@@ -9,7 +9,7 @@ const button = tv({
       "disabled:pointer-events-none disabled:opacity-50",
     ],
     surface: [
-      "relative flex h-full w-full items-center justify-center rounded-full",
+      "relative flex min-w-0 max-w-full items-center justify-center rounded-full",
       "border border-double border-[rgba(51,51,51,0.08)] bg-[rgba(0,0,0,0.02)]",
       "shadow-[inset_2px_-2px_1px_-1px_rgba(255,255,255,0.9),inset_-2px_2px_1px_-1px_rgba(255,255,255,0.9),inset_6px_-6px_1px_-6px_rgba(255,255,255,0.55),inset_-6px_6px_1px_-6px_rgba(255,255,255,0.55),inset_0_0_2px_rgba(0,0,0,0.8),0_4px_8px_rgba(0,0,0,0.2)]",
       "backdrop-blur-[2px] [filter:brightness(0.9)_contrast(3)]",
@@ -20,7 +20,7 @@ const button = tv({
       "motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-active:scale-100",
     ],
     label: [
-      "min-w-0 truncate font-[system-ui,-apple-system,sans-serif] font-normal leading-none text-[#3e3e3e]",
+      "min-w-0 truncate font-[system-ui,-apple-system,sans-serif] font-normal text-[#3e3e3e]",
       "[filter:drop-shadow(0_25px_3px_rgba(102,102,102,0.15))]",
       "group-active:text-black",
     ],
@@ -33,7 +33,7 @@ const button = tv({
       "transition-transform duration-[250ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]",
       "group-hover:scale-110 group-active:scale-[0.94]",
       "motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100",
-      "[&_svg]:h-[40%] [&_svg]:w-[40%] [&_svg]:shrink-0",
+      "[&_svg]:shrink-0",
     ],
     overlay: [
       "pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[calc(100%_-_9px)] w-[calc(100%_-_9px)]",
@@ -42,26 +42,35 @@ const button = tv({
   },
   variants: {
     size: {
-      sm: {
-        base: "h-10 min-w-[8.5rem]",
-        surface: "gap-2 px-3",
-        label: "text-sm",
+      xs: {
+        surface: "min-h-8 gap-1 px-2 py-1",
+        label: "text-xs",
         leadingIcon: "[&_svg]:size-4",
-        trailingIcon: "size-8",
+        trailingIcon: "size-6 [&_svg]:size-4",
+      },
+      sm: {
+        surface: "min-h-9 gap-1.5 px-2.5 py-1.5",
+        label: "text-xs",
+        leadingIcon: "[&_svg]:size-4",
+        trailingIcon: "size-6 [&_svg]:size-4",
       },
       md: {
-        base: "h-[3.25rem] min-w-[11.5rem]",
-        surface: "gap-2.5 px-3.5",
-        label: "text-base",
-        leadingIcon: "[&_svg]:size-[1.125rem]",
-        trailingIcon: "size-9",
+        surface: "min-h-10 gap-1.5 px-2.5 py-1.5",
+        label: "text-sm",
+        leadingIcon: "[&_svg]:size-5",
+        trailingIcon: "size-7 [&_svg]:size-5",
       },
       lg: {
-        base: "h-[clamp(3.65rem,12vw,4.6875rem)] min-w-[min(16.25rem,calc(100vw_-_2.5rem))]",
-        surface: "gap-[clamp(0.6rem,3vw,1rem)] px-[0.8rem]",
-        label: "text-[clamp(1.0625rem,4vw,1.5625rem)]",
-        leadingIcon: "[&_svg]:size-[clamp(1rem,3.6vw,1.125rem)]",
-        trailingIcon: "size-[clamp(2rem,7vw,2.5rem)]",
+        surface: "min-h-11 gap-2 px-3 py-2",
+        label: "text-sm",
+        leadingIcon: "[&_svg]:size-5",
+        trailingIcon: "size-7 [&_svg]:size-5",
+      },
+      xl: {
+        surface: "min-h-12 gap-2 px-3 py-2",
+        label: "text-base",
+        leadingIcon: "[&_svg]:size-6",
+        trailingIcon: "size-8 [&_svg]:size-6",
       },
     },
   },
