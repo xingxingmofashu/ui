@@ -43,25 +43,25 @@ const button = tv({
   variants: {
     size: {
       sm: {
+        base: "w-[8rem]",
+        surface: "h-9 gap-2 px-3",
+        label: "text-sm/[normal]",
+        leadingIcon: "[&_svg]:size-4",
+        trailingIcon: "[&_svg]:size-4",
+      },
+      md: {
         base: "w-[9rem]",
         surface: "h-11 gap-2 px-3",
         label: "text-sm/[normal]",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
       },
-      md: {
+      lg: {
         base: "w-[11rem]",
         surface: "h-[3.25rem] gap-2.5 px-3.5",
         label: "text-base/[normal]",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
-      },
-      lg: {
-        base: "w-[16.25rem]",
-        surface: "h-[4.6875rem] gap-4 px-[0.8rem]",
-        label: "text-[1.5625rem]/[normal]",
-        leadingIcon: "[&_svg]:size-4",
-        trailingIcon: "[&_svg]:size-4 h-10",
       },
     },
   },

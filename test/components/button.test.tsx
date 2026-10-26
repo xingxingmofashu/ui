@@ -106,25 +106,25 @@ describe("Button", () => {
 
       const buttonElement = screen.getByRole("button");
 
-      expect(buttonElement).toHaveClass("w-[11rem]", "max-w-full");
-      expect(getSlot(buttonElement, "surface")).toHaveClass("h-[3.25rem]");
+      expect(buttonElement).toHaveClass("w-[9rem]", "max-w-full");
+      expect(getSlot(buttonElement, "surface")).toHaveClass("h-11");
     });
 
     it("uses the compact reference geometry for the default size", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.base()).toContain("w-[11rem]");
-      expect(styles.surface()).toContain("h-[3.25rem]");
-      expect(styles.surface()).toContain("gap-2.5");
-      expect(styles.surface()).toContain("px-3.5");
-      expect(styles.label()).toContain("text-base/[normal]");
+      expect(styles.base()).toContain("w-[9rem]");
+      expect(styles.surface()).toContain("h-11");
+      expect(styles.surface()).toContain("gap-2");
+      expect(styles.surface()).toContain("px-3");
+      expect(styles.label()).toContain("text-sm/[normal]");
       expect(styles.trailingIcon()).toContain("[&_svg]:size-4");
     });
 
     it.each([
-      ["sm", "w-[9rem]", "h-11"],
-      ["md", "w-[11rem]", "h-[3.25rem]"],
-      ["lg", "w-[16.25rem]", "h-[4.6875rem]"],
+      ["sm", "w-[8rem]", "h-9"],
+      ["md", "w-[9rem]", "h-11"],
+      ["lg", "w-[11rem]", "h-[3.25rem]"],
     ] as const)("applies the %s size", (size, width, height) => {
       render(<Button size={size} label={size} />);
 

@@ -41,7 +41,7 @@ Each layer has a purpose. Do not delete or merge them casually. `z-[500]` / `z-[
 - Text color uses `text-ink`; pressed text uses `text-ink-active`, mapped to `--ui-ink` / `--ui-ink-active`, switching with `.light` / `.dark`.
 - The label uses the reference `drop-shadow(0 25px 3px rgba(102, 102, 102, 0.15))`, controlled by `--ui-drop-shadow-label`; do not inline raw color values.
 - `leadingIcon` is a plain icon without a background; its SVG uses `--ui-drop-shadow-icon`.
-- `trailingIcon` is a dark circular badge with a light icon; in `lg` the badge is fixed at `40px`, while `sm` / `md` use `53.33%` of the surface height. Its SVG uses `--ui-drop-shadow-icon`.
+- `trailingIcon` is a dark circular badge with a light icon; the badge is `53.33%` of the surface height, and its SVG uses `--ui-drop-shadow-icon`.
 - Icon sizes are controlled by the Button `size`: all sizes use 16px.
 - Icon sizes are set directly in the `leadingIcon` / `trailingIcon` slots of the `size` variant via `[&_svg]:size-*`; callers do not need to pass an icon `size`.
 - To use a custom size, override through `classNames.leadingIcon` / `classNames.trailingIcon` with `[&_svg]:size-*`; do not change the default mapping.
@@ -118,9 +118,9 @@ Do not relax this constraint. Icon-only buttons must receive `aria-label` or `ar
 
 | Size | Width | Height | Text | Icon |
 | --- | --- | --- | --- | --- |
-| `sm` | `9rem` / 144px | `2.75rem` / 44px | `text-sm/[normal]` / 14px | `1rem` / 16px |
-| `md` | `11rem` / 176px | `3.25rem` / 52px | `text-base/[normal]` / 16px | `1rem` / 16px |
-| `lg` | `16.25rem` / 260px | `4.6875rem` / 75px | `text-[1.5625rem]/[normal]` / 25px | `1rem` / 16px |
+| `sm` | `8rem` / 128px | `2.25rem` / 36px | `text-sm/[normal]` / 14px | `1rem` / 16px |
+| `md` | `9rem` / 144px | `2.75rem` / 44px | `text-sm/[normal]` / 14px | `1rem` / 16px |
+| `lg` | `11rem` / 176px | `3.25rem` / 52px | `text-base/[normal]` / 16px | `1rem` / 16px |
 
 Rules:
 
@@ -128,7 +128,7 @@ Rules:
 - `base` must have `max-w-full` and `min-w-0` so narrow parents can shrink the button to the parent width.
 - **Do not use `100vw` or `calc(100vw - ...)` to constrain width.**
 - `min-w-0` + `truncate` on `label` is required behavior for narrow containers; do not remove it.
-- `lg` preserves the original reference geometry: `260 × 75px`, `25px` text, `16px` icon, and a `40px` trailing badge. `md` is the default at `176 × 52px`; `sm` is `144 × 44px`.
+- `md` is the default at `144 × 44px`; `lg` is the largest at `176 × 52px`, and `sm` is `128 × 36px`. All sizes use 16px icons and a trailing badge at `53.33%` of the surface height.
 - Set icon sizes in the `leadingIcon` / `trailingIcon` slots of the `size` variant; do not hard-code them in component JSX.
 - After changing sizes, verify at minimum: `200px` parent container, `390px` mobile, and `1440px` desktop have no horizontal overflow, and check that actual SVG dimensions match the table.
 
@@ -202,7 +202,7 @@ Place test files under `test/components/` and name them `*.test.tsx`. Token test
 - Icon size contract: all sizes use `size-4`; both icon slots are set together in the `size` variant.
 - Responsive contract: no `100vw`; `base` has `max-w-full`; `surface` has `w-full`.
 - Visual regression points: label uses `--ui-drop-shadow-label`; SVG uses `--ui-drop-shadow-icon`; `base` contrast and `surface` brightness are layered; the surface transition covers `translate` / `scale`.
-- Reference baseline: `lg` is `260 × 75px`, `25px` text, `16px` icon, and a `40px` trailing badge; the default `md` is `176 × 52px`.
+- Reference baseline: the default `md` is `144 × 44px`, `14px` text, `16px` icon, and a trailing badge at `53.33%` of the surface height; `lg` is `176 × 52px`, and `sm` is `128 × 36px`.
 - Token contract: color, background, border, and shadow utilities resolve from `src/index.css` correctly; after token changes, check actual computed styles and verify `.dark` switches colors, borders, and shadows with the variables.
 - Slot API: `className` applies to `base`; `classNames` can override slots such as `surface`.
 - Interaction: click callbacks and disabled state.
