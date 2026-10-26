@@ -7,8 +7,17 @@ import { type VariantProps } from "tailwind-variants";
 
 import button from "../theme/button";
 
-type ButtonProps = React.ComponentProps<typeof UIButton> &
-  VariantProps<typeof button> & {
+type ButtonSlot =
+  | "base"
+  | "surface"
+  | "label"
+  | "leadingIcon"
+  | "trailingIcon"
+  | "overlay";
+
+type ButtonClassNames = Partial<Record<ButtonSlot, string>>;
+
+type ButtonContentProps = {
   /** Text or content rendered inside the button. */
   label?: React.ReactNode;
   /** Leading icon. Alias for `leadingIcon`. */
@@ -17,10 +26,28 @@ type ButtonProps = React.ComponentProps<typeof UIButton> &
   leadingIcon?: React.ReactNode;
   /** Icon rendered after the label, inside the circular badge. */
   trailingIcon?: React.ReactNode;
+  /** Classes for individual slots. Use `surface` to style the visible glass pill. */
+  classNames?: ButtonClassNames;
 };
+
+/**
+ * Buttons must have an accessible name. Use `label`/`children` for visible
+ * text, or `aria-label`/`aria-labelledby` for icon-only buttons.
+ */
+type ButtonAccessibleName =
+  | { label: React.ReactNode }
+  | { children: React.ReactNode }
+  | { "aria-label": string }
+  | { "aria-labelledby": string };
+
+type ButtonProps = React.ComponentProps<typeof UIButton> &
+  VariantProps<typeof button> &
+  ButtonContentProps &
+  ButtonAccessibleName;
 
 function Button({
   className,
+  classNames,
   children,
   label,
   icon,
@@ -32,27 +59,39 @@ function Button({
   const ui = button({ size });
   const content = label ?? children;
   const leading = leadingIcon ?? icon;
-  const hasLabel = content !== undefined && content !== null;
+  const hasLabel =
+    content !== undefined &&
+    content !== null &&
+    content !== "" &&
+    content !== false;
+  const hasAccessibleName =
+    hasLabel ||
+    Boolean(props["aria-label"]) ||
+    Boolean(props["aria-labelledby"]);
+  const iconIsDecorative = hasAccessibleName;
 
   return (
     <UIButton
       data-slot="button"
-      className={cn(ui.base(), className)}
+      className={cn(ui.base(), className, classNames?.base)}
       {...props}
     >
-      <span data-slot="surface" className={ui.surface()}>
+      <span data-slot="surface" className={cn(ui.surface(), classNames?.surface)}>
         {leading != null ? (
           <span
             data-slot="leading-icon"
-            className={ui.leadingIcon()}
-            aria-hidden="true"
+            className={cn(ui.leadingIcon(), classNames?.leadingIcon)}
+            aria-hidden={iconIsDecorative || undefined}
           >
             {leading}
           </span>
         ) : null}
 
         {hasLabel ? (
-          <span data-slot="label" className={ui.label()}>
+          <span
+            data-slot="label"
+            className={cn(ui.label(), classNames?.label)}
+          >
             {content}
           </span>
         ) : null}
@@ -60,18 +99,22 @@ function Button({
         {trailingIcon != null ? (
           <span
             data-slot="trailing-icon"
-            className={ui.trailingIcon()}
-            aria-hidden="true"
+            className={cn(ui.trailingIcon(), classNames?.trailingIcon)}
+            aria-hidden={iconIsDecorative || undefined}
           >
             {trailingIcon}
           </span>
         ) : null}
 
-        <span data-slot="overlay" className={ui.overlay()} aria-hidden="true" />
+        <span
+          data-slot="overlay"
+          className={cn(ui.overlay(), classNames?.overlay)}
+          aria-hidden="true"
+        />
       </span>
     </UIButton>
   );
 }
 
 export { Button };
-export type { ButtonProps };
+export type { ButtonClassNames, ButtonProps };

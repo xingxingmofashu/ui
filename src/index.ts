@@ -1,1 +1,5 @@
-export { Button, type ButtonProps } from "./components/button";
+export {
+  Button,
+  type ButtonClassNames,
+  type ButtonProps,
+} from "./components/button";

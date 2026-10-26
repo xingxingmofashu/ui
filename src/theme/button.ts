@@ -3,13 +3,13 @@ import { tv } from "tailwind-variants";
 const button = tv({
   slots: {
     base: [
-      "group relative z-[500] inline-flex cursor-pointer select-none whitespace-nowrap",
+      "group relative z-[500] inline-flex min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
       "appearance-none rounded-full border-0 bg-transparent p-0",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgba(0,0,0,0.6)]",
       "disabled:pointer-events-none disabled:opacity-50",
     ],
     surface: [
-      "relative flex w-max max-w-[calc(100vw_-_2.5rem)] items-center justify-center rounded-full",
+      "relative flex w-full min-w-0 max-w-full items-center justify-center rounded-full",
       "border border-double border-[rgba(51,51,51,0.08)] bg-[rgba(0,0,0,0.02)]",
       "shadow-[inset_2px_-2px_1px_-1px_rgba(255,255,255,0.9),inset_-2px_2px_1px_-1px_rgba(255,255,255,0.9),inset_6px_-6px_1px_-6px_rgba(255,255,255,0.55),inset_-6px_6px_1px_-6px_rgba(255,255,255,0.55),inset_0_0_2px_rgba(0,0,0,0.8),0_4px_8px_rgba(0,0,0,0.2)]",
       "backdrop-blur-[2px] [filter:brightness(0.9)_contrast(3)]",
@@ -21,7 +21,6 @@ const button = tv({
     ],
     label: [
       "min-w-0 truncate font-[system-ui,-apple-system,sans-serif] font-normal text-[#3e3e3e]",
-      "[filter:drop-shadow(0_25px_3px_rgba(102,102,102,0.15))]",
       "group-active:text-black",
     ],
     leadingIcon: [
@@ -43,26 +42,29 @@ const button = tv({
   variants: {
     size: {
       xs: {
-        surface:
-          "h-11 min-w-[min(9rem,calc(100vw_-_2.5rem))] gap-2 px-3",
+        base: "w-[9rem]",
+        surface: "h-11 gap-2 px-3",
         label: "text-sm",
       },
       sm: {
-        surface:
-          "h-[3.25rem] min-w-[min(11rem,calc(100vw_-_2.5rem))] gap-2.5 px-3.5",
+        base: "w-[11rem]",
+        surface: "h-[3.25rem] gap-2.5 px-3.5",
         label: "text-base",
       },
       md: {
+        base: "w-[16.25rem]",
         surface:
-          "h-[clamp(3.65rem,12vw,4.6875rem)] min-w-[min(16.25rem,calc(100vw_-_2.5rem))] gap-[clamp(0.6rem,3vw,1rem)] px-[0.8rem]",
+          "h-[clamp(3.65rem,12vw,4.6875rem)] gap-[clamp(0.6rem,3vw,1rem)] px-[0.8rem]",
         label: "text-[clamp(1.0625rem,4vw,1.5625rem)]",
       },
       lg: {
-        surface: "h-[5.25rem] min-w-[min(19rem,calc(100vw_-_2.5rem))] gap-[1.125rem] px-4",
+        base: "w-[19rem]",
+        surface: "h-[5.25rem] gap-[1.125rem] px-4",
         label: "text-[1.75rem]",
       },
       xl: {
-        surface: "h-[5.75rem] min-w-[min(22rem,calc(100vw_-_2.5rem))] gap-5 px-5",
+        base: "w-[22rem]",
+        surface: "h-[5.75rem] gap-5 px-5",
         label: "text-[2rem]",
       },
     },
