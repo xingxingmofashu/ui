@@ -7,6 +7,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@base-ui/react": "catalog:",
     "cn": "catalog:",
     "tailwind-variants": "catalog:"
   },
