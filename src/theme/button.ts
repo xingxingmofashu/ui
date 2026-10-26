@@ -3,13 +3,13 @@ import { tv } from "tailwind-variants";
 const button = tv({
   slots: {
     base: [
-      "group relative z-[500] inline-flex w-max max-w-[calc(100vw_-_2.5rem)] cursor-pointer select-none whitespace-nowrap",
+      "group relative z-[500] inline-flex cursor-pointer select-none whitespace-nowrap",
       "appearance-none rounded-full border-0 bg-transparent p-0",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgba(0,0,0,0.6)]",
       "disabled:pointer-events-none disabled:opacity-50",
     ],
     surface: [
-      "relative flex min-w-0 max-w-full items-center justify-center rounded-full",
+      "relative flex w-max max-w-[calc(100vw_-_2.5rem)] items-center justify-center rounded-full",
       "border border-double border-[rgba(51,51,51,0.08)] bg-[rgba(0,0,0,0.02)]",
       "shadow-[inset_2px_-2px_1px_-1px_rgba(255,255,255,0.9),inset_-2px_2px_1px_-1px_rgba(255,255,255,0.9),inset_6px_-6px_1px_-6px_rgba(255,255,255,0.55),inset_-6px_6px_1px_-6px_rgba(255,255,255,0.55),inset_0_0_2px_rgba(0,0,0,0.8),0_4px_8px_rgba(0,0,0,0.2)]",
       "backdrop-blur-[2px] [filter:brightness(0.9)_contrast(3)]",
@@ -28,12 +28,12 @@ const button = tv({
       "grid shrink-0 place-items-center [&_svg]:shrink-0",
     ],
     trailingIcon: [
-      "grid shrink-0 place-items-center rounded-full",
+      "grid h-[53.33%] aspect-square shrink-0 place-items-center rounded-full",
       "bg-[#3e3e3e] text-[#f5f5f5] shadow-[0_0_6px_rgba(0,0,0,0.3)]",
       "transition-transform duration-[250ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]",
       "group-hover:scale-110 group-active:scale-[0.94]",
       "motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100",
-      "[&_svg]:shrink-0",
+      "[&_svg]:h-[40%] [&_svg]:w-[40%] [&_svg]:shrink-0",
     ],
     overlay: [
       "pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[calc(100%_-_9px)] w-[calc(100%_-_9px)]",
@@ -43,34 +43,32 @@ const button = tv({
   variants: {
     size: {
       xs: {
-        surface: "min-h-8 gap-1 px-2 py-1",
-        label: "text-xs",
+        surface:
+          "h-11 min-w-[min(9rem,calc(100vw_-_2.5rem))] gap-2 px-3",
+        label: "text-sm",
         leadingIcon: "[&_svg]:size-4",
-        trailingIcon: "size-6 [&_svg]:size-4",
       },
       sm: {
-        surface: "min-h-9 gap-1.5 px-2.5 py-1.5",
-        label: "text-xs",
-        leadingIcon: "[&_svg]:size-4",
-        trailingIcon: "size-6 [&_svg]:size-4",
+        surface:
+          "h-[3.25rem] min-w-[min(11rem,calc(100vw_-_2.5rem))] gap-2.5 px-3.5",
+        label: "text-base",
+        leadingIcon: "[&_svg]:size-[1.125rem]",
       },
       md: {
-        surface: "min-h-10 gap-1.5 px-2.5 py-1.5",
-        label: "text-sm",
-        leadingIcon: "[&_svg]:size-5",
-        trailingIcon: "size-7 [&_svg]:size-5",
+        surface:
+          "h-[clamp(3.65rem,12vw,4.6875rem)] min-w-[min(16.25rem,calc(100vw_-_2.5rem))] gap-[clamp(0.6rem,3vw,1rem)] px-[0.8rem]",
+        label: "text-[clamp(1.0625rem,4vw,1.5625rem)]",
+        leadingIcon: "[&_svg]:size-[clamp(1rem,3.6vw,1.125rem)]",
       },
       lg: {
-        surface: "min-h-11 gap-2 px-3 py-2",
-        label: "text-sm",
+        surface: "h-[5.25rem] min-w-[min(19rem,calc(100vw_-_2.5rem))] gap-[1.125rem] px-4",
+        label: "text-[1.75rem]",
         leadingIcon: "[&_svg]:size-5",
-        trailingIcon: "size-7 [&_svg]:size-5",
       },
       xl: {
-        surface: "min-h-12 gap-2 px-3 py-2",
-        label: "text-base",
-        leadingIcon: "[&_svg]:size-6",
-        trailingIcon: "size-8 [&_svg]:size-6",
+        surface: "h-[5.75rem] min-w-[min(22rem,calc(100vw_-_2.5rem))] gap-5 px-5",
+        label: "text-[2rem]",
+        leadingIcon: "[&_svg]:size-[1.375rem]",
       },
     },
   },
