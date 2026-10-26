@@ -40,9 +40,8 @@ Each layer has a purpose. Do not delete or merge them casually. `z-[500]` / `z-[
 
 - Text color uses `text-ink`; pressed text uses `text-ink-active`, mapped to `--ui-ink` / `--ui-ink-active`, switching with `.light` / `.dark`.
 - The label uses the reference `drop-shadow(0 25px 3px rgba(102, 102, 102, 0.15))`, controlled by `--ui-drop-shadow-label`; do not inline raw color values.
-- `leadingIcon` is a plain icon without a background; its SVG uses `--ui-drop-shadow-icon`.
-- `trailingIcon` is a dark circular badge with a light icon; its size follows the Nuxt UI scale: 18 / 20 / 24 / 28 / 32px from `xs` to `xl`. Its SVG uses `--ui-drop-shadow-icon`.
-- Icon sizes follow the Nuxt UI scale, except `xs`: `xs` uses 14px, `sm` uses 16px, `md` / `lg` use 20px, and `xl` uses 24px; label text is 12 / 12 / 14 / 14 / 16px.
+- `leadingIcon` and `trailingIcon` are identical plain icon containers with no background or badge; both use `text-ink` and `--ui-drop-shadow-icon`.
+- Icon sizes follow the Nuxt UI scale: `xs` / `sm` use 16px, `md` / `lg` use 20px, and `xl` uses 24px; label text is 12 / 12 / 14 / 14 / 16px.
 - Icon sizes are set directly in the `leadingIcon` / `trailingIcon` slots of the `size` variant via `[&_svg]:size-*`; callers do not need to pass an icon `size`.
 - To use a custom size, override through `classNames.leadingIcon` / `classNames.trailingIcon` with `[&_svg]:size-*`; do not change the default mapping.
 - The icon container is responsible for centering, preventing shrink, and normalizing dimensions; it does not handle icon-library-specific logic.
@@ -116,15 +115,15 @@ Do not relax this constraint. Icon-only buttons must receive `aria-label` or `ar
 
 ## 5. Sizes and Responsiveness
 
-| Size | Height | Padding | Gap | Text | Icon | Badge |
+| Size | Height | Padding X | Padding Y | Gap | Text | Icon |
 | --- | --- | --- | --- | --- | --- | --- |
-| `xs` | `1.5rem` / 24px | `px-3` / 12px | 4px | `text-xs` / 12px | `0.875rem` / 14px | 18px |
-| `sm` | `1.75rem` / 28px | `px-3.5` / 14px | 6px | `text-xs` / 12px | `1rem` / 16px | 20px |
-| `md` | `2rem` / 32px | `px-3.5` / 14px | 6px | `text-sm` / 14px | `1.25rem` / 20px | 24px |
-| `lg` | `2.25rem` / 36px | `px-4` / 16px | 8px | `text-sm` / 14px | `1.25rem` / 20px | 28px |
-| `xl` | `2.5rem` / 40px | `px-4` / 16px | 8px | `text-base` / 16px | `1.5rem` / 24px | 32px |
+| `xs` | `1.5rem` / 24px | `px-2.5` / 10px | `py-[3px]` / 3px | 4px | `text-xs` / 12px | `1rem` / 16px |
+| `sm` | `1.75rem` / 28px | `px-3` / 12px | `py-[5px]` / 5px | 6px | `text-xs` / 12px | `1rem` / 16px |
+| `md` | `2rem` / 32px | `px-3` / 12px | `py-[5px]` / 5px | 6px | `text-sm` / 14px | `1.25rem` / 20px |
+| `lg` | `2.25rem` / 36px | `px-3.5` / 14px | `py-[7px]` / 7px | 8px | `text-sm` / 14px | `1.25rem` / 20px |
+| `xl` | `2.5rem` / 40px | `px-3.5` / 14px | `py-[7px]` / 7px | 8px | `text-base` / 16px | `1.5rem` / 24px |
 
-The text, gap, height, and badge values follow the local Nuxt UI Button theme. `xs` uses a 14px icon and an 18px badge to keep the 24px capsule balanced. Horizontal padding is increased by 4px for the glass capsule. The vertical padding is represented by the fixed height so the glass geometry stays unchanged.
+The text, icon, and gap values follow the local Nuxt UI Button theme. Horizontal padding is increased by 2px for the glass capsule. Vertical padding is reduced by 1px per side from the Nuxt UI values to compensate for the 2px glass border, so the target heights are exact.
 
 Rules:
 
@@ -133,7 +132,7 @@ Rules:
 - `base` must have `max-w-full` and `min-w-0` so narrow parents can shrink the button to the parent width.
 - **Do not use `100vw` or `calc(100vw - ...)` to constrain width.**
 - `min-w-0` + `truncate` on `label` is required behavior for narrow containers; do not remove it.
-- `md` is the default at 32px high; `xl` is the largest at 40px, and `xs` is the smallest at 24px. Follow the text, icon, padding, gap, and badge values in the table.
+- `md` is the default at 32px high; `xl` is the largest at 40px, and `xs` is the smallest at 24px. Follow the text, icon, padding, and gap values in the table.
 - Set icon sizes in the `leadingIcon` / `trailingIcon` slots of the `size` variant; do not hard-code them in component JSX.
 - Changing sizes must not change the glass composition: keep the existing `base` / `surface` glass layers, shadows, pseudo-elements, and token values intact.
 - After changing sizes, verify at minimum: `200px` parent container, `390px` mobile, and `1440px` desktop have no horizontal overflow, and check that actual SVG dimensions match the table.
@@ -204,11 +203,11 @@ Place test files under `test/components/` and name them `*.test.tsx`. Token test
 
 - Accessible names: `label`, `children`, `aria-label`, `aria-labelledby`.
 - Decorative icons: hidden when a name exists, not hidden when no name exists.
-- Size contract: default `md`, content-driven width, and the height, padding, gap, text, icon, and badge classes for every size.
-- Icon size contract: `xs` uses `size-3.5`, `sm` uses `size-4`, `md` / `lg` use `size-5`, and `xl` uses `size-6`; both icon slots are set together in the `size` variant.
+- Size contract: default `md`, content-driven width, and the height, padding, gap, and text classes for every size.
+- Icon size contract: `xs` / `sm` use `size-4`, `md` / `lg` use `size-5`, and `xl` uses `size-6`; both icon slots use the same plain container.
 - Responsive contract: no `100vw`; `base` has `max-w-full`; `surface` has `w-full`; full-width usage is opt-in through `classNames`.
 - Visual regression points: label uses `--ui-drop-shadow-label`; SVG uses `--ui-drop-shadow-icon`; `base` contrast and `surface` brightness are layered; the surface transition covers `translate` / `scale`.
-- Reference baseline: the default `md` is 32px high, `14px` text, `20px` icon, and a `24px` trailing badge; `xl` is 40px, `lg` is 36px, `sm` is 28px, and `xs` is 24px.
+- Reference baseline: the default `md` is 32px high, `14px` text, and `20px` icons; `xl` is 40px, `lg` is 36px, `sm` is 28px, and `xs` is 24px.
 - Token contract: color, background, border, and shadow utilities resolve from `src/index.css` correctly; after token changes, check actual computed styles and verify `.dark` switches colors, borders, and shadows with the variables.
 - Slot API: `className` applies to `base`; `classNames` can override slots such as `surface`.
 - Interaction: click callbacks and disabled state.

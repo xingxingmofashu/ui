@@ -38,27 +38,27 @@ const button = tv({
   variants: {
     size: {
       xs: {
-        surface: "px-2.5 py-1 text-xs gap-1",
+        surface: "px-2.5 py-[3px] text-xs gap-1",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
       },
       sm: {
-        surface: "px-3 py-1.5 text-xs gap-1.5",
+        surface: "px-3 py-[5px] text-xs gap-1.5",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
       },
       md: {
-        surface: "px-3 py-1.5 text-sm gap-1.5",
+        surface: "px-3 py-[5px] text-sm gap-1.5",
         leadingIcon: "[&_svg]:size-5",
         trailingIcon: "[&_svg]:size-5",
       },
       lg: {
-        surface: "px-3.5 py-2 text-sm gap-2",
+        surface: "px-3.5 py-[7px] text-sm gap-2",
         leadingIcon: "[&_svg]:size-5",
         trailingIcon: "[&_svg]:size-5",
       },
       xl: {
-        surface: "px-3.5 py-2 text-base gap-2",
+        surface: "px-3.5 py-[7px] text-base gap-2",
         leadingIcon: "[&_svg]:size-6",
         trailingIcon: "[&_svg]:size-6",
       },

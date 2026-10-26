@@ -108,7 +108,12 @@ describe("Button", () => {
 
       expect(buttonElement).toHaveClass("max-w-full");
       expect(buttonElement).not.toHaveClass("w-[8rem]");
-      expect(getSlot(buttonElement, "surface")).toHaveClass("h-8");
+      expect(getSlot(buttonElement, "surface")).toHaveClass(
+        "px-3",
+        "py-[5px]",
+        "text-sm",
+        "gap-1.5",
+      );
     });
 
     it("uses content-driven width and the Nuxt UI reference geometry", () => {
@@ -116,36 +121,41 @@ describe("Button", () => {
 
       expect(styles.base()).not.toContain("w-[");
       expect(styles.base()).toContain("inline-flex");
-      expect(styles.surface()).toContain("h-8");
+      expect(styles.base()).toContain("items-center");
+      expect(styles.surface()).toContain("px-3");
+      expect(styles.surface()).toContain("py-[5px]");
       expect(styles.surface()).toContain("gap-1.5");
-      expect(styles.surface()).toContain("px-3.5");
-      expect(styles.label()).toContain("text-sm");
+      expect(styles.surface()).toContain("text-sm");
       expect(styles.leadingIcon()).toContain("[&_svg]:size-5");
-      expect(styles.trailingIcon()).toContain("h-6");
       expect(styles.trailingIcon()).toContain("[&_svg]:size-5");
+      expect(styles.leadingIcon()).toBe(styles.trailingIcon());
+      expect(styles.trailingIcon()).not.toContain("bg-glass-icon");
+      expect(styles.trailingIcon()).not.toContain("shadow-glass-icon");
     });
 
     it.each([
-      ["xs", "h-6", "gap-1", "px-3", "text-xs", "h-[18px]"],
-      ["sm", "h-7", "gap-1.5", "px-3.5", "text-xs", "h-5"],
-      ["md", "h-8", "gap-1.5", "px-3.5", "text-sm", "h-6"],
-      ["lg", "h-9", "gap-2", "px-4", "text-sm", "h-7"],
-      ["xl", "h-10", "gap-2", "px-4", "text-base", "h-8"],
+      ["xs", "px-2.5", "py-[3px]", "gap-1", "text-xs", "[&_svg]:size-4"],
+      ["sm", "px-3", "py-[5px]", "gap-1.5", "text-xs", "[&_svg]:size-4"],
+      ["md", "px-3", "py-[5px]", "gap-1.5", "text-sm", "[&_svg]:size-5"],
+      ["lg", "px-3.5", "py-[7px]", "gap-2", "text-sm", "[&_svg]:size-5"],
+      ["xl", "px-3.5", "py-[7px]", "gap-2", "text-base", "[&_svg]:size-6"],
     ] as const)(
       "applies the Nuxt UI %s size",
-      (size, height, gap, padding, text, badge) => {
+      (size, paddingX, paddingY, gap, text, iconClass) => {
         const styles = button({ size });
 
-        expect(styles.surface()).toContain(height);
+        expect(styles.surface()).toContain(paddingX);
+        expect(styles.surface()).toContain(paddingY);
         expect(styles.surface()).toContain(gap);
-        expect(styles.surface()).toContain(padding);
-        expect(styles.label()).toContain(text);
-        expect(styles.trailingIcon()).toContain(badge);
+        expect(styles.surface()).toContain(text);
+        expect(styles.leadingIcon()).toContain(iconClass);
+        expect(styles.trailingIcon()).toContain(iconClass);
+        expect(styles.leadingIcon()).toBe(styles.trailingIcon());
       },
     );
 
     it.each([
-      ["xs", "[&_svg]:size-3.5"],
+      ["xs", "[&_svg]:size-4"],
       ["sm", "[&_svg]:size-4"],
       ["md", "[&_svg]:size-5"],
       ["lg", "[&_svg]:size-5"],
@@ -164,6 +174,20 @@ describe("Button", () => {
 
       expect(getSlot(buttonElement, "leading-icon")).toHaveClass(iconClass);
       expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(iconClass);
+    });
+
+    it("renders both icon slots with the same plain container", () => {
+      for (const size of sizes) {
+        const styles = button({ size });
+
+        expect(styles.leadingIcon()).toBe(styles.trailingIcon());
+        expect(styles.leadingIcon()).toContain("inline-flex");
+        expect(styles.leadingIcon()).toContain("items-center");
+        expect(styles.leadingIcon()).toContain("justify-center");
+        expect(styles.leadingIcon()).toContain("shrink-0");
+        expect(styles.trailingIcon()).not.toContain("bg-glass-icon");
+        expect(styles.trailingIcon()).not.toContain("shadow-glass-icon");
+      }
     });
 
     it("caps its width to the container instead of the viewport", () => {
