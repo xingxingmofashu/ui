@@ -109,10 +109,16 @@ describe("Button", () => {
       expect(buttonElement).toHaveClass("max-w-full");
       expect(buttonElement).not.toHaveClass("w-[8rem]");
       expect(getSlot(buttonElement, "surface")).toHaveClass(
+        "h-[var(--ui-button-height)]",
+        "box-border",
+        "overflow-hidden",
         "px-3",
-        "py-[5px]",
         "text-sm",
         "gap-1.5",
+        "[--ui-button-height:2rem]",
+      );
+      expect(getSlot(buttonElement, "surface").className).toContain(
+        "py-[calc(",
       );
     });
 
@@ -123,7 +129,12 @@ describe("Button", () => {
       expect(styles.base()).toContain("inline-flex");
       expect(styles.base()).toContain("items-center");
       expect(styles.surface()).toContain("px-3");
-      expect(styles.surface()).toContain("py-[5px]");
+      expect(styles.surface()).toContain("h-[var(--ui-button-height)]");
+      expect(styles.surface()).toContain("box-border");
+      expect(styles.surface()).toContain("overflow-hidden");
+      expect(styles.surface()).toContain("py-[calc(");
+      expect(styles.surface()).toContain("1lh");
+      expect(styles.surface()).toContain("[--ui-button-height:2rem]");
       expect(styles.surface()).toContain("gap-1.5");
       expect(styles.surface()).toContain("text-sm");
       expect(styles.leadingIcon()).toContain("[&_svg]:size-5");
@@ -133,19 +144,32 @@ describe("Button", () => {
       expect(styles.trailingIcon()).not.toContain("shadow-glass-icon");
     });
 
+    it("clips decorative shadows and highlights to the capsule", () => {
+      const styles = button();
+
+      expect(styles.surface()).toContain("overflow-hidden");
+      expect(styles.surface()).toContain("rounded-full");
+      expect(styles.label()).toContain("var(--ui-drop-shadow-label)");
+      expect(styles.leadingIcon()).toContain("var(--ui-drop-shadow-icon)");
+      expect(styles.trailingIcon()).toContain("var(--ui-drop-shadow-icon)");
+    });
+
     it.each([
-      ["xs", "px-2.5", "py-[3px]", "gap-1", "text-xs", "[&_svg]:size-4"],
-      ["sm", "px-3", "py-[5px]", "gap-1.5", "text-xs", "[&_svg]:size-4"],
-      ["md", "px-3", "py-[5px]", "gap-1.5", "text-sm", "[&_svg]:size-5"],
-      ["lg", "px-3.5", "py-[7px]", "gap-2", "text-sm", "[&_svg]:size-5"],
-      ["xl", "px-3.5", "py-[7px]", "gap-2", "text-base", "[&_svg]:size-6"],
+      ["xs", "px-2.5", "1.5rem", "gap-1", "text-xs", "[&_svg]:size-4"],
+      ["sm", "px-3", "1.75rem", "gap-1.5", "text-xs", "[&_svg]:size-4"],
+      ["md", "px-3", "2rem", "gap-1.5", "text-sm", "[&_svg]:size-5"],
+      ["lg", "px-3.5", "2.25rem", "gap-2", "text-sm", "[&_svg]:size-5"],
+      ["xl", "px-3.5", "2.5rem", "gap-2", "text-base", "[&_svg]:size-6"],
     ] as const)(
       "applies the Nuxt UI %s size",
-      (size, paddingX, paddingY, gap, text, iconClass) => {
+      (size, paddingX, height, gap, text, iconClass) => {
         const styles = button({ size });
 
         expect(styles.surface()).toContain(paddingX);
-        expect(styles.surface()).toContain(paddingY);
+        expect(styles.surface()).toContain("h-[var(--ui-button-height)]");
+        expect(styles.surface()).toContain("overflow-hidden");
+        expect(styles.surface()).toContain(`[--ui-button-height:${height}]`);
+        expect(styles.surface()).toContain("py-[calc(");
         expect(styles.surface()).toContain(gap);
         expect(styles.surface()).toContain(text);
         expect(styles.leadingIcon()).toContain(iconClass);

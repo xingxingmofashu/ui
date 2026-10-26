@@ -9,7 +9,8 @@ const button = tv({
       "disabled:pointer-events-none disabled:opacity-50",
     ],
     surface: [
-      "relative flex w-full min-w-0 max-w-full flex-row flex-nowrap items-center justify-center rounded-full",
+      "relative flex h-[var(--ui-button-height)] w-full min-w-0 max-w-full flex-row flex-nowrap items-center justify-center overflow-hidden rounded-full",
+      "box-border py-[calc((var(--ui-button-height)_-_1lh_-_2px)/2)]",
       "border border-double border-glass-border bg-glass-surface",
       "shadow-glass",
       "backdrop-blur-[2px] [filter:brightness(0.9)]",
@@ -38,27 +39,27 @@ const button = tv({
   variants: {
     size: {
       xs: {
-        surface: "px-2.5 py-[3px] text-xs gap-1",
+        surface: "px-2.5 text-xs gap-1 [--ui-button-height:1.5rem]",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
       },
       sm: {
-        surface: "px-3 py-[5px] text-xs gap-1.5",
+        surface: "px-3 text-xs gap-1.5 [--ui-button-height:1.75rem]",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
       },
       md: {
-        surface: "px-3 py-[5px] text-sm gap-1.5",
+        surface: "px-3 text-sm gap-1.5 [--ui-button-height:2rem]",
         leadingIcon: "[&_svg]:size-5",
         trailingIcon: "[&_svg]:size-5",
       },
       lg: {
-        surface: "px-3.5 py-[7px] text-sm gap-2",
+        surface: "px-3.5 text-sm gap-2 [--ui-button-height:2.25rem]",
         leadingIcon: "[&_svg]:size-5",
         trailingIcon: "[&_svg]:size-5",
       },
       xl: {
-        surface: "px-3.5 py-[7px] text-base gap-2",
+        surface: "px-3.5 text-base gap-2 [--ui-button-height:2.5rem]",
         leadingIcon: "[&_svg]:size-6",
         trailingIcon: "[&_svg]:size-6",
       },
