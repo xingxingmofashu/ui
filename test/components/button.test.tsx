@@ -167,22 +167,16 @@ describe("Button", () => {
       }
     });
 
-    it("uses the reference font stack and drop shadows", () => {
+    it("uses the reference font stack without duplicate-glyph shadows", () => {
       for (const size of sizes) {
         const styles = button({ size });
 
         expect(styles.label()).toContain(
           "[font-family:system-ui,-apple-system,sans-serif]",
         );
-        expect(styles.label()).toContain(
-          "[filter:var(--ui-drop-shadow-label)]",
-        );
-        expect(styles.leadingIcon()).toContain(
-          "[&_svg]:[filter:var(--ui-drop-shadow-icon)]",
-        );
-        expect(styles.trailingIcon()).toContain(
-          "[&_svg]:[filter:var(--ui-drop-shadow-icon)]",
-        );
+        expect(styles.label()).not.toContain("drop-shadow");
+        expect(styles.leadingIcon()).not.toContain("drop-shadow");
+        expect(styles.trailingIcon()).not.toContain("drop-shadow");
       }
     });
 

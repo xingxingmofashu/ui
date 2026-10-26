@@ -39,9 +39,9 @@ Each layer has a purpose. Do not delete or merge them casually. `z-[500]` / `z-[
 ### Text and Icons
 
 - Text color uses `text-ink`; pressed text uses `text-ink-active`, mapped to `--ui-ink` / `--ui-ink-active`, switching with `.light` / `.dark`.
-- The label uses the reference `drop-shadow(0 25px 3px rgba(102, 102, 102, 0.15))`, controlled by `--ui-drop-shadow-label`; do not inline raw color values.
-- `leadingIcon` is a plain icon without a background; its SVG uses `--ui-drop-shadow-icon`.
-- `trailingIcon` is a dark circular badge with a light icon; in `md` the badge is fixed at `40px`, and its SVG uses `--ui-drop-shadow-icon`.
+- The label is crisp: do not apply a text `drop-shadow` or duplicate-glyph shadow. Liquid Glass depth comes from the surface, not typography.
+- `leadingIcon` is a plain icon without a background; its SVG stays crisp.
+- `trailingIcon` is a contrasting circular badge with a light icon in the light theme and a dark icon in the dark theme; in `md` the badge is fixed at `40px`, and its SVG stays crisp.
 - Icon sizes are controlled by the Button `size`: `xs` / `sm` / `md` are 16px, `lg` is 20px, and `xl` is 24px.
 - Icon sizes are set directly in the `leadingIcon` / `trailingIcon` slots of the `size` variant via `[&_svg]:size-*`; callers do not need to pass an icon `size`.
 - To use a custom size, override through `classNames.leadingIcon` / `classNames.trailingIcon` with `[&_svg]:size-*`; do not change the default mapping.
@@ -180,6 +180,7 @@ Rules:
 - `src/index.css` only contains tokens, not layout, pseudo-elements, variants, or component classes; keep the glass surface composition in `theme/button.ts`.
 - Use `cn(ui.slot(), classNames?.slot)` to merge slot styles.
 - Reuse existing tokens and layers; do not introduce a new color, radius, or shadow system casually.
+- Do not apply `drop-shadow` filters to labels or icon glyphs; keep typography crisp and carry depth through the glass surface.
 - Do not depend on icon libraries; icon sizes are constrained by the icon slot classes in the `size` variant; do not hard-code widths/heights at call sites or in JSX.
 - New dependencies must first be added to the `catalog` in the root `pnpm-workspace.yaml`, then referenced in `package.json` with `catalog:`.
 - `className` is currently treated as a string; do not rely on Base UI's function-style `className`, which this component does not implement yet.
@@ -203,7 +204,7 @@ Place test files under `test/components/` and name them `*.test.tsx`. Token test
 - Size contract: default `md`, and the width and height classes for every size.
 - Icon size contract: `xs` / `sm` / `md` use `size-4`, `lg` uses `size-5`, `xl` uses `size-6`; both icon slots are set together in the `size` variant.
 - Responsive contract: no `100vw`; `base` has `max-w-full`; `surface` has `w-full`.
-- Visual regression points: label uses `--ui-drop-shadow-label`; SVG uses `--ui-drop-shadow-icon`; `base` contrast and `surface` brightness are layered; the surface transition covers `translate` / `scale`.
+- Visual regression points: label and icon SVGs do not use `drop-shadow` filters; `base` contrast and `surface` brightness are layered; the surface transition covers `translate` / `scale`.
 - Reference baseline: `md` on desktop is `260 × 75px`, `25px` text, `16px` icon, and a `40px` trailing badge.
 - Token contract: color, background, border, and shadow utilities resolve from `src/index.css` correctly; after token changes, check actual computed styles and verify `.dark` switches colors, borders, and shadows with the variables.
 - Slot API: `className` applies to `base`; `classNames` can override slots such as `surface`.

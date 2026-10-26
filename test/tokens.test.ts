@@ -51,8 +51,7 @@ describe("design tokens", () => {
     expect(css).toContain("--tw-shadow: var(--ui-shadow-glass);");
     expect(css).toContain("var(--ui-glass-highlight)");
     expect(css).toContain("var(--ui-glass-glare-stop)");
-    expect(css).toContain("filter: var(--ui-drop-shadow-label);");
-    expect(css).toContain("filter: var(--ui-drop-shadow-icon);");
+    expect(css).not.toContain("var(--ui-drop-shadow");
     expect(css).toContain("filter: contrast(3);");
     expect(css).toContain("filter: brightness(0.9);");
     expect(css).toContain(
@@ -68,15 +67,7 @@ describe("design tokens", () => {
     expect(css).toContain("--ui-ink: #f5f5f5;");
     expect(css).toContain("--ui-glass-surface: rgb(255 255 255 / 0.06);");
     expect(css).toContain("--ui-glass-glare-stop: 15%;");
-    expect(css).toContain(
-      "--ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));",
-    );
-    expect(css).toContain(
-      "--ui-drop-shadow-icon: drop-shadow(0 25px 3px rgb(102 102 102 / 0.2));",
-    );
-    expect(css).toContain(
-      "--ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(0 0 0 / 0.45));",
-    );
+    expect(css).not.toContain("--ui-drop-shadow");
     expect(css).toContain(".dark {");
   });
 
