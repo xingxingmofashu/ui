@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { Button } from "../../src/components/button";
 import button from "../../src/theme/button";
 
-const sizes = ["sm", "md", "lg", "xl"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
 function getSlot(element: HTMLElement, slot: string) {
   const node = element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
@@ -106,25 +106,25 @@ describe("Button", () => {
 
       const buttonElement = screen.getByRole("button");
 
-      expect(buttonElement).toHaveClass("w-[16.25rem]", "max-w-full");
-      expect(getSlot(buttonElement, "surface")).toHaveClass("h-[4.6875rem]");
+      expect(buttonElement).toHaveClass("w-[11rem]", "max-w-full");
+      expect(getSlot(buttonElement, "surface")).toHaveClass("h-[3.25rem]");
     });
 
-    it("uses the reference geometry for the default size", () => {
+    it("uses the compact reference geometry for the default size", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.base()).toContain("w-[16.25rem]");
-      expect(styles.surface()).toContain("h-[4.6875rem]");
-      expect(styles.surface()).toContain("gap-4");
-      expect(styles.label()).toContain("text-[1.5625rem]/[normal]");
-      expect(styles.trailingIcon()).toContain("h-10");
+      expect(styles.base()).toContain("w-[11rem]");
+      expect(styles.surface()).toContain("h-[3.25rem]");
+      expect(styles.surface()).toContain("gap-2.5");
+      expect(styles.surface()).toContain("px-3.5");
+      expect(styles.label()).toContain("text-base/[normal]");
+      expect(styles.trailingIcon()).toContain("[&_svg]:size-4");
     });
 
     it.each([
-      ["sm", "w-[11rem]", "h-[3.25rem]"],
-      ["md", "w-[16.25rem]", "h-[4.6875rem]"],
-      ["lg", "w-[19rem]", "h-[5.25rem]"],
-      ["xl", "w-[22rem]", "h-[5.75rem]"],
+      ["sm", "w-[9rem]", "h-11"],
+      ["md", "w-[11rem]", "h-[3.25rem]"],
+      ["lg", "w-[16.25rem]", "h-[4.6875rem]"],
     ] as const)("applies the %s size", (size, width, height) => {
       render(<Button size={size} label={size} />);
 
@@ -137,8 +137,7 @@ describe("Button", () => {
     it.each([
       ["sm", "[&_svg]:size-4"],
       ["md", "[&_svg]:size-4"],
-      ["lg", "[&_svg]:size-5"],
-      ["xl", "[&_svg]:size-6"],
+      ["lg", "[&_svg]:size-4"],
     ] as const)("constrains %s icons to the button size", (size, iconClass) => {
       render(
         <Button
