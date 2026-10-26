@@ -1,6 +1,6 @@
 "use client";
 
-import { Button as BaseButton } from "@base-ui/react/button";
+import { Button as UIButton } from "@base-ui/react/button";
 import { cn } from "cn";
 import * as React from "react";
 
@@ -8,11 +8,11 @@ import button from "../theme/button";
 
 const ui = button();
 
-type ButtonProps = React.ComponentProps<typeof BaseButton>;
+type ButtonProps = React.ComponentProps<typeof UIButton>;
 
 function Button({ className, children, ...props }: ButtonProps) {
   return (
-    <BaseButton
+    <UIButton
       data-slot="button"
       className={cn(ui.base(), className)}
       {...props}
@@ -37,7 +37,7 @@ function Button({ className, children, ...props }: ButtonProps) {
         </span>
         <span data-slot="overlay" className={ui.overlay()} aria-hidden="true" />
       </span>
-    </BaseButton>
+    </UIButton>
   );
 }
 
