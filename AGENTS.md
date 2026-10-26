@@ -41,8 +41,10 @@ Button 是一个 **玻璃胶囊 CTA**，整体克制、轻量、有物理质感�
 - **label 不使用固定偏移的 `drop-shadow`**，否则会在小尺寸下产生重影。
 - `leadingIcon` 是普通图标，不加背景。
 - `trailingIcon` 是深色圆形徽章，内部图标为浅色。
-- 图标大小完全由调用方决定；UI 包不限制 SVG 的宽高。
-- 图标容器只负责居中和防止收缩，不替调用方设定图标尺寸。
+- 图标大小由 Button 的 `size` 自动控制，与 Nuxt UI 对齐：`xs` / `sm` 为 16px，`md` / `lg` 为 20px，`xl` 为 24px。
+- 主题在 `surface` 上设置 `--button-icon-size`，两个图标 slot 通过 `[&_svg]:size-[var(--button-icon-size)]` 约束任意 SVG；调用方不需要传图标 `size`。
+- 需要特殊尺寸时，通过 `classNames.leadingIcon` / `classNames.trailingIcon` 传 `[&_svg]:size-*` 覆盖，不要修改默认映射。
+- 图标容器负责居中、防止收缩和统一尺寸，不承担具体图标库的逻辑。
 
 ### 动效
 
@@ -79,8 +81,8 @@ Button 支持：
 - `label`：优先使用的可见文字。
 - `children`：`label` 的备用写法；两者同时存在时 `label` 优先。
 - `icon`：`leadingIcon` 的别名；两者同时存在时 `leadingIcon` 优先。
-- `leadingIcon` / `trailingIcon`：任意 `ReactNode`，通常传图标。
-- `size`：`xs | sm | md | lg | xl`，默认 `md`。
+- `leadingIcon` / `trailingIcon`：任意 `ReactNode`，通常传图标；图标尺寸由 `size` 自动约束，不要在调用处传 `size`。
+- `size`：`xs | sm | md | lg | xl`，默认 `md`；同时决定文字、按钮和图标尺寸。
 - `classNames`：按 slot 覆盖样式。
 - 其余原生/Base UI 属性透传给 `UIButton`。
 
@@ -112,13 +114,13 @@ Button 支持：
 
 ## 5. 尺寸与响应式
 
-| Size | 宽度 | 高度 | 文字 |
-| --- | --- | --- | --- |
-| `xs` | `9rem` | `2.75rem` | `text-sm` |
-| `sm` | `11rem` | `3.25rem` | `text-base` |
-| `md` | `16.25rem` | `clamp(3.65rem, 12vw, 4.6875rem)` | `clamp(1.0625rem, 4vw, 1.5625rem)` |
-| `lg` | `19rem` | `5.25rem` | `1.75rem` |
-| `xl` | `22rem` | `5.75rem` | `2rem` |
+| Size | 宽度 | 高度 | 文字 | 图标 |
+| --- | --- | --- | --- | --- |
+| `xs` | `9rem` | `2.75rem` | `text-sm` | `1rem` / 16px |
+| `sm` | `11rem` | `3.25rem` | `text-base` | `1rem` / 16px |
+| `md` | `16.25rem` | `clamp(3.65rem, 12vw, 4.6875rem)` | `clamp(1.0625rem, 4vw, 1.5625rem)` | `1.25rem` / 20px |
+| `lg` | `19rem` | `5.25rem` | `1.75rem` | `1.25rem` / 20px |
+| `xl` | `22rem` | `5.75rem` | `2rem` | `1.5rem` / 24px |
 
 规则：
 
@@ -127,7 +129,8 @@ Button 支持：
 - **不要使用 `100vw` 或 `calc(100vw - ...)` 约束宽度。**
 - `label` 的 `min-w-0` + `truncate` 是窄容器下的必要行为，不要删除。
 - `md` 的高度和字号使用 `clamp + vw` 是流动排版设计，宽度仍然不用视口单位。
-- 修改尺寸后至少验证：`200px` 父容器、`390px` 移动端、`1440px` 桌面端均无横向溢出。
+- 图标尺寸映射保持与 Nuxt UI 一致，由 `surface` 上的 `--button-icon-size` 驱动，不要在组件 JSX 或预览页重复写死。
+- 修改尺寸后至少验证：`200px` 父容器、`390px` 移动端、`1440px` 桌面端均无横向溢出，并检查实际 SVG 尺寸符合上表。
 
 ## 6. 代码书写规范
 
@@ -164,7 +167,7 @@ Button 支持：
 - 所有组件样式进入 `tailwind-variants`，不要散落静态 class 字符串在 JSX 里。
 - 使用 `cn(ui.slot(), classNames?.slot)` 合并 slot 样式。
 - 复用现有 token 和层级，不要随意引入新的颜色、圆角或阴影体系。
-- 不依赖图标库，不写死 SVG 宽高。
+- 不依赖图标库；图标尺寸由 `size` variant 和 `--button-icon-size` 统一约束，不要在调用处或 JSX 中写死宽高。
 - 新增依赖必须先加到根目录 `pnpm-workspace.yaml` 的 catalog，再在 `package.json` 使用 `catalog:`。
 - 当前 `className` 按字符串使用；不要依赖 Base UI 的函数式 `className`，组件尚未实现该解析。
 
@@ -185,6 +188,7 @@ Button 支持：
 - 可访问名称：`label`、`children`、`aria-label`、`aria-labelledby`。
 - 图标装饰性：有名称时隐藏，无名称时不隐藏。
 - 尺寸契约：默认 `md`、每个 size 的宽度和高度 class。
+- 图标尺寸契约：`xs` / `sm` 对应 `1rem`，`md` / `lg` 对应 `1.25rem`，`xl` 对应 `1.5rem`，两个图标 slot 都使用统一 CSS 变量。
 - 响应式契约：不存在 `100vw`，`base` 有 `max-w-full`，`surface` 有 `w-full`。
 - 视觉回归点：label 不包含固定 `drop-shadow`。
 - slot API：`className` 在 `base`，`classNames` 能覆盖 `surface` 等 slot。
@@ -196,7 +200,7 @@ Button 支持：
 - 不做 snapshot 测试。
 - 断言行为、可访问性和稳定的 class 契约，不断言容易变化的 DOM 结构细节。
 - 修复视觉或布局 bug 时，同时补一个能失败的回归用例。
-- 当前 18 个用例来自上述范围，新增行为应继续扩展，不要用跳过测试的方式绕过问题。
+- 用例应覆盖上述范围；新增行为继续扩展测试，不要用跳过测试的方式绕过问题。
 
 ## 8. 验证流程
 

@@ -127,6 +127,30 @@ describe("Button", () => {
       expect(getSlot(buttonElement, "surface")).toHaveClass(height);
     });
 
+    it.each([
+      ["xs", "[--button-icon-size:1rem]"],
+      ["sm", "[--button-icon-size:1rem]"],
+      ["md", "[--button-icon-size:1.25rem]"],
+      ["lg", "[--button-icon-size:1.25rem]"],
+      ["xl", "[--button-icon-size:1.5rem]"],
+    ] as const)("constrains %s icons to the button size", (size, iconSize) => {
+      render(
+        <Button
+          size={size}
+          label={size}
+          leadingIcon={<svg />}
+          trailingIcon={<svg />}
+        />,
+      );
+
+      const buttonElement = screen.getByRole("button");
+      const iconSelector = "[&_svg]:size-[var(--button-icon-size)]";
+
+      expect(getSlot(buttonElement, "surface")).toHaveClass(iconSize);
+      expect(getSlot(buttonElement, "leading-icon")).toHaveClass(iconSelector);
+      expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(iconSelector);
+    });
+
     it("caps its width to the container instead of the viewport", () => {
       for (const size of sizes) {
         const styles = button({ size });
@@ -178,6 +202,35 @@ describe("Button", () => {
         "slot-trailing-icon",
       );
       expect(getSlot(buttonElement, "overlay")).toHaveClass("slot-overlay");
+    });
+
+    it("allows explicit icon size overrides through slot classes", () => {
+      render(
+        <Button
+          label="Custom"
+          leadingIcon={<svg />}
+          trailingIcon={<svg />}
+          classNames={{
+            leadingIcon: "[&_svg]:size-8",
+            trailingIcon: "[&_svg]:size-8",
+          }}
+        />,
+      );
+
+      const buttonElement = screen.getByRole("button", { name: "Custom" });
+
+      expect(getSlot(buttonElement, "leading-icon")).toHaveClass(
+        "[&_svg]:size-8",
+      );
+      expect(getSlot(buttonElement, "leading-icon")).not.toHaveClass(
+        "[&_svg]:size-[var(--button-icon-size)]",
+      );
+      expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(
+        "[&_svg]:size-8",
+      );
+      expect(getSlot(buttonElement, "trailing-icon")).not.toHaveClass(
+        "[&_svg]:size-[var(--button-icon-size)]",
+      );
     });
 
     it("accepts icon as an alias for leadingIcon", () => {
