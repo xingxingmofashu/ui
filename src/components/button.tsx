@@ -8,9 +8,30 @@ import button from "../theme/button";
 
 const ui = button();
 
-type ButtonProps = React.ComponentProps<typeof UIButton>;
+type ButtonProps = React.ComponentProps<typeof UIButton> & {
+  /** Text or content rendered inside the button. */
+  label?: React.ReactNode;
+  /** Leading icon. Alias for `leadingIcon`. */
+  icon?: React.ReactNode;
+  /** Icon rendered before the label. */
+  leadingIcon?: React.ReactNode;
+  /** Icon rendered after the label, inside the circular badge. */
+  trailingIcon?: React.ReactNode;
+};
 
-function Button({ className, children, ...props }: ButtonProps) {
+function Button({
+  className,
+  children,
+  label,
+  icon,
+  leadingIcon,
+  trailingIcon,
+  ...props
+}: ButtonProps) {
+  const content = label ?? children;
+  const leading = leadingIcon ?? icon;
+  const hasLabel = content !== undefined && content !== null;
+
   return (
     <UIButton
       data-slot="button"
@@ -18,23 +39,32 @@ function Button({ className, children, ...props }: ButtonProps) {
       {...props}
     >
       <span data-slot="surface" className={ui.surface()}>
-        <span data-slot="label" className={ui.label()}>
-          {children}
-        </span>
-        <span
-          data-slot="trailing-icon"
-          className={ui.trailingIcon()}
-          aria-hidden="true"
-        >
-          <svg
-            className={ui.trailingIconGlyph()}
-            viewBox="0 0 1024 1024"
-            xmlns="http://www.w3.org/2000/svg"
-            focusable="false"
+        {leading != null ? (
+          <span
+            data-slot="leading-icon"
+            className={ui.leadingIcon()}
+            aria-hidden="true"
           >
-            <path d="M779.180132 473.232045 322.354755 16.406668c-21.413706-21.413706-56.121182-21.413706-77.534887 0-21.413706 21.413706-21.413706 56.122205 0 77.534887l418.057421 418.057421L244.819868 930.057421c-21.413706 21.413706-21.413706 56.122205 0 77.534887 10.706853 10.706853 24.759917 16.059767 38.767955 16.059767s28.061103-5.353938 38.767955-16.059767L779.180132 550.767955C800.593837 529.35425 800.593837 494.64575 779.180132 473.232045z" />
-          </svg>
-        </span>
+            {leading}
+          </span>
+        ) : null}
+
+        {hasLabel ? (
+          <span data-slot="label" className={ui.label()}>
+            {content}
+          </span>
+        ) : null}
+
+        {trailingIcon != null ? (
+          <span
+            data-slot="trailing-icon"
+            className={ui.trailingIcon()}
+            aria-hidden="true"
+          >
+            {trailingIcon}
+          </span>
+        ) : null}
+
         <span data-slot="overlay" className={ui.overlay()} aria-hidden="true" />
       </span>
     </UIButton>

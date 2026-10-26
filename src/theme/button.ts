@@ -3,8 +3,8 @@ import { tv } from "tailwind-variants";
 const button = tv({
   slots: {
     base: [
-      "group relative z-[500] inline-flex cursor-pointer select-none",
-      "h-[clamp(3.65rem,12vw,4.6875rem)] w-[16.25rem] max-w-[calc(100vw_-_2.5rem)]",
+      "group relative z-[500] inline-flex cursor-pointer select-none whitespace-nowrap",
+      "h-[clamp(3.65rem,12vw,4.6875rem)] w-max min-w-[min(16.25rem,calc(100vw_-_2.5rem))] max-w-[calc(100vw_-_2.5rem)]",
       "appearance-none rounded-full border-0 bg-transparent p-0",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgba(0,0,0,0.6)]",
       "disabled:pointer-events-none disabled:opacity-50",
@@ -22,10 +22,14 @@ const button = tv({
       "motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-active:scale-100",
     ],
     label: [
-      "font-[system-ui,-apple-system,sans-serif] text-[clamp(1.0625rem,4vw,1.5625rem)]",
+      "min-w-0 truncate font-[system-ui,-apple-system,sans-serif] text-[clamp(1.0625rem,4vw,1.5625rem)]",
       "font-normal leading-none text-[#3e3e3e]",
       "[filter:drop-shadow(0_25px_3px_rgba(102,102,102,0.15))]",
       "group-active:text-black",
+    ],
+    leadingIcon: [
+      "grid shrink-0 place-items-center",
+      "[&_svg]:size-[clamp(1rem,3.6vw,1.125rem)] [&_svg]:shrink-0",
     ],
     trailingIcon: [
       "grid size-[clamp(2rem,7vw,2.5rem)] shrink-0 place-items-center rounded-full",
@@ -33,10 +37,7 @@ const button = tv({
       "transition-transform duration-[250ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]",
       "group-hover:scale-110 group-active:scale-[0.94]",
       "motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100",
-    ],
-    trailingIconGlyph: [
-      "block h-[40%] w-[40%] fill-current",
-      "[filter:drop-shadow(0_25px_3px_rgba(102,102,102,0.2))]",
+      "[&_svg]:h-[40%] [&_svg]:w-[40%] [&_svg]:shrink-0",
     ],
     overlay: [
       "pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[calc(100%_-_9px)] w-[calc(100%_-_9px)]",
