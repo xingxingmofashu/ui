@@ -1,238 +1,245 @@
-# UI 组件包规范
+# UI Package Guidelines
 
-本文件约束 `packages/ui` 内的组件、样式、测试和协作方式。当前包内只有 Button，后续组件应沿用同样的分层、命名和验证方式。
+This file defines the conventions for components, styles, tests, and collaboration inside `packages/ui`. The package currently contains only Button; future components should follow the same layering, naming, and validation approach.
 
-## 1. 包定位
+## 1. Package Scope
 
-- 包名：`@xingxingmofashu.me/ui`
-- 公开入口：`src/index.ts`
-- 直接导出源码，不维护单独的构建产物或 `dist`。
-- `react` / `react-dom` 是 `peerDependencies`，不要改成普通依赖。
-- 交互行为基于 `@base-ui/react`，样式基于 `tailwind-variants`，类名合并使用 `cn`。
-- 设计 token 在 `src/index.css` 中定义：原始值放在 `@layer theme` 的 `:root` / `.light` / `.dark`，Tailwind utility 通过 `@theme inline` 映射；消费方需要导入 `@xingxingmofashu.me/ui/index.css`。
-- UI 包不依赖具体图标库；`lucide-react` 只用于 `packages/web` 预览页。
+- Package name: `@xingxingmofashu.me/ui`
+- Public entry point: `src/index.ts`
+- Export source directly; do not maintain a separate build output or `dist`.
+- `react` / `react-dom` are `peerDependencies`; do not turn them into regular dependencies.
+- Interaction behavior is based on `@base-ui/react`, styles are based on `tailwind-variants`, and class names are merged with `cn`.
+- Design tokens live in `src/index.css`: raw values go in `@layer theme` under `:root` / `.light` / `.dark`, and Tailwind utilities are bridged through `@theme inline`. Consumers must import `@xingxingmofashu.me/ui/index.css`.
+- The UI package does not depend on a specific icon library; `lucide-react` is only used by the `packages/web` preview page.
 
-## 2. Button 的视觉风格
+## 2. Button Visual Style
 
-Button 是一个 **玻璃胶囊 CTA**，整体克制、轻量、有物理质感。
+Button is a **glass capsule CTA** that feels restrained, light, and physically grounded.
 
-### 外层与可见表面
+### Outer Layer and Visible Surface
 
-采用两层结构，不要合并：
+Use a two-layer structure; do not merge the layers:
 
-- `base`：外层交互区域，负责布局、焦点、禁用态，本身不可见。
-- `surface`：真正可见的玻璃胶囊，负责背景、边框、阴影、滤镜、尺寸。
+- `base`: outer interactive area. Handles layout, focus, and disabled state, and is invisible itself.
+- `surface`: the visible glass capsule. Handles background, border, shadow, filters, and dimensions.
 
-玻璃质感由多层效果叠加而成：
+The glass effect is built from several stacked layers:
 
-- `rounded-full` 胶囊形状。
-- 极低透明度的黑色背景 + 双层细边框。
-- 多层 `inset` 内阴影模拟玻璃边缘反光。
-- 柔和的外部投影制造悬浮感。
-- `backdrop-blur`、`brightness`、`contrast` 形成磨砂玻璃质感。
-- `before` 伪元素负责内侧模糊暗边。
-- `after` 伪元素负责对角线高光。
-- `overlay` 负责表面内圈细环。
+- `rounded-full` capsule shape.
+- A very low-opacity black background plus a double fine border.
+- Multiple `inset` shadows to simulate glass edge reflections.
+- A soft outer shadow to create a floating feel.
+- `backdrop-blur`, `brightness`, and `contrast` create the frosted glass texture.
+- The `before` pseudo-element provides the blurred inner dark edge.
+- The `after` pseudo-element provides the diagonal highlight.
+- The `overlay` provides the inner ring on the surface.
 
-这些层各有作用，不要为了“简化”随意删除或合并。`z-[500]` / `z-[501]`、伪元素位置和高光方向都是有意的，调整前必须看桌面和移动端效果。
+Each layer has a purpose. Do not delete or merge them casually. `z-[500]` / `z-[501]`, pseudo-element positions, and highlight direction are intentional; inspect desktop and mobile rendering before changing them.
 
-### 文字与图标
+### Text and Icons
 
-- 文字颜色使用 `text-ink`，按下时使用 `text-ink-active`，对应 `--ui-ink` / `--ui-ink-active`，会随 `.light` / `.dark` 切换。
-- **label 不使用固定偏移的 `drop-shadow`**，否则会在小尺寸下产生重影。
-- `leadingIcon` 是普通图标，不加背景。
-- `trailingIcon` 是深色圆形徽章，内部图标为浅色。
-- 图标大小由 Button 的 `size` 自动控制，与 Nuxt UI 对齐：`xs` / `sm` 为 16px，`md` / `lg` 为 20px，`xl` 为 24px。
-- 图标尺寸在 `size` variant 的 `leadingIcon` / `trailingIcon` slot 中通过 `[&_svg]:size-*` 直接设置；调用方不需要传图标 `size`。
-- 需要特殊尺寸时，通过 `classNames.leadingIcon` / `classNames.trailingIcon` 传 `[&_svg]:size-*` 覆盖，不要修改默认映射。
-- 图标容器负责居中、防止收缩和统一尺寸，不承担具体图标库的逻辑。
+- Text color uses `text-ink`; pressed text uses `text-ink-active`, mapped to `--ui-ink` / `--ui-ink-active`, switching with `.light` / `.dark`.
+- The label uses the reference `drop-shadow(0 25px 3px rgba(102, 102, 102, 0.15))`, controlled by `--ui-drop-shadow-label`; do not inline raw color values.
+- `leadingIcon` is a plain icon without a background; its SVG uses `--ui-drop-shadow-icon`.
+- `trailingIcon` is a dark circular badge with a light icon; in `md` the badge is fixed at `40px`, and its SVG uses `--ui-drop-shadow-icon`.
+- Icon sizes are controlled by the Button `size`: `xs` / `sm` / `md` are 16px, `lg` is 20px, and `xl` is 24px.
+- Icon sizes are set directly in the `leadingIcon` / `trailingIcon` slots of the `size` variant via `[&_svg]:size-*`; callers do not need to pass an icon `size`.
+- To use a custom size, override through `classNames.leadingIcon` / `classNames.trailingIcon` with `[&_svg]:size-*`; do not change the default mapping.
+- The icon container is responsible for centering, preventing shrink, and normalizing dimensions; it does not handle icon-library-specific logic.
 
-### 动效
+### Motion
 
-- 整体悬浮：`600ms ease-in-out`，hover 上移 `3px`。
-- 按下：`120ms`，恢复位移并缩放至 `0.94`。
-- 尾部图标：`250ms`，hover 放大至 `1.1`。
-- 必须保留 `motion-reduce` 覆盖，减少动态偏好下关闭位移和缩放。
-- 不要改成弹簧动画或更重的过渡，当前动效是明确的产品特征。
+- Overall hover: `250ms ease`, lift `3px`.
+- Press: `250ms`, reset the translation and scale to `0.94`.
+- Trailing icon: `250ms ease`, scale to `1.1` on hover.
+- The `surface` transition must cover `translate` and `scale`; Tailwind v4 uses separate CSS properties for translation and scaling, so `transform` alone will not animate them.
+- Keep the `motion-reduce` override to disable translation and scaling when reduced motion is preferred.
+- Do not replace these with spring animations or heavier transitions; the current motion is a deliberate characteristic of the reference implementation.
 
-## 3. 结构与 slot 约定
+## 3. Structure and Slot Conventions
 
-| Slot | `data-slot` | 作用 |
+| Slot | `data-slot` | Purpose |
 | --- | --- | --- |
-| `base` | `button` | 外层点击区域、焦点、禁用态 |
-| `surface` | `surface` | 可见玻璃胶囊、尺寸和主要视觉 |
-| `label` | `label` | 可见文字，负责截断和排版 |
-| `leadingIcon` | `leading-icon` | 前置图标容器 |
-| `trailingIcon` | `trailing-icon` | 后置圆形徽章 |
-| `overlay` | `overlay` | 表面内圈装饰，无交互 |
+| `base` | `button` | Outer click area, focus, and disabled state |
+| `surface` | `surface` | Visible glass capsule, dimensions, and primary visuals |
+| `label` | `label` | Visible text, truncation, and typography |
+| `leadingIcon` | `leading-icon` | Leading icon container |
+| `trailingIcon` | `trailing-icon` | Trailing circular badge |
+| `overlay` | `overlay` | Inner decorative surface ring, non-interactive |
 
-约定：
+Conventions:
 
-- `base` 必须包裹 Base UI 的 `UIButton`，不要替换为原生 `<button>`。
-- 所有视觉类名放在 `src/theme/button.ts`，组件文件只负责结构、状态和合并类名。
-- `className` 作用于 `base`；要修改可见玻璃表面，使用 `classNames.surface`。
-- `classNames` 的 key 使用 camelCase：`base`、`surface`、`label`、`leadingIcon`、`trailingIcon`、`overlay`。
-- DOM 的 `data-slot` 使用 kebab-case：`button`、`surface`、`label`、`leading-icon`、`trailing-icon`、`overlay`。
-- `overlay` 永远 `aria-hidden="true"`，且不可接收指针事件。
-- `surface` 必须保持 `flex-row` + `flex-nowrap` + `items-center`，确保 label 和两个图标默认在同一行。
+- `base` must wrap Base UI's `UIButton`; do not replace it with a native `<button>`.
+- Put all visual class names in `src/theme/button.ts`; the component file only handles structure, state, and class merging.
+- `className` applies to `base`; to change the visible glass surface, use `classNames.surface`.
+- `classNames` keys use camelCase: `base`, `surface`, `label`, `leadingIcon`, `trailingIcon`, `overlay`.
+- DOM `data-slot` values use kebab-case: `button`, `surface`, `label`, `leading-icon`, `trailing-icon`, `overlay`.
+- `overlay` is always `aria-hidden="true"` and must not receive pointer events.
+- `surface` must keep `flex-row` + `flex-nowrap` + `items-center` so the label and both icons stay on one row by default.
 
-## 4. API 约定
+## 4. API Conventions
 
-Button 支持：
+Button supports:
 
-- `label`：优先使用的可见文字。
-- `children`：`label` 的备用写法；两者同时存在时 `label` 优先。
-- `icon`：`leadingIcon` 的别名；两者同时存在时 `leadingIcon` 优先。
-- `leadingIcon` / `trailingIcon`：任意 `ReactNode`，通常传图标；图标尺寸由 `size` 自动约束，不要在调用处传 `size`。
-- `size`：`xs | sm | md | lg | xl`，默认 `md`；同时决定文字、按钮和图标尺寸。
-- `classNames`：按 slot 覆盖样式。
-- 其余原生/Base UI 属性透传给 `UIButton`。
+- `label`: preferred visible text.
+- `children`: fallback for `label`; when both are present, `label` takes precedence.
+- `icon`: alias for `leadingIcon`; when both are present, `leadingIcon` takes precedence.
+- `leadingIcon` / `trailingIcon`: any `ReactNode`, usually an icon; icon size is constrained by `size`, so do not pass `size` at the call site.
+- `size`: `xs | sm | md | lg | xl`, default `md`; controls text, button, and icon sizes together.
+- `classNames`: per-slot style overrides.
+- All other native / Base UI props are forwarded to `UIButton`.
 
-示例：
+Examples:
 
 ```tsx
-<Button label="继续" trailingIcon={<ChevronRight />} />
-<Button aria-label="下一步" icon={<ChevronRight />} />
+<Button label="Continue" trailingIcon={<ChevronRight />} />
+<Button aria-label="Next" icon={<ChevronRight />} />
 <Button
-  label="全宽"
+  label="Full width"
   classNames={{ base: "w-full", surface: "w-full" }}
 />
 ```
 
-### 可访问名称
+### Accessible Name
 
-按钮必须有可访问名称。类型层面通过 `ButtonAccessibleName` 强制要求至少提供以下之一：
+Buttons must have an accessible name. At the type level, `ButtonAccessibleName` requires at least one of:
 
 - `label`
 - `children`
 - `aria-label`
 - `aria-labelledby`
 
-不要放宽这个约束。纯图标按钮必须传 `aria-label` 或 `aria-labelledby`。
+Do not relax this constraint. Icon-only buttons must receive `aria-label` or `aria-labelledby`.
 
-- 当按钮已有可访问名称时，图标容器设置 `aria-hidden="true"`，避免重复朗读。
-- 当没有可访问名称时，不要主动隐藏图标，保留图标自身携带语义的可能。
-- 使用 `aria-hidden={condition || undefined}`，不要输出 `aria-hidden="false"`。
+- When the button already has an accessible name, set `aria-hidden="true"` on icon containers to avoid duplicate announcements.
+- When there is no accessible name, do not hide the icons proactively; preserve any semantics the icon may carry.
+- Use `aria-hidden={condition || undefined}`; do not emit `aria-hidden="false"`.
 
-## 5. 尺寸与响应式
+## 5. Sizes and Responsiveness
 
-| Size | 宽度 | 高度 | 文字 | 图标 |
+| Size | Width | Height | Text | Icon |
 | --- | --- | --- | --- | --- |
-| `xs` | `9rem` | `2.75rem` | `text-sm` | `1rem` / 16px |
-| `sm` | `11rem` | `3.25rem` | `text-base` | `1rem` / 16px |
-| `md` | `16.25rem` | `clamp(3.65rem, 12vw, 4.6875rem)` | `clamp(1.0625rem, 4vw, 1.5625rem)` | `1.25rem` / 20px |
-| `lg` | `19rem` | `5.25rem` | `1.75rem` | `1.25rem` / 20px |
-| `xl` | `22rem` | `5.75rem` | `2rem` | `1.5rem` / 24px |
+| `xs` | `9rem` | `2.75rem` | `text-sm/[normal]` | `1rem` / 16px |
+| `sm` | `11rem` | `3.25rem` | `text-base/[normal]` | `1rem` / 16px |
+| `md` | `16.25rem` | `4.6875rem` / 75px | `text-[1.5625rem]/[normal]` | `1rem` / 16px |
+| `lg` | `19rem` | `5.25rem` | `text-[1.75rem]/[normal]` | `1.25rem` / 20px |
+| `xl` | `22rem` | `5.75rem` | `text-[2rem]/[normal]` | `1.5rem` / 24px |
 
-规则：
+Rules:
 
-- 宽度通过 `base` 的固定 `w-*` 控制，surface 使用 `w-full` 填满。
-- `base` 必须有 `max-w-full` 和 `min-w-0`，确保窄父容器能把按钮压缩到父容器宽度。
-- **不要使用 `100vw` 或 `calc(100vw - ...)` 约束宽度。**
-- `label` 的 `min-w-0` + `truncate` 是窄容器下的必要行为，不要删除。
-- `md` 的高度和字号使用 `clamp + vw` 是流动排版设计，宽度仍然不用视口单位。
-- 图标尺寸映射保持与 Nuxt UI 一致，在 `size` variant 的 `leadingIcon` / `trailingIcon` slot 中设置，不要在组件 JSX 或预览页重复写死。
-- 修改尺寸后至少验证：`200px` 父容器、`390px` 移动端、`1440px` 桌面端均无横向溢出，并检查实际 SVG 尺寸符合上表。
+- Width is controlled by a fixed `w-*` on `base`; `surface` fills it with `w-full`.
+- `base` must have `max-w-full` and `min-w-0` so narrow parents can shrink the button to the parent width.
+- **Do not use `100vw` or `calc(100vw - ...)` to constrain width.**
+- `min-w-0` + `truncate` on `label` is required behavior for narrow containers; do not remove it.
+- `md` is the reference baseline: `260 × 75px`, `25px` text, `16px` icon, and `40px` trailing badge. Other sizes scale from the same design.
+- Set icon sizes in the `leadingIcon` / `trailingIcon` slots of the `size` variant; do not hard-code them in component JSX.
+- After changing sizes, verify at minimum: `200px` parent container, `390px` mobile, and `1440px` desktop have no horizontal overflow, and check that actual SVG dimensions match the table.
 
-## 6. 代码书写规范
+## 6. Code Style
 
-### 文件职责
+### File Responsibilities
 
-- `src/components/button.tsx`：组件结构、props、类型、可访问性、事件透传。
-- `src/theme/button.ts`：唯一的 `tailwind-variants` recipe，只使用 default export。
-- `src/index.css`：唯一的全局设计 token 文件；`@layer theme` 定义 `--ui-*` 原始值和 `.light` / `.dark`，`@theme inline` 映射为 Tailwind utility；不写组件 class。
-- `src/index.ts`：公共导出。
-- `test/components/button.test.tsx`：组件行为测试。
-- `test/setup.ts`：Testing Library 清理和 jest-dom 扩展。
-- `vitest.config.ts`：测试环境配置。
+- `src/components/button.tsx`: component structure, props, types, accessibility, and event forwarding.
+- `src/theme/button.ts`: the single `tailwind-variants` recipe; default export only.
+- `src/index.css`: the single global design token file; `@layer theme` defines raw `--ui-*` values and `.light` / `.dark`, and `@theme inline` maps them to Tailwind utilities; no component classes.
+- `src/index.ts`: public exports.
+- `test/components/button.test.tsx`: component behavior tests.
+- `test/tokens.test.ts`: Tailwind compilation and token regression tests.
+- `test/setup.ts`: Testing Library cleanup and jest-dom setup.
+- `vitest.config.ts`: test environment configuration.
 
-### TypeScript 与 React
+### TypeScript and React
 
-- `strict: true`，不要使用 `any`；无法避免时先补具体类型。
-- 组件文件首行保留 `"use client"`。
-- 使用 `React.ReactNode`、`React.ComponentProps` 等 React 命名空间类型。
-- 组件使用函数声明，组件名 PascalCase。
-- prop、slot、类型名使用 camelCase / PascalCase。
-- 条件渲染节点使用 `value != null ? ... : null`，不要用可能渲染 `0` 或空字符串的 `&&`。
-- 不为了简单样式引入 `useMemo` 或额外状态。
+- `strict: true`; do not use `any`; add a concrete type first if avoidance is impossible.
+- Keep `"use client"` as the first line of component files.
+- Use React namespace types such as `React.ReactNode` and `React.ComponentProps`.
+- Use function declarations for components and PascalCase component names.
+- Use camelCase / PascalCase for props, slots, and type names.
+- Use `value != null ? ... : null` for conditional rendering; do not use `&&` that could render `0` or an empty string.
+- Do not introduce `useMemo` or extra state for simple styling.
 
-### 导入与格式
+### Imports and Formatting
 
-- 使用双引号、分号、2 空格缩进、尾随逗号。
-- 第三方依赖在前，本地相对导入在后，中间空一行。
-- 类型导入使用 `type` 修饰符，例如 `import { type VariantProps } from "tailwind-variants"`。
-- 具名导出优先；只有 theme recipe 使用 default export。
-- 公共类型在文件底部集中导出：`export type { ButtonClassNames, ButtonProps }`。
-- 给非显然的公共 prop 和类型写简短 JSDoc，不写重复代码本身的注释。
+- Use double quotes, semicolons, 2-space indentation, and trailing commas.
+- Third-party dependencies first, local relative imports after, separated by a blank line.
+- Use `type` modifiers for type imports, e.g. `import { type VariantProps } from "tailwind-variants"`.
+- Prefer named exports; only the theme recipe uses a default export.
+- Export public types together at the bottom of the file: `export type { ButtonClassNames, ButtonProps }`.
+- Add brief JSDoc for non-obvious public props and types; do not comment on self-explanatory code.
 
-### 样式写法
+### Styling
 
-- 所有组件样式进入 `tailwind-variants`，不要散落静态 class 字符串在 JSX 里。
-- 颜色、阴影等设计值进入 `src/index.css` 的 `--ui-*` token，不要在 recipe 中重复写 hex / rgba。
-- 通过 `@theme inline` 把 `--ui-*` 映射成语义 utility，例如 `text-ink`、`bg-glass-surface`、`border-glass-border`、`shadow-glass`。
-- 主题切换只改 `:root` / `.light` / `.dark` 下的 `--ui-*`，组件 recipe 不写 `dark:` 颜色分支。预留了 `light:` / `dark:` custom variants。
-- `@theme inline` 不保证导出 `--color-*` 变量；需要直接引用原始变量时使用 `--ui-*`，不要写 `var(--color-*)`。
-- `src/index.css` 只放 token，不放布局、伪元素、variant 或组件 class；玻璃表面的组合仍保留在 `theme/button.ts`。
-- 使用 `cn(ui.slot(), classNames?.slot)` 合并 slot 样式。
-- 复用现有 token 和层级，不要随意引入新的颜色、圆角或阴影体系。
-- 不依赖图标库；图标尺寸由 `size` variant 的 icon slot class 统一约束，不要在调用处或 JSX 中写死宽高。
-- 新增依赖必须先加到根目录 `pnpm-workspace.yaml` 的 catalog，再在 `package.json` 使用 `catalog:`。
-- 当前 `className` 按字符串使用；不要依赖 Base UI 的函数式 `className`，组件尚未实现该解析。
+- Put all component styles in `tailwind-variants`; do not scatter static class strings in JSX.
+- Put design values such as colors and shadows in `src/index.css` `--ui-*` tokens; do not repeat hex / rgba values in the recipe.
+- Map `--ui-*` tokens to semantic utilities through `@theme inline`, e.g. `text-ink`, `bg-glass-surface`, `border-glass-border`, `shadow-glass`.
+- Theme switching only changes `--ui-*` under `:root` / `.light` / `.dark`; component recipes must not use `dark:` color branches. The package reserves `ui-light:` / `ui-dark:` namespaced variants; do not override the consuming app's global `dark:`.
+- `@theme inline` does not guarantee exported `--color-*` variables; when referencing raw variables directly, use `--ui-*`, not `var(--color-*)`.
+- Lens refraction uses two layers: `base` uses `[filter:contrast(3)]`, while `surface` uses `[filter:brightness(0.9)]` and `backdrop-blur-[2px]`; do not merge `contrast(3)` back into `surface`.
+- Use `--ui-glass-glare-stop` for the diagonal highlight threshold, default `15%`; do not hard-code the percentage in the gradient again.
+- Tailwind's `font-[...]` and `font-normal` are treated as the same group by the merger, causing one to be dropped; use the `[font-family:...]` arbitrary property for the font family.
+- Motion transitions must explicitly include `translate` and `scale`; do not write only `transform`.
+- `src/index.css` only contains tokens, not layout, pseudo-elements, variants, or component classes; keep the glass surface composition in `theme/button.ts`.
+- Use `cn(ui.slot(), classNames?.slot)` to merge slot styles.
+- Reuse existing tokens and layers; do not introduce a new color, radius, or shadow system casually.
+- Do not depend on icon libraries; icon sizes are constrained by the icon slot classes in the `size` variant; do not hard-code widths/heights at call sites or in JSX.
+- New dependencies must first be added to the `catalog` in the root `pnpm-workspace.yaml`, then referenced in `package.json` with `catalog:`.
+- `className` is currently treated as a string; do not rely on Base UI's function-style `className`, which this component does not implement yet.
 
-## 7. 测试规范
+## 7. Testing Guidelines
 
-技术栈：Vitest + jsdom + Testing Library + user-event。
+Stack: Vitest + jsdom + Testing Library + user-event, plus a Tailwind compile test for token regressions.
 
-测试文件放在 `test/components/`，命名为 `*.test.tsx`。
+Place test files under `test/components/` and name them `*.test.tsx`. Token tests live at `test/tokens.test.ts`.
 
-### 查询方式
+### Queries
 
-- 优先 `screen.getByRole("button", { name: "..." })`，不要用 CSS 选择器找按钮。
-- 需要验证 slot 时使用 `getSlot(element, "surface")` 辅助函数，依赖 `data-slot`。
-- 图标测试使用内联 `<svg />`，不要为了测试给 UI 包引入图标库。
+- Prefer `screen.getByRole("button", { name: "..." })`; do not find buttons with CSS selectors.
+- To verify slots, use the `getSlot(element, "surface")` helper based on `data-slot`.
+- Use inline `<svg />` for icon tests; do not add an icon library to the UI package for tests.
 
-### 应覆盖的内容
+### Coverage
 
-- 可访问名称：`label`、`children`、`aria-label`、`aria-labelledby`。
-- 图标装饰性：有名称时隐藏，无名称时不隐藏。
-- 尺寸契约：默认 `md`、每个 size 的宽度和高度 class。
-- 图标尺寸契约：`xs` / `sm` 对应 `size-4`，`md` / `lg` 对应 `size-5`，`xl` 对应 `size-6`，两个图标 slot 在 `size` variant 中同步设置。
-- 响应式契约：不存在 `100vw`，`base` 有 `max-w-full`，`surface` 有 `w-full`。
-- 视觉回归点：label 不包含固定 `drop-shadow`。
-- token 契约：颜色、背景、边框、阴影 utility 能从 `src/index.css` 正确解析；token 修改后检查实际 computed style，并验证 `.dark` 下的颜色、边框和阴影能随变量切换。
-- slot API：`className` 在 `base`，`classNames` 能覆盖 `surface` 等 slot。
-- 交互：点击回调、disabled 状态。
-- 类型约束：使用 `@ts-expect-error` 覆盖“纯图标必须有可访问名称”。
+- Accessible names: `label`, `children`, `aria-label`, `aria-labelledby`.
+- Decorative icons: hidden when a name exists, not hidden when no name exists.
+- Size contract: default `md`, and the width and height classes for every size.
+- Icon size contract: `xs` / `sm` / `md` use `size-4`, `lg` uses `size-5`, `xl` uses `size-6`; both icon slots are set together in the `size` variant.
+- Responsive contract: no `100vw`; `base` has `max-w-full`; `surface` has `w-full`.
+- Visual regression points: label uses `--ui-drop-shadow-label`; SVG uses `--ui-drop-shadow-icon`; `base` contrast and `surface` brightness are layered; the surface transition covers `translate` / `scale`.
+- Reference baseline: `md` on desktop is `260 × 75px`, `25px` text, `16px` icon, and a `40px` trailing badge.
+- Token contract: color, background, border, and shadow utilities resolve from `src/index.css` correctly; after token changes, check actual computed styles and verify `.dark` switches colors, borders, and shadows with the variables.
+- Slot API: `className` applies to `base`; `classNames` can override slots such as `surface`.
+- Interaction: click callbacks and disabled state.
+- Type constraints: use `@ts-expect-error` to cover "icon-only buttons must have an accessible name".
 
-测试约定：
+Testing conventions:
 
-- 不做 snapshot 测试。
-- 断言行为、可访问性和稳定的 class 契约，不断言容易变化的 DOM 结构细节。
-- 修复视觉或布局 bug 时，同时补一个能失败的回归用例。
-- 用例应覆盖上述范围；新增行为继续扩展测试，不要用跳过测试的方式绕过问题。
+- Do not use snapshot tests.
+- Assert behavior, accessibility, and stable class contracts; do not assert brittle DOM structure details.
+- When fixing a visual or layout bug, add a regression case that would fail without the fix.
+- Cases should cover the scope above; extend tests for new behavior instead of skipping tests to bypass issues.
 
-## 8. 验证流程
+## 8. Validation Flow
 
-在 `packages/ui` 下修改后，至少运行：
+After changes under `packages/ui`, run at minimum:
 
 ```bash
 pnpm test
 pnpm typecheck
 ```
 
-如果改动会影响预览页或构建，再在仓库根目录运行：
+If the change affects the preview page or build, also run from the repository root:
 
 ```bash
 pnpm build
 pnpm lint
 ```
 
-涉及视觉、尺寸、层叠或动效时，还要实际检查预览页：
+For visual, sizing, stacking, or motion changes, also inspect the preview page:
 
-- 桌面端 `1440px`：尺寸序列和图标徽章正常。
-- 移动端 `390px`：页面无横向溢出。
-- 父容器 `200px`：所有尺寸都能收敛到容器宽度，不溢出。
+- Desktop `1440px`: size sequence and icon badges render correctly.
+- Mobile `390px`: no horizontal overflow.
+- Parent container `200px`: all sizes shrink to the container width without overflow.
 
-清理临时截图、Playwright 产物和其他调试文件，保持工作区干净。
+Clean up temporary screenshots, Playwright artifacts, and other debug files; keep the working tree tidy.
 
-除非用户明确要求，不要自动 push 到远程仓库；本地验证和提交即可。
+Unless the user explicitly requests it, do not automatically push to the remote repository; validate and commit locally.

@@ -107,15 +107,23 @@ describe("Button", () => {
       const buttonElement = screen.getByRole("button");
 
       expect(buttonElement).toHaveClass("w-[16.25rem]", "max-w-full");
-      expect(getSlot(buttonElement, "surface")).toHaveClass(
-        "h-[clamp(3.65rem,12vw,4.6875rem)]",
-      );
+      expect(getSlot(buttonElement, "surface")).toHaveClass("h-[4.6875rem]");
+    });
+
+    it("uses the reference geometry for the default size", () => {
+      const styles = button({ size: "md" });
+
+      expect(styles.base()).toContain("w-[16.25rem]");
+      expect(styles.surface()).toContain("h-[4.6875rem]");
+      expect(styles.surface()).toContain("gap-4");
+      expect(styles.label()).toContain("text-[1.5625rem]/[normal]");
+      expect(styles.trailingIcon()).toContain("h-10");
     });
 
     it.each([
       ["xs", "w-[9rem]", "h-11"],
       ["sm", "w-[11rem]", "h-[3.25rem]"],
-      ["md", "w-[16.25rem]", "h-[clamp(3.65rem,12vw,4.6875rem)]"],
+      ["md", "w-[16.25rem]", "h-[4.6875rem]"],
       ["lg", "w-[19rem]", "h-[5.25rem]"],
       ["xl", "w-[22rem]", "h-[5.75rem]"],
     ] as const)("applies the %s size", (size, width, height) => {
@@ -130,7 +138,7 @@ describe("Button", () => {
     it.each([
       ["xs", "[&_svg]:size-4"],
       ["sm", "[&_svg]:size-4"],
-      ["md", "[&_svg]:size-5"],
+      ["md", "[&_svg]:size-4"],
       ["lg", "[&_svg]:size-5"],
       ["xl", "[&_svg]:size-6"],
     ] as const)("constrains %s icons to the button size", (size, iconClass) => {
@@ -159,10 +167,45 @@ describe("Button", () => {
       }
     });
 
-    it("does not use a fixed label drop shadow", () => {
+    it("uses the reference font stack and drop shadows", () => {
       for (const size of sizes) {
-        expect(button({ size }).label()).not.toContain("drop-shadow");
+        const styles = button({ size });
+
+        expect(styles.label()).toContain(
+          "[font-family:system-ui,-apple-system,sans-serif]",
+        );
+        expect(styles.label()).toContain(
+          "[filter:var(--ui-drop-shadow-label)]",
+        );
+        expect(styles.leadingIcon()).toContain(
+          "[&_svg]:[filter:var(--ui-drop-shadow-icon)]",
+        );
+        expect(styles.trailingIcon()).toContain(
+          "[&_svg]:[filter:var(--ui-drop-shadow-icon)]",
+        );
       }
+    });
+
+    it("transitions the properties used by hover and press states", () => {
+      const styles = button({ size: "md" });
+
+      expect(styles.surface()).toContain(
+        "transition-[background-color,translate,scale]",
+      );
+      expect(styles.surface()).toContain("duration-[250ms]");
+      expect(styles.surface()).not.toContain("duration-[600ms]");
+      expect(styles.surface()).not.toContain("duration-[120ms]");
+      expect(styles.surface()).not.toContain(
+        "transition-[background-color,transform]",
+      );
+    });
+
+    it("applies the reference lens filters on separate layers", () => {
+      const styles = button({ size: "md" });
+
+      expect(styles.base()).toContain("[filter:contrast(3)]");
+      expect(styles.surface()).toContain("[filter:brightness(0.9)]");
+      expect(styles.surface()).not.toContain("contrast(3)");
     });
   });
 
@@ -191,7 +234,7 @@ describe("Button", () => {
       expect(buttonElement).toHaveClass("custom-base", "slot-base");
       expect(surface).toHaveClass("bg-white");
       expect(surface).not.toHaveClass("custom-base");
-      expect(surface).not.toHaveClass("bg-[rgba(0,0,0,0.02)]");
+      expect(surface).not.toHaveClass("bg-glass-surface");
       expect(getSlot(buttonElement, "label")).toHaveClass("slot-label");
       expect(getSlot(buttonElement, "leading-icon")).toHaveClass(
         "slot-leading-icon",
@@ -221,13 +264,13 @@ describe("Button", () => {
         "[&_svg]:size-8",
       );
       expect(getSlot(buttonElement, "leading-icon")).not.toHaveClass(
-        "[&_svg]:size-5",
+        "[&_svg]:size-4",
       );
       expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(
         "[&_svg]:size-8",
       );
       expect(getSlot(buttonElement, "trailing-icon")).not.toHaveClass(
-        "[&_svg]:size-5",
+        "[&_svg]:size-4",
       );
     });
 
