@@ -13,7 +13,7 @@ const button = tv({
       "border border-double border-[rgba(51,51,51,0.08)] bg-[rgba(0,0,0,0.02)]",
       "shadow-[inset_2px_-2px_1px_-1px_rgba(255,255,255,0.9),inset_-2px_2px_1px_-1px_rgba(255,255,255,0.9),inset_6px_-6px_1px_-6px_rgba(255,255,255,0.55),inset_-6px_6px_1px_-6px_rgba(255,255,255,0.55),inset_0_0_2px_rgba(0,0,0,0.8),0_4px_8px_rgba(0,0,0,0.2)]",
       "backdrop-blur-[2px] [filter:brightness(0.9)_contrast(3)]",
-      "transition-[background-color,transform] duration-[400ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] group-active:duration-[120ms]",
+      "transition-[background-color,transform] duration-[600ms] ease-in-out group-active:duration-[120ms]",
       "before:pointer-events-none before:absolute before:left-1/2 before:top-[35%] before:z-[1] before:h-[calc(100%_-_16px)] before:w-[calc(100%_-_16px)] before:-translate-x-1/2 before:rounded-[inherit] before:border before:border-[rgba(0,0,0,0.9)] before:blur-[8px] before:content-['']",
       "after:pointer-events-none after:absolute after:inset-0 after:z-[501] after:rounded-[inherit] after:bg-[linear-gradient(45deg,rgba(255,255,255,0.8)_0%,transparent_15%,transparent_85%,rgba(255,255,255,0.8)_100%)] after:blur-[7px] after:content-['']",
       "group-hover:-translate-y-[3px] group-hover:bg-transparent group-active:translate-y-0 group-active:scale-[0.94]",
