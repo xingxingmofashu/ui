@@ -3,12 +3,12 @@
 import { Button as UIButton } from "@base-ui/react/button";
 import { cn } from "cn";
 import * as React from "react";
+import { type VariantProps } from "tailwind-variants";
 
 import button from "../theme/button";
 
-const ui = button();
-
-type ButtonProps = React.ComponentProps<typeof UIButton> & {
+type ButtonProps = React.ComponentProps<typeof UIButton> &
+  VariantProps<typeof button> & {
   /** Text or content rendered inside the button. */
   label?: React.ReactNode;
   /** Leading icon. Alias for `leadingIcon`. */
@@ -26,8 +26,10 @@ function Button({
   icon,
   leadingIcon,
   trailingIcon,
+  size,
   ...props
 }: ButtonProps) {
+  const ui = button({ size });
   const content = label ?? children;
   const leading = leadingIcon ?? icon;
   const hasLabel = content !== undefined && content !== null;
