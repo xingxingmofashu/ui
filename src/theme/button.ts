@@ -66,7 +66,7 @@ const button = tv({
     },
   },
   defaultVariants: {
-    size: "lg",
+    size: "md",
   },
 });
 
