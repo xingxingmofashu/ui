@@ -15,7 +15,7 @@ const button = tv({
       "backdrop-blur-[2px] [filter:brightness(0.9)_contrast(3)]",
       "transition-[background-color,transform] duration-[600ms] ease-in-out group-active:duration-[120ms]",
       "before:pointer-events-none before:absolute before:left-1/2 before:top-[35%] before:z-[1] before:h-[calc(100%_-_16px)] before:w-[calc(100%_-_16px)] before:-translate-x-1/2 before:rounded-[inherit] before:border before:border-glass-inner-border before:blur-[8px] before:content-['']",
-      "after:pointer-events-none after:absolute after:inset-0 after:z-[501] after:rounded-[inherit] after:bg-[linear-gradient(45deg,var(--color-glass-highlight)_0%,transparent_15%,transparent_85%,var(--color-glass-highlight)_100%)] after:blur-[7px] after:content-['']",
+      "after:pointer-events-none after:absolute after:inset-0 after:z-[501] after:rounded-[inherit] after:bg-[linear-gradient(45deg,var(--ui-glass-highlight)_0%,transparent_15%,transparent_85%,var(--ui-glass-highlight)_100%)] after:blur-[7px] after:content-['']",
       "group-hover:-translate-y-[3px] group-hover:bg-transparent group-active:translate-y-0 group-active:scale-[0.94]",
       "motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-active:scale-100",
     ],

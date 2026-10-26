@@ -9,7 +9,7 @@
 - 直接导出源码，不维护单独的构建产物或 `dist`。
 - `react` / `react-dom` 是 `peerDependencies`，不要改成普通依赖。
 - 交互行为基于 `@base-ui/react`，样式基于 `tailwind-variants`，类名合并使用 `cn`。
-- 设计 token 在 `src/index.css` 中通过 `@theme` 定义；消费方需要导入 `@xingxingmofashu.me/ui/index.css`。
+- 设计 token 在 `src/index.css` 中定义：原始值放在 `@layer theme` 的 `:root` / `.light` / `.dark`，Tailwind utility 通过 `@theme inline` 映射；消费方需要导入 `@xingxingmofashu.me/ui/index.css`。
 - UI 包不依赖具体图标库；`lucide-react` 只用于 `packages/web` 预览页。
 
 ## 2. Button 的视觉风格
@@ -38,7 +38,7 @@ Button 是一个 **玻璃胶囊 CTA**，整体克制、轻量、有物理质感�
 
 ### 文字与图标
 
-- 文字颜色使用 `#3e3e3e`，按下时变为黑色。
+- 文字颜色使用 `text-ink`，按下时使用 `text-ink-active`，对应 `--ui-ink` / `--ui-ink-active`，会随 `.light` / `.dark` 切换。
 - **label 不使用固定偏移的 `drop-shadow`**，否则会在小尺寸下产生重影。
 - `leadingIcon` 是普通图标，不加背景。
 - `trailingIcon` 是深色圆形徽章，内部图标为浅色。
@@ -140,7 +140,7 @@ Button 支持：
 
 - `src/components/button.tsx`：组件结构、props、类型、可访问性、事件透传。
 - `src/theme/button.ts`：唯一的 `tailwind-variants` recipe，只使用 default export。
-- `src/index.css`：唯一的全局设计 token 文件，使用 `@theme` 定义颜色和阴影；不写组件 class。
+- `src/index.css`：唯一的全局设计 token 文件；`@layer theme` 定义 `--ui-*` 原始值和 `.light` / `.dark`，`@theme inline` 映射为 Tailwind utility；不写组件 class。
 - `src/index.ts`：公共导出。
 - `test/components/button.test.tsx`：组件行为测试。
 - `test/setup.ts`：Testing Library 清理和 jest-dom 扩展。
@@ -168,8 +168,10 @@ Button 支持：
 ### 样式写法
 
 - 所有组件样式进入 `tailwind-variants`，不要散落静态 class 字符串在 JSX 里。
-- 颜色、阴影等设计值进入 `src/index.css` 的 `@theme` token，不要在 recipe 中重复写 hex / rgba。
-- 使用语义 utility，例如 `text-ink`、`bg-glass-surface`、`border-glass-border`、`shadow-glass`。
+- 颜色、阴影等设计值进入 `src/index.css` 的 `--ui-*` token，不要在 recipe 中重复写 hex / rgba。
+- 通过 `@theme inline` 把 `--ui-*` 映射成语义 utility，例如 `text-ink`、`bg-glass-surface`、`border-glass-border`、`shadow-glass`。
+- 主题切换只改 `:root` / `.light` / `.dark` 下的 `--ui-*`，组件 recipe 不写 `dark:` 颜色分支。预留了 `light:` / `dark:` custom variants。
+- `@theme inline` 不保证导出 `--color-*` 变量；需要直接引用原始变量时使用 `--ui-*`，不要写 `var(--color-*)`。
 - `src/index.css` 只放 token，不放布局、伪元素、variant 或组件 class；玻璃表面的组合仍保留在 `theme/button.ts`。
 - 使用 `cn(ui.slot(), classNames?.slot)` 合并 slot 样式。
 - 复用现有 token 和层级，不要随意引入新的颜色、圆角或阴影体系。
@@ -197,7 +199,7 @@ Button 支持：
 - 图标尺寸契约：`xs` / `sm` 对应 `size-4`，`md` / `lg` 对应 `size-5`，`xl` 对应 `size-6`，两个图标 slot 在 `size` variant 中同步设置。
 - 响应式契约：不存在 `100vw`，`base` 有 `max-w-full`，`surface` 有 `w-full`。
 - 视觉回归点：label 不包含固定 `drop-shadow`。
-- token 契约：颜色、背景、边框、阴影 utility 能从 `src/index.css` 正确解析；token 修改后检查实际 computed style。
+- token 契约：颜色、背景、边框、阴影 utility 能从 `src/index.css` 正确解析；token 修改后检查实际 computed style，并验证 `.dark` 下的颜色、边框和阴影能随变量切换。
 - slot API：`className` 在 `base`，`classNames` 能覆盖 `surface` 等 slot。
 - 交互：点击回调、disabled 状态。
 - 类型约束：使用 `@ts-expect-error` 覆盖“纯图标必须有可访问名称”。
