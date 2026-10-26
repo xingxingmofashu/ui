@@ -10,11 +10,11 @@
     --ui-ink: #3e3e3e;
     --ui-ink-active: #000;
     --ui-glass-surface: rgb(0 0 0 / 0.02);
-    --ui-glass-border: rgb(51 51 51 / 0.08);
+    --ui-glass-border: rgb(51 51 51 / 0.12);
     --ui-glass-focus: rgb(0 0 0 / 0.6);
     --ui-glass-inner-border: rgb(0 0 0 / 0.9);
     --ui-glass-rim: rgb(255 255 255 / 0.2);
-    --ui-glass-highlight: rgb(255 255 255 / 0.8);
+    --ui-glass-highlight: rgb(255 255 255 / 0.65);
     --ui-glass-glare-stop: 15%;
     --ui-glass-icon: #3e3e3e;
     --ui-glass-icon-foreground: #f5f5f5;
@@ -24,15 +24,15 @@
       inset 6px -6px 1px -6px rgb(255 255 255 / 0.55),
       inset -6px 6px 1px -6px rgb(255 255 255 / 0.55),
       inset 0 0 2px rgb(0 0 0 / 0.8),
-      0 4px 8px rgb(0 0 0 / 0.2);
-    --ui-shadow-glass-icon: 0 0 6px rgb(0 0 0 / 0.3);
+      0 2px 5px rgb(0 0 0 / 0.16);
+    --ui-shadow-glass-icon: 0 0 4px rgb(0 0 0 / 0.25);
   }
 
   .dark {
     --ui-ink: #f5f5f5;
     --ui-ink-active: #fff;
     --ui-glass-surface: rgb(255 255 255 / 0.06);
-    --ui-glass-border: rgb(255 255 255 / 0.14);
+    --ui-glass-border: rgb(255 255 255 / 0.18);
     --ui-glass-focus: rgb(255 255 255 / 0.7);
     --ui-glass-inner-border: rgb(255 255 255 / 0.4);
     --ui-glass-rim: rgb(255 255 255 / 0.25);
@@ -45,8 +45,8 @@
       inset 6px -6px 1px -6px rgb(255 255 255 / 0.2),
       inset -6px 6px 1px -6px rgb(255 255 255 / 0.2),
       inset 0 0 2px rgb(0 0 0 / 0.9),
-      0 4px 8px rgb(0 0 0 / 0.35);
-    --ui-shadow-glass-icon: 0 0 6px rgb(0 0 0 / 0.45);
+      0 2px 6px rgb(0 0 0 / 0.35);
+    --ui-shadow-glass-icon: 0 0 4px rgb(0 0 0 / 0.4);
   }
 }
 

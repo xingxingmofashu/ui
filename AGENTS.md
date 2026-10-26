@@ -41,8 +41,8 @@ Each layer has a purpose. Do not delete or merge them casually. `z-[500]` / `z-[
 - Text color uses `text-ink`; pressed text uses `text-ink-active`, mapped to `--ui-ink` / `--ui-ink-active`, switching with `.light` / `.dark`.
 - The label is crisp: do not apply a text `drop-shadow` or duplicate-glyph shadow. Liquid Glass depth comes from the surface, not typography.
 - `leadingIcon` is a plain icon without a background; its SVG stays crisp.
-- `trailingIcon` is a contrasting circular badge with a light icon in the light theme and a dark icon in the dark theme; in `md` the badge is fixed at `40px`, and its SVG stays crisp.
-- Icon sizes are controlled by the Button `size`: `xs` / `sm` / `md` are 16px, `lg` is 20px, and `xl` is 24px.
+- `trailingIcon` is a contrasting circular badge with a light icon in the light theme and a dark icon in the dark theme; its SVG stays crisp.
+- Icon sizes are controlled by the Button `size`: `xs` / `sm` are 16px, `md` / `lg` are 20px, and `xl` is 24px.
 - Icon sizes are set directly in the `leadingIcon` / `trailingIcon` slots of the `size` variant via `[&_svg]:size-*`; callers do not need to pass an icon `size`.
 - To use a custom size, override through `classNames.leadingIcon` / `classNames.trailingIcon` with `[&_svg]:size-*`; do not change the default mapping.
 - The icon container is responsible for centering, preventing shrink, and normalizing dimensions; it does not handle icon-library-specific logic.
@@ -116,21 +116,21 @@ Do not relax this constraint. Icon-only buttons must receive `aria-label` or `ar
 
 ## 5. Sizes and Responsiveness
 
-| Size | Width | Height | Text | Icon |
-| --- | --- | --- | --- | --- |
-| `xs` | `9rem` | `2.75rem` | `text-sm/[normal]` | `1rem` / 16px |
-| `sm` | `11rem` | `3.25rem` | `text-base/[normal]` | `1rem` / 16px |
-| `md` | `16.25rem` | `4.6875rem` / 75px | `text-[1.5625rem]/[normal]` | `1rem` / 16px |
-| `lg` | `19rem` | `5.25rem` | `text-[1.75rem]/[normal]` | `1.25rem` / 20px |
-| `xl` | `22rem` | `5.75rem` | `text-[2rem]/[normal]` | `1.5rem` / 24px |
+| Size | Width | Height | Text | Icon | Trailing badge |
+| --- | --- | --- | --- | --- | --- |
+| `xs` | auto | `1.5rem` / 24px | `text-xs` / 12px | 16px | 20px |
+| `sm` | auto | `1.75rem` / 28px | `text-xs` / 12px | 16px | 20px |
+| `md` | auto | `2rem` / 32px | `text-sm` / 14px | 20px | 24px |
+| `lg` | auto | `2.25rem` / 36px | `text-sm` / 14px | 20px | 28px |
+| `xl` | auto | `2.5rem` / 40px | `text-base` / 16px | 24px | 32px |
 
 Rules:
 
-- Width is controlled by a fixed `w-*` on `base`; `surface` fills it with `w-full`.
-- `base` must have `max-w-full` and `min-w-0` so narrow parents can shrink the button to the parent width.
+- The size scale matches Nuxt UI v4 `Button` content metrics: height, font size, icon size, horizontal padding, and gap. Width is content-driven; do not restore fixed `w-*` widths on `base`.
+- `base` must have `max-w-full` and `min-w-0` so long labels truncate and narrow parents can shrink the button.
 - **Do not use `100vw` or `calc(100vw - ...)` to constrain width.**
 - `min-w-0` + `truncate` on `label` is required behavior for narrow containers; do not remove it.
-- `md` is the reference baseline: `260 × 75px`, `25px` text, `16px` icon, and `40px` trailing badge. Other sizes scale from the same design.
+- `md` is the reference baseline: `32px` high, `14px` text, `20px` icon, and a `24px` trailing badge. Other sizes follow the Nuxt UI scale.
 - Set icon sizes in the `leadingIcon` / `trailingIcon` slots of the `size` variant; do not hard-code them in component JSX.
 - After changing sizes, verify at minimum: `200px` parent container, `390px` mobile, and `1440px` desktop have no horizontal overflow, and check that actual SVG dimensions match the table.
 
@@ -201,11 +201,11 @@ Place test files under `test/components/` and name them `*.test.tsx`. Token test
 
 - Accessible names: `label`, `children`, `aria-label`, `aria-labelledby`.
 - Decorative icons: hidden when a name exists, not hidden when no name exists.
-- Size contract: default `md`, and the width and height classes for every size.
-- Icon size contract: `xs` / `sm` / `md` use `size-4`, `lg` uses `size-5`, `xl` uses `size-6`; both icon slots are set together in the `size` variant.
+- Size contract: default `md`, and the height, padding, gap, and text-size classes for every size; no fixed width.
+- Icon size contract: `xs` / `sm` use `size-4`, `md` / `lg` use `size-5`, `xl` uses `size-6`; both icon slots are set together in the `size` variant.
 - Responsive contract: no `100vw`; `base` has `max-w-full`; `surface` has `w-full`.
 - Visual regression points: label and icon SVGs do not use `drop-shadow` filters; `base` contrast and `surface` brightness are layered; the surface transition covers `translate` / `scale`.
-- Reference baseline: `md` on desktop is `260 × 75px`, `25px` text, `16px` icon, and a `40px` trailing badge.
+- Reference baseline: `md` on desktop is `32px` high, `14px` text, `20px` icon, and a `24px` trailing badge.
 - Token contract: color, background, border, and shadow utilities resolve from `src/index.css` correctly; after token changes, check actual computed styles and verify `.dark` switches colors, borders, and shadows with the variables.
 - Slot API: `className` applies to `base`; `classNames` can override slots such as `surface`.
 - Interaction: click callbacks and disabled state.

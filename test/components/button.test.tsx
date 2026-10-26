@@ -106,39 +106,59 @@ describe("Button", () => {
 
       const buttonElement = screen.getByRole("button");
 
-      expect(buttonElement).toHaveClass("w-[16.25rem]", "max-w-full");
-      expect(getSlot(buttonElement, "surface")).toHaveClass("h-[4.6875rem]");
+      expect(buttonElement).toHaveClass("max-w-full");
+      expect(buttonElement).not.toHaveClass("w-[16.25rem]");
+      expect(getSlot(buttonElement, "surface")).toHaveClass("h-8");
     });
 
-    it("uses the reference geometry for the default size", () => {
+    it("uses the Nuxt UI geometry for the default size", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.base()).toContain("w-[16.25rem]");
-      expect(styles.surface()).toContain("h-[4.6875rem]");
-      expect(styles.surface()).toContain("gap-4");
-      expect(styles.label()).toContain("text-[1.5625rem]/[normal]");
-      expect(styles.trailingIcon()).toContain("h-10");
+      expect(styles.base()).not.toContain("w-[");
+      expect(styles.surface()).toContain("h-8");
+      expect(styles.surface()).toContain("gap-1.5");
+      expect(styles.surface()).toContain("px-2.5");
+      expect(styles.label()).toContain("text-sm");
+      expect(styles.trailingIcon()).toContain("h-6");
     });
 
     it.each([
-      ["xs", "w-[9rem]", "h-11"],
-      ["sm", "w-[11rem]", "h-[3.25rem]"],
-      ["md", "w-[16.25rem]", "h-[4.6875rem]"],
-      ["lg", "w-[19rem]", "h-[5.25rem]"],
-      ["xl", "w-[22rem]", "h-[5.75rem]"],
-    ] as const)("applies the %s size", (size, width, height) => {
-      render(<Button size={size} label={size} />);
+      ["xs", "h-6", "px-2", "gap-1", "text-xs", "h-5"],
+      ["sm", "h-7", "px-2.5", "gap-1.5", "text-xs", "h-5"],
+      ["md", "h-8", "px-2.5", "gap-1.5", "text-sm", "h-6"],
+      ["lg", "h-9", "px-3", "gap-2", "text-sm", "h-7"],
+      ["xl", "h-10", "px-3", "gap-2", "text-base", "h-8"],
+    ] as const)(
+      "matches the Nuxt UI %s content metrics",
+      (size, height, padding, gap, text, badge) => {
+        const styles = button({ size });
 
-      const buttonElement = screen.getByRole("button");
+        expect(styles.base()).not.toContain("w-[");
+        expect(styles.surface()).toContain(height);
+        expect(styles.surface()).toContain(padding);
+        expect(styles.surface()).toContain(gap);
+        expect(styles.label()).toContain(text);
+        expect(styles.trailingIcon()).toContain(badge);
 
-      expect(buttonElement).toHaveClass(width);
-      expect(getSlot(buttonElement, "surface")).toHaveClass(height);
-    });
+        render(<Button size={size} label={size} />);
+
+        const buttonElement = screen.getByRole("button");
+
+        expect(buttonElement).not.toHaveClass(
+          "w-[9rem]",
+          "w-[11rem]",
+          "w-[16.25rem]",
+          "w-[19rem]",
+          "w-[22rem]",
+        );
+        expect(getSlot(buttonElement, "surface")).toHaveClass(height);
+      },
+    );
 
     it.each([
       ["xs", "[&_svg]:size-4"],
       ["sm", "[&_svg]:size-4"],
-      ["md", "[&_svg]:size-4"],
+      ["md", "[&_svg]:size-5"],
       ["lg", "[&_svg]:size-5"],
       ["xl", "[&_svg]:size-6"],
     ] as const)("constrains %s icons to the button size", (size, iconClass) => {
