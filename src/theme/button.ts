@@ -5,30 +5,30 @@ const button = tv({
     base: [
       "group relative z-[500] inline-flex min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
       "appearance-none rounded-full border-0 bg-transparent p-0",
-      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgba(0,0,0,0.6)]",
+      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
       "disabled:pointer-events-none disabled:opacity-50",
     ],
     surface: [
       "relative flex w-full min-w-0 max-w-full flex-row flex-nowrap items-center justify-center rounded-full",
-      "border border-double border-[rgba(51,51,51,0.08)] bg-[rgba(0,0,0,0.02)]",
-      "shadow-[inset_2px_-2px_1px_-1px_rgba(255,255,255,0.9),inset_-2px_2px_1px_-1px_rgba(255,255,255,0.9),inset_6px_-6px_1px_-6px_rgba(255,255,255,0.55),inset_-6px_6px_1px_-6px_rgba(255,255,255,0.55),inset_0_0_2px_rgba(0,0,0,0.8),0_4px_8px_rgba(0,0,0,0.2)]",
+      "border border-double border-glass-border bg-glass-surface",
+      "shadow-glass",
       "backdrop-blur-[2px] [filter:brightness(0.9)_contrast(3)]",
       "transition-[background-color,transform] duration-[600ms] ease-in-out group-active:duration-[120ms]",
-      "before:pointer-events-none before:absolute before:left-1/2 before:top-[35%] before:z-[1] before:h-[calc(100%_-_16px)] before:w-[calc(100%_-_16px)] before:-translate-x-1/2 before:rounded-[inherit] before:border before:border-[rgba(0,0,0,0.9)] before:blur-[8px] before:content-['']",
-      "after:pointer-events-none after:absolute after:inset-0 after:z-[501] after:rounded-[inherit] after:bg-[linear-gradient(45deg,rgba(255,255,255,0.8)_0%,transparent_15%,transparent_85%,rgba(255,255,255,0.8)_100%)] after:blur-[7px] after:content-['']",
+      "before:pointer-events-none before:absolute before:left-1/2 before:top-[35%] before:z-[1] before:h-[calc(100%_-_16px)] before:w-[calc(100%_-_16px)] before:-translate-x-1/2 before:rounded-[inherit] before:border before:border-glass-inner-border before:blur-[8px] before:content-['']",
+      "after:pointer-events-none after:absolute after:inset-0 after:z-[501] after:rounded-[inherit] after:bg-[linear-gradient(45deg,var(--color-glass-highlight)_0%,transparent_15%,transparent_85%,var(--color-glass-highlight)_100%)] after:blur-[7px] after:content-['']",
       "group-hover:-translate-y-[3px] group-hover:bg-transparent group-active:translate-y-0 group-active:scale-[0.94]",
       "motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-active:scale-100",
     ],
     label: [
-      "min-w-0 truncate font-[system-ui,-apple-system,sans-serif] font-normal text-[#3e3e3e]",
-      "group-active:text-black",
+      "min-w-0 truncate font-[system-ui,-apple-system,sans-serif] font-normal text-ink",
+      "group-active:text-ink-active",
     ],
     leadingIcon: [
       "grid shrink-0 place-items-center [&_svg]:block [&_svg]:shrink-0",
     ],
     trailingIcon: [
       "grid h-[53.33%] aspect-square shrink-0 place-items-center rounded-full",
-      "bg-[#3e3e3e] text-[#f5f5f5] shadow-[0_0_6px_rgba(0,0,0,0.3)]",
+      "bg-glass-icon text-glass-icon-foreground shadow-glass-icon",
       "transition-transform duration-[250ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]",
       "group-hover:scale-110 group-active:scale-[0.94]",
       "motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100",
@@ -36,7 +36,7 @@ const button = tv({
     ],
     overlay: [
       "pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[calc(100%_-_9px)] w-[calc(100%_-_9px)]",
-      "-translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(255,255,255,0.2)] blur-[1px]",
+      "-translate-x-1/2 -translate-y-1/2 rounded-full border border-glass-rim blur-[1px]",
     ],
   },
   variants: {
