@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 const button = tv({
   slots: {
     base: [
-      "group relative z-[500] inline-flex min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
+      "group relative z-[500] inline-flex min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap [zoom:var(--ui-button-scale)]",
       "appearance-none rounded-full border-0 bg-transparent p-0 [filter:contrast(3)]",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
       "disabled:pointer-events-none disabled:opacity-50",

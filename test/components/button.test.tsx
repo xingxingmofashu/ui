@@ -120,6 +120,14 @@ describe("Button", () => {
       expect(styles.trailingIcon()).toContain("h-10");
     });
 
+    it("scales the whole button through the shared scale token", () => {
+      for (const size of sizes) {
+        const styles = button({ size });
+
+        expect(styles.base()).toContain("[zoom:var(--ui-button-scale)]");
+      }
+    });
+
     it.each([
       ["xs", "w-[9rem]", "h-11"],
       ["sm", "w-[11rem]", "h-[3.25rem]"],

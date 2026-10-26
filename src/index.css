@@ -7,6 +7,7 @@
   :root,
   :host,
   .light {
+    --ui-button-scale: 0.5;
     --ui-ink: #3e3e3e;
     --ui-ink-active: #000;
     --ui-glass-surface: rgb(0 0 0 / 0.02);
