@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 const button = tv({
   slots: {
     base: [
-      "group relative z-[500] inline-flex min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
+      "group relative z-[500] inline-flex items-center min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
       "appearance-none rounded-full border-0 bg-transparent p-0 [filter:contrast(3)]",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
       "disabled:pointer-events-none disabled:opacity-50",
@@ -25,11 +25,10 @@ const button = tv({
       "group-active:text-ink-active",
     ],
     leadingIcon: [
-      "grid shrink-0 place-items-center [&_svg]:block [&_svg]:shrink-0 [&_svg]:[filter:var(--ui-drop-shadow-icon)]",
+      "inline-flex shrink-0 items-center justify-center [&_svg]:block [&_svg]:shrink-0 [&_svg]:[filter:var(--ui-drop-shadow-icon)]",
     ],
     trailingIcon: [
-      "grid h-[53.33%] aspect-square shrink-0 place-items-center rounded-full",
-      "bg-glass-icon text-glass-icon-foreground shadow-glass-icon",
+      "inline-flex h-[53.33%] aspect-square shrink-0 items-center justify-center rounded-full text-ink",
       "transition-transform duration-[250ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]",
       "group-hover:scale-110 group-active:scale-[0.94]",
       "motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100",
@@ -42,26 +41,30 @@ const button = tv({
   },
   variants: {
     size: {
+      xs: {
+        surface: "px-2.5 py-1 text-xs gap-1",
+        leadingIcon: "[&_svg]:size-4",
+        trailingIcon: "[&_svg]:size-4",
+      },
       sm: {
-        base: "w-[8rem]",
-        surface: "h-9 gap-2 px-3",
-        label: "text-sm/[normal]",
+        surface: "px-3 py-1.5 text-xs gap-1.5",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
       },
       md: {
-        base: "w-[9rem]",
-        surface: "h-11 gap-2 px-3",
-        label: "text-sm/[normal]",
-        leadingIcon: "[&_svg]:size-4",
-        trailingIcon: "[&_svg]:size-4",
+        surface: "px-3 py-1.5 text-sm gap-1.5",
+        leadingIcon: "[&_svg]:size-5",
+        trailingIcon: "[&_svg]:size-5",
       },
       lg: {
-        base: "w-[11rem]",
-        surface: "h-[3.25rem] gap-2.5 px-3.5",
-        label: "text-base/[normal]",
-        leadingIcon: "[&_svg]:size-4",
-        trailingIcon: "[&_svg]:size-4",
+        surface: "px-3.5 py-2 text-sm gap-2",
+        leadingIcon: "[&_svg]:size-5",
+        trailingIcon: "[&_svg]:size-5",
+      },
+      xl: {
+        surface: "px-3.5 py-2 text-base gap-2",
+        leadingIcon: "[&_svg]:size-6",
+        trailingIcon: "[&_svg]:size-6",
       },
     },
   },

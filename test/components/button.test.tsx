@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { Button } from "../../src/components/button";
 import button from "../../src/theme/button";
 
-const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
 
 function getSlot(element: HTMLElement, slot: string) {
   const node = element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
@@ -106,38 +106,50 @@ describe("Button", () => {
 
       const buttonElement = screen.getByRole("button");
 
-      expect(buttonElement).toHaveClass("w-[9rem]", "max-w-full");
-      expect(getSlot(buttonElement, "surface")).toHaveClass("h-11");
+      expect(buttonElement).toHaveClass("max-w-full");
+      expect(buttonElement).not.toHaveClass("w-[8rem]");
+      expect(getSlot(buttonElement, "surface")).toHaveClass("h-8");
     });
 
-    it("uses the compact reference geometry for the default size", () => {
+    it("uses content-driven width and the Nuxt UI reference geometry", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.base()).toContain("w-[9rem]");
-      expect(styles.surface()).toContain("h-11");
-      expect(styles.surface()).toContain("gap-2");
-      expect(styles.surface()).toContain("px-3");
-      expect(styles.label()).toContain("text-sm/[normal]");
-      expect(styles.trailingIcon()).toContain("[&_svg]:size-4");
+      expect(styles.base()).not.toContain("w-[");
+      expect(styles.base()).toContain("inline-flex");
+      expect(styles.surface()).toContain("h-8");
+      expect(styles.surface()).toContain("gap-1.5");
+      expect(styles.surface()).toContain("px-3.5");
+      expect(styles.label()).toContain("text-sm");
+      expect(styles.leadingIcon()).toContain("[&_svg]:size-5");
+      expect(styles.trailingIcon()).toContain("h-6");
+      expect(styles.trailingIcon()).toContain("[&_svg]:size-5");
     });
 
     it.each([
-      ["sm", "w-[8rem]", "h-9"],
-      ["md", "w-[9rem]", "h-11"],
-      ["lg", "w-[11rem]", "h-[3.25rem]"],
-    ] as const)("applies the %s size", (size, width, height) => {
-      render(<Button size={size} label={size} />);
+      ["xs", "h-6", "gap-1", "px-3", "text-xs", "h-[18px]"],
+      ["sm", "h-7", "gap-1.5", "px-3.5", "text-xs", "h-5"],
+      ["md", "h-8", "gap-1.5", "px-3.5", "text-sm", "h-6"],
+      ["lg", "h-9", "gap-2", "px-4", "text-sm", "h-7"],
+      ["xl", "h-10", "gap-2", "px-4", "text-base", "h-8"],
+    ] as const)(
+      "applies the Nuxt UI %s size",
+      (size, height, gap, padding, text, badge) => {
+        const styles = button({ size });
 
-      const buttonElement = screen.getByRole("button");
-
-      expect(buttonElement).toHaveClass(width);
-      expect(getSlot(buttonElement, "surface")).toHaveClass(height);
-    });
+        expect(styles.surface()).toContain(height);
+        expect(styles.surface()).toContain(gap);
+        expect(styles.surface()).toContain(padding);
+        expect(styles.label()).toContain(text);
+        expect(styles.trailingIcon()).toContain(badge);
+      },
+    );
 
     it.each([
+      ["xs", "[&_svg]:size-3.5"],
       ["sm", "[&_svg]:size-4"],
-      ["md", "[&_svg]:size-4"],
-      ["lg", "[&_svg]:size-4"],
+      ["md", "[&_svg]:size-5"],
+      ["lg", "[&_svg]:size-5"],
+      ["xl", "[&_svg]:size-6"],
     ] as const)("constrains %s icons to the button size", (size, iconClass) => {
       render(
         <Button
@@ -261,13 +273,13 @@ describe("Button", () => {
         "[&_svg]:size-8",
       );
       expect(getSlot(buttonElement, "leading-icon")).not.toHaveClass(
-        "[&_svg]:size-4",
+        "[&_svg]:size-5",
       );
       expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(
         "[&_svg]:size-8",
       );
       expect(getSlot(buttonElement, "trailing-icon")).not.toHaveClass(
-        "[&_svg]:size-4",
+        "[&_svg]:size-5",
       );
     });
 
