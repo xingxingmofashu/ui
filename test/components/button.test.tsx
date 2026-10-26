@@ -128,12 +128,12 @@ describe("Button", () => {
     });
 
     it.each([
-      ["xs", "[--button-icon-size:1rem]"],
-      ["sm", "[--button-icon-size:1rem]"],
-      ["md", "[--button-icon-size:1.25rem]"],
-      ["lg", "[--button-icon-size:1.25rem]"],
-      ["xl", "[--button-icon-size:1.5rem]"],
-    ] as const)("constrains %s icons to the button size", (size, iconSize) => {
+      ["xs", "[&_svg]:size-4"],
+      ["sm", "[&_svg]:size-4"],
+      ["md", "[&_svg]:size-5"],
+      ["lg", "[&_svg]:size-5"],
+      ["xl", "[&_svg]:size-6"],
+    ] as const)("constrains %s icons to the button size", (size, iconClass) => {
       render(
         <Button
           size={size}
@@ -144,11 +144,9 @@ describe("Button", () => {
       );
 
       const buttonElement = screen.getByRole("button");
-      const iconSelector = "[&_svg]:size-[var(--button-icon-size)]";
 
-      expect(getSlot(buttonElement, "surface")).toHaveClass(iconSize);
-      expect(getSlot(buttonElement, "leading-icon")).toHaveClass(iconSelector);
-      expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(iconSelector);
+      expect(getSlot(buttonElement, "leading-icon")).toHaveClass(iconClass);
+      expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(iconClass);
     });
 
     it("caps its width to the container instead of the viewport", () => {
@@ -223,13 +221,13 @@ describe("Button", () => {
         "[&_svg]:size-8",
       );
       expect(getSlot(buttonElement, "leading-icon")).not.toHaveClass(
-        "[&_svg]:size-[var(--button-icon-size)]",
+        "[&_svg]:size-5",
       );
       expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(
         "[&_svg]:size-8",
       );
       expect(getSlot(buttonElement, "trailing-icon")).not.toHaveClass(
-        "[&_svg]:size-[var(--button-icon-size)]",
+        "[&_svg]:size-5",
       );
     });
 
