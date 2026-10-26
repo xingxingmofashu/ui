@@ -42,8 +42,7 @@ Each layer has a purpose. Do not delete or merge them casually. `z-[500]` / `z-[
 - The label uses the reference `drop-shadow(0 25px 3px rgba(102, 102, 102, 0.15))`, controlled by `--ui-drop-shadow-label`; do not inline raw color values.
 - `leadingIcon` is a plain icon without a background; its SVG uses `--ui-drop-shadow-icon`.
 - `trailingIcon` is a dark circular badge with a light icon; in `md` the badge is fixed at `40px`, and its SVG uses `--ui-drop-shadow-icon`.
-- The glyph shadow offsets are reference values. The whole button is scaled through `--ui-button-scale`, so do not reduce the `25px` offsets or the glass blur/inset values independently when making the button smaller.
-- Icon sizes are controlled by the Button `size`: `xs` / `sm` / `md` are 16px, `lg` is 20px, and `xl` is 24px.
+- Icon sizes are controlled by the Button `size`: `sm` / `md` are 16px, `lg` is 20px, and `xl` is 24px.
 - Icon sizes are set directly in the `leadingIcon` / `trailingIcon` slots of the `size` variant via `[&_svg]:size-*`; callers do not need to pass an icon `size`.
 - To use a custom size, override through `classNames.leadingIcon` / `classNames.trailingIcon` with `[&_svg]:size-*`; do not change the default mapping.
 - The icon container is responsible for centering, preventing shrink, and normalizing dimensions; it does not handle icon-library-specific logic.
@@ -85,7 +84,7 @@ Button supports:
 - `label`: preferred visible text.
 - `children`: fallback for `label`; when both are present, `label` takes precedence.
 - `leadingIcon` / `trailingIcon`: any `ReactNode`, usually an icon; icon size is constrained by `size`, so do not pass `size` at the call site.
-- `size`: `xs | sm | md | lg | xl`, default `md`; controls text, button, and icon sizes together.
+- `size`: `sm | md | lg | xl`, default `md`; controls text, button, and icon sizes together.
 - `classNames`: per-slot style overrides.
 - All other native / Base UI props are forwarded to `UIButton`.
 
@@ -117,34 +116,20 @@ Do not relax this constraint. Icon-only buttons must receive `aria-label` or `ar
 
 ## 5. Sizes and Responsiveness
 
-The recipe is authored at the reference geometry below. `base` applies `zoom: var(--ui-button-scale)`; the shipped token is `0.5`, so the entire button — layout, text, icons, glass layers, shadows, and motion offsets — renders at half size. This is the only supported way to make the button smaller.
-
-| Size | Reference width | Reference height | Text | Icon |
+| Size | Width | Height | Text | Icon |
 | --- | --- | --- | --- | --- |
-| `xs` | `9rem` / 144px | `2.75rem` / 44px | `text-sm/[normal]` / 14px | `1rem` / 16px |
 | `sm` | `11rem` / 176px | `3.25rem` / 52px | `text-base/[normal]` / 16px | `1rem` / 16px |
 | `md` | `16.25rem` / 260px | `4.6875rem` / 75px | `text-[1.5625rem]/[normal]` / 25px | `1rem` / 16px |
 | `lg` | `19rem` / 304px | `5.25rem` / 84px | `text-[1.75rem]/[normal]` / 28px | `1.25rem` / 20px |
 | `xl` | `22rem` / 352px | `5.75rem` / 92px | `text-[2rem]/[normal]` / 32px | `1.5rem` / 24px |
 
-At the shipped `0.5` scale, the effective dimensions are:
-
-| Size | Rendered width | Rendered height |
-| --- | --- | --- |
-| `xs` | 72px | 22px |
-| `sm` | 88px | 26px |
-| `md` | 130px | 37.5px |
-| `lg` | 152px | 42px |
-| `xl` | 176px | 46px |
-
 Rules:
 
 - Width is controlled by a fixed `w-*` on `base`; `surface` fills it with `w-full`.
 - `base` must have `max-w-full` and `min-w-0` so narrow parents can shrink the button to the parent width.
-- `base` must keep `[zoom:var(--ui-button-scale)]`; this preserves the whole visual system when the scale changes.
 - **Do not use `100vw` or `calc(100vw - ...)` to constrain width.**
 - `min-w-0` + `truncate` on `label` is required behavior for narrow containers; do not remove it.
-- `md` is the reference baseline: `260 × 75px` before scaling, `130 × 37.5px` at the shipped scale, `25px` reference text, `16px` reference icon, and a `40px` reference trailing badge.
+- `md` is the reference baseline: `260 × 75px`, `25px` text, `16px` icon, and a `40px` trailing badge. Other sizes follow the same design.
 - Set icon sizes in the `leadingIcon` / `trailingIcon` slots of the `size` variant; do not hard-code them in component JSX.
 - After changing sizes, verify at minimum: `200px` parent container, `390px` mobile, and `1440px` desktop have no horizontal overflow, and check that actual SVG dimensions match the table.
 
@@ -214,11 +199,11 @@ Place test files under `test/components/` and name them `*.test.tsx`. Token test
 
 - Accessible names: `label`, `children`, `aria-label`, `aria-labelledby`.
 - Decorative icons: hidden when a name exists, not hidden when no name exists.
-- Size contract: default `md`, the width and height classes for every size, and the shared `[zoom:var(--ui-button-scale)]` on `base`.
-- Icon size contract: `xs` / `sm` / `md` use `size-4`, `lg` uses `size-5`, `xl` uses `size-6`; both icon slots are set together in the `size` variant.
+- Size contract: default `md`, and the width and height classes for every size.
+- Icon size contract: `sm` / `md` use `size-4`, `lg` uses `size-5`, `xl` uses `size-6`; both icon slots are set together in the `size` variant.
 - Responsive contract: no `100vw`; `base` has `max-w-full`; `surface` has `w-full`.
 - Visual regression points: label uses `--ui-drop-shadow-label`; SVG uses `--ui-drop-shadow-icon`; `base` contrast and `surface` brightness are layered; the surface transition covers `translate` / `scale`.
-- Reference baseline: `md` on desktop is `260 × 75px` before scaling, `25px` text, `16px` icon, and a `40px` trailing badge; at the shipped `0.5` scale it renders at `130 × 37.5px`.
+- Reference baseline: `md` on desktop is `260 × 75px`, `25px` text, `16px` icon, and a `40px` trailing badge.
 - Token contract: color, background, border, and shadow utilities resolve from `src/index.css` correctly; after token changes, check actual computed styles and verify `.dark` switches colors, borders, and shadows with the variables.
 - Slot API: `className` applies to `base`; `classNames` can override slots such as `surface`.
 - Interaction: click callbacks and disabled state.

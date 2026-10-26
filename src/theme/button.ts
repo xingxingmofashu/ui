@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 const button = tv({
   slots: {
     base: [
-      "group relative z-[500] inline-flex min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap [zoom:var(--ui-button-scale)]",
+      "group relative z-[500] inline-flex min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
       "appearance-none rounded-full border-0 bg-transparent p-0 [filter:contrast(3)]",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
       "disabled:pointer-events-none disabled:opacity-50",
@@ -42,13 +42,6 @@ const button = tv({
   },
   variants: {
     size: {
-      xs: {
-        base: "w-[9rem]",
-        surface: "h-11 gap-2 px-3",
-        label: "text-sm/[normal]",
-        leadingIcon: "[&_svg]:size-4",
-        trailingIcon: "[&_svg]:size-4",
-      },
       sm: {
         base: "w-[11rem]",
         surface: "h-[3.25rem] gap-2.5 px-3.5",

@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { Button } from "../../src/components/button";
 import button from "../../src/theme/button";
 
-const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+const sizes = ["sm", "md", "lg", "xl"] as const;
 
 function getSlot(element: HTMLElement, slot: string) {
   const node = element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
@@ -120,16 +120,7 @@ describe("Button", () => {
       expect(styles.trailingIcon()).toContain("h-10");
     });
 
-    it("scales the whole button through the shared scale token", () => {
-      for (const size of sizes) {
-        const styles = button({ size });
-
-        expect(styles.base()).toContain("[zoom:var(--ui-button-scale)]");
-      }
-    });
-
     it.each([
-      ["xs", "w-[9rem]", "h-11"],
       ["sm", "w-[11rem]", "h-[3.25rem]"],
       ["md", "w-[16.25rem]", "h-[4.6875rem]"],
       ["lg", "w-[19rem]", "h-[5.25rem]"],
@@ -144,7 +135,6 @@ describe("Button", () => {
     });
 
     it.each([
-      ["xs", "[&_svg]:size-4"],
       ["sm", "[&_svg]:size-4"],
       ["md", "[&_svg]:size-4"],
       ["lg", "[&_svg]:size-5"],

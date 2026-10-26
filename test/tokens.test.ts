@@ -64,7 +64,6 @@ describe("design tokens", () => {
   it("ships light and dark runtime values", async () => {
     const css = await buildStyles([]);
 
-    expect(css).toContain("--ui-button-scale: 0.5;");
     expect(css).toContain("--ui-ink: #3e3e3e;");
     expect(css).toContain("--ui-ink: #f5f5f5;");
     expect(css).toContain("--ui-glass-surface: rgb(255 255 255 / 0.06);");
