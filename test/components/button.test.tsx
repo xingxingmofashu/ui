@@ -43,7 +43,7 @@ describe("Button", () => {
     });
 
     it("supports aria-label for icon-only buttons", () => {
-      render(<Button aria-label="Add item" icon={<svg />} />);
+      render(<Button aria-label="Add item" leadingIcon={<svg />} />);
 
       const buttonElement = screen.getByRole("button", { name: "Add item" });
 
@@ -58,7 +58,7 @@ describe("Button", () => {
       render(
         <>
           <span id="next-label">Next</span>
-          <Button aria-labelledby="next-label" icon={<svg />} />
+          <Button aria-labelledby="next-label" leadingIcon={<svg />} />
         </>,
       );
 
@@ -89,7 +89,7 @@ describe("Button", () => {
     it("does not hide icons when no accessible name is provided", () => {
       render(
         // @ts-expect-error Icon-only buttons must have an accessible name.
-        <Button icon={<svg data-testid="fallback-icon" />} />,
+        <Button leadingIcon={<svg data-testid="fallback-icon" />} />,
       );
 
       const buttonElement = screen.getByRole("button");
@@ -289,16 +289,6 @@ describe("Button", () => {
       );
 
       expect(surface).toHaveClass("flex-row", "flex-nowrap", "items-center");
-    });
-
-    it("accepts icon as an alias for leadingIcon", () => {
-      render(<Button label="Alias" icon={<svg data-testid="alias-icon" />} />);
-
-      const buttonElement = screen.getByRole("button", { name: "Alias" });
-
-      expect(getSlot(buttonElement, "leading-icon")).toContainElement(
-        screen.getByTestId("alias-icon"),
-      );
     });
   });
 

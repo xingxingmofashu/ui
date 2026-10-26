@@ -83,7 +83,6 @@ Button supports:
 
 - `label`: preferred visible text.
 - `children`: fallback for `label`; when both are present, `label` takes precedence.
-- `icon`: alias for `leadingIcon`; when both are present, `leadingIcon` takes precedence.
 - `leadingIcon` / `trailingIcon`: any `ReactNode`, usually an icon; icon size is constrained by `size`, so do not pass `size` at the call site.
 - `size`: `xs | sm | md | lg | xl`, default `md`; controls text, button, and icon sizes together.
 - `classNames`: per-slot style overrides.
@@ -93,7 +92,7 @@ Examples:
 
 ```tsx
 <Button label="Continue" trailingIcon={<ChevronRight />} />
-<Button aria-label="Next" icon={<ChevronRight />} />
+<Button aria-label="Next" leadingIcon={<ChevronRight />} />
 <Button
   label="Full width"
   classNames={{ base: "w-full", surface: "w-full" }}

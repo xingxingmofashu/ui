@@ -20,8 +20,6 @@ type ButtonClassNames = Partial<Record<ButtonSlot, string>>;
 type ButtonContentProps = {
   /** Text or content rendered inside the button. */
   label?: React.ReactNode;
-  /** Leading icon. Alias for `leadingIcon`. */
-  icon?: React.ReactNode;
   /** Icon rendered before the label. */
   leadingIcon?: React.ReactNode;
   /** Icon rendered after the label, inside the circular badge. */
@@ -50,7 +48,6 @@ function Button({
   classNames,
   children,
   label,
-  icon,
   leadingIcon,
   trailingIcon,
   size,
@@ -58,7 +55,6 @@ function Button({
 }: ButtonProps) {
   const ui = button({ size });
   const content = label ?? children;
-  const leading = leadingIcon ?? icon;
   const hasLabel =
     content !== undefined &&
     content !== null &&
@@ -77,13 +73,13 @@ function Button({
       {...props}
     >
       <span data-slot="surface" className={cn(ui.surface(), classNames?.surface)}>
-        {leading != null ? (
+        {leadingIcon != null ? (
           <span
             data-slot="leading-icon"
             className={cn(ui.leadingIcon(), classNames?.leadingIcon)}
             aria-hidden={iconIsDecorative || undefined}
           >
-            {leading}
+            {leadingIcon}
           </span>
         ) : null}
 
