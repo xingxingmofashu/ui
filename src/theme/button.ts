@@ -33,7 +33,7 @@ const button = tv({
       "transition-transform duration-[250ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]",
       "group-hover:scale-110 group-active:scale-[0.94]",
       "motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100",
-      "[&_svg]:h-[40%] [&_svg]:w-[40%] [&_svg]:shrink-0",
+      "[&_svg]:shrink-0",
     ],
     overlay: [
       "pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[calc(100%_-_9px)] w-[calc(100%_-_9px)]",
@@ -46,29 +46,24 @@ const button = tv({
         surface:
           "h-11 min-w-[min(9rem,calc(100vw_-_2.5rem))] gap-2 px-3",
         label: "text-sm",
-        leadingIcon: "[&_svg]:size-4",
       },
       sm: {
         surface:
           "h-[3.25rem] min-w-[min(11rem,calc(100vw_-_2.5rem))] gap-2.5 px-3.5",
         label: "text-base",
-        leadingIcon: "[&_svg]:size-[1.125rem]",
       },
       md: {
         surface:
           "h-[clamp(3.65rem,12vw,4.6875rem)] min-w-[min(16.25rem,calc(100vw_-_2.5rem))] gap-[clamp(0.6rem,3vw,1rem)] px-[0.8rem]",
         label: "text-[clamp(1.0625rem,4vw,1.5625rem)]",
-        leadingIcon: "[&_svg]:size-[clamp(1rem,3.6vw,1.125rem)]",
       },
       lg: {
         surface: "h-[5.25rem] min-w-[min(19rem,calc(100vw_-_2.5rem))] gap-[1.125rem] px-4",
         label: "text-[1.75rem]",
-        leadingIcon: "[&_svg]:size-5",
       },
       xl: {
         surface: "h-[5.75rem] min-w-[min(22rem,calc(100vw_-_2.5rem))] gap-5 px-5",
         label: "text-[2rem]",
-        leadingIcon: "[&_svg]:size-[1.375rem]",
       },
     },
   },
