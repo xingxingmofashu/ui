@@ -9,7 +9,7 @@ const button = tv({
       "disabled:pointer-events-none disabled:opacity-50",
     ],
     surface: [
-      "relative flex w-full min-w-0 max-w-full items-center justify-center rounded-full",
+      "relative flex w-full min-w-0 max-w-full flex-row flex-nowrap items-center justify-center rounded-full",
       "border border-double border-[rgba(51,51,51,0.08)] bg-[rgba(0,0,0,0.02)]",
       "shadow-[inset_2px_-2px_1px_-1px_rgba(255,255,255,0.9),inset_-2px_2px_1px_-1px_rgba(255,255,255,0.9),inset_6px_-6px_1px_-6px_rgba(255,255,255,0.55),inset_-6px_6px_1px_-6px_rgba(255,255,255,0.55),inset_0_0_2px_rgba(0,0,0,0.8),0_4px_8px_rgba(0,0,0,0.2)]",
       "backdrop-blur-[2px] [filter:brightness(0.9)_contrast(3)]",

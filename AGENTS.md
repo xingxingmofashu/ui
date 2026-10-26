@@ -73,6 +73,7 @@ Button 是一个 **玻璃胶囊 CTA**，整体克制、轻量、有物理质感�
 - `classNames` 的 key 使用 camelCase：`base`、`surface`、`label`、`leadingIcon`、`trailingIcon`、`overlay`。
 - DOM 的 `data-slot` 使用 kebab-case：`button`、`surface`、`label`、`leading-icon`、`trailing-icon`、`overlay`。
 - `overlay` 永远 `aria-hidden="true"`，且不可接收指针事件。
+- `surface` 必须保持 `flex-row` + `flex-nowrap` + `items-center`，确保 label 和两个图标默认在同一行。
 
 ## 4. API 约定
 

@@ -231,6 +231,23 @@ describe("Button", () => {
       );
     });
 
+    it("keeps the label and icons on one row", () => {
+      render(
+        <Button
+          label="Both"
+          leadingIcon={<svg />}
+          trailingIcon={<svg />}
+        />,
+      );
+
+      const surface = getSlot(
+        screen.getByRole("button", { name: "Both" }),
+        "surface",
+      );
+
+      expect(surface).toHaveClass("flex-row", "flex-nowrap", "items-center");
+    });
+
     it("accepts icon as an alias for leadingIcon", () => {
       render(<Button label="Alias" icon={<svg data-testid="alias-icon" />} />);
 
