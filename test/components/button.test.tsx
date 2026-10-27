@@ -252,12 +252,12 @@ describe("Button", () => {
   });
 
   describe("styling", () => {
-    it("applies className to the base and classNames to each slot", () => {
+    it("applies className to the base and ui to each slot", () => {
       render(
         <Button
           label="Styled"
           className="custom-base"
-          classNames={{
+          ui={{
             root: "slot-root",
             base: "bg-white",
             label: "slot-label",
@@ -293,7 +293,7 @@ describe("Button", () => {
           label="Custom"
           leadingIcon={<svg />}
           trailingIcon={<svg />}
-          classNames={{
+          ui={{
             leadingIcon: "[&_svg]:size-8",
             trailingIcon: "[&_svg]:size-8",
           }}

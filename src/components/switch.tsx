@@ -15,7 +15,7 @@ type SwitchSlot =
   | "label"
   | "description";
 
-type SwitchClassNames = Partial<Record<SwitchSlot, string>>;
+type SwitchStyle = Partial<Record<SwitchSlot, string>>;
 
 type SwitchSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -35,10 +35,10 @@ type SwitchAccessibleName =
 type SwitchRootProps = React.ComponentProps<typeof UISwitch.Root>;
 
 type SwitchProps = Omit<SwitchRootProps, "className" | "nativeButton"> & {
-  /** Classes merged into the outer root. Use `classNames.base` for the switch itself. */
+  /** Classes merged into the outer root. Use `ui.base` for the switch itself. */
   className?: string;
   /** Classes for individual slots. */
-  classNames?: SwitchClassNames;
+  ui?: SwitchStyle;
   /** Visible label. It is connected to the switch through `aria-labelledby`. */
   label?: React.ReactNode;
   /** Optional supporting text connected through `aria-describedby`. */
@@ -99,7 +99,7 @@ function LiquidGlassFilter({ filterId }: LiquidGlassFilterProps) {
 
 function Switch({
   className,
-  classNames,
+  ui: uiOverrides,
   style,
   label,
   description,
@@ -155,11 +155,11 @@ function Switch({
       data-slot="root"
       data-disabled={disabled || undefined}
       data-readonly={readOnly || undefined}
-      className={cn(ui.root(), className, classNames?.root)}
+      className={cn(ui.root(), className, uiOverrides?.root)}
     >
       <div
         data-slot="container"
-        className={cn(ui.container(), classNames?.container)}
+        className={cn(ui.container(), uiOverrides?.container)}
       >
         <UISwitch.Root
           {...props}
@@ -171,7 +171,7 @@ function Switch({
           data-slot="base"
           data-animating={animating || undefined}
           onCheckedChange={handleCheckedChange}
-          className={cn(ui.base(), classNames?.base)}
+          className={cn(ui.base(), uiOverrides?.base)}
           style={switchStyle}
         >
           <LiquidGlassFilter filterId={filterId} />
@@ -186,7 +186,7 @@ function Switch({
             data-slot="thumb"
             aria-hidden="true"
             onTransitionEnd={handleThumbTransitionEnd}
-            className={cn(ui.thumb(), classNames?.thumb)}
+            className={cn(ui.thumb(), uiOverrides?.thumb)}
           >
             <span aria-hidden="true" data-layer="glass-rim" />
             <span data-layer="glass-lens">
@@ -203,14 +203,14 @@ function Switch({
       {hasText ? (
         <div
           data-slot="wrapper"
-          className={cn(ui.wrapper(), classNames?.wrapper)}
+          className={cn(ui.wrapper(), uiOverrides?.wrapper)}
         >
           {hasLabel ? (
             <label
               data-slot="label"
               id={labelId}
               htmlFor={disabled || readOnly ? undefined : switchId}
-              className={cn(ui.label(), classNames?.label)}
+              className={cn(ui.label(), uiOverrides?.label)}
             >
               {label}
             </label>
@@ -219,7 +219,7 @@ function Switch({
             <p
               data-slot="description"
               id={descriptionId}
-              className={cn(ui.description(), classNames?.description)}
+              className={cn(ui.description(), uiOverrides?.description)}
             >
               {description}
             </p>
@@ -231,4 +231,4 @@ function Switch({
 }
 
 export { Switch };
-export type { SwitchClassNames, SwitchProps, SwitchSize };
+export type { SwitchStyle, SwitchProps, SwitchSize };

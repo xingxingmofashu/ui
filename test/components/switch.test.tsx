@@ -206,12 +206,12 @@ describe("Switch", () => {
       ).toBeNull();
     });
 
-    it("merges className and classNames into their slots", () => {
+    it("merges className and ui into their slots", () => {
       render(
         <Switch
           className="custom-root"
           description="Description slot"
-          classNames={{
+          ui={{
             root: "slot-root",
             container: "slot-container",
             base: "slot-base",

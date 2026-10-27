@@ -1,16 +1,31 @@
 export {
   Button,
-  type ButtonClassNames,
+  type ButtonStyle,
   type ButtonProps,
 } from "./components/button";
 export {
   Card,
-  type CardClassNames,
+  type CardStyle,
   type CardProps,
 } from "./components/card";
 export {
+  Slider,
+  type SliderStyle,
+  type SliderProps,
+  type SliderSlot,
+} from "./components/slider";
+export {
   Switch,
-  type SwitchClassNames,
+  type SwitchStyle,
   type SwitchProps,
   type SwitchSize,
 } from "./components/switch";
+export {
+  ToggleGroup,
+  ToggleGroupItem,
+  type ToggleGroupStyle,
+  type ToggleGroupItemStyle,
+  type ToggleGroupItemProps,
+  type ToggleGroupProps,
+  type ToggleGroupSize,
+} from "./components/toggle-group";

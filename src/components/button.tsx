@@ -15,7 +15,7 @@ type ButtonSlot =
   | "trailingIcon"
   | "overlay";
 
-type ButtonClassNames = Partial<Record<ButtonSlot, string>>;
+type ButtonStyle = Partial<Record<ButtonSlot, string>>;
 
 type ButtonContentProps = {
   /** Text or content rendered inside the button. */
@@ -25,7 +25,7 @@ type ButtonContentProps = {
   /** Icon rendered after the label. */
   trailingIcon?: React.ReactNode;
   /** Classes for individual slots. Use `base` to style the visible glass pill and `root` for the outer click area. */
-  classNames?: ButtonClassNames;
+  ui?: ButtonStyle;
 };
 
 /**
@@ -45,7 +45,7 @@ type ButtonProps = React.ComponentProps<typeof UIButton> &
 
 function Button({
   className,
-  classNames,
+  ui: uiOverrides,
   children,
   label,
   leadingIcon,
@@ -69,14 +69,14 @@ function Button({
   return (
     <UIButton
       data-slot="root"
-      className={cn(ui.root(), className, classNames?.root)}
+      className={cn(ui.root(), className, uiOverrides?.root)}
       {...props}
     >
-      <span data-slot="base" className={cn(ui.base(), classNames?.base)}>
+      <span data-slot="base" className={cn(ui.base(), uiOverrides?.base)}>
         {leadingIcon != null ? (
           <span
             data-slot="leading-icon"
-            className={cn(ui.leadingIcon(), classNames?.leadingIcon)}
+            className={cn(ui.leadingIcon(), uiOverrides?.leadingIcon)}
             aria-hidden={iconIsDecorative || undefined}
           >
             {leadingIcon}
@@ -86,7 +86,7 @@ function Button({
         {hasLabel ? (
           <span
             data-slot="label"
-            className={cn(ui.label(), classNames?.label)}
+            className={cn(ui.label(), uiOverrides?.label)}
           >
             {content}
           </span>
@@ -95,7 +95,7 @@ function Button({
         {trailingIcon != null ? (
           <span
             data-slot="trailing-icon"
-            className={cn(ui.trailingIcon(), classNames?.trailingIcon)}
+            className={cn(ui.trailingIcon(), uiOverrides?.trailingIcon)}
             aria-hidden={iconIsDecorative || undefined}
           >
             {trailingIcon}
@@ -104,7 +104,7 @@ function Button({
 
         <span
           data-slot="overlay"
-          className={cn(ui.overlay(), classNames?.overlay)}
+          className={cn(ui.overlay(), uiOverrides?.overlay)}
           aria-hidden="true"
         />
       </span>
@@ -113,4 +113,4 @@ function Button({
 }
 
 export { Button };
-export type { ButtonClassNames, ButtonProps };
+export type { ButtonStyle, ButtonProps };

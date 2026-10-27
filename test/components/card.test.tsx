@@ -168,7 +168,7 @@ describe("Card", () => {
     it("keeps the glass layers private", () => {
       render(
         // @ts-expect-error The glass layer is an implementation detail.
-        <Card classNames={{ surface: "custom-surface" }}>Body</Card>,
+        <Card ui={{ surface: "custom-surface" }}>Body</Card>,
       );
 
       const cardElement = getCard("Body");
@@ -180,14 +180,14 @@ describe("Card", () => {
   });
 
   describe("styling", () => {
-    it("applies className to the root and classNames to each public slot", () => {
+    it("applies className to the root and ui to each public slot", () => {
       render(
         <Card
           title="Styled"
           description="Slot overrides"
           footer="Footer"
           className="custom-root"
-          classNames={{
+          ui={{
             root: "slot-root",
             header: "slot-header",
             title: "slot-title",

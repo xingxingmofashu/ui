@@ -12,7 +12,9 @@ Source files and tests are the source of truth.
 | --- | --- | --- | --- |
 | Button | `src/components/button.tsx` | `src/theme/button.ts` | `test/components/button.test.tsx` |
 | Card | `src/components/card.tsx` | `src/theme/card.ts` | `test/components/card.test.tsx` |
+| Slider | `src/components/slider.tsx` | `src/theme/slider.ts` | `test/components/slider.test.tsx` |
 | Switch | `src/components/switch.tsx` | `src/theme/switch.ts` | `test/components/switch.test.tsx` |
+| Toggle Group | `src/components/toggle-group.tsx` | `src/theme/toggle-group.ts` | `test/components/toggle-group.test.tsx` |
 
 ## Package files
 

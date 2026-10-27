@@ -13,13 +13,13 @@ type CardSlot =
   | "body"
   | "footer";
 
-type CardClassNames = Partial<Record<CardSlot, string>>;
+type CardStyle = Partial<Record<CardSlot, string>>;
 
 type CardProps = Omit<React.ComponentProps<"div">, "title"> & {
   /** Classes merged into the root element. */
   className?: string;
   /** Classes for individual slots. */
-  classNames?: CardClassNames;
+  ui?: CardStyle;
   /** Optional visible heading rendered inside the card header. */
   title?: React.ReactNode;
   /** Optional supporting copy rendered under the title. */
@@ -35,7 +35,7 @@ function hasContent(value: React.ReactNode) {
 
 function Card({
   className,
-  classNames,
+  ui: uiOverrides,
   title,
   description,
   footer,
@@ -50,7 +50,7 @@ function Card({
   return (
     <div
       data-slot="root"
-      className={cn(ui.root(), className, classNames?.root)}
+      className={cn(ui.root(), className, uiOverrides?.root)}
       {...props}
     >
       <div aria-hidden="true" className={ui.glass()}>
@@ -61,12 +61,12 @@ function Card({
         {hasHeader ? (
           <div
             data-slot="header"
-            className={cn(ui.header(), classNames?.header)}
+            className={cn(ui.header(), uiOverrides?.header)}
           >
             {hasContent(title) ? (
               <div
                 data-slot="title"
-                className={cn(ui.title(), classNames?.title)}
+                className={cn(ui.title(), uiOverrides?.title)}
               >
                 {title}
               </div>
@@ -74,7 +74,7 @@ function Card({
             {hasContent(description) ? (
               <div
                 data-slot="description"
-                className={cn(ui.description(), classNames?.description)}
+                className={cn(ui.description(), uiOverrides?.description)}
               >
                 {description}
               </div>
@@ -83,7 +83,7 @@ function Card({
         ) : null}
 
         {hasBody ? (
-          <div data-slot="body" className={cn(ui.body(), classNames?.body)}>
+          <div data-slot="body" className={cn(ui.body(), uiOverrides?.body)}>
             {children}
           </div>
         ) : null}
@@ -91,7 +91,7 @@ function Card({
         {hasFooter ? (
           <div
             data-slot="footer"
-            className={cn(ui.footer(), classNames?.footer)}
+            className={cn(ui.footer(), uiOverrides?.footer)}
           >
             {footer}
           </div>
@@ -102,4 +102,4 @@ function Card({
 }
 
 export { Card };
-export type { CardClassNames, CardProps };
+export type { CardStyle, CardProps };

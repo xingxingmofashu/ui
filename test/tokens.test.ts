@@ -7,7 +7,9 @@ import { describe, expect, it } from "vitest";
 
 import buttonTheme from "../src/theme/button";
 import cardTheme from "../src/theme/card";
+import sliderTheme from "../src/theme/slider";
 import theme from "../src/theme/switch";
+import toggleGroupTheme from "../src/theme/toggle-group";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
   "\\",
@@ -56,6 +58,35 @@ function themeCandidates() {
 
     return switchSlots.map((slot) => switchStyles[slot]());
   });
+  const toggleGroupSlots = [
+    "root",
+    "glass",
+    "indicator",
+    "item",
+    "content",
+    "icon",
+    "label",
+  ] as const;
+  const toggleGroupSizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const toggleGroupCandidates = toggleGroupSizes.flatMap((size) => {
+    const toggleGroupStyles = toggleGroupTheme({ size });
+
+    return toggleGroupSlots.map((slot) => toggleGroupStyles[slot]());
+  });
+  const sliderSlots = [
+    "root",
+    "header",
+    "label",
+    "value",
+    "description",
+    "filter",
+    "control",
+    "track",
+    "indicator",
+    "thumb",
+  ] as const;
+  const sliderStyles = sliderTheme();
+  const sliderCandidates = sliderSlots.map((slot) => sliderStyles[slot]());
 
   return [
     buttonStyles.root(),
@@ -66,6 +97,8 @@ function themeCandidates() {
     buttonStyles.overlay(),
     ...cardSlots.map((slot) => cardStyles[slot]()),
     ...switchCandidates,
+    ...toggleGroupCandidates,
+    ...sliderCandidates,
   ]
     .join(" ")
     .split(/\s+/)
@@ -159,6 +192,71 @@ describe("design tokens", () => {
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
   });
 
+  it("compiles the toggle group glass controls from the theme recipe", async () => {
+    const css = await buildStyles(themeCandidates());
+
+    expect(css).toContain(
+      "backdrop-filter: blur(8px) saturate(150%);",
+    );
+    expect(css).toContain("background-color: var(--ui-toggle-group-thumb);");
+    expect(css).toContain(
+      "border-color: var(--ui-toggle-group-thumb-rim);",
+    );
+    expect(css).toContain(
+      "--tw-shadow: var(--ui-toggle-group-thumb-shadow);",
+    );
+    expect(css).toContain(
+      "width: var(--ui-toggle-group-indicator-width);",
+    );
+    expect(css).toContain(
+      "height: var(--ui-toggle-group-indicator-height);",
+    );
+    expect(css).toContain(
+      "translate: var(--ui-toggle-group-indicator-x) var(--ui-toggle-group-indicator-y);",
+    );
+    expect(css).toContain("transform-origin: var(--ui-toggle-group-origin);");
+    expect(css).toContain("color: var(--ui-ink-active);");
+    expect(css).toContain("--ui-toggle-group-item-height: 24px;");
+    expect(css).toContain("--ui-toggle-group-item-height: 32px;");
+    expect(css).toContain("--ui-toggle-group-item-height: 40px;");
+    expect(css).toContain("--ui-toggle-group-item-px: 12px;");
+    expect(css).toContain("--ui-toggle-group-icon-size: 20px;");
+    expect(css).toContain("--ui-toggle-group-padding: 4px;");
+    expect(css).toContain("--ui-toggle-group-gap: 3px;");
+    expect(css).toContain("--ui-toggle-group-vertical-radius: 20px;");
+    expect(css).toContain(
+      "border-radius: var(--ui-toggle-group-vertical-radius);",
+    );
+    expect(css).toContain("overflow: hidden;");
+    expect(css).toContain("border-color: var(--ui-glass-inner-border);");
+  });
+
+  it("compiles the slider glass controls from the theme recipe", async () => {
+    const css = await buildStyles(themeCandidates());
+
+    expect(css).toContain(
+      "--ui-slider-track: color-mix(in srgb,var(--ui-ink) 14%,transparent);",
+    );
+    expect(css).toContain("--ui-slider-fill-from: #49a3fc;");
+    expect(css).toContain("--ui-slider-fill-to: #3681ee;");
+    expect(css).toContain("--ui-slider-thumb-width: 40px;");
+    expect(css).toContain("--ui-slider-track-height: 6px;");
+    expect(css).toContain("--ui-slider-thumb-height: 24px;");
+    expect(css).toContain(
+      "background-image: linear-gradient(117deg,var(--ui-slider-fill-from) 0%,var(--ui-slider-fill-to) 100%);",
+    );
+    expect(css).toContain(
+      "backdrop-filter: blur(1.5px) saturate(160%) var(--ui-slider-filter);",
+    );
+    expect(css).toContain(
+      "inset 0 1px 2px var(--tw-shadow-color, rgb(0 0 0/0.14))",
+    );
+    expect(css).toContain("scale: 1.08 0.96;");
+    expect(css).toContain("[data-layer=thumb-glass]");
+    expect(css).toContain("--ui-slider-control-height: calc(");
+    expect(css).toContain("background-image: radial-gradient(");
+  });
+
   it("ships light and dark runtime values", async () => {
     const css = await buildStyles([]);
 
@@ -191,6 +289,7 @@ describe("design tokens", () => {
     expect(source).not.toContain('@import "./switch.css"');
     expect(source).not.toContain(".ui-switch-");
     expect(source).not.toContain("--ui-switch");
+    expect(source).not.toContain("--ui-toggle-group");
   });
 
   it("keeps switch styling and tokens in the tailwind-variants theme", async () => {
@@ -228,5 +327,26 @@ describe("design tokens", () => {
     expect(recipe).not.toContain(".css");
     expect(tokens).not.toContain(".ui-card-");
     expect(tokens).not.toContain("backdrop-filter");
+  });
+
+  it("keeps toggle group styling in the tailwind-variants theme", async () => {
+    const recipe = await readFile(
+      new URL("../src/theme/toggle-group.ts", import.meta.url),
+      "utf8",
+    );
+
+    expect(recipe).toContain('from "tailwind-variants"');
+    expect(recipe).toContain("bg-glass-surface");
+    expect(recipe).toContain("shadow-glass");
+    expect(recipe).toContain("--ui-toggle-group-thumb:");
+    expect(recipe).toContain("--ui-toggle-group-thumb-shadow:");
+    expect(recipe).toContain("data-[orientation=vertical]:items-stretch");
+    expect(recipe).toContain("group-data-[multiple]/toggle-group");
+    expect(recipe).toContain(
+      "[translate:var(--ui-toggle-group-indicator-x)",
+    );
+    expect(recipe).toContain("overflow-hidden");
+    expect(recipe).not.toContain("LIQUID_GLASS_MAP");
+    expect(recipe).not.toContain(".css");
   });
 });
