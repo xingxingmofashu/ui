@@ -137,14 +137,14 @@ describe("Button", () => {
       expect(styles.trailingIcon()).not.toContain("shadow-glass-icon");
     });
 
-    it("clips decorative shadows and highlights to the capsule", () => {
+    it("clips the glass highlights to the capsule", () => {
       const styles = button();
 
       expect(styles.base()).toContain("overflow-hidden");
       expect(styles.base()).toContain("rounded-full");
-      expect(styles.label()).toContain("var(--ui-drop-shadow-label)");
-      expect(styles.leadingIcon()).toContain("var(--ui-drop-shadow-icon)");
-      expect(styles.trailingIcon()).toContain("var(--ui-drop-shadow-icon)");
+      expect(styles.label()).not.toContain("var(--ui-drop-shadow-label)");
+      expect(styles.leadingIcon()).not.toContain("var(--ui-drop-shadow-icon)");
+      expect(styles.trailingIcon()).not.toContain("var(--ui-drop-shadow-icon)");
     });
 
     it.each([
@@ -215,22 +215,16 @@ describe("Button", () => {
       }
     });
 
-    it("uses the reference font stack and drop shadows", () => {
+    it("uses the reference font stack", () => {
       for (const size of sizes) {
         const styles = button({ size });
 
         expect(styles.label()).toContain(
           "[font-family:system-ui,-apple-system,sans-serif]",
         );
-        expect(styles.label()).toContain(
-          "[filter:var(--ui-drop-shadow-label)]",
-        );
-        expect(styles.leadingIcon()).toContain(
-          "[&_svg]:[filter:var(--ui-drop-shadow-icon)]",
-        );
-        expect(styles.trailingIcon()).toContain(
-          "[&_svg]:[filter:var(--ui-drop-shadow-icon)]",
-        );
+        expect(styles.label()).not.toContain("drop-shadow");
+        expect(styles.leadingIcon()).not.toContain("drop-shadow");
+        expect(styles.trailingIcon()).not.toContain("drop-shadow");
       }
     });
 

@@ -22,14 +22,13 @@ export default tv({
     ],
     label: [
       "min-w-0 truncate [font-family:system-ui,-apple-system,sans-serif] font-normal text-ink",
-      "[filter:var(--ui-drop-shadow-label)]",
       "group-active:text-ink-active",
     ],
     leadingIcon: [
-      "inline-flex shrink-0 items-center justify-center text-ink [&_svg]:block [&_svg]:shrink-0 [&_svg]:[filter:var(--ui-drop-shadow-icon)]",
+      "inline-flex shrink-0 items-center justify-center text-ink [&_svg]:block [&_svg]:shrink-0",
     ],
     trailingIcon: [
-      "inline-flex shrink-0 items-center justify-center text-ink [&_svg]:block [&_svg]:shrink-0 [&_svg]:[filter:var(--ui-drop-shadow-icon)]",
+      "inline-flex shrink-0 items-center justify-center text-ink [&_svg]:block [&_svg]:shrink-0",
     ],
     overlay: [
       "pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[calc(100%_-_9px)] w-[calc(100%_-_9px)]",

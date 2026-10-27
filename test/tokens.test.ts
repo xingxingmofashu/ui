@@ -83,7 +83,7 @@ describe("design tokens", () => {
     expect(css).toContain("var(--ui-glass-highlight)");
     expect(css).toContain("var(--ui-glass-glare-stop)");
     expect(css).toContain("filter: var(--ui-drop-shadow-label);");
-    expect(css).toContain("filter: var(--ui-drop-shadow-icon);");
+    expect(css).not.toContain("filter: var(--ui-drop-shadow-icon);");
     expect(css).toContain("filter: contrast(3);");
     expect(css).toContain("filter: brightness(0.9);");
     expect(css).toContain(
