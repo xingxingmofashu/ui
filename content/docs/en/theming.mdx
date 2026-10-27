@@ -1,0 +1,149 @@
+---
+title: "Theming"
+description: "Override design tokens, switch between light and dark, and use Tailwind aliases."
+---
+
+All design tokens live in `@xingxingmofashu.me/ui/index.css`. Components consume tokens without hard-coded brand colors, so the application can override them completely.
+
+## Tokens
+
+| Token | Purpose |
+| --- | --- |
+| `--ui-ink` | Primary text and icon color. |
+| `--ui-ink-active` | Primary color while pressed. |
+| `--ui-glass-surface` | Base color of the glass surface. |
+| `--ui-glass-border` | Outer glass border. |
+| `--ui-glass-focus` | Keyboard focus outline. |
+| `--ui-glass-inner-border` | Inner highlight border. |
+| `--ui-glass-rim` | Rim around the glass edge. |
+| `--ui-glass-highlight` | Diagonal highlight. |
+| `--ui-glass-glare-stop` | Position of the highlight gradient. |
+| `--ui-glass-icon` | Icon color. |
+| `--ui-glass-icon-foreground` | Foreground color of icon badges. |
+| `--ui-drop-shadow-label` | Text drop shadow. |
+| `--ui-drop-shadow-icon` | Icon drop shadow. |
+| `--ui-shadow-glass` | Composite glass shadow. |
+| `--ui-shadow-glass-icon` | Icon badge shadow. |
+
+See `packages/ui/src/index.css` for the full values.
+
+## Override tokens
+
+Override the variables in the application's global styles. It is best to update both `.light` and `.dark` so custom values survive theme changes:
+
+```css title="app/globals.css"
+:root,
+.light {
+  --ui-ink: #1f2937;
+  --ui-glass-surface: rgb(255 255 255 / 0.4);
+  --ui-glass-border: rgb(15 23 42 / 0.12);
+}
+
+.dark {
+  --ui-ink: #f8fafc;
+  --ui-glass-surface: rgb(15 23 42 / 0.4);
+  --ui-glass-border: rgb(248 250 252 / 0.16);
+}
+```
+
+<Callout title="Start with black and white">
+  For a simple recolor, override `--ui-ink`, `--ui-glass-surface`, and
+  `--ui-glass-border` first. Those three usually produce a consistent result. The docs
+  themselves only use neutral colors.
+</Callout>
+
+## Light and dark mode
+
+Components read tokens from the `.light` / `.dark` class. Use `next-themes` or a similar solution to switch the class on the root element:
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider } from "next-themes";
+
+<html lang="en" suppressHydrationWarning>
+  <body>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      {children}
+    </ThemeProvider>
+  </body>
+</html>;
+```
+
+## Tailwind aliases
+
+`index.css` exposes ready-to-use utilities through `@theme inline`:
+
+| Alias | Token |
+| --- | --- |
+| `text-ink` / `bg-ink` | `--ui-ink` |
+| `text-ink-active` / `bg-ink-active` | `--ui-ink-active` |
+| `bg-glass-surface` | `--ui-glass-surface` |
+| `border-glass-border` | `--ui-glass-border` |
+| `outline-glass-focus` | `--ui-glass-focus` |
+| `border-glass-inner-border` | `--ui-glass-inner-border` |
+| `border-glass-rim` | `--ui-glass-rim` |
+| `bg-glass-highlight` | `--ui-glass-highlight` |
+| `text-glass-icon` | `--ui-glass-icon` |
+| `text-glass-icon-foreground` | `--ui-glass-icon-foreground` |
+| `shadow-glass` | `--ui-shadow-glass` |
+| `shadow-glass-icon` | `--ui-shadow-glass-icon` |
+
+## Custom variants
+
+The UI package registers two Tailwind custom variants, `ui-light` and `ui-dark`:
+
+```tsx
+<div className="bg-white ui-dark:bg-slate-900">...</div>
+```
+
+You can also use the application's own `dark` variant:
+
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+## Component-level overrides
+
+Besides global tokens, each component supports:
+
+- `className`: targets the component root.
+- `classNames`: overrides internal slots, such as Button's `base`, Card's `body`, or Switch's `thumb`.
+
+Component styles live in tailwind-variants recipes under `packages/ui/src/theme/*.ts`; `index.css` only contains tokens.
+
+## Monochrome Switch track
+
+The switch track colors are controlled by `--ui-switch-on` / `--ui-switch-off` inside the component. The docs keep the real Switch and only override these variables inline:
+
+```tsx
+<Switch
+  label="Enable notifications"
+  style={{
+    "--ui-switch-on": "var(--docs-switch-on)",
+    "--ui-switch-off": "var(--docs-switch-off)",
+  }}
+/>
+```
+
+```css
+:root {
+  --docs-switch-on: #171717;
+  --docs-switch-off: #cfcfcf;
+}
+
+.dark {
+  --docs-switch-on: #fafafa;
+  --docs-switch-off: #3f3f46;
+}
+```
+
+## Fumadocs theme
+
+The docs use Fumadocs' `black` theme with the Glass layout:
+
+```css title="app/globals.css"
+@import "fumadocs-ui/css/generated/glass.css";
+@import "fumadocs-ui/css/black.css";
+@import "fumadocs-ui/css/preset.css";
+```
+
+Callout colors, syntax highlighting, and link colors are also overridden to keep the whole site monochrome.

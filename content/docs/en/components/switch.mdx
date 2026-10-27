@@ -1,0 +1,136 @@
+---
+title: "Switch"
+description: "A switch with a liquid glass thumb, label, and description. Previews use a monochrome track."
+---
+
+Switch is built on Base UI's `Switch.Root` and supports controlled and uncontrolled usage. A visible `label` is automatically connected through `aria-labelledby`; without visible text, you must provide `aria-label` or `aria-labelledby`.
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. The track and text scale together with the size.
+
+<SwitchSizes />
+
+| Size | Track | Text |
+| --- | --- | --- |
+| `xs` | 48 × 24px | `text-xs` |
+| `sm` | 56 × 28px | `text-xs` |
+| `md` | 64 × 32px | `text-sm` |
+| `lg` | 72 × 36px | `text-sm` |
+| `xl` | 80 × 40px | `text-base` |
+
+## Controlled usage
+
+<SwitchControlled />
+
+```tsx
+"use client";
+
+import { Switch } from "@xingxingmofashu.me/ui";
+import * as React from "react";
+
+export function ControlledSwitch() {
+  const [checked, setChecked] = React.useState(true);
+
+  return (
+    <Switch
+      checked={checked}
+      onCheckedChange={(value) => setChecked(value)}
+      label="Receive notifications"
+      description={
+        checked
+          ? "New messages will be sent to your inbox."
+          : "No notifications will be sent right now."
+      }
+    />
+  );
+}
+```
+
+## Basic usage
+
+```tsx
+import { Switch } from "@xingxingmofashu.me/ui";
+
+<Switch
+  label="Enable notifications"
+  description="New messages will be sent to your inbox."
+  defaultChecked
+/>;
+```
+
+Without a visible label, use `aria-label`:
+
+```tsx
+<Switch aria-label="Enable notifications" defaultChecked />
+```
+
+## Disabled and read-only
+
+<SwitchStates />
+
+```tsx
+<Switch label="Disabled" disabled />
+<Switch label="Read-only" readOnly defaultChecked />
+```
+
+## Monochrome track
+
+The UI package ships a switch track with a green hue. The docs do not duplicate the component; they keep rendering the real Switch and override the track colors with inline variables:
+
+```tsx
+<Switch
+  label="Enable notifications"
+  style={{
+    "--ui-switch-on": "var(--docs-switch-on)",
+    "--ui-switch-off": "var(--docs-switch-off)",
+  }}
+/>
+```
+
+```css
+:root {
+  --docs-switch-on: #171717;
+  --docs-switch-off: #cfcfcf;
+}
+
+.dark {
+  --docs-switch-on: #fafafa;
+  --docs-switch-off: #3f3f46;
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible label, connected through `aria-labelledby`. |
+| `description` | `ReactNode` | — | Supporting text, connected through `aria-describedby`. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls track size and text size. |
+| `checked` | `boolean` | — | Controlled checked state. |
+| `defaultChecked` | `boolean` | — | Uncontrolled initial state. |
+| `onCheckedChange` | `(checked: boolean, details) => void` | — | Called when the checked state changes. |
+| `disabled` | `boolean` | `false` | Disables the switch. |
+| `readOnly` | `boolean` | `false` | Keeps the switch from toggling. |
+| `className` | `string` | — | Merged into the outermost `root`. |
+| `classNames` | `Partial<Record<SwitchSlot, string>>` | — | Overrides internal slot styles. |
+
+All other props are forwarded to Base UI's `Switch.Root`.
+
+### classNames slots
+
+| Slot | Description |
+| --- | --- |
+| `root` | Outermost container with the switch and text. |
+| `container` | Layout container for the switch itself. |
+| `base` | Switch track. |
+| `thumb` | Liquid glass thumb. |
+| `wrapper` | Label and description container. |
+| `label` | Visible label. |
+| `description` | Supporting text. |
+
+## Accessibility
+
+- With a `label`, the accessible name is connected automatically. Without visible text, provide `aria-label` or `aria-labelledby`.
+- `description` is connected as `aria-describedby`.
+- `disabled` and `readOnly` are reflected on the outer state, and both styles and interactions update accordingly.

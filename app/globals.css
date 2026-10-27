@@ -1,0 +1,77 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/generated/glass.css";
+@import "fumadocs-ui/css/black.css";
+@import "fumadocs-ui/css/preset.css";
+@import "@xingxingmofashu.me/ui/index.css";
+
+@source "../../ui/src";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --docs-switch-on: #171717;
+  --docs-switch-off: #cfcfcf;
+  --docs-grid-line: rgb(0 0 0 / 0.06);
+  --docs-halo: rgb(0 0 0 / 0.05);
+
+  --color-fd-info: hsl(0 0% 36%);
+  --color-fd-warning: hsl(0 0% 28%);
+  --color-fd-error: hsl(0 0% 20%);
+  --color-fd-success: hsl(0 0% 34%);
+  --color-fd-idea: hsl(0 0% 42%);
+  --color-fd-diff-add: hsl(0 0% 40% / 0.12);
+  --color-fd-diff-remove: hsl(0 0% 20% / 0.1);
+  --color-fd-diff-add-symbol: hsl(0 0% 30%);
+  --color-fd-diff-remove-symbol: hsl(0 0% 45%);
+}
+
+.dark {
+  --docs-switch-on: #fafafa;
+  --docs-switch-off: #3f3f46;
+  --docs-grid-line: rgb(255 255 255 / 0.07);
+  --docs-halo: rgb(255 255 255 / 0.06);
+
+  --color-fd-info: hsl(0 0% 74%);
+  --color-fd-warning: hsl(0 0% 82%);
+  --color-fd-error: hsl(0 0% 72%);
+  --color-fd-success: hsl(0 0% 74%);
+  --color-fd-idea: hsl(0 0% 78%);
+  --color-fd-diff-add: hsl(0 0% 100% / 0.08);
+  --color-fd-diff-remove: hsl(0 0% 0% / 0.28);
+  --color-fd-diff-add-symbol: hsl(0 0% 72%);
+  --color-fd-diff-remove-symbol: hsl(0 0% 58%);
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: var(--color-fd-background);
+  color: var(--color-fd-foreground);
+}
+
+/* A quiet monochrome grid used by live component stages. */
+.docs-grid {
+  background-image:
+    linear-gradient(var(--docs-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--docs-grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.docs-halo {
+  background:
+    radial-gradient(36rem 24rem at 18% 0%, var(--docs-halo), transparent 70%),
+    radial-gradient(30rem 22rem at 90% 12%, var(--docs-halo), transparent 72%);
+}
+
+/* Keep syntax highlighting legible while staying strictly black and white. */
+.shiki,
+.shiki span {
+  filter: grayscale(1);
+}
+
+/* The UI package uses light scrollbars inside its glass surfaces. */
+* {
+  scrollbar-color: var(--color-fd-border) transparent;
+}

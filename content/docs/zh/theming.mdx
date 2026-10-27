@@ -1,0 +1,148 @@
+---
+title: "主题"
+description: "覆盖设计 token、切换明暗模式，并使用 Tailwind 别名。"
+---
+
+所有设计 token 都定义在 `@xingxingmofashu.me/ui/index.css` 中。组件只消费 token，不内置主题色，因此可以在应用层完整覆盖。
+
+## Token
+
+| Token | 用途 |
+| --- | --- |
+| `--ui-ink` | 文字与图标的主色。 |
+| `--ui-ink-active` | 按下状态的主色。 |
+| `--ui-glass-surface` | 玻璃表面的底色。 |
+| `--ui-glass-border` | 外层玻璃边框。 |
+| `--ui-glass-focus` | 键盘焦点轮廓。 |
+| `--ui-glass-inner-border` | 内部高光边框。 |
+| `--ui-glass-rim` | 边缘玻璃圈。 |
+| `--ui-glass-highlight` | 斜向高光。 |
+| `--ui-glass-glare-stop` | 高光渐变的位置。 |
+| `--ui-glass-icon` | 图标主色。 |
+| `--ui-glass-icon-foreground` | 图标徽标的前景色。 |
+| `--ui-drop-shadow-label` | 文字投影。 |
+| `--ui-drop-shadow-icon` | 图标投影。 |
+| `--ui-shadow-glass` | 玻璃表面的复合阴影。 |
+| `--ui-shadow-glass-icon` | 图标徽标阴影。 |
+
+完整的值以 `packages/ui/src/index.css` 为准。
+
+## 覆盖 Token
+
+在应用全局样式中覆盖对应变量即可。建议同时覆盖 `.light` 与 `.dark`，避免切换主题时丢失自定义值：
+
+```css title="app/globals.css"
+:root,
+.light {
+  --ui-ink: #1f2937;
+  --ui-glass-surface: rgb(255 255 255 / 0.4);
+  --ui-glass-border: rgb(15 23 42 / 0.12);
+}
+
+.dark {
+  --ui-ink: #f8fafc;
+  --ui-glass-surface: rgb(15 23 42 / 0.4);
+  --ui-glass-border: rgb(248 250 252 / 0.16);
+}
+```
+
+<Callout title="从黑白开始">
+  只改主色时，优先覆盖 `--ui-ink`、`--ui-glass-surface` 和 `--ui-glass-border`
+  这三组变量，通常就能得到一致的效果。文档站本身只使用中性色。
+</Callout>
+
+## 明暗模式
+
+组件通过 `.light` / `.dark` 类名读取 token。使用 `next-themes` 等方案在根元素切换 `class` 即可：
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider } from "next-themes";
+
+<html lang="zh-CN" suppressHydrationWarning>
+  <body>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      {children}
+    </ThemeProvider>
+  </body>
+</html>;
+```
+
+## Tailwind 别名
+
+`index.css` 通过 `@theme inline` 暴露了可直接使用的工具类：
+
+| 别名 | 对应 token |
+| --- | --- |
+| `text-ink` / `bg-ink` | `--ui-ink` |
+| `text-ink-active` / `bg-ink-active` | `--ui-ink-active` |
+| `bg-glass-surface` | `--ui-glass-surface` |
+| `border-glass-border` | `--ui-glass-border` |
+| `outline-glass-focus` | `--ui-glass-focus` |
+| `border-glass-inner-border` | `--ui-glass-inner-border` |
+| `border-glass-rim` | `--ui-glass-rim` |
+| `bg-glass-highlight` | `--ui-glass-highlight` |
+| `text-glass-icon` | `--ui-glass-icon` |
+| `text-glass-icon-foreground` | `--ui-glass-icon-foreground` |
+| `shadow-glass` | `--ui-shadow-glass` |
+| `shadow-glass-icon` | `--ui-shadow-glass-icon` |
+
+## 自定义变体
+
+UI 包注册了 `ui-light` 和 `ui-dark` 两个 Tailwind 自定义变体：
+
+```tsx
+<div className="bg-white ui-dark:bg-slate-900">...</div>
+```
+
+也可以使用应用自己的 `dark` 变体：
+
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+## 组件级覆盖
+
+除了全局 token，每个组件都支持：
+
+- `className`：作用于组件根元素。
+- `classNames`：覆盖内部槽位，例如 Button 的 `base`、Card 的 `body`、Switch 的 `thumb`。
+
+组件样式位于 `packages/ui/src/theme/*.ts` 的 tailwind-variants recipe 中，`index.css` 只保留 token。
+
+## Switch 的黑白轨道
+
+Switch 的轨道颜色由组件内部的 `--ui-switch-on` / `--ui-switch-off` 控制。文档站继续渲染真实 Switch，只在内联样式中覆盖这两个变量：
+
+```tsx
+<Switch
+  label="启用通知"
+  style={{
+    "--ui-switch-on": "var(--docs-switch-on)",
+    "--ui-switch-off": "var(--docs-switch-off)",
+  }}
+/>
+```
+
+```css
+:root {
+  --docs-switch-on: #171717;
+  --docs-switch-off: #cfcfcf;
+}
+
+.dark {
+  --docs-switch-on: #fafafa;
+  --docs-switch-off: #3f3f46;
+}
+```
+
+## Fumadocs 主题
+
+文档站使用 Fumadocs 的 `black` 主题与 Glass layout：
+
+```css title="app/globals.css"
+@import "fumadocs-ui/css/generated/glass.css";
+@import "fumadocs-ui/css/black.css";
+@import "fumadocs-ui/css/preset.css";
+```
+
+此外还覆盖了提示框颜色、代码高亮与链接颜色，使整个站点保持黑白。

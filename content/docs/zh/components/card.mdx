@@ -1,0 +1,86 @@
+---
+title: "Card"
+description: "由 header、body 和 footer 组成的液态玻璃卡片。"
+---
+
+Card 使用两层结构：一层负责玻璃表面与高光，另一层负责内容布局。`className` 作用于 `root`，可以用 `classNames` 覆盖每个内部槽位。
+
+<CardPreview />
+
+## 基础用法
+
+```tsx
+import { Button, Card } from "@xingxingmofashu.me/ui";
+import { ArrowRight } from "lucide-react";
+
+<Card
+  className="max-w-md"
+  title="液态玻璃"
+  description="纯 CSS 磨砂玻璃面板。"
+  footer={<Button size="sm" label="查看" trailingIcon={<ArrowRight />} />}
+>
+  <div className="text-sm text-ink/70">
+    把卡片放在有细节的背景上，就能看到玻璃效果。
+  </div>
+</Card>;
+```
+
+## 仅内容
+
+不传 `title`、`description` 或 `footer` 时，对应的区域不会渲染：
+
+```tsx
+<Card className="max-w-sm">
+  <div className="text-sm text-ink/70">只有 body 的卡片。</div>
+</Card>
+```
+
+## 自定义槽位
+
+`classNames` 可以覆盖 header、body、title 等内部结构，而 `className` 始终作用于 root：
+
+```tsx
+<Card
+  className="max-w-md"
+  classNames={{
+    header: "border-b border-glass-border",
+    body: "bg-glass-surface/50",
+    title: "tracking-tight",
+  }}
+  title="自定义样式"
+  description="通过 classNames 调整内部结构。"
+>
+  <div className="text-sm text-ink/70">内容是默认插槽。</div>
+</Card>
+```
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | 卡片标题。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `footer` | `ReactNode` | — | 底部操作区。 |
+| `children` | `ReactNode` | — | 卡片主体内容。 |
+| `className` | `string` | — | 合并到 `root`。 |
+| `classNames` | `Partial<Record<CardSlot, string>>` | — | 覆盖内部槽位样式。 |
+
+其余属性会透传给根 `div`，例如 `id`、`role`、`onClick`。
+
+### classNames 槽位
+
+| 槽位 | 说明 |
+| --- | --- |
+| `root` | 最外层容器。 |
+| `header` | 标题与描述区域。 |
+| `title` | 标题元素。 |
+| `description` | 描述元素。 |
+| `body` | 主体内容区域。 |
+| `footer` | 底部区域。 |
+
+## 结构说明
+
+- Card 没有 `size` 属性，内边距固定为 `p-4 sm:px-6` / `p-4 sm:p-6` / `p-4 sm:px-6`。
+- 标题使用 `font-semibold`，描述使用 `mt-1 text-sm`。
+- 卡片本身不是按钮。需要整卡可点击时，请由调用方补充 `role`、键盘行为和焦点样式。
+- 玻璃效果需要背景有细节才能显现，纯色背景上会比较克制。

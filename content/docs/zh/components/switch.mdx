@@ -1,0 +1,134 @@
+---
+title: "Switch"
+description: "带液态玻璃滑块、标签和描述文本的开关。文档预览使用黑白轨道。"
+---
+
+Switch 基于 Base UI 的 `Switch.Root`，支持受控与非受控用法。有可见 `label` 时会自动通过 `aria-labelledby` 关联；没有可见标签时必须提供 `aria-label` 或 `aria-labelledby`。
+
+## 尺寸
+
+支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。开关尺寸随档位变化，文字大小也会同步调整。
+
+<SwitchSizes />
+
+| 尺寸 | 轨道尺寸 | 文字 |
+| --- | --- | --- |
+| `xs` | 48 × 24px | `text-xs` |
+| `sm` | 56 × 28px | `text-xs` |
+| `md` | 64 × 32px | `text-sm` |
+| `lg` | 72 × 36px | `text-sm` |
+| `xl` | 80 × 40px | `text-base` |
+
+## 受控用法
+
+<SwitchControlled />
+
+```tsx
+"use client";
+
+import { Switch } from "@xingxingmofashu.me/ui";
+import * as React from "react";
+
+export function ControlledSwitch() {
+  const [checked, setChecked] = React.useState(true);
+
+  return (
+    <Switch
+      checked={checked}
+      onCheckedChange={(value) => setChecked(value)}
+      label="接收通知"
+      description={
+        checked ? "新消息会推送到你的邮箱。" : "当前不会发送任何通知。"
+      }
+    />
+  );
+}
+```
+
+## 基础用法
+
+```tsx
+import { Switch } from "@xingxingmofashu.me/ui";
+
+<Switch
+  label="启用通知"
+  description="新消息会推送到你的邮箱。"
+  defaultChecked
+/>;
+```
+
+没有可见标签时，使用 `aria-label`：
+
+```tsx
+<Switch aria-label="启用通知" defaultChecked />
+```
+
+## 禁用与只读
+
+<SwitchStates />
+
+```tsx
+<Switch label="禁用" disabled />
+<Switch label="只读" readOnly defaultChecked />
+```
+
+## 黑白轨道
+
+UI 包默认的开关轨道带有绿色。文档站没有复刻组件，而是继续渲染真实 Switch，并通过内联变量覆盖轨道颜色：
+
+```tsx
+<Switch
+  label="启用通知"
+  style={{
+    "--ui-switch-on": "var(--docs-switch-on)",
+    "--ui-switch-off": "var(--docs-switch-off)",
+  }}
+/>
+```
+
+```css
+:root {
+  --docs-switch-on: #171717;
+  --docs-switch-off: #cfcfcf;
+}
+
+.dark {
+  --docs-switch-on: #fafafa;
+  --docs-switch-off: #3f3f46;
+}
+```
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | 可见标签，会与开关建立 `aria-labelledby` 关联。 |
+| `description` | `ReactNode` | — | 辅助说明，会与开关建立 `aria-describedby` 关联。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制开关尺寸与文字大小。 |
+| `checked` | `boolean` | — | 受控选中状态。 |
+| `defaultChecked` | `boolean` | — | 非受控初始状态。 |
+| `onCheckedChange` | `(checked: boolean, details) => void` | — | 选中状态变化时触发。 |
+| `disabled` | `boolean` | `false` | 禁用开关。 |
+| `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
+| `className` | `string` | — | 合并到最外层 `root`。 |
+| `classNames` | `Partial<Record<SwitchSlot, string>>` | — | 覆盖内部槽位样式。 |
+
+其余属性会透传给 Base UI 的 `Switch.Root`。
+
+### classNames 槽位
+
+| 槽位 | 说明 |
+| --- | --- |
+| `root` | 最外层容器，包含开关与文字。 |
+| `container` | 开关本身的布局容器。 |
+| `base` | 开关轨道。 |
+| `thumb` | 液态玻璃滑块。 |
+| `wrapper` | 标签与描述的文字容器。 |
+| `label` | 可见标签。 |
+| `description` | 辅助说明。 |
+
+## 无障碍
+
+- 有 `label` 时自动关联无障碍名称；无文字场景必须提供 `aria-label` 或 `aria-labelledby`。
+- `description` 会自动关联为 `aria-describedby`。
+- `disabled` 与 `readOnly` 会同步到外层状态，样式和交互都会相应变化。

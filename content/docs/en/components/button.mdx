@@ -1,0 +1,101 @@
+---
+title: "Button"
+description: "A liquid glass button with icons, five sizes, and strict accessible-name checks."
+---
+
+`className` targets the outer click area, while the visible glass surface is drawn by the inner `base` slot. Icon-only buttons must provide `aria-label` or `aria-labelledby`, otherwise type checking fails.
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Text and icons scale with the size, so you do not need to pass `size` to icons separately.
+
+<ButtonSizes />
+
+| Size | Height | Icon |
+| --- | --- | --- |
+| `xs` | 24px | 16px |
+| `sm` | 28px | 16px |
+| `md` | 32px | 20px |
+| `lg` | 36px | 20px |
+| `xl` | 40px | 24px |
+
+```tsx
+<Button size="sm" label="Small" trailingIcon={<ArrowRight />} />
+<Button size="md" label="Medium" trailingIcon={<ArrowRight />} />
+<Button size="lg" label="Large" trailingIcon={<ArrowRight />} />
+```
+
+## Icons
+
+The leading icon sits before the label. The trailing icon sits after the label inside a circular badge. When visible text exists, icons are automatically marked as decorative.
+
+<ButtonIcons />
+
+```tsx
+import { Button } from "@xingxingmofashu.me/ui";
+import { ArrowRight, Plus, Search } from "lucide-react";
+
+<Button label="Create" leadingIcon={<Plus />} />
+<Button label="Search" leadingIcon={<Search />} />
+<Button label="Continue" trailingIcon={<ArrowRight />} />
+<Button aria-label="Next" leadingIcon={<ArrowRight />} />;
+```
+
+<Callout title="Icon-only buttons">
+  Icon-only buttons have no visible text and must provide an accessible name through
+  `aria-label`. Omitting it is rejected by TypeScript.
+</Callout>
+
+## States
+
+The disabled state uses the native `disabled` attribute, stopping both keyboard and pointer interaction.
+
+<ButtonStates />
+
+```tsx
+<Button label="Save" trailingIcon={<ArrowRight />} />
+<Button label="Unavailable" disabled />
+```
+
+## Full-width buttons
+
+`className` adjusts the outer click area, while `classNames.base` adjusts the visible glass surface:
+
+```tsx
+<Button
+  label="Full width"
+  className="w-full"
+  classNames={{ base: "w-full" }}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Button text. `children` is an equivalent alternative. |
+| `children` | `ReactNode` | — | Visible content, equivalent to `label`. |
+| `leadingIcon` | `ReactNode` | — | Icon before the label. |
+| `trailingIcon` | `ReactNode` | — | Icon after the label, inside the circular badge. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, and icon size. |
+| `className` | `string` | — | Merged into the outer `root`. |
+| `classNames` | `Partial<Record<ButtonSlot, string>>` | — | Overrides internal slot styles. |
+
+All other props are forwarded to the Base UI `Button`, such as `disabled`, `onClick`, `type`, and `render`.
+
+### classNames slots
+
+| Slot | Description |
+| --- | --- |
+| `root` | Outer click area. |
+| `base` | Visible glass pill. |
+| `label` | Text container. |
+| `leadingIcon` | Leading icon container. |
+| `trailingIcon` | Trailing icon container. |
+| `overlay` | Glass rim highlight layer. |
+
+## Accessibility
+
+- Visible text is provided through `label` or `children`.
+- Icon-only buttons must provide `aria-label` or `aria-labelledby`.
+- The disabled state uses native `disabled` and is synchronized with Base UI's interaction state.

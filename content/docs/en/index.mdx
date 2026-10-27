@@ -1,0 +1,44 @@
+---
+title: "Introduction"
+description: "A composable, accessible, and themeable set of liquid glass components. Every preview in these docs is a real component, not a screenshot."
+---
+
+Liquid Glass UI is the documentation site for `@xingxingmofashu.me/ui`. The components are built with React 19, Tailwind CSS 4, and Base UI. Surfaces, rim highlights, and inner shadows are all drawn with CSS — no textures and no extra runtime.
+
+The documentation uses a black-and-white theme: navigation, syntax highlighting, callouts, and component previews all stay neutral. The card, buttons, and switches below render directly from the UI package.
+
+<CardPreview />
+
+## Get started
+
+<Cards>
+  <Card title="Installation" href="/en/docs/installation">
+    Add the workspace dependency, configure transpilePackages, and let Tailwind scan the component source.
+  </Card>
+  <Card title="Button" href="/en/docs/components/button">
+    Five sizes, leading and trailing icons, and strict accessible-name checks.
+  </Card>
+  <Card title="Card" href="/en/docs/components/card">
+    A glass card built from header, body, and footer, with slot-level overrides.
+  </Card>
+  <Card title="Switch" href="/en/docs/components/switch">
+    A switch with a liquid glass thumb, label, and description, including controlled usage.
+  </Card>
+  <Card title="Theming" href="/en/docs/theming">
+    Override `--ui-*` tokens, switch between light and dark, and use Tailwind aliases.
+  </Card>
+  <Card title="GitHub" href="https://github.com/xingxingmofashu/xingxingmofashu.me">
+    Browse the source, tests, and the site example in the monorepo.
+  </Card>
+</Cards>
+
+## Design principles
+
+- **Real components**: docs render `@xingxingmofashu.me/ui` directly through MDX, so previews match the published code.
+- **Monochrome first**: the docs use Fumadocs' black theme and override callouts and syntax highlighting to neutral colors.
+- **Accessible**: buttons and switches without an accessible name are rejected at the TypeScript level.
+- **Overridable**: `className` targets the root, `classNames` targets internal slots, and tokens control the theme.
+
+<Callout title="About previews">
+  The switches in previews are still the real component. Only the green track is replaced with black and white through inline variables. Behavior, focus management, and animation are unchanged.
+</Callout>

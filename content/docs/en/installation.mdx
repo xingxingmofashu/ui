@@ -1,0 +1,113 @@
+---
+title: "Installation"
+description: "Add the UI package, styles, and Tailwind source to a monorepo or any React project."
+---
+
+`@xingxingmofashu.me/ui` is a private package in this workspace. It exports TypeScript source directly, so the application must compile the package and Tailwind must scan its component files.
+
+## Add the dependency
+
+Reference the UI package with `workspace:*` in the application's `package.json`:
+
+```json title="package.json"
+{
+  "dependencies": {
+    "@xingxingmofashu.me/ui": "workspace:*"
+  }
+}
+```
+
+Then install dependencies:
+
+```bash
+pnpm install
+```
+
+## Configure Next.js
+
+Add the UI package to `transpilePackages` so Next.js compiles its TypeScript and JSX:
+
+```ts title="next.config.ts"
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  transpilePackages: ["@xingxingmofashu.me/ui"],
+};
+
+export default nextConfig;
+```
+
+<Callout title="Why this is required">
+  The UI package exports source rather than a prebuilt bundle. Skipping this step usually
+  produces JSX or TypeScript parsing errors during the build.
+</Callout>
+
+## Import the styles
+
+Import Tailwind, the UI package tokens, and point Tailwind at the component source in your global CSS:
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@xingxingmofashu.me/ui/index.css";
+
+@source "../../ui/src";
+```
+
+The `@source` path is relative to the CSS file. Adjust it for your directory layout. Both the docs and the site in this repository live under `packages`, so they use `../../ui/src`.
+
+## Use the components
+
+```tsx
+import { Button, Card, Switch } from "@xingxingmofashu.me/ui";
+import { ArrowRight } from "lucide-react";
+
+export function Example() {
+  return (
+    <Card
+      title="Liquid glass"
+      description="A CSS-only frosted glass panel."
+      footer={
+        <Button
+          size="sm"
+          label="Continue"
+          trailingIcon={<ArrowRight />}
+        />
+      }
+    >
+      <Switch
+        label="Enable notifications"
+        description="New messages will be sent to your inbox."
+      />
+    </Card>
+  );
+}
+```
+
+## Light and dark mode
+
+Components read tokens from the `.light` / `.dark` class. Use `next-themes` to switch the class on the root element:
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider } from "next-themes";
+
+<html lang="en" suppressHydrationWarning>
+  <body>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      {children}
+    </ThemeProvider>
+  </body>
+</html>;
+```
+
+If the project uses Fumadocs, `RootProvider` already includes `next-themes`, so you do not need to add it again.
+
+## Next steps
+
+<Cards>
+  <Card title="Explore components" href="/en/docs/components/button">
+    Start with Button to learn about sizes, icons, and slot overrides.
+  </Card>
+  <Card title="Customize the theme" href="/en/docs/theming">
+    Override `--ui-*` tokens or target component slots directly.
+  </Card>
+</Cards>
