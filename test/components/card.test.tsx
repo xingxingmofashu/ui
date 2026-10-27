@@ -1,0 +1,213 @@
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
+import { Card } from "../../src/components/card";
+import card from "../../src/theme/card";
+
+function getSlot(element: HTMLElement, slot: string) {
+  const node = element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
+
+  if (!node) {
+    throw new Error(`Card slot "${slot}" was not rendered.`);
+  }
+
+  return node;
+}
+
+function querySlot(element: HTMLElement, slot: string) {
+  return element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
+}
+
+function getCard(text: string, index = 0) {
+  const node = screen
+    .getAllByText(text)
+    [index]?.closest<HTMLElement>('[data-slot="root"]');
+
+  if (!node) {
+    throw new Error(`Card containing "${text}" was not rendered.`);
+  }
+
+  return node;
+}
+
+describe("Card", () => {
+  describe("content", () => {
+    it("renders the Nuxt UI card sections", () => {
+      render(
+        <Card
+          title="Liquid glass"
+          description="Refractive surface"
+          footer={<button type="button">Open</button>}
+        >
+          <p>Card body</p>
+        </Card>,
+      );
+
+      const cardElement = getCard("Liquid glass");
+      const header = getSlot(cardElement, "header");
+
+      expect(cardElement).toHaveAttribute("data-slot", "root");
+      expect(getSlot(cardElement, "title")).toHaveTextContent("Liquid glass");
+      expect(getSlot(cardElement, "description")).toHaveTextContent(
+        "Refractive surface",
+      );
+      expect(getSlot(cardElement, "body")).toHaveTextContent("Card body");
+      expect(getSlot(cardElement, "footer")).toHaveTextContent("Open");
+      expect(header).toContainElement(getSlot(cardElement, "title"));
+      expect(header).toContainElement(getSlot(cardElement, "description"));
+    });
+
+    it("does not render an empty header or footer", () => {
+      render(<Card>Body only</Card>);
+
+      const cardElement = getCard("Body only");
+
+      expect(querySlot(cardElement, "header")).toBeNull();
+      expect(querySlot(cardElement, "title")).toBeNull();
+      expect(querySlot(cardElement, "description")).toBeNull();
+      expect(querySlot(cardElement, "footer")).toBeNull();
+    });
+
+    it("renders falsy but renderable slot content", () => {
+      render(
+        <Card title={0} description={0}>
+          {0}
+        </Card>,
+      );
+
+      const cardElement = getCard("0");
+
+      expect(getSlot(cardElement, "title")).toHaveTextContent("0");
+      expect(getSlot(cardElement, "description")).toHaveTextContent("0");
+      expect(getSlot(cardElement, "body")).toHaveTextContent("0");
+    });
+
+    it("keeps the body content outside the decorative glass layer", () => {
+      render(<Card title="Accessible">Body</Card>);
+
+      const cardElement = getCard("Accessible");
+      const body = getSlot(cardElement, "body");
+      const glassLayers = Array.from(cardElement.children).filter(
+        (child) => child.getAttribute("aria-hidden") === "true",
+      );
+
+      expect(body.closest('[aria-hidden="true"]')).toBeNull();
+      expect(glassLayers.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe("nuxt ui structure", () => {
+    it("uses the fixed section paddings", () => {
+      render(
+        <Card title="Padded" description="Description">
+          Body
+        </Card>,
+      );
+
+      const cardElement = getCard("Padded");
+
+      expect(getSlot(cardElement, "header")).toHaveClass("p-4", "sm:px-6");
+      expect(getSlot(cardElement, "body")).toHaveClass("p-4", "sm:p-6");
+    });
+
+    it("does not accept a size prop", () => {
+      render(
+        // @ts-expect-error Card follows Nuxt UI and has no size variant.
+        <Card size="md">Body</Card>,
+      );
+
+      expect(screen.getByText("Body")).toBeInTheDocument();
+    });
+
+    it("keeps the glass layers private", () => {
+      render(
+        // @ts-expect-error The glass surface is an implementation detail.
+        <Card classNames={{ surface: "custom-surface" }}>Body</Card>,
+      );
+
+      const cardElement = getCard("Body");
+
+      expect(querySlot(cardElement, "surface")).toBeNull();
+      expect(querySlot(cardElement, "overlay")).toBeNull();
+    });
+  });
+
+  describe("styling", () => {
+    it("applies className to the root and classNames to each public slot", () => {
+      render(
+        <Card
+          title="Styled"
+          description="Slot overrides"
+          footer="Footer"
+          className="custom-root"
+          classNames={{
+            root: "slot-root",
+            header: "slot-header",
+            title: "slot-title",
+            description: "slot-description",
+            body: "slot-body",
+            footer: "slot-footer",
+          }}
+        >
+          Body
+        </Card>,
+      );
+
+      const cardElement = getCard("Styled");
+
+      expect(cardElement).toHaveClass("custom-root", "slot-root");
+      expect(getSlot(cardElement, "header")).toHaveClass("slot-header");
+      expect(getSlot(cardElement, "title")).toHaveClass("slot-title");
+      expect(getSlot(cardElement, "description")).toHaveClass(
+        "slot-description",
+      );
+      expect(getSlot(cardElement, "body")).toHaveClass("slot-body");
+      expect(getSlot(cardElement, "footer")).toHaveClass("slot-footer");
+    });
+
+    it("uses the button glass composition", () => {
+      const styles = card();
+
+      expect(styles.root()).toContain("grid");
+      expect(styles.root()).toContain("rounded-[2rem]");
+      expect(styles.root()).not.toContain("100vw");
+      expect(styles.glass()).toContain("[filter:contrast(3)]");
+      expect(styles.glass()).toContain("pointer-events-none");
+      expect(styles.surface()).toContain("bg-glass-surface");
+      expect(styles.surface()).toContain("border-double");
+      expect(styles.surface()).toContain("border-glass-border");
+      expect(styles.surface()).toContain("shadow-glass");
+      expect(styles.surface()).toContain("backdrop-blur-[2px]");
+      expect(styles.surface()).toContain("[filter:brightness(0.9)]");
+      expect(styles.surface()).toContain("before:");
+      expect(styles.surface()).toContain("after:");
+      expect(styles.overlay()).toContain("border-glass-rim");
+      expect(styles.overlay()).toContain("blur-[1px]");
+      expect(styles.layout()).toContain("z-10");
+      expect(styles.layout()).toContain("flex-col");
+    });
+
+    it("uses the Nuxt UI typography and padding", () => {
+      const styles = card();
+
+      expect(styles.title()).toContain("font-semibold");
+      expect(styles.title()).toContain("text-ink");
+      expect(styles.title()).toContain("var(--ui-drop-shadow-label)");
+      expect(styles.description()).toContain("mt-1");
+      expect(styles.description()).toContain("text-sm");
+      expect(styles.description()).toContain("opacity-60");
+      expect(styles.body()).toContain("text-ink");
+      expect(styles.footer()).toContain("p-4");
+      expect(styles.footer()).toContain("sm:px-6");
+    });
+
+    it("does not render SVG or filter markup", () => {
+      render(<Card>Body</Card>);
+
+      const cardElement = getCard("Body");
+
+      expect(cardElement.querySelector("svg")).toBeNull();
+      expect(cardElement.querySelector("filter")).toBeNull();
+    });
+  });
+});
