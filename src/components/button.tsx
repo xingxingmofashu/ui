@@ -5,7 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import button from "../theme/button";
+import theme from "../theme/button";
 
 type ButtonSlot =
   | "base"
@@ -39,7 +39,7 @@ type ButtonAccessibleName =
   | { "aria-labelledby": string };
 
 type ButtonProps = React.ComponentProps<typeof UIButton> &
-  VariantProps<typeof button> &
+  VariantProps<typeof theme> &
   ButtonContentProps &
   ButtonAccessibleName;
 
@@ -53,7 +53,7 @@ function Button({
   size,
   ...props
 }: ButtonProps) {
-  const ui = button({ size });
+  const ui = theme({ size });
   const content = label ?? children;
   const hasLabel =
     content !== undefined &&

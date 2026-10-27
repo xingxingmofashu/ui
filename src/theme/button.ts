@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 
-const button = tv({
+export default tv({
   slots: {
     base: [
       "group relative z-[500] inline-flex items-center min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
@@ -69,5 +69,3 @@ const button = tv({
     size: "md",
   },
 });
-
-export default button;

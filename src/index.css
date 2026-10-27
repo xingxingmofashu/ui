@@ -1,4 +1,4 @@
-/* Design tokens only. Component recipes live in theme/. */
+/* Design tokens. Component recipes live in theme/. */
 @custom-variant ui-light (&:where(.light, .light *));
 @custom-variant ui-dark (&:where(.dark, .dark *));
 

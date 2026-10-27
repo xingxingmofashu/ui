@@ -8,3 +8,9 @@ export {
   type CardClassNames,
   type CardProps,
 } from "./components/card";
+export {
+  Switch,
+  type SwitchClassNames,
+  type SwitchProps,
+  type SwitchSize,
+} from "./components/switch";
