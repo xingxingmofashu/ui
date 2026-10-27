@@ -28,6 +28,11 @@ type CardProps = Omit<React.ComponentProps<"div">, "title"> & {
   footer?: React.ReactNode;
 };
 
+/** Treat empty strings, booleans, and empty arrays as absent while keeping 0. */
+function hasContent(value: React.ReactNode) {
+  return React.Children.toArray(value).some((child) => child !== "");
+}
+
 function Card({
   className,
   classNames,
@@ -38,13 +43,9 @@ function Card({
   ...props
 }: CardProps) {
   const ui = theme();
-  const hasHeader = title != null || description != null;
-  const hasBody =
-    children !== undefined &&
-    children !== null &&
-    children !== "" &&
-    children !== false;
-  const hasFooter = footer != null;
+  const hasHeader = hasContent(title) || hasContent(description);
+  const hasBody = hasContent(children);
+  const hasFooter = hasContent(footer);
 
   return (
     <div
@@ -64,7 +65,7 @@ function Card({
             data-slot="header"
             className={cn(ui.header(), classNames?.header)}
           >
-            {title != null ? (
+            {hasContent(title) ? (
               <div
                 data-slot="title"
                 className={cn(ui.title(), classNames?.title)}
@@ -72,7 +73,7 @@ function Card({
                 {title}
               </div>
             ) : null}
-            {description != null ? (
+            {hasContent(description) ? (
               <div
                 data-slot="description"
                 className={cn(ui.description(), classNames?.description)}

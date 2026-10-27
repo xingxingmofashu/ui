@@ -18,6 +18,17 @@ function querySlot(element: HTMLElement, slot: string) {
   return element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
 }
 
+function getPrivateSurface(element: HTMLElement) {
+  const glassLayer = element.querySelector<HTMLElement>('[aria-hidden="true"]');
+  const surface = glassLayer?.firstElementChild;
+
+  if (!(surface instanceof HTMLElement)) {
+    throw new Error("Card private surface was not rendered.");
+  }
+
+  return surface;
+}
+
 function getCard(text: string, index = 0) {
   const node = screen
     .getAllByText(text)
@@ -66,6 +77,42 @@ describe("Card", () => {
       expect(querySlot(cardElement, "title")).toBeNull();
       expect(querySlot(cardElement, "description")).toBeNull();
       expect(querySlot(cardElement, "footer")).toBeNull();
+    });
+
+    it("omits empty strings and false", () => {
+      render(
+        <Card title="" description={false} footer={false}>
+          Body only
+        </Card>,
+      );
+
+      const cardElement = getCard("Body only");
+
+      expect(querySlot(cardElement, "header")).toBeNull();
+      expect(querySlot(cardElement, "title")).toBeNull();
+      expect(querySlot(cardElement, "description")).toBeNull();
+      expect(querySlot(cardElement, "footer")).toBeNull();
+    });
+
+    it("keeps a non-empty description when the title is empty", () => {
+      render(
+        <Card title="" description="Description">
+          Body
+        </Card>,
+      );
+
+      const cardElement = getCard("Description");
+
+      expect(querySlot(cardElement, "title")).toBeNull();
+      expect(getSlot(cardElement, "description")).toHaveTextContent(
+        "Description",
+      );
+    });
+
+    it("does not render a body for an empty children array", () => {
+      render(<Card title="Empty body">{[]}</Card>);
+
+      expect(querySlot(getCard("Empty body"), "body")).toBeNull();
     });
 
     it("renders falsy but renderable slot content", () => {
@@ -129,6 +176,7 @@ describe("Card", () => {
 
       expect(querySlot(cardElement, "surface")).toBeNull();
       expect(querySlot(cardElement, "overlay")).toBeNull();
+      expect(getPrivateSurface(cardElement)).not.toHaveClass("custom-surface");
     });
   });
 
@@ -185,6 +233,13 @@ describe("Card", () => {
       expect(styles.overlay()).toContain("blur-[1px]");
       expect(styles.layout()).toContain("z-10");
       expect(styles.layout()).toContain("flex-col");
+    });
+
+    it("clips content to the rounded panel", () => {
+      const styles = card();
+
+      expect(styles.layout()).toContain("overflow-hidden");
+      expect(styles.layout()).toContain("rounded-[inherit]");
     });
 
     it("uses the Nuxt UI typography and padding", () => {

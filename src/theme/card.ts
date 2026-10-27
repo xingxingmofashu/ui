@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 
-const cardRecipe = tv({
+export default tv({
   slots: {
     root: [
       "relative grid w-full min-w-0 rounded-[2rem]",
@@ -19,7 +19,10 @@ const cardRecipe = tv({
       "pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[calc(100%_-_9px)] w-[calc(100%_-_9px)]",
       "-translate-x-1/2 -translate-y-1/2 rounded-[inherit] border border-glass-rim blur-[1px]",
     ],
-    layout: "relative z-10 col-start-1 row-start-1 flex min-w-0 flex-col",
+    layout: [
+      "relative z-10 col-start-1 row-start-1 flex min-w-0 flex-col",
+      "overflow-hidden rounded-[inherit]",
+    ],
     header: "min-w-0 p-4 sm:px-6",
     title:
       "min-w-0 font-semibold text-ink [filter:var(--ui-drop-shadow-label)]",
@@ -28,5 +31,3 @@ const cardRecipe = tv({
     footer: "min-w-0 p-4 sm:px-6",
   },
 });
-
-export default cardRecipe;
