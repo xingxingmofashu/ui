@@ -16,11 +16,24 @@ Source files and tests are the source of truth.
 | Switch | `src/components/switch.tsx` | `src/theme/switch.ts` | `test/components/switch.test.tsx` |
 | Toggle Group | `src/components/toggle-group.tsx` | `src/theme/toggle-group.ts` | `test/components/toggle-group.test.tsx` |
 
+## Glass
+
+- `src/index.css` owns the standard glass material: `--ui-glass-*` tokens and the
+  `.ui-glass`, `.ui-glass-inner`, `.ui-glass-highlight`, `.ui-glass-rim`, and
+  `.ui-glass-chip` classes.
+- Component recipes compose those classes. Do not restate the surface, border,
+  shadow, backdrop blur, inner rim, or highlight gradient in `src/theme/`.
+- Size, radius, overflow, layout, and motion remain in the component recipe.
+- Switch and Slider keep their unique optical layers, but shared colors, edge
+  shadows, lens blur, and specular values come from `--ui-glass-*` tokens.
+- Tune the material through the tokens in `src/index.css`, not through
+  per-component one-off overrides.
+
 ## Package files
 
 - Public exports: `src/index.ts`
-- Design tokens: `src/index.css`
-- Shared token tests: `test/tokens.test.ts`
+- Design tokens and glass material: `src/index.css`
+- Shared token and glass tests: `test/tokens.test.ts`
 - Test setup: `test/setup.ts`
 - Vitest config: `vitest.config.ts`
 - Preview page: `packages/web/app/page.tsx`

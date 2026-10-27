@@ -112,13 +112,20 @@ describe("design tokens", () => {
     expect(css).toContain("color: var(--ui-ink);");
     expect(css).toContain("background-color: var(--ui-glass-surface);");
     expect(css).toContain("outline-color: var(--ui-glass-focus);");
-    expect(css).toContain("--tw-shadow: var(--ui-shadow-glass);");
+    expect(css).toContain("box-shadow: var(--ui-shadow-glass);");
     expect(css).toContain("var(--ui-glass-highlight)");
     expect(css).toContain("var(--ui-glass-glare-stop)");
     expect(css).toContain("filter: var(--ui-drop-shadow-label);");
     expect(css).not.toContain("filter: var(--ui-drop-shadow-icon);");
-    expect(css).toContain("filter: contrast(3);");
-    expect(css).toContain("filter: brightness(0.9);");
+    expect(css).toContain("--ui-glass-tone: brightness(1);");
+    expect(css).toContain("--ui-glass-tone: brightness(0.9);");
+    expect(css).toContain(
+      "filter: var(--ui-glass-tone, brightness(1));",
+    );
+    expect(css).not.toContain("filter: contrast(3);");
+    expect(css).toContain(
+      "backdrop-filter: blur(var(--ui-glass-blur, 8px)) saturate(var(--ui-glass-saturate, 150%));",
+    );
     expect(css).toContain(
       "transition-property: background-color,translate,scale;",
     );
@@ -129,12 +136,14 @@ describe("design tokens", () => {
     const css = await buildStyles(themeCandidates());
 
     expect(css).toContain("background-color: var(--ui-glass-surface);");
-    expect(css).toContain("--tw-shadow: var(--ui-shadow-glass);");
-    expect(css).toContain("--tw-backdrop-blur: blur(2px);");
-    expect(css).toContain("border-color: var(--ui-glass-border);");
-    expect(css).toContain("border-color: var(--ui-glass-inner-border);");
-    expect(css).toContain("border-color: var(--ui-glass-rim);");
-    expect(css).toContain("filter: brightness(0.9) contrast(3);");
+    expect(css).toContain("box-shadow: var(--ui-shadow-glass);");
+    expect(css).toContain(
+      "backdrop-filter: blur(var(--ui-glass-blur, 8px)) saturate(var(--ui-glass-saturate, 150%));",
+    );
+    expect(css).toContain("border: 1px double var(--ui-glass-border);");
+    expect(css).toContain("border: 1px solid var(--ui-glass-inner-border);");
+    expect(css).toContain("border: 1px solid var(--ui-glass-rim);");
+    expect(css).toContain("filter: var(--ui-glass-tone, brightness(1));");
     expect(css).toContain("filter: var(--ui-drop-shadow-label);");
     expect(css).toContain("font-family: system-ui");
     expect(css).toContain("border-radius: 2rem;");
@@ -152,12 +161,8 @@ describe("design tokens", () => {
     expect(css).toContain(
       "box-shadow: inset 0 1px 1px rgb(255 255 255/0.35),inset 0 -1px 2px rgb(0 0 0/0.12);",
     );
-    expect(css).toContain(
-      "box-shadow: 0 1px 3px rgb(0 0 0/0.2),inset 0 0 0 1px rgb(255 255 255/0.55);",
-    );
-    expect(css).toContain(
-      "box-shadow: inset 1px -1px 2px rgb(255 255 255/0.55),inset -1px 1px 2px rgb(0 0 0/0.18),0 1px 3px rgb(0 0 0/0.2);",
-    );
+    expect(css).toContain("box-shadow: var(--ui-glass-thumb-shadow);");
+    expect(css).toContain("box-shadow: var(--ui-glass-edge-shadow);");
     expect(css).toContain("filter: var(--ui-switch-filter-goo);");
     expect(css).toContain("filter: var(--ui-switch-filter-remove-black);");
     expect(css).toContain("filter: blur(calc(var(--ui-switch-height) * 0.1));");
@@ -196,7 +201,7 @@ describe("design tokens", () => {
     const css = await buildStyles(themeCandidates());
 
     expect(css).toContain(
-      "backdrop-filter: blur(8px) saturate(150%);",
+      "backdrop-filter: blur(var(--ui-glass-blur, 8px)) saturate(var(--ui-glass-saturate, 150%));",
     );
     expect(css).toContain("background-color: var(--ui-toggle-group-thumb);");
     expect(css).toContain(
@@ -228,7 +233,7 @@ describe("design tokens", () => {
       "border-radius: var(--ui-toggle-group-vertical-radius);",
     );
     expect(css).toContain("overflow: hidden;");
-    expect(css).toContain("border-color: var(--ui-glass-inner-border);");
+    expect(css).toContain("border: 1px solid var(--ui-glass-inner-border);");
   });
 
   it("compiles the slider glass controls from the theme recipe", async () => {
@@ -246,7 +251,7 @@ describe("design tokens", () => {
       "background-image: linear-gradient(117deg,var(--ui-slider-fill-from) 0%,var(--ui-slider-fill-to) 100%);",
     );
     expect(css).toContain(
-      "backdrop-filter: blur(1.5px) saturate(160%) var(--ui-slider-filter);",
+      "backdrop-filter: blur(var(--ui-glass-lens-blur)) saturate(var(--ui-glass-lens-saturate)) var(--ui-slider-filter);",
     );
     expect(css).toContain(
       "inset 0 1px 2px var(--tw-shadow-color, rgb(0 0 0/0.14))",
@@ -262,7 +267,11 @@ describe("design tokens", () => {
 
     expect(css).toContain("--ui-ink: #3e3e3e;");
     expect(css).toContain("--ui-ink: #f5f5f5;");
+    expect(css).toContain("--ui-glass-surface: rgb(0 0 0 / 0.01);");
     expect(css).toContain("--ui-glass-surface: rgb(255 255 255 / 0.06);");
+    expect(css).toContain("--ui-glass-inner-border: rgb(0 0 0 / 0.7);");
+    expect(css).toContain("--ui-glass-tone: brightness(1);");
+    expect(css).toContain("--ui-glass-tone: brightness(0.9);");
     expect(css).toContain("--ui-glass-glare-stop: 15%;");
     expect(css).toContain(
       "--ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));",
@@ -320,13 +329,18 @@ describe("design tokens", () => {
     ]);
 
     expect(recipe).toContain('from "tailwind-variants"');
-    expect(recipe).toContain("bg-glass-surface");
-    expect(recipe).toContain("shadow-glass");
-    expect(recipe).toContain("[filter:brightness(0.9)_contrast(3)]");
+    expect(recipe).toContain("ui-glass");
+    expect(recipe).toContain("ui-glass-inner");
+    expect(recipe).toContain("ui-glass-highlight");
+    expect(recipe).toContain("ui-glass-rim");
+    expect(recipe).not.toContain("bg-glass-surface");
+    expect(recipe).not.toContain("shadow-glass");
+    expect(recipe).not.toContain("[filter:brightness(0.9)_contrast(3)]");
     expect(recipe).not.toContain("size:");
     expect(recipe).not.toContain(".css");
     expect(tokens).not.toContain(".ui-card-");
-    expect(tokens).not.toContain("backdrop-filter");
+    expect(tokens).toContain("backdrop-filter");
+    expect(tokens).toContain(".ui-glass");
   });
 
   it("keeps toggle group styling in the tailwind-variants theme", async () => {
@@ -336,8 +350,11 @@ describe("design tokens", () => {
     );
 
     expect(recipe).toContain('from "tailwind-variants"');
-    expect(recipe).toContain("bg-glass-surface");
-    expect(recipe).toContain("shadow-glass");
+    expect(recipe).toContain("ui-glass");
+    expect(recipe).toContain("ui-glass-inner");
+    expect(recipe).toContain("ui-glass-highlight");
+    expect(recipe).not.toContain("bg-glass-surface");
+    expect(recipe).not.toContain("shadow-glass");
     expect(recipe).toContain("--ui-toggle-group-thumb:");
     expect(recipe).toContain("--ui-toggle-group-thumb-shadow:");
     expect(recipe).toContain("data-[orientation=vertical]:items-stretch");

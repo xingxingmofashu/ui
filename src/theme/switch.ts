@@ -26,7 +26,7 @@ const theme = tv({
       "[&_[data-layer=track-mask]]:[translate:0_-50%] data-[checked]:[&_[data-layer=track-mask]]:[translate:calc(100cqi_-_100%_-_2*var(--ui-switch-border))_-50%]",
       "[&_[data-layer=track-mask]]:[transition:translate_120ms_ease-out_180ms,scale_300ms_ease-out]",
       "active:[&_[data-layer=track-mask]]:[scale:1.65] data-[animating=true]:[&_[data-layer=track-mask]]:[scale:1.65]",
-      "[&_[data-layer=glass-rim]]:absolute [&_[data-layer=glass-rim]]:inset-0 [&_[data-layer=glass-rim]]:z-[20] [&_[data-layer=glass-rim]]:rounded-[100px] [&_[data-layer=glass-rim]]:[box-shadow:inset_1px_-1px_2px_rgb(255_255_255/0.55),inset_-1px_1px_2px_rgb(0_0_0/0.18),0_1px_3px_rgb(0_0_0/0.2)] [&_[data-layer=glass-rim]]:opacity-0",
+      "[&_[data-layer=glass-rim]]:absolute [&_[data-layer=glass-rim]]:inset-0 [&_[data-layer=glass-rim]]:z-[20] [&_[data-layer=glass-rim]]:rounded-[100px] [&_[data-layer=glass-rim]]:[box-shadow:var(--ui-glass-edge-shadow)] [&_[data-layer=glass-rim]]:opacity-0",
       "[&_[data-layer=glass-rim]]:transition-opacity [&_[data-layer=glass-rim]]:duration-200 [&_[data-layer=glass-rim]]:ease-out",
       "active:[&_[data-layer=glass-rim]]:opacity-100 data-[animating=true]:[&_[data-layer=glass-rim]]:opacity-100",
       "[&_[data-layer=glass-lens]]:absolute [&_[data-layer=glass-lens]]:inset-0 [&_[data-layer=glass-lens]]:rounded-[100px] [&_[data-layer=glass-lens]]:[clip-path:inset(0_0_0_0_round_100px)]",
@@ -48,7 +48,7 @@ const theme = tv({
       "active:[&_[data-layer=cover]]:opacity-0 data-[animating=true]:[&_[data-layer=cover]]:opacity-0",
     ],
     thumb: [
-      "absolute left-[var(--ui-switch-border)] top-1/2 h-[calc(100%_-_2*var(--ui-switch-border))] w-[calc(60%_-_2*var(--ui-switch-border))] rounded-[100px] bg-transparent [box-shadow:0_1px_3px_rgb(0_0_0/0.2),inset_0_0_0_1px_rgb(255_255_255/0.55)]",
+      "absolute left-[var(--ui-switch-border)] top-1/2 h-[calc(100%_-_2*var(--ui-switch-border))] w-[calc(60%_-_2*var(--ui-switch-border))] rounded-[100px] bg-transparent [box-shadow:var(--ui-glass-thumb-shadow)]",
       "[container-type:inline-size]",
       "[translate:0_-50%] group-data-[checked]:[translate:calc(100cqi_-_100%_-_2*var(--ui-switch-border))_-50%]",
       "[transition:translate_120ms_ease-out_180ms,scale_300ms_ease-out]",

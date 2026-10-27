@@ -325,7 +325,9 @@ function ToggleGroup<Value extends string = string>({
           aria-hidden="true"
           data-slot="glass"
           className={cn(ui.glass(), uiOverrides?.glass)}
-        />
+        >
+          <span aria-hidden="true" data-layer="rim" className="ui-glass-rim" />
+        </span>
 
         <span
           ref={indicatorRef}

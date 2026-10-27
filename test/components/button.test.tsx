@@ -242,12 +242,15 @@ describe("Button", () => {
       );
     });
 
-    it("applies the reference lens filters on separate layers", () => {
+    it("uses the standard glass material", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.root()).toContain("[filter:contrast(3)]");
-      expect(styles.base()).toContain("[filter:brightness(0.9)]");
-      expect(styles.base()).not.toContain("contrast(3)");
+      expect(styles.base()).toContain("ui-glass");
+      expect(styles.base()).toContain("ui-glass-inner");
+      expect(styles.base()).toContain("ui-glass-highlight");
+      expect(styles.base()).not.toContain("[filter:brightness(0.9)]");
+      expect(styles.root()).not.toContain("contrast(3)");
+      expect(styles.overlay()).toContain("ui-glass-rim");
     });
   });
 

@@ -503,10 +503,16 @@ describe("Slider", () => {
         "bg-[linear-gradient(117deg,var(--ui-slider-fill-from)_0%,var(--ui-slider-fill-to)_100%)]",
       );
       expect(styles.thumb()).toContain(
-        "[&_[data-layer=thumb-glass]]:[backdrop-filter:blur(1.5px)_saturate(160%)_var(--ui-slider-filter)]",
+        "[&_[data-layer=thumb-glass]]:[backdrop-filter:blur(var(--ui-glass-lens-blur))_saturate(var(--ui-glass-lens-saturate))_var(--ui-slider-filter)]",
       );
       expect(styles.thumb()).toContain(
-        "data-[dragging]:[&_[data-layer=thumb-glass]]:bg-[rgb(255_255_255/0.12)]",
+        "[&_[data-layer=thumb-glass]]:[background-image:var(--ui-glass-lens-surface)]",
+      );
+      expect(styles.thumb()).toContain(
+        "[&_[data-layer=thumb-specular]]:[box-shadow:var(--ui-glass-lens-specular)]",
+      );
+      expect(styles.thumb()).toContain(
+        "data-[dragging]:[&_[data-layer=thumb-glass]]:bg-[var(--ui-glass-lens-surface-active)]",
       );
       expect(styles.thumb()).toContain(
         "data-[dragging]:[&_[data-layer=thumb-specular]]:opacity-100",

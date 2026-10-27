@@ -212,23 +212,22 @@ describe("Card", () => {
       expect(getSlot(cardElement, "footer")).toHaveClass("slot-footer");
     });
 
-    it("uses the button glass composition", () => {
+    it("uses the standard glass composition", () => {
       const styles = card();
 
       expect(styles.root()).toContain("grid");
       expect(styles.root()).toContain("rounded-[2rem]");
       expect(styles.root()).not.toContain("100vw");
-      expect(styles.glass()).toContain("[filter:brightness(0.9)_contrast(3)]");
+      expect(styles.glass()).toContain("ui-glass");
+      expect(styles.glass()).toContain("ui-glass-inner");
+      expect(styles.glass()).toContain("ui-glass-highlight");
       expect(styles.glass()).toContain("pointer-events-none");
-      expect(styles.glass()).toContain("bg-glass-surface");
-      expect(styles.glass()).toContain("border-double");
-      expect(styles.glass()).toContain("border-glass-border");
-      expect(styles.glass()).toContain("shadow-glass");
-      expect(styles.glass()).toContain("backdrop-blur-[2px]");
-      expect(styles.glass()).toContain("before:");
-      expect(styles.glass()).toContain("after:");
-      expect(styles.overlay()).toContain("border-glass-rim");
-      expect(styles.overlay()).toContain("blur-[1px]");
+      expect(styles.glass()).not.toContain("bg-glass-surface");
+      expect(styles.glass()).not.toContain("border-double");
+      expect(styles.glass()).not.toContain("shadow-glass");
+      expect(styles.glass()).not.toContain("backdrop-blur-[2px]");
+      expect(styles.overlay()).toContain("ui-glass-rim");
+      expect(styles.overlay()).not.toContain("border-glass-rim");
       expect(styles.layout()).toContain("z-10");
       expect(styles.layout()).toContain("flex-col");
     });

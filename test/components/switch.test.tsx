@@ -341,7 +341,7 @@ describe("Switch", () => {
         "[&_[data-layer=track]]:[box-shadow:inset_0_1px_1px_rgb(255_255_255/0.35),inset_0_-1px_2px_rgb(0_0_0/0.12)]",
       );
       expect(styles.base()).toContain(
-        "[&_[data-layer=glass-rim]]:[box-shadow:inset_1px_-1px_2px_rgb(255_255_255/0.55),inset_-1px_1px_2px_rgb(0_0_0/0.18),0_1px_3px_rgb(0_0_0/0.2)]",
+        "[&_[data-layer=glass-rim]]:[box-shadow:var(--ui-glass-edge-shadow)]",
       );
       expect(styles.base()).toContain(
         "[&_[data-layer=glass-lens]]:[filter:blur(calc(var(--ui-switch-height)*0.1))]",
@@ -365,7 +365,7 @@ describe("Switch", () => {
       expect(styles.thumb()).toContain("group-active");
       expect(styles.thumb()).toContain("group-data-[animating=true]");
       expect(styles.thumb()).toContain(
-        "[box-shadow:0_1px_3px_rgb(0_0_0/0.2),inset_0_0_0_1px_rgb(255_255_255/0.55)]",
+        "[box-shadow:var(--ui-glass-thumb-shadow)]",
       );
       expect(styles.root()).toContain("data-[disabled]:opacity-75");
     });

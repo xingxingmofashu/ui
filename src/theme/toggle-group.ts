@@ -8,11 +8,10 @@ const thumbGlass = [
 export default tv({
   slots: {
     root: [
+      "ui-glass",
       "group/toggle-group relative isolate inline-flex min-w-0 max-w-full items-center",
-      "rounded-full border border-double border-glass-border bg-glass-surface shadow-glass",
+      "rounded-full",
       "p-[var(--ui-toggle-group-padding)] gap-[var(--ui-toggle-group-gap)]",
-      "[backdrop-filter:blur(8px)_saturate(150%)]",
-      "[-webkit-backdrop-filter:blur(8px)_saturate(150%)]",
       "[--ui-toggle-group-indicator-x:0px] [--ui-toggle-group-indicator-y:0px]",
       "[--ui-toggle-group-indicator-width:0px] [--ui-toggle-group-indicator-height:0px]",
       "[--ui-toggle-group-origin:center]",
@@ -28,9 +27,8 @@ export default tv({
       "motion-reduce:transition-none motion-reduce:[&_*]:transition-none",
     ],
     glass: [
+      "ui-glass-inner ui-glass-highlight",
       "pointer-events-none absolute inset-0 z-[1] overflow-hidden rounded-[inherit]",
-      "before:pointer-events-none before:absolute before:inset-[2px] before:z-[1] before:rounded-[inherit] before:border before:border-glass-inner-border before:blur-[8px] before:content-['']",
-      "after:pointer-events-none after:absolute after:inset-0 after:z-[1] after:rounded-[inherit] after:bg-[linear-gradient(45deg,var(--ui-glass-highlight)_0%,transparent_var(--ui-glass-glare-stop),transparent_calc(100%_-_var(--ui-glass-glare-stop)),var(--ui-glass-highlight)_100%)] after:blur-[7px] after:content-['']",
     ],
     indicator: [
       "pointer-events-none absolute left-0 top-0 z-0",
