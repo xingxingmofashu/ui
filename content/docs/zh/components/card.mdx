@@ -3,7 +3,7 @@ title: "Card"
 description: "由 header、body 和 footer 组成的液态玻璃卡片。"
 ---
 
-Card 使用两层结构：一层负责玻璃表面与高光，另一层负责内容布局。`className` 作用于 `root`，可以用 `classNames` 覆盖每个内部槽位。
+Card 使用两层结构：一层负责玻璃表面与高光，另一层负责内容布局。`className` 作用于 `root`，可以用 `ui` 覆盖每个内部槽位。
 
 <CardPreview />
 
@@ -37,18 +37,18 @@ import { ArrowRight } from "lucide-react";
 
 ## 自定义槽位
 
-`classNames` 可以覆盖 header、body、title 等内部结构，而 `className` 始终作用于 root：
+`ui` 可以覆盖 header、body、title 等内部结构，而 `className` 始终作用于 root：
 
 ```tsx
 <Card
   className="max-w-md"
-  classNames={{
+  ui={{
     header: "border-b border-glass-border",
     body: "bg-glass-surface/50",
     title: "tracking-tight",
   }}
   title="自定义样式"
-  description="通过 classNames 调整内部结构。"
+  description="通过 ui 调整内部结构。"
 >
   <div className="text-sm text-ink/70">内容是默认插槽。</div>
 </Card>
@@ -63,11 +63,11 @@ import { ArrowRight } from "lucide-react";
 | `footer` | `ReactNode` | — | 底部操作区。 |
 | `children` | `ReactNode` | — | 卡片主体内容。 |
 | `className` | `string` | — | 合并到 `root`。 |
-| `classNames` | `Partial<Record<CardSlot, string>>` | — | 覆盖内部槽位样式。 |
+| `ui` | `Partial<Record<CardSlot, string>>` | — | 覆盖内部槽位样式。 |
 
 其余属性会透传给根 `div`，例如 `id`、`role`、`onClick`。
 
-### classNames 槽位
+### ui 槽位
 
 | 槽位 | 说明 |
 | --- | --- |

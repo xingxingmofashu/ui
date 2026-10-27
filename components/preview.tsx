@@ -1,9 +1,27 @@
 "use client";
 
-import { ArrowRight, Plus, Search } from "lucide-react";
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  ArrowRight,
+  Bold,
+  Italic,
+  Lamp,
+  Moon,
+  Plus,
+  Search,
+  Sun,
+  Underline,
+} from "lucide-react";
 import type { ReactNode } from "react";
 
-import { Button, Card } from "@xingxingmofashu.me/ui";
+import {
+  Button,
+  Card,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@xingxingmofashu.me/ui";
 
 import { useDocsLocale } from "./locale-provider";
 import { MonochromeSwitch } from "./monochrome-switch";
@@ -224,6 +242,138 @@ export function SwitchStates() {
           readOnly
           defaultChecked
         />
+      </div>
+    </DemoStage>
+  );
+}
+
+export function ToggleGroupSizes() {
+  const locale = useDocsLocale();
+  const isZh = locale === "zh";
+  const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+
+  return (
+    <DemoStage
+      label={
+        isZh
+          ? "真实 Toggle Group 组件 · 五种尺寸"
+          : "Live Toggle Group · five sizes"
+      }
+    >
+      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-7">
+        {sizes.map((size) => (
+          <div key={size} className="flex flex-col items-center gap-3">
+            <ToggleGroup
+              aria-label={`${size} toggle group`}
+              defaultValue={["one"]}
+              size={size}
+            >
+              <ToggleGroupItem value="one" aria-label="One">
+                One
+              </ToggleGroupItem>
+              <ToggleGroupItem value="two" aria-label="Two">
+                Two
+              </ToggleGroupItem>
+              <ToggleGroupItem value="three" aria-label="Three">
+                Three
+              </ToggleGroupItem>
+            </ToggleGroup>
+            <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-fd-muted-foreground">
+              {size}
+            </span>
+          </div>
+        ))}
+      </div>
+    </DemoStage>
+  );
+}
+
+export function ToggleGroupModes() {
+  const locale = useDocsLocale();
+  const isZh = locale === "zh";
+
+  return (
+    <DemoStage
+      label={
+        isZh
+          ? "真实 Toggle Group 组件 · 单选 / 多选 / 纵向"
+          : "Live Toggle Group · single, multiple, and vertical"
+      }
+    >
+      <div className="flex flex-wrap items-center justify-center gap-8">
+        <ToggleGroup aria-label="Theme" defaultValue={["light"]} size="lg">
+          <ToggleGroupItem
+            value="light"
+            aria-label="Light"
+            icon={<Sun />}
+          />
+          <ToggleGroupItem
+            value="dark"
+            aria-label="Dark"
+            icon={<Moon />}
+          />
+          <ToggleGroupItem value="dim" aria-label="Dim" icon={<Lamp />} />
+        </ToggleGroup>
+
+        <ToggleGroup
+          aria-label="Text formatting"
+          defaultValue={["bold"]}
+          multiple
+        >
+          <ToggleGroupItem
+            value="bold"
+            aria-label="Bold"
+            icon={<Bold />}
+          />
+          <ToggleGroupItem
+            value="italic"
+            aria-label="Italic"
+            icon={<Italic />}
+          />
+          <ToggleGroupItem
+            value="underline"
+            aria-label="Underline"
+            icon={<Underline />}
+          />
+        </ToggleGroup>
+
+        <ToggleGroup
+          aria-label="Text alignment"
+          defaultValue={["left"]}
+          size="xl"
+        >
+          <ToggleGroupItem
+            value="left"
+            aria-label="Align left"
+            icon={<AlignLeft />}
+          />
+          <ToggleGroupItem
+            value="center"
+            aria-label="Align center"
+            icon={<AlignCenter />}
+          />
+          <ToggleGroupItem
+            value="right"
+            aria-label="Align right"
+            icon={<AlignRight />}
+          />
+        </ToggleGroup>
+
+        <ToggleGroup
+          aria-label="Position"
+          defaultValue={["top"]}
+          orientation="vertical"
+        >
+          <ToggleGroupItem value="top" aria-label="Top">
+            Top
+          </ToggleGroupItem>
+          <ToggleGroupItem value="middle" aria-label="Middle">
+            Middle
+          </ToggleGroupItem>
+          <ToggleGroupItem value="bottom" aria-label="Bottom">
+            Bottom
+          </ToggleGroupItem>
+        </ToggleGroup>
       </div>
     </DemoStage>
   );

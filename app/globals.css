@@ -75,3 +75,9 @@ body {
 * {
   scrollbar-color: var(--color-fd-border) transparent;
 }
+
+/* Make top-level page links fill the sidebar like folder triggers. */
+#nd-sidebar div[style*="display:table"] > a,
+.fd-scroll-container div[style*="display:table"] > a {
+  width: 100%;
+}

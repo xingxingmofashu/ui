@@ -1,4 +1,4 @@
 {
   "title": "组件",
-  "pages": ["button", "card", "switch"]
+  "pages": ["button", "card", "switch", "toggle-group"]
 }

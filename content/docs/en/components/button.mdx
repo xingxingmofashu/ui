@@ -59,13 +59,13 @@ The disabled state uses the native `disabled` attribute, stopping both keyboard 
 
 ## Full-width buttons
 
-`className` adjusts the outer click area, while `classNames.base` adjusts the visible glass surface:
+`className` adjusts the outer click area, while `ui.base` adjusts the visible glass surface:
 
 ```tsx
 <Button
   label="Full width"
   className="w-full"
-  classNames={{ base: "w-full" }}
+  ui={{ base: "w-full" }}
 />
 ```
 
@@ -92,11 +92,11 @@ When the button should navigate instead of trigger an action, tell Base UI not t
 | `trailingIcon` | `ReactNode` | — | Icon after the label, using the same container as the leading icon. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, and icon size. |
 | `className` | `string` | — | Merged into the outer `root`. |
-| `classNames` | `Partial<Record<ButtonSlot, string>>` | — | Overrides internal slot styles. |
+| `ui` | `Partial<Record<ButtonSlot, string>>` | — | Overrides internal slot styles. |
 
 Provide at least one of `label`, `children`, `aria-label`, or `aria-labelledby`, otherwise type checking fails. All other props are forwarded to the Base UI `Button`, such as `disabled`, `onClick`, `type`, and `render`.
 
-### classNames slots
+### ui slots
 
 | Slot | Description |
 | --- | --- |

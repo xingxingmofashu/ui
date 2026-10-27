@@ -1,0 +1,122 @@
+---
+title: "Toggle Group"
+description: "A set of toggle buttons with a shared liquid glass thumb, single or multiple selection, and horizontal or vertical orientation."
+---
+
+Toggle Group is built on Base UI's `ToggleGroup` and `Toggle`, with a shared glass thumb that follows the pressed item. The group uses `role="group"`, so provide an accessible name with `aria-label` or `aria-labelledby`.
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
+
+<ToggleGroupSizes />
+
+## Selection and orientation
+
+Use `multiple` to allow more than one pressed item, and `orientation="vertical"` for a vertical group. Switching `multiple` from `true` to `false` keeps only the first pressed value.
+
+<ToggleGroupModes />
+
+```tsx
+import { Moon, Sun } from "lucide-react";
+
+import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+
+<ToggleGroup aria-label="Theme" defaultValue={["light"]}>
+  <ToggleGroupItem value="light" aria-label="Light" icon={<Sun />} />
+  <ToggleGroupItem value="dark" aria-label="Dark" icon={<Moon />} />
+</ToggleGroup>;
+```
+
+Vertical groups use `orientation="vertical"`:
+
+```tsx
+<ToggleGroup
+  aria-label="Position"
+  defaultValue={["top"]}
+  orientation="vertical"
+>
+  <ToggleGroupItem value="top" aria-label="Top">
+    Top
+  </ToggleGroupItem>
+  <ToggleGroupItem value="middle" aria-label="Middle">
+    Middle
+  </ToggleGroupItem>
+  <ToggleGroupItem value="bottom" aria-label="Bottom">
+    Bottom
+  </ToggleGroupItem>
+</ToggleGroup>;
+```
+
+## Controlled usage
+
+```tsx
+"use client";
+
+import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+import * as React from "react";
+
+export function ControlledToggleGroup() {
+  const [value, setValue] = React.useState<string[]>(["grid"]);
+
+  return (
+    <ToggleGroup
+      aria-label="View"
+      value={value}
+      onValueChange={(next) => setValue(next)}
+    >
+      <ToggleGroupItem value="grid" aria-label="Grid">
+        Grid
+      </ToggleGroupItem>
+      <ToggleGroupItem value="list" aria-label="List">
+        List
+      </ToggleGroupItem>
+    </ToggleGroup>
+  );
+}
+```
+
+## Props
+
+### ToggleGroup
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `readonly string[]` | — | Controlled pressed values. |
+| `defaultValue` | `readonly string[]` | — | Initial pressed values. |
+| `onValueChange` | `(value: string[], details) => void` | — | Called when the pressed values change. |
+| `multiple` | `boolean` | `false` | Allows multiple pressed items. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, and icons. |
+| `disabled` | `boolean` | `false` | Disables every item. |
+| `className` | `string` | — | Merged into the group root. |
+| `ui` | `ToggleGroupStyle` | — | Overrides internal layers. |
+
+`ToggleGroup` also forwards Base UI's `ToggleGroup` props such as `loopFocus` and `render`.
+
+### ToggleGroupItem
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Required value used by the group. |
+| `pressed` | `boolean` | — | Controlled pressed state for standalone usage. |
+| `defaultPressed` | `boolean` | `false` | Initial pressed state for standalone usage. |
+| `disabled` | `boolean` | `false` | Disables the item. |
+| `icon` | `ReactNode` | — | Icon rendered inside the item. |
+| `children` | `ReactNode` | — | Text or custom content. |
+| `className` | `string` | — | Merged into the item button. |
+| `ui` | `ToggleGroupItemStyle` | — | Overrides item slots. |
+
+Provide an accessible name with `children` or `aria-label` / `aria-labelledby`.
+
+### ui slots
+
+| Component | Slot | Description |
+| --- | --- | --- |
+| `ToggleGroup` | `root` | Outermost group. |
+| `ToggleGroup` | `glass` | Clipped highlight layer. |
+| `ToggleGroup` | `indicator` | Shared moving glass thumb. |
+| `ToggleGroupItem` | `root` | Toggle button. |
+| `ToggleGroupItem` | `content` | Icon and label layout wrapper. |
+| `ToggleGroupItem` | `icon` | Icon wrapper. |
+| `ToggleGroupItem` | `label` | Text wrapper. |

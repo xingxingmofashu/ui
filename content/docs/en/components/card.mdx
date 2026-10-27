@@ -3,7 +3,7 @@ title: "Card"
 description: "A liquid glass card composed of header, body, and footer."
 ---
 
-Card uses two layers: one draws the glass surface and highlights, the other lays out content. `className` targets `root`, while `classNames` overrides each internal slot.
+Card uses two layers: one draws the glass surface and highlights, the other lays out content. `className` targets `root`, while `ui` overrides each internal slot.
 
 <CardPreview />
 
@@ -37,18 +37,18 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 
 ## Custom slots
 
-`classNames` overrides internal structure such as header, body, and title, while `className` always targets the root:
+`ui` overrides internal structure such as header, body, and title, while `className` always targets the root:
 
 ```tsx
 <Card
   className="max-w-md"
-  classNames={{
+  ui={{
     header: "border-b border-glass-border",
     body: "bg-glass-surface/50",
     title: "tracking-tight",
   }}
   title="Custom styles"
-  description="Adjust internal structure with classNames."
+  description="Adjust internal structure with ui."
 >
   <div className="text-sm text-ink/70">The default slot goes here.</div>
 </Card>
@@ -63,11 +63,11 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 | `footer` | `ReactNode` | — | Footer action area. |
 | `children` | `ReactNode` | — | Card body content. |
 | `className` | `string` | — | Merged into `root`. |
-| `classNames` | `Partial<Record<CardSlot, string>>` | — | Overrides internal slot styles. |
+| `ui` | `Partial<Record<CardSlot, string>>` | — | Overrides internal slot styles. |
 
 All other props are forwarded to the root `div`, such as `id`, `role`, and `onClick`.
 
-### classNames slots
+### ui slots
 
 | Slot | Description |
 | --- | --- |

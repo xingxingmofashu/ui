@@ -130,11 +130,11 @@ import type { CSSProperties } from "react";
 | `disabled` | `boolean` | `false` | 禁用开关。 |
 | `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
 | `className` | `string` | — | 合并到最外层 `root`。 |
-| `classNames` | `Partial<Record<SwitchSlot, string>>` | — | 覆盖内部槽位样式。 |
+| `ui` | `Partial<Record<SwitchSlot, string>>` | — | 覆盖内部槽位样式。 |
 
 其余属性会透传给 Base UI 的 `Switch.Root`。
 
-### classNames 槽位
+### ui 槽位
 
 | 槽位 | 说明 |
 | --- | --- |

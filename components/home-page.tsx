@@ -69,7 +69,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
             icon: Layers,
             title: "槽位级覆盖",
             description:
-              "通过 classNames 精确控制 root、base、label 等内部结构，不破坏默认视觉。",
+              "通过 ui 精确控制 root、base、label 等内部结构，不破坏默认视觉。",
           },
           {
             icon: Palette,
@@ -81,11 +81,11 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         quickEyebrow: "Quick start",
         quickTitle: "几行代码就能开始",
         quickDescription:
-          "引入样式、扫描组件源码，然后直接使用。Next.js 项目只需额外配置一个 transpilePackages。",
-        quickLink: "查看安装指南",
+          "下面是一个最小组合示例；更多组件用法见组件文档。",
+        quickLink: "浏览组件文档",
         ctaTitle: "准备好把玻璃带进项目了吗？",
-        ctaDescription: "从安装开始，几分钟内就能在当前 workspace 的 Next.js 应用中使用。",
-        ctaButton: "查看安装指南",
+        ctaDescription: "从组件文档开始，了解每个组件的 API 与用法。",
+        ctaButton: "阅读文档",
         github: "GitHub",
       }
     : {
@@ -140,7 +140,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
             icon: Layers,
             title: "Slot-level overrides",
             description:
-              "Use classNames to target root, base, label, and other internals without breaking the default look.",
+              "Use ui to target root, base, label, and other internals without breaking the default look.",
           },
           {
             icon: Palette,
@@ -152,12 +152,12 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         quickEyebrow: "Quick start",
         quickTitle: "Start with a few lines",
         quickDescription:
-          "Import the styles, scan the component source, and use them directly. Next.js only needs transpilePackages.",
-        quickLink: "Read the installation guide",
+          "A minimal composition; see the component docs for more usage.",
+        quickLink: "Browse component docs",
         ctaTitle: "Ready to bring glass into your project?",
         ctaDescription:
-          "Start with installation and use it in this workspace's Next.js app in minutes.",
-        ctaButton: "Read the installation guide",
+          "Start with the component docs to learn each API and usage pattern.",
+        ctaButton: "Read the docs",
         github: "GitHub",
       };
 
@@ -386,7 +386,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
               {copy.quickDescription}
             </p>
             <a
-              href={`/${lang}/docs/installation`}
+              href={`/${lang}/docs/components/button`}
               className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-fd-foreground underline decoration-fd-border underline-offset-4 transition-colors hover:decoration-fd-foreground"
             >
               {copy.quickLink}
@@ -415,7 +415,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <a
-              href={`/${lang}/docs/installation`}
+              href={`/${lang}/docs`}
               className="inline-flex h-9 items-center gap-2 rounded-full bg-fd-foreground px-4 text-sm font-medium text-fd-background transition-opacity hover:opacity-85"
             >
               {copy.ctaButton}

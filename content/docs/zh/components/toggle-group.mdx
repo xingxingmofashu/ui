@@ -1,0 +1,122 @@
+---
+title: "Toggle Group"
+description: "一组共享液态玻璃滑块的切换按钮，支持单选、多选以及水平或垂直布局。"
+---
+
+Toggle Group 基于 Base UI 的 `ToggleGroup` 和 `Toggle`，选中项由一个共享玻璃滑块跟随。group 使用 `role="group"`，请通过 `aria-label` 或 `aria-labelledby` 提供可访问名称。
+
+## 尺寸
+
+支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。
+
+<ToggleGroupSizes />
+
+## 选择模式与方向
+
+使用 `multiple` 允许多个 item 同时选中；使用 `orientation="vertical"` 切换为纵向布局。`multiple` 从 `true` 改为 `false` 时，只保留第一个选中值。
+
+<ToggleGroupModes />
+
+```tsx
+import { Moon, Sun } from "lucide-react";
+
+import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+
+<ToggleGroup aria-label="主题" defaultValue={["light"]}>
+  <ToggleGroupItem value="light" aria-label="浅色" icon={<Sun />} />
+  <ToggleGroupItem value="dark" aria-label="深色" icon={<Moon />} />
+</ToggleGroup>;
+```
+
+纵向布局：
+
+```tsx
+<ToggleGroup
+  aria-label="位置"
+  defaultValue={["top"]}
+  orientation="vertical"
+>
+  <ToggleGroupItem value="top" aria-label="顶部">
+    顶部
+  </ToggleGroupItem>
+  <ToggleGroupItem value="middle" aria-label="中间">
+    中间
+  </ToggleGroupItem>
+  <ToggleGroupItem value="bottom" aria-label="底部">
+    底部
+  </ToggleGroupItem>
+</ToggleGroup>;
+```
+
+## 受控用法
+
+```tsx
+"use client";
+
+import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+import * as React from "react";
+
+export function ControlledToggleGroup() {
+  const [value, setValue] = React.useState<string[]>(["grid"]);
+
+  return (
+    <ToggleGroup
+      aria-label="视图"
+      value={value}
+      onValueChange={(next) => setValue(next)}
+    >
+      <ToggleGroupItem value="grid" aria-label="网格">
+        网格
+      </ToggleGroupItem>
+      <ToggleGroupItem value="list" aria-label="列表">
+        列表
+      </ToggleGroupItem>
+    </ToggleGroup>
+  );
+}
+```
+
+## Props
+
+### ToggleGroup
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `value` | `readonly string[]` | — | 受控的选中值。 |
+| `defaultValue` | `readonly string[]` | — | 初始选中值。 |
+| `onValueChange` | `(value: string[], details) => void` | — | 选中值变化时调用。 |
+| `multiple` | `boolean` | `false` | 是否允许多选。 |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局和键盘方向。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制 item 高度、内边距、文字和图标尺寸。 |
+| `disabled` | `boolean` | `false` | 禁用所有 item。 |
+| `className` | `string` | — | 合并到 group root。 |
+| `ui` | `ToggleGroupStyle` | — | 覆盖内部图层样式。 |
+
+`ToggleGroup` 还会透传 Base UI `ToggleGroup` 的 `loopFocus`、`render` 等属性。
+
+### ToggleGroupItem
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `value` | `string` | — | group 使用的必填值。 |
+| `pressed` | `boolean` | — | 独立使用时的受控选中状态。 |
+| `defaultPressed` | `boolean` | `false` | 独立使用时的初始选中状态。 |
+| `disabled` | `boolean` | `false` | 禁用该 item。 |
+| `icon` | `ReactNode` | — | item 内的图标。 |
+| `children` | `ReactNode` | — | 文字或自定义内容。 |
+| `className` | `string` | — | 合并到 item 按钮。 |
+| `ui` | `ToggleGroupItemStyle` | — | 覆盖 item 内部槽位样式。 |
+
+请通过 `children` 或 `aria-label` / `aria-labelledby` 提供可访问名称。
+
+### ui 槽位
+
+| 组件 | 槽位 | 说明 |
+| --- | --- | --- |
+| `ToggleGroup` | `root` | 最外层 group。 |
+| `ToggleGroup` | `glass` | 裁切后的高光层。 |
+| `ToggleGroup` | `indicator` | 共享的移动玻璃滑块。 |
+| `ToggleGroupItem` | `root` | 切换按钮。 |
+| `ToggleGroupItem` | `content` | 图标与文字布局容器。 |
+| `ToggleGroupItem` | `icon` | 图标容器。 |
+| `ToggleGroupItem` | `label` | 文字容器。 |

@@ -9,6 +9,8 @@ import {
   CardPreview,
   SwitchSizes,
   SwitchStates,
+  ToggleGroupModes,
+  ToggleGroupSizes,
 } from "@/components/preview";
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
@@ -21,6 +23,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     SwitchSizes,
     SwitchStates,
     SwitchControlled,
+    ToggleGroupSizes,
+    ToggleGroupModes,
     ...components,
   };
 }

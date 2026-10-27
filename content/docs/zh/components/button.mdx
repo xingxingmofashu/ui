@@ -59,13 +59,13 @@ import { ArrowRight, Plus, Search } from "lucide-react";
 
 ## 全宽按钮
 
-`className` 调整外层点击区域，`classNames.base` 调整可见玻璃表面：
+`className` 调整外层点击区域，`ui.base` 调整可见玻璃表面：
 
 ```tsx
 <Button
   label="全宽"
   className="w-full"
-  classNames={{ base: "w-full" }}
+  ui={{ base: "w-full" }}
 />
 ```
 
@@ -92,11 +92,11 @@ import { ArrowRight, Plus, Search } from "lucide-react";
 | `trailingIcon` | `ReactNode` | — | 标签后的图标，使用与前置图标相同的容器。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距和图标尺寸。 |
 | `className` | `string` | — | 合并到外层 `root`。 |
-| `classNames` | `Partial<Record<ButtonSlot, string>>` | — | 覆盖内部槽位样式。 |
+| `ui` | `Partial<Record<ButtonSlot, string>>` | — | 覆盖内部槽位样式。 |
 
 `label`、`children`、`aria-label`、`aria-labelledby` 至少提供一个，否则类型检查会失败。其余属性会透传给 Base UI 的 `Button`，例如 `disabled`、`onClick`、`type`、`render`。
 
-### classNames 槽位
+### ui 槽位
 
 | 槽位 | 说明 |
 | --- | --- |
