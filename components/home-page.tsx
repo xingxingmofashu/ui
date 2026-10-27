@@ -406,7 +406,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-6 pb-24 pt-8">
-        <div className="rounded-3xl bg-fd-foreground px-6 py-12 text-center text-fd-background sm:px-12">
+        <div className="rounded-3xl border border-fd-border bg-fd-muted/60 px-6 py-12 text-center text-fd-foreground shadow-sm sm:px-12">
           <h2 className="text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">
             {copy.ctaTitle}
           </h2>
@@ -416,14 +416,14 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <a
               href={`/${lang}/docs/installation`}
-              className="inline-flex h-9 items-center gap-2 rounded-full bg-fd-background px-4 text-sm font-medium text-fd-foreground transition-opacity hover:opacity-85"
+              className="inline-flex h-9 items-center gap-2 rounded-full bg-fd-foreground px-4 text-sm font-medium text-fd-background transition-opacity hover:opacity-85"
             >
               {copy.ctaButton}
               <ArrowRight className="size-4" aria-hidden="true" />
             </a>
             <a
               href={githubUrl}
-              className="inline-flex h-9 items-center rounded-full border border-fd-background/30 px-4 text-sm font-medium text-fd-background transition-colors hover:bg-fd-background/10"
+              className="inline-flex h-9 items-center rounded-full border border-fd-border px-4 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
             >
               {copy.github}
             </a>
