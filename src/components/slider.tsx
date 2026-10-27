@@ -4,7 +4,6 @@ import { Slider as UISlider } from "@base-ui/react/slider";
 import { cn } from "cn";
 import * as React from "react";
 
-import { LIQUID_GLASS_MAP } from "../lib/liquid-glass-map";
 import theme from "../theme/slider";
 
 type SliderSlot =
@@ -13,7 +12,6 @@ type SliderSlot =
   | "label"
   | "value"
   | "description"
-  | "filter"
   | "control"
   | "track"
   | "indicator"
@@ -56,52 +54,6 @@ type SliderProps<Value extends number | readonly number[] = number> = Omit<
     showValue?: boolean;
   };
 
-type LiquidGlassFilterProps = {
-  filterId: string;
-  className?: string;
-};
-
-function LiquidGlassFilter({ filterId, className }: LiquidGlassFilterProps) {
-  return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      data-layer="filter"
-      className={className}
-    >
-      <defs>
-        <filter
-          id={filterId}
-          primitiveUnits="objectBoundingBox"
-          colorInterpolationFilters="sRGB"
-        >
-          <feImage
-            result="map"
-            width="100%"
-            height="100%"
-            x="0"
-            y="0"
-            href={LIQUID_GLASS_MAP}
-            preserveAspectRatio="none"
-          />
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="0.035"
-            result="blur"
-          />
-          <feDisplacementMap
-            in="blur"
-            in2="map"
-            scale="0.45"
-            xChannelSelector="R"
-            yChannelSelector="G"
-          />
-        </filter>
-      </defs>
-    </svg>
-  );
-}
-
 function hasContent(value: React.ReactNode) {
   return React.Children.toArray(value).some((child) => child !== "");
 }
@@ -134,7 +86,6 @@ function Slider<Value extends number | readonly number[] = number>({
 }: SliderProps<Value>) {
   const ui = theme();
   const generatedId = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const filterId = `ui-slider-${generatedId || "filter"}`;
   const descriptionId = `ui-slider-description-${generatedId || "description"}`;
   const hasLabel = hasContent(label);
   const hasDescription = hasContent(description);
@@ -144,10 +95,6 @@ function Slider<Value extends number | readonly number[] = number>({
     [props["aria-describedby"], hasDescription ? descriptionId : undefined]
       .filter(Boolean)
       .join(" ") || undefined;
-  const rootStyle = {
-    ...style,
-    "--ui-slider-filter": `url(#${filterId})`,
-  } as React.CSSProperties;
 
   const thumbAria = {
     "aria-label": hasLabel ? undefined : props["aria-label"],
@@ -162,13 +109,8 @@ function Slider<Value extends number | readonly number[] = number>({
       defaultValue={defaultValue}
       data-slot="root"
       className={cn(ui.root(), className, uiOverrides?.root)}
-      style={rootStyle}
+      style={style}
     >
-      <LiquidGlassFilter
-        filterId={filterId}
-        className={cn(ui.filter(), uiOverrides?.filter)}
-      />
-
       {hasHeader ? (
         <div
           data-slot="header"

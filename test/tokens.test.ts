@@ -79,7 +79,6 @@ function themeCandidates() {
     "label",
     "value",
     "description",
-    "filter",
     "control",
     "track",
     "indicator",
@@ -251,8 +250,9 @@ describe("design tokens", () => {
       "background-image: linear-gradient(117deg,var(--ui-slider-fill-from) 0%,var(--ui-slider-fill-to) 100%);",
     );
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-lens-blur)) saturate(var(--ui-glass-lens-saturate)) var(--ui-slider-filter);",
+      "backdrop-filter: blur(var(--ui-glass-lens-blur)) saturate(var(--ui-glass-lens-saturate));",
     );
+    expect(css).not.toContain("--ui-slider-filter");
     expect(css).toContain(
       "inset 0 1px 2px var(--tw-shadow-color, rgb(0 0 0/0.14))",
     );
@@ -365,5 +365,24 @@ describe("design tokens", () => {
     expect(recipe).toContain("overflow-hidden");
     expect(recipe).not.toContain("LIQUID_GLASS_MAP");
     expect(recipe).not.toContain(".css");
+  });
+
+  it("keeps slider styling in the tailwind-variants theme", async () => {
+    const [recipe, component] = await Promise.all([
+      readFile(new URL("../src/theme/slider.ts", import.meta.url), "utf8"),
+      readFile(
+        new URL("../src/components/slider.tsx", import.meta.url),
+        "utf8",
+      ),
+    ]);
+
+    expect(recipe).toContain('from "tailwind-variants"');
+    expect(recipe).toContain("ui-glass-chip");
+    expect(recipe).toContain("--ui-glass-lens-blur");
+    expect(recipe).not.toContain("--ui-slider-filter");
+    expect(recipe).not.toContain("LIQUID_GLASS_MAP");
+    expect(component).not.toContain("--ui-slider-filter");
+    expect(component).not.toContain("LIQUID_GLASS_MAP");
+    expect(component).not.toContain(".css");
   });
 });

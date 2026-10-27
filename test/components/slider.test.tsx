@@ -98,7 +98,6 @@ describe("Slider", () => {
       const track = getSlot(control, "track");
       const indicator = getSlot(track, "indicator");
       const thumb = getSlot(control, "thumb");
-      const filter = root.querySelector<SVGElement>('[data-layer="filter"]');
 
       expect(root.tagName).toBe("DIV");
       expect(root).toHaveAttribute("data-slot", "root");
@@ -106,9 +105,6 @@ describe("Slider", () => {
       expect(track).toContainElement(indicator);
       expect(control).toContainElement(thumb);
       expect(thumb).toContainElement(slider);
-      expect(filter).not.toBeNull();
-      expect(filter).toHaveAttribute("aria-hidden", "true");
-      expect(filter?.querySelector("filter")).not.toBeNull();
     });
 
     it("renders the liquid glass layers inside the thumb", () => {
@@ -159,35 +155,6 @@ describe("Slider", () => {
       expect(root.querySelector('[data-slot="description"]')).toBeNull();
     });
 
-    it("generates unique liquid filters for each slider", () => {
-      render(
-        <>
-          <Slider aria-label="First" />
-          <Slider aria-label="Second" />
-        </>,
-      );
-
-      const roots = [
-        getRoot(getSlider("First")),
-        getRoot(getSlider("Second")),
-      ];
-      const filterUrls = roots.map((root) =>
-        root.style.getPropertyValue("--ui-slider-filter"),
-      );
-      const filterIds = filterUrls.map(
-        (value) => value.match(/url\(#(.+)\)/)?.[1] ?? "",
-      );
-
-      expect(new Set(filterUrls).size).toBe(2);
-
-      roots.forEach((root, index) => {
-        const filterId = filterIds[index];
-
-        expect(filterId).toMatch(/^ui-slider-/);
-        expect(root.querySelector(`filter[id="${filterId}"]`)).not.toBeNull();
-      });
-    });
-
     it("merges className and ui into their slots", () => {
       render(
         <Slider
@@ -202,7 +169,6 @@ describe("Slider", () => {
             label: "slot-label",
             value: "slot-value",
             description: "slot-description",
-            filter: "slot-filter",
             control: "slot-control",
             track: "slot-track",
             indicator: "slot-indicator",
@@ -221,9 +187,6 @@ describe("Slider", () => {
       expect(getSlot(root, "label")).toHaveClass("slot-label");
       expect(getSlot(root, "value")).toHaveClass("slot-value");
       expect(getSlot(root, "description")).toHaveClass("slot-description");
-      expect(root.querySelector('[data-layer="filter"]')).toHaveClass(
-        "slot-filter",
-      );
       expect(control).toHaveClass("slot-control");
       expect(track).toHaveClass("slot-track");
       expect(getSlot(track, "indicator")).toHaveClass("slot-indicator");
@@ -473,7 +436,6 @@ describe("Slider", () => {
         "base",
         "control",
         "description",
-        "filter",
         "header",
         "indicator",
         "label",
@@ -503,8 +465,9 @@ describe("Slider", () => {
         "bg-[linear-gradient(117deg,var(--ui-slider-fill-from)_0%,var(--ui-slider-fill-to)_100%)]",
       );
       expect(styles.thumb()).toContain(
-        "[&_[data-layer=thumb-glass]]:[backdrop-filter:blur(var(--ui-glass-lens-blur))_saturate(var(--ui-glass-lens-saturate))_var(--ui-slider-filter)]",
+        "[&_[data-layer=thumb-glass]]:[backdrop-filter:blur(var(--ui-glass-lens-blur))_saturate(var(--ui-glass-lens-saturate))]",
       );
+      expect(styles.thumb()).not.toContain("--ui-slider-filter");
       expect(styles.thumb()).toContain(
         "[&_[data-layer=thumb-glass]]:[background-image:var(--ui-glass-lens-surface)]",
       );
@@ -541,7 +504,6 @@ describe("Slider", () => {
         styles.label,
         styles.value,
         styles.description,
-        styles.filter,
         styles.control,
         styles.track,
         styles.indicator,

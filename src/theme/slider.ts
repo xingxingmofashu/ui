@@ -23,7 +23,6 @@ export default tv({
       "font-mono text-xs tabular-nums leading-none text-ink/80",
     ],
     description: "text-xs leading-5 text-ink/75",
-    filter: "pointer-events-none absolute h-0 w-0 overflow-hidden",
     control: [
       "relative flex h-[var(--ui-slider-control-height)] w-full touch-none select-none items-center",
       "data-[orientation=vertical]:mx-auto data-[orientation=vertical]:min-h-40 data-[orientation=vertical]:w-[var(--ui-slider-control-height)] data-[orientation=vertical]:flex-col",
@@ -59,7 +58,6 @@ export default tv({
       "[&_[data-layer=thumb-glass]]:[background-image:var(--ui-glass-lens-surface)]",
       "[&_[data-layer=thumb-glass]]:[box-shadow:var(--ui-glass-lens-shadow)]",
       "[&_[data-layer=thumb-glass]]:[backdrop-filter:blur(var(--ui-glass-lens-blur))_saturate(var(--ui-glass-lens-saturate))]",
-      "[&_[data-layer=thumb-glass]]:[backdrop-filter:blur(var(--ui-glass-lens-blur))_saturate(var(--ui-glass-lens-saturate))_var(--ui-slider-filter)]",
       "[&_[data-layer=thumb-glass]]:[-webkit-backdrop-filter:blur(var(--ui-glass-lens-blur))_saturate(var(--ui-glass-lens-saturate))]",
       "[&_[data-layer=thumb-glass]]:[transition:background_200ms_ease,box-shadow_200ms_ease]",
       "data-[dragging]:[&_[data-layer=thumb-glass]]:bg-[var(--ui-glass-lens-surface-active)]",
