@@ -54,9 +54,7 @@ function Card({
       {...props}
     >
       <div aria-hidden="true" className={ui.glass()}>
-        <div className={ui.surface()}>
-          <span aria-hidden="true" className={ui.overlay()} />
-        </div>
+        <span aria-hidden="true" className={ui.overlay()} />
       </div>
 
       <div className={ui.layout()}>

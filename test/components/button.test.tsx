@@ -108,35 +108,28 @@ describe("Button", () => {
 
       expect(buttonElement).toHaveClass("max-w-full");
       expect(buttonElement).not.toHaveClass("w-[8rem]");
-      expect(getSlot(buttonElement, "surface")).toHaveClass(
-        "h-[var(--ui-button-height)]",
+      expect(getSlot(buttonElement, "base")).toHaveClass(
+        "h-8",
         "box-border",
         "overflow-hidden",
         "px-3",
         "text-sm",
         "gap-1.5",
-        "[--ui-button-height:2rem]",
-      );
-      expect(getSlot(buttonElement, "surface").className).toContain(
-        "py-[calc(",
       );
     });
 
     it("uses content-driven width and the Nuxt UI reference geometry", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.base()).not.toContain("w-[");
-      expect(styles.base()).toContain("inline-flex");
-      expect(styles.base()).toContain("items-center");
-      expect(styles.surface()).toContain("px-3");
-      expect(styles.surface()).toContain("h-[var(--ui-button-height)]");
-      expect(styles.surface()).toContain("box-border");
-      expect(styles.surface()).toContain("overflow-hidden");
-      expect(styles.surface()).toContain("py-[calc(");
-      expect(styles.surface()).toContain("1lh");
-      expect(styles.surface()).toContain("[--ui-button-height:2rem]");
-      expect(styles.surface()).toContain("gap-1.5");
-      expect(styles.surface()).toContain("text-sm");
+      expect(styles.root()).not.toContain("w-[");
+      expect(styles.root()).toContain("inline-flex");
+      expect(styles.root()).toContain("items-center");
+      expect(styles.base()).toContain("px-3");
+      expect(styles.base()).toContain("h-8");
+      expect(styles.base()).toContain("box-border");
+      expect(styles.base()).toContain("overflow-hidden");
+      expect(styles.base()).toContain("gap-1.5");
+      expect(styles.base()).toContain("text-sm");
       expect(styles.leadingIcon()).toContain("[&_svg]:size-5");
       expect(styles.trailingIcon()).toContain("[&_svg]:size-5");
       expect(styles.leadingIcon()).toBe(styles.trailingIcon());
@@ -147,31 +140,29 @@ describe("Button", () => {
     it("clips decorative shadows and highlights to the capsule", () => {
       const styles = button();
 
-      expect(styles.surface()).toContain("overflow-hidden");
-      expect(styles.surface()).toContain("rounded-full");
+      expect(styles.base()).toContain("overflow-hidden");
+      expect(styles.base()).toContain("rounded-full");
       expect(styles.label()).toContain("var(--ui-drop-shadow-label)");
       expect(styles.leadingIcon()).toContain("var(--ui-drop-shadow-icon)");
       expect(styles.trailingIcon()).toContain("var(--ui-drop-shadow-icon)");
     });
 
     it.each([
-      ["xs", "px-2.5", "1.5rem", "gap-1", "text-xs", "[&_svg]:size-4"],
-      ["sm", "px-3", "1.75rem", "gap-1.5", "text-xs", "[&_svg]:size-4"],
-      ["md", "px-3", "2rem", "gap-1.5", "text-sm", "[&_svg]:size-5"],
-      ["lg", "px-3.5", "2.25rem", "gap-2", "text-sm", "[&_svg]:size-5"],
-      ["xl", "px-3.5", "2.5rem", "gap-2", "text-base", "[&_svg]:size-6"],
+      ["xs", "px-2.5", "h-6", "gap-1", "text-xs", "[&_svg]:size-4"],
+      ["sm", "px-3", "h-7", "gap-1.5", "text-xs", "[&_svg]:size-4"],
+      ["md", "px-3", "h-8", "gap-1.5", "text-sm", "[&_svg]:size-5"],
+      ["lg", "px-3.5", "h-9", "gap-2", "text-sm", "[&_svg]:size-5"],
+      ["xl", "px-3.5", "h-10", "gap-2", "text-base", "[&_svg]:size-6"],
     ] as const)(
       "applies the Nuxt UI %s size",
-      (size, paddingX, height, gap, text, iconClass) => {
+      (size, paddingX, heightClass, gap, text, iconClass) => {
         const styles = button({ size });
 
-        expect(styles.surface()).toContain(paddingX);
-        expect(styles.surface()).toContain("h-[var(--ui-button-height)]");
-        expect(styles.surface()).toContain("overflow-hidden");
-        expect(styles.surface()).toContain(`[--ui-button-height:${height}]`);
-        expect(styles.surface()).toContain("py-[calc(");
-        expect(styles.surface()).toContain(gap);
-        expect(styles.surface()).toContain(text);
+        expect(styles.base()).toContain(paddingX);
+        expect(styles.base()).toContain(heightClass);
+        expect(styles.base()).toContain("overflow-hidden");
+        expect(styles.base()).toContain(gap);
+        expect(styles.base()).toContain(text);
         expect(styles.leadingIcon()).toContain(iconClass);
         expect(styles.trailingIcon()).toContain(iconClass);
         expect(styles.leadingIcon()).toBe(styles.trailingIcon());
@@ -218,9 +209,9 @@ describe("Button", () => {
       for (const size of sizes) {
         const styles = button({ size });
 
-        expect(`${styles.base()} ${styles.surface()}`).not.toContain("100vw");
-        expect(styles.base()).toContain("max-w-full");
-        expect(styles.surface()).toContain("w-full");
+        expect(`${styles.root()} ${styles.base()}`).not.toContain("100vw");
+        expect(styles.root()).toContain("max-w-full");
+        expect(styles.base()).toContain("w-full");
       }
     });
 
@@ -246,13 +237,13 @@ describe("Button", () => {
     it("transitions the properties used by hover and press states", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.surface()).toContain(
+      expect(styles.base()).toContain(
         "transition-[background-color,translate,scale]",
       );
-      expect(styles.surface()).toContain("duration-[250ms]");
-      expect(styles.surface()).not.toContain("duration-[600ms]");
-      expect(styles.surface()).not.toContain("duration-[120ms]");
-      expect(styles.surface()).not.toContain(
+      expect(styles.base()).toContain("duration-[250ms]");
+      expect(styles.base()).not.toContain("duration-[600ms]");
+      expect(styles.base()).not.toContain("duration-[120ms]");
+      expect(styles.base()).not.toContain(
         "transition-[background-color,transform]",
       );
     });
@@ -260,9 +251,9 @@ describe("Button", () => {
     it("applies the reference lens filters on separate layers", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.base()).toContain("[filter:contrast(3)]");
-      expect(styles.surface()).toContain("[filter:brightness(0.9)]");
-      expect(styles.surface()).not.toContain("contrast(3)");
+      expect(styles.root()).toContain("[filter:contrast(3)]");
+      expect(styles.base()).toContain("[filter:brightness(0.9)]");
+      expect(styles.base()).not.toContain("contrast(3)");
     });
   });
 
@@ -273,8 +264,8 @@ describe("Button", () => {
           label="Styled"
           className="custom-base"
           classNames={{
-            base: "slot-base",
-            surface: "bg-white",
+            root: "slot-root",
+            base: "bg-white",
             label: "slot-label",
             leadingIcon: "slot-leading-icon",
             trailingIcon: "slot-trailing-icon",
@@ -286,12 +277,12 @@ describe("Button", () => {
       );
 
       const buttonElement = screen.getByRole("button", { name: "Styled" });
-      const surface = getSlot(buttonElement, "surface");
+      const base = getSlot(buttonElement, "base");
 
-      expect(buttonElement).toHaveClass("custom-base", "slot-base");
-      expect(surface).toHaveClass("bg-white");
-      expect(surface).not.toHaveClass("custom-base");
-      expect(surface).not.toHaveClass("bg-glass-surface");
+      expect(buttonElement).toHaveClass("custom-base", "slot-root");
+      expect(base).toHaveClass("bg-white");
+      expect(base).not.toHaveClass("custom-base");
+      expect(base).not.toHaveClass("bg-glass-surface");
       expect(getSlot(buttonElement, "label")).toHaveClass("slot-label");
       expect(getSlot(buttonElement, "leading-icon")).toHaveClass(
         "slot-leading-icon",
@@ -340,12 +331,12 @@ describe("Button", () => {
         />,
       );
 
-      const surface = getSlot(
+      const base = getSlot(
         screen.getByRole("button", { name: "Both" }),
-        "surface",
+        "base",
       );
 
-      expect(surface).toHaveClass("flex-row", "flex-nowrap", "items-center");
+      expect(base).toHaveClass("flex-row", "flex-nowrap", "items-center");
     });
   });
 

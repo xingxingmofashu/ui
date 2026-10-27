@@ -7,11 +7,10 @@ export default tv({
       "[font-family:system-ui,-apple-system,sans-serif]",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
     ],
-    glass: "pointer-events-none col-start-1 row-start-1 [filter:contrast(3)]",
-    surface: [
-      "relative col-start-1 row-start-1 h-full w-full overflow-hidden rounded-[2rem]",
+    glass: [
+      "pointer-events-none relative col-start-1 row-start-1 h-full w-full overflow-hidden rounded-[2rem]",
       "border border-double border-glass-border bg-glass-surface shadow-glass",
-      "backdrop-blur-[2px] [filter:brightness(0.9)]",
+      "backdrop-blur-[2px] [filter:brightness(0.9)_contrast(3)]",
       "before:pointer-events-none before:absolute before:inset-[8px] before:z-[1] before:rounded-[inherit] before:border before:border-glass-inner-border before:blur-[8px] before:content-['']",
       "after:pointer-events-none after:absolute after:inset-0 after:z-[501] after:rounded-[inherit] after:bg-[linear-gradient(45deg,var(--ui-glass-highlight)_0%,transparent_var(--ui-glass-glare-stop),transparent_calc(100%_-_var(--ui-glass-glare-stop)),var(--ui-glass-highlight)_100%)] after:blur-[7px] after:content-['']",
     ],

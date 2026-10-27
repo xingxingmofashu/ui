@@ -8,8 +8,8 @@ import { type VariantProps } from "tailwind-variants";
 import theme from "../theme/button";
 
 type ButtonSlot =
+  | "root"
   | "base"
-  | "surface"
   | "label"
   | "leadingIcon"
   | "trailingIcon"
@@ -24,7 +24,7 @@ type ButtonContentProps = {
   leadingIcon?: React.ReactNode;
   /** Icon rendered after the label, inside the circular badge. */
   trailingIcon?: React.ReactNode;
-  /** Classes for individual slots. Use `surface` to style the visible glass pill. */
+  /** Classes for individual slots. Use `base` to style the visible glass pill and `root` for the outer click area. */
   classNames?: ButtonClassNames;
 };
 
@@ -68,11 +68,11 @@ function Button({
 
   return (
     <UIButton
-      data-slot="button"
-      className={cn(ui.base(), className, classNames?.base)}
+      data-slot="root"
+      className={cn(ui.root(), className, classNames?.root)}
       {...props}
     >
-      <span data-slot="surface" className={cn(ui.surface(), classNames?.surface)}>
+      <span data-slot="base" className={cn(ui.base(), classNames?.base)}>
         {leadingIcon != null ? (
           <span
             data-slot="leading-icon"

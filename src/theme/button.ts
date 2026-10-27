@@ -2,15 +2,15 @@ import { tv } from "tailwind-variants";
 
 export default tv({
   slots: {
-    base: [
+    root: [
       "group relative z-[500] inline-flex items-center min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
       "appearance-none rounded-full border-0 bg-transparent p-0 [filter:contrast(3)]",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
       "disabled:pointer-events-none disabled:opacity-50",
     ],
-    surface: [
-      "relative flex h-[var(--ui-button-height)] w-full min-w-0 max-w-full flex-row flex-nowrap items-center justify-center overflow-hidden rounded-full",
-      "box-border py-[calc((var(--ui-button-height)_-_1lh_-_2px)/2)]",
+    base: [
+      "relative flex w-full min-w-0 max-w-full flex-row flex-nowrap items-center justify-center overflow-hidden rounded-full",
+      "box-border",
       "border border-double border-glass-border bg-glass-surface",
       "shadow-glass",
       "backdrop-blur-[2px] [filter:brightness(0.9)]",
@@ -39,27 +39,27 @@ export default tv({
   variants: {
     size: {
       xs: {
-        surface: "px-2.5 text-xs gap-1 [--ui-button-height:1.5rem]",
+        base: "h-6 px-2.5 text-xs gap-1",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
       },
       sm: {
-        surface: "px-3 text-xs gap-1.5 [--ui-button-height:1.75rem]",
+        base: "h-7 px-3 text-xs gap-1.5",
         leadingIcon: "[&_svg]:size-4",
         trailingIcon: "[&_svg]:size-4",
       },
       md: {
-        surface: "px-3 text-sm gap-1.5 [--ui-button-height:2rem]",
+        base: "h-8 px-3 text-sm gap-1.5",
         leadingIcon: "[&_svg]:size-5",
         trailingIcon: "[&_svg]:size-5",
       },
       lg: {
-        surface: "px-3.5 text-sm gap-2 [--ui-button-height:2.25rem]",
+        base: "h-9 px-3.5 text-sm gap-2",
         leadingIcon: "[&_svg]:size-5",
         trailingIcon: "[&_svg]:size-5",
       },
       xl: {
-        surface: "px-3.5 text-base gap-2 [--ui-button-height:2.5rem]",
+        base: "h-10 px-3.5 text-base gap-2",
         leadingIcon: "[&_svg]:size-6",
         trailingIcon: "[&_svg]:size-6",
       },

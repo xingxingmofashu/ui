@@ -18,15 +18,14 @@ function querySlot(element: HTMLElement, slot: string) {
   return element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
 }
 
-function getPrivateSurface(element: HTMLElement) {
-  const glassLayer = element.querySelector<HTMLElement>('[aria-hidden="true"]');
-  const surface = glassLayer?.firstElementChild;
+function getPrivateGlass(element: HTMLElement) {
+  const glass = element.querySelector<HTMLElement>('[aria-hidden="true"]');
 
-  if (!(surface instanceof HTMLElement)) {
-    throw new Error("Card private surface was not rendered.");
+  if (!(glass instanceof HTMLElement)) {
+    throw new Error("Card private glass layer was not rendered.");
   }
 
-  return surface;
+  return glass;
 }
 
 function getCard(text: string, index = 0) {
@@ -168,7 +167,7 @@ describe("Card", () => {
 
     it("keeps the glass layers private", () => {
       render(
-        // @ts-expect-error The glass surface is an implementation detail.
+        // @ts-expect-error The glass layer is an implementation detail.
         <Card classNames={{ surface: "custom-surface" }}>Body</Card>,
       );
 
@@ -176,7 +175,7 @@ describe("Card", () => {
 
       expect(querySlot(cardElement, "surface")).toBeNull();
       expect(querySlot(cardElement, "overlay")).toBeNull();
-      expect(getPrivateSurface(cardElement)).not.toHaveClass("custom-surface");
+      expect(getPrivateGlass(cardElement)).not.toHaveClass("custom-surface");
     });
   });
 
@@ -219,16 +218,15 @@ describe("Card", () => {
       expect(styles.root()).toContain("grid");
       expect(styles.root()).toContain("rounded-[2rem]");
       expect(styles.root()).not.toContain("100vw");
-      expect(styles.glass()).toContain("[filter:contrast(3)]");
+      expect(styles.glass()).toContain("[filter:brightness(0.9)_contrast(3)]");
       expect(styles.glass()).toContain("pointer-events-none");
-      expect(styles.surface()).toContain("bg-glass-surface");
-      expect(styles.surface()).toContain("border-double");
-      expect(styles.surface()).toContain("border-glass-border");
-      expect(styles.surface()).toContain("shadow-glass");
-      expect(styles.surface()).toContain("backdrop-blur-[2px]");
-      expect(styles.surface()).toContain("[filter:brightness(0.9)]");
-      expect(styles.surface()).toContain("before:");
-      expect(styles.surface()).toContain("after:");
+      expect(styles.glass()).toContain("bg-glass-surface");
+      expect(styles.glass()).toContain("border-double");
+      expect(styles.glass()).toContain("border-glass-border");
+      expect(styles.glass()).toContain("shadow-glass");
+      expect(styles.glass()).toContain("backdrop-blur-[2px]");
+      expect(styles.glass()).toContain("before:");
+      expect(styles.glass()).toContain("after:");
       expect(styles.overlay()).toContain("border-glass-rim");
       expect(styles.overlay()).toContain("blur-[1px]");
       expect(styles.layout()).toContain("z-10");

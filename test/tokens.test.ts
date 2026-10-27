@@ -32,7 +32,6 @@ function themeCandidates() {
   const cardSlots = [
     "root",
     "glass",
-    "surface",
     "overlay",
     "layout",
     "header",
@@ -59,8 +58,8 @@ function themeCandidates() {
   });
 
   return [
+    buttonStyles.root(),
     buttonStyles.base(),
-    buttonStyles.surface(),
     buttonStyles.label(),
     buttonStyles.leadingIcon(),
     buttonStyles.trailingIcon(),
@@ -102,8 +101,7 @@ describe("design tokens", () => {
     expect(css).toContain("border-color: var(--ui-glass-border);");
     expect(css).toContain("border-color: var(--ui-glass-inner-border);");
     expect(css).toContain("border-color: var(--ui-glass-rim);");
-    expect(css).toContain("filter: contrast(3);");
-    expect(css).toContain("filter: brightness(0.9);");
+    expect(css).toContain("filter: brightness(0.9) contrast(3);");
     expect(css).toContain("filter: var(--ui-drop-shadow-label);");
     expect(css).toContain("font-family: system-ui");
     expect(css).toContain("border-radius: 2rem;");
@@ -215,7 +213,7 @@ describe("design tokens", () => {
     expect(recipe).toContain('from "tailwind-variants"');
     expect(recipe).toContain("bg-glass-surface");
     expect(recipe).toContain("shadow-glass");
-    expect(recipe).toContain("[filter:brightness(0.9)]");
+    expect(recipe).toContain("[filter:brightness(0.9)_contrast(3)]");
     expect(recipe).not.toContain("size:");
     expect(recipe).not.toContain(".css");
     expect(tokens).not.toContain(".ui-card-");
