@@ -22,7 +22,7 @@ type ButtonContentProps = {
   label?: React.ReactNode;
   /** Icon rendered before the label. */
   leadingIcon?: React.ReactNode;
-  /** Icon rendered after the label, inside the circular badge. */
+  /** Icon rendered after the label. */
   trailingIcon?: React.ReactNode;
   /** Classes for individual slots. Use `base` to style the visible glass pill and `root` for the outer click area. */
   classNames?: ButtonClassNames;
