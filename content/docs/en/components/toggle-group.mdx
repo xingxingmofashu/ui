@@ -5,30 +5,95 @@ description: "A set of toggle buttons with a shared liquid glass thumb, single o
 
 Toggle Group is built on Base UI's `ToggleGroup` and `Toggle`, with a shared glass thumb that follows the pressed item. The group uses `role="group"`, so provide an accessible name with `aria-label` or `aria-labelledby`.
 
+## Basic example
+
+The view switcher below uses the real Toggle Group. The pressed item drives the shared glass thumb and updates the text underneath.
+
+<ToggleGroupBasic />
+
+```tsx
+"use client";
+
+import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+import { LayoutGrid, List } from "lucide-react";
+import * as React from "react";
+
+export function ViewToggle() {
+  const [value, setValue] = React.useState<string[]>(["grid"]);
+
+  return (
+    <div className="flex flex-col gap-3">
+      <ToggleGroup aria-label="View" value={value} onValueChange={setValue}>
+        <ToggleGroupItem value="grid" aria-label="Grid" icon={<LayoutGrid />}>
+          Grid
+        </ToggleGroupItem>
+        <ToggleGroupItem value="list" aria-label="List" icon={<List />}>
+          List
+        </ToggleGroupItem>
+      </ToggleGroup>
+      <span className="text-sm text-ink/70">
+        Current view:{" "}
+        {value.length === 0
+          ? "None"
+          : value[0] === "grid"
+            ? "Grid"
+            : "List"}
+      </span>
+    </div>
+  );
+}
+```
+
 ## Sizes
 
 Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
 
 <ToggleGroupSizes />
 
-## Selection and orientation
+```tsx
+<ToggleGroup aria-label="Size" defaultValue={["one"]} size="lg">
+  <ToggleGroupItem value="one" aria-label="One">
+    One
+  </ToggleGroupItem>
+  <ToggleGroupItem value="two" aria-label="Two">
+    Two
+  </ToggleGroupItem>
+</ToggleGroup>
+```
 
-Use `multiple` to allow more than one pressed item, and `orientation="vertical"` for a vertical group. Switching `multiple` from `true` to `false` keeps only the first pressed value.
+## Selection mode
 
-<ToggleGroupModes />
+Use `multiple` to allow more than one pressed item; the default is single selection. Switching `multiple` from `true` to `false` keeps only the first pressed value.
+
+<ToggleGroupSelection />
 
 ```tsx
-import { Moon, Sun } from "lucide-react";
+import { Bold, Italic, Lamp, Moon, Sun, Underline } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
 
 <ToggleGroup aria-label="Theme" defaultValue={["light"]}>
   <ToggleGroupItem value="light" aria-label="Light" icon={<Sun />} />
   <ToggleGroupItem value="dark" aria-label="Dark" icon={<Moon />} />
+  <ToggleGroupItem value="dim" aria-label="Dim" icon={<Lamp />} />
+</ToggleGroup>;
+
+<ToggleGroup aria-label="Text formatting" defaultValue={["bold"]} multiple>
+  <ToggleGroupItem value="bold" aria-label="Bold" icon={<Bold />} />
+  <ToggleGroupItem value="italic" aria-label="Italic" icon={<Italic />} />
+  <ToggleGroupItem
+    value="underline"
+    aria-label="Underline"
+    icon={<Underline />}
+  />
 </ToggleGroup>;
 ```
 
-Vertical groups use `orientation="vertical"`:
+## Orientation
+
+Use `orientation="vertical"` for a vertical group:
+
+<ToggleGroupOrientation />
 
 ```tsx
 <ToggleGroup
@@ -50,28 +115,52 @@ Vertical groups use `orientation="vertical"`:
 
 ## Controlled usage
 
+`value` and `onValueChange` let external state fully control the selection. The example below stays controlled after clearing:
+
+<ToggleGroupControlled />
+
 ```tsx
 "use client";
 
-import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+import {
+  Button,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@xingxingmofashu.me/ui";
+import { Bold, Italic, Underline } from "lucide-react";
 import * as React from "react";
 
-export function ControlledToggleGroup() {
-  const [value, setValue] = React.useState<string[]>(["grid"]);
+export function ControlledFormatting() {
+  const [value, setValue] = React.useState<string[]>(["bold"]);
 
   return (
-    <ToggleGroup
-      aria-label="View"
-      value={value}
-      onValueChange={(next) => setValue(next)}
-    >
-      <ToggleGroupItem value="grid" aria-label="Grid">
-        Grid
-      </ToggleGroupItem>
-      <ToggleGroupItem value="list" aria-label="List">
-        List
-      </ToggleGroupItem>
-    </ToggleGroup>
+    <div className="flex flex-col gap-3">
+      <ToggleGroup
+        aria-label="Text formatting"
+        multiple
+        value={value}
+        onValueChange={setValue}
+      >
+        <ToggleGroupItem value="bold" aria-label="Bold" icon={<Bold />} />
+        <ToggleGroupItem value="italic" aria-label="Italic" icon={<Italic />} />
+        <ToggleGroupItem
+          value="underline"
+          aria-label="Underline"
+          icon={<Underline />}
+        />
+      </ToggleGroup>
+      <div className="flex items-center gap-3">
+        <span className="text-sm text-ink/70">
+          Selected: {value.length ? value.join(", ") : "none"}
+        </span>
+        <Button
+          size="sm"
+          label="Clear"
+          onClick={() => setValue([])}
+          disabled={value.length === 0}
+        />
+      </div>
+    </div>
   );
 }
 ```

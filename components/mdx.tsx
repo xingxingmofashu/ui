@@ -1,30 +1,72 @@
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 
-import { SwitchControlled } from "@/components/examples/switch-controlled";
 import {
+  ButtonBasic,
+  ButtonFullWidth,
   ButtonIcons,
+  ButtonLink,
   ButtonSizes,
   ButtonStates,
-  CardPreview,
+} from "@/components/examples/button";
+import {
+  CardBasic,
+  CardContentOnly,
+  CardCustomSlots,
+} from "@/components/examples/card";
+import {
+  SliderBasic,
+  SliderDisabled,
+  SliderForm,
+  SliderRange,
+  SliderVertical,
+} from "@/components/examples/slider";
+import {
+  SwitchBasic,
+  SwitchControlled,
+  SwitchForm,
+  SwitchMonochrome,
   SwitchSizes,
   SwitchStates,
-  ToggleGroupModes,
+  SwitchUncontrolled,
+} from "@/components/examples/switch";
+import {
+  ToggleGroupBasic,
+  ToggleGroupControlled,
+  ToggleGroupOrientation,
+  ToggleGroupSelection,
   ToggleGroupSizes,
-} from "@/components/preview";
+} from "@/components/examples/toggle-group";
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
-    ButtonSizes,
+    ButtonBasic,
+    ButtonFullWidth,
     ButtonIcons,
+    ButtonLink,
+    ButtonSizes,
     ButtonStates,
-    CardPreview,
+    CardBasic,
+    CardContentOnly,
+    CardCustomSlots,
+    SliderBasic,
+    SliderDisabled,
+    SliderForm,
+    SliderRange,
+    SliderVertical,
+    SwitchBasic,
+    SwitchControlled,
+    SwitchForm,
+    SwitchMonochrome,
     SwitchSizes,
     SwitchStates,
-    SwitchControlled,
+    SwitchUncontrolled,
+    ToggleGroupBasic,
+    ToggleGroupControlled,
+    ToggleGroupOrientation,
+    ToggleGroupSelection,
     ToggleGroupSizes,
-    ToggleGroupModes,
     ...components,
   };
 }

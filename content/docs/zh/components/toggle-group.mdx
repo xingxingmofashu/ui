@@ -5,30 +5,95 @@ description: "一组共享液态玻璃滑块的切换按钮，支持单选、多
 
 Toggle Group 基于 Base UI 的 `ToggleGroup` 和 `Toggle`，选中项由一个共享玻璃滑块跟随。group 使用 `role="group"`，请通过 `aria-label` 或 `aria-labelledby` 提供可访问名称。
 
+## 基础示例
+
+下面的视图切换使用真实 Toggle Group。选中项会驱动共享玻璃滑块，并把当前值同步到下方文字。
+
+<ToggleGroupBasic />
+
+```tsx
+"use client";
+
+import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+import { LayoutGrid, List } from "lucide-react";
+import * as React from "react";
+
+export function ViewToggle() {
+  const [value, setValue] = React.useState<string[]>(["grid"]);
+
+  return (
+    <div className="flex flex-col gap-3">
+      <ToggleGroup aria-label="视图" value={value} onValueChange={setValue}>
+        <ToggleGroupItem value="grid" aria-label="网格" icon={<LayoutGrid />}>
+          网格
+        </ToggleGroupItem>
+        <ToggleGroupItem value="list" aria-label="列表" icon={<List />}>
+          列表
+        </ToggleGroupItem>
+      </ToggleGroup>
+      <span className="text-sm text-ink/70">
+        当前视图：
+        {value.length === 0
+          ? "未选择"
+          : value[0] === "grid"
+            ? "网格"
+            : "列表"}
+      </span>
+    </div>
+  );
+}
+```
+
 ## 尺寸
 
 支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。
 
 <ToggleGroupSizes />
 
-## 选择模式与方向
+```tsx
+<ToggleGroup aria-label="尺寸" defaultValue={["one"]} size="lg">
+  <ToggleGroupItem value="one" aria-label="一">
+    一
+  </ToggleGroupItem>
+  <ToggleGroupItem value="two" aria-label="二">
+    二
+  </ToggleGroupItem>
+</ToggleGroup>
+```
 
-使用 `multiple` 允许多个 item 同时选中；使用 `orientation="vertical"` 切换为纵向布局。`multiple` 从 `true` 改为 `false` 时，只保留第一个选中值。
+## 选择模式
 
-<ToggleGroupModes />
+使用 `multiple` 允许多个 item 同时选中，默认是单选。`multiple` 从 `true` 改为 `false` 时，只保留第一个选中值。
+
+<ToggleGroupSelection />
 
 ```tsx
-import { Moon, Sun } from "lucide-react";
+import { Bold, Italic, Lamp, Moon, Sun, Underline } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
 
 <ToggleGroup aria-label="主题" defaultValue={["light"]}>
   <ToggleGroupItem value="light" aria-label="浅色" icon={<Sun />} />
   <ToggleGroupItem value="dark" aria-label="深色" icon={<Moon />} />
+  <ToggleGroupItem value="dim" aria-label="暗色" icon={<Lamp />} />
+</ToggleGroup>;
+
+<ToggleGroup aria-label="文本格式" defaultValue={["bold"]} multiple>
+  <ToggleGroupItem value="bold" aria-label="粗体" icon={<Bold />} />
+  <ToggleGroupItem value="italic" aria-label="斜体" icon={<Italic />} />
+  <ToggleGroupItem
+    value="underline"
+    aria-label="下划线"
+    icon={<Underline />}
+  />
 </ToggleGroup>;
 ```
 
-纵向布局：
+## 方向
+
+使用 `orientation="vertical"` 切换为纵向布局：
+
+<ToggleGroupOrientation />
 
 ```tsx
 <ToggleGroup
@@ -50,28 +115,52 @@ import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
 
 ## 受控用法
 
+`value` 与 `onValueChange` 让选中值完全由外部状态控制。下面的示例在清空后仍然保持受控：
+
+<ToggleGroupControlled />
+
 ```tsx
 "use client";
 
-import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+import {
+  Button,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@xingxingmofashu.me/ui";
+import { Bold, Italic, Underline } from "lucide-react";
 import * as React from "react";
 
-export function ControlledToggleGroup() {
-  const [value, setValue] = React.useState<string[]>(["grid"]);
+export function ControlledFormatting() {
+  const [value, setValue] = React.useState<string[]>(["bold"]);
 
   return (
-    <ToggleGroup
-      aria-label="视图"
-      value={value}
-      onValueChange={(next) => setValue(next)}
-    >
-      <ToggleGroupItem value="grid" aria-label="网格">
-        网格
-      </ToggleGroupItem>
-      <ToggleGroupItem value="list" aria-label="列表">
-        列表
-      </ToggleGroupItem>
-    </ToggleGroup>
+    <div className="flex flex-col gap-3">
+      <ToggleGroup
+        aria-label="文本格式"
+        multiple
+        value={value}
+        onValueChange={setValue}
+      >
+        <ToggleGroupItem value="bold" aria-label="粗体" icon={<Bold />} />
+        <ToggleGroupItem value="italic" aria-label="斜体" icon={<Italic />} />
+        <ToggleGroupItem
+          value="underline"
+          aria-label="下划线"
+          icon={<Underline />}
+        />
+      </ToggleGroup>
+      <div className="flex items-center gap-3">
+        <span className="text-sm text-ink/70">
+          已选：{value.length ? value.join("、") : "无"}
+        </span>
+        <Button
+          size="sm"
+          label="清空"
+          onClick={() => setValue([])}
+          disabled={value.length === 0}
+        />
+      </div>
+    </div>
   );
 }
 ```

@@ -18,11 +18,17 @@ Bilingual Fumadocs documentation for `@xingxingmofashu.me/ui`.
 
 ## Components And Theme
 
-- Live previews live in `components/preview.tsx` and render the real UI package.
-- `SwitchControlled` lives in `components/examples/switch-controlled.tsx`.
-- Previews read the active locale from `components/locale-provider.tsx`.
+- Live examples live in `components/examples/`, one file per component:
+  `button.tsx`, `card.tsx`, `slider.tsx`, `switch.tsx`, and `toggle-group.tsx`.
+- Each example file exports every demo for that component. Do not add a barrel
+  `index.ts`; import the files directly from `components/mdx.tsx`.
+- Every component page starts with a basic example that renders the real,
+  interactive component.
+- Shared example frame: `components/demo-stage.tsx`. Switch examples go through
+  `components/monochrome-switch.tsx`.
+- Examples read the active locale from `components/locale-provider.tsx`.
 - The site uses Fumadocs' `black.css` theme and the Glass layout.
-- Do not add accent colors. Callouts, code highlighting, and previews are neutral.
+- Do not add accent colors. Callouts, code highlighting, and examples are neutral.
 - Do not replace live components with screenshots.
 
 ## i18n

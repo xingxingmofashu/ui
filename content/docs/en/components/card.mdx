@@ -5,16 +5,18 @@ description: "A liquid glass card composed of header, body, and footer."
 
 Card uses two layers: one draws the glass surface and highlights, the other lays out content. `className` targets `root`, while `ui` overrides each internal slot.
 
-<CardPreview />
+## Basic example
 
-## Basic usage
+The card below is the real component, matching the code example.
+
+<CardBasic />
 
 ```tsx
 import { Button, Card } from "@xingxingmofashu.me/ui";
 import { ArrowRight } from "lucide-react";
 
 <Card
-  className="max-w-md"
+  className="w-full max-w-md"
   title="Liquid glass"
   description="A CSS-only frosted glass panel."
   footer={<Button size="sm" label="View" trailingIcon={<ArrowRight />} />}
@@ -29,8 +31,10 @@ import { ArrowRight } from "lucide-react";
 
 When `title`, `description`, or `footer` are omitted, the corresponding region is not rendered:
 
+<CardContentOnly />
+
 ```tsx
-<Card className="max-w-sm">
+<Card className="w-full max-w-sm">
   <div className="text-sm text-ink/70">A card with only a body.</div>
 </Card>
 ```
@@ -39,9 +43,11 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 
 `ui` overrides internal structure such as header, body, and title, while `className` always targets the root:
 
+<CardCustomSlots />
+
 ```tsx
 <Card
-  className="max-w-md"
+  className="w-full max-w-md"
   ui={{
     header: "border-b border-glass-border",
     body: "bg-glass-surface/50",

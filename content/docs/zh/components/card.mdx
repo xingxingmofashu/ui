@@ -5,16 +5,18 @@ description: "由 header、body 和 footer 组成的液态玻璃卡片。"
 
 Card 使用两层结构：一层负责玻璃表面与高光，另一层负责内容布局。`className` 作用于 `root`，可以用 `ui` 覆盖每个内部槽位。
 
-<CardPreview />
+## 基础示例
 
-## 基础用法
+下面的卡片来自真实组件，结构与代码示例一致。
+
+<CardBasic />
 
 ```tsx
 import { Button, Card } from "@xingxingmofashu.me/ui";
 import { ArrowRight } from "lucide-react";
 
 <Card
-  className="max-w-md"
+  className="w-full max-w-md"
   title="液态玻璃"
   description="纯 CSS 磨砂玻璃面板。"
   footer={<Button size="sm" label="查看" trailingIcon={<ArrowRight />} />}
@@ -29,8 +31,10 @@ import { ArrowRight } from "lucide-react";
 
 不传 `title`、`description` 或 `footer` 时，对应的区域不会渲染：
 
+<CardContentOnly />
+
 ```tsx
-<Card className="max-w-sm">
+<Card className="w-full max-w-sm">
   <div className="text-sm text-ink/70">只有 body 的卡片。</div>
 </Card>
 ```
@@ -39,9 +43,11 @@ import { ArrowRight } from "lucide-react";
 
 `ui` 可以覆盖 header、body、title 等内部结构，而 `className` 始终作用于 root：
 
+<CardCustomSlots />
+
 ```tsx
 <Card
-  className="max-w-md"
+  className="w-full max-w-md"
   ui={{
     header: "border-b border-glass-border",
     body: "bg-glass-surface/50",

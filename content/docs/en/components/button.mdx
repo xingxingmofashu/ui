@@ -3,7 +3,45 @@ title: "Button"
 description: "A liquid glass button with icons, five sizes, and strict accessible-name checks."
 ---
 
-`className` targets the outer click area, while the visible glass surface is drawn by the inner `base` slot. Icon-only buttons must provide `aria-label` or `aria-labelledby`, otherwise type checking fails.
+`className` targets the outer click area, while the visible glass surface is drawn by the inner `glass` slot. Icon-only buttons must provide `aria-label` or `aria-labelledby`, otherwise type checking fails.
+
+## Basic example
+
+The counter below renders the real `Button`. Clicking updates React state, and the reset button disables itself at zero.
+
+<ButtonBasic />
+
+```tsx
+"use client";
+
+import { Button } from "@xingxingmofashu.me/ui";
+import { Plus, RotateCcw } from "lucide-react";
+import * as React from "react";
+
+export function ButtonExample() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button
+        label="Add one"
+        leadingIcon={<Plus />}
+        onClick={() => setCount((value) => value + 1)}
+      />
+      <Button
+        size="sm"
+        label="Reset"
+        leadingIcon={<RotateCcw />}
+        onClick={() => setCount(0)}
+        disabled={count === 0}
+      />
+      <span aria-live="polite" className="text-sm text-ink/70">
+        Clicked {count} times
+      </span>
+    </div>
+  );
+}
+```
 
 ## Sizes
 
@@ -20,9 +58,11 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Text and icons sc
 | `xl` | 40px | 24px |
 
 ```tsx
-<Button size="sm" label="Small" trailingIcon={<ArrowRight />} />
-<Button size="md" label="Medium" trailingIcon={<ArrowRight />} />
-<Button size="lg" label="Large" trailingIcon={<ArrowRight />} />
+<Button size="xs" label="XS" trailingIcon={<ArrowRight />} />
+<Button size="sm" label="SM" trailingIcon={<ArrowRight />} />
+<Button size="md" label="MD" trailingIcon={<ArrowRight />} />
+<Button size="lg" label="LG" trailingIcon={<ArrowRight />} />
+<Button size="xl" label="XL" trailingIcon={<ArrowRight />} />
 ```
 
 ## Icons
@@ -59,19 +99,19 @@ The disabled state uses the native `disabled` attribute, stopping both keyboard 
 
 ## Full-width buttons
 
-`className` adjusts the outer click area, while `ui.base` adjusts the visible glass surface:
+`className` adjusts the outer click area. The inner `base` layout already fills the available width:
+
+<ButtonFullWidth />
 
 ```tsx
-<Button
-  label="Full width"
-  className="w-full"
-  ui={{ base: "w-full" }}
-/>
+<Button label="Full width" className="w-full" />
 ```
 
 ## Render as a link
 
 When the button should navigate instead of trigger an action, tell Base UI not to render a native `<button>`:
+
+<ButtonLink />
 
 ```tsx
 <Button
@@ -101,7 +141,8 @@ Provide at least one of `label`, `children`, `aria-label`, or `aria-labelledby`,
 | Slot | Description |
 | --- | --- |
 | `root` | Outer click area. |
-| `base` | Visible glass pill. |
+| `base` | Layout, hover lift, and press scale. |
+| `glass` | Visible glass pill and shared material. |
 | `label` | Text container. |
 | `leadingIcon` | Leading icon container. |
 | `trailingIcon` | Trailing icon container. |

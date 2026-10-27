@@ -2,12 +2,20 @@ import {
   ArrowRight,
   Check,
   Layers,
+  LayoutGrid,
+  List,
   Moon,
   Palette,
   Sparkles,
 } from "lucide-react";
 
-import { Button, Card } from "@xingxingmofashu.me/ui";
+import {
+  Button,
+  Card,
+  Slider,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@xingxingmofashu.me/ui";
 
 import { MonochromeSwitch } from "@/components/monochrome-switch";
 
@@ -35,13 +43,15 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         switchLabel: "启用高光",
         switchDescription: "在玻璃边缘显示斜向高光。",
         componentsEyebrow: "Components",
-        componentsTitle: "三个组件，一套语言",
+        componentsTitle: "五个组件，一套语言",
         componentsDescription:
           "每个组件共享同一套玻璃 token，因此可以自然地组合在一起。下面的内容直接渲染 UI 包里的组件。",
         componentDescriptions: {
           button: "五种尺寸、前置与后置图标，以及严格的无障碍名称约束。",
           card: "由 header、body 与 footer 组成的玻璃卡片。",
+          slider: "带数值显示、区间选择与纵向布局的玻璃滑块。",
           switch: "带液态玻璃滑块、标签与描述文本的开关。",
+          toggleGroup: "共享玻璃滑块的切换按钮，支持单选、多选与纵向布局。",
         },
         cardPreviewTitle: "玻璃面板",
         cardPreviewDescription: "内容留在滤镜之外。",
@@ -104,14 +114,18 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         switchLabel: "Enable highlights",
         switchDescription: "Show a diagonal highlight along the glass rim.",
         componentsEyebrow: "Components",
-        componentsTitle: "Three components, one language",
+        componentsTitle: "Five components, one language",
         componentsDescription:
           "Every component shares the same glass tokens, so they compose naturally. Everything below renders directly from the UI package.",
         componentDescriptions: {
           button:
             "Five sizes, leading and trailing icons, and strict accessible-name checks.",
           card: "A glass card built from header, body, and footer slots.",
+          slider:
+            "A glass slider with value display, range selection, and vertical orientation.",
           switch: "A switch with a liquid glass thumb, label, and description.",
+          toggleGroup:
+            "Shared glass thumb toggles for single, multiple, and vertical layouts.",
         },
         cardPreviewTitle: "Glass panel",
         cardPreviewDescription: "Content stays outside the filter.",
@@ -196,6 +210,18 @@ export function HomePageContent({ lang }: { lang: Locale }) {
       ),
     },
     {
+      name: "Slider",
+      href: `/${lang}/docs/components/slider`,
+      description: copy.componentDescriptions.slider,
+      preview: (
+        <Slider
+          label={isZh ? "音量" : "Volume"}
+          defaultValue={60}
+          showValue
+        />
+      ),
+    },
+    {
       name: "Switch",
       href: `/${lang}/docs/components/switch`,
       description: copy.componentDescriptions.switch,
@@ -204,6 +230,28 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           <MonochromeSwitch label={copy.switchPreviewOn} defaultChecked />
           <MonochromeSwitch label={copy.switchPreviewOff} />
         </div>
+      ),
+    },
+    {
+      name: "Toggle Group",
+      href: `/${lang}/docs/components/toggle-group`,
+      description: copy.componentDescriptions.toggleGroup,
+      preview: (
+        <ToggleGroup
+          aria-label={isZh ? "视图" : "View"}
+          defaultValue={["grid"]}
+        >
+          <ToggleGroupItem
+            value="grid"
+            aria-label={isZh ? "网格" : "Grid"}
+            icon={<LayoutGrid />}
+          />
+          <ToggleGroupItem
+            value="list"
+            aria-label={isZh ? "列表" : "List"}
+            icon={<List />}
+          />
+        </ToggleGroup>
       ),
     },
   ];
@@ -287,8 +335,10 @@ export function HomePageContent({ lang }: { lang: Locale }) {
                 defaultChecked
               />
               <div className="h-px bg-fd-border" />
-              <div className="flex items-center justify-between text-xs text-fd-muted-foreground">
-                <span>Button · Card · Switch</span>
+              <div className="flex items-center justify-between gap-4 text-xs text-fd-muted-foreground">
+                <span>
+                  {isZh ? "五个组件 · 同一套玻璃" : "Five components · one glass"}
+                </span>
                 <span className="font-mono uppercase tracking-[0.14em]">
                   .light / .dark
                 </span>
@@ -314,7 +364,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           </p>
         </div>
 
-        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {components.map((item) => (
             <div
               key={item.name}

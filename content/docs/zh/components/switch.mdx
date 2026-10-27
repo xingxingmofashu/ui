@@ -5,6 +5,28 @@ description: "带液态玻璃滑块、标签和描述文本的开关。文档预
 
 Switch 基于 Base UI 的 `Switch.Root`，支持受控与非受控用法。有可见 `label` 时会自动通过 `aria-labelledby` 关联；没有可见标签时必须提供 `aria-label` 或 `aria-labelledby`。
 
+## 基础示例
+
+下面的开关来自真实组件，可以直接点击切换；描述文本会通过 `aria-describedby` 与开关关联。
+
+<SwitchBasic />
+
+```tsx
+"use client";
+
+import { Switch } from "@xingxingmofashu.me/ui";
+
+export function NotificationSwitch() {
+  return (
+    <Switch
+      label="接收通知"
+      description="开启后，新消息会推送到你的邮箱。"
+      defaultChecked
+    />
+  );
+}
+```
+
 ## 尺寸
 
 支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。轨道与文字会随 `size` 缩放。
@@ -19,7 +41,17 @@ Switch 基于 Base UI 的 `Switch.Root`，支持受控与非受控用法。有�
 | `lg` | 72 × 36px | `text-sm` |
 | `xl` | 80 × 40px | `text-base` |
 
+```tsx
+<Switch size="xs" label="XS" defaultChecked />
+<Switch size="sm" label="SM" defaultChecked />
+<Switch size="md" label="MD" defaultChecked />
+<Switch size="lg" label="LG" defaultChecked />
+<Switch size="xl" label="XL" defaultChecked />
+```
+
 ## 受控用法
+
+`checked` 与 `onCheckedChange` 让开关状态完全由外部状态控制：
 
 <SwitchControlled />
 
@@ -45,7 +77,11 @@ export function ControlledSwitch() {
 }
 ```
 
-## 基础用法
+## 非受控用法
+
+不传 `checked` 时，Switch 自己维护状态，`defaultChecked` 只作为初始值：
+
+<SwitchUncontrolled />
 
 ```tsx
 import { Switch } from "@xingxingmofashu.me/ui";
@@ -67,15 +103,52 @@ import { Switch } from "@xingxingmofashu.me/ui";
 
 Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过隐藏的 checkbox input 发送当前值：
 
+<SwitchForm />
+
 ```tsx
-<form>
-  <Switch
-    name="notifications"
-    value="enabled"
-    label="接收通知"
-    defaultChecked
-  />
-</form>
+"use client";
+
+import { Button, Switch } from "@xingxingmofashu.me/ui";
+import { ArrowRight } from "lucide-react";
+import * as React from "react";
+
+export function NotificationForm() {
+  const [submitted, setSubmitted] = React.useState<string | null>(null);
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const value = data.get("notifications");
+    setSubmitted(value === null ? "off" : String(value));
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <Switch
+        name="notifications"
+        value="enabled"
+        label="接收通知"
+        description="开启后，新消息会推送到你的邮箱。"
+        defaultChecked
+      />
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <Button
+          type="submit"
+          size="sm"
+          label="提交"
+          trailingIcon={<ArrowRight />}
+        />
+        <p aria-live="polite" className="text-sm text-ink/70">
+          {submitted === null
+            ? "尚未提交"
+            : submitted === "off"
+              ? "未启用"
+              : `提交值：${submitted}`}
+        </p>
+      </div>
+    </form>
+  );
+}
 ```
 
 ## 禁用与只读
@@ -91,7 +164,10 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 
 UI 包默认的开关轨道带有绿色。文档站没有复刻组件，而是继续渲染真实 Switch，并通过内联变量覆盖轨道颜色。`--ui-switch-on` / `--ui-switch-off` 是 Switch 的组件内部变量，默认值在 `packages/ui/src/theme/switch.ts` 中，不在全局 token 表里：
 
+<SwitchMonochrome />
+
 ```tsx
+import { Switch } from "@xingxingmofashu.me/ui";
 import type { CSSProperties } from "react";
 
 <Switch

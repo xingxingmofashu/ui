@@ -30,7 +30,9 @@ The dev server runs on port 3001. The build uses `output: "export"` and writes t
 - `lib/source.ts` — Fumadocs loader with i18n.
 - `lib/layout.shared.tsx` — navigation, links, and UI translations.
 - `components/docs-root-provider.tsx` — Fumadocs provider and locale-change handling.
-- `components/preview.tsx` — live component previews used by MDX.
+- `components/examples/` — live examples, one file per component.
+- `components/demo-stage.tsx` — shared frame for live examples.
+- `components/mdx.tsx` — maps example components into MDX.
 - `components/monochrome-switch.tsx` — real Switch with a black-and-white track.
 - `app/globals.css` — Fumadocs black theme, monochrome overrides, and UI source scanning.
 
@@ -38,7 +40,7 @@ The dev server runs on port 3001. The build uses `output: "export"` and writes t
 
 - Keep both Chinese and English pages in sync. Every page must exist under both locale folders.
 - Internal links in MDX must include the locale prefix, for example `/zh/docs/components/button` or `/en/docs/components/switch`.
-- Use the live preview components instead of screenshots or mockups.
+- Use the live example components instead of screenshots or mockups.
 - Keep component names and API terms in English in both languages.
 - The documentation theme is black and white. Do not introduce accent colors; use neutral `fd-*` tokens.
-- The Switch preview uses the real component and only overrides `--ui-switch-on` / `--ui-switch-off` inline.
+- The Switch example uses the real component and only overrides `--ui-switch-on` / `--ui-switch-off` inline.

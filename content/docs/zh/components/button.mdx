@@ -3,7 +3,45 @@ title: "Button"
 description: "带液态玻璃表面的按钮，支持图标、尺寸与无障碍名称约束。"
 ---
 
-`className` 作用于外层点击区域，可见的玻璃表面由内部 `base` 槽位绘制。图标按钮必须提供 `aria-label` 或 `aria-labelledby`，否则类型检查会报错。
+`className` 作用于外层点击区域，可见的玻璃表面由内部 `glass` 槽位绘制。图标按钮必须提供 `aria-label` 或 `aria-labelledby`，否则类型检查会报错。
+
+## 基础示例
+
+下面的计数器直接渲染真实 `Button`。点击按钮会更新 React 状态，重置按钮在计数为零时自动禁用。
+
+<ButtonBasic />
+
+```tsx
+"use client";
+
+import { Button } from "@xingxingmofashu.me/ui";
+import { Plus, RotateCcw } from "lucide-react";
+import * as React from "react";
+
+export function ButtonExample() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button
+        label="增加计数"
+        leadingIcon={<Plus />}
+        onClick={() => setCount((value) => value + 1)}
+      />
+      <Button
+        size="sm"
+        label="重置"
+        leadingIcon={<RotateCcw />}
+        onClick={() => setCount(0)}
+        disabled={count === 0}
+      />
+      <span aria-live="polite" className="text-sm text-ink/70">
+        已点击 {count} 次
+      </span>
+    </div>
+  );
+}
+```
 
 ## 尺寸
 
@@ -20,9 +58,11 @@ description: "带液态玻璃表面的按钮，支持图标、尺寸与无障碍
 | `xl` | 40px | 24px |
 
 ```tsx
-<Button size="sm" label="Small" trailingIcon={<ArrowRight />} />
-<Button size="md" label="Medium" trailingIcon={<ArrowRight />} />
-<Button size="lg" label="Large" trailingIcon={<ArrowRight />} />
+<Button size="xs" label="XS" trailingIcon={<ArrowRight />} />
+<Button size="sm" label="SM" trailingIcon={<ArrowRight />} />
+<Button size="md" label="MD" trailingIcon={<ArrowRight />} />
+<Button size="lg" label="LG" trailingIcon={<ArrowRight />} />
+<Button size="xl" label="XL" trailingIcon={<ArrowRight />} />
 ```
 
 ## 图标
@@ -59,19 +99,19 @@ import { ArrowRight, Plus, Search } from "lucide-react";
 
 ## 全宽按钮
 
-`className` 调整外层点击区域，`ui.base` 调整可见玻璃表面：
+`className` 调整外层点击区域，内部的 `base` 布局会自动填满可用宽度：
+
+<ButtonFullWidth />
 
 ```tsx
-<Button
-  label="全宽"
-  className="w-full"
-  ui={{ base: "w-full" }}
-/>
+<Button label="全宽" className="w-full" />
 ```
 
 ## 渲染为链接
 
 需要导航而不是触发操作时，可以告诉 Base UI 不要渲染原生 `<button>`：
+
+<ButtonLink />
 
 ```tsx
 <Button
@@ -101,7 +141,8 @@ import { ArrowRight, Plus, Search } from "lucide-react";
 | 槽位 | 说明 |
 | --- | --- |
 | `root` | 外层点击区域。 |
-| `base` | 可见的玻璃胶囊。 |
+| `base` | 布局、hover 位移与按压缩放。 |
+| `glass` | 可见的玻璃胶囊，承载共享玻璃材质。 |
 | `label` | 文字容器。 |
 | `leadingIcon` | 前置图标容器。 |
 | `trailingIcon` | 后置图标容器。 |
