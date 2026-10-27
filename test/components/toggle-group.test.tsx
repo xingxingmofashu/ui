@@ -199,7 +199,11 @@ describe("ToggleGroup", () => {
       expect(indicator).toHaveAttribute("aria-hidden", "true");
       expect(indicator).toHaveAttribute("data-visible", "false");
       expect(glass).toHaveAttribute("aria-hidden", "true");
-      expect(glass).toHaveClass("overflow-hidden", "ui-glass-inner");
+      expect(glass).toHaveClass(
+        "overflow-hidden",
+        "ui-glass",
+        "ui-glass-inner",
+      );
       expect(
         glass.querySelector('[data-layer="rim"]'),
       ).toHaveClass("ui-glass-rim");
@@ -724,7 +728,7 @@ describe("ToggleGroup", () => {
     it("builds the liquid glass group and sliding indicator", () => {
       const styles = theme();
 
-      expect(styles.root()).toContain("ui-glass");
+      expect(styles.root()).not.toContain("ui-glass");
       expect(styles.root()).not.toContain("border-double");
       expect(styles.root()).not.toContain("bg-glass-surface");
       expect(styles.root()).not.toContain("shadow-glass");
@@ -732,6 +736,7 @@ describe("ToggleGroup", () => {
         "[backdrop-filter:blur(8px)_saturate(150%)]",
       );
       expect(styles.root()).not.toContain("--ui-toggle-group-filter");
+      expect(styles.glass()).toContain("ui-glass");
       expect(styles.glass()).toContain("ui-glass-inner");
       expect(styles.glass()).toContain("ui-glass-highlight");
       expect(styles.glass()).toContain("overflow-hidden");

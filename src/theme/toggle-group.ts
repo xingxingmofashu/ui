@@ -8,7 +8,6 @@ const thumbGlass = [
 export default tv({
   slots: {
     root: [
-      "ui-glass",
       "group/toggle-group relative isolate inline-flex min-w-0 max-w-full items-center",
       "rounded-full",
       "p-[var(--ui-toggle-group-padding)] gap-[var(--ui-toggle-group-gap)]",
@@ -19,19 +18,18 @@ export default tv({
       "[--ui-toggle-group-thumb-rim:color-mix(in_srgb,var(--ui-ink)_16%,transparent)]",
       "[--ui-toggle-group-thumb-shadow:inset_2px_1px_0_-1px_rgb(255_255_255/0.9),inset_-1.5px_-1px_0_-1px_rgb(255_255_255/0.7),inset_-2px_-6px_1px_-5px_rgb(255_255_255/0.5),inset_-1px_2px_3px_-1px_rgb(0_0_0/0.16),inset_0_-4px_1px_-2px_rgb(0_0_0/0.08),0_3px_6px_rgb(0_0_0/0.08)]",
       "[font-family:system-ui,-apple-system,sans-serif]",
-      "transition-[background-color,box-shadow] duration-[400ms] ease-[cubic-bezier(1,0,0.4,1)]",
       "data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch",
       "data-[orientation=vertical]:rounded-[var(--ui-toggle-group-vertical-radius)]",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-75",
       "[&_*]:box-border",
-      "motion-reduce:transition-none motion-reduce:[&_*]:transition-none",
+      "motion-reduce:[&_*]:transition-none",
     ],
     glass: [
-      "ui-glass-inner ui-glass-highlight",
-      "pointer-events-none absolute inset-0 z-[1] overflow-hidden rounded-[inherit]",
+      "ui-glass ui-glass-inner ui-glass-highlight",
+      "pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit]",
     ],
     indicator: [
-      "pointer-events-none absolute left-0 top-0 z-0",
+      "pointer-events-none absolute left-0 top-0 z-[1]",
       "h-[var(--ui-toggle-group-indicator-height)] w-[var(--ui-toggle-group-indicator-width)]",
       "[translate:var(--ui-toggle-group-indicator-x)_var(--ui-toggle-group-indicator-y)]",
       "[transform-origin:var(--ui-toggle-group-origin)]",

@@ -90,6 +90,7 @@ function themeCandidates() {
   return [
     buttonStyles.root(),
     buttonStyles.base(),
+    buttonStyles.glass(),
     buttonStyles.label(),
     buttonStyles.leadingIcon(),
     buttonStyles.trailingIcon(),
@@ -116,18 +117,19 @@ describe("design tokens", () => {
     expect(css).toContain("var(--ui-glass-glare-stop)");
     expect(css).toContain("filter: var(--ui-drop-shadow-label);");
     expect(css).not.toContain("filter: var(--ui-drop-shadow-icon);");
-    expect(css).toContain("--ui-glass-tone: brightness(1);");
     expect(css).toContain("--ui-glass-tone: brightness(0.9);");
+    expect(css).toContain("--ui-glass-contrast: 3;");
+    expect(css).toContain("--ui-glass-contrast: 1;");
     expect(css).toContain(
-      "filter: var(--ui-glass-tone, brightness(1));",
-    );
-    expect(css).not.toContain("filter: contrast(3);");
-    expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 8px)) saturate(var(--ui-glass-saturate, 150%));",
+      "filter: var(--ui-glass-tone, brightness(0.9)) contrast(var(--ui-glass-contrast, 3));",
     );
     expect(css).toContain(
-      "transition-property: background-color,translate,scale;",
+      "backdrop-filter: blur(var(--ui-glass-blur, 2px)) saturate(var(--ui-glass-saturate, 150%));",
     );
+    expect(css).toContain(
+      "top: calc(var(--ui-glass-inner-inset, 8px) + var(--ui-glass-inner-offset, 1px));",
+    );
+    expect(css).toContain("transition-property: background-color,translate,scale;");
     expect(css).not.toContain("var(--color-glass-highlight)");
   });
 
@@ -137,12 +139,14 @@ describe("design tokens", () => {
     expect(css).toContain("background-color: var(--ui-glass-surface);");
     expect(css).toContain("box-shadow: var(--ui-shadow-glass);");
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 8px)) saturate(var(--ui-glass-saturate, 150%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 2px)) saturate(var(--ui-glass-saturate, 150%));",
     );
     expect(css).toContain("border: 1px double var(--ui-glass-border);");
     expect(css).toContain("border: 1px solid var(--ui-glass-inner-border);");
     expect(css).toContain("border: 1px solid var(--ui-glass-rim);");
-    expect(css).toContain("filter: var(--ui-glass-tone, brightness(1));");
+    expect(css).toContain(
+      "filter: var(--ui-glass-tone, brightness(0.9)) contrast(var(--ui-glass-contrast, 3));",
+    );
     expect(css).toContain("filter: var(--ui-drop-shadow-label);");
     expect(css).toContain("font-family: system-ui");
     expect(css).toContain("border-radius: 2rem;");
@@ -200,7 +204,7 @@ describe("design tokens", () => {
     const css = await buildStyles(themeCandidates());
 
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 8px)) saturate(var(--ui-glass-saturate, 150%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 2px)) saturate(var(--ui-glass-saturate, 150%));",
     );
     expect(css).toContain("background-color: var(--ui-toggle-group-thumb);");
     expect(css).toContain(
@@ -265,14 +269,18 @@ describe("design tokens", () => {
   it("ships light and dark runtime values", async () => {
     const css = await buildStyles([]);
 
-    expect(css).toContain("--ui-ink: #3e3e3e;");
+    expect(css).toContain("--ui-ink: #1f1f1f;");
     expect(css).toContain("--ui-ink: #f5f5f5;");
-    expect(css).toContain("--ui-glass-surface: rgb(0 0 0 / 0.01);");
+    expect(css).toContain("--ui-glass-surface: rgb(0 0 0 / 0.02);");
     expect(css).toContain("--ui-glass-surface: rgb(255 255 255 / 0.06);");
-    expect(css).toContain("--ui-glass-inner-border: rgb(0 0 0 / 0.7);");
-    expect(css).toContain("--ui-glass-tone: brightness(1);");
+    expect(css).toContain("--ui-glass-inner-border: rgb(0 0 0 / 0.9);");
+    expect(css).toContain("--ui-glass-inner-border: rgb(255 255 255 / 0.4);");
     expect(css).toContain("--ui-glass-tone: brightness(0.9);");
+    expect(css).toContain("--ui-glass-contrast: 3;");
+    expect(css).toContain("--ui-glass-contrast: 1;");
     expect(css).toContain("--ui-glass-glare-stop: 15%;");
+    expect(css).toContain("--ui-glass-inner-inset: 8px;");
+    expect(css).toContain("--ui-glass-inner-offset: 1px;");
     expect(css).toContain(
       "--ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));",
     );

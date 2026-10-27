@@ -10,6 +10,7 @@ import theme from "../theme/button";
 type ButtonSlot =
   | "root"
   | "base"
+  | "glass"
   | "label"
   | "leadingIcon"
   | "trailingIcon"
@@ -24,7 +25,7 @@ type ButtonContentProps = {
   leadingIcon?: React.ReactNode;
   /** Icon rendered after the label. */
   trailingIcon?: React.ReactNode;
-  /** Classes for individual slots. Use `base` to style the visible glass pill and `root` for the outer click area. */
+  /** Classes for individual slots. Use `glass` to style the visible glass surface and `root` for the outer click area. */
   ui?: ButtonStyle;
 };
 
@@ -73,6 +74,18 @@ function Button({
       {...props}
     >
       <span data-slot="base" className={cn(ui.base(), uiOverrides?.base)}>
+        <span
+          data-slot="glass"
+          aria-hidden="true"
+          className={cn(ui.glass(), uiOverrides?.glass)}
+        >
+          <span
+            data-slot="overlay"
+            className={cn(ui.overlay(), uiOverrides?.overlay)}
+            aria-hidden="true"
+          />
+        </span>
+
         {leadingIcon != null ? (
           <span
             data-slot="leading-icon"
@@ -101,12 +114,6 @@ function Button({
             {trailingIcon}
           </span>
         ) : null}
-
-        <span
-          data-slot="overlay"
-          className={cn(ui.overlay(), uiOverrides?.overlay)}
-          aria-hidden="true"
-        />
       </span>
     </UIButton>
   );

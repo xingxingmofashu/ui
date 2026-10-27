@@ -111,11 +111,11 @@ describe("Button", () => {
       expect(getSlot(buttonElement, "base")).toHaveClass(
         "h-8",
         "box-border",
-        "overflow-hidden",
         "px-3",
         "text-sm",
         "gap-1.5",
       );
+      expect(getSlot(buttonElement, "glass")).toHaveClass("overflow-hidden");
     });
 
     it("uses content-driven width and the Nuxt UI reference geometry", () => {
@@ -127,7 +127,7 @@ describe("Button", () => {
       expect(styles.base()).toContain("px-3");
       expect(styles.base()).toContain("h-8");
       expect(styles.base()).toContain("box-border");
-      expect(styles.base()).toContain("overflow-hidden");
+      expect(styles.glass()).toContain("overflow-hidden");
       expect(styles.base()).toContain("gap-1.5");
       expect(styles.base()).toContain("text-sm");
       expect(styles.leadingIcon()).toContain("[&_svg]:size-5");
@@ -140,8 +140,10 @@ describe("Button", () => {
     it("clips the glass highlights to the capsule", () => {
       const styles = button();
 
-      expect(styles.base()).toContain("overflow-hidden");
+      expect(styles.base()).not.toContain("overflow-hidden");
       expect(styles.base()).toContain("rounded-full");
+      expect(styles.glass()).toContain("overflow-hidden");
+      expect(styles.glass()).toContain("rounded-[inherit]");
       expect(styles.label()).not.toContain("var(--ui-drop-shadow-label)");
       expect(styles.leadingIcon()).not.toContain("var(--ui-drop-shadow-icon)");
       expect(styles.trailingIcon()).not.toContain("var(--ui-drop-shadow-icon)");
@@ -160,7 +162,7 @@ describe("Button", () => {
 
         expect(styles.base()).toContain(paddingX);
         expect(styles.base()).toContain(heightClass);
-        expect(styles.base()).toContain("overflow-hidden");
+        expect(styles.glass()).toContain("overflow-hidden");
         expect(styles.base()).toContain(gap);
         expect(styles.base()).toContain(text);
         expect(styles.leadingIcon()).toContain(iconClass);
@@ -245,10 +247,19 @@ describe("Button", () => {
     it("uses the standard glass material", () => {
       const styles = button({ size: "md" });
 
-      expect(styles.base()).toContain("ui-glass");
-      expect(styles.base()).toContain("ui-glass-inner");
-      expect(styles.base()).toContain("ui-glass-highlight");
-      expect(styles.base()).not.toContain("[filter:brightness(0.9)]");
+      expect(styles.base()).not.toContain("ui-glass");
+      expect(styles.base()).toContain("isolate");
+      expect(styles.glass()).toContain("ui-glass");
+      expect(styles.glass()).toContain("ui-glass-inner");
+      expect(styles.glass()).toContain("ui-glass-highlight");
+      expect(styles.glass()).toContain("absolute");
+      expect(styles.glass()).toContain("inset-0");
+      expect(styles.glass()).toContain("z-0");
+      expect(styles.glass()).toContain("rounded-[inherit]");
+      expect(styles.glass()).not.toContain("border-double");
+      expect(styles.glass()).not.toContain("shadow-glass");
+      expect(styles.glass()).not.toContain("backdrop-blur-[2px]");
+      expect(styles.glass()).not.toContain("[filter:brightness(0.9)]");
       expect(styles.root()).not.toContain("contrast(3)");
       expect(styles.overlay()).toContain("ui-glass-rim");
     });
@@ -263,6 +274,7 @@ describe("Button", () => {
           ui={{
             root: "slot-root",
             base: "bg-white",
+            glass: "slot-glass",
             label: "slot-label",
             leadingIcon: "slot-leading-icon",
             trailingIcon: "slot-trailing-icon",
@@ -280,6 +292,7 @@ describe("Button", () => {
       expect(base).toHaveClass("bg-white");
       expect(base).not.toHaveClass("custom-base");
       expect(base).not.toHaveClass("bg-glass-surface");
+      expect(getSlot(buttonElement, "glass")).toHaveClass("slot-glass");
       expect(getSlot(buttonElement, "label")).toHaveClass("slot-label");
       expect(getSlot(buttonElement, "leading-icon")).toHaveClass(
         "slot-leading-icon",
@@ -334,6 +347,29 @@ describe("Button", () => {
       );
 
       expect(base).toHaveClass("flex-row", "flex-nowrap", "items-center");
+    });
+
+    it("keeps content outside the filtered glass layer", () => {
+      render(
+        <Button
+          label="Layered"
+          leadingIcon={<svg />}
+          trailingIcon={<svg />}
+        />,
+      );
+
+      const buttonElement = screen.getByRole("button", { name: "Layered" });
+      const glass = getSlot(buttonElement, "glass");
+
+      expect(glass).toHaveAttribute("aria-hidden", "true");
+      expect(glass).toContainElement(getSlot(buttonElement, "overlay"));
+      expect(glass).not.toContainElement(getSlot(buttonElement, "label"));
+      expect(glass).not.toContainElement(
+        getSlot(buttonElement, "leading-icon"),
+      );
+      expect(
+        getSlot(buttonElement, "label").closest('[aria-hidden="true"]'),
+      ).toBeNull();
     });
   });
 

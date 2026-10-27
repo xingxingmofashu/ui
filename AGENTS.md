@@ -21,9 +21,18 @@ Source files and tests are the source of truth.
 - `src/index.css` owns the standard glass material: `--ui-glass-*` tokens and the
   `.ui-glass`, `.ui-glass-inner`, `.ui-glass-highlight`, `.ui-glass-rim`, and
   `.ui-glass-chip` classes.
+- The material is a lens: the surface applies the shared tone and contrast
+  filter to its backdrop, border, shadow, inner rim, and glare. Keep text and
+  icons out of that filtered element. Render the material as a dedicated,
+  `aria-hidden` glass layer and put content in a sibling layer above it.
+- Button uses `base` for layout/motion and the private `glass` slot for the
+  material. Card uses its private `glass` layer. Toggle Group uses its private
+  `glass` layer behind the indicator and items.
 - Component recipes compose those classes. Do not restate the surface, border,
   shadow, backdrop blur, inner rim, or highlight gradient in `src/theme/`.
 - Size, radius, overflow, layout, and motion remain in the component recipe.
+  The glass layer clips its own pseudo-elements; the content wrapper must not
+  clip the material's outer shadow.
 - Switch and Slider keep their unique optical layers, but shared colors, edge
   shadows, lens blur, and specular values come from `--ui-glass-*` tokens.
 - Tune the material through the tokens in `src/index.css`, not through
