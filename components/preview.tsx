@@ -163,6 +163,17 @@ export function CardPreview() {
           </code>
           {isZh ? "本身。" : "itself."}
         </p>
+        <div className="mt-4 border-t border-fd-border pt-4">
+          <MonochromeSwitch
+            label={isZh ? "启用通知" : "Enable notifications"}
+            description={
+              isZh
+                ? "新消息会推送到你的邮箱。"
+                : "New messages will be sent to your inbox."
+            }
+            defaultChecked
+          />
+        </div>
       </Card>
     </DemoStage>
   );

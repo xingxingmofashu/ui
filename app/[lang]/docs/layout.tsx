@@ -14,7 +14,13 @@ export default async function Layout({
   const { lang } = await params;
 
   return (
-    <DocsLayout {...baseOptions(lang)} tree={source.getPageTree(lang)}>
+    <DocsLayout
+      {...baseOptions(lang)}
+      // The docs sidebar already contains the page tree. Reusing the header
+      // links here duplicates "Docs" and "Components" next to the page entries.
+      links={[]}
+      tree={source.getPageTree(lang)}
+    >
       {children}
     </DocsLayout>
   );

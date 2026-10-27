@@ -7,7 +7,7 @@ Switch 基于 Base UI 的 `Switch.Root`，支持受控与非受控用法。有�
 
 ## 尺寸
 
-支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。开关尺寸随档位变化，文字大小也会同步调整。
+支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。轨道与文字会随 `size` 缩放。
 
 <SwitchSizes />
 
@@ -63,6 +63,21 @@ import { Switch } from "@xingxingmofashu.me/ui";
 <Switch aria-label="启用通知" defaultChecked />
 ```
 
+## 表单用法
+
+Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过隐藏的 checkbox input 发送当前值：
+
+```tsx
+<form>
+  <Switch
+    name="notifications"
+    value="enabled"
+    label="接收通知"
+    defaultChecked
+  />
+</form>
+```
+
 ## 禁用与只读
 
 <SwitchStates />
@@ -74,15 +89,19 @@ import { Switch } from "@xingxingmofashu.me/ui";
 
 ## 黑白轨道
 
-UI 包默认的开关轨道带有绿色。文档站没有复刻组件，而是继续渲染真实 Switch，并通过内联变量覆盖轨道颜色：
+UI 包默认的开关轨道带有绿色。文档站没有复刻组件，而是继续渲染真实 Switch，并通过内联变量覆盖轨道颜色。`--ui-switch-on` / `--ui-switch-off` 是 Switch 的组件内部变量，默认值在 `packages/ui/src/theme/switch.ts` 中，不在全局 token 表里：
 
 ```tsx
+import type { CSSProperties } from "react";
+
 <Switch
   label="启用通知"
-  style={{
-    "--ui-switch-on": "var(--docs-switch-on)",
-    "--ui-switch-off": "var(--docs-switch-off)",
-  }}
+  style={
+    {
+      "--ui-switch-on": "var(--docs-switch-on)",
+      "--ui-switch-off": "var(--docs-switch-off)",
+    } as CSSProperties
+  }
 />
 ```
 

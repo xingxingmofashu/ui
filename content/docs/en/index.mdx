@@ -3,7 +3,7 @@ title: "Introduction"
 description: "A composable, accessible, and themeable set of liquid glass components. Every preview in these docs is a real component, not a screenshot."
 ---
 
-Liquid Glass UI is the documentation site for `@xingxingmofashu.me/ui`. The components are built with React 19, Tailwind CSS 4, and Base UI. Surfaces, rim highlights, and inner shadows are all drawn with CSS — no textures and no extra runtime.
+This is the documentation site for Liquid Glass UI (`@xingxingmofashu.me/ui`). The components are built with React 19 and Tailwind CSS 4; Button and Switch use Base UI, while Card uses native elements. Surfaces, rim highlights, and inner shadows are all drawn with CSS — no textures and no extra runtime.
 
 The documentation uses a black-and-white theme: navigation, syntax highlighting, callouts, and component previews all stay neutral. The card, buttons, and switches below render directly from the UI package.
 
@@ -34,7 +34,7 @@ The documentation uses a black-and-white theme: navigation, syntax highlighting,
 
 ## Design principles
 
-- **Real components**: docs render `@xingxingmofashu.me/ui` directly through MDX, so previews match the published code.
+- **Real components**: docs render `@xingxingmofashu.me/ui` directly through MDX, so previews match the component source.
 - **Monochrome first**: the docs use Fumadocs' black theme and override callouts and syntax highlighting to neutral colors.
 - **Accessible**: buttons and switches without an accessible name are rejected at the TypeScript level.
 - **Overridable**: `className` targets the root, `classNames` targets internal slots, and tokens control the theme.

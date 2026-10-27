@@ -27,7 +27,7 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Text and icons sc
 
 ## Icons
 
-The leading icon sits before the label. The trailing icon sits after the label inside a circular badge. When visible text exists, icons are automatically marked as decorative.
+The leading icon sits before the label. The trailing icon sits after the label. Both use the same plain icon container. When visible text exists, icons are automatically marked as decorative.
 
 <ButtonIcons />
 
@@ -43,7 +43,7 @@ import { ArrowRight, Plus, Search } from "lucide-react";
 
 <Callout title="Icon-only buttons">
   Icon-only buttons have no visible text and must provide an accessible name through
-  `aria-label`. Omitting it is rejected by TypeScript.
+  `aria-label` or `aria-labelledby`. Omitting it is rejected by TypeScript.
 </Callout>
 
 ## States
@@ -69,19 +69,32 @@ The disabled state uses the native `disabled` attribute, stopping both keyboard 
 />
 ```
 
+## Render as a link
+
+When the button should navigate instead of trigger an action, tell Base UI not to render a native `<button>`:
+
+```tsx
+<Button
+  nativeButton={false}
+  render={<a href="/en/docs" />}
+  label="Read the docs"
+  trailingIcon={<ArrowRight />}
+/>
+```
+
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Button text. `children` is an equivalent alternative. |
-| `children` | `ReactNode` | — | Visible content, equivalent to `label`. |
+| `label` | `ReactNode` | — | Button text. Takes precedence over `children` when both are provided. |
+| `children` | `ReactNode` | — | Visible content used when `label` is not provided. |
 | `leadingIcon` | `ReactNode` | — | Icon before the label. |
-| `trailingIcon` | `ReactNode` | — | Icon after the label, inside the circular badge. |
+| `trailingIcon` | `ReactNode` | — | Icon after the label, using the same container as the leading icon. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, and icon size. |
 | `className` | `string` | — | Merged into the outer `root`. |
 | `classNames` | `Partial<Record<ButtonSlot, string>>` | — | Overrides internal slot styles. |
 
-All other props are forwarded to the Base UI `Button`, such as `disabled`, `onClick`, `type`, and `render`.
+Provide at least one of `label`, `children`, `aria-label`, or `aria-labelledby`, otherwise type checking fails. All other props are forwarded to the Base UI `Button`, such as `disabled`, `onClick`, `type`, and `render`.
 
 ### classNames slots
 

@@ -29,6 +29,7 @@ The dev server runs on port 3001. The build uses `output: "export"` and writes t
 - `lib/i18n.ts` — locales, default language, and directory-based locale parsing.
 - `lib/source.ts` — Fumadocs loader with i18n.
 - `lib/layout.shared.tsx` — navigation, links, and UI translations.
+- `components/docs-root-provider.tsx` — Fumadocs provider and locale-change handling.
 - `components/preview.tsx` — live component previews used by MDX.
 - `components/monochrome-switch.tsx` — real Switch with a black-and-white track.
 - `app/globals.css` — Fumadocs black theme, monochrome overrides, and UI source scanning.

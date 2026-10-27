@@ -31,6 +31,8 @@ Bilingual Fumadocs documentation for `@xingxingmofashu.me/ui`.
 - `lib/layout.shared.tsx` defines navigation, links, and UI translations.
 - UI strings use `@fumadocs/language/zh-cn` for Chinese and Fumadocs' English defaults.
 - `app/(root)` is the Chinese home page at `/`; all other localized routes live under `app/[lang]`.
+- The docs sidebar uses the page tree only; `links={[]}` prevents duplicate Docs/Components entries next to pages.
+- Locale changes perform a full navigation in `components/docs-root-provider.tsx`, so next-themes' theme script is not re-rendered on the client (React 19 warns about script tags).
 
 <!-- BEGIN:nextjs-agent-rules -->
 

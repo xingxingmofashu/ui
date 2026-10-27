@@ -65,6 +65,21 @@ Without a visible label, use `aria-label`:
 <Switch aria-label="Enable notifications" defaultChecked />
 ```
 
+## Form usage
+
+Switch forwards `name` and `value` to Base UI and submits the current value through a hidden checkbox input:
+
+```tsx
+<form>
+  <Switch
+    name="notifications"
+    value="enabled"
+    label="Receive notifications"
+    defaultChecked
+  />
+</form>
+```
+
 ## Disabled and read-only
 
 <SwitchStates />
@@ -76,15 +91,19 @@ Without a visible label, use `aria-label`:
 
 ## Monochrome track
 
-The UI package ships a switch track with a green hue. The docs do not duplicate the component; they keep rendering the real Switch and override the track colors with inline variables:
+The UI package ships a switch track with a green hue. The docs do not duplicate the component; they keep rendering the real Switch and override the track colors with inline variables. `--ui-switch-on` / `--ui-switch-off` are component-local variables defined in `packages/ui/src/theme/switch.ts`, not global tokens:
 
 ```tsx
+import type { CSSProperties } from "react";
+
 <Switch
   label="Enable notifications"
-  style={{
-    "--ui-switch-on": "var(--docs-switch-on)",
-    "--ui-switch-off": "var(--docs-switch-off)",
-  }}
+  style={
+    {
+      "--ui-switch-on": "var(--docs-switch-on)",
+      "--ui-switch-off": "var(--docs-switch-off)",
+    } as CSSProperties
+  }
 />
 ```
 

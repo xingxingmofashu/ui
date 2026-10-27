@@ -80,7 +80,8 @@ import { ArrowRight } from "lucide-react";
 
 ## 结构说明
 
-- Card 没有 `size` 属性，内边距固定为 `p-4 sm:px-6` / `p-4 sm:p-6` / `p-4 sm:px-6`。
+- Card 没有 `size` 属性。header 与 footer 的内边距为 `p-4 sm:px-6`，body 为 `p-4 sm:p-6`。
+- `title`、`description`、`footer` 或 `children` 为空字符串、`false` 或空数组时，对应区域也不会渲染。
 - 标题使用 `font-semibold`，描述使用 `mt-1 text-sm`。
 - 卡片本身不是按钮。需要整卡可点击时，请由调用方补充 `role`、键盘行为和焦点样式。
 - 玻璃效果需要背景有细节才能显现，纯色背景上会比较克制。

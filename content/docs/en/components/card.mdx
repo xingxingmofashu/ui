@@ -80,7 +80,8 @@ All other props are forwarded to the root `div`, such as `id`, `role`, and `onCl
 
 ## Structure notes
 
-- Card has no `size` prop. Padding is fixed at `p-4 sm:px-6` / `p-4 sm:p-6` / `p-4 sm:px-6`.
+- Card has no `size` prop. The header and footer use `p-4 sm:px-6`; the body uses `p-4 sm:p-6`.
+- Empty strings, `false`, and empty arrays for `title`, `description`, `footer`, or `children` also skip rendering the corresponding region.
 - The title uses `font-semibold`; the description uses `mt-1 text-sm`.
 - The card itself is not a button. If the whole card should be clickable, add `role`, keyboard behavior, and focus styles at the call site.
 - The glass effect needs background detail to show. It stays subtle on flat backgrounds.

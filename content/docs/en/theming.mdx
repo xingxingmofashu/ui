@@ -3,7 +3,7 @@ title: "Theming"
 description: "Override design tokens, switch between light and dark, and use Tailwind aliases."
 ---
 
-All design tokens live in `@xingxingmofashu.me/ui/index.css`. Components consume tokens without hard-coded brand colors, so the application can override them completely.
+Global design tokens live in `@xingxingmofashu.me/ui/index.css`. Button and Card read their colors from tokens; Switch track colors use component-local `--ui-switch-on` / `--ui-switch-off` variables and must be overridden separately. Component styles live in tailwind-variants recipes under `packages/ui/src/theme/*.ts`.
 
 ## Tokens
 
@@ -18,14 +18,14 @@ All design tokens live in `@xingxingmofashu.me/ui/index.css`. Components consume
 | `--ui-glass-rim` | Rim around the glass edge. |
 | `--ui-glass-highlight` | Diagonal highlight. |
 | `--ui-glass-glare-stop` | Position of the highlight gradient. |
-| `--ui-glass-icon` | Icon color. |
-| `--ui-glass-icon-foreground` | Foreground color of icon badges. |
-| `--ui-drop-shadow-label` | Text drop shadow. |
-| `--ui-drop-shadow-icon` | Icon drop shadow. |
+| `--ui-glass-icon` | Reserved token; not used by the current built-in components. |
+| `--ui-glass-icon-foreground` | Reserved token; not used by the current built-in components. |
+| `--ui-drop-shadow-label` | Text drop shadow for Card titles. |
+| `--ui-drop-shadow-icon` | Reserved token; not used by the current built-in components. |
 | `--ui-shadow-glass` | Composite glass shadow. |
-| `--ui-shadow-glass-icon` | Icon badge shadow. |
+| `--ui-shadow-glass-icon` | Reserved token; not used by the current built-in components. |
 
-See `packages/ui/src/index.css` for the full values.
+See `packages/ui/src/index.css` for the full values. Reserved tokens are still available for custom styles, but overriding them does not change the current Button, Card, or Switch appearance.
 
 ## Override tokens
 
@@ -87,6 +87,8 @@ import { ThemeProvider } from "next-themes";
 | `shadow-glass` | `--ui-shadow-glass` |
 | `shadow-glass-icon` | `--ui-shadow-glass-icon` |
 
+The icon-related aliases remain available, but the current built-in components do not use the corresponding tokens.
+
 ## Custom variants
 
 The UI package registers two Tailwind custom variants, `ui-light` and `ui-dark`:
@@ -108,19 +110,23 @@ Besides global tokens, each component supports:
 - `className`: targets the component root.
 - `classNames`: overrides internal slots, such as Button's `base`, Card's `body`, or Switch's `thumb`.
 
-Component styles live in tailwind-variants recipes under `packages/ui/src/theme/*.ts`; `index.css` only contains tokens.
+Component styles live in tailwind-variants recipes under `packages/ui/src/theme/*.ts`; `index.css` keeps global tokens, custom variants, and Tailwind aliases.
 
 ## Monochrome Switch track
 
-The switch track colors are controlled by `--ui-switch-on` / `--ui-switch-off` inside the component. The docs keep the real Switch and only override these variables inline:
+The switch track colors are controlled by `--ui-switch-on` / `--ui-switch-off` inside the component. These variables are defined in `packages/ui/src/theme/switch.ts`, not in the global token file. The docs keep the real Switch and only override these variables inline:
 
 ```tsx
+import type { CSSProperties } from "react";
+
 <Switch
   label="Enable notifications"
-  style={{
-    "--ui-switch-on": "var(--docs-switch-on)",
-    "--ui-switch-off": "var(--docs-switch-off)",
-  }}
+  style={
+    {
+      "--ui-switch-on": "var(--docs-switch-on)",
+      "--ui-switch-off": "var(--docs-switch-off)",
+    } as CSSProperties
+  }
 />
 ```
 
@@ -141,9 +147,13 @@ The switch track colors are controlled by `--ui-switch-on` / `--ui-switch-off` i
 The docs use Fumadocs' `black` theme with the Glass layout:
 
 ```css title="app/globals.css"
+@import "tailwindcss";
 @import "fumadocs-ui/css/generated/glass.css";
 @import "fumadocs-ui/css/black.css";
 @import "fumadocs-ui/css/preset.css";
+@import "@xingxingmofashu.me/ui/index.css";
+
+@source "../../ui/src";
 ```
 
-Callout colors, syntax highlighting, and link colors are also overridden to keep the whole site monochrome.
+Callout colors are also overridden, and syntax highlighting is grayscaled to keep the whole site monochrome.

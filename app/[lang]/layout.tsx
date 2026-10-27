@@ -1,11 +1,10 @@
 import { i18nProvider } from "fumadocs-ui/i18n";
-import { RootProvider } from "fumadocs-ui/provider/next";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { DocsLocaleProvider } from "@/components/locale-provider";
-import { StaticSearchDialog } from "@/components/search";
+import { DocsRootProvider } from "@/components/docs-root-provider";
 import { i18n, isLocale, locales } from "@/lib/i18n";
 import { translations } from "@/lib/layout.shared";
 
@@ -37,12 +36,12 @@ export default async function LocaleLayout({
   return (
     <html lang={lang === "zh" ? "zh-CN" : "en"} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col antialiased">
-        <RootProvider
+        <DocsRootProvider
+          lang={lang}
           i18n={i18nProvider(translations, lang)}
-          search={{ SearchDialog: StaticSearchDialog }}
         >
           <DocsLocaleProvider locale={lang}>{children}</DocsLocaleProvider>
-        </RootProvider>
+        </DocsRootProvider>
       </body>
     </html>
   );

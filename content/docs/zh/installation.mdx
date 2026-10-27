@@ -1,9 +1,15 @@
 ---
 title: "安装与配置"
-description: "在 monorepo 或任意 React 项目中引入 UI 包、样式与 Tailwind 源文件。"
+description: "在当前 monorepo workspace 中引入 UI 包、样式与 Tailwind 源文件。"
 ---
 
-`@xingxingmofashu.me/ui` 是当前 workspace 的私有包。它直接导出 TypeScript 源码，因此需要让应用编译包源码，并让 Tailwind 扫描组件文件。
+`@xingxingmofashu.me/ui` 是当前 workspace 的私有包，不会发布到 npm。它直接导出 TypeScript 源码，因此需要让应用编译包源码，并让 Tailwind 扫描组件文件。下面的步骤适用于本仓库内的 Next.js 应用。
+
+## 前置条件
+
+- pnpm workspace；根目录的 `pnpm-workspace.yaml` 已包含 `packages/*`。
+- React 19。
+- Tailwind CSS 4。
 
 ## 添加依赖
 
@@ -53,7 +59,7 @@ export default nextConfig;
 @source "../../ui/src";
 ```
 
-`@source` 的路径相对于当前 CSS 文件。请根据实际目录调整；本仓库的文档站与站点都位于 `packages` 下，因此使用 `../../ui/src`。
+`@source` 的路径相对于当前 CSS 文件。请根据实际目录调整；本仓库的文档站与示例站点都位于 `packages` 下，因此使用 `../../ui/src`。
 
 ## 使用组件
 

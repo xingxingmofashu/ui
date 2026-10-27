@@ -3,7 +3,7 @@ title: "主题"
 description: "覆盖设计 token、切换明暗模式，并使用 Tailwind 别名。"
 ---
 
-所有设计 token 都定义在 `@xingxingmofashu.me/ui/index.css` 中。组件只消费 token，不内置主题色，因此可以在应用层完整覆盖。
+全局设计 token 定义在 `@xingxingmofashu.me/ui/index.css` 中。Button 与 Card 通过 token 取色；Switch 的轨道颜色使用组件内部的 `--ui-switch-on` / `--ui-switch-off`，需要单独覆盖。组件样式位于 `packages/ui/src/theme/*.ts` 的 tailwind-variants recipe 中。
 
 ## Token
 
@@ -18,14 +18,14 @@ description: "覆盖设计 token、切换明暗模式，并使用 Tailwind 别�
 | `--ui-glass-rim` | 边缘玻璃圈。 |
 | `--ui-glass-highlight` | 斜向高光。 |
 | `--ui-glass-glare-stop` | 高光渐变的位置。 |
-| `--ui-glass-icon` | 图标主色。 |
-| `--ui-glass-icon-foreground` | 图标徽标的前景色。 |
-| `--ui-drop-shadow-label` | 文字投影。 |
-| `--ui-drop-shadow-icon` | 图标投影。 |
+| `--ui-glass-icon` | 保留 token；当前内置组件未使用。 |
+| `--ui-glass-icon-foreground` | 保留 token；当前内置组件未使用。 |
+| `--ui-drop-shadow-label` | Card 标题的文字投影。 |
+| `--ui-drop-shadow-icon` | 保留 token；当前内置组件未使用。 |
 | `--ui-shadow-glass` | 玻璃表面的复合阴影。 |
-| `--ui-shadow-glass-icon` | 图标徽标阴影。 |
+| `--ui-shadow-glass-icon` | 保留 token；当前内置组件未使用。 |
 
-完整的值以 `packages/ui/src/index.css` 为准。
+完整的值以 `packages/ui/src/index.css` 为准。标记为“保留”的 token 仍可用于自定义样式，但覆盖它们不会改变当前 Button、Card 或 Switch 的外观。
 
 ## 覆盖 Token
 
@@ -47,8 +47,8 @@ description: "覆盖设计 token、切换明暗模式，并使用 Tailwind 别�
 ```
 
 <Callout title="从黑白开始">
-  只改主色时，优先覆盖 `--ui-ink`、`--ui-glass-surface` 和 `--ui-glass-border`
-  这三组变量，通常就能得到一致的效果。文档站本身只使用中性色。
+  如果只想调整主色，优先覆盖 `--ui-ink`、`--ui-glass-surface` 和 `--ui-glass-border`
+  这三个变量，通常就能得到一致的效果。文档站本身只使用中性色。
 </Callout>
 
 ## 明暗模式
@@ -86,6 +86,8 @@ import { ThemeProvider } from "next-themes";
 | `shadow-glass` | `--ui-shadow-glass` |
 | `shadow-glass-icon` | `--ui-shadow-glass-icon` |
 
+图标相关的别名仍然可用，但当前内置组件没有使用对应的 token。
+
 ## 自定义变体
 
 UI 包注册了 `ui-light` 和 `ui-dark` 两个 Tailwind 自定义变体：
@@ -107,19 +109,23 @@ UI 包注册了 `ui-light` 和 `ui-dark` 两个 Tailwind 自定义变体：
 - `className`：作用于组件根元素。
 - `classNames`：覆盖内部槽位，例如 Button 的 `base`、Card 的 `body`、Switch 的 `thumb`。
 
-组件样式位于 `packages/ui/src/theme/*.ts` 的 tailwind-variants recipe 中，`index.css` 只保留 token。
+组件样式位于 `packages/ui/src/theme/*.ts` 的 tailwind-variants recipe 中；`index.css` 保留全局 token、自定义变体与 Tailwind 别名。
 
 ## Switch 的黑白轨道
 
-Switch 的轨道颜色由组件内部的 `--ui-switch-on` / `--ui-switch-off` 控制。文档站继续渲染真实 Switch，只在内联样式中覆盖这两个变量：
+Switch 的轨道颜色由组件内部的 `--ui-switch-on` / `--ui-switch-off` 控制。这两个变量默认定义在 `packages/ui/src/theme/switch.ts`，不属于全局 token。文档站继续渲染真实 Switch，只在内联样式中覆盖这两个变量：
 
 ```tsx
+import type { CSSProperties } from "react";
+
 <Switch
   label="启用通知"
-  style={{
-    "--ui-switch-on": "var(--docs-switch-on)",
-    "--ui-switch-off": "var(--docs-switch-off)",
-  }}
+  style={
+    {
+      "--ui-switch-on": "var(--docs-switch-on)",
+      "--ui-switch-off": "var(--docs-switch-off)",
+    } as CSSProperties
+  }
 />
 ```
 
@@ -140,9 +146,13 @@ Switch 的轨道颜色由组件内部的 `--ui-switch-on` / `--ui-switch-off` �
 文档站使用 Fumadocs 的 `black` 主题与 Glass layout：
 
 ```css title="app/globals.css"
+@import "tailwindcss";
 @import "fumadocs-ui/css/generated/glass.css";
 @import "fumadocs-ui/css/black.css";
 @import "fumadocs-ui/css/preset.css";
+@import "@xingxingmofashu.me/ui/index.css";
+
+@source "../../ui/src";
 ```
 
-此外还覆盖了提示框颜色、代码高亮与链接颜色，使整个站点保持黑白。
+此外还覆盖了提示框颜色，并对代码高亮做灰度处理，使整个站点保持黑白。

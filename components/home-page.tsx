@@ -24,7 +24,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         titleLine1: "黑白之间，",
         titleLine2: "玻璃有光。",
         description:
-          "Liquid Glass UI 是一套可组合、可访问、可主题化的玻璃组件。文档里的每个预览都是真实组件，不是截图，也不是复刻外观。",
+          "Liquid Glass UI 是一套可组合、可访问、支持主题定制的玻璃组件。文档里的每个预览都是真实组件，不是截图，也不是复刻外观。",
         readDocs: "阅读文档",
         viewComponents: "查看组件",
         meta: ["真实组件预览", "Light / Dark", "零图片依赖"],
@@ -84,7 +84,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           "引入样式、扫描组件源码，然后直接使用。Next.js 项目只需额外配置一个 transpilePackages。",
         quickLink: "查看安装指南",
         ctaTitle: "准备好把玻璃带进项目了吗？",
-        ctaDescription: "从安装开始，几分钟内就能在现有 Next.js 或 React 项目里使用。",
+        ctaDescription: "从安装开始，几分钟内就能在当前 workspace 的 Next.js 应用中使用。",
         ctaButton: "查看安装指南",
         github: "GitHub",
       }
@@ -156,7 +156,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         quickLink: "Read the installation guide",
         ctaTitle: "Ready to bring glass into your project?",
         ctaDescription:
-          "Start with installation and use it in an existing Next.js or React project in minutes.",
+          "Start with installation and use it in this workspace's Next.js app in minutes.",
         ctaButton: "Read the installation guide",
         github: "GitHub",
       };
@@ -316,22 +316,26 @@ export function HomePageContent({ lang }: { lang: Locale }) {
 
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {components.map((item) => (
-            <a
+            <div
               key={item.name}
-              href={item.href}
               className="group flex flex-col rounded-2xl border border-fd-border bg-fd-card/40 p-5 transition-colors hover:bg-fd-accent/40"
             >
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-fd-foreground">{item.name}</h3>
-                <ArrowRight className="size-4 text-fd-muted-foreground transition-transform group-hover:translate-x-0.5" />
-              </div>
-              <p className="mt-2 text-sm leading-6 text-fd-muted-foreground">
-                {item.description}
-              </p>
+              <a
+                href={item.href}
+                className="block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fd-ring"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-fd-foreground">{item.name}</h3>
+                  <ArrowRight className="size-4 text-fd-muted-foreground transition-transform group-hover:translate-x-0.5" />
+                </div>
+                <p className="mt-2 text-sm leading-6 text-fd-muted-foreground">
+                  {item.description}
+                </p>
+              </a>
               <div className="mt-6 flex flex-1 items-center rounded-xl border border-dashed border-fd-border bg-fd-background/50 p-4">
                 {item.preview}
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </section>
