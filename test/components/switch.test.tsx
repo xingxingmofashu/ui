@@ -323,6 +323,14 @@ describe("Switch", () => {
         "[&_[data-layer=filter]]:pointer-events-none",
       );
       expect(styles.base()).not.toContain("[&>svg]");
+      expect(styles.base()).not.toContain("--ui-switch-hue");
+      expect(styles.base()).not.toContain("--ui-switch-thumb");
+      expect(styles.base()).not.toContain("--ui-switch-track-shadow");
+      expect(styles.base()).not.toContain("--ui-switch-glass-shadow");
+      expect(styles.thumb()).not.toContain("--ui-switch-thumb-shadow");
+      expect(styles.base()).not.toContain(
+        "[&_[data-layer=mask]]:h-[var(--ui-switch-height)]",
+      );
       expect(styles.base()).toContain(
         "[&_[data-layer=track]]:bg-[var(--ui-switch-off)]",
       );
@@ -330,10 +338,10 @@ describe("Switch", () => {
         "data-[checked]:[&_[data-layer=track]]:bg-[var(--ui-switch-on)]",
       );
       expect(styles.base()).toContain(
-        "[&_[data-layer=track]]:[box-shadow:var(--ui-switch-track-shadow)]",
+        "[&_[data-layer=track]]:[box-shadow:inset_0_1px_1px_rgb(255_255_255/0.35),inset_0_-1px_2px_rgb(0_0_0/0.12)]",
       );
       expect(styles.base()).toContain(
-        "[&_[data-layer=glass-rim]]:[box-shadow:var(--ui-switch-glass-shadow)]",
+        "[&_[data-layer=glass-rim]]:[box-shadow:inset_1px_-1px_2px_rgb(255_255_255/0.55),inset_-1px_1px_2px_rgb(0_0_0/0.18),0_1px_3px_rgb(0_0_0/0.2)]",
       );
       expect(styles.base()).toContain(
         "[&_[data-layer=glass-lens]]:[filter:blur(calc(var(--ui-switch-height)*0.1))]",
@@ -348,7 +356,7 @@ describe("Switch", () => {
         "data-[checked]:[&_[data-layer=inner-glow]]:[--ui-switch-glow-color:var(--ui-switch-on)]",
       );
       expect(styles.base()).toContain(
-        "[&_[data-layer=cover]]:bg-[var(--ui-switch-thumb)]",
+        "[&_[data-layer=cover]]:bg-white",
       );
       expect(styles.base()).toContain(
         "active:[&_[data-layer=cover]]:opacity-0",
@@ -357,7 +365,7 @@ describe("Switch", () => {
       expect(styles.thumb()).toContain("group-active");
       expect(styles.thumb()).toContain("group-data-[animating=true]");
       expect(styles.thumb()).toContain(
-        "[box-shadow:var(--ui-switch-thumb-shadow)]",
+        "[box-shadow:0_1px_3px_rgb(0_0_0/0.2),inset_0_0_0_1px_rgb(255_255_255/0.55)]",
       );
       expect(styles.root()).toContain("data-[disabled]:opacity-75");
     });

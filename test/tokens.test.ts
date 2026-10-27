@@ -115,10 +115,16 @@ describe("design tokens", () => {
     expect(css).toContain("height: var(--ui-switch-height);");
     expect(css).toContain("background-color: var(--ui-switch-off);");
     expect(css).toContain("background-color: var(--ui-switch-on);");
-    expect(css).toContain("background-color: var(--ui-switch-thumb);");
-    expect(css).toContain("box-shadow: var(--ui-switch-track-shadow);");
-    expect(css).toContain("box-shadow: var(--ui-switch-thumb-shadow);");
-    expect(css).toContain("box-shadow: var(--ui-switch-glass-shadow);");
+    expect(css).toContain("background-color: var(--color-white);");
+    expect(css).toContain(
+      "box-shadow: inset 0 1px 1px rgb(255 255 255/0.35),inset 0 -1px 2px rgb(0 0 0/0.12);",
+    );
+    expect(css).toContain(
+      "box-shadow: 0 1px 3px rgb(0 0 0/0.2),inset 0 0 0 1px rgb(255 255 255/0.55);",
+    );
+    expect(css).toContain(
+      "box-shadow: inset 1px -1px 2px rgb(255 255 255/0.55),inset -1px 1px 2px rgb(0 0 0/0.18),0 1px 3px rgb(0 0 0/0.2);",
+    );
     expect(css).toContain("filter: var(--ui-switch-filter-goo);");
     expect(css).toContain("filter: var(--ui-switch-filter-remove-black);");
     expect(css).toContain("filter: blur(calc(var(--ui-switch-height) * 0.1));");
@@ -140,9 +146,13 @@ describe("design tokens", () => {
     expect(css).toContain("--ui-switch-glow-color: var(--ui-switch-off);");
     expect(css).toContain("--ui-switch-glow-color: var(--ui-switch-on);");
     expect(css).toContain("border-top-right-radius: 100px;");
-    expect(css).toContain("--ui-switch-hue: 144;");
-    expect(css).toContain("--ui-switch-off: hsl(var(--ui-switch-hue) 8% 81%);");
-    expect(css).toContain("--ui-switch-on: hsl(var(--ui-switch-hue) 92% 43%);");
+    expect(css).toContain("--ui-switch-off: hsl(144 8% 81%);");
+    expect(css).toContain("--ui-switch-on: hsl(144 92% 43%);");
+    expect(css).not.toContain("--ui-switch-hue");
+    expect(css).not.toContain("--ui-switch-thumb:");
+    expect(css).not.toContain("--ui-switch-thumb-shadow");
+    expect(css).not.toContain("--ui-switch-track-shadow");
+    expect(css).not.toContain("--ui-switch-glass-shadow");
     expect(css).toContain("--ui-switch-width: 48px;");
     expect(css).toContain("--ui-switch-width: 80px;");
     expect(css).toContain("--ui-switch-border: 2px;");
