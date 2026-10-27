@@ -53,11 +53,7 @@ type LiquidGlassFilterProps = {
 
 function LiquidGlassFilter({ filterId }: LiquidGlassFilterProps) {
   return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      className="pointer-events-none absolute h-0 w-0 overflow-hidden"
-    >
+    <svg aria-hidden="true" focusable="false" data-layer="filter">
       <defs>
         <filter id={`${filterId}-goo`}>
           <feGaussianBlur
@@ -180,33 +176,9 @@ function Switch({
         >
           <LiquidGlassFilter filterId={filterId} />
 
-          <span
-            aria-hidden="true"
-            data-layer="mask"
-            className={cn(
-              "absolute inset-0 h-[var(--ui-switch-height)] w-[var(--ui-switch-width)] rounded-[100px]",
-              "[filter:var(--ui-switch-filter-remove-black)] [transform:translate3d(0,0,0)]",
-            )}
-          >
-            <span
-              data-layer="track"
-              className={cn(
-                "absolute left-1/2 top-1/2 z-[12] h-full w-full rounded-[100px] bg-[var(--ui-switch-off)] [container-type:inline-size] [translate:-50%_-50%]",
-                "[box-shadow:var(--ui-switch-track-shadow)]",
-                "[transition:background-color_120ms_ease-out_180ms]",
-                "group-data-[checked]:bg-[var(--ui-switch-on)] motion-reduce:transition-none",
-              )}
-            >
-              <span
-                data-layer="track-mask"
-                className={cn(
-                  "absolute left-[var(--ui-switch-border)] top-1/2 h-[calc(100%_-_2*var(--ui-switch-border))] w-[calc(60%_-_2*var(--ui-switch-border))] rounded-[100px] bg-black",
-                  "[translate:0_-50%] group-data-[checked]:[translate:calc(100cqi_-_100%_-_2*var(--ui-switch-border))_-50%]",
-                  "[transition:translate_120ms_ease-out_180ms,scale_300ms_ease-out]",
-                  "group-active:[scale:1.65] group-data-[animating=true]:[scale:1.65]",
-                  "motion-reduce:transition-none",
-                )}
-              />
+          <span aria-hidden="true" data-layer="mask">
+            <span data-layer="track">
+              <span data-layer="track-mask" />
             </span>
           </span>
 
@@ -216,61 +188,14 @@ function Switch({
             onTransitionEnd={handleThumbTransitionEnd}
             className={cn(ui.thumb(), classNames?.thumb)}
           >
-            <span
-              aria-hidden="true"
-              data-layer="glass-rim"
-              className={cn(
-                "absolute inset-0 z-[20] rounded-[100px] [box-shadow:var(--ui-switch-glass-shadow)] opacity-0",
-                "transition-opacity duration-200 ease-out group-active:opacity-100 group-data-[animating=true]:opacity-100",
-                "motion-reduce:transition-none",
-              )}
-            />
-            <span
-              data-layer="glass-lens"
-              className={cn(
-                "absolute inset-0 rounded-[100px] [clip-path:inset(0_0_0_0_round_100px)] [filter:blur(calc(var(--ui-switch-height)*0.1))]",
-                "transition-[filter] duration-200 ease-out group-active:[filter:blur(0)] group-data-[animating=true]:[filter:blur(0)]",
-                "motion-reduce:transition-none",
-              )}
-            >
-              <span
-                data-layer="goo"
-                className={cn(
-                  "absolute inset-0 overflow-hidden rounded-[100px]",
-                  "[filter:var(--ui-switch-filter-goo)] [transform:translate3d(0,0,0)]",
-                )}
-              >
-                <span
-                  data-layer="inner-glow"
-                  className={cn(
-                    "absolute inset-0 rounded-[100px]",
-                    "[--ui-switch-glow-color:var(--ui-switch-off)] group-data-[checked]:[--ui-switch-glow-color:var(--ui-switch-on)]",
-                    "[transition:box-shadow_120ms_ease-out_180ms]",
-                    "[box-shadow:inset_0_0_calc(var(--ui-switch-height)*0.05)_calc(var(--ui-switch-height)*0.0667)_var(--ui-switch-glow-color),inset_calc(var(--ui-switch-height)*0.133)_0_calc(var(--ui-switch-height)*0.05)_calc(var(--ui-switch-height)*0.0667)_var(--ui-switch-glow-color)]",
-                  )}
-                />
-                <span
-                  data-layer="fill"
-                  className={cn(
-                    "absolute left-0 top-1/2 h-[var(--ui-switch-height)] w-[var(--ui-switch-width)] rounded-[100px] bg-[var(--ui-switch-off)]",
-                    "[translate:0_-50%] group-data-[checked]:[translate:calc(100cqi_-_100%_-_6*var(--ui-switch-border))_-50%]",
-                    "[transition:height_200ms_ease-out,translate_120ms_ease-out_180ms,background-color_120ms_ease-out_180ms]",
-                    "group-active:h-[calc(var(--ui-switch-height)_-_6*var(--ui-switch-border))]",
-                    "group-data-[animating=true]:h-[calc(var(--ui-switch-height)_-_6*var(--ui-switch-border))]",
-                    "group-data-[checked]:bg-[var(--ui-switch-on)]",
-                    "motion-reduce:transition-none",
-                  )}
-                />
+            <span aria-hidden="true" data-layer="glass-rim" />
+            <span data-layer="glass-lens">
+              <span data-layer="goo">
+                <span data-layer="inner-glow" />
+                <span data-layer="fill" />
               </span>
             </span>
-            <span
-              data-layer="cover"
-              className={cn(
-                "absolute inset-0 rounded-[100px] bg-[var(--ui-switch-thumb)]",
-                "transition-opacity duration-200 ease-out group-active:opacity-0 group-data-[animating=true]:opacity-0",
-                "motion-reduce:transition-none",
-              )}
-            />
+            <span data-layer="cover" />
           </UISwitch.Thumb>
         </UISwitch.Root>
       </div>

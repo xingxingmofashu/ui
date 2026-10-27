@@ -115,6 +115,33 @@ describe("design tokens", () => {
 
     expect(css).toContain("width: var(--ui-switch-width);");
     expect(css).toContain("height: var(--ui-switch-height);");
+    expect(css).toContain("background-color: var(--ui-switch-off);");
+    expect(css).toContain("background-color: var(--ui-switch-on);");
+    expect(css).toContain("background-color: var(--ui-switch-thumb);");
+    expect(css).toContain("box-shadow: var(--ui-switch-track-shadow);");
+    expect(css).toContain("box-shadow: var(--ui-switch-thumb-shadow);");
+    expect(css).toContain("box-shadow: var(--ui-switch-glass-shadow);");
+    expect(css).toContain("filter: var(--ui-switch-filter-goo);");
+    expect(css).toContain("filter: var(--ui-switch-filter-remove-black);");
+    expect(css).toContain("filter: blur(calc(var(--ui-switch-height) * 0.1));");
+    expect(css).toContain("filter: blur(0);");
+    expect(css).toContain(
+      "translate: calc(100cqi - 100% - 2 * var(--ui-switch-border)) -50%;",
+    );
+    expect(css).toContain("translate: calc(100cqi - 100%) -50%;");
+    expect(css).not.toContain(
+      "translate: calc(100cqi - 100% - 6 * var(--ui-switch-border)) -50%;",
+    );
+    expect(css).toContain("transition: background-color 120ms ease-out 180ms;");
+    expect(css).toContain("transition: box-shadow 120ms ease-out 180ms;");
+    expect(css).toContain(
+      "transition: height 200ms ease-out,translate 120ms ease-out 180ms,background-color 120ms ease-out 180ms;",
+    );
+    expect(css).toContain("[data-layer=filter]");
+    expect(css).toContain("scale: 1.65;");
+    expect(css).toContain("--ui-switch-glow-color: var(--ui-switch-off);");
+    expect(css).toContain("--ui-switch-glow-color: var(--ui-switch-on);");
+    expect(css).toContain("border-top-right-radius: 100px;");
     expect(css).toContain("--ui-switch-hue: 144;");
     expect(css).toContain("--ui-switch-off: hsl(var(--ui-switch-hue) 8% 81%);");
     expect(css).toContain("--ui-switch-on: hsl(var(--ui-switch-hue) 92% 43%);");
@@ -170,7 +197,11 @@ describe("design tokens", () => {
     expect(source).toContain("group-data-[checked]");
     expect(source).toContain("group-active");
     expect(source).not.toContain("ui-liquid-switch");
-    expect(source).not.toContain("data-layer");
+    expect(source).toContain("[&_[data-layer=fill]]");
+    expect(source).toContain("[&_[data-layer=filter]]");
+    expect(source).toContain("[&_[data-layer=inner-glow]]");
+    expect(source).not.toContain("[&>svg]");
+    expect(source).not.toContain("switchLayers");
     expect(source).not.toMatch(/\b(liquid|liquids|liquidShadow|liquidTrack):/);
     expect(source).not.toContain(".css");
   });
