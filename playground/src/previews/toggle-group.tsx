@@ -68,6 +68,35 @@ function ToggleGroupPreview() {
           <ToggleGroupItem value="underline">Underline</ToggleGroupItem>
         </ToggleGroup>
       </DemoGroup>
+
+      <DemoGroup label="Orientation">
+        <div className="flex flex-wrap items-start gap-10">
+          <div className="flex flex-col items-center gap-2">
+            <ToggleGroup
+              aria-label="Horizontal position"
+              defaultValue={["left"]}
+            >
+              <ToggleGroupItem value="left">Left</ToggleGroupItem>
+              <ToggleGroupItem value="center">Center</ToggleGroupItem>
+              <ToggleGroupItem value="right">Right</ToggleGroupItem>
+            </ToggleGroup>
+            <Caption>horizontal</Caption>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            <ToggleGroup
+              aria-label="Vertical position"
+              orientation="vertical"
+              defaultValue={["top"]}
+            >
+              <ToggleGroupItem value="top">Top</ToggleGroupItem>
+              <ToggleGroupItem value="middle">Middle</ToggleGroupItem>
+              <ToggleGroupItem value="bottom">Bottom</ToggleGroupItem>
+            </ToggleGroup>
+            <Caption>vertical</Caption>
+          </div>
+        </div>
+      </DemoGroup>
     </>
   );
 }
