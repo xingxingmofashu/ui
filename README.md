@@ -2,10 +2,10 @@
 
 Liquid Glass UI components for React 19 and Tailwind CSS 4.
 
-The package ships five components: Button, Card, Slider, Switch, and Toggle
-Group. Glass surfaces, rim highlights, and inner shadows are drawn entirely
-with CSS. The components are built on Base UI and do not add a custom rendering
-engine.
+The package ships six components: Accordion, Button, Card, Slider, Switch, and
+Toggle Group. Glass surfaces, rim highlights, and inner shadows are drawn
+entirely with CSS. The interactive components are built on Base UI and do
+not add a custom rendering engine; `Card` is a native layout primitive.
 
 ## Requirements
 
@@ -14,8 +14,9 @@ engine.
 - Tailwind CSS 4.
 - An ESM-capable bundler. The package publishes ES modules only.
 
-`Button`, `Slider`, `Switch`, and `ToggleGroup` are client components. `Card`
-is server-safe and can be rendered from a React Server Component.
+`Accordion`, `Button`, `Slider`, `Switch`, and `ToggleGroup` are client
+components. `Card` is server-safe and can be rendered from a React Server
+Component.
 
 ## Install
 
@@ -81,8 +82,8 @@ package stylesheet; override them in your own theme layer. Tailwind aliases use
 the `ui-` prefix (`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid
 colliding with host design tokens.
 
-`Button`, `Card`, `Slider`, `Switch`, and `ToggleGroup` inherit the host font
-and do not force a font family.
+`Button`, `Card`, `Slider`, `Switch`, `ToggleGroup`, and `Accordion` inherit the
+host font and do not force a font family.
 
 The visual material relies on modern CSS: `backdrop-filter`, `color-mix`,
 container units, individual `translate` / `scale` properties, and `:has`.
@@ -90,6 +91,7 @@ Use a current evergreen browser.
 
 ## Components
 
+- `Accordion` / `AccordionItem`
 - `Button`
 - `Card`
 - `Slider`
@@ -111,11 +113,13 @@ pnpm test            # run the Vitest suite
 pnpm typecheck       # typecheck the package
 pnpm docs:dev        # start the Fumadocs site on port 3001
 pnpm docs:build      # export the docs site to docs/out
+pnpm playground:dev  # start the component playground on port 3002
 ```
 
 The documentation site lives in `docs/` and imports this package from the
 workspace, so changes under `src/` are picked up directly during docs
-development.
+development. The playground in `playground/` also imports the source directly
+and adds a persistent light/dark toggle for previewing every component.
 
 ## License
 
