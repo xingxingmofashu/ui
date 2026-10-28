@@ -41,39 +41,7 @@ same pnpm workspace.
   `.ui-glass`, `.ui-glass-inner`, `.ui-glass-highlight`, `.ui-glass-rim`, and
   `.ui-glass-chip` classes.
 - Light/dark tokens support `.light` / `.dark` and
-  `data-theme="light"` / `data-theme="dark"`. Tailwind aliases use the `ui-`
-  prefix (`text-ui-ink`, `outline-ui-glass-focus`).
-- The material is a lens: the surface applies the shared tone and contrast
-  filter to its backdrop, border, shadow, inner rim, and glare. Keep text and
-  icons out of that filtered element. Render the material as a dedicated,
-  `aria-hidden` glass layer and put content in a sibling layer above it.
-- Button uses `base` for layout/motion and the private `glass` slot for the
-  material. Card uses its private `glass` layer. Toggle Group uses its private
-  `glass` layer behind the indicator and items.
-- Component recipes compose those classes. Do not restate the surface, border,
-  shadow, backdrop blur, inner rim, or highlight gradient in `src/theme/`.
-- Size, radius, overflow, layout, and motion remain in the component recipe.
-  The glass layer clips its own pseudo-elements; the content wrapper must not
-  clip the material's outer shadow.
-- Switch and Slider keep their unique optical layers, but shared colors, edge
-  shadows, lens blur, and specular values come from `--ui-glass-*` tokens.
-- Tune the material through the tokens in `src/index.css`, not through
-  per-component one-off overrides.
-
-## Playground
-
-- `playground/` is a private Vite + React 19 app that previews every component
-  in light and dark mode.
-- It imports the package source directly through Vite and tsconfig aliases, so
-  source changes hot-reload without building `dist`.
-- The header theme toggle writes `.light`/`.dark`, `data-theme`, and
-  `color-scheme` on `<html>`. The initial theme is read from
-  `localStorage` (`ui-playground-theme`) or the system preference before React
-  mounts.
-- Previews live in `playground/src/previews/`, one file per component. The
-  shared stage and label primitives are in `playground/src/demo.tsx`.
-- Playground chrome must stay monochrome; the component glass provides the
-  visual interest.
+  `data-theme="light"` / `data-theme="dark"`.
 
 ## Package files
 
