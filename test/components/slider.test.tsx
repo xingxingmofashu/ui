@@ -204,7 +204,7 @@ describe("Slider", () => {
       expect(getSlot(control, "thumb")).toHaveClass("slot-thumb");
     });
 
-    it("resolves className and style callbacks with Base UI state", () => {
+    it("resolves className callbacks with Base UI state", () => {
       const { rerender } = render(
         <Slider
           aria-label="Stateful"
@@ -212,14 +212,12 @@ describe("Slider", () => {
           className={(state) =>
             state.disabled ? "slider-disabled" : "slider-enabled"
           }
-          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
         />,
       );
 
       let root = getRoot(getSlider("Stateful"));
 
       expect(root).toHaveClass("slider-disabled");
-      expect(root).toHaveStyle({ opacity: "0.5" });
 
       rerender(
         <Slider
@@ -227,14 +225,21 @@ describe("Slider", () => {
           className={(state) =>
             state.disabled ? "slider-disabled" : "slider-enabled"
           }
-          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
         />,
       );
 
       root = getRoot(getSlider("Stateful"));
 
       expect(root).toHaveClass("slider-enabled");
-      expect(root).toHaveStyle({ opacity: "1" });
+    });
+
+    it("does not accept inline styles", () => {
+      const element = (
+        // @ts-expect-error The glass theme owns inline styles.
+        <Slider aria-label="Styled" style={{ opacity: 0.5 }} />
+      );
+
+      expect(element).toBeTruthy();
     });
 
     it("forwards render and ref to the Base UI root", () => {

@@ -6,6 +6,7 @@ import * as React from "react";
 
 import { hasContent } from "../lib/has-content";
 import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
+import { withoutStyle } from "../lib/without-style";
 import theme from "../theme/slider";
 
 type SliderThemeSlot =
@@ -30,17 +31,12 @@ type SliderRootProps<Value extends number | readonly number[]> =
 type SliderClassName<Value extends number | readonly number[]> =
   SliderRootProps<Value>["className"];
 
-type SliderStyleProp<Value extends number | readonly number[]> =
-  SliderRootProps<Value>["style"];
-
 interface SliderBaseProps<Value extends number | readonly number[]>
   extends Omit<SliderRootProps<Value>, "className" | "style" | "children"> {
   /** Classes merged into the outer root. Accepts a callback that receives Base UI's slider state. */
   className?: SliderClassName<Value>;
   /** Classes for individual slots. */
   ui?: SliderStyle;
-  /** Inline styles merged into the root. Accepts a callback that receives Base UI's slider state. */
-  style?: SliderStyleProp<Value>;
   /** Visible label, connected to every thumb through `aria-labelledby`. */
   label?: React.ReactNode;
   /** Optional supporting text connected through `aria-describedby`. */
@@ -88,7 +84,6 @@ function getThumbCount(
 function Slider<Value extends number | readonly number[] = number>({
   className,
   ui: uiOverrides,
-  style,
   label,
   description,
   showValue = false,
@@ -122,12 +117,11 @@ function Slider<Value extends number | readonly number[] = number>({
 
   return (
     <UISlider.Root
-      {...props}
+      {...withoutStyle(props)}
       value={value}
       defaultValue={defaultValue}
       data-slot="root"
       className={rootClassName}
-      style={style}
     >
       {hasHeader ? (
         <div

@@ -53,10 +53,11 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 | `disabled` | `boolean` | `false` | Disables the slider. |
 | `name` | `string` | — | Field name used when submitting a form. |
 | `className` | `string \| ((state) => string \| undefined)` | — | Merged into the outermost `root`. The callback receives Base UI slider state. |
-| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | Inline styles merged into `root`. The callback receives Base UI slider state. |
 | `ui` | `Partial<Record<SliderThemeSlot, string>>` | — | Overrides internal slot styles. |
 
 All other props are forwarded to Base UI's `Slider.Root`, including `form`, `name`, `thumbAlignment`, `thumbCollisionBehavior`, `render`, and `ref`.
+
+`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout or the `ui` slots for theme overrides.
 
 ### UI Slots
 
