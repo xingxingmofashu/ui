@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { createRef, type ComponentProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import { Accordion, AccordionItem } from "../../src/components/accordion";
+import { Accordion } from "../../src/components/accordion";
 import theme from "../../src/theme/accordion";
 
 const copy = {
@@ -14,6 +14,24 @@ const copy = {
   international:
     "Yes, we ship to over 40 countries. International orders typically arrive within 7-14 business days.",
 };
+
+const items = [
+  {
+    value: "shipping",
+    title: "How long does shipping take?",
+    content: copy.shipping,
+  },
+  {
+    value: "returns",
+    title: "What is your return policy?",
+    content: copy.returns,
+  },
+  {
+    value: "international",
+    title: "Do you ship internationally?",
+    content: copy.international,
+  },
+] as const;
 
 function getButton(name: string) {
   const button = screen.getByRole("button", { name });
@@ -35,10 +53,6 @@ function getSlot(element: Element, slot: string) {
   return node;
 }
 
-function querySlot(element: Element, slot: string) {
-  return element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
-}
-
 function getRoot(text: string) {
   const node = screen
     .getByText(text)
@@ -55,25 +69,16 @@ function BasicAccordion({
   defaultValue,
   value,
   ...props
-}: ComponentProps<typeof Accordion>) {
+}: Omit<ComponentProps<typeof Accordion>, "items">) {
   const controlled = value !== undefined;
 
   return (
     <Accordion
       {...props}
+      items={items}
       value={value}
       defaultValue={controlled ? undefined : (defaultValue ?? ["shipping"])}
-    >
-      <AccordionItem value="shipping" title="How long does shipping take?">
-        {copy.shipping}
-      </AccordionItem>
-      <AccordionItem value="returns" title="What is your return policy?">
-        {copy.returns}
-      </AccordionItem>
-      <AccordionItem value="international" title="Do you ship internationally?">
-        {copy.international}
-      </AccordionItem>
-    </Accordion>
+    />
   );
 }
 
@@ -127,35 +132,16 @@ describe("Accordion", () => {
       expect(content).toContainElement(trigger);
     });
 
-    it("renders the default plus indicator and a custom replacement", () => {
-      const { rerender } = render(<BasicAccordion />);
+    it("renders the default plus indicator", () => {
+      render(<BasicAccordion />);
 
       const trigger = getButton("How long does shipping take?");
       const indicator = getSlot(trigger, "indicator");
-      const bars = indicator.querySelectorAll<HTMLElement>(
-        '[data-slot="indicator-bar"]',
-      );
+      const icon = getSlot(trigger, "indicator-icon");
 
       expect(indicator).toHaveAttribute("aria-hidden", "true");
-      expect(bars).toHaveLength(2);
-      expect(bars[1]).toHaveAttribute("data-orientation", "vertical");
-
-      rerender(
-        <Accordion defaultValue={["custom"]}>
-          <AccordionItem
-            value="custom"
-            title="Custom indicator"
-            indicator={<svg data-testid="chevron" />}
-          >
-            Content
-          </AccordionItem>
-        </Accordion>,
-      );
-
-      const custom = getButton("Custom indicator");
-
-      expect(screen.getByTestId("chevron")).toBeInTheDocument();
-      expect(querySlot(custom, "indicator-icon")).toBeNull();
+      expect(icon.tagName).toBe("svg");
+      expect(icon).toHaveClass("block", "size-[var(--ui-accordion-icon-size)]");
     });
   });
 
@@ -191,10 +177,7 @@ describe("Accordion", () => {
       const user = userEvent.setup();
 
       render(
-        <BasicAccordion
-          multiple
-          defaultValue={["shipping", "returns"]}
-        />,
+        <BasicAccordion multiple defaultValue={["shipping", "returns"]} />,
       );
 
       const shipping = getButton("How long does shipping take?");
@@ -227,10 +210,7 @@ describe("Accordion", () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
       const { rerender } = render(
-        <BasicAccordion
-          value={["shipping"]}
-          onValueChange={onValueChange}
-        />,
+        <BasicAccordion value={["shipping"]} onValueChange={onValueChange} />,
       );
 
       const shipping = getButton("How long does shipping take?");
@@ -272,14 +252,18 @@ describe("Accordion", () => {
       const user = userEvent.setup();
 
       render(
-        <Accordion defaultValue={["shipping"]}>
-          <AccordionItem value="shipping" title="Shipping">
-            Shipping content
-          </AccordionItem>
-          <AccordionItem value="returns" title="Returns" disabled>
-            Returns content
-          </AccordionItem>
-        </Accordion>,
+        <Accordion
+          defaultValue={["shipping"]}
+          items={[
+            { value: "shipping", title: "Shipping", content: "Shipping content" },
+            {
+              value: "returns",
+              title: "Returns",
+              content: "Returns content",
+              disabled: true,
+            },
+          ]}
+        />,
       );
 
       const disabled = getButton("Returns");
@@ -313,11 +297,18 @@ describe("Accordion", () => {
   describe("styling", () => {
     it("applies className to the root and item only", () => {
       render(
-        <Accordion defaultValue={["one"]} className="custom-root">
-          <AccordionItem value="one" title="One" className="custom-item">
-            Panel
-          </AccordionItem>
-        </Accordion>,
+        <Accordion
+          defaultValue={["one"]}
+          className="custom-root"
+          items={[
+            {
+              value: "one",
+              title: "One",
+              content: "Panel",
+              className: "custom-item",
+            },
+          ]}
+        />,
       );
 
       const root = getRoot("One");
@@ -335,40 +326,28 @@ describe("Accordion", () => {
 
     it("does not accept a ui prop", () => {
       const element = (
-        <>
-          {/* @ts-expect-error Accordion no longer accepts a ui prop. */}
-          <Accordion ui={{ root: "custom-root" }}>
-            <AccordionItem value="one" title="One">
-              Panel
-            </AccordionItem>
-          </Accordion>
-          <Accordion>
-            {/* @ts-expect-error AccordionItem no longer accepts a ui prop. */}
-            <AccordionItem value="one" title="One" ui={{ item: "custom-item" }}>
-              Panel
-            </AccordionItem>
-          </Accordion>
-        </>
+        // @ts-expect-error Accordion does not accept a ui prop.
+        <Accordion items={items} ui={{ root: "custom-root" }} />
       );
 
       expect(element).toBeTruthy();
     });
 
-    it("does not accept inline styles on the root or item", () => {
+    it("does not accept inline styles", () => {
       const element = (
         <>
           {/* @ts-expect-error The glass theme owns inline styles. */}
-          <Accordion style={{ opacity: 0.5 }}>
-            <AccordionItem value="one" title="One">
-              Panel
-            </AccordionItem>
-          </Accordion>
-          <Accordion>
-            {/* @ts-expect-error The glass theme owns inline styles. */}
-            <AccordionItem value="one" title="One" style={{ opacity: 0.5 }}>
-              Panel
-            </AccordionItem>
-          </Accordion>
+          <Accordion items={items} style={{ opacity: 0.5 }} />
+          <Accordion
+            items={[
+              {
+                value: "one",
+                title: "One",
+                // @ts-expect-error Item entries do not accept inline styles.
+                style: { opacity: 0.5 },
+              },
+            ]}
+          />
         </>
       );
 
@@ -379,11 +358,12 @@ describe("Accordion", () => {
       const ref = createRef<HTMLDivElement>();
 
       render(
-        <Accordion ref={ref} render={<section />} defaultValue={["one"]}>
-          <AccordionItem value="one" title="One">
-            Panel
-          </AccordionItem>
-        </Accordion>,
+        <Accordion
+          ref={ref}
+          render={<section />}
+          defaultValue={["one"]}
+          items={[{ value: "one", title: "One", content: "Panel" }]}
+        />,
       );
 
       const root = getRoot("One");
@@ -430,7 +410,6 @@ describe("Accordion", () => {
         "title",
         "indicator",
         "indicatorIcon",
-        "indicatorBar",
         "panel",
         "panelContent",
       ].forEach((slot) => {
@@ -451,9 +430,7 @@ describe("Accordion", () => {
       expect(styles.glass()).toContain("overflow-hidden");
       expect(styles.glass()).toContain("rounded-[inherit]");
       expect(styles.overlay()).toContain("ui-glass-rim");
-      expect(styles.panel()).toContain(
-        "h-[var(--accordion-panel-height)]",
-      );
+      expect(styles.panel()).toContain("h-[var(--accordion-panel-height)]");
       expect(styles.panel()).toContain("data-[starting-style]:h-0");
       expect(styles.panel()).toContain("data-[ending-style]:h-0");
       expect(styles.indicator()).toContain(
@@ -584,7 +561,6 @@ describe("Accordion", () => {
         styles.title,
         styles.indicator,
         styles.indicatorIcon,
-        styles.indicatorBar,
         styles.panel,
         styles.panelContent,
       ];

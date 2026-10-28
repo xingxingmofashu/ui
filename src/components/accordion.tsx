@@ -7,36 +7,37 @@ import { type VariantProps } from "tailwind-variants";
 
 import theme from "../theme/accordion";
 
-type AccordionProps<Value extends string = string> = Omit<
-  UIAccordion.Root.Props<Value>,
-  "className" | "style" | "children"
-> &
-  VariantProps<typeof theme> & {
-    /** Tailwind classes merged into the root. */
-    className?: any;
-    children?: React.ReactNode;
-  };
-
-type AccordionItemProps = Omit<
-  UIAccordion.Item.Props,
-  "className" | "children" | "style" | "value" | "title"
-> & {
+/** One panel managed by the accordion. */
+type AccordionItemProps = {
   /** Value that identifies the item in the accordion value. */
   value: string;
   /** Visible heading inside the trigger. */
   title: React.ReactNode;
   /** Panel content. */
-  children?: React.ReactNode;
+  content?: React.ReactNode;
+  /** Disables this item. */
+  disabled?: boolean;
+  /** Called when this panel opens or closes. */
+  onOpenChange?: UIAccordion.Item.Props["onOpenChange"];
   /** Tailwind classes merged into the item root. */
   className?: any;
-  /** Replaces the default plus indicator. */
-  indicator?: React.ReactNode;
 };
+
+type AccordionProps<Value extends string = string> = Omit<
+  UIAccordion.Root.Props<Value>,
+  "className" | "style" | "children"
+> &
+  VariantProps<typeof theme> & {
+    /** Panels rendered by the accordion. */
+    items: readonly AccordionItemProps[];
+    /** Tailwind classes merged into the root. */
+    className?: any;
+  };
 
 function Accordion<Value extends string = string>({
   className,
   size,
-  children,
+  items,
   ...props
 }: AccordionProps<Value>) {
   const ui = theme({ size });
@@ -56,7 +57,9 @@ function Accordion<Value extends string = string>({
       </span>
 
       <div data-slot="content" className={ui.content()}>
-        {children}
+        {items.map((item) => (
+          <AccordionItem key={item.value} {...item} />
+        ))}
       </div>
     </UIAccordion.Root>
   );
@@ -65,9 +68,8 @@ function Accordion<Value extends string = string>({
 function AccordionItem({
   value,
   title,
-  children,
+  content,
   className,
-  indicator,
   ...props
 }: AccordionItemProps) {
   const ui = theme();
@@ -90,28 +92,29 @@ function AccordionItem({
             data-slot="indicator"
             className={ui.indicator()}
           >
-            {indicator ?? (
-              <span data-slot="indicator-icon" className={ui.indicatorIcon()}>
-                <span data-slot="indicator-bar" className={ui.indicatorBar()} />
-                <span
-                  data-slot="indicator-bar"
-                  data-orientation="vertical"
-                  className={ui.indicatorBar()}
-                />
-              </span>
-            )}
+            <svg
+              data-slot="indicator-icon"
+              className={ui.indicatorIcon()}
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="square"
+              strokeLinejoin="round"
+            >
+              <path d="M1.5 8h13M8 14.5v-13" />
+            </svg>
           </span>
         </UIAccordion.Trigger>
       </UIAccordion.Header>
 
       <UIAccordion.Panel data-slot="panel" className={ui.panel()}>
         <div data-slot="panel-content" className={ui.panelContent()}>
-          {children}
+          {content}
         </div>
       </UIAccordion.Panel>
     </UIAccordion.Item>
   );
 }
 
-export { Accordion, AccordionItem };
+export { Accordion };
 export type { AccordionItemProps, AccordionProps };

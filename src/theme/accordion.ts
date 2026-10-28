@@ -43,11 +43,7 @@ export default tv({
       "group-data-[panel-open]/trigger:rotate-45",
       "motion-reduce:transition-none",
     ],
-    indicatorIcon: "relative block size-[var(--ui-accordion-icon-size)]",
-    indicatorBar: [
-      "absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 rounded-full bg-current",
-      "data-[orientation=vertical]:rotate-90",
-    ],
+    indicatorIcon: "block size-[var(--ui-accordion-icon-size)]",
     panel: [
       "h-[var(--accordion-panel-height)] overflow-hidden text-ui-ink",
       "text-[length:var(--ui-accordion-panel-font-size)]",

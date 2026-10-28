@@ -11,6 +11,7 @@ import sliderTheme from "../src/theme/slider";
 import switchTheme from "../src/theme/switch";
 import toggleGroupTheme from "../src/theme/toggle-group";
 import accordionTheme from "../src/theme/accordion";
+import alertDialogTheme from "../src/theme/alert-dialog";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
   "\\",
@@ -70,7 +71,6 @@ function themeCandidates() {
     "title",
     "indicator",
     "indicatorIcon",
-    "indicatorBar",
     "panel",
     "panelContent",
   ] as const;
@@ -80,6 +80,22 @@ function themeCandidates() {
 
     return accordionSlots.map((slot) => accordionStyles[slot]());
   });
+  const alertDialogSlots = [
+    "backdrop",
+    "viewport",
+    "popup",
+    "glass",
+    "overlay",
+    "content",
+    "title",
+    "description",
+    "body",
+    "footer",
+  ] as const;
+  const alertDialogStyles = alertDialogTheme();
+  const alertDialogCandidates = alertDialogSlots.map((slot) =>
+    alertDialogStyles[slot](),
+  );
   const toggleGroupSlots = [
     "root",
     "glass",
@@ -116,6 +132,7 @@ function themeCandidates() {
     ...cardSlots.map((slot) => cardStyles[slot]()),
     ...switchCandidates,
     ...accordionCandidates,
+    ...alertDialogCandidates,
     ...toggleGroupCandidates,
     ...sliderCandidates,
   ]
@@ -249,6 +266,31 @@ describe("design tokens", () => {
     expect(css).toContain("--ui-accordion-trigger-height: 36px;");
     expect(css).toContain("--ui-accordion-trigger-height: 64px;");
     expect(css).toContain("--ui-accordion-panel-font-size: 0.875rem;");
+  });
+
+  it("compiles the alert dialog overlay and glass popup", async () => {
+    const css = await buildStyles(themeCandidates());
+
+    expect(css).toContain("position: fixed;");
+    expect(css).toContain("z-index: 40;");
+    expect(css).toContain("z-index: 50;");
+    expect(css).toContain("backdrop-filter: blur(2px);");
+    expect(css).toContain("transition-property: opacity;");
+    expect(css).toContain("border-radius: 1.75rem;");
+    expect(css).toContain("max-width: var(--container-md);");
+    expect(css).toContain(
+      "transition-property: opacity,scale,translate;",
+    );
+    expect(css).toContain("--tw-translate-y: calc(var(--spacing) * 2);");
+    expect(css).toContain("--tw-scale-x: 95%;");
+    expect(css).toContain("[data-starting-style]");
+    expect(css).toContain("[data-ending-style]");
+    expect(css).toContain("border: 1px solid var(--ui-glass-inner-border);");
+    expect(css).toContain("border: 1px solid var(--ui-glass-rim);");
+    expect(css).toContain("--tw-font-weight: var(--font-weight-semibold);");
+    expect(css).toContain("opacity: 60%;");
+    expect(css).toContain("opacity: 75%;");
+    expect(css).toContain("justify-content: flex-end;");
   });
 
   it("compiles the toggle group glass controls from the theme recipe", async () => {
@@ -416,6 +458,34 @@ describe("design tokens", () => {
     expect(recipe).not.toContain("shadow-glass");
     expect(recipe).not.toContain(".css");
     expect(component).toContain('data-slot="indicator"');
+    expect(component).not.toContain("LIQUID_GLASS_MAP");
+    expect(component).not.toContain(".css");
+  });
+
+  it("keeps alert dialog styling in the tailwind-variants theme", async () => {
+    const [recipe, component] = await Promise.all([
+      readFile(
+        new URL("../src/theme/alert-dialog.ts", import.meta.url),
+        "utf8",
+      ),
+      readFile(
+        new URL("../src/components/alert-dialog.tsx", import.meta.url),
+        "utf8",
+      ),
+    ]);
+
+    expect(recipe).toContain('from "tailwind-variants"');
+    expect(recipe).toContain("ui-glass");
+    expect(recipe).toContain("ui-glass-inner");
+    expect(recipe).toContain("ui-glass-highlight");
+    expect(recipe).toContain("ui-glass-rim");
+    expect(recipe).toContain("data-[starting-style]:opacity-0");
+    expect(recipe).not.toContain("bg-glass-surface");
+    expect(recipe).not.toContain("shadow-glass");
+    expect(recipe).not.toContain(".css");
+    expect(component).toContain("UIAlertDialog.Portal");
+    expect(component).toContain("UIAlertDialog.Backdrop");
+    expect(component).toContain("UIAlertDialog.Viewport");
     expect(component).not.toContain("LIQUID_GLASS_MAP");
     expect(component).not.toContain(".css");
   });

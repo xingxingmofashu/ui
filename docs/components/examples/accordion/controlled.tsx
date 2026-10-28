@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Accordion, AccordionItem, Button } from "@xingxingmofashu/ui";
+import { Accordion, Button } from "@xingxingmofashu/ui";
 
 const items = [
   {
@@ -33,17 +33,12 @@ export default function AccordionControlledDemo() {
 
   return (
     <div className="flex w-full max-w-md flex-col gap-4">
-      <Accordion multiple value={value} onValueChange={setValue}>
-        {items.map((item) => (
-          <AccordionItem
-            key={item.value}
-            value={item.value}
-            title={item.title}
-          >
-            {item.content}
-          </AccordionItem>
-        ))}
-      </Accordion>
+      <Accordion
+        multiple
+        value={value}
+        onValueChange={setValue}
+        items={items}
+      />
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <span className="text-sm text-ui-ink/60">

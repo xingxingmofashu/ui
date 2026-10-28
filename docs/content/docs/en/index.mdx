@@ -3,7 +3,7 @@ title: "Introduction"
 description: "A composable and themeable set of liquid glass components. Every preview in these docs is a real component, not a screenshot."
 ---
 
-This is the documentation site for Liquid Glass UI (`@xingxingmofashu/ui`). The components are built with React 19 and Tailwind CSS 4; Accordion, Button, Slider, Switch, and Toggle Group use Base UI, while Card uses native elements. Surfaces, rim highlights, and inner shadows are all drawn with CSS — no textures and no extra runtime.
+This is the documentation site for Liquid Glass UI (`@xingxingmofashu/ui`). The components are built with React 19 and Tailwind CSS 4; Accordion, Alert Dialog, Button, Slider, Switch, and Toggle Group use Base UI, while Card uses native elements. Surfaces, rim highlights, and inner shadows are all drawn with CSS — no textures and no extra runtime.
 
 The documentation uses a black-and-white theme: navigation, syntax highlighting, callouts, and component examples all stay neutral. The accordions, card, buttons, sliders, and switches below render directly from the UI package.
 
@@ -14,6 +14,9 @@ The documentation uses a black-and-white theme: navigation, syntax highlighting,
 <Cards>
   <Card title="Accordion" href="/en/docs/components/accordion">
     Collapsible glass panels with accessible headings, single or multiple expansion, and height animation.
+  </Card>
+  <Card title="Alert Dialog" href="/en/docs/components/alert-dialog">
+    A modal confirmation with a glass popup and built-in cancel and confirm actions.
   </Card>
   <Card title="Button" href="/en/docs/components/button">
     Five sizes with leading and trailing icons.
@@ -39,7 +42,7 @@ The documentation uses a black-and-white theme: navigation, syntax highlighting,
 
 - **Real components**: docs render `@xingxingmofashu/ui` directly through MDX, so previews match the component source.
 - **Monochrome first**: the docs use Fumadocs' black theme and override callouts and syntax highlighting to neutral colors.
-- **Overridable**: `className` targets the root, `ui` targets internal slots, and tokens control the theme.
+- **Overridable**: `className` targets the root, and the shared `--ui-*` tokens control the theme.
 
 <Callout title="About previews">
   The switches in previews are still the real component, and the track follows the monochrome theme by default. Behavior, focus management, and animation are unchanged.

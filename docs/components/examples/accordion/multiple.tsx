@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion, AccordionItem } from "@xingxingmofashu/ui";
+import { Accordion } from "@xingxingmofashu/ui";
 
 export default function AccordionMultipleDemo() {
   return (
@@ -8,19 +8,26 @@ export default function AccordionMultipleDemo() {
       className="w-full max-w-md"
       multiple
       defaultValue={["surface", "tokens"]}
-    >
-      <AccordionItem value="surface" title="Glass surface">
-        The shared material combines a translucent fill, rim highlight, and
-        backdrop blur.
-      </AccordionItem>
-      <AccordionItem value="tokens" title="Theme tokens">
-        Override the --ui-* variables to carry the same glass language into
-        light and dark themes.
-      </AccordionItem>
-      <AccordionItem value="motion" title="Motion">
-        Panels animate their height, and the plus indicator rotates into a
-        close icon.
-      </AccordionItem>
-    </Accordion>
+      items={[
+        {
+          value: "surface",
+          title: "Glass surface",
+          content:
+            "The shared material combines a translucent fill, rim highlight, and backdrop blur.",
+        },
+        {
+          value: "tokens",
+          title: "Theme tokens",
+          content:
+            "Override the --ui-* variables to carry the same glass language into light and dark themes.",
+        },
+        {
+          value: "motion",
+          title: "Motion",
+          content:
+            "Panels animate their height, and the plus indicator rotates into a close icon.",
+        },
+      ]}
+    />
   );
 }

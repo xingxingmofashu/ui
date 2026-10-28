@@ -1,0 +1,50 @@
+---
+title: "Alert Dialog"
+description: "带液态玻璃表面、强制响应以及内置取消/确认操作的模态确认对话框。"
+---
+
+`AlertDialog` 是 Base UI `AlertDialog` 的一体化封装。它内部渲染触发器、Portal、遮罩、居中弹窗、标题、描述、可选正文以及操作按钮。
+
+## 基础示例
+
+下面的对话框使用真实组件。它是模态的，点击遮罩不会关闭，用户必须选择一个操作。
+
+<Example name="alert-dialog/basic" />
+
+## 受控用法
+
+`open` 与 `onOpenChange` 控制对话框。省略 `trigger` 即可通过代码打开。`onConfirm` 与 `onCancel` 会在对话框关闭前执行。
+
+<Example name="alert-dialog/controlled" />
+
+## 自定义内容
+
+`children` 会在描述和操作按钮之间渲染额外内容。把 `cancelLabel` 或 `confirmLabel` 设为 `null` 可以隐藏对应操作。
+
+<Example name="alert-dialog/content" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `trigger` | `ReactElement` | — | 打开对话框的元素。完全受控时可以省略。 |
+| `title` | `ReactNode` | — | 对话框标题。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `children` | `ReactNode` | — | 描述与操作按钮之间的额外内容。 |
+| `cancelLabel` | `ReactNode` | `"Cancel"` | 取消操作文案。设为 `null` 可隐藏。 |
+| `confirmLabel` | `ReactNode` | `"Confirm"` | 确认操作文案。设为 `null` 可隐藏。 |
+| `onConfirm` | `MouseEventHandler<HTMLButtonElement>` | — | 点击确认时调用。 |
+| `onCancel` | `MouseEventHandler<HTMLButtonElement>` | — | 点击取消时调用。 |
+| `open` | `boolean` | — | 受控的打开状态。 |
+| `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
+| `onOpenChange` | `(open: boolean, details) => void` | — | 对话框打开或关闭时调用。 |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
+| `className` | `any` | — | 合并到弹窗的 Tailwind 类名。 |
+
+`AlertDialog` 还会透传 Base UI `AlertDialog.Root` 的 `actionsRef`、`handle`、`triggerId`、`defaultTriggerId` 等属性。
+
+`style` 被有意禁用：玻璃主题接管遮罩、弹窗与内容。布局请使用 `className`。对话框样式属于内部实现，不支持逐实例修改；请通过共享的 `--ui-glass-*` token 调整。
+
+取消与确认操作使用包内的 `Button`。确认后会在 `onConfirm` 执行完关闭对话框。受控模式下请通过 `onOpenChange` 更新 `open`。
+
+Base UI 负责 `alertdialog` 角色、由标题生成 `aria-labelledby`、由描述生成 `aria-describedby`、焦点锁定、滚动锁定以及关闭后的焦点恢复。

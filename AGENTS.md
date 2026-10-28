@@ -29,6 +29,7 @@ same pnpm workspace.
 | Component | Component file | Theme file | Test file |
 | --- | --- | --- | --- |
 | Accordion | `src/components/accordion.tsx` | `src/theme/accordion.ts` | `test/components/accordion.test.tsx` |
+| Alert Dialog | `src/components/alert-dialog.tsx` | `src/theme/alert-dialog.ts` | `test/components/alert-dialog.test.tsx` |
 | Button | `src/components/button.tsx` | `src/theme/button.ts` | `test/components/button.test.tsx` |
 | Card | `src/components/card.tsx` | `src/theme/card.ts` | `test/components/card.test.tsx` |
 | Slider | `src/components/slider.tsx` | `src/theme/slider.ts` | `test/components/slider.test.tsx` |

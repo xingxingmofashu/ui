@@ -6,6 +6,12 @@ import AccordionMultipleDemo from "./accordion/multiple";
 import accordionMultipleSource from "./accordion/multiple?raw";
 import AccordionSizesDemo from "./accordion/sizes";
 import accordionSizesSource from "./accordion/sizes?raw";
+import AlertDialogBasicDemo from "./alert-dialog/basic";
+import alertDialogBasicSource from "./alert-dialog/basic?raw";
+import AlertDialogContentDemo from "./alert-dialog/content";
+import alertDialogContentSource from "./alert-dialog/content?raw";
+import AlertDialogControlledDemo from "./alert-dialog/controlled";
+import alertDialogControlledSource from "./alert-dialog/controlled?raw";
 import ButtonBasicDemo from "./button/basic";
 import buttonBasicSource from "./button/basic?raw";
 import ButtonFullWidthDemo from "./button/full-width";
@@ -71,6 +77,18 @@ export const examples = {
   "accordion/controlled": {
     Demo: AccordionControlledDemo,
     source: accordionControlledSource,
+  },
+  "alert-dialog/basic": {
+    Demo: AlertDialogBasicDemo,
+    source: alertDialogBasicSource,
+  },
+  "alert-dialog/controlled": {
+    Demo: AlertDialogControlledDemo,
+    source: alertDialogControlledSource,
+  },
+  "alert-dialog/content": {
+    Demo: AlertDialogContentDemo,
+    source: alertDialogContentSource,
   },
   "button/basic": {
     Demo: ButtonBasicDemo,

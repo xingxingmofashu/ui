@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { ThemeToggle } from "./components/theme-toggle";
 import { AccordionPreview } from "./previews/accordion";
+import { AlertDialogPreview } from "./previews/alert-dialog";
 import { ButtonPreview } from "./previews/button";
 import { CardPreview } from "./previews/card";
 import { SliderPreview } from "./previews/slider";
@@ -34,8 +35,16 @@ const sections = [
     Preview: AccordionPreview,
   },
   {
-    id: "switch",
+    id: "alert-dialog",
     index: "04",
+    title: "Alert Dialog",
+    description:
+      "A modal confirmation with a glass popup, built-in actions, and controlled usage.",
+    Preview: AlertDialogPreview,
+  },
+  {
+    id: "switch",
+    index: "05",
     title: "Switch",
     description:
       "A liquid thumb that stretches while it moves, in all five sizes.",
@@ -43,7 +52,7 @@ const sections = [
   },
   {
     id: "slider",
-    index: "05",
+    index: "06",
     title: "Slider",
     description:
       "Single values, ranges, and vertical controls with a glass thumb.",
@@ -51,7 +60,7 @@ const sections = [
   },
   {
     id: "toggle-group",
-    index: "06",
+    index: "07",
     title: "Toggle Group",
     description:
       "Single and multiple selection with a liquid glass selected state.",
@@ -120,7 +129,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Six components · two themes
+        Seven components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.

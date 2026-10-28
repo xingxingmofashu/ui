@@ -11,7 +11,7 @@ import {
 
 import {
   Accordion,
-  AccordionItem,
+  AlertDialog,
   Button,
   Card,
   Slider,
@@ -44,12 +44,14 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         switchLabel: "启用高光",
         switchDescription: "在玻璃边缘显示斜向高光。",
         componentsEyebrow: "Components",
-        componentsTitle: "六个组件，一套语言",
+        componentsTitle: "七个组件，一套语言",
         componentsDescription:
           "每个组件共享同一套玻璃 token，因此可以自然地组合在一起。下面的内容直接渲染 UI 包里的组件。",
         componentDescriptions: {
           accordion:
             "带可访问标题的玻璃折叠面板，支持单选、多选与高度动画。",
+          alertDialog:
+            "带内置取消/确认操作的玻璃模态确认对话框。",
           button: "五种尺寸，支持前置与后置图标。",
           card: "由 header、body 与 footer 组成的玻璃卡片。",
           slider: "支持区间选择与纵向布局的玻璃滑块。",
@@ -80,9 +82,9 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           },
           {
             icon: Layers,
-            title: "Slot 级覆盖",
+            title: "布局可覆盖",
             description:
-              "通过 ui 精确控制 root、base、label 等内部结构，不破坏默认视觉。",
+              "通过 className 调整根元素布局，配合 token 保持默认玻璃视觉。",
           },
           {
             icon: Palette,
@@ -117,12 +119,14 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         switchLabel: "Enable highlights",
         switchDescription: "Show a diagonal highlight along the glass rim.",
         componentsEyebrow: "Components",
-        componentsTitle: "Six components, one language",
+        componentsTitle: "Seven components, one language",
         componentsDescription:
           "Every component shares the same glass tokens, so they compose naturally. Everything below renders directly from the UI package.",
         componentDescriptions: {
           accordion:
             "Collapsible glass panels with accessible headings, single or multiple expansion, and height animation.",
+          alertDialog:
+            "A glass modal confirmation with built-in cancel and confirm actions.",
           button:
             "Five sizes with leading and trailing icons.",
           card: "A glass card built from header, body, and footer slots.",
@@ -157,9 +161,9 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           },
           {
             icon: Layers,
-            title: "Slot-level overrides",
+            title: "Layout overrides",
             description:
-              "Use ui to target root, base, label, and other internals without breaking the default look.",
+              "Use className to adjust root layout while tokens keep the default glass look.",
           },
           {
             icon: Palette,
@@ -186,24 +190,50 @@ export function HomePageContent({ lang }: { lang: Locale }) {
       href: `/${lang}/docs/components/accordion`,
       description: copy.componentDescriptions.accordion,
       preview: (
-        <Accordion className="w-full" defaultValue={["surface"]} size="sm">
-          <AccordionItem
-            value="surface"
-            title={isZh ? "玻璃表面" : "Glass surface"}
-          >
-            {isZh
-              ? "内容留在滤镜之外。"
-              : "Content stays outside the filter."}
-          </AccordionItem>
-          <AccordionItem
-            value="tokens"
-            title={isZh ? "主题 Token" : "Theme tokens"}
-          >
-            {isZh
-              ? "一套 token 同时服务浅色与深色。"
-              : "One set of tokens serves light and dark."}
-          </AccordionItem>
-        </Accordion>
+        <Accordion
+          className="w-full"
+          defaultValue={["surface"]}
+          size="sm"
+          items={[
+            {
+              value: "surface",
+              title: isZh ? "玻璃表面" : "Glass surface",
+              content: isZh
+                ? "内容留在滤镜之外。"
+                : "Content stays outside the filter.",
+            },
+            {
+              value: "tokens",
+              title: isZh ? "主题 Token" : "Theme tokens",
+              content: isZh
+                ? "一套 token 同时服务浅色与深色。"
+                : "One set of tokens serves light and dark.",
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      name: "Alert Dialog",
+      href: `/${lang}/docs/components/alert-dialog`,
+      description: copy.componentDescriptions.alertDialog,
+      preview: (
+        <AlertDialog
+          trigger={
+            <Button
+              size="sm"
+              label={isZh ? "删除项目" : "Delete project"}
+            />
+          }
+          title={isZh ? "删除项目？" : "Delete project?"}
+          description={
+            isZh
+              ? "此操作无法撤销，所有文件都会被永久删除。"
+              : "This action cannot be undone. All files will be permanently removed."
+          }
+          confirmLabel={isZh ? "删除" : "Delete"}
+          cancelLabel={isZh ? "取消" : "Cancel"}
+        />
       ),
     },
     {
@@ -368,7 +398,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
               <div className="h-px bg-fd-border" />
               <div className="flex items-center justify-between gap-4 text-xs text-fd-muted-foreground">
                 <span>
-                  {isZh ? "六个组件 · 同一套玻璃" : "Six components · one glass"}
+                  {isZh ? "七个组件 · 同一套玻璃" : "Seven components · one glass"}
                 </span>
                 <span className="font-mono uppercase tracking-[0.14em]">
                   .light / .dark

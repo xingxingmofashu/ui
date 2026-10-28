@@ -5,7 +5,7 @@ description: "A set of collapsible liquid glass panels with accessible headings.
 
 ## Basic example
 
-Each item renders a real heading and button. The default plus indicator rotates into a close icon, and the panel animates its height.
+Each entry in `items` renders a real heading and button. The default plus indicator rotates into a close icon, and the panel animates its height.
 
 <Example name="accordion/basic" />
 
@@ -39,6 +39,7 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Trigger height, p
 | `multiple` | `boolean` | `false` | Allows more than one panel to stay open. |
 | `disabled` | `boolean` | `false` | Disables every trigger. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and the indicator. |
+| `items` | `readonly AccordionItemProps[]` | — | Panels rendered inside the accordion. |
 | `hiddenUntilFound` | `boolean` | `false` | Keeps closed panels mounted with `hidden="until-found"` so browser search can reveal them. |
 | `keepMounted` | `boolean` | `false` | Keeps closed panels in the DOM. |
 | `className` | `any` | — | Tailwind classes merged into the root. |
@@ -47,18 +48,15 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Trigger height, p
 
 `style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout. Accordion styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
 
-### AccordionItem
+### Item entries
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `string` | — | Required identifier used by the accordion value. |
 | `title` | `ReactNode` | — | Visible heading inside the trigger. |
-| `children` | `ReactNode` | — | Panel content. |
+| `content` | `ReactNode` | — | Panel content. |
 | `disabled` | `boolean` | `false` | Disables this item. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when this panel opens or closes. |
-| `indicator` | `ReactNode` | — | Replaces the default plus indicator. |
 | `className` | `any` | — | Tailwind classes merged into the item root. |
 
-`AccordionItem` also forwards Base UI `Accordion.Item` props such as `render` and `ref`.
-
-`style` is intentionally not supported on the item either; use `className` for layout.
+Item entries are plain objects; the accordion renders the Base UI item, header, trigger, and panel internally.
