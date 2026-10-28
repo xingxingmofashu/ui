@@ -19,7 +19,7 @@
     "test/**/*.ts",
     "test/**/*.tsx",
     "vitest.config.ts",
-    "tsup.config.ts"
+    "build.config.ts"
   ],
   "exclude": ["node_modules"]
 }

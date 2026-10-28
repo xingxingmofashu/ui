@@ -62,7 +62,7 @@ in `src/index.css`.
 
 ```bash
 pnpm install
-pnpm build        # build dist with tsup
+pnpm build        # build dist with unbuild
 pnpm test         # run the Vitest suite
 pnpm typecheck    # typecheck the package
 pnpm docs:dev     # start the Fumadocs site on port 3001

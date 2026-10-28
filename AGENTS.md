@@ -11,7 +11,7 @@ is included in the same pnpm workspace.
 
 ## Commands
 
-- `pnpm build` — build the publishable `dist` output with tsup.
+- `pnpm build` — build the publishable `dist` output with unbuild.
 - `pnpm dev` — rebuild `dist` in watch mode.
 - `pnpm test` — run the Vitest suite.
 - `pnpm typecheck` — typecheck the package.
@@ -58,5 +58,5 @@ is included in the same pnpm workspace.
 - Shared token and glass tests: `test/tokens.test.ts`
 - Test setup: `test/setup.ts`
 - Vitest config: `vitest.config.ts`
-- Build config: `tsup.config.ts`
+- Build config: `build.config.ts`
 - Docs site: `docs/` (see `docs/AGENTS.md`)
