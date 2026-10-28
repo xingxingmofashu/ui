@@ -18,6 +18,7 @@ export {
   Card,
   type CardStyle,
   type CardProps,
+  type CardThemeSlot,
 } from "./components/card";
 export {
   Slider,

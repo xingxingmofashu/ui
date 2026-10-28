@@ -110,4 +110,4 @@ function Card({
 }
 
 export { Card };
-export type { CardStyle, CardProps };
+export type { CardStyle, CardProps, CardThemeSlot };
