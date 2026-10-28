@@ -28,6 +28,14 @@ import CardBasicDemo from "./card/basic";
 import cardBasicSource from "./card/basic?raw";
 import CardContentOnlyDemo from "./card/content-only";
 import cardContentOnlySource from "./card/content-only?raw";
+import CheckboxBasicDemo from "./checkbox/basic";
+import checkboxBasicSource from "./checkbox/basic?raw";
+import CheckboxControlledDemo from "./checkbox/controlled";
+import checkboxControlledSource from "./checkbox/controlled?raw";
+import CheckboxIndeterminateDemo from "./checkbox/indeterminate";
+import checkboxIndeterminateSource from "./checkbox/indeterminate?raw";
+import CheckboxSizesDemo from "./checkbox/sizes";
+import checkboxSizesSource from "./checkbox/sizes?raw";
 import DialogActionsDemo from "./dialog/actions";
 import dialogActionsSource from "./dialog/actions?raw";
 import DialogBasicDemo from "./dialog/basic";
@@ -125,6 +133,22 @@ export const examples = {
   "card/content-only": {
     Demo: CardContentOnlyDemo,
     source: cardContentOnlySource,
+  },
+  "checkbox/basic": {
+    Demo: CheckboxBasicDemo,
+    source: checkboxBasicSource,
+  },
+  "checkbox/controlled": {
+    Demo: CheckboxControlledDemo,
+    source: checkboxControlledSource,
+  },
+  "checkbox/indeterminate": {
+    Demo: CheckboxIndeterminateDemo,
+    source: checkboxIndeterminateSource,
+  },
+  "checkbox/sizes": {
+    Demo: CheckboxSizesDemo,
+    source: checkboxSizesSource,
   },
   "dialog/basic": {
     Demo: DialogBasicDemo,

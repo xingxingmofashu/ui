@@ -7,6 +7,7 @@ import { describe, expect, it } from "vitest";
 
 import buttonTheme from "../src/theme/button";
 import cardTheme from "../src/theme/card";
+import checkboxTheme from "../src/theme/checkbox";
 import sliderTheme from "../src/theme/slider";
 import switchTheme from "../src/theme/switch";
 import toggleGroupTheme from "../src/theme/toggle-group";
@@ -111,6 +112,24 @@ function themeCandidates() {
   ] as const;
   const dialogStyles = dialogTheme();
   const dialogCandidates = dialogSlots.map((slot) => dialogStyles[slot]());
+  const checkboxSlots = [
+    "root",
+    "box",
+    "fill",
+    "glass",
+    "overlay",
+    "indicator",
+    "indicatorIcon",
+    "wrapper",
+    "label",
+    "description",
+  ] as const;
+  const checkboxSizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const checkboxCandidates = checkboxSizes.flatMap((size) => {
+    const checkboxStyles = checkboxTheme({ size });
+
+    return checkboxSlots.map((slot) => checkboxStyles[slot]());
+  });
   const toggleGroupSlots = [
     "root",
     "glass",
@@ -149,6 +168,7 @@ function themeCandidates() {
     ...accordionCandidates,
     ...alertDialogCandidates,
     ...dialogCandidates,
+    ...checkboxCandidates,
     ...toggleGroupCandidates,
     ...sliderCandidates,
   ]
@@ -371,6 +391,11 @@ describe("design tokens", () => {
 
     expect(css).toContain("--ui-ink: #1f1f1f;");
     expect(css).toContain("--ui-ink: #f5f5f5;");
+    expect(css).toContain("--ui-checkbox-mark: #fff;");
+    expect(css).toContain("--ui-checkbox-mark: #141414;");
+    expect(css).toContain("--ui-checkbox-rim: rgb(255 255 255 / 0.18);");
+    expect(css).toContain("--ui-checkbox-rim: rgb(255 255 255 / 0.14);");
+    expect(css).toContain("--ui-checkbox-shadow:");
     expect(css).toContain("--ui-dialog-surface: #fff;");
     expect(css).toContain("--ui-dialog-surface: #141414;");
     expect(css).toContain("--ui-glass-surface: rgb(0 0 0 / 0.02);");
@@ -528,6 +553,30 @@ describe("design tokens", () => {
     expect(component).toContain("UIDialog.Backdrop");
     expect(component).toContain("UIDialog.Viewport");
     expect(component).toContain("footer");
+    expect(component).not.toContain("LIQUID_GLASS_MAP");
+    expect(component).not.toContain(".css");
+  });
+
+  it("keeps checkbox styling in the tailwind-variants theme", async () => {
+    const [recipe, component] = await Promise.all([
+      readFile(new URL("../src/theme/checkbox.ts", import.meta.url), "utf8"),
+      readFile(
+        new URL("../src/components/checkbox.tsx", import.meta.url),
+        "utf8",
+      ),
+    ]);
+
+    expect(recipe).toContain('from "tailwind-variants"');
+    expect(recipe).toContain("ui-glass");
+    expect(recipe).toContain("ui-glass-rim");
+    expect(recipe).toContain("--ui-checkbox-size");
+    expect(recipe).toContain("--ui-checkbox-shadow");
+    expect(recipe).not.toContain("bg-glass-surface");
+    expect(recipe).not.toContain(" shadow-glass");
+    expect(recipe).not.toContain(".css");
+    expect(component).toContain("UICheckbox.Root");
+    expect(component).toContain("UICheckbox.Indicator");
+    expect(component).toContain('data-icon={indeterminate ? "dash" : "check"}');
     expect(component).not.toContain("LIQUID_GLASS_MAP");
     expect(component).not.toContain(".css");
   });

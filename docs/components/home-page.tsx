@@ -13,6 +13,7 @@ import {
   Accordion,
   Button,
   Card,
+  Checkbox,
   Slider,
   Switch,
   ToggleGroup,
@@ -46,7 +47,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         switchLabel: "启用高光",
         switchDescription: "在玻璃边缘显示斜向高光。",
         componentsEyebrow: "Components",
-        componentsTitle: "八个组件，一套语言",
+        componentsTitle: "九个组件，一套语言",
         componentsDescription:
           "每个组件共享同一套玻璃 token，因此可以自然地组合在一起。下面的内容直接渲染 UI 包里的组件。",
         componentDescriptions: {
@@ -56,6 +57,8 @@ export function HomePageContent({ lang }: { lang: Locale }) {
             "带内置取消/确认操作的玻璃模态确认对话框。",
           button: "五种尺寸，支持前置与后置图标。",
           card: "由 header、body 与 footer 组成的玻璃卡片。",
+          checkbox:
+            "带玻璃方块、勾选动画与不确定状态的复选框。",
           dialog:
             "带玻璃弹窗与自定义操作区的通用模态对话框，可放置任意数量按钮。",
           slider: "支持区间选择与纵向布局的玻璃滑块。",
@@ -123,7 +126,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         switchLabel: "Enable highlights",
         switchDescription: "Show a diagonal highlight along the glass rim.",
         componentsEyebrow: "Components",
-        componentsTitle: "Eight components, one language",
+        componentsTitle: "Nine components, one language",
         componentsDescription:
           "Every component shares the same glass tokens, so they compose naturally. Everything below renders directly from the UI package.",
         componentDescriptions: {
@@ -134,6 +137,8 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           button:
             "Five sizes with leading and trailing icons.",
           card: "A glass card built from header, body, and footer slots.",
+          checkbox:
+            "A checkbox with a glass tile, animated check, and indeterminate state.",
           dialog:
             "A general-purpose modal with a glass popup and a custom action area for any number of buttons.",
           slider:
@@ -256,6 +261,17 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         >
           <p className="text-sm text-ink/70">{copy.cardPreviewBody}</p>
         </Card>
+      ),
+    },
+    {
+      name: "Checkbox",
+      href: `/${lang}/docs/components/checkbox`,
+      description: copy.componentDescriptions.checkbox,
+      preview: (
+        <div className="flex flex-col gap-3">
+          <Checkbox size="sm" label={isZh ? "产品更新" : "Product updates"} defaultChecked />
+          <Checkbox size="sm" label={isZh ? "安全提醒" : "Security alerts"} />
+        </div>
       ),
     },
     {
@@ -393,7 +409,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
               <div className="h-px bg-fd-border" />
               <div className="flex items-center justify-between gap-4 text-xs text-fd-muted-foreground">
                 <span>
-                  {isZh ? "八个组件 · 同一套玻璃" : "Eight components · one glass"}
+                  {isZh ? "九个组件 · 同一套玻璃" : "Nine components · one glass"}
                 </span>
                 <span className="font-mono uppercase tracking-[0.14em]">
                   .light / .dark

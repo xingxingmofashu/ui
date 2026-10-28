@@ -1,0 +1,56 @@
+---
+title: "Checkbox"
+description: "带液态玻璃方块、勾选动画与不确定状态的复选框。"
+---
+
+`Checkbox` 是 Base UI `Checkbox` 的一体化封装。它渲染玻璃方块、勾选/横线指示器、可选标签与描述，以及用于表单提交的隐藏原生复选框。
+
+方块在未选中时保持玻璃表面；选中后由 `--ui-ink` 填充，并通过缩放动画显示标记。支持 `indeterminate` 混合状态。
+
+## 基础示例
+
+`label` 与 `description` 会渲染在方块右侧，整行都可以点击。未使用 `checked` 时是非受控组件，可用 `defaultChecked` 设置初始状态。
+
+<Example name="checkbox/basic" />
+
+## 受控用法
+
+用 `checked` 与 `onCheckedChange` 控制状态。`onCheckedChange` 也会收到 Base UI 的事件详情。
+
+<Example name="checkbox/controlled" />
+
+## 不确定状态
+
+`indeterminate` 会把复选框显示为混合状态，并渲染横线标记。它通常用于“全选”父级：当部分子项被选中时设置 `indeterminate`，全部选中时设置 `checked`。
+
+<Example name="checkbox/indeterminate" />
+
+## 尺寸
+
+提供 `xs`、`sm`、`md`、`lg`、`xl` 五种尺寸；标签与描述的字号会随尺寸调整。
+
+<Example name="checkbox/sizes" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | 可见标签，同时作为复选框的可访问名称。 |
+| `description` | `ReactNode` | — | 标签下方的说明文字。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 方块、图标与文字尺寸。 |
+| `checked` | `boolean` | — | 受控的选中状态。 |
+| `defaultChecked` | `boolean` | `false` | 非受控时的初始选中状态。 |
+| `indeterminate` | `boolean` | `false` | 混合状态；为 `true` 时 `aria-checked="mixed"`。 |
+| `onCheckedChange` | `(checked: boolean, details) => void` | — | 选中状态变化时调用。 |
+| `disabled` | `boolean` | `false` | 禁用交互。 |
+| `readOnly` | `boolean` | `false` | 只读，不可修改。 |
+| `required` | `boolean` | `false` | 表单提交前必须选中。 |
+| `name` | `string` | — | 表单字段名。 |
+| `value` | `string` | — | 表单提交的值。 |
+| `className` | `string` | — | 合并到 Base UI 复选框根元素的 Tailwind 类名。 |
+
+`Checkbox` 还会透传 Base UI `Checkbox.Root` 的 `id`、`form`、`inputRef`、`uncheckedValue`、`parent` 等属性。
+
+`style` 被有意禁用：玻璃主题接管方块视觉。请使用 `className` 调整根元素布局，通过共享的 `--ui-*` token 调整主题。
+
+Base UI 负责 `checkbox` 角色、`aria-checked`（包含 `mixed`）、焦点管理、隐藏原生输入以及表单提交。`label` 或 `aria-label` / `aria-labelledby` 提供可访问名称。

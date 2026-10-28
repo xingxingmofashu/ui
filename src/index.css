@@ -11,6 +11,11 @@
   :host {
     --ui-ink: #1f1f1f;
     --ui-ink-active: #000;
+    --ui-checkbox-mark: #fff;
+    --ui-checkbox-rim: rgb(255 255 255 / 0.18);
+    --ui-checkbox-shadow:
+      inset 0 0 0 1px rgb(0 0 0 / 0.04),
+      0 1px 2px rgb(0 0 0 / 0.16);
     --ui-dialog-surface: #fff;
     --ui-glass-surface: rgb(0 0 0 / 0.02);
     --ui-glass-border: rgb(51 51 51 / 0.08);
@@ -35,6 +40,11 @@
   [data-theme="dark"] {
     --ui-ink: #f5f5f5;
     --ui-ink-active: #fff;
+    --ui-checkbox-mark: #141414;
+    --ui-checkbox-rim: rgb(255 255 255 / 0.14);
+    --ui-checkbox-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.04),
+      0 1px 2px rgb(0 0 0 / 0.4);
     --ui-dialog-surface: #141414;
     --ui-glass-surface: rgb(255 255 255 / 0.06);
     --ui-glass-border: rgb(255 255 255 / 0.14);
@@ -59,6 +69,11 @@
   [data-theme="light"] {
     --ui-ink: #1f1f1f;
     --ui-ink-active: #000;
+    --ui-checkbox-mark: #fff;
+    --ui-checkbox-rim: rgb(255 255 255 / 0.18);
+    --ui-checkbox-shadow:
+      inset 0 0 0 1px rgb(0 0 0 / 0.04),
+      0 1px 2px rgb(0 0 0 / 0.16);
     --ui-dialog-surface: #fff;
     --ui-glass-surface: rgb(0 0 0 / 0.02);
     --ui-glass-border: rgb(51 51 51 / 0.08);

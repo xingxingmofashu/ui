@@ -32,6 +32,7 @@ same pnpm workspace.
 | Alert Dialog | `src/components/alert-dialog.tsx` | `src/theme/alert-dialog.ts` | `test/components/alert-dialog.test.tsx` |
 | Button | `src/components/button.tsx` | `src/theme/button.ts` | `test/components/button.test.tsx` |
 | Card | `src/components/card.tsx` | `src/theme/card.ts` | `test/components/card.test.tsx` |
+| Checkbox | `src/components/checkbox.tsx` | `src/theme/checkbox.ts` | `test/components/checkbox.test.tsx` |
 | Dialog | `src/components/dialog.tsx` | `src/theme/dialog.ts` | `test/components/dialog.test.tsx` |
 | Slider | `src/components/slider.tsx` | `src/theme/slider.ts` | `test/components/slider.test.tsx` |
 | Switch | `src/components/switch.tsx` | `src/theme/switch.ts` | `test/components/switch.test.tsx` |

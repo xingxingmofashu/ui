@@ -1,0 +1,56 @@
+---
+title: "Checkbox"
+description: "A checkbox with a liquid glass tile, animated check, and indeterminate state."
+---
+
+`Checkbox` is an integrated wrapper around Base UI's `Checkbox`. It renders the glass tile, check or dash indicator, optional label and description, and a hidden native checkbox for form submission.
+
+The tile keeps the glass surface when unchecked; when checked it fills with `--ui-ink` and reveals the mark with a scale animation. The `indeterminate` mixed state is supported.
+
+## Basic example
+
+`label` and `description` render to the right of the tile, and the entire row is clickable. When `checked` is omitted the component is uncontrolled; use `defaultChecked` for the initial state.
+
+<Example name="checkbox/basic" />
+
+## Controlled usage
+
+Use `checked` and `onCheckedChange` to control the state. `onCheckedChange` also receives Base UI's event details.
+
+<Example name="checkbox/controlled" />
+
+## Indeterminate state
+
+`indeterminate` renders a mixed state with a dash mark. It is commonly used for a "select all" parent: set `indeterminate` when some children are selected and `checked` when all of them are.
+
+<Example name="checkbox/indeterminate" />
+
+## Sizes
+
+Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and description type scale with the tile.
+
+<Example name="checkbox/sizes" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible label, also used as the checkbox's accessible name. |
+| `description` | `ReactNode` | — | Supporting copy under the label. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Tile, icon, and text size. |
+| `checked` | `boolean` | — | Controlled checked state. |
+| `defaultChecked` | `boolean` | `false` | Initial checked state when uncontrolled. |
+| `indeterminate` | `boolean` | `false` | Mixed state; sets `aria-checked="mixed"` when true. |
+| `onCheckedChange` | `(checked: boolean, details) => void` | — | Called when the checked state changes. |
+| `disabled` | `boolean` | `false` | Disables interaction. |
+| `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
+| `required` | `boolean` | `false` | Requires the checkbox to be checked for form submission. |
+| `name` | `string` | — | Form field name. |
+| `value` | `string` | — | Value submitted with the form. |
+| `className` | `string` | — | Tailwind classes merged into the Base UI checkbox root. |
+
+`Checkbox` also forwards Base UI `Checkbox.Root` props such as `id`, `form`, `inputRef`, `uncheckedValue`, and `parent`.
+
+`style` is intentionally not supported: the glass theme owns the tile visuals. Use `className` for root layout and tune the shared `--ui-*` tokens for theming.
+
+Base UI supplies the `checkbox` role, `aria-checked` (including `mixed`), focus management, the hidden native input, and form submission. `label` or `aria-label` / `aria-labelledby` provides the accessible name.
