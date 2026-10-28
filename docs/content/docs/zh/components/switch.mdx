@@ -51,21 +51,8 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `onCheckedChange` | `(checked: boolean, details) => void` | — | 选中状态变化时触发。 |
 | `disabled` | `boolean` | `false` | 禁用开关。 |
 | `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
-| `className` | `string` | — | 合并到 Base UI switch root。 |
-| `ui` | `Partial<Record<SwitchThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
+| `className` | `string` | — | Tailwind 类名，合并到 Base UI switch root。 |
 
 其余属性会透传给 Base UI 的 `Switch.Root`，包括 `required`、`name`、`form`、`value`、`uncheckedValue`、`inputRef`、`nativeButton`、`render` 和 `ref`。
 
-`style`、`baseStyle` 与 `baseClassName` 被有意禁用：玻璃主题接管根元素和所有 Base UI 部件。请使用 `className` 控制根元素，使用 `ui` 槽位（包括 `ui.base`）做主题扩展。
-
-### UI Slots
-
-| Slot | 说明 |
-| --- | --- |
-| `root` | 最外层 Base UI switch root，包含开关与文字。 |
-| `container` | 视觉轨道的布局容器。 |
-| `base` | 视觉轨道与玻璃图层。 |
-| `thumb` | 液态玻璃滑块。 |
-| `wrapper` | 标签与描述的文字容器。 |
-| `label` | 可见标签。 |
-| `description` | 辅助说明。 |
+`style`、`baseStyle` 与 `baseClassName` 被有意禁用：玻璃主题接管根元素和所有 Base UI 部件。根元素布局请使用 `className`。

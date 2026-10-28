@@ -53,21 +53,8 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
 | `onCheckedChange` | `(checked: boolean, details) => void` | — | Called when the checked state changes. |
 | `disabled` | `boolean` | `false` | Disables the switch. |
 | `readOnly` | `boolean` | `false` | Keeps the switch from toggling. |
-| `className` | `string` | — | Merged into the Base UI switch root. |
-| `ui` | `Partial<Record<SwitchThemeSlot, string>>` | — | Overrides internal slot styles. |
+| `className` | `string` | — | Tailwind classes merged into the Base UI switch root. |
 
 All other props are forwarded to Base UI's `Switch.Root`, including `required`, `name`, `form`, `value`, `uncheckedValue`, `inputRef`, `nativeButton`, `render`, and `ref`.
 
-`style`, `baseStyle`, and `baseClassName` are intentionally not supported: the glass theme owns the root and every Base UI part. Use `className` for the root and `ui` slots, including `ui.base`, for theme-governed overrides.
-
-### UI Slots
-
-| Slot | Description |
-| --- | --- |
-| `root` | Outermost Base UI switch root with the switch and text. |
-| `container` | Layout container for the visual track. |
-| `base` | Visual track and glass layers. |
-| `thumb` | Liquid glass thumb. |
-| `wrapper` | Label and description container. |
-| `label` | Visible label. |
-| `description` | Supporting text. |
+`style`, `baseStyle`, and `baseClassName` are intentionally not supported: the glass theme owns the root and every Base UI part. Use `className` for root layout.

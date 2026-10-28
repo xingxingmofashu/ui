@@ -72,14 +72,6 @@ describe("Switch", () => {
       ).toBeInTheDocument();
     });
 
-    it("requires an accessible name at the type level", () => {
-      render(
-        // @ts-expect-error Liquid switches must have an accessible name.
-        <Switch />,
-      );
-
-      expect(screen.getByRole("switch")).toBeInTheDocument();
-    });
   });
 
   describe("structure", () => {
@@ -175,11 +167,11 @@ describe("Switch", () => {
       );
     });
 
-    it("renders and connects label and description", () => {
+    it("renders label and description", () => {
       render(<Switch label="Notifications" description="Receive alerts" />);
 
       const switchElement = screen.getByRole("switch", {
-        name: "Notifications",
+        name: /Notifications/,
       });
       const root = getRoot(switchElement);
       const label = getSlot(root, "label");
@@ -190,12 +182,8 @@ describe("Switch", () => {
       expect(description.tagName).toBe("SPAN");
       expect(label).toHaveTextContent("Notifications");
       expect(description).toHaveTextContent("Receive alerts");
-      expect(switchElement).toHaveAttribute("aria-labelledby", label.id);
-      expect(switchElement).toHaveAttribute(
-        "aria-describedby",
-        description.id,
-      );
-      expect(switchElement).toHaveAccessibleDescription("Receive alerts");
+      expect(switchElement).not.toHaveAttribute("aria-labelledby");
+      expect(switchElement).not.toHaveAttribute("aria-describedby");
     });
 
     it("does not render a text wrapper without label or description", () => {
@@ -210,34 +198,27 @@ describe("Switch", () => {
       ).toBeNull();
     });
 
-    it("merges className and ui into their slots", () => {
-      render(
-        <Switch
-          className="custom-root"
-          description="Description slot"
-          ui={{
-            root: "slot-root",
-            container: "slot-container",
-            base: "slot-base",
-            thumb: "slot-thumb",
-            wrapper: "slot-wrapper",
-            label: "slot-label",
-            description: "slot-description",
-          }}
-          label="Label slot"
-        />,
-      );
+    it("applies className to the root only", () => {
+      render(<Switch className="custom-root" label="Label slot" />);
 
       const switchElement = screen.getByRole("switch", { name: "Label slot" });
       const root = getRoot(switchElement);
 
-      expect(root).toHaveClass("custom-root", "slot-root");
-      expect(getSlot(root, "container")).toHaveClass("slot-container");
-      expect(getSlot(root, "base")).toHaveClass("slot-base");
-      expect(getSlot(root, "thumb")).toHaveClass("slot-thumb");
-      expect(getSlot(root, "wrapper")).toHaveClass("slot-wrapper");
-      expect(getSlot(root, "label")).toHaveClass("slot-label");
-      expect(getSlot(root, "description")).toHaveClass("slot-description");
+      expect(root).toHaveClass("custom-root");
+      expect(getSlot(root, "container")).not.toHaveClass("custom-root");
+      expect(getSlot(root, "base")).not.toHaveClass("custom-root");
+      expect(getSlot(root, "thumb")).not.toHaveClass("custom-root");
+      expect(getSlot(root, "wrapper")).not.toHaveClass("custom-root");
+      expect(getSlot(root, "label")).not.toHaveClass("custom-root");
+    });
+
+    it("does not accept a ui prop", () => {
+      const element = (
+        // @ts-expect-error Switch no longer accepts a ui prop.
+        <Switch aria-label="Internal" ui={{ base: "h-10" }} />
+      );
+
+      expect(element).toBeTruthy();
     });
 
     it("does not accept inline styles on the wrapper or Base UI root", () => {
@@ -292,7 +273,7 @@ describe("Switch", () => {
       ).toBeNull();
     });
 
-    it("generates unique liquid filters for each switch", () => {
+    it("renders the liquid glass filters", () => {
       render(
         <>
           <Switch aria-label="First" />
@@ -301,25 +282,15 @@ describe("Switch", () => {
       );
 
       const switches = screen.getAllByRole("switch");
-      const filterUrls = switches.map((switchElement) =>
-        switchElement.style.getPropertyValue("--ui-switch-filter-goo"),
-      );
-      const filterIds = filterUrls.map(
-        (value) => value.match(/url\(#(.+)-goo\)/)?.[1] ?? "",
-      );
 
-      expect(new Set(filterUrls).size).toBe(2);
-
-      switches.forEach((switchElement, index) => {
-        const filterId = filterIds[index];
+      switches.forEach((switchElement) => {
         const gooFilter = switchElement.querySelector(
-          `filter[id="${filterId}-goo"]`,
+          'filter[id="ui-switch-goo"]',
         );
         const removeBlackFilter = switchElement.querySelector(
-          `filter[id="${filterId}-remove-black"]`,
+          'filter[id="ui-switch-remove-black"]',
         );
 
-        expect(filterId).toMatch(/^ui-switch-/);
         expect(gooFilter).not.toBeNull();
         expect(removeBlackFilter).not.toBeNull();
         expect(gooFilter?.children).toHaveLength(3);
@@ -593,7 +564,7 @@ describe("Switch", () => {
       render(<Switch label="Notifications" description="Receive alerts" />);
 
       const switchElement = screen.getByRole("switch", {
-        name: "Notifications",
+        name: /Notifications/,
       });
 
       await user.click(screen.getByText("Receive alerts"));

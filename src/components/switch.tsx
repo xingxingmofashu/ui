@@ -3,64 +3,29 @@
 import { Switch as UISwitch } from "@base-ui/react/switch";
 import { cn } from "cn";
 import * as React from "react";
+import { type VariantProps } from "tailwind-variants";
 
-import { hasContent } from "../lib/has-content";
-import { withoutStyle } from "../lib/without-style";
 import theme from "../theme/switch";
 
-type SwitchThemeSlot =
-  | "root"
-  | "container"
-  | "base"
-  | "thumb"
-  | "wrapper"
-  | "label"
-  | "description";
-
-type SwitchStyle = Partial<Record<SwitchThemeSlot, string>>;
-
-type SwitchSize = "xs" | "sm" | "md" | "lg" | "xl";
-
-/**
- * Switch uses a visible `label`, or an external accessible name through
- * `aria-label` / `aria-labelledby`.
- */
-type SwitchAccessibleName =
-  | { "aria-label": string }
-  | { "aria-labelledby": string }
-  | {
-      label: React.ReactNode;
-      "aria-label"?: string;
-      "aria-labelledby"?: string;
-    };
-
-type SwitchRootProps = React.ComponentProps<typeof UISwitch.Root>;
-
-interface SwitchBaseProps
-  extends Omit<SwitchRootProps, "className" | "children" | "style"> {
-  /** Classes merged into the Base UI switch root. Use `ui.base` for the visual track. */
+interface SwitchProps
+  extends Omit<
+      React.ComponentProps<typeof UISwitch.Root>,
+      "className" | "children" | "style"
+    >,
+    VariantProps<typeof theme> {
+  /** Tailwind classes merged into the Base UI switch root. */
   className?: string;
-  /** Classes for individual slots. */
-  ui?: SwitchStyle;
-  /** Visible label. It is connected to the switch through `aria-labelledby`. */
+  /** Visible label. */
   label?: React.ReactNode;
-  /** Optional supporting text connected through `aria-describedby`. */
+  /** Optional supporting text. */
   description?: React.ReactNode;
-  /** Control size; defaults to `md`. */
-  size?: SwitchSize;
 }
 
-type SwitchProps = SwitchBaseProps & SwitchAccessibleName;
-
-type LiquidGlassFilterProps = {
-  filterId: string;
-};
-
-function LiquidGlassFilter({ filterId }: LiquidGlassFilterProps) {
+function LiquidGlassFilter() {
   return (
     <svg aria-hidden="true" focusable="false" data-layer="filter">
       <defs>
-        <filter id={`${filterId}-goo`}>
+        <filter id="ui-switch-goo">
           <feGaussianBlur
             in="SourceGraphic"
             stdDeviation="2"
@@ -77,10 +42,7 @@ function LiquidGlassFilter({ filterId }: LiquidGlassFilterProps) {
           />
           <feComposite in="matrix" operator="atop" result="goo" />
         </filter>
-        <filter
-          id={`${filterId}-remove-black`}
-          colorInterpolationFilters="sRGB"
-        >
+        <filter id="ui-switch-remove-black" colorInterpolationFilters="sRGB">
           <feColorMatrix
             type="matrix"
             values="1 0 0 0 0
@@ -104,7 +66,6 @@ function LiquidGlassFilter({ filterId }: LiquidGlassFilterProps) {
 
 function Switch({
   className,
-  ui: uiOverrides,
   label,
   description,
   size,
@@ -115,46 +76,14 @@ function Switch({
 }: SwitchProps) {
   const ui = theme({ size });
   const [animating, setAnimating] = React.useState(false);
-  const animationTimeout = React.useRef<number | null>(null);
-  const generatedId = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const switchId = props.id ?? generatedId;
-  const filterId = `ui-switch-${generatedId || "filter"}`;
-  const labelId = `ui-switch-label-${generatedId || "label"}`;
-  const descriptionId = `ui-switch-description-${generatedId || "description"}`;
-  const hasLabel = hasContent(label);
-  const hasDescription = hasContent(description);
-  const hasText = hasLabel || hasDescription;
-  const labelledBy =
-    props["aria-labelledby"] ??
-    (hasLabel && props["aria-label"] == null ? labelId : undefined);
-  const describedBy =
-    props["aria-describedby"] ?? (hasDescription ? descriptionId : undefined);
-  const switchStyle = {
-    "--ui-switch-filter-goo": `url(#${filterId}-goo)`,
-    "--ui-switch-filter-remove-black": `url(#${filterId}-remove-black)`,
-  } as React.CSSProperties;
-  const clearAnimationTimeout = React.useCallback(() => {
-    if (animationTimeout.current !== null) {
-      window.clearTimeout(animationTimeout.current);
-      animationTimeout.current = null;
-    }
-  }, []);
-  const stopAnimating = () => {
-    clearAnimationTimeout();
-    setAnimating(false);
-  };
   const handleCheckedChange: NonNullable<
-    SwitchRootProps["onCheckedChange"]
+    SwitchProps["onCheckedChange"]
   > = (checked, details) => {
     onCheckedChange?.(checked, details);
 
-    if (details.isCanceled) {
-      return;
+    if (!details.isCanceled) {
+      setAnimating(true);
     }
-
-    clearAnimationTimeout();
-    setAnimating(true);
-    animationTimeout.current = window.setTimeout(stopAnimating, 400);
   };
   const handleThumbTransitionEnd = (
     event: React.TransitionEvent<HTMLSpanElement>,
@@ -167,37 +96,26 @@ function Switch({
       event.propertyName === "translate" ||
       event.propertyName === "scale"
     ) {
-      stopAnimating();
+      setAnimating(false);
     }
   };
 
-  React.useEffect(
-    () => () => {
-      clearAnimationTimeout();
-    },
-    [clearAnimationTimeout],
-  );
-
   return (
     <UISwitch.Root
-      {...withoutStyle(props)}
-      id={switchId}
+      {...props}
       disabled={disabled}
       readOnly={readOnly}
-      aria-labelledby={labelledBy}
-      aria-describedby={describedBy}
       data-slot="root"
       data-animating={animating || undefined}
       onCheckedChange={handleCheckedChange}
-      className={cn(ui.root(), className, uiOverrides?.root)}
-      style={switchStyle}
+      className={cn(ui.root(), className)}
     >
       <span
         data-slot="container"
-        className={cn(ui.container(), uiOverrides?.container)}
+        className={ui.container()}
       >
-        <span data-slot="base" className={cn(ui.base(), uiOverrides?.base)}>
-          <LiquidGlassFilter filterId={filterId} />
+        <span data-slot="base" className={ui.base()}>
+          <LiquidGlassFilter />
 
           <span aria-hidden="true" data-layer="mask">
             <span data-layer="track">
@@ -209,7 +127,7 @@ function Switch({
             data-slot="thumb"
             aria-hidden="true"
             onTransitionEnd={handleThumbTransitionEnd}
-            className={cn(ui.thumb(), uiOverrides?.thumb)}
+            className={ui.thumb()}
           >
             <span aria-hidden="true" data-layer="glass-rim" />
             <span data-layer="glass-lens">
@@ -223,26 +141,15 @@ function Switch({
         </span>
       </span>
 
-      {hasText ? (
-        <span
-          data-slot="wrapper"
-          className={cn(ui.wrapper(), uiOverrides?.wrapper)}
-        >
-          {hasLabel ? (
-            <span
-              data-slot="label"
-              id={labelId}
-              className={cn(ui.label(), uiOverrides?.label)}
-            >
+      {label || description ? (
+        <span data-slot="wrapper" className={ui.wrapper()}>
+          {label ? (
+            <span data-slot="label" className={ui.label()}>
               {label}
             </span>
           ) : null}
-          {hasDescription ? (
-            <span
-              data-slot="description"
-              id={descriptionId}
-              className={cn(ui.description(), uiOverrides?.description)}
-            >
+          {description ? (
+            <span data-slot="description" className={ui.description()}>
               {description}
             </span>
           ) : null}
@@ -253,4 +160,4 @@ function Switch({
 }
 
 export { Switch };
-export type { SwitchStyle, SwitchProps, SwitchSize, SwitchThemeSlot };
+export type { SwitchProps };

@@ -186,8 +186,8 @@ describe("design tokens", () => {
     );
     expect(css).toContain("box-shadow: var(--ui-glass-thumb-shadow);");
     expect(css).toContain("box-shadow: var(--ui-glass-edge-shadow);");
-    expect(css).toContain("filter: var(--ui-switch-filter-goo);");
-    expect(css).toContain("filter: var(--ui-switch-filter-remove-black);");
+    expect(css).toContain("filter: url(#ui-switch-goo);");
+    expect(css).toContain("filter: url(#ui-switch-remove-black);");
     expect(css).toContain("filter: blur(calc(var(--ui-switch-height) * 0.1));");
     expect(css).toContain("filter: blur(0);");
     expect(css).toContain(
