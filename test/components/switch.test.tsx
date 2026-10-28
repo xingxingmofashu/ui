@@ -236,12 +236,19 @@ describe("Switch", () => {
       expect(getSlot(root, "description")).toHaveClass("slot-description");
     });
 
-    it("applies style to the outer root", () => {
-      render(<Switch aria-label="Styled" style={{ width: 120 }} />);
+    it("does not accept inline styles on the wrapper or Base UI root", () => {
+      const invalidElement = (
+        <>
+          {/* @ts-expect-error The glass theme owns inline styles. */}
+          <Switch aria-label="Styled" style={{ width: 120 }} />
+          {/* @ts-expect-error Base UI internals are theme-controlled. */}
+          <Switch aria-label="Styled" baseStyle={{ width: 120 }} />
+          {/* @ts-expect-error Base UI internals are theme-controlled. */}
+          <Switch aria-label="Styled" baseClassName="base" />
+        </>
+      );
 
-      const switchElement = screen.getByRole("switch", { name: "Styled" });
-
-      expect(getRoot(switchElement)).toHaveStyle({ width: "120px" });
+      expect(invalidElement).toBeTruthy();
     });
 
     it("forwards nativeButton and render to the Base UI switch", () => {
@@ -260,47 +267,6 @@ describe("Switch", () => {
       expect(switchElement.tagName).toBe("BUTTON");
     });
 
-    it("forwards state callbacks to the Base UI switch root", async () => {
-      const user = userEvent.setup();
-      const { rerender } = render(
-        <Switch
-          aria-label="Stateful switch"
-          defaultChecked
-          className="outer-root"
-          baseClassName={(state) =>
-            state.checked ? "base-checked" : "base-unchecked"
-          }
-          baseStyle={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
-        />,
-      );
-
-      const switchElement = screen.getByRole("switch", {
-        name: "Stateful switch",
-      });
-
-      expect(getRoot(switchElement)).toHaveClass("outer-root");
-      expect(switchElement).toHaveClass("base-checked");
-      expect(switchElement).toHaveStyle({ opacity: "1" });
-
-      await user.click(switchElement);
-
-      expect(switchElement).toHaveClass("base-unchecked");
-
-      rerender(
-        <Switch
-          aria-label="Stateful switch"
-          defaultChecked
-          disabled
-          baseClassName={(state) =>
-            state.checked ? "base-checked" : "base-unchecked"
-          }
-          baseStyle={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
-        />,
-      );
-
-      expect(switchElement).toHaveStyle({ opacity: "0.5" });
-    });
-
     it("does not render arbitrary children", () => {
       render(
         // @ts-expect-error Switch owns its internal children.
@@ -308,15 +274,6 @@ describe("Switch", () => {
       );
 
       expect(screen.queryByText("Child")).not.toBeInTheDocument();
-    });
-
-    it("only accepts object styles", () => {
-      const invalidElement = (
-        // @ts-expect-error State-based style functions are not supported.
-        <Switch aria-label="Styled" style={() => ({ color: "red" })} />
-      );
-
-      expect(invalidElement).toBeTruthy();
     });
 
     it("does not render an empty label", () => {

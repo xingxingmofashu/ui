@@ -5,7 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { hasContent } from "../lib/has-content";
-import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
+import { withoutStyle } from "../lib/without-style";
 import theme from "../theme/switch";
 
 type SwitchThemeSlot =
@@ -40,12 +40,6 @@ interface SwitchBaseProps
   extends Omit<SwitchRootProps, "className" | "children" | "style"> {
   /** Classes merged into the outer root. Use `ui.base` for the switch itself. */
   className?: string;
-  /** Inline styles merged into the outer root. */
-  style?: React.CSSProperties;
-  /** Classes merged into the Base UI switch root. Accepts a callback that receives Base UI's switch state. */
-  baseClassName?: SwitchRootProps["className"];
-  /** Inline styles merged into the Base UI switch root. Accepts a callback that receives Base UI's switch state. */
-  baseStyle?: SwitchRootProps["style"];
   /** Classes for individual slots. */
   ui?: SwitchStyle;
   /** Visible label. It is connected to the switch through `aria-labelledby`. */
@@ -111,9 +105,6 @@ function LiquidGlassFilter({ filterId }: LiquidGlassFilterProps) {
 function Switch({
   className,
   ui: uiOverrides,
-  style,
-  baseClassName,
-  baseStyle,
   label,
   description,
   size,
@@ -142,18 +133,6 @@ function Switch({
     "--ui-switch-filter-goo": `url(#${filterId}-goo)`,
     "--ui-switch-filter-remove-black": `url(#${filterId}-remove-black)`,
   } as React.CSSProperties;
-  const baseClassNameValue = resolveThemeClassName<UISwitch.Root.State>(
-    ui.base(),
-    baseClassName,
-    uiOverrides?.base,
-  );
-  const baseStyleValue =
-    typeof baseStyle === "function"
-      ? (state: UISwitch.Root.State) => ({
-          ...switchStyle,
-          ...baseStyle(state),
-        })
-      : { ...switchStyle, ...baseStyle };
   const clearAnimationTimeout = React.useCallback(() => {
     if (animationTimeout.current !== null) {
       window.clearTimeout(animationTimeout.current);
@@ -205,14 +184,13 @@ function Switch({
       data-disabled={disabled || undefined}
       data-readonly={readOnly || undefined}
       className={cn(ui.root(), className, uiOverrides?.root)}
-      style={style}
     >
       <div
         data-slot="container"
         className={cn(ui.container(), uiOverrides?.container)}
       >
         <UISwitch.Root
-          {...props}
+          {...withoutStyle(props)}
           id={switchId}
           disabled={disabled}
           readOnly={readOnly}
@@ -221,8 +199,8 @@ function Switch({
           data-slot="base"
           data-animating={animating || undefined}
           onCheckedChange={handleCheckedChange}
-          className={baseClassNameValue}
-          style={baseStyleValue}
+          className={cn(ui.base(), uiOverrides?.base)}
+          style={switchStyle}
         >
           <LiquidGlassFilter filterId={filterId} />
 

@@ -50,12 +50,11 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `disabled` | `boolean` | `false` | 禁用开关。 |
 | `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
 | `className` | `string` | — | 合并到最外层布局容器。 |
-| `style` | `CSSProperties` | — | 内联样式，合并到最外层布局容器。 |
-| `baseClassName` | `string \| ((state) => string \| undefined)` | — | 合并到 Base UI switch root。回调会收到 Base UI switch 状态。 |
-| `baseStyle` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | 合并到 Base UI switch root 的内联样式。回调会收到 Base UI switch 状态。 |
 | `ui` | `Partial<Record<SwitchThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
 其余属性会透传给 Base UI 的 `Switch.Root`，包括 `required`、`name`、`form`、`value`、`uncheckedValue`、`inputRef`、`nativeButton`、`render` 和 `ref`。
+
+`style`、`baseStyle` 与 `baseClassName` 被有意禁用：玻璃主题接管最外层容器和所有 Base UI 部件。布局请使用 `className`，主题扩展请使用 `ui` 槽位（包括 `ui.base`）。
 
 ### UI Slots
 
