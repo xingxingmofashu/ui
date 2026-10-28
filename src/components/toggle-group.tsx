@@ -6,6 +6,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { hasContent } from "../lib/has-content";
+import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
 import theme from "../theme/toggle-group";
 
 type ToggleGroupSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -101,11 +102,11 @@ function ToggleGroup<Value extends string = string>({
   ...props
 }: ToggleGroupProps<Value>) {
   const ui = theme({ size });
-  const rootClassName =
-    typeof className === "function"
-      ? (state: UIToggleGroup.State) =>
-          cn(ui.root(), className(state), uiOverrides?.root)
-      : cn(ui.root(), className, uiOverrides?.root);
+  const rootClassName = resolveThemeClassName<UIToggleGroup.State>(
+    ui.root(),
+    className,
+    uiOverrides?.root,
+  );
   const rootRef = React.useRef<HTMLDivElement>(null);
   const indicatorRef = React.useRef<HTMLSpanElement>(null);
   const previousState = React.useRef<IndicatorState | null>(null);
@@ -386,11 +387,11 @@ function ToggleGroupItem<Value extends string = string>({
     hasLabel ||
     Boolean(props["aria-label"]) ||
     Boolean(props["aria-labelledby"]);
-  const itemClassName =
-    typeof className === "function"
-      ? (state: UIToggle.State) =>
-          cn(ui.item(), className(state), uiOverrides?.root)
-      : cn(ui.item(), className, uiOverrides?.root);
+  const itemClassName = resolveThemeClassName<UIToggle.State>(
+    ui.item(),
+    className,
+    uiOverrides?.root,
+  );
 
   return (
     <UIToggle
