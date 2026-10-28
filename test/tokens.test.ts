@@ -12,6 +12,7 @@ import switchTheme from "../src/theme/switch";
 import toggleGroupTheme from "../src/theme/toggle-group";
 import accordionTheme from "../src/theme/accordion";
 import alertDialogTheme from "../src/theme/alert-dialog";
+import dialogTheme from "../src/theme/dialog";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
   "\\",
@@ -96,6 +97,20 @@ function themeCandidates() {
   const alertDialogCandidates = alertDialogSlots.map((slot) =>
     alertDialogStyles[slot](),
   );
+  const dialogSlots = [
+    "backdrop",
+    "viewport",
+    "popup",
+    "glass",
+    "overlay",
+    "content",
+    "title",
+    "description",
+    "body",
+    "footer",
+  ] as const;
+  const dialogStyles = dialogTheme();
+  const dialogCandidates = dialogSlots.map((slot) => dialogStyles[slot]());
   const toggleGroupSlots = [
     "root",
     "glass",
@@ -133,6 +148,7 @@ function themeCandidates() {
     ...switchCandidates,
     ...accordionCandidates,
     ...alertDialogCandidates,
+    ...dialogCandidates,
     ...toggleGroupCandidates,
     ...sliderCandidates,
   ]
@@ -488,6 +504,30 @@ describe("design tokens", () => {
     expect(component).toContain("UIAlertDialog.Portal");
     expect(component).toContain("UIAlertDialog.Backdrop");
     expect(component).toContain("UIAlertDialog.Viewport");
+    expect(component).not.toContain("LIQUID_GLASS_MAP");
+    expect(component).not.toContain(".css");
+  });
+
+  it("keeps dialog styling in the tailwind-variants theme", async () => {
+    const [recipe, component] = await Promise.all([
+      readFile(new URL("../src/theme/dialog.ts", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/dialog.tsx", import.meta.url), "utf8"),
+    ]);
+
+    expect(recipe).toContain('from "tailwind-variants"');
+    expect(recipe).toContain("ui-glass");
+    expect(recipe).toContain("ui-glass-inner");
+    expect(recipe).toContain("ui-glass-highlight");
+    expect(recipe).toContain("ui-glass-rim");
+    expect(recipe).toContain("bg-ui-dialog-surface");
+    expect(recipe).toContain("data-[starting-style]:opacity-0");
+    expect(recipe).not.toContain("bg-glass-surface");
+    expect(recipe).not.toContain("shadow-glass");
+    expect(recipe).not.toContain(".css");
+    expect(component).toContain("UIDialog.Portal");
+    expect(component).toContain("UIDialog.Backdrop");
+    expect(component).toContain("UIDialog.Viewport");
+    expect(component).toContain("footer");
     expect(component).not.toContain("LIQUID_GLASS_MAP");
     expect(component).not.toContain(".css");
   });

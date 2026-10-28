@@ -2,10 +2,10 @@
 
 Liquid Glass UI components for React 19 and Tailwind CSS 4.
 
-The package ships seven components: Accordion, Alert Dialog, Button, Card,
-Slider, Switch, and Toggle Group. Glass surfaces, rim highlights, and inner
-shadows are drawn entirely with CSS. The interactive components are built on
-Base UI and do not add a custom rendering engine; `Card` is a native layout
+The package ships eight components: Accordion, Alert Dialog, Button, Card,
+Dialog, Slider, Switch, and Toggle Group. Glass surfaces, rim highlights, and
+inner shadows are drawn entirely with CSS. The interactive components are built
+on Base UI and do not add a custom rendering engine; `Card` is a native layout
 primitive.
 
 ## Requirements
@@ -15,9 +15,9 @@ primitive.
 - Tailwind CSS 4.
 - An ESM-capable bundler. The package publishes ES modules only.
 
-`Accordion`, `AlertDialog`, `Button`, `Slider`, `Switch`, and `ToggleGroup` are
-client components. `Card` is server-safe and can be rendered from a React
-Server Component.
+`Accordion`, `AlertDialog`, `Button`, `Dialog`, `Slider`, `Switch`, and
+`ToggleGroup` are client components. `Card` is server-safe and can be rendered
+from a React Server Component.
 
 ## Install
 
@@ -83,7 +83,7 @@ package stylesheet; override them in your own theme layer. Tailwind aliases use
 the `ui-` prefix (`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid
 colliding with host design tokens.
 
-`Button`, `Card`, `Slider`, `Switch`, `ToggleGroup`, `Accordion`, and
+`Button`, `Card`, `Dialog`, `Slider`, `Switch`, `ToggleGroup`, `Accordion`, and
 `AlertDialog` inherit the host font and do not force a font family.
 
 The visual material relies on modern CSS: `backdrop-filter`, `color-mix`,
@@ -96,6 +96,7 @@ Use a current evergreen browser.
 - `AlertDialog`
 - `Button`
 - `Card`
+- `Dialog`
 - `Slider`
 - `Switch`
 - `ToggleGroup` / `ToggleGroupItem`

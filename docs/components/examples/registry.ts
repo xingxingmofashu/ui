@@ -28,6 +28,10 @@ import CardBasicDemo from "./card/basic";
 import cardBasicSource from "./card/basic?raw";
 import CardContentOnlyDemo from "./card/content-only";
 import cardContentOnlySource from "./card/content-only?raw";
+import DialogActionsDemo from "./dialog/actions";
+import dialogActionsSource from "./dialog/actions?raw";
+import DialogBasicDemo from "./dialog/basic";
+import dialogBasicSource from "./dialog/basic?raw";
 import SliderBasicDemo from "./slider/basic";
 import sliderBasicSource from "./slider/basic?raw";
 import SliderDisabledDemo from "./slider/disabled";
@@ -121,6 +125,14 @@ export const examples = {
   "card/content-only": {
     Demo: CardContentOnlyDemo,
     source: cardContentOnlySource,
+  },
+  "dialog/basic": {
+    Demo: DialogBasicDemo,
+    source: dialogBasicSource,
+  },
+  "dialog/actions": {
+    Demo: DialogActionsDemo,
+    source: dialogActionsSource,
   },
   "slider/basic": {
     Demo: SliderBasicDemo,

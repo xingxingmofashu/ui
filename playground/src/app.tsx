@@ -5,6 +5,7 @@ import { AccordionPreview } from "./previews/accordion";
 import { AlertDialogPreview } from "./previews/alert-dialog";
 import { ButtonPreview } from "./previews/button";
 import { CardPreview } from "./previews/card";
+import { DialogPreview } from "./previews/dialog";
 import { SliderPreview } from "./previews/slider";
 import { SwitchPreview } from "./previews/switch";
 import { ToggleGroupPreview } from "./previews/toggle-group";
@@ -43,8 +44,16 @@ const sections = [
     Preview: AlertDialogPreview,
   },
   {
-    id: "switch",
+    id: "dialog",
     index: "05",
+    title: "Dialog",
+    description:
+      "A general-purpose modal with a custom action area for any number of buttons.",
+    Preview: DialogPreview,
+  },
+  {
+    id: "switch",
+    index: "06",
     title: "Switch",
     description:
       "A liquid thumb that stretches while it moves, in all five sizes.",
@@ -52,7 +61,7 @@ const sections = [
   },
   {
     id: "slider",
-    index: "06",
+    index: "07",
     title: "Slider",
     description:
       "Single values, ranges, and vertical controls with a glass thumb.",
@@ -60,7 +69,7 @@ const sections = [
   },
   {
     id: "toggle-group",
-    index: "07",
+    index: "08",
     title: "Toggle Group",
     description:
       "Single and multiple selection with a liquid glass selected state.",
@@ -129,7 +138,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Seven components · two themes
+        Eight components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.

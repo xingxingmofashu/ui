@@ -6,6 +6,7 @@ export {
 export { AlertDialog, type AlertDialogProps } from "./components/alert-dialog";
 export { Button, type ButtonProps } from "./components/button";
 export { Card, type CardProps } from "./components/card";
+export { Dialog, type DialogProps } from "./components/dialog";
 export { Slider, type SliderProps } from "./components/slider";
 export { Switch, type SwitchProps } from "./components/switch";
 export {

@@ -1,0 +1,41 @@
+---
+title: "Dialog"
+description: "A general-purpose modal dialog with a liquid glass surface and a custom action area."
+---
+
+`Dialog` is an integrated wrapper around Base UI's `Dialog`. It renders the portal, backdrop, centered popup, title, description, optional body, and a custom action area internally.
+
+Unlike `AlertDialog`, which requires a response, `Dialog` can be dismissed by pressing the backdrop or Escape, and `footer` can render any number and any kind of action buttons.
+
+## Basic example
+
+The component is typically used in controlled mode: `open` controls visibility and the page renders its own trigger button. Put your buttons in `footer` and close the dialog with `setOpen(false)`.
+
+<Example name="dialog/basic" />
+
+## Custom actions
+
+`footer` is a regular React node, so it can hold two, three, or more buttons, or a mix of other controls. Buttons do not close the dialog automatically; update `open` yourself as the example does.
+
+<Example name="dialog/actions" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | Dialog heading. |
+| `description` | `ReactNode` | — | Supporting copy under the title. |
+| `children` | `ReactNode` | — | Body content between the description and the action area. |
+| `footer` | `ReactNode` | — | Bottom action area that can hold any number of buttons. |
+| `open` | `boolean` | — | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the dialog opens or closes. |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
+| `disablePointerDismissal` | `boolean` | `false` | Prevent the backdrop from closing the dialog. |
+| `className` | `any` | — | Tailwind classes merged into the popup. |
+
+`Dialog` also forwards Base UI `Dialog.Root` props such as `actionsRef`, `handle`, `triggerId`, `defaultTriggerId`, and `modal`.
+
+`style` is intentionally not supported: the glass theme owns the backdrop, popup, and content. Use `className` for popup layout. Dialog styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
+
+Base UI supplies the `dialog` role, `aria-labelledby` from the title, `aria-describedby` from the description, focus trapping, scroll locking, focus return, and backdrop and Escape dismissal.

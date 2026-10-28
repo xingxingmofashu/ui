@@ -1,0 +1,41 @@
+---
+title: "Dialog"
+description: "带液态玻璃表面和自定义操作区的通用模态对话框。"
+---
+
+`Dialog` 是 Base UI `Dialog` 的一体化封装。它内部渲染 Portal、遮罩、居中弹窗、标题、描述、可选正文以及自定义操作区。
+
+与强制响应的 `AlertDialog` 不同，`Dialog` 允许点击遮罩或按 Esc 关闭，`footer` 也可以渲染任意数量和任意类型的操作按钮。
+
+## 基础示例
+
+组件通常以受控方式使用：用 `open` 控制显示，触发按钮由页面自己渲染。`footer` 放置自己的按钮，点击后通过 `setOpen(false)` 关闭。
+
+<Example name="dialog/basic" />
+
+## 自定义操作区
+
+`footer` 是普通 React 节点，可以放入两个、三个或更多按钮，也可以混合其他控件。按钮不会自动关闭对话框，需要像示例一样自行更新 `open`。
+
+<Example name="dialog/actions" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | 对话框标题。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `children` | `ReactNode` | — | 描述与操作区之间的正文内容。 |
+| `footer` | `ReactNode` | — | 底部操作区，可放置任意数量的按钮。 |
+| `open` | `boolean` | — | 受控的打开状态。 |
+| `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
+| `onOpenChange` | `(open: boolean, details) => void` | — | 对话框打开或关闭时调用。 |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
+| `disablePointerDismissal` | `boolean` | `false` | 禁止点击遮罩关闭。 |
+| `className` | `any` | — | 合并到弹窗的 Tailwind 类名。 |
+
+`Dialog` 还会透传 Base UI `Dialog.Root` 的 `actionsRef`、`handle`、`triggerId`、`defaultTriggerId`、`modal` 等属性。
+
+`style` 被有意禁用：玻璃主题接管遮罩、弹窗与内容。布局请使用 `className`。对话框样式属于内部实现，不支持逐实例修改；请通过共享的 `--ui-glass-*` token 调整。
+
+Base UI 负责 `dialog` 角色、由标题生成 `aria-labelledby`、由描述生成 `aria-describedby`、焦点锁定、滚动锁定、关闭后的焦点恢复，以及遮罩点击和 Esc 关闭。
