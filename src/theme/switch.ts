@@ -12,7 +12,7 @@ const theme = tv({
       "group relative inline-flex h-[var(--ui-switch-height)] w-[var(--ui-switch-width)] shrink-0 cursor-pointer select-none overflow-visible rounded-[100px] border-0 bg-transparent p-0 text-inherit outline-offset-2",
       "[container-type:inline-size] touch-none [-webkit-tap-highlight-color:transparent]",
       "[--ui-switch-off:color-mix(in_srgb,var(--ui-ink)_20%,transparent)] [--ui-switch-on:var(--ui-ink)]",
-      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
+      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-glass-focus",
       "data-[disabled]:pointer-events-none data-[readonly]:pointer-events-none",
       "[&_*]:pointer-events-none",
       "motion-reduce:[transition-duration:0.01ms!important] motion-reduce:[transition-delay:0ms!important] motion-reduce:[&_*]:[transition-duration:0.01ms!important] motion-reduce:[&_*]:[transition-delay:0ms!important]",
@@ -56,8 +56,8 @@ const theme = tv({
       "motion-reduce:transition-none",
     ],
     wrapper: "ms-2 min-w-0",
-    label: "block font-medium text-ink",
-    description: "block text-ink opacity-60",
+    label: "block font-medium text-ui-ink",
+    description: "block text-ui-ink opacity-60",
   },
   variants: {
     size: {

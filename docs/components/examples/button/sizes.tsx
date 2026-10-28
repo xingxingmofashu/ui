@@ -16,7 +16,7 @@ export default function ButtonSizesDemo() {
             label={size.toUpperCase()}
             trailingIcon={<ArrowRight />}
           />
-          <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-fd-muted-foreground">
+          <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-ui-ink/60">
             {size}
           </span>
         </div>

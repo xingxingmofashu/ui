@@ -4,6 +4,7 @@ import { Slider as UISlider } from "@base-ui/react/slider";
 import { cn } from "cn";
 import * as React from "react";
 
+import { hasContent } from "../lib/has-content";
 import theme from "../theme/slider";
 
 type SliderSlot =
@@ -52,11 +53,12 @@ type SliderProps<Value extends number | readonly number[] = number> = Omit<
     description?: React.ReactNode;
     /** Renders the current value (or range) in the header. */
     showValue?: boolean;
+    /**
+     * Returns an accessible name for each thumb. Use this on range sliders to
+     * distinguish the minimum and maximum handles.
+     */
+    getThumbAriaLabel?: (index: number) => string;
   };
-
-function hasContent(value: React.ReactNode) {
-  return React.Children.toArray(value).some((child) => child !== "");
-}
 
 function getThumbCount(
   value: number | readonly number[] | undefined,
@@ -80,6 +82,7 @@ function Slider<Value extends number | readonly number[] = number>({
   label,
   description,
   showValue = false,
+  getThumbAriaLabel,
   value,
   defaultValue,
   ...props
@@ -153,6 +156,7 @@ function Slider<Value extends number | readonly number[] = number>({
             key={index}
             index={index}
             data-slot="thumb"
+            getAriaLabel={getThumbAriaLabel}
             {...thumbAria}
             className={cn(ui.thumb(), uiOverrides?.thumb)}
           >

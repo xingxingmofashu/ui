@@ -12,12 +12,13 @@ is included in the same pnpm workspace.
 ## Commands
 
 - `pnpm build` — build the publishable `dist` output with unbuild.
-- `pnpm dev` — rebuild `dist` in watch mode.
+- `pnpm lint` — lint the package and tests with oxlint.
+- `pnpm lint:fix` — apply oxlint's safe fixes.
 - `pnpm test` — run the Vitest suite.
 - `pnpm typecheck` — typecheck the package.
 - `pnpm docs:dev` — start the docs site on port 3001.
 - `pnpm docs:build` — export the docs site to `docs/out`.
-- `pnpm check` — typecheck, test, and typecheck the docs.
+- `pnpm docs:typecheck` — typecheck the docs package.
 
 ## Components
 
@@ -34,6 +35,9 @@ is included in the same pnpm workspace.
 - `src/index.css` owns the standard glass material: `--ui-glass-*` tokens and the
   `.ui-glass`, `.ui-glass-inner`, `.ui-glass-highlight`, `.ui-glass-rim`, and
   `.ui-glass-chip` classes.
+- Light/dark tokens support `.light` / `.dark` and
+  `data-theme="light"` / `data-theme="dark"`. Tailwind aliases use the `ui-`
+  prefix (`text-ui-ink`, `outline-ui-glass-focus`).
 - The material is a lens: the surface applies the shared tone and contrast
   filter to its backdrop, border, shadow, inner rim, and glare. Keep text and
   icons out of that filtered element. Render the material as a dedicated,

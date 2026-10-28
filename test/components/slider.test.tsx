@@ -78,6 +78,16 @@ describe("Slider", () => {
       expect(slider).toHaveAttribute("aria-labelledby", label.id);
     });
 
+    it("treats an empty label as absent", () => {
+      render(<Slider label="" aria-label="Volume" />);
+
+      const slider = getSlider("Volume");
+
+      expect(
+        getRoot(slider).querySelector('[data-slot="label"]'),
+      ).toBeNull();
+    });
+
     it("requires an accessible name at the type level", () => {
       render(
         // @ts-expect-error Sliders must have an accessible name.
@@ -250,6 +260,25 @@ describe("Slider", () => {
       render(<Slider aria-label="Price" value={[10, 60, 90]} />);
 
       expect(screen.getAllByRole("slider", { name: "Price" })).toHaveLength(3);
+    });
+
+    it("supports distinct accessible names for range thumbs", () => {
+      render(
+        <Slider
+          aria-label="Price"
+          defaultValue={[20, 80]}
+          getThumbAriaLabel={(index) =>
+            index === 0 ? "Minimum price" : "Maximum price"
+          }
+        />,
+      );
+
+      expect(
+        screen.getByRole("slider", { name: "Minimum price" }),
+      ).toHaveAttribute("aria-valuenow", "20");
+      expect(
+        screen.getByRole("slider", { name: "Maximum price" }),
+      ).toHaveAttribute("aria-valuenow", "80");
     });
 
     it("renders a formatted range in the value slot", () => {

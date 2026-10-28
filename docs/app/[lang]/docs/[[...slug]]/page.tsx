@@ -1,17 +1,31 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
 } from "fumadocs-ui/layouts/glass/page";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { getMDXComponents } from "@/components/mdx";
+import { isLocale } from "@/lib/i18n";
 import { source } from "@/lib/source";
 
-export function getDocsMetadata(slug: string[], lang: string): Metadata {
-  const page = source.getPage(slug, lang);
+type PageProps = {
+  params: Promise<{ lang: string; slug?: string[] }>;
+};
+
+export function generateStaticParams() {
+  return source.generateParams();
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) return {};
+
+  const page = source.getPage(slug ?? [], lang);
   if (!page) return {};
 
   return {
@@ -20,14 +34,11 @@ export function getDocsMetadata(slug: string[], lang: string): Metadata {
   };
 }
 
-export function DocsPageView({
-  slug,
-  lang,
-}: {
-  slug: string[];
-  lang: string;
-}) {
-  const page = source.getPage(slug, lang);
+export default async function Page({ params }: PageProps) {
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) notFound();
+
+  const page = source.getPage(slug ?? [], lang);
   if (!page) notFound();
 
   const MDX = page.data.body;

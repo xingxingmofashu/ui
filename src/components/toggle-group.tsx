@@ -5,6 +5,7 @@ import { ToggleGroup as UIToggleGroup } from "@base-ui/react/toggle-group";
 import { cn } from "cn";
 import * as React from "react";
 
+import { hasContent } from "../lib/has-content";
 import theme from "../theme/toggle-group";
 
 type ToggleGroupSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -67,10 +68,6 @@ type ToggleGroupItemProps<Value extends string = string> = Omit<
   children?: React.ReactNode;
 } & ToggleGroupItemAccessibleName;
 
-function hasContent(value: React.ReactNode) {
-  return React.Children.toArray(value).some((child) => child !== "");
-}
-
 type IndicatorState = {
   x: number;
   y: number;
@@ -109,6 +106,8 @@ function ToggleGroup<Value extends string = string>({
 
   React.useEffect(() => {
     if (!isControlled && !multiple && internalValue.length > 1) {
+      // This trims the uncontrolled value after switching back to single mode.
+      // oxlint-disable-next-line react/set-state-in-effect
       setInternalValue(internalValue.slice(0, 1));
     }
   }, [internalValue, isControlled, multiple]);
@@ -243,18 +242,29 @@ function ToggleGroup<Value extends string = string>({
     updateIndicator();
 
     let resizeObserver: ResizeObserver | null = null;
-    const observed = new Set<Element>();
+    const observed = new Set<HTMLElement>();
     const observeItems = () => {
       if (!resizeObserver) {
         return;
       }
 
-      root.querySelectorAll<HTMLElement>('[data-slot="item"]').forEach((item) => {
+      const currentItems = new Set(
+        root.querySelectorAll<HTMLElement>('[data-slot="item"]'),
+      );
+
+      for (const item of observed) {
+        if (!currentItems.has(item)) {
+          resizeObserver.unobserve(item);
+          observed.delete(item);
+        }
+      }
+
+      for (const item of currentItems) {
         if (!observed.has(item)) {
-          resizeObserver?.observe(item);
+          resizeObserver.observe(item);
           observed.add(item);
         }
-      });
+      }
     };
 
     if (typeof ResizeObserver !== "undefined") {

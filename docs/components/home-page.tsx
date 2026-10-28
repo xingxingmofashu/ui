@@ -20,7 +20,7 @@ import {
 
 type Locale = "zh" | "en";
 
-const githubUrl = "https://github.com/xingxingmofashu/xingxingmofashu.me";
+const githubUrl = "https://github.com/xingxingmofashu/ui";
 
 export function HomePageContent({ lang }: { lang: Locale }) {
   const isZh = lang === "zh";
@@ -31,7 +31,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         titleLine1: "黑白之间，",
         titleLine2: "玻璃有光。",
         description:
-          "Liquid Glass UI 是一套可组合、可访问、支持主题定制的玻璃组件。文档里的每个预览都是真实组件，不是截图，也不是复刻外观。",
+          "Liquid Glass UI 是一套可组合、支持主题定制的玻璃组件。文档里的每个预览都是真实组件，不是截图，也不是复刻外观。",
         readDocs: "阅读文档",
         viewComponents: "查看组件",
         meta: ["真实组件预览", "Light / Dark", "零图片依赖"],
@@ -46,7 +46,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         componentsDescription:
           "每个组件共享同一套玻璃 token，因此可以自然地组合在一起。下面的内容直接渲染 UI 包里的组件。",
         componentDescriptions: {
-          button: "五种尺寸、前置与后置图标，以及严格的无障碍名称约束。",
+          button: "五种尺寸，支持前置与后置图标。",
           card: "由 header、body 与 footer 组成的玻璃卡片。",
           slider: "带数值显示、区间选择与纵向布局的玻璃滑块。",
           switch: "带液态玻璃滑块、标签与描述文本的开关。",
@@ -76,7 +76,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           },
           {
             icon: Layers,
-            title: "槽位级覆盖",
+            title: "Slot 级覆盖",
             description:
               "通过 ui 精确控制 root、base、label 等内部结构，不破坏默认视觉。",
           },
@@ -102,7 +102,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         titleLine1: "Between black and white,",
         titleLine2: "glass finds its light.",
         description:
-          "Liquid Glass UI is a composable, accessible, and themeable set of glass components. Every preview in these docs is a real component — not a screenshot, and not a look-alike.",
+          "Liquid Glass UI is a composable and themeable set of glass components. Every preview in these docs is a real component — not a screenshot, and not a look-alike.",
         readDocs: "Read the docs",
         viewComponents: "View components",
         meta: ["Live components", "Light / Dark", "No image assets"],
@@ -118,7 +118,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           "Every component shares the same glass tokens, so they compose naturally. Everything below renders directly from the UI package.",
         componentDescriptions: {
           button:
-            "Five sizes, leading and trailing icons, and strict accessible-name checks.",
+            "Five sizes with leading and trailing icons.",
           card: "A glass card built from header, body, and footer slots.",
           slider:
             "A glass slider with value display, range selection, and vertical orientation.",

@@ -15,25 +15,28 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.mjs"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./components/*": {
       "types": "./dist/components/*.d.ts",
-      "import": "./dist/components/*.mjs",
-      "default": "./dist/components/*.mjs"
+      "import": "./dist/components/*.js",
+      "default": "./dist/components/*.js"
     },
     "./theme/*": {
       "types": "./dist/theme/*.d.ts",
-      "import": "./dist/theme/*.mjs",
-      "default": "./dist/theme/*.mjs"
+      "import": "./dist/theme/*.js",
+      "default": "./dist/theme/*.js"
     },
     "./index.css": "./dist/index.css",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xingxingmofashu/ui.git"
@@ -55,15 +58,15 @@
   },
   "scripts": {
     "build": "unbuild",
-    "dev": "unbuild --watch",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "test": "vitest run",
-    "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "docs:dev": "pnpm --filter @xingxingmofashu.me/docs dev",
-    "docs:build": "pnpm --filter @xingxingmofashu.me/docs build",
-    "docs:typecheck": "pnpm --filter @xingxingmofashu.me/docs typecheck",
-    "check": "pnpm typecheck && pnpm test && pnpm docs:typecheck",
-    "prepublishOnly": "pnpm build && pnpm typecheck && pnpm test"
+    "docs:dev": "pnpm --filter @xingxingmofashu/docs dev",
+    "docs:build": "pnpm --filter @xingxingmofashu/docs build",
+    "docs:typecheck": "pnpm --filter @xingxingmofashu/docs typecheck",
+    "prepare": "husky",
+    "prepublishOnly": "pnpm lint && pnpm build && pnpm typecheck && pnpm test"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
@@ -79,7 +82,9 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "husky": "catalog:",
     "jsdom": "catalog:",
+    "oxlint": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "unbuild": "catalog:",

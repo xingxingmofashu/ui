@@ -3,11 +3,9 @@ title: "Switch"
 description: "A switch with a liquid glass thumb, label, and description. The track follows the monochrome theme."
 ---
 
-Switch is built on Base UI's `Switch.Root` and supports controlled and uncontrolled usage. A visible `label` is automatically connected through `aria-labelledby`; without visible text, you must provide `aria-label` or `aria-labelledby`.
-
 ## Basic example
 
-The switch below is the real component and can be clicked directly. Its description is connected through `aria-describedby`.
+The switch below is the real component and can be clicked directly.
 
 <Example name="switch/basic" />
 
@@ -43,8 +41,8 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Visible label, connected through `aria-labelledby`. |
-| `description` | `ReactNode` | — | Supporting text, connected through `aria-describedby`. |
+| `label` | `ReactNode` | — | Visible label. |
+| `description` | `ReactNode` | — | Supporting text. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls track size and text size. |
 | `checked` | `boolean` | — | Controlled checked state. |
 | `defaultChecked` | `boolean` | — | Uncontrolled initial state. |
@@ -56,7 +54,7 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
 
 All other props are forwarded to Base UI's `Switch.Root`.
 
-### ui slots
+### UI Slots
 
 | Slot | Description |
 | --- | --- |
@@ -67,9 +65,3 @@ All other props are forwarded to Base UI's `Switch.Root`.
 | `wrapper` | Label and description container. |
 | `label` | Visible label. |
 | `description` | Supporting text. |
-
-## Accessibility
-
-- With a `label`, the accessible name is connected automatically. Without visible text, provide `aria-label` or `aria-labelledby`.
-- `description` is connected as `aria-describedby`.
-- `disabled` and `readOnly` are reflected on the outer state, and both styles and interactions update accordingly.

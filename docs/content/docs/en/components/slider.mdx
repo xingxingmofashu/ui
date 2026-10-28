@@ -3,8 +3,6 @@ title: "Slider"
 description: "A slider with a liquid glass thumb, label, and value display, supporting single values, ranges, and vertical orientation."
 ---
 
-Slider is built on Base UI's `Slider.Root` and supports controlled and uncontrolled usage. Every slider must have a complete accessible name: use a visible `label`, or provide `aria-label` / `aria-labelledby` for an external label, otherwise type checking fails.
-
 ## Basic example
 
 The volume slider below renders the real component. Dragging the glass thumb, clicking the track, or using the arrow keys updates the value, and the value display follows automatically.
@@ -39,8 +37,8 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Visible label, connected to every thumb through `aria-labelledby`. |
-| `description` | `ReactNode` | — | Supporting text, connected to every thumb through `aria-describedby`. |
+| `label` | `ReactNode` | — | Visible label. |
+| `description` | `ReactNode` | — | Supporting text. |
 | `showValue` | `boolean` | `false` | Renders the current value or range in the header. |
 | `value` | `number \| readonly number[]` | — | Controlled value; an array renders multiple thumbs. |
 | `defaultValue` | `number \| readonly number[]` | — | Uncontrolled initial value. |
@@ -60,7 +58,7 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 
 All other props are forwarded to Base UI's `Slider.Root`.
 
-### ui slots
+### UI Slots
 
 | Slot | Description |
 | --- | --- |
@@ -73,16 +71,3 @@ All other props are forwarded to Base UI's `Slider.Root`.
 | `track` | Slider track. |
 | `indicator` | Filled portion of the track. |
 | `thumb` | Liquid glass thumb. |
-
-## Structure and sizing
-
-- Slider has no `size` prop and always uses a 6px track and a 40 × 24px thumb; vertical orientation swaps the dimensions.
-- The vertical control has a `min-h-40` minimum height; override `ui.control` when you need more room.
-- Track and thumb colors, blur, and rim highlights come from `--ui-glass-*` and Slider-local variables in `src/theme/slider.ts`.
-
-## Accessibility
-
-- Provide one of `label`, `aria-label`, or `aria-labelledby`.
-- `description` is connected as `aria-describedby`.
-- Arrow keys move by `step`; Page Up / Page Down and Shift + arrow keys use `largeStep`.
-- Each thumb exposes its current value through `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`.

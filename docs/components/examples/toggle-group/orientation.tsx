@@ -2,26 +2,21 @@
 
 import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu/ui";
 
-import { useDocsLocale } from "@/components/locale-provider";
-
 export default function ToggleGroupOrientationDemo() {
-  const locale = useDocsLocale();
-  const isZh = locale === "zh";
-
   return (
     <ToggleGroup
-      aria-label={isZh ? "位置" : "Position"}
+      aria-label="Position"
       defaultValue={["top"]}
       orientation="vertical"
     >
-      <ToggleGroupItem value="top" aria-label={isZh ? "顶部" : "Top"}>
-        {isZh ? "顶部" : "Top"}
+      <ToggleGroupItem value="top" aria-label="Top">
+        Top
       </ToggleGroupItem>
-      <ToggleGroupItem value="middle" aria-label={isZh ? "中间" : "Middle"}>
-        {isZh ? "中间" : "Middle"}
+      <ToggleGroupItem value="middle" aria-label="Middle">
+        Middle
       </ToggleGroupItem>
-      <ToggleGroupItem value="bottom" aria-label={isZh ? "底部" : "Bottom"}>
-        {isZh ? "底部" : "Bottom"}
+      <ToggleGroupItem value="bottom" aria-label="Bottom">
+        Bottom
       </ToggleGroupItem>
     </ToggleGroup>
   );

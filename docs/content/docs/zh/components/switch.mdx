@@ -3,11 +3,9 @@ title: "Switch"
 description: "带液态玻璃滑块、标签和描述文本的开关，轨道默认跟随黑白主题。"
 ---
 
-Switch 基于 Base UI 的 `Switch.Root`，支持受控与非受控用法。有可见 `label` 时会自动通过 `aria-labelledby` 关联；没有可见标签时必须提供 `aria-label` 或 `aria-labelledby`。
-
 ## 基础示例
 
-下面的开关来自真实组件，可以直接点击切换；描述文本会通过 `aria-describedby` 与开关关联。
+下面的开关来自真实组件，可以直接点击切换。
 
 <Example name="switch/basic" />
 
@@ -43,8 +41,8 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | 可见标签，会与开关建立 `aria-labelledby` 关联。 |
-| `description` | `ReactNode` | — | 辅助说明，会与开关建立 `aria-describedby` 关联。 |
+| `label` | `ReactNode` | — | 可见标签。 |
+| `description` | `ReactNode` | — | 辅助说明。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制开关尺寸与文字大小。 |
 | `checked` | `boolean` | — | 受控选中状态。 |
 | `defaultChecked` | `boolean` | — | 非受控初始状态。 |
@@ -52,13 +50,13 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `disabled` | `boolean` | `false` | 禁用开关。 |
 | `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
 | `className` | `string` | — | 合并到最外层 `root`。 |
-| `ui` | `Partial<Record<SwitchSlot, string>>` | — | 覆盖内部槽位样式。 |
+| `ui` | `Partial<Record<SwitchSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
 其余属性会透传给 Base UI 的 `Switch.Root`。
 
-### ui 槽位
+### UI Slots
 
-| 槽位 | 说明 |
+| Slot | 说明 |
 | --- | --- |
 | `root` | 最外层容器，包含开关与文字。 |
 | `container` | 开关本身的布局容器。 |
@@ -67,9 +65,3 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `wrapper` | 标签与描述的文字容器。 |
 | `label` | 可见标签。 |
 | `description` | 辅助说明。 |
-
-## 无障碍
-
-- 有 `label` 时自动关联无障碍名称；无文字场景必须提供 `aria-label` 或 `aria-labelledby`。
-- `description` 会自动关联为 `aria-describedby`。
-- `disabled` 与 `readOnly` 会同步到外层状态，样式和交互都会相应变化。

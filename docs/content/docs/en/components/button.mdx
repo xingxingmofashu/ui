@@ -1,9 +1,7 @@
 ---
 title: "Button"
-description: "A liquid glass button with icons, five sizes, and strict accessible-name checks."
+description: "A button component that can be rendered as another tag or focusable when disabled."
 ---
-
-`className` targets the outer click area, while the visible glass surface is drawn by the inner `glass` slot. Icon-only buttons must provide `aria-label` or `aria-labelledby`, otherwise type checking fails.
 
 ## Basic example
 
@@ -19,14 +17,9 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Text and icons sc
 
 ## Icons
 
-The leading icon sits before the label. The trailing icon sits after the label. Both use the same plain icon container. When visible text exists, icons are automatically marked as decorative.
+The leading icon sits before the label. The trailing icon sits after the label. Both use the same plain icon container.
 
 <Example name="button/icons" />
-
-<Callout title="Icon-only buttons">
-  Icon-only buttons have no visible text and must provide an accessible name through
-  `aria-label` or `aria-labelledby`. Omitting it is rejected by TypeScript.
-</Callout>
 
 ## States
 
@@ -58,9 +51,9 @@ When the button should navigate instead of trigger an action, tell Base UI not t
 | `className` | `string` | — | Merged into the outer `root`. |
 | `ui` | `Partial<Record<ButtonSlot, string>>` | — | Overrides internal slot styles. |
 
-Provide at least one of `label`, `children`, `aria-label`, or `aria-labelledby`, otherwise type checking fails. All other props are forwarded to the Base UI `Button`, such as `disabled`, `onClick`, `type`, and `render`.
+All other props are forwarded to the Base UI `Button`, such as `disabled`, `onClick`, `type`, and `render`.
 
-### ui slots
+### UI Slots
 
 | Slot | Description |
 | --- | --- |
@@ -71,9 +64,3 @@ Provide at least one of `label`, `children`, `aria-label`, or `aria-labelledby`,
 | `leadingIcon` | Leading icon container. |
 | `trailingIcon` | Trailing icon container. |
 | `overlay` | Glass rim highlight layer. |
-
-## Accessibility
-
-- Visible text is provided through `label` or `children`.
-- Icon-only buttons must provide `aria-label` or `aria-labelledby`.
-- The disabled state uses native `disabled` and is synchronized with Base UI's interaction state.

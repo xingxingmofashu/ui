@@ -236,6 +236,44 @@ describe("Switch", () => {
       expect(getSlot(root, "description")).toHaveClass("slot-description");
     });
 
+    it("applies style to the outer root", () => {
+      render(<Switch aria-label="Styled" style={{ width: 120 }} />);
+
+      const switchElement = screen.getByRole("switch", { name: "Styled" });
+
+      expect(getRoot(switchElement)).toHaveStyle({ width: "120px" });
+    });
+
+    it("does not render arbitrary children", () => {
+      render(
+        // @ts-expect-error Switch owns its internal children.
+        <Switch aria-label="Notifications">Child</Switch>,
+      );
+
+      expect(screen.queryByText("Child")).not.toBeInTheDocument();
+    });
+
+    it("only accepts object styles", () => {
+      const invalidElement = (
+        // @ts-expect-error State-based style functions are not supported.
+        <Switch aria-label="Styled" style={() => ({ color: "red" })} />
+      );
+
+      expect(invalidElement).toBeTruthy();
+    });
+
+    it("does not render an empty label", () => {
+      render(<Switch label="" aria-label="Notifications" />);
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Notifications",
+      });
+
+      expect(
+        getRoot(switchElement).querySelector('[data-slot="label"]'),
+      ).toBeNull();
+    });
+
     it("generates unique liquid filters for each switch", () => {
       render(
         <>
@@ -473,6 +511,30 @@ describe("Switch", () => {
 
       fireEvent.transitionEnd(thumb, { propertyName: "translate" });
 
+      expect(switchElement).not.toHaveAttribute("data-animating");
+    });
+
+    it("does not start the animation when the change is canceled", async () => {
+      const user = userEvent.setup();
+      const onCheckedChange = vi.fn(
+        (_checked: boolean, details: { cancel: () => void }) =>
+          details.cancel(),
+      );
+
+      render(
+        <Switch
+          aria-label="Notifications"
+          onCheckedChange={onCheckedChange}
+        />,
+      );
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Notifications",
+      });
+
+      await user.click(switchElement);
+
+      expect(onCheckedChange).toHaveBeenCalled();
       expect(switchElement).not.toHaveAttribute("data-animating");
     });
 

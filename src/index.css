@@ -1,12 +1,12 @@
 /* Design tokens and the standard glass material. Component recipes live in theme/. */
-@custom-variant ui-light (&:where(.light, .light *));
-@custom-variant ui-dark (&:where(.dark, .dark *));
+@custom-variant ui-light (&:where(.light, .light *, [data-theme="light"], [data-theme="light"] *));
+@custom-variant ui-dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
 /* Runtime values. Override these for light/dark themes. */
 @layer theme {
+  /* Light is the default, including when no theme selector is present. */
   :root,
-  :host,
-  .light {
+  :host {
     --ui-ink: #1f1f1f;
     --ui-ink-active: #000;
     --ui-glass-surface: rgb(0 0 0 / 0.02);
@@ -18,10 +18,7 @@
     --ui-glass-glare-stop: 15%;
     --ui-glass-tone: brightness(0.9);
     --ui-glass-contrast: 3;
-    --ui-glass-icon: #3e3e3e;
-    --ui-glass-icon-foreground: #f5f5f5;
     --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));
-    --ui-drop-shadow-icon: drop-shadow(0 25px 3px rgb(102 102 102 / 0.2));
     --ui-shadow-glass:
       inset 2px -2px 1px -1px rgb(255 255 255 / 0.9),
       inset -2px 2px 1px -1px rgb(255 255 255 / 0.9),
@@ -29,10 +26,10 @@
       inset -6px 6px 1px -6px rgb(255 255 255 / 0.55),
       inset 0 0 2px rgb(0 0 0 / 0.8),
       0 4px 8px rgb(0 0 0 / 0.2);
-    --ui-shadow-glass-icon: 0 0 6px rgb(0 0 0 / 0.3);
   }
 
-  .dark {
+  .dark,
+  [data-theme="dark"] {
     --ui-ink: #f5f5f5;
     --ui-ink-active: #fff;
     --ui-glass-surface: rgb(255 255 255 / 0.06);
@@ -43,10 +40,7 @@
     --ui-glass-highlight: rgb(255 255 255 / 0.45);
     --ui-glass-tone: brightness(0.9);
     --ui-glass-contrast: 1;
-    --ui-glass-icon: #f5f5f5;
-    --ui-glass-icon-foreground: #1a1a1a;
     --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(0 0 0 / 0.45));
-    --ui-drop-shadow-icon: drop-shadow(0 25px 3px rgb(0 0 0 / 0.55));
     --ui-shadow-glass:
       inset 2px -2px 1px -1px rgb(255 255 255 / 0.35),
       inset -2px 2px 1px -1px rgb(255 255 255 / 0.35),
@@ -54,7 +48,30 @@
       inset -6px 6px 1px -6px rgb(255 255 255 / 0.2),
       inset 0 0 2px rgb(0 0 0 / 0.9),
       0 4px 8px rgb(0 0 0 / 0.35);
-    --ui-shadow-glass-icon: 0 0 6px rgb(0 0 0 / 0.45);
+  }
+
+  /* A nested light subtree wins over an ancestor dark theme. */
+  .light,
+  [data-theme="light"] {
+    --ui-ink: #1f1f1f;
+    --ui-ink-active: #000;
+    --ui-glass-surface: rgb(0 0 0 / 0.02);
+    --ui-glass-border: rgb(51 51 51 / 0.08);
+    --ui-glass-focus: rgb(0 0 0 / 0.6);
+    --ui-glass-inner-border: rgb(0 0 0 / 0.9);
+    --ui-glass-rim: rgb(255 255 255 / 0.2);
+    --ui-glass-highlight: rgb(255 255 255 / 0.8);
+    --ui-glass-glare-stop: 15%;
+    --ui-glass-tone: brightness(0.9);
+    --ui-glass-contrast: 3;
+    --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));
+    --ui-shadow-glass:
+      inset 2px -2px 1px -1px rgb(255 255 255 / 0.9),
+      inset -2px 2px 1px -1px rgb(255 255 255 / 0.9),
+      inset 6px -6px 1px -6px rgb(255 255 255 / 0.55),
+      inset -6px 6px 1px -6px rgb(255 255 255 / 0.55),
+      inset 0 0 2px rgb(0 0 0 / 0.8),
+      0 4px 8px rgb(0 0 0 / 0.2);
   }
 
   /* Shared glass parameters: geometry and optical primitives. */
@@ -62,6 +79,7 @@
   :host {
     --ui-glass-blur: 2px;
     --ui-glass-saturate: 150%;
+    --ui-glass-chip-blur: 8px;
     --ui-glass-inner-inset: 8px;
     --ui-glass-inner-offset: 1px;
     --ui-glass-inner-blur: 8px;
@@ -100,18 +118,14 @@
 
 /* Tailwind aliases. `inline` keeps utilities tied to the active --ui-* values. */
 @theme inline {
-  --color-ink: var(--ui-ink);
-  --color-ink-active: var(--ui-ink-active);
-  --color-glass-surface: var(--ui-glass-surface);
-  --color-glass-border: var(--ui-glass-border);
-  --color-glass-focus: var(--ui-glass-focus);
-  --color-glass-inner-border: var(--ui-glass-inner-border);
-  --color-glass-rim: var(--ui-glass-rim);
-  --color-glass-highlight: var(--ui-glass-highlight);
-  --color-glass-icon: var(--ui-glass-icon);
-  --color-glass-icon-foreground: var(--ui-glass-icon-foreground);
-  --shadow-glass: var(--ui-shadow-glass);
-  --shadow-glass-icon: var(--ui-shadow-glass-icon);
+  --color-ui-ink: var(--ui-ink);
+  --color-ui-ink-active: var(--ui-ink-active);
+  --color-ui-glass-surface: var(--ui-glass-surface);
+  --color-ui-glass-border: var(--ui-glass-border);
+  --color-ui-glass-focus: var(--ui-glass-focus);
+  --color-ui-glass-inner-border: var(--ui-glass-inner-border);
+  --color-ui-glass-rim: var(--ui-glass-rim);
+  --color-ui-glass-highlight: var(--ui-glass-highlight);
 }
 
 /*
@@ -192,9 +206,9 @@
     border: 1px solid var(--ui-glass-border);
     background-color: var(--ui-glass-surface);
     box-shadow: inset 0 1px 0 var(--ui-glass-highlight);
-    -webkit-backdrop-filter: blur(var(--ui-glass-blur, 8px))
+    -webkit-backdrop-filter: blur(var(--ui-glass-chip-blur, 8px))
       saturate(var(--ui-glass-saturate, 150%));
-    backdrop-filter: blur(var(--ui-glass-blur, 8px))
+    backdrop-filter: blur(var(--ui-glass-chip-blur, 8px))
       saturate(var(--ui-glass-saturate, 150%));
   }
 }

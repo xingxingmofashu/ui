@@ -29,9 +29,8 @@ function getPrivateGlass(element: HTMLElement) {
 }
 
 function getCard(text: string, index = 0) {
-  const node = screen
-    .getAllByText(text)
-    [index]?.closest<HTMLElement>('[data-slot="root"]');
+  const matches = screen.getAllByText(text);
+  const node = matches[index]?.closest<HTMLElement>('[data-slot="root"]');
 
   if (!node) {
     throw new Error(`Card containing "${text}" was not rendered.`);
@@ -165,6 +164,26 @@ describe("Card", () => {
       expect(screen.getByText("Body")).toBeInTheDocument();
     });
 
+    it("renders the title as a configurable heading", () => {
+      render(
+        <Card title="Section title" titleAs="h2">
+          Body
+        </Card>,
+      );
+
+      expect(getSlot(getCard("Section title"), "title").tagName).toBe("H2");
+    });
+
+    it("can leave content clipping to the host", () => {
+      render(<Card clipContent={false}>Body</Card>);
+
+      const body = getSlot(getCard("Body"), "body");
+      const layout = body.parentElement;
+
+      expect(layout).toHaveClass("overflow-visible");
+      expect(layout).not.toHaveClass("overflow-hidden");
+    });
+
     it("keeps the glass layers private", () => {
       render(
         // @ts-expect-error The glass layer is an implementation detail.
@@ -243,12 +262,12 @@ describe("Card", () => {
       const styles = card();
 
       expect(styles.title()).toContain("font-semibold");
-      expect(styles.title()).toContain("text-ink");
+      expect(styles.title()).toContain("text-ui-ink");
       expect(styles.title()).toContain("var(--ui-drop-shadow-label)");
       expect(styles.description()).toContain("mt-1");
       expect(styles.description()).toContain("text-sm");
       expect(styles.description()).toContain("opacity-60");
-      expect(styles.body()).toContain("text-ink");
+      expect(styles.body()).toContain("text-ui-ink");
       expect(styles.footer()).toContain("p-4");
       expect(styles.footer()).toContain("sm:px-6");
     });

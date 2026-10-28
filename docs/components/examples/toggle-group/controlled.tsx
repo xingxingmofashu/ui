@@ -9,46 +9,40 @@ import {
   ToggleGroupItem,
 } from "@xingxingmofashu/ui";
 
-import { useDocsLocale } from "@/components/locale-provider";
-
 export default function ToggleGroupControlledDemo() {
-  const locale = useDocsLocale();
-  const isZh = locale === "zh";
   const [value, setValue] = useState<string[]>(["bold"]);
 
   return (
     <div className="flex flex-col items-center gap-4">
       <ToggleGroup
-        aria-label={isZh ? "文本格式" : "Text formatting"}
+        aria-label="Text formatting"
         multiple
         value={value}
         onValueChange={setValue}
       >
         <ToggleGroupItem
           value="bold"
-          aria-label={isZh ? "粗体" : "Bold"}
+          aria-label="Bold"
           icon={<Bold />}
         />
         <ToggleGroupItem
           value="italic"
-          aria-label={isZh ? "斜体" : "Italic"}
+          aria-label="Italic"
           icon={<Italic />}
         />
         <ToggleGroupItem
           value="underline"
-          aria-label={isZh ? "下划线" : "Underline"}
+          aria-label="Underline"
           icon={<Underline />}
         />
       </ToggleGroup>
       <div className="flex flex-wrap items-center justify-center gap-3">
-        <span className="text-sm text-fd-muted-foreground">
-          {isZh
-            ? `已选：${value.length ? value.join("、") : "无"}`
-            : `Selected: ${value.length ? value.join(", ") : "none"}`}
+        <span className="text-sm text-ui-ink/60">
+          Selected: {value.length ? value.join(", ") : "none"}
         </span>
         <Button
           size="sm"
-          label={isZh ? "清空" : "Clear"}
+          label="Clear"
           onClick={() => setValue([])}
           disabled={value.length === 0}
         />

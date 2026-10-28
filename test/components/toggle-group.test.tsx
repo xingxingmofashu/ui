@@ -72,15 +72,21 @@ class MockResizeObserver implements ResizeObserver {
   static instances: MockResizeObserver[] = [];
 
   private readonly callback: ResizeObserverCallback;
+  readonly observed: Element[] = [];
+  readonly unobserved: Element[] = [];
 
   constructor(callback: ResizeObserverCallback) {
     this.callback = callback;
     MockResizeObserver.instances.push(this);
   }
 
-  observe() {}
+  observe(target: Element) {
+    this.observed.push(target);
+  }
 
-  unobserve() {}
+  unobserve(target: Element) {
+    this.unobserved.push(target);
+  }
 
   disconnect() {}
 
@@ -489,6 +495,39 @@ describe("ToggleGroup", () => {
   });
 
   describe("indicator", () => {
+    it("unobserves items that are removed from the group", async () => {
+      MockResizeObserver.instances = [];
+      vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+      const { rerender } = render(
+        <ToggleGroup aria-label="Theme" defaultValue={["light"]}>
+          <ToggleGroupItem value="light" aria-label="Light">
+            Light
+          </ToggleGroupItem>
+          <ToggleGroupItem value="dark" aria-label="Dark">
+            Dark
+          </ToggleGroupItem>
+        </ToggleGroup>,
+      );
+
+      const [dark] = screen.getAllByRole("button", { name: "Dark" });
+      const observer = MockResizeObserver.instances[0];
+
+      expect(observer?.observed).toContain(dark);
+
+      rerender(
+        <ToggleGroup aria-label="Theme" defaultValue={["light"]}>
+          <ToggleGroupItem value="light" aria-label="Light">
+            Light
+          </ToggleGroupItem>
+        </ToggleGroup>,
+      );
+
+      await waitFor(() => {
+        expect(observer?.unobserved).toContain(dark);
+      });
+    });
+
     it("tracks the pressed item geometry", async () => {
       const user = userEvent.setup();
 
@@ -779,8 +818,8 @@ describe("ToggleGroup", () => {
       expect(styles.indicator()).toContain(
         "group-data-[orientation=vertical]/toggle-group:data-[animating=true]:scale-y-110",
       );
-      expect(styles.item()).toContain("hover:text-ink-active");
-      expect(styles.item()).toContain("data-[pressed]:text-ink");
+      expect(styles.item()).toContain("hover:text-ui-ink-active");
+      expect(styles.item()).toContain("data-[pressed]:text-ui-ink");
       expect(styles.item()).toContain(
         "group-data-[multiple]/toggle-group:data-[pressed]:bg-[var(--ui-toggle-group-thumb)]",
       );

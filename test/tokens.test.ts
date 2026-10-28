@@ -131,6 +131,7 @@ describe("design tokens", () => {
     );
     expect(css).toContain("transition-property: background-color,translate,scale;");
     expect(css).not.toContain("var(--color-glass-highlight)");
+    expect(css).not.toContain("--color-ink");
   });
 
   it("compiles every card layer from the theme recipe", async () => {
@@ -148,7 +149,7 @@ describe("design tokens", () => {
       "filter: var(--ui-glass-tone, brightness(0.9)) contrast(var(--ui-glass-contrast, 3));",
     );
     expect(css).toContain("filter: var(--ui-drop-shadow-label);");
-    expect(css).toContain("font-family: system-ui");
+    expect(css).not.toContain("font-family: system-ui");
     expect(css).toContain("border-radius: 2rem;");
     expect(css).toContain("padding: calc(var(--spacing) * 4);");
   });
@@ -290,12 +291,15 @@ describe("design tokens", () => {
       "--ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));",
     );
     expect(css).toContain(
-      "--ui-drop-shadow-icon: drop-shadow(0 25px 3px rgb(102 102 102 / 0.2));",
-    );
-    expect(css).toContain(
       "--ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(0 0 0 / 0.45));",
     );
-    expect(css).toContain(".dark {");
+    expect(css).toContain("--ui-glass-chip-blur: 8px;");
+    expect(css).toContain(".dark");
+    expect(css).toContain(".light");
+    expect(css).toContain('[data-theme="dark"]');
+    expect(css).toContain('[data-theme="light"]');
+    expect(css).not.toContain("--ui-drop-shadow-icon");
+    expect(css).not.toContain("--ui-shadow-glass-icon");
   });
 
   it("does not override the host app's global light/dark variants", async () => {

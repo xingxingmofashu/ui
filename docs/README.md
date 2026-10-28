@@ -1,6 +1,6 @@
 # Docs Package
 
-`@xingxingmofashu.me/docs` is the bilingual documentation site for `@xingxingmofashu/ui`. It is built with Next.js and Fumadocs, uses a strict black-and-white theme, and renders real components from the UI package through MDX.
+`@xingxingmofashu/docs` is the bilingual documentation site for `@xingxingmofashu/ui`. It is built with Next.js and Fumadocs, uses a strict black-and-white theme, and renders real components from the UI package through MDX.
 
 ## Commands
 
@@ -42,16 +42,18 @@ The dev server runs on port 3001. The build uses `output: "export"` and writes t
 - `components/docs-root-provider.tsx` — Fumadocs provider and locale-change handling.
 - `components/examples/<component>/<demo>.tsx` — one live example per file.
 - `components/examples/registry.ts` — maps example names to demos and raw source.
-- `components/example.tsx` — renders a live example with its collapsible source.
+- `components/example.tsx` — renders a live example with optional collapsible source.
 - `components/demo-stage.tsx` — shared frame for live examples.
-- `components/mdx.tsx` — exposes `Example` and `Preview` to MDX.
+- `components/mdx.tsx` — exposes `Example` to MDX.
+- `app/[lang]/docs/[[...slug]]/page.tsx` — renders docs pages and their metadata.
 - `app/globals.css` — Fumadocs black theme, monochrome overrides, and UI source scanning (`../../src`).
 
 ## Conventions
 
 - Keep both Chinese and English pages in sync. Every page must exist under both locale folders.
 - Internal links in MDX must include the locale prefix, for example `/zh/docs/components/button` or `/en/docs/components/switch`.
-- Use `<Example name="component/demo" />` instead of duplicating example code in MDX.
+- Use `<Example name="component/demo" />` instead of duplicating example code in MDX. Pass `showCode={false}` for a preview without the source toggle.
+- Keep example source standalone and copy-pasteable: English demo text, package imports only, and no docs-only helpers or `fd-*` classes.
 - Keep component names and API terms in English in both languages.
 - The documentation theme is black and white. Do not introduce accent colors; use neutral `fd-*` tokens.
 - The Switch example uses the real component and only overrides `--ui-switch-on` / `--ui-switch-off` inline.

@@ -42,6 +42,14 @@ describe("Button", () => {
       expect(screen.queryByText("Delete")).not.toBeInTheDocument();
     });
 
+    it("falls back to children when label is empty", () => {
+      render(<Button label="">Fallback</Button>);
+
+      expect(
+        screen.getByRole("button", { name: "Fallback" }),
+      ).toBeInTheDocument();
+    });
+
     it("supports aria-label for icon-only buttons", () => {
       render(<Button aria-label="Add item" leadingIcon={<svg />} />);
 
@@ -217,17 +225,19 @@ describe("Button", () => {
       }
     });
 
-    it("uses the reference font stack", () => {
+    it("inherits typography from the host", () => {
       for (const size of sizes) {
         const styles = button({ size });
 
-        expect(styles.label()).toContain(
-          "[font-family:system-ui,-apple-system,sans-serif]",
-        );
+        expect(styles.label()).not.toContain("font-family");
         expect(styles.label()).not.toContain("drop-shadow");
         expect(styles.leadingIcon()).not.toContain("drop-shadow");
         expect(styles.trailingIcon()).not.toContain("drop-shadow");
       }
+    });
+
+    it("does not hardcode a high z-index", () => {
+      expect(button().root()).not.toContain("z-[500]");
     });
 
     it("transitions the properties used by hover and press states", () => {

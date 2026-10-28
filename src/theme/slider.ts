@@ -4,7 +4,6 @@ export default tv({
   slots: {
     root: [
       "group/slider relative flex w-full min-w-0 flex-col gap-3",
-      "[font-family:system-ui,-apple-system,sans-serif]",
       "[--ui-slider-track:color-mix(in_srgb,var(--ui-ink)_14%,transparent)]",
       "[--ui-slider-fill-from:var(--ui-ink)] [--ui-slider-fill-to:var(--ui-ink-active)]",
       "[--ui-slider-fill-glow:color-mix(in_srgb,var(--ui-ink)_30%,transparent)]",
@@ -15,15 +14,15 @@ export default tv({
     ],
     header: "flex min-w-0 items-center justify-between gap-4",
     label: [
-      "block min-w-0 select-none text-sm font-medium text-ink",
+      "block min-w-0 select-none text-sm font-medium text-ui-ink",
       "group-data-[disabled]/slider:cursor-not-allowed",
     ],
     value: [
       "ui-glass-chip",
       "ms-auto inline-flex shrink-0 items-center rounded-full px-2 py-0.5",
-      "font-mono text-xs tabular-nums leading-none text-ink/80",
+      "font-mono text-xs tabular-nums leading-none text-ui-ink/80",
     ],
-    description: "text-xs leading-5 text-ink/75",
+    description: "text-xs leading-5 text-ui-ink/75",
     control: [
       "relative flex h-[var(--ui-slider-control-height)] w-full touch-none select-none items-center",
       "data-[orientation=vertical]:mx-auto data-[orientation=vertical]:min-h-40 data-[orientation=vertical]:w-[var(--ui-slider-control-height)] data-[orientation=vertical]:flex-col",
@@ -32,7 +31,7 @@ export default tv({
     ],
     track: [
       "relative h-[var(--ui-slider-track-height)] w-full grow select-none overflow-hidden rounded-full",
-      "border border-glass-border bg-[var(--ui-slider-track)]",
+      "border border-ui-glass-border bg-[var(--ui-slider-track)]",
       "[backdrop-filter:blur(2px)] [-webkit-backdrop-filter:blur(2px)]",
       "shadow-[inset_0_1px_2px_rgb(0_0_0/0.14),inset_0_-1px_0_rgb(255_255_255/0.35)]",
       "before:pointer-events-none before:absolute before:inset-0 before:z-[1] before:rounded-full before:bg-[linear-gradient(180deg,rgb(255_255_255/0.22),transparent_55%)] before:content-['']",
@@ -50,7 +49,7 @@ export default tv({
       "cursor-grab touch-none rounded-full bg-transparent p-0",
       "outline-none transition-[scale] duration-150 ease-out",
       "hover:[scale:1.04] active:[scale:1.08_0.96] data-[dragging]:[scale:1.08_0.96]",
-      "[&:has(input:focus-visible)]:outline-2 [&:has(input:focus-visible)]:outline-offset-4 [&:has(input:focus-visible)]:outline-glass-focus",
+      "[&:has(input:focus-visible)]:outline-2 [&:has(input:focus-visible)]:outline-offset-4 [&:has(input:focus-visible)]:outline-ui-glass-focus",
       "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       "data-[orientation=vertical]:h-[var(--ui-slider-thumb-width)] data-[orientation=vertical]:w-[var(--ui-slider-thumb-height)]",
       "motion-reduce:transition-none",

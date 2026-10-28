@@ -3,9 +3,9 @@ import { tv } from "tailwind-variants";
 export default tv({
   slots: {
     root: [
-      "group relative z-[500] inline-flex items-center min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
+      "group relative inline-flex items-center min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
       "appearance-none rounded-full border-0 bg-transparent p-0",
-      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
+      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-glass-focus",
       "disabled:pointer-events-none disabled:opacity-50",
     ],
     base: [
@@ -23,14 +23,14 @@ export default tv({
       "motion-reduce:transition-none",
     ],
     label: [
-      "relative z-[1] min-w-0 truncate [font-family:system-ui,-apple-system,sans-serif] font-normal text-ink",
-      "group-active:text-ink-active",
+      "relative z-[1] min-w-0 truncate font-normal text-ui-ink",
+      "group-active:text-ui-ink-active",
     ],
     leadingIcon: [
-      "relative z-[1] inline-flex shrink-0 items-center justify-center text-ink [&_svg]:block [&_svg]:shrink-0",
+      "relative z-[1] inline-flex shrink-0 items-center justify-center text-ui-ink [&_svg]:block [&_svg]:shrink-0",
     ],
     trailingIcon: [
-      "relative z-[1] inline-flex shrink-0 items-center justify-center text-ink [&_svg]:block [&_svg]:shrink-0",
+      "relative z-[1] inline-flex shrink-0 items-center justify-center text-ui-ink [&_svg]:block [&_svg]:shrink-0",
     ],
     overlay: "ui-glass-rim",
   },

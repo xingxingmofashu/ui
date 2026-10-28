@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { hasContent } from "../lib/has-content";
 import theme from "../theme/button";
 
 type ButtonSlot =
@@ -39,10 +40,12 @@ type ButtonAccessibleName =
   | { "aria-label": string }
   | { "aria-labelledby": string };
 
-type ButtonProps = React.ComponentProps<typeof UIButton> &
+type ButtonProps = Omit<React.ComponentProps<typeof UIButton>, "className"> &
   VariantProps<typeof theme> &
-  ButtonContentProps &
-  ButtonAccessibleName;
+  ButtonContentProps & {
+    /** Classes merged into the outer click area. */
+    className?: string;
+  } & ButtonAccessibleName;
 
 function Button({
   className,
@@ -55,12 +58,8 @@ function Button({
   ...props
 }: ButtonProps) {
   const ui = theme({ size });
-  const content = label ?? children;
-  const hasLabel =
-    content !== undefined &&
-    content !== null &&
-    content !== "" &&
-    content !== false;
+  const content = hasContent(label) ? label : children;
+  const hasLabel = hasContent(content);
   const hasAccessibleName =
     hasLabel ||
     Boolean(props["aria-label"]) ||

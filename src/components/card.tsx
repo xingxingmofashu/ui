@@ -1,8 +1,7 @@
-"use client";
-
 import { cn } from "cn";
 import * as React from "react";
 
+import { hasContent } from "../lib/has-content";
 import theme from "../theme/card";
 
 type CardSlot =
@@ -13,6 +12,8 @@ type CardSlot =
   | "body"
   | "footer";
 
+type CardTitleTag = "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
 type CardStyle = Partial<Record<CardSlot, string>>;
 
 type CardProps = Omit<React.ComponentProps<"div">, "title"> & {
@@ -20,28 +21,30 @@ type CardProps = Omit<React.ComponentProps<"div">, "title"> & {
   className?: string;
   /** Classes for individual slots. */
   ui?: CardStyle;
-  /** Optional visible heading rendered inside the card header. */
+  /** Optional visible title rendered inside the card header. */
   title?: React.ReactNode;
+  /** Element used for the title. Defaults to `div`; use a heading tag for document structure. */
+  titleAs?: CardTitleTag;
   /** Optional supporting copy rendered under the title. */
   description?: React.ReactNode;
   /** Optional footer row rendered below the body. */
   footer?: React.ReactNode;
+  /** Keep content clipped to the rounded panel. Defaults to true; disable it when hosting popovers. */
+  clipContent?: boolean;
 };
-
-/** Treat empty strings, booleans, and empty arrays as absent while keeping 0. */
-function hasContent(value: React.ReactNode) {
-  return React.Children.toArray(value).some((child) => child !== "");
-}
 
 function Card({
   className,
   ui: uiOverrides,
   title,
+  titleAs = "div",
   description,
   footer,
   children,
+  clipContent = true,
   ...props
 }: CardProps) {
+  const Title = titleAs as React.ElementType;
   const ui = theme();
   const hasHeader = hasContent(title) || hasContent(description);
   const hasBody = hasContent(children);
@@ -57,19 +60,24 @@ function Card({
         <span aria-hidden="true" className={ui.overlay()} />
       </div>
 
-      <div className={ui.layout()}>
+      <div
+        className={cn(
+          ui.layout(),
+          !clipContent && "overflow-visible",
+        )}
+      >
         {hasHeader ? (
           <div
             data-slot="header"
             className={cn(ui.header(), uiOverrides?.header)}
           >
             {hasContent(title) ? (
-              <div
+              <Title
                 data-slot="title"
                 className={cn(ui.title(), uiOverrides?.title)}
               >
                 {title}
-              </div>
+              </Title>
             ) : null}
             {hasContent(description) ? (
               <div

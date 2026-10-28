@@ -27,12 +27,13 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
   per file. `components/examples/registry.ts` maps `component/demo` keys to the
   demo component and its `?raw` source.
 - MDX renders examples with `<Example name="button/basic" />`. `components/example.tsx`
-  renders the live component and the source from the same file; do not duplicate
+  renders the live component and the source from the same file; pass
+  `showCode={false}` for a preview without the source toggle. Do not duplicate
   the example code in MDX.
 - Every component page starts with a basic example that renders the real,
   interactive component.
 - Shared example frame: `components/demo-stage.tsx`.
-- Examples read the active locale from `components/locale-provider.tsx`.
+- Examples must stay standalone and copy-pasteable: use English demo text, import only from `@xingxingmofashu/ui`, React, and icon packages, and do not use docs-only helpers or `fd-*` classes.
 - The site uses Fumadocs' `black.css` theme and the Glass layout.
 - Do not add accent colors. Callouts, code highlighting, and examples are neutral.
 - Do not replace live components with screenshots.

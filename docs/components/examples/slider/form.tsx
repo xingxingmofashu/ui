@@ -5,11 +5,7 @@ import { useState, type FormEvent } from "react";
 
 import { Button, Slider } from "@xingxingmofashu/ui";
 
-import { useDocsLocale } from "@/components/locale-provider";
-
 export default function SliderFormDemo() {
-  const locale = useDocsLocale();
-  const isZh = locale === "zh";
   const [submitted, setSubmitted] = useState<string | null>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -25,12 +21,8 @@ export default function SliderFormDemo() {
     >
       <Slider
         name="volume"
-        label={isZh ? "音量" : "Volume"}
-        description={
-          isZh
-            ? "提交表单时会通过隐藏的 range input 发送当前值。"
-            : "The current value is submitted through a hidden range input."
-        }
+        label="Volume"
+        description="The current value is submitted through a hidden range input."
         defaultValue={40}
         showValue
       />
@@ -38,17 +30,11 @@ export default function SliderFormDemo() {
         <Button
           type="submit"
           size="sm"
-          label={isZh ? "提交" : "Submit"}
+          label="Submit"
           trailingIcon={<ArrowRight />}
         />
-        <p aria-live="polite" className="text-sm text-fd-muted-foreground">
-          {submitted !== null
-            ? isZh
-              ? `提交值：${submitted}`
-              : `Submitted: ${submitted}`
-            : isZh
-              ? "尚未提交"
-              : "Not submitted yet"}
+        <p aria-live="polite" className="text-sm text-ui-ink/60">
+          {submitted === null ? "Not submitted yet" : `Submitted: ${submitted}`}
         </p>
       </div>
     </form>

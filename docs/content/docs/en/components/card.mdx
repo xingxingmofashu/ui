@@ -3,8 +3,6 @@ title: "Card"
 description: "A liquid glass card composed of header, body, and footer."
 ---
 
-Card uses two layers: one draws the glass surface and highlights, the other lays out content. `className` targets `root`, while `ui` overrides each internal slot.
-
 ## Basic example
 
 The card below is the real component, matching the code example.
@@ -36,7 +34,7 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 
 All other props are forwarded to the root `div`, such as `id`, `role`, and `onClick`.
 
-### ui slots
+### UI Slots
 
 | Slot | Description |
 | --- | --- |
@@ -46,11 +44,3 @@ All other props are forwarded to the root `div`, such as `id`, `role`, and `onCl
 | `description` | Description element. |
 | `body` | Main content region. |
 | `footer` | Footer region. |
-
-## Structure notes
-
-- Card has no `size` prop. The header and footer use `p-4 sm:px-6`; the body uses `p-4 sm:p-6`.
-- Empty strings, `false`, and empty arrays for `title`, `description`, `footer`, or `children` also skip rendering the corresponding region.
-- The title uses `font-semibold`; the description uses `mt-1 text-sm`.
-- The card itself is not a button. If the whole card should be clickable, add `role`, keyboard behavior, and focus styles at the call site.
-- The glass effect needs background detail to show. It stays subtle on flat backgrounds.

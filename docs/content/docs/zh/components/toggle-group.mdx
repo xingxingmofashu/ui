@@ -3,8 +3,6 @@ title: "Toggle Group"
 description: "一组共享液态玻璃滑块的切换按钮，支持单选、多选以及水平或垂直布局。"
 ---
 
-Toggle Group 基于 Base UI 的 `ToggleGroup` 和 `Toggle`，选中项由一个共享玻璃滑块跟随。group 使用 `role="group"`，请通过 `aria-label` 或 `aria-labelledby` 提供可访问名称。
-
 ## 基础示例
 
 下面的视图切换使用真实 Toggle Group。选中项会驱动共享玻璃滑块，并把当前值同步到下方文字。
@@ -64,13 +62,11 @@ Toggle Group 基于 Base UI 的 `ToggleGroup` 和 `Toggle`，选中项由一个�
 | `icon` | `ReactNode` | — | item 内的图标。 |
 | `children` | `ReactNode` | — | 文字或自定义内容。 |
 | `className` | `string` | — | 合并到 item 按钮。 |
-| `ui` | `ToggleGroupItemStyle` | — | 覆盖 item 内部槽位样式。 |
+| `ui` | `ToggleGroupItemStyle` | — | 覆盖 item 内部 Slot 样式。 |
 
-请通过 `children` 或 `aria-label` / `aria-labelledby` 提供可访问名称。
+### UI Slots
 
-### ui 槽位
-
-| 组件 | 槽位 | 说明 |
+| 组件 | Slot | 说明 |
 | --- | --- | --- |
 | `ToggleGroup` | `root` | 最外层 group。 |
 | `ToggleGroup` | `glass` | 裁切后的高光层。 |

@@ -4,15 +4,24 @@ Liquid Glass UI components for React 19 and Tailwind CSS 4.
 
 The package ships five components: Button, Card, Slider, Switch, and Toggle
 Group. Glass surfaces, rim highlights, and inner shadows are drawn entirely
-with CSS. There are no textures and no extra runtime.
+with CSS. The components are built on Base UI and do not add a custom rendering
+engine.
+
+## Requirements
+
+- Node.js 22 or newer.
+- React and React DOM 19.
+- Tailwind CSS 4.
+- An ESM-capable bundler. The package publishes ES modules only.
+
+`Button`, `Slider`, `Switch`, and `ToggleGroup` are client components. `Card`
+is server-safe and can be rendered from a React Server Component.
 
 ## Install
 
 ```bash
 pnpm add @xingxingmofashu/ui
 ```
-
-`react` and `react-dom` 19 are peer dependencies. Tailwind CSS 4 is required.
 
 ## Setup
 
@@ -44,8 +53,6 @@ export function Example() {
 }
 ```
 
-Components are client components and opt into `"use client"` themselves.
-
 Deep imports are available for each component and theme recipe:
 
 ```tsx
@@ -56,6 +63,31 @@ import buttonTheme from "@xingxingmofashu/ui/theme/button";
 Use them when you want to import a single component without going through the
 package root.
 
+## Theming
+
+Light and dark values are selected by `.light` / `.dark`, or by
+`data-theme="light"` / `data-theme="dark"`:
+
+```html
+<html class="dark">
+  <!-- or -->
+  <html data-theme="dark">
+</html>
+```
+
+A nested `.light` / `[data-theme="light"]` subtree can switch back to light
+tokens. Shared colors and glass parameters live in the `--ui-*` tokens in the
+package stylesheet; override them in your own theme layer. Tailwind aliases use
+the `ui-` prefix (`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid
+colliding with host design tokens.
+
+`Button`, `Card`, `Slider`, `Switch`, and `ToggleGroup` inherit the host font
+and do not force a font family.
+
+The visual material relies on modern CSS: `backdrop-filter`, `color-mix`,
+container units, individual `translate` / `scale` properties, and `:has`.
+Use a current evergreen browser.
+
 ## Components
 
 - `Button`
@@ -64,19 +96,21 @@ package root.
 - `Switch`
 - `ToggleGroup` / `ToggleGroupItem`
 
-Each component exposes its slots through the `ui` prop for per-instance
-overrides. Shared colors and glass parameters live in the `--ui-glass-*` tokens
-in `src/index.css`.
+Each component exposes its public slots through the `ui` prop for
+per-instance overrides. `Card` also accepts `titleAs` for heading semantics and
+`clipContent={false}` when its body needs to host popovers.
 
 ## Development
 
 ```bash
 pnpm install
-pnpm build        # build dist with unbuild
-pnpm test         # run the Vitest suite
-pnpm typecheck    # typecheck the package
-pnpm docs:dev     # start the Fumadocs site on port 3001
-pnpm docs:build   # export the docs site to docs/out
+pnpm build           # build dist with unbuild
+pnpm lint            # lint with oxlint
+pnpm lint:fix        # apply oxlint's safe fixes
+pnpm test            # run the Vitest suite
+pnpm typecheck       # typecheck the package
+pnpm docs:dev        # start the Fumadocs site on port 3001
+pnpm docs:build      # export the docs site to docs/out
 ```
 
 The documentation site lives in `docs/` and imports this package from the

@@ -4,6 +4,7 @@ import { Switch as UISwitch } from "@base-ui/react/switch";
 import { cn } from "cn";
 import * as React from "react";
 
+import { hasContent } from "../lib/has-content";
 import theme from "../theme/switch";
 
 type SwitchSlot =
@@ -34,9 +35,14 @@ type SwitchAccessibleName =
 
 type SwitchRootProps = React.ComponentProps<typeof UISwitch.Root>;
 
-type SwitchProps = Omit<SwitchRootProps, "className" | "nativeButton"> & {
+type SwitchProps = Omit<
+  SwitchRootProps,
+  "className" | "nativeButton" | "children" | "style"
+> & {
   /** Classes merged into the outer root. Use `ui.base` for the switch itself. */
   className?: string;
+  /** Inline styles merged into the outer root. */
+  style?: React.CSSProperties;
   /** Classes for individual slots. */
   ui?: SwitchStyle;
   /** Visible label. It is connected to the switch through `aria-labelledby`. */
@@ -111,13 +117,14 @@ function Switch({
 }: SwitchProps) {
   const ui = theme({ size });
   const [animating, setAnimating] = React.useState(false);
+  const animationTimeout = React.useRef<number | null>(null);
   const generatedId = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const switchId = props.id ?? generatedId;
   const filterId = `ui-switch-${generatedId || "filter"}`;
   const labelId = `ui-switch-label-${generatedId || "label"}`;
   const descriptionId = `ui-switch-description-${generatedId || "description"}`;
-  const hasLabel = label != null;
-  const hasDescription = description != null;
+  const hasLabel = hasContent(label);
+  const hasDescription = hasContent(description);
   const hasText = hasLabel || hasDescription;
   const labelledBy =
     props["aria-labelledby"] ??
@@ -125,15 +132,31 @@ function Switch({
   const describedBy =
     props["aria-describedby"] ?? (hasDescription ? descriptionId : undefined);
   const switchStyle = {
-    ...style,
     "--ui-switch-filter-goo": `url(#${filterId}-goo)`,
     "--ui-switch-filter-remove-black": `url(#${filterId}-remove-black)`,
   } as React.CSSProperties;
+  const clearAnimationTimeout = React.useCallback(() => {
+    if (animationTimeout.current !== null) {
+      window.clearTimeout(animationTimeout.current);
+      animationTimeout.current = null;
+    }
+  }, []);
+  const stopAnimating = () => {
+    clearAnimationTimeout();
+    setAnimating(false);
+  };
   const handleCheckedChange: NonNullable<
     SwitchRootProps["onCheckedChange"]
   > = (checked, details) => {
-    setAnimating(true);
     onCheckedChange?.(checked, details);
+
+    if (details.isCanceled) {
+      return;
+    }
+
+    clearAnimationTimeout();
+    setAnimating(true);
+    animationTimeout.current = window.setTimeout(stopAnimating, 400);
   };
   const handleThumbTransitionEnd = (
     event: React.TransitionEvent<HTMLSpanElement>,
@@ -146,9 +169,16 @@ function Switch({
       event.propertyName === "translate" ||
       event.propertyName === "scale"
     ) {
-      setAnimating(false);
+      stopAnimating();
     }
   };
+
+  React.useEffect(
+    () => () => {
+      clearAnimationTimeout();
+    },
+    [clearAnimationTimeout],
+  );
 
   return (
     <div
@@ -156,6 +186,7 @@ function Switch({
       data-disabled={disabled || undefined}
       data-readonly={readOnly || undefined}
       className={cn(ui.root(), className, uiOverrides?.root)}
+      style={style}
     >
       <div
         data-slot="container"

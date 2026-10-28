@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
-import { DocsLocaleProvider } from "@/components/locale-provider";
 import { DocsRootProvider } from "@/components/docs-root-provider";
 import { i18n, isLocale, locales } from "@/lib/i18n";
 import { translations } from "@/lib/layout.shared";
@@ -36,11 +35,8 @@ export default async function LocaleLayout({
   return (
     <html lang={lang === "zh" ? "zh-CN" : "en"} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col antialiased">
-        <DocsRootProvider
-          lang={lang}
-          i18n={i18nProvider(translations, lang)}
-        >
-          <DocsLocaleProvider locale={lang}>{children}</DocsLocaleProvider>
+        <DocsRootProvider lang={lang} i18n={i18nProvider(translations, lang)}>
+          {children}
         </DocsRootProvider>
       </body>
     </html>

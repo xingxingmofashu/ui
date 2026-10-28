@@ -4,8 +4,7 @@ export default tv({
   slots: {
     root: [
       "relative grid w-full min-w-0 rounded-[2rem]",
-      "[font-family:system-ui,-apple-system,sans-serif]",
-      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
+      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-glass-focus",
     ],
     glass: [
       "ui-glass ui-glass-inner ui-glass-highlight",
@@ -18,9 +17,9 @@ export default tv({
     ],
     header: "min-w-0 p-4 sm:px-6",
     title:
-      "min-w-0 font-semibold text-ink [filter:var(--ui-drop-shadow-label)]",
-    description: "mt-1 min-w-0 text-sm text-ink opacity-60",
-    body: "min-w-0 p-4 text-ink sm:p-6",
+      "min-w-0 font-semibold text-ui-ink [filter:var(--ui-drop-shadow-label)]",
+    description: "mt-1 min-w-0 text-sm text-ui-ink opacity-60",
+    body: "min-w-0 p-4 text-ui-ink sm:p-6",
     footer: "min-w-0 p-4 sm:px-6",
   },
 });

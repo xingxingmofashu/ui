@@ -39,7 +39,7 @@ export function baseOptions(locale: string): BaseLayoutProps {
       ),
     },
     i18n: true,
-    githubUrl: "https://github.com/xingxingmofashu/xingxingmofashu.me",
+    githubUrl: "https://github.com/xingxingmofashu/ui",
     links: [
       {
         text: isZh ? "文档" : "Docs",

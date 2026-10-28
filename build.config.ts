@@ -7,12 +7,10 @@ export default defineBuildConfig({
       input: "src",
       outDir: "dist",
       declaration: true,
+      format: "esm",
+      ext: "js",
+      addRelativeDeclarationExtensions: true,
     },
   ],
   clean: true,
-  hooks: {
-    "mkdist:entry:options"(_ctx, _entry, options) {
-      options.addRelativeDeclarationExtensions = false;
-    },
-  },
 });

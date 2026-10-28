@@ -1,9 +1,7 @@
 ---
 title: "Button"
-description: "带液态玻璃表面的按钮，支持图标、尺寸与无障碍名称约束。"
+description: "可以渲染为其他标签，或在禁用时仍可聚焦的按钮组件。"
 ---
-
-`className` 作用于外层点击区域，可见的玻璃表面由内部 `glass` 槽位绘制。图标按钮必须提供 `aria-label` 或 `aria-labelledby`，否则类型检查会报错。
 
 ## 基础示例
 
@@ -19,14 +17,9 @@ description: "带液态玻璃表面的按钮，支持图标、尺寸与无障碍
 
 ## 图标
 
-前置图标位于文字左侧，后置图标位于文字右侧。两个图标使用相同的普通容器；有可见文字时，图标会自动标记为装饰性。
+前置图标位于文字左侧，后置图标位于文字右侧。两个图标使用相同的普通容器。
 
 <Example name="button/icons" />
-
-<Callout title="仅图标按钮">
-  仅图标按钮没有可见文字，必须通过 `aria-label` 或 `aria-labelledby` 提供无障碍名称。
-  遗漏时会在 TypeScript 层被拒绝。
-</Callout>
 
 ## 状态
 
@@ -56,13 +49,13 @@ description: "带液态玻璃表面的按钮，支持图标、尺寸与无障碍
 | `trailingIcon` | `ReactNode` | — | 标签后的图标，使用与前置图标相同的容器。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距和图标尺寸。 |
 | `className` | `string` | — | 合并到外层 `root`。 |
-| `ui` | `Partial<Record<ButtonSlot, string>>` | — | 覆盖内部槽位样式。 |
+| `ui` | `Partial<Record<ButtonSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
-`label`、`children`、`aria-label`、`aria-labelledby` 至少提供一个，否则类型检查会失败。其余属性会透传给 Base UI 的 `Button`，例如 `disabled`、`onClick`、`type`、`render`。
+其余属性会透传给 Base UI 的 `Button`，例如 `disabled`、`onClick`、`type`、`render`。
 
-### ui 槽位
+### UI Slots
 
-| 槽位 | 说明 |
+| Slot | 说明 |
 | --- | --- |
 | `root` | 外层点击区域。 |
 | `base` | 布局、hover 位移与按压缩放。 |
@@ -71,9 +64,3 @@ description: "带液态玻璃表面的按钮，支持图标、尺寸与无障碍
 | `leadingIcon` | 前置图标容器。 |
 | `trailingIcon` | 后置图标容器。 |
 | `overlay` | 玻璃边缘高光层。 |
-
-## 无障碍
-
-- 可见文字通过 `label` 或 `children` 提供。
-- 仅图标按钮必须提供 `aria-label` 或 `aria-labelledby`。
-- 禁用状态使用原生 `disabled`，并同步到 Base UI 的交互状态。
