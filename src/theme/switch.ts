@@ -11,7 +11,7 @@ const theme = tv({
     base: [
       "group relative inline-flex h-[var(--ui-switch-height)] w-[var(--ui-switch-width)] shrink-0 cursor-pointer select-none overflow-visible rounded-[100px] border-0 bg-transparent p-0 text-inherit outline-offset-2",
       "[container-type:inline-size] touch-none [-webkit-tap-highlight-color:transparent]",
-      "[--ui-switch-off:hsl(144_8%_81%)] [--ui-switch-on:hsl(144_92%_43%)]",
+      "[--ui-switch-off:color-mix(in_srgb,var(--ui-ink)_20%,transparent)] [--ui-switch-on:var(--ui-ink)]",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glass-focus",
       "data-[disabled]:pointer-events-none data-[readonly]:pointer-events-none",
       "[&_*]:pointer-events-none",

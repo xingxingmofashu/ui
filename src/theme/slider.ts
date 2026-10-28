@@ -6,7 +6,8 @@ export default tv({
       "group/slider relative flex w-full min-w-0 flex-col gap-3",
       "[font-family:system-ui,-apple-system,sans-serif]",
       "[--ui-slider-track:color-mix(in_srgb,var(--ui-ink)_14%,transparent)]",
-      "[--ui-slider-fill-from:#49a3fc] [--ui-slider-fill-to:#3681ee]",
+      "[--ui-slider-fill-from:var(--ui-ink)] [--ui-slider-fill-to:var(--ui-ink-active)]",
+      "[--ui-slider-fill-glow:color-mix(in_srgb,var(--ui-ink)_30%,transparent)]",
       "[--ui-slider-track-height:6px] [--ui-slider-thumb-width:40px] [--ui-slider-thumb-height:24px]",
       "[--ui-slider-control-height:calc(var(--ui-slider-thumb-height)_+_12px)]",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60",
@@ -40,7 +41,7 @@ export default tv({
     indicator: [
       "relative overflow-hidden rounded-full select-none",
       "bg-[linear-gradient(117deg,var(--ui-slider-fill-from)_0%,var(--ui-slider-fill-to)_100%)]",
-      "shadow-[0_0_10px_rgb(54_129_238/0.35),inset_0_1px_0_rgb(255_255_255/0.35)]",
+      "shadow-[0_0_10px_var(--ui-slider-fill-glow),inset_0_1px_0_rgb(255_255_255/0.35)]",
       "after:pointer-events-none after:absolute after:inset-0 after:rounded-full after:bg-[linear-gradient(180deg,rgb(255_255_255/0.28),transparent_60%)] after:content-['']",
       "data-[orientation=vertical]:after:bg-[linear-gradient(90deg,rgb(255_255_255/0.28),transparent_60%)]",
     ],

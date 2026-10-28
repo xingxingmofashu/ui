@@ -452,8 +452,15 @@ describe("Slider", () => {
       expect(styles.root()).toContain(
         "[--ui-slider-track:color-mix(in_srgb,var(--ui-ink)_14%,transparent)]",
       );
-      expect(styles.root()).toContain("[--ui-slider-fill-from:#49a3fc]");
-      expect(styles.root()).toContain("[--ui-slider-fill-to:#3681ee]");
+      expect(styles.root()).toContain(
+        "[--ui-slider-fill-from:var(--ui-ink)]",
+      );
+      expect(styles.root()).toContain(
+        "[--ui-slider-fill-to:var(--ui-ink-active)]",
+      );
+      expect(styles.root()).toContain(
+        "[--ui-slider-fill-glow:color-mix(in_srgb,var(--ui-ink)_30%,transparent)]",
+      );
       expect(styles.root()).toContain(
         "data-[orientation=vertical]:w-fit",
       );
@@ -463,6 +470,9 @@ describe("Slider", () => {
       );
       expect(styles.indicator()).toContain(
         "bg-[linear-gradient(117deg,var(--ui-slider-fill-from)_0%,var(--ui-slider-fill-to)_100%)]",
+      );
+      expect(styles.indicator()).toContain(
+        "shadow-[0_0_10px_var(--ui-slider-fill-glow),inset_0_1px_0_rgb(255_255_255/0.35)]",
       );
       expect(styles.thumb()).toContain(
         "[&_[data-layer=thumb-glass]]:[backdrop-filter:blur(var(--ui-glass-lens-blur))_saturate(var(--ui-glass-lens-saturate))]",

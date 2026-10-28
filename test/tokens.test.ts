@@ -187,8 +187,10 @@ describe("design tokens", () => {
     expect(css).toContain("--ui-switch-glow-color: var(--ui-switch-off);");
     expect(css).toContain("--ui-switch-glow-color: var(--ui-switch-on);");
     expect(css).toContain("border-top-right-radius: 100px;");
-    expect(css).toContain("--ui-switch-off: hsl(144 8% 81%);");
-    expect(css).toContain("--ui-switch-on: hsl(144 92% 43%);");
+    expect(css).toContain(
+      "--ui-switch-off: color-mix(in srgb,var(--ui-ink) 20%,transparent);",
+    );
+    expect(css).toContain("--ui-switch-on: var(--ui-ink);");
     expect(css).not.toContain("--ui-switch-hue");
     expect(css).not.toContain("--ui-switch-thumb:");
     expect(css).not.toContain("--ui-switch-thumb-shadow");
@@ -245,8 +247,11 @@ describe("design tokens", () => {
     expect(css).toContain(
       "--ui-slider-track: color-mix(in srgb,var(--ui-ink) 14%,transparent);",
     );
-    expect(css).toContain("--ui-slider-fill-from: #49a3fc;");
-    expect(css).toContain("--ui-slider-fill-to: #3681ee;");
+    expect(css).toContain("--ui-slider-fill-from: var(--ui-ink);");
+    expect(css).toContain("--ui-slider-fill-to: var(--ui-ink-active);");
+    expect(css).toContain(
+      "--ui-slider-fill-glow: color-mix(in srgb,var(--ui-ink) 30%,transparent);",
+    );
     expect(css).toContain("--ui-slider-thumb-width: 40px;");
     expect(css).toContain("--ui-slider-track-height: 6px;");
     expect(css).toContain("--ui-slider-thumb-height: 24px;");
