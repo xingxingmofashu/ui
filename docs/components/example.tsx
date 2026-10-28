@@ -19,7 +19,15 @@ export function Example({
   const isZh = locale === "zh";
   const [open, setOpen] = useState(false);
   const codeId = useId();
-  const { Demo, source } = examples[name];
+  const example = examples[name];
+
+  if (!example) {
+    throw new Error(
+      `Unknown example "${name}". Expected docs/components/examples/${name}.tsx.`,
+    );
+  }
+
+  const { Demo, source } = example;
 
   return (
     <DemoStage

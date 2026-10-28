@@ -24,8 +24,10 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
 ## Components And Theme
 
 - Live examples live in `components/examples/<component>/<demo>.tsx`, one demo
-  per file. `components/examples/registry.ts` maps `component/demo` keys to the
-  demo component and its `?raw` source.
+  per file. `components/examples/registry.ts` auto-discovers every demo with
+  `import.meta.glob`, so adding a file registers `component/demo` without
+  editing the registry. Every `.tsx` file in a component folder must default-export
+  a demo component; keep helpers elsewhere.
 - MDX renders examples with `<Example name="button/basic" />`. `components/example.tsx`
   renders the live component and the source from the same file; pass
   `showCode={false}` for a preview without the source toggle. Do not duplicate

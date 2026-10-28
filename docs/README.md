@@ -41,7 +41,7 @@ The dev server runs on port 3001. The build uses `output: "export"` and writes t
 - `lib/layout.shared.tsx` — navigation, links, and UI translations.
 - `components/docs-root-provider.tsx` — Fumadocs provider and locale-change handling.
 - `components/examples/<component>/<demo>.tsx` — one live example per file.
-- `components/examples/registry.ts` — maps example names to demos and raw source.
+- `components/examples/registry.ts` — auto-discovers demos and their raw source with `import.meta.glob`.
 - `components/example.tsx` — renders a live example with optional collapsible source.
 - `components/demo-stage.tsx` — shared frame for live examples.
 - `components/mdx.tsx` — exposes `Example` to MDX.
@@ -53,6 +53,7 @@ The dev server runs on port 3001. The build uses `output: "export"` and writes t
 - Keep both Chinese and English pages in sync. Every page must exist under both locale folders.
 - Internal links in MDX must include the locale prefix, for example `/zh/docs/components/button` or `/en/docs/components/switch`.
 - Use `<Example name="component/demo" />` instead of duplicating example code in MDX. Pass `showCode={false}` for a preview without the source toggle.
+- Add a demo by creating `components/examples/<component>/<demo>.tsx` with a default export; the registry discovers it automatically. Every `.tsx` in that folder is treated as a demo, so keep helpers elsewhere.
 - Keep example source standalone and copy-pasteable: English demo text, package imports only, and no docs-only helpers or `fd-*` classes.
 - Keep component names and API terms in English in both languages.
 - The documentation theme is black and white. Do not introduce accent colors; use neutral `fd-*` tokens.
