@@ -11,6 +11,7 @@ import { type VariantProps } from "tailwind-variants";
 
 import { hasContent } from "../lib/has-content";
 import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
+import { withoutStyle } from "../lib/without-style";
 import theme from "../theme/button";
 
 type ButtonThemeSlot =
@@ -48,7 +49,7 @@ type ButtonAccessibleName =
 type ButtonClassName = UIButtonProps["className"];
 
 interface ButtonBaseProps
-  extends Omit<UIButtonProps, "ref">,
+  extends Omit<UIButtonProps, "ref" | "style">,
     ButtonContentProps {
   /** Ref to the rendered root element. */
   ref?: React.Ref<HTMLElement>;
@@ -91,7 +92,7 @@ function Button({
     <UIButton
       data-slot="root"
       className={rootClassName}
-      {...props}
+      {...withoutStyle(props)}
     >
       <span data-slot="base" className={cn(ui.base(), uiOverrides?.base)}>
         <span

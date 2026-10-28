@@ -430,29 +430,13 @@ describe("Button", () => {
       );
     });
 
-    it("forwards the style function with the button state", () => {
-      const { rerender } = render(
-        <Button
-          label="Styled"
-          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
-        />,
+    it("does not accept inline styles", () => {
+      const element = (
+        // @ts-expect-error The glass theme owns inline styles.
+        <Button label="Styled" style={{ opacity: 0.5 }} />
       );
 
-      expect(screen.getByRole("button", { name: "Styled" })).toHaveStyle({
-        opacity: "1",
-      });
-
-      rerender(
-        <Button
-          label="Styled"
-          disabled
-          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
-        />,
-      );
-
-      expect(screen.getByRole("button", { name: "Styled" })).toHaveStyle({
-        opacity: "0.5",
-      });
+      expect(element).toBeTruthy();
     });
 
     it("renders a custom element through render and nativeButton", () => {

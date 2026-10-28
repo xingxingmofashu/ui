@@ -49,10 +49,11 @@ When the button should navigate instead of trigger an action, tell Base UI not t
 | `trailingIcon` | `ReactNode` | — | Icon after the label, using the same container as the leading icon. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, and icon size. |
 | `className` | `string \| ((state: { disabled: boolean }) => string \| undefined)` | — | Merged into the outer `root`. The callback receives the Base UI button state. |
-| `style` | `CSSProperties \| ((state: { disabled: boolean }) => CSSProperties \| undefined)` | — | Forwarded to the underlying Base UI `Button`. |
 | `ui` | `Partial<Record<ButtonThemeSlot, string>>` | — | Overrides internal slot styles. |
 
 All other props are forwarded to the Base UI `Button`, including `disabled`, `focusableWhenDisabled`, `nativeButton`, `onClick`, `type`, `render`, and `ref`.
+
+`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout or the `ui` slots for theme overrides.
 
 ### UI Slots
 
