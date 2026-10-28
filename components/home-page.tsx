@@ -13,11 +13,10 @@ import {
   Button,
   Card,
   Slider,
+  Switch,
   ToggleGroup,
   ToggleGroupItem,
 } from "@xingxingmofashu.me/ui";
-
-import { MonochromeSwitch } from "@/components/monochrome-switch";
 
 type Locale = "zh" | "en";
 
@@ -227,8 +226,8 @@ export function HomePageContent({ lang }: { lang: Locale }) {
       description: copy.componentDescriptions.switch,
       preview: (
         <div className="flex flex-col gap-4">
-          <MonochromeSwitch label={copy.switchPreviewOn} defaultChecked />
-          <MonochromeSwitch label={copy.switchPreviewOff} />
+          <Switch label={copy.switchPreviewOn} defaultChecked />
+          <Switch label={copy.switchPreviewOff} />
         </div>
       ),
     },
@@ -329,7 +328,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
             }
           >
             <div className="space-y-5">
-              <MonochromeSwitch
+              <Switch
                 label={copy.switchLabel}
                 description={copy.switchDescription}
                 defaultChecked

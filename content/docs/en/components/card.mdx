@@ -9,56 +9,19 @@ Card uses two layers: one draws the glass surface and highlights, the other lays
 
 The card below is the real component, matching the code example.
 
-<CardBasic />
-
-```tsx
-import { Button, Card } from "@xingxingmofashu.me/ui";
-import { ArrowRight } from "lucide-react";
-
-<Card
-  className="w-full max-w-md"
-  title="Liquid glass"
-  description="A CSS-only frosted glass panel."
-  footer={<Button size="sm" label="View" trailingIcon={<ArrowRight />} />}
->
-  <div className="text-sm text-ink/70">
-    Place the card over a detailed background to see the glass effect.
-  </div>
-</Card>;
-```
+<Example name="card/basic" />
 
 ## Content only
 
 When `title`, `description`, or `footer` are omitted, the corresponding region is not rendered:
 
-<CardContentOnly />
-
-```tsx
-<Card className="w-full max-w-sm">
-  <div className="text-sm text-ink/70">A card with only a body.</div>
-</Card>
-```
+<Example name="card/content-only" />
 
 ## Custom slots
 
 `ui` overrides internal structure such as header, body, and title, while `className` always targets the root:
 
-<CardCustomSlots />
-
-```tsx
-<Card
-  className="w-full max-w-md"
-  ui={{
-    header: "border-b border-glass-border",
-    body: "bg-glass-surface/50",
-    title: "tracking-tight",
-  }}
-  title="Custom styles"
-  description="Adjust internal structure with ui."
->
-  <div className="text-sm text-ink/70">The default slot goes here.</div>
-</Card>
-```
+<Example name="card/custom-slots" />
 
 ## Props
 

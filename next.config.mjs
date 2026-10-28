@@ -9,6 +9,10 @@ const config = {
   transpilePackages: ["@xingxingmofashu.me/ui"],
   turbopack: {
     rules: {
+      "*.tsx": {
+        condition: { query: "?raw" },
+        type: "text",
+      },
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",

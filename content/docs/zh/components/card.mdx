@@ -9,56 +9,19 @@ Card 使用两层结构：一层负责玻璃表面与高光，另一层负责内
 
 下面的卡片来自真实组件，结构与代码示例一致。
 
-<CardBasic />
-
-```tsx
-import { Button, Card } from "@xingxingmofashu.me/ui";
-import { ArrowRight } from "lucide-react";
-
-<Card
-  className="w-full max-w-md"
-  title="液态玻璃"
-  description="纯 CSS 磨砂玻璃面板。"
-  footer={<Button size="sm" label="查看" trailingIcon={<ArrowRight />} />}
->
-  <div className="text-sm text-ink/70">
-    把卡片放在有细节的背景上，就能看到玻璃效果。
-  </div>
-</Card>;
-```
+<Example name="card/basic" />
 
 ## 仅内容
 
 不传 `title`、`description` 或 `footer` 时，对应的区域不会渲染：
 
-<CardContentOnly />
-
-```tsx
-<Card className="w-full max-w-sm">
-  <div className="text-sm text-ink/70">只有 body 的卡片。</div>
-</Card>
-```
+<Example name="card/content-only" />
 
 ## 自定义槽位
 
 `ui` 可以覆盖 header、body、title 等内部结构，而 `className` 始终作用于 root：
 
-<CardCustomSlots />
-
-```tsx
-<Card
-  className="w-full max-w-md"
-  ui={{
-    header: "border-b border-glass-border",
-    body: "bg-glass-surface/50",
-    title: "tracking-tight",
-  }}
-  title="自定义样式"
-  description="通过 ui 调整内部结构。"
->
-  <div className="text-sm text-ink/70">内容是默认插槽。</div>
-</Card>
-```
+<Example name="card/custom-slots" />
 
 ## Props
 

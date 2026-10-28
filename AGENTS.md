@@ -18,14 +18,15 @@ Bilingual Fumadocs documentation for `@xingxingmofashu.me/ui`.
 
 ## Components And Theme
 
-- Live examples live in `components/examples/`, one file per component:
-  `button.tsx`, `card.tsx`, `slider.tsx`, `switch.tsx`, and `toggle-group.tsx`.
-- Each example file exports every demo for that component. Do not add a barrel
-  `index.ts`; import the files directly from `components/mdx.tsx`.
+- Live examples live in `components/examples/<component>/<demo>.tsx`, one demo
+  per file. `components/examples/registry.ts` maps `component/demo` keys to the
+  demo component and its `?raw` source.
+- MDX renders examples with `<Example name="button/basic" />`. `components/example.tsx`
+  renders the live component and the source from the same file; do not duplicate
+  the example code in MDX.
 - Every component page starts with a basic example that renders the real,
   interactive component.
-- Shared example frame: `components/demo-stage.tsx`. Switch examples go through
-  `components/monochrome-switch.tsx`.
+- Shared example frame: `components/demo-stage.tsx`.
 - Examples read the active locale from `components/locale-provider.tsx`.
 - The site uses Fumadocs' `black.css` theme and the Glass layout.
 - Do not add accent colors. Callouts, code highlighting, and examples are neutral.

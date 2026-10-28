@@ -9,8 +9,6 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --docs-switch-on: #171717;
-  --docs-switch-off: #cfcfcf;
   --docs-grid-line: rgb(0 0 0 / 0.06);
   --docs-halo: rgb(0 0 0 / 0.05);
 
@@ -26,8 +24,6 @@
 }
 
 .dark {
-  --docs-switch-on: #fafafa;
-  --docs-switch-off: #3f3f46;
   --docs-grid-line: rgb(255 255 255 / 0.07);
   --docs-halo: rgb(255 255 255 / 0.06);
 

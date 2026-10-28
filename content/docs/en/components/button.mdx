@@ -9,77 +9,19 @@ description: "A liquid glass button with icons, five sizes, and strict accessibl
 
 The counter below renders the real `Button`. Clicking updates React state, and the reset button disables itself at zero.
 
-<ButtonBasic />
-
-```tsx
-"use client";
-
-import { Button } from "@xingxingmofashu.me/ui";
-import { Plus, RotateCcw } from "lucide-react";
-import * as React from "react";
-
-export function ButtonExample() {
-  const [count, setCount] = React.useState(0);
-
-  return (
-    <div className="flex flex-wrap items-center gap-3">
-      <Button
-        label="Add one"
-        leadingIcon={<Plus />}
-        onClick={() => setCount((value) => value + 1)}
-      />
-      <Button
-        size="sm"
-        label="Reset"
-        leadingIcon={<RotateCcw />}
-        onClick={() => setCount(0)}
-        disabled={count === 0}
-      />
-      <span aria-live="polite" className="text-sm text-ink/70">
-        Clicked {count} times
-      </span>
-    </div>
-  );
-}
-```
+<Example name="button/basic" />
 
 ## Sizes
 
 Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Text and icons scale with the size, so you do not need to pass `size` to icons separately.
 
-<ButtonSizes />
-
-| Size | Height | Icon |
-| --- | --- | --- |
-| `xs` | 24px | 16px |
-| `sm` | 28px | 16px |
-| `md` | 32px | 20px |
-| `lg` | 36px | 20px |
-| `xl` | 40px | 24px |
-
-```tsx
-<Button size="xs" label="XS" trailingIcon={<ArrowRight />} />
-<Button size="sm" label="SM" trailingIcon={<ArrowRight />} />
-<Button size="md" label="MD" trailingIcon={<ArrowRight />} />
-<Button size="lg" label="LG" trailingIcon={<ArrowRight />} />
-<Button size="xl" label="XL" trailingIcon={<ArrowRight />} />
-```
+<Example name="button/sizes" />
 
 ## Icons
 
 The leading icon sits before the label. The trailing icon sits after the label. Both use the same plain icon container. When visible text exists, icons are automatically marked as decorative.
 
-<ButtonIcons />
-
-```tsx
-import { Button } from "@xingxingmofashu.me/ui";
-import { ArrowRight, Plus, Search } from "lucide-react";
-
-<Button label="Create" leadingIcon={<Plus />} />
-<Button label="Search" leadingIcon={<Search />} />
-<Button label="Continue" trailingIcon={<ArrowRight />} />
-<Button aria-label="Next" leadingIcon={<ArrowRight />} />;
-```
+<Example name="button/icons" />
 
 <Callout title="Icon-only buttons">
   Icon-only buttons have no visible text and must provide an accessible name through
@@ -90,37 +32,19 @@ import { ArrowRight, Plus, Search } from "lucide-react";
 
 The disabled state uses the native `disabled` attribute, stopping both keyboard and pointer interaction.
 
-<ButtonStates />
-
-```tsx
-<Button label="Save" trailingIcon={<ArrowRight />} />
-<Button label="Unavailable" disabled />
-```
+<Example name="button/states" />
 
 ## Full-width buttons
 
 `className` adjusts the outer click area. The inner `base` layout already fills the available width:
 
-<ButtonFullWidth />
-
-```tsx
-<Button label="Full width" className="w-full" />
-```
+<Example name="button/full-width" />
 
 ## Render as a link
 
 When the button should navigate instead of trigger an action, tell Base UI not to render a native `<button>`:
 
-<ButtonLink />
-
-```tsx
-<Button
-  nativeButton={false}
-  render={<a href="/en/docs" />}
-  label="Read the docs"
-  trailingIcon={<ArrowRight />}
-/>
-```
+<Example name="button/link" />
 
 ## Props
 

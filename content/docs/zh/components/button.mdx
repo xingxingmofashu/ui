@@ -9,77 +9,19 @@ description: "带液态玻璃表面的按钮，支持图标、尺寸与无障碍
 
 下面的计数器直接渲染真实 `Button`。点击按钮会更新 React 状态，重置按钮在计数为零时自动禁用。
 
-<ButtonBasic />
-
-```tsx
-"use client";
-
-import { Button } from "@xingxingmofashu.me/ui";
-import { Plus, RotateCcw } from "lucide-react";
-import * as React from "react";
-
-export function ButtonExample() {
-  const [count, setCount] = React.useState(0);
-
-  return (
-    <div className="flex flex-wrap items-center gap-3">
-      <Button
-        label="增加计数"
-        leadingIcon={<Plus />}
-        onClick={() => setCount((value) => value + 1)}
-      />
-      <Button
-        size="sm"
-        label="重置"
-        leadingIcon={<RotateCcw />}
-        onClick={() => setCount(0)}
-        disabled={count === 0}
-      />
-      <span aria-live="polite" className="text-sm text-ink/70">
-        已点击 {count} 次
-      </span>
-    </div>
-  );
-}
-```
+<Example name="button/basic" />
 
 ## 尺寸
 
 支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。文字和图标会随尺寸缩放，不需要给图标单独传 `size`。
 
-<ButtonSizes />
-
-| 尺寸 | 高度 | 图标 |
-| --- | --- | --- |
-| `xs` | 24px | 16px |
-| `sm` | 28px | 16px |
-| `md` | 32px | 20px |
-| `lg` | 36px | 20px |
-| `xl` | 40px | 24px |
-
-```tsx
-<Button size="xs" label="XS" trailingIcon={<ArrowRight />} />
-<Button size="sm" label="SM" trailingIcon={<ArrowRight />} />
-<Button size="md" label="MD" trailingIcon={<ArrowRight />} />
-<Button size="lg" label="LG" trailingIcon={<ArrowRight />} />
-<Button size="xl" label="XL" trailingIcon={<ArrowRight />} />
-```
+<Example name="button/sizes" />
 
 ## 图标
 
 前置图标位于文字左侧，后置图标位于文字右侧。两个图标使用相同的普通容器；有可见文字时，图标会自动标记为装饰性。
 
-<ButtonIcons />
-
-```tsx
-import { Button } from "@xingxingmofashu.me/ui";
-import { ArrowRight, Plus, Search } from "lucide-react";
-
-<Button label="新建" leadingIcon={<Plus />} />
-<Button label="搜索" leadingIcon={<Search />} />
-<Button label="继续" trailingIcon={<ArrowRight />} />
-<Button aria-label="下一步" leadingIcon={<ArrowRight />} />;
-```
+<Example name="button/icons" />
 
 <Callout title="仅图标按钮">
   仅图标按钮没有可见文字，必须通过 `aria-label` 或 `aria-labelledby` 提供无障碍名称。
@@ -90,37 +32,19 @@ import { ArrowRight, Plus, Search } from "lucide-react";
 
 禁用状态使用原生 `disabled`，键盘与指针交互都会停止。
 
-<ButtonStates />
-
-```tsx
-<Button label="保存" trailingIcon={<ArrowRight />} />
-<Button label="不可用" disabled />
-```
+<Example name="button/states" />
 
 ## 全宽按钮
 
 `className` 调整外层点击区域，内部的 `base` 布局会自动填满可用宽度：
 
-<ButtonFullWidth />
-
-```tsx
-<Button label="全宽" className="w-full" />
-```
+<Example name="button/full-width" />
 
 ## 渲染为链接
 
 需要导航而不是触发操作时，可以告诉 Base UI 不要渲染原生 `<button>`：
 
-<ButtonLink />
-
-```tsx
-<Button
-  nativeButton={false}
-  render={<a href="/zh/docs" />}
-  label="阅读文档"
-  trailingIcon={<ArrowRight />}
-/>
-```
+<Example name="button/link" />
 
 ## Props
 

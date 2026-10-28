@@ -9,116 +9,31 @@ Slider 基于 Base UI 的 `Slider.Root`，支持受控与非受控用法。每�
 
 下面的音量滑块直接渲染真实组件。拖动玻璃滑块、点击轨道或使用方向键都会更新数值，右侧的数值显示会自动跟随。
 
-<SliderBasic />
-
-```tsx
-"use client";
-
-import { Slider } from "@xingxingmofashu.me/ui";
-import * as React from "react";
-
-export function VolumeSlider() {
-  const [volume, setVolume] = React.useState(40);
-
-  return (
-    <Slider
-      label="音量"
-      description="拖动玻璃滑块，或使用方向键调整。"
-      showValue
-      value={volume}
-      onValueChange={setVolume}
-    />
-  );
-}
-```
+<Example name="slider/basic" />
 
 ## 区间值
 
 传入数组会为每个值渲染一个滑块。`format` 使用 `Intl.NumberFormatOptions` 格式化 `Slider.Value` 的显示内容：
 
-<SliderRange />
-
-```tsx
-<Slider
-  label="价格区间"
-  description="每个值对应一个滑块，数值通过 Intl.NumberFormat 格式化。"
-  defaultValue={[25, 75]}
-  showValue
-  format={{ style: "currency", currency: "USD" }}
-/>
-```
+<Example name="slider/range" />
 
 ## 纵向
 
 `orientation="vertical"` 会把轨道、指示条和滑块切换为纵向布局：
 
-<SliderVertical />
-
-```tsx
-<Slider
-  aria-label="等级"
-  orientation="vertical"
-  defaultValue={60}
-  ui={{ control: "h-48" }}
-/>
-```
+<Example name="slider/vertical" />
 
 ## 禁用
 
 禁用状态使用原生 `disabled`，拖动和键盘交互都会停止：
 
-<SliderDisabled />
-
-```tsx
-<Slider aria-label="禁用滑块" defaultValue={35} disabled />
-```
+<Example name="slider/disabled" />
 
 ## 表单用法
 
 Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]` 提交当前值：
 
-<SliderForm />
-
-```tsx
-"use client";
-
-import { Button, Slider } from "@xingxingmofashu.me/ui";
-import { ArrowRight } from "lucide-react";
-import * as React from "react";
-
-export function VolumeForm() {
-  const [submitted, setSubmitted] = React.useState<string | null>(null);
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    setSubmitted(String(data.get("volume") ?? ""));
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <Slider
-        name="volume"
-        label="音量"
-        description="提交表单时会通过隐藏的 range input 发送当前值。"
-        defaultValue={40}
-        showValue
-      />
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <Button
-          type="submit"
-          size="sm"
-          label="提交"
-          trailingIcon={<ArrowRight />}
-        />
-        <p aria-live="polite" className="text-sm text-ink/70">
-          {submitted === null ? "尚未提交" : `提交值：${submitted}`}
-        </p>
-      </div>
-    </form>
-  );
-}
-```
+<Example name="slider/form" />
 
 ## Props
 

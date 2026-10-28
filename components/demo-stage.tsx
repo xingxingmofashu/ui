@@ -2,10 +2,10 @@ import type { ReactNode } from "react";
 
 export function DemoStage({
   children,
-  label,
+  footer,
 }: {
   children: ReactNode;
-  label?: string;
+  footer?: ReactNode;
 }) {
   return (
     <div className="not-prose my-6 overflow-hidden rounded-2xl border border-fd-border bg-fd-card/50">
@@ -18,10 +18,8 @@ export function DemoStage({
           {children}
         </div>
       </div>
-      {label ? (
-        <div className="border-t border-fd-border bg-fd-muted/30 px-4 py-2 text-xs text-fd-muted-foreground">
-          {label}
-        </div>
+      {footer ? (
+        <div className="border-t border-fd-border bg-fd-muted/20">{footer}</div>
       ) : null}
     </div>
   );

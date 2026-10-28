@@ -9,116 +9,31 @@ Slider is built on Base UI's `Slider.Root` and supports controlled and uncontrol
 
 The volume slider below renders the real component. Dragging the glass thumb, clicking the track, or using the arrow keys updates the value, and the value display follows automatically.
 
-<SliderBasic />
-
-```tsx
-"use client";
-
-import { Slider } from "@xingxingmofashu.me/ui";
-import * as React from "react";
-
-export function VolumeSlider() {
-  const [volume, setVolume] = React.useState(40);
-
-  return (
-    <Slider
-      label="Volume"
-      description="Drag the glass thumb or use the arrow keys."
-      showValue
-      value={volume}
-      onValueChange={setVolume}
-    />
-  );
-}
-```
+<Example name="slider/basic" />
 
 ## Range values
 
 Passing an array renders one thumb per value. `format` uses `Intl.NumberFormatOptions` to format the value shown by `Slider.Value`:
 
-<SliderRange />
-
-```tsx
-<Slider
-  label="Price range"
-  description="One thumb per value, formatted with Intl.NumberFormat."
-  defaultValue={[25, 75]}
-  showValue
-  format={{ style: "currency", currency: "USD" }}
-/>
-```
+<Example name="slider/range" />
 
 ## Vertical
 
 `orientation="vertical"` switches the track, indicator, and thumb to a vertical layout:
 
-<SliderVertical />
-
-```tsx
-<Slider
-  aria-label="Level"
-  orientation="vertical"
-  defaultValue={60}
-  ui={{ control: "h-48" }}
-/>
-```
+<Example name="slider/vertical" />
 
 ## Disabled
 
 The disabled state uses the native `disabled` attribute, stopping both dragging and keyboard interaction:
 
-<SliderDisabled />
-
-```tsx
-<Slider aria-label="Disabled slider" defaultValue={35} disabled />
-```
+<Example name="slider/disabled" />
 
 ## Form usage
 
 Slider forwards `name` to Base UI and submits the current value through a hidden `input[type="range"]`:
 
-<SliderForm />
-
-```tsx
-"use client";
-
-import { Button, Slider } from "@xingxingmofashu.me/ui";
-import { ArrowRight } from "lucide-react";
-import * as React from "react";
-
-export function VolumeForm() {
-  const [submitted, setSubmitted] = React.useState<string | null>(null);
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    setSubmitted(String(data.get("volume") ?? ""));
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <Slider
-        name="volume"
-        label="Volume"
-        description="The current value is submitted through a hidden range input."
-        defaultValue={40}
-        showValue
-      />
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <Button
-          type="submit"
-          size="sm"
-          label="Submit"
-          trailingIcon={<ArrowRight />}
-        />
-        <p aria-live="polite" className="text-sm text-ink/70">
-          {submitted === null ? "Not submitted yet" : `Submitted: ${submitted}`}
-        </p>
-      </div>
-    </form>
-  );
-}
-```
+<Example name="slider/form" />
 
 ## Props
 
