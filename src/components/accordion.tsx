@@ -4,6 +4,7 @@ import { Accordion as UIAccordion } from "@base-ui/react/accordion";
 import { cn } from "cn";
 import * as React from "react";
 
+import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
 import theme from "../theme/accordion";
 
 type AccordionSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -91,11 +92,11 @@ function Accordion<Value extends string = string>({
   ...props
 }: AccordionProps<Value>) {
   const ui = theme({ size });
-  const rootClassName =
-    typeof className === "function"
-      ? (state: UIAccordion.Root.State<Value>) =>
-          cn(ui.root(), className(state), uiOverrides?.root)
-      : cn(ui.root(), className, uiOverrides?.root);
+  const rootClassName = resolveThemeClassName<UIAccordion.Root.State<Value>>(
+    ui.root(),
+    className,
+    uiOverrides?.root,
+  );
 
   return (
     <AccordionContext.Provider
@@ -144,11 +145,11 @@ function AccordionItem({
   const size = context?.size ?? "md";
   const headingAs = context?.headingAs ?? "h3";
   const ui = theme({ size });
-  const itemClassName =
-    typeof className === "function"
-      ? (state: UIAccordion.Item.State) =>
-          cn(ui.item(), className(state), uiOverrides?.root)
-      : cn(ui.item(), className, uiOverrides?.root);
+  const itemClassName = resolveThemeClassName<UIAccordion.Item.State>(
+    ui.item(),
+    className,
+    uiOverrides?.root,
+  );
 
   return (
     <UIAccordion.Item
