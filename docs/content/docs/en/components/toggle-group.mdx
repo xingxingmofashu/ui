@@ -47,10 +47,11 @@ Use `orientation="vertical"` for a vertical group:
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, and icons. |
 | `disabled` | `boolean` | `false` | Disables every item. |
 | `className` | `string \| ((state) => string \| undefined)` | — | Merged into the group root. The callback receives Base UI group state. |
-| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | Inline styles merged into the group root. The callback receives Base UI group state. |
 | `ui` | `ToggleGroupStyle` | — | Overrides internal layers. |
 
 `ToggleGroup` also forwards Base UI's `ToggleGroup` props such as `loopFocus`, `render`, and `ref`.
+
+`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout or the `ui` slots for theme overrides.
 
 ### ToggleGroupItem
 
@@ -63,10 +64,11 @@ Use `orientation="vertical"` for a vertical group:
 | `icon` | `ReactNode` | — | Icon rendered inside the item. |
 | `children` | `ReactNode` | — | Text or custom content. |
 | `className` | `string \| ((state) => string \| undefined)` | — | Merged into the item button. The callback receives Base UI toggle state. |
-| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | Inline styles merged into the item button. The callback receives Base UI toggle state. |
 | `ui` | `ToggleGroupItemStyle` | — | Overrides item slots. |
 
 `ToggleGroupItem` also forwards Base UI's `Toggle` props such as `nativeButton`, `render`, and `ref`.
+
+`style` is intentionally not supported on the item either; use `className` or `ui` slots.
 
 ### UI Slots
 

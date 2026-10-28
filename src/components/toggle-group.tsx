@@ -7,6 +7,7 @@ import * as React from "react";
 
 import { hasContent } from "../lib/has-content";
 import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
+import { withoutStyle } from "../lib/without-style";
 import theme from "../theme/toggle-group";
 
 type ToggleGroupSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -32,9 +33,6 @@ const ToggleGroupContext = React.createContext<ToggleGroupContextValue | null>(
 type ToggleGroupClassName<Value extends string> =
   UIToggleGroup.Props<Value>["className"];
 
-type ToggleGroupStyleProp<Value extends string> =
-  UIToggleGroup.Props<Value>["style"];
-
 interface ToggleGroupBaseProps<Value extends string>
   extends Omit<
     UIToggleGroup.Props<Value>,
@@ -44,8 +42,6 @@ interface ToggleGroupBaseProps<Value extends string>
   className?: ToggleGroupClassName<Value>;
   /** Classes for individual group layers. */
   ui?: ToggleGroupStyle;
-  /** Inline styles merged into the group root. Accepts a callback that receives Base UI's group state. */
-  style?: ToggleGroupStyleProp<Value>;
   /** Control size; defaults to `md`. */
   size?: ToggleGroupSize;
   children?: React.ReactNode;
@@ -67,7 +63,7 @@ type ToggleGroupItemClassName<Value extends string> =
   UIToggle.Props<Value>["className"];
 
 interface ToggleGroupItemBaseProps<Value extends string>
-  extends Omit<UIToggle.Props<Value>, "className" | "children"> {
+  extends Omit<UIToggle.Props<Value>, "className" | "children" | "style"> {
   /** Classes merged into the item root. Accepts a callback that receives Base UI's toggle state. */
   className?: ToggleGroupItemClassName<Value>;
   /** Classes for individual item slots. */
@@ -91,7 +87,6 @@ type IndicatorState = {
 function ToggleGroup<Value extends string = string>({
   className,
   ui: uiOverrides,
-  style,
   size,
   ref,
   children,
@@ -338,7 +333,7 @@ function ToggleGroup<Value extends string = string>({
   return (
     <ToggleGroupContext.Provider value={{ size: size ?? "md" }}>
       <UIToggleGroup
-        {...props}
+        {...withoutStyle(props)}
         ref={setRootRef}
         value={normalizedValue}
         multiple={multiple}
@@ -347,7 +342,6 @@ function ToggleGroup<Value extends string = string>({
         data-size={size ?? "md"}
         data-animating={animating || undefined}
         className={rootClassName}
-        style={style}
       >
         <span
           aria-hidden="true"
@@ -395,7 +389,7 @@ function ToggleGroupItem<Value extends string = string>({
 
   return (
     <UIToggle
-      {...props}
+      {...withoutStyle(props)}
       data-slot="item"
       data-size={size}
       data-value={props.value}

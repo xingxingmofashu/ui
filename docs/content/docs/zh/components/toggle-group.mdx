@@ -47,10 +47,11 @@ description: "一组共享液态玻璃滑块的切换按钮，支持单选、多
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制 item 高度、内边距、文字和图标尺寸。 |
 | `disabled` | `boolean` | `false` | 禁用所有 item。 |
 | `className` | `string \| ((state) => string \| undefined)` | — | 合并到 group root。回调会收到 Base UI group 状态。 |
-| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | 合并到 group root 的内联样式。回调会收到 Base UI group 状态。 |
 | `ui` | `ToggleGroupStyle` | — | 覆盖内部图层样式。 |
 
 `ToggleGroup` 还会透传 Base UI `ToggleGroup` 的 `loopFocus`、`render`、`ref` 等属性。
+
+`style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`，主题扩展请使用 `ui` 槽位。
 
 ### ToggleGroupItem
 
@@ -63,10 +64,11 @@ description: "一组共享液态玻璃滑块的切换按钮，支持单选、多
 | `icon` | `ReactNode` | — | item 内的图标。 |
 | `children` | `ReactNode` | — | 文字或自定义内容。 |
 | `className` | `string \| ((state) => string \| undefined)` | — | 合并到 item 按钮。回调会收到 Base UI toggle 状态。 |
-| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | 合并到 item 按钮的内联样式。回调会收到 Base UI toggle 状态。 |
 | `ui` | `ToggleGroupItemStyle` | — | 覆盖 item 内部 Slot 样式。 |
 
 `ToggleGroupItem` 还会透传 Base UI `Toggle` 的 `nativeButton`、`render`、`ref` 等属性。
+
+item 上同样有意禁用 `style`；请使用 `className` 或 `ui` 槽位。
 
 ### UI Slots
 

@@ -315,43 +315,25 @@ describe("ToggleGroup", () => {
       expect(getGroup("Stateful")).toHaveClass("group-disabled");
     });
 
-    it("forwards style callbacks to the group and item", () => {
-      const { rerender } = render(
-        <ToggleGroup
-          aria-label="Styled callbacks"
-          defaultValue={["one"]}
-          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
-        >
-          <ToggleGroupItem
-            value="one"
-            aria-label="One"
-            style={(state) => ({ opacity: state.pressed ? 1 : 0.5 })}
-          />
-        </ToggleGroup>,
+    it("does not accept inline styles on the group or item", () => {
+      const element = (
+        <>
+          {/* @ts-expect-error The glass theme owns inline styles. */}
+          <ToggleGroup aria-label="Styled" style={{ opacity: 0.5 }}>
+            <ToggleGroupItem value="one" aria-label="One" />
+          </ToggleGroup>
+          <ToggleGroup aria-label="Styled">
+            <ToggleGroupItem
+              value="one"
+              aria-label="One"
+              // @ts-expect-error The glass theme owns inline styles.
+              style={{ opacity: 0.5 }}
+            />
+          </ToggleGroup>
+        </>
       );
 
-      let group = getGroup("Styled callbacks");
-
-      expect(group).toHaveStyle({ opacity: "1" });
-      expect(getItems(group)[0]).toHaveStyle({ opacity: "1" });
-
-      rerender(
-        <ToggleGroup
-          aria-label="Styled callbacks"
-          disabled
-          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
-        >
-          <ToggleGroupItem
-            value="one"
-            aria-label="One"
-            style={(state) => ({ opacity: state.pressed ? 1 : 0.5 })}
-          />
-        </ToggleGroup>,
-      );
-
-      group = getGroup("Styled callbacks");
-
-      expect(group).toHaveStyle({ opacity: "0.5" });
+      expect(element).toBeTruthy();
     });
 
     it("forwards refs to the Base UI group root", () => {
