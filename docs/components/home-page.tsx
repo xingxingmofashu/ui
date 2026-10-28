@@ -54,7 +54,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           card: "由 header、body 与 footer 组成的玻璃卡片。",
           slider: "支持区间选择与纵向布局的玻璃滑块。",
           switch: "带液态玻璃滑块、标签与描述文本的开关。",
-          toggleGroup: "共享玻璃滑块的切换按钮，支持单选、多选与纵向布局。",
+          toggleGroup: "带液态玻璃选中态的切换按钮，支持单选、多选与纵向布局。",
         },
         cardPreviewTitle: "玻璃面板",
         cardPreviewDescription: "内容留在滤镜之外。",
@@ -130,7 +130,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
             "A glass slider with range selection and vertical orientation.",
           switch: "A switch with a liquid glass thumb, label, and description.",
           toggleGroup:
-            "Shared glass thumb toggles for single, multiple, and vertical layouts.",
+            "Glass selected-state toggles for single, multiple, and vertical layouts.",
         },
         cardPreviewTitle: "Glass panel",
         cardPreviewDescription: "Content stays outside the filter.",

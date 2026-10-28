@@ -1,3 +1,5 @@
+@import "./keyframes.css";
+
 /* Design tokens and the standard glass material. Component recipes live in theme/. */
 @custom-variant ui-light (&:where(.light, .light *, [data-theme="light"], [data-theme="light"] *));
 @custom-variant ui-dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
@@ -212,3 +214,5 @@
       saturate(var(--ui-glass-saturate, 150%));
   }
 }
+
+

@@ -15,9 +15,6 @@ export { Switch, type SwitchProps } from "./components/switch";
 export {
   ToggleGroup,
   ToggleGroupItem,
-  type ToggleGroupStyle,
-  type ToggleGroupItemStyle,
   type ToggleGroupItemProps,
   type ToggleGroupProps,
-  type ToggleGroupSize,
 } from "./components/toggle-group";

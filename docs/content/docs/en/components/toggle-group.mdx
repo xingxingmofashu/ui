@@ -1,11 +1,11 @@
 ---
 title: "Toggle Group"
-description: "A set of toggle buttons with a shared liquid glass thumb, single or multiple selection, and horizontal or vertical orientation."
+description: "A set of toggle buttons with a liquid glass selected state, single or multiple selection, and horizontal or vertical orientation."
 ---
 
 ## Basic example
 
-The view switcher below uses the real Toggle Group. The pressed item drives the shared glass thumb and updates the text underneath.
+The view switcher below uses the real Toggle Group. The pressed item receives the glass selected state and updates the text underneath.
 
 <Example name="toggle-group/basic" />
 
@@ -17,7 +17,7 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
 
 ## Selection mode
 
-Use `multiple` to allow more than one pressed item; the default is single selection. Switching `multiple` from `true` to `false` keeps only the first pressed value.
+Use `multiple` to allow more than one pressed item; the default is single selection.
 
 <Example name="toggle-group/selection" />
 
@@ -46,12 +46,11 @@ Use `orientation="vertical"` for a vertical group:
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, and icons. |
 | `disabled` | `boolean` | `false` | Disables every item. |
-| `className` | `string \| ((state) => string \| undefined)` | — | Merged into the group root. The callback receives Base UI group state. |
-| `ui` | `ToggleGroupStyle` | — | Overrides internal layers. |
+| `className` | `any` | — | Tailwind classes merged into the group root. |
 
 `ToggleGroup` also forwards Base UI's `ToggleGroup` props such as `loopFocus`, `render`, and `ref`.
 
-`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout or the `ui` slots for theme overrides.
+`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout.
 
 ### ToggleGroupItem
 
@@ -63,21 +62,8 @@ Use `orientation="vertical"` for a vertical group:
 | `disabled` | `boolean` | `false` | Disables the item. |
 | `icon` | `ReactNode` | — | Icon rendered inside the item. |
 | `children` | `ReactNode` | — | Text or custom content. |
-| `className` | `string \| ((state) => string \| undefined)` | — | Merged into the item button. The callback receives Base UI toggle state. |
-| `ui` | `ToggleGroupItemStyle` | — | Overrides item slots. |
+| `className` | `any` | — | Tailwind classes merged into the item root. |
 
 `ToggleGroupItem` also forwards Base UI's `Toggle` props such as `nativeButton`, `render`, and `ref`.
 
-`style` is intentionally not supported on the item either; use `className` or `ui` slots.
-
-### UI Slots
-
-| Component | Slot | Description |
-| --- | --- | --- |
-| `ToggleGroup` | `root` | Outermost group. |
-| `ToggleGroup` | `glass` | Clipped highlight layer. |
-| `ToggleGroup` | `indicator` | Shared moving glass thumb. |
-| `ToggleGroupItem` | `root` | Toggle button. |
-| `ToggleGroupItem` | `content` | Icon and label layout wrapper. |
-| `ToggleGroupItem` | `icon` | Icon wrapper. |
-| `ToggleGroupItem` | `label` | Text wrapper. |
+`style` is intentionally not supported on the item either; use `className`.

@@ -54,7 +54,7 @@ const sections = [
     index: "06",
     title: "Toggle Group",
     description:
-      "Single and multiple selection with a sliding glass indicator.",
+      "Single and multiple selection with a liquid glass selected state.",
     Preview: ToggleGroupPreview,
   },
 ] as const;

@@ -1,0 +1,13 @@
+@keyframes ui-toggle-group-select {
+  0% {
+    opacity: 0;
+    scale: 0.94;
+    translate: 0 2px;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}

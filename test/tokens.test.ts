@@ -83,7 +83,7 @@ function themeCandidates() {
   const toggleGroupSlots = [
     "root",
     "glass",
-    "indicator",
+    "rim",
     "item",
     "content",
     "icon",
@@ -259,21 +259,9 @@ describe("design tokens", () => {
     );
     expect(css).toContain("background-color: var(--ui-toggle-group-thumb);");
     expect(css).toContain(
-      "border-color: var(--ui-toggle-group-thumb-rim);",
-    );
-    expect(css).toContain(
       "--tw-shadow: var(--ui-toggle-group-thumb-shadow);",
     );
-    expect(css).toContain(
-      "width: var(--ui-toggle-group-indicator-width);",
-    );
-    expect(css).toContain(
-      "height: var(--ui-toggle-group-indicator-height);",
-    );
-    expect(css).toContain(
-      "translate: var(--ui-toggle-group-indicator-x) var(--ui-toggle-group-indicator-y);",
-    );
-    expect(css).toContain("transform-origin: var(--ui-toggle-group-origin);");
+    expect(css).toContain("animation: ui-toggle-group-select 240ms ease-out;");
     expect(css).toContain("color: var(--ui-ink-active);");
     expect(css).toContain("--ui-toggle-group-item-height: 24px;");
     expect(css).toContain("--ui-toggle-group-item-height: 32px;");
@@ -447,9 +435,11 @@ describe("design tokens", () => {
     expect(recipe).toContain("--ui-toggle-group-thumb:");
     expect(recipe).toContain("--ui-toggle-group-thumb-shadow:");
     expect(recipe).toContain("data-[orientation=vertical]:items-stretch");
-    expect(recipe).toContain("group-data-[multiple]/toggle-group");
     expect(recipe).toContain(
-      "[translate:var(--ui-toggle-group-indicator-x)",
+      "before:bg-[var(--ui-toggle-group-thumb)]",
+    );
+    expect(recipe).toContain(
+      "animation:ui-toggle-group-select_240ms_ease-out",
     );
     expect(recipe).toContain("overflow-hidden");
     expect(recipe).not.toContain("LIQUID_GLASS_MAP");

@@ -1,13 +1,7 @@
-import {
-  act,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import {
   ToggleGroup,
@@ -38,68 +32,6 @@ function getSlot(element: Element, slot: string) {
 function getItems(group: HTMLElement) {
   return within(group).getAllByRole("button");
 }
-
-function mockGeometry(
-  items: HTMLElement[],
-  geometry: Array<{ x: number; y: number; width: number; height: number }>,
-) {
-  items.forEach((item, index) => {
-    const value = geometry[index];
-
-    if (!value) {
-      throw new Error(`Missing geometry for item ${index}.`);
-    }
-
-    Object.defineProperty(item, "offsetLeft", {
-      configurable: true,
-      value: value.x,
-    });
-    Object.defineProperty(item, "offsetTop", {
-      configurable: true,
-      value: value.y,
-    });
-    Object.defineProperty(item, "offsetWidth", {
-      configurable: true,
-      value: value.width,
-    });
-    Object.defineProperty(item, "offsetHeight", {
-      configurable: true,
-      value: value.height,
-    });
-  });
-}
-
-class MockResizeObserver implements ResizeObserver {
-  static instances: MockResizeObserver[] = [];
-
-  private readonly callback: ResizeObserverCallback;
-  readonly observed: Element[] = [];
-  readonly unobserved: Element[] = [];
-
-  constructor(callback: ResizeObserverCallback) {
-    this.callback = callback;
-    MockResizeObserver.instances.push(this);
-  }
-
-  observe(target: Element) {
-    this.observed.push(target);
-  }
-
-  unobserve(target: Element) {
-    this.unobserved.push(target);
-  }
-
-  disconnect() {}
-
-  trigger() {
-    this.callback([], this);
-  }
-}
-
-afterEach(() => {
-  vi.unstubAllGlobals();
-  MockResizeObserver.instances = [];
-});
 
 function ThemeGroup() {
   return (
@@ -167,17 +99,6 @@ describe("ToggleGroup", () => {
       ).toBeInTheDocument();
     });
 
-    it("requires an accessible name for icon-only items at the type level", () => {
-      render(
-        <ToggleGroup aria-label="Formatting">
-          {/* @ts-expect-error Icon-only toggle items must have an accessible name. */}
-          <ToggleGroupItem value="bold" icon={<svg />} />
-        </ToggleGroup>,
-      );
-
-      expect(screen.getByRole("button")).toBeInTheDocument();
-    });
-
     it("hides an icon from assistive technology when the item has a name", () => {
       render(
         <ToggleGroup aria-label="Theme">
@@ -196,15 +117,12 @@ describe("ToggleGroup", () => {
   });
 
   describe("structure", () => {
-    it("renders the shared indicator and clipped glass layer", () => {
+    it("renders the clipped glass layer", () => {
       render(<ThemeGroup />);
 
       const group = getGroup("Theme");
-      const indicator = getSlot(group, "indicator");
       const glass = getSlot(group, "glass");
 
-      expect(indicator).toHaveAttribute("aria-hidden", "true");
-      expect(indicator).toHaveAttribute("data-visible", "false");
       expect(glass).toHaveAttribute("aria-hidden", "true");
       expect(glass).toHaveClass(
         "overflow-hidden",
@@ -214,39 +132,14 @@ describe("ToggleGroup", () => {
       expect(
         glass.querySelector('[data-layer="rim"]'),
       ).toHaveClass("ui-glass-rim");
-      expect(indicator).not.toHaveAttribute("data-slot", "item");
     });
 
-    it("stores each item value for stable indicator targeting", () => {
-      render(<ThemeGroup />);
-
-      const items = getItems(getGroup("Theme"));
-
-      expect(items[0]).toHaveAttribute("data-value", "light");
-      expect(items[1]).toHaveAttribute("data-value", "dark");
-      expect(items[2]).toHaveAttribute("data-value", "dim");
-    });
-
-    it("merges className and ui into their slots", () => {
+    it("applies className to the group and item roots", () => {
       render(
-        <ToggleGroup
-          aria-label="Styled"
-          className="custom-root"
-          ui={{
-            root: "slot-root",
-            glass: "slot-glass",
-            indicator: "slot-indicator",
-          }}
-        >
+        <ToggleGroup aria-label="Styled" className="custom-root">
           <ToggleGroupItem
             value="one"
             className="custom-item"
-            ui={{
-              root: "slot-item",
-              content: "slot-content",
-              icon: "slot-icon",
-              label: "slot-label",
-            }}
             icon={<svg />}
           >
             One
@@ -257,62 +150,54 @@ describe("ToggleGroup", () => {
       const group = getGroup("Styled");
       const item = screen.getByRole("button", { name: "One" });
 
-      expect(group).toHaveClass("custom-root", "slot-root");
-      expect(getSlot(group, "glass")).toHaveClass("slot-glass");
-      expect(getSlot(group, "indicator")).toHaveClass("slot-indicator");
-      expect(item).toHaveClass("custom-item", "slot-item");
-      expect(getSlot(item, "content")).toHaveClass("slot-content");
-      expect(getSlot(item, "icon")).toHaveClass("slot-icon");
-      expect(getSlot(item, "label")).toHaveClass("slot-label");
+      expect(group).toHaveClass("custom-root");
+      expect(getSlot(group, "glass")).not.toHaveClass("custom-root");
+      expect(group.querySelector('[data-layer="rim"]')).not.toHaveClass(
+        "custom-root",
+      );
+      expect(item).toHaveClass("custom-item");
+      expect(getSlot(item, "content")).not.toHaveClass("custom-item");
+      expect(getSlot(item, "icon")).not.toHaveClass("custom-item");
+      expect(getSlot(item, "label")).not.toHaveClass("custom-item");
     });
 
-    it("resolves className callbacks with Base UI state", async () => {
-      const user = userEvent.setup();
-      const { rerender } = render(
-        <ToggleGroup
-          aria-label="Stateful"
-          defaultValue={["one"]}
-          className={(state) =>
-            state.disabled ? "group-disabled" : "group-enabled"
-          }
-        >
-          <ToggleGroupItem
-            value="one"
-            aria-label="One"
-            className={(state) =>
-              state.pressed ? "item-pressed" : "item-unpressed"
-            }
-          />
-          <ToggleGroupItem value="two" aria-label="Two" />
+    it("merges Tailwind classes with the themed roots", () => {
+      render(
+        <ToggleGroup aria-label="Merged" className="rounded-none">
+          <ToggleGroupItem value="one" aria-label="One" className="rounded-none">
+            One
+          </ToggleGroupItem>
         </ToggleGroup>,
       );
 
-      let group = getGroup("Stateful");
-      let item = getItems(group)[0];
+      const group = getGroup("Merged");
+      const item = getItems(group)[0];
 
-      expect(group).toHaveClass("group-enabled");
-      expect(item).toHaveClass("item-pressed");
+      expect(group).toHaveClass("rounded-none");
+      expect(group).not.toHaveClass("rounded-full");
+      expect(item).toHaveClass("rounded-none");
+      expect(item).not.toHaveClass("rounded-full");
+    });
 
-      await user.click(getItems(group)[1]);
-
-      group = getGroup("Stateful");
-      item = getItems(group)[0];
-
-      expect(item).toHaveClass("item-unpressed");
-
-      rerender(
-        <ToggleGroup
-          aria-label="Stateful"
-          disabled
-          className={(state) =>
-            state.disabled ? "group-disabled" : "group-enabled"
-          }
-        >
-          <ToggleGroupItem value="one" aria-label="One" />
-        </ToggleGroup>,
+    it("does not accept a ui prop", () => {
+      const element = (
+        <>
+          {/* @ts-expect-error ToggleGroup no longer accepts a ui prop. */}
+          <ToggleGroup aria-label="Internal" ui={{ root: "rounded-none" }}>
+            <ToggleGroupItem value="one" aria-label="One" />
+          </ToggleGroup>
+          <ToggleGroup aria-label="Internal">
+            <ToggleGroupItem
+              value="one"
+              aria-label="One"
+              // @ts-expect-error ToggleGroupItem no longer accepts a ui prop.
+              ui={{ root: "rounded-none" }}
+            />
+          </ToggleGroup>
+        </>
       );
 
-      expect(getGroup("Stateful")).toHaveClass("group-disabled");
+      expect(element).toBeTruthy();
     });
 
     it("does not accept inline styles on the group or item", () => {
@@ -372,7 +257,7 @@ describe("ToggleGroup", () => {
       item = getItems(group)[0];
 
       expect(group).toHaveClass("[--ui-toggle-group-item-height:24px]");
-      expect(item).toHaveAttribute("data-size", "xs");
+      expect(item).toHaveClass("h-[var(--ui-toggle-group-item-height)]");
     });
 
     it("marks multiple and vertical groups", () => {
@@ -487,50 +372,6 @@ describe("ToggleGroup", () => {
       expect(dark).toHaveAttribute("aria-pressed", "false");
     });
 
-    it("normalizes the value when multiple is disabled", async () => {
-      const { rerender } = render(
-        <ToggleGroup
-          aria-label="Formatting"
-          multiple
-          defaultValue={["bold", "italic"]}
-        >
-          <ToggleGroupItem value="bold" aria-label="Bold">
-            Bold
-          </ToggleGroupItem>
-          <ToggleGroupItem value="italic" aria-label="Italic">
-            Italic
-          </ToggleGroupItem>
-        </ToggleGroup>,
-      );
-
-      const bold = screen.getByRole("button", { name: "Bold" });
-      const italic = screen.getByRole("button", { name: "Italic" });
-
-      expect(bold).toHaveAttribute("aria-pressed", "true");
-      expect(italic).toHaveAttribute("aria-pressed", "true");
-
-      rerender(
-        <ToggleGroup
-          aria-label="Formatting"
-          multiple={false}
-          defaultValue={["bold", "italic"]}
-        >
-          <ToggleGroupItem value="bold" aria-label="Bold">
-            Bold
-          </ToggleGroupItem>
-          <ToggleGroupItem value="italic" aria-label="Italic">
-            Italic
-          </ToggleGroupItem>
-        </ToggleGroup>,
-      );
-
-      await waitFor(() => {
-        expect(italic).toHaveAttribute("aria-pressed", "false");
-      });
-
-      expect(bold).toHaveAttribute("aria-pressed", "true");
-    });
-
     it("does not change when disabled", async () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
@@ -577,262 +418,8 @@ describe("ToggleGroup", () => {
     });
   });
 
-  describe("indicator", () => {
-    it("unobserves items that are removed from the group", async () => {
-      MockResizeObserver.instances = [];
-      vi.stubGlobal("ResizeObserver", MockResizeObserver);
-
-      const { rerender } = render(
-        <ToggleGroup aria-label="Theme" defaultValue={["light"]}>
-          <ToggleGroupItem value="light" aria-label="Light">
-            Light
-          </ToggleGroupItem>
-          <ToggleGroupItem value="dark" aria-label="Dark">
-            Dark
-          </ToggleGroupItem>
-        </ToggleGroup>,
-      );
-
-      const [dark] = screen.getAllByRole("button", { name: "Dark" });
-      const observer = MockResizeObserver.instances[0];
-
-      expect(observer?.observed).toContain(dark);
-
-      rerender(
-        <ToggleGroup aria-label="Theme" defaultValue={["light"]}>
-          <ToggleGroupItem value="light" aria-label="Light">
-            Light
-          </ToggleGroupItem>
-        </ToggleGroup>,
-      );
-
-      await waitFor(() => {
-        expect(observer?.unobserved).toContain(dark);
-      });
-    });
-
-    it("tracks the pressed item geometry", async () => {
-      const user = userEvent.setup();
-
-      render(<ThemeGroup />);
-
-      const group = getGroup("Theme");
-      const items = getItems(group);
-      const indicator = getSlot(group, "indicator");
-
-      mockGeometry(items, [
-        { x: 4, y: 4, width: 44, height: 32 },
-        { x: 50, y: 4, width: 44, height: 32 },
-        { x: 96, y: 4, width: 44, height: 32 },
-      ]);
-
-      await user.click(items[1]!);
-
-      await waitFor(() => {
-        expect(
-          indicator.style.getPropertyValue("--ui-toggle-group-indicator-x"),
-        ).toBe("50px");
-      });
-
-      expect(
-        indicator.style.getPropertyValue("--ui-toggle-group-indicator-y"),
-      ).toBe("4px");
-      expect(
-        indicator.style.getPropertyValue("--ui-toggle-group-indicator-width"),
-      ).toBe("44px");
-      expect(
-        indicator.style.getPropertyValue("--ui-toggle-group-indicator-height"),
-      ).toBe("32px");
-      expect(indicator).toHaveAttribute("data-visible", "true");
-      expect(group).toHaveAttribute("data-has-value", "true");
-
-      await user.click(items[2]!);
-
-      await waitFor(() => {
-        expect(
-          indicator.style.getPropertyValue("--ui-toggle-group-indicator-x"),
-        ).toBe("96px");
-      });
-
-      expect(group.style.getPropertyValue("--ui-toggle-group-origin")).toBe(
-        "left center",
-      );
-      expect(group).toHaveAttribute("data-animating", "true");
-
-      await user.click(items[1]!);
-
-      await waitFor(() => {
-        expect(
-          indicator.style.getPropertyValue("--ui-toggle-group-indicator-x"),
-        ).toBe("50px");
-      });
-
-      expect(group.style.getPropertyValue("--ui-toggle-group-origin")).toBe(
-        "right center",
-      );
-    });
-
-    it("tracks the pressed item geometry in a vertical group", async () => {
-      const user = userEvent.setup();
-
-      render(
-        <ToggleGroup
-          aria-label="Position"
-          defaultValue={["top"]}
-          orientation="vertical"
-        >
-          <ToggleGroupItem value="top" aria-label="Top">
-            Top
-          </ToggleGroupItem>
-          <ToggleGroupItem value="middle" aria-label="Middle">
-            Middle
-          </ToggleGroupItem>
-          <ToggleGroupItem value="bottom" aria-label="Bottom">
-            Bottom
-          </ToggleGroupItem>
-        </ToggleGroup>,
-      );
-
-      const group = getGroup("Position");
-      const items = getItems(group);
-      const indicator = getSlot(group, "indicator");
-
-      mockGeometry(items, [
-        { x: 4, y: 4, width: 74, height: 32 },
-        { x: 4, y: 38, width: 74, height: 32 },
-        { x: 4, y: 72, width: 74, height: 32 },
-      ]);
-
-      await user.click(items[1]!);
-
-      await waitFor(() => {
-        expect(
-          indicator.style.getPropertyValue("--ui-toggle-group-indicator-y"),
-        ).toBe("38px");
-      });
-
-      expect(
-        indicator.style.getPropertyValue("--ui-toggle-group-indicator-x"),
-      ).toBe("4px");
-      expect(
-        indicator.style.getPropertyValue("--ui-toggle-group-indicator-width"),
-      ).toBe("74px");
-      expect(
-        indicator.style.getPropertyValue("--ui-toggle-group-indicator-height"),
-      ).toBe("32px");
-
-      await user.click(items[2]!);
-
-      await waitFor(() => {
-        expect(
-          indicator.style.getPropertyValue("--ui-toggle-group-indicator-y"),
-        ).toBe("72px");
-      });
-
-      expect(group.style.getPropertyValue("--ui-toggle-group-origin")).toBe(
-        "center top",
-      );
-
-      await user.click(items[0]!);
-
-      await waitFor(() => {
-        expect(
-          indicator.style.getPropertyValue("--ui-toggle-group-indicator-y"),
-        ).toBe("4px");
-      });
-
-      expect(group.style.getPropertyValue("--ui-toggle-group-origin")).toBe(
-        "center bottom",
-      );
-    });
-
-    it("does not animate when layout moves the selected item", async () => {
-      MockResizeObserver.instances = [];
-      vi.stubGlobal("ResizeObserver", MockResizeObserver);
-      const user = userEvent.setup();
-
-      render(<ThemeGroup />);
-
-      const group = getGroup("Theme");
-      const items = getItems(group);
-      const indicator = getSlot(group, "indicator");
-
-      mockGeometry(items, [
-        { x: 4, y: 4, width: 44, height: 32 },
-        { x: 50, y: 4, width: 44, height: 32 },
-        { x: 96, y: 4, width: 44, height: 32 },
-      ]);
-
-      act(() => {
-        MockResizeObserver.instances.forEach((observer) => observer.trigger());
-      });
-
-      await waitFor(() => {
-        expect(indicator).toHaveAttribute("data-visible", "true");
-      });
-
-      await user.click(items[1]!);
-
-      await waitFor(() => {
-        expect(group).toHaveAttribute("data-animating", "true");
-      });
-
-      await waitFor(
-        () => {
-          expect(group).not.toHaveAttribute("data-animating");
-        },
-        { timeout: 1000 },
-      );
-
-      Object.defineProperty(items[0], "offsetWidth", {
-        configurable: true,
-        value: 60,
-      });
-      Object.defineProperty(items[1], "offsetLeft", {
-        configurable: true,
-        value: 66,
-      });
-
-      act(() => {
-        MockResizeObserver.instances.forEach((observer) => observer.trigger());
-      });
-
-      await waitFor(() => {
-        expect(
-          indicator.style.getPropertyValue("--ui-toggle-group-indicator-x"),
-        ).toBe("66px");
-      });
-
-      expect(group).not.toHaveAttribute("data-animating");
-    });
-
-    it("hides the indicator when nothing is pressed", async () => {
-      const user = userEvent.setup();
-
-      render(<ThemeGroup />);
-
-      const group = getGroup("Theme");
-      const items = getItems(group);
-      const indicator = getSlot(group, "indicator");
-
-      mockGeometry(items, [
-        { x: 4, y: 4, width: 44, height: 32 },
-        { x: 50, y: 4, width: 44, height: 32 },
-        { x: 96, y: 4, width: 44, height: 32 },
-      ]);
-
-      await user.click(items[0]!);
-
-      await waitFor(() => {
-        expect(indicator).toHaveAttribute("data-visible", "false");
-      });
-
-      expect(group).toHaveAttribute("data-has-value", "false");
-    });
-  });
-
   describe("theme recipe", () => {
-    it("defines the group, indicator, and item slots", () => {
+    it("defines the group and item slots", () => {
       const styles = theme();
 
       expect(Object.keys(styles).sort()).toEqual([
@@ -840,14 +427,14 @@ describe("ToggleGroup", () => {
         "content",
         "glass",
         "icon",
-        "indicator",
         "item",
         "label",
+        "rim",
         "root",
       ]);
     });
 
-    it("builds the liquid glass group and sliding indicator", () => {
+    it("builds the liquid glass group and selected item", () => {
       const styles = theme();
 
       expect(styles.root()).not.toContain("ui-glass");
@@ -866,9 +453,6 @@ describe("ToggleGroup", () => {
       expect(styles.glass()).not.toContain("border-glass-inner-border");
       expect(styles.root()).not.toContain("before:absolute");
       expect(styles.root()).not.toContain("after:absolute");
-      expect(styles.root()).toContain(
-        "[--ui-toggle-group-indicator-x:0px]",
-      );
       expect(styles.root()).toContain("data-[orientation=vertical]:flex-col");
       expect(styles.root()).toContain(
         "data-[orientation=vertical]:items-stretch",
@@ -876,35 +460,22 @@ describe("ToggleGroup", () => {
       expect(styles.root()).toContain(
         "data-[orientation=vertical]:rounded-[var(--ui-toggle-group-vertical-radius)]",
       );
-      expect(styles.indicator()).toContain(
-        "[translate:var(--ui-toggle-group-indicator-x)_var(--ui-toggle-group-indicator-y)]",
-      );
       expect(styles.root()).toContain(
         "[--ui-toggle-group-thumb:color-mix(in_srgb,var(--ui-ink)_12%,transparent)]",
-      );
-      expect(styles.indicator()).toContain(
-        "border-[var(--ui-toggle-group-thumb-rim)]",
-      );
-      expect(styles.indicator()).toContain(
-        "bg-[var(--ui-toggle-group-thumb)]",
-      );
-      expect(styles.indicator()).toContain(
-        "shadow-[var(--ui-toggle-group-thumb-shadow)]",
-      );
-      expect(styles.indicator()).toContain("data-[visible=false]:opacity-0");
-      expect(styles.indicator()).toContain(
-        "group-data-[multiple]/toggle-group:hidden",
-      );
-      expect(styles.indicator()).toContain(
-        "group-data-[orientation=horizontal]/toggle-group:data-[animating=true]:scale-x-110",
-      );
-      expect(styles.indicator()).toContain(
-        "group-data-[orientation=vertical]/toggle-group:data-[animating=true]:scale-y-110",
       );
       expect(styles.item()).toContain("hover:text-ui-ink-active");
       expect(styles.item()).toContain("data-[pressed]:text-ui-ink");
       expect(styles.item()).toContain(
-        "group-data-[multiple]/toggle-group:data-[pressed]:bg-[var(--ui-toggle-group-thumb)]",
+        "before:bg-[var(--ui-toggle-group-thumb)]",
+      );
+      expect(styles.item()).toContain(
+        "before:shadow-[var(--ui-toggle-group-thumb-shadow)]",
+      );
+      expect(styles.item()).toContain(
+        "before:ring-1 before:ring-ui-glass-rim before:ring-inset",
+      );
+      expect(styles.item()).toContain(
+        "data-[pressed]:before:[animation:ui-toggle-group-select_240ms_ease-out]",
       );
       expect(styles.item()).toContain(
         "group-data-[orientation=vertical]/toggle-group:self-stretch",
@@ -984,7 +555,7 @@ describe("ToggleGroup", () => {
       const slots = [
         styles.root,
         styles.glass,
-        styles.indicator,
+        styles.rim,
         styles.item,
         styles.content,
         styles.icon,

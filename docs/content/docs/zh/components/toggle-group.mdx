@@ -1,11 +1,11 @@
 ---
 title: "Toggle Group"
-description: "一组共享液态玻璃滑块的切换按钮，支持单选、多选以及水平或垂直布局。"
+description: "一组带液态玻璃选中态的切换按钮，支持单选、多选以及水平或垂直布局。"
 ---
 
 ## 基础示例
 
-下面的视图切换使用真实 Toggle Group。选中项会驱动共享玻璃滑块，并把当前值同步到下方文字。
+下面的视图切换使用真实 Toggle Group。选中项会显示液态玻璃选中态，并把当前值同步到下方文字。
 
 <Example name="toggle-group/basic" />
 
@@ -17,7 +17,7 @@ description: "一组共享液态玻璃滑块的切换按钮，支持单选、多
 
 ## 选择模式
 
-使用 `multiple` 允许多个 item 同时选中，默认是单选。`multiple` 从 `true` 改为 `false` 时，只保留第一个选中值。
+使用 `multiple` 允许多个 item 同时选中，默认是单选。
 
 <Example name="toggle-group/selection" />
 
@@ -46,12 +46,11 @@ description: "一组共享液态玻璃滑块的切换按钮，支持单选、多
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局和键盘方向。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制 item 高度、内边距、文字和图标尺寸。 |
 | `disabled` | `boolean` | `false` | 禁用所有 item。 |
-| `className` | `string \| ((state) => string \| undefined)` | — | 合并到 group root。回调会收到 Base UI group 状态。 |
-| `ui` | `ToggleGroupStyle` | — | 覆盖内部图层样式。 |
+| `className` | `any` | — | Tailwind 类名，合并到 group root。 |
 
 `ToggleGroup` 还会透传 Base UI `ToggleGroup` 的 `loopFocus`、`render`、`ref` 等属性。
 
-`style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`，主题扩展请使用 `ui` 槽位。
+`style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`。
 
 ### ToggleGroupItem
 
@@ -63,21 +62,8 @@ description: "一组共享液态玻璃滑块的切换按钮，支持单选、多
 | `disabled` | `boolean` | `false` | 禁用该 item。 |
 | `icon` | `ReactNode` | — | item 内的图标。 |
 | `children` | `ReactNode` | — | 文字或自定义内容。 |
-| `className` | `string \| ((state) => string \| undefined)` | — | 合并到 item 按钮。回调会收到 Base UI toggle 状态。 |
-| `ui` | `ToggleGroupItemStyle` | — | 覆盖 item 内部 Slot 样式。 |
+| `className` | `any` | — | Tailwind 类名，合并到 item root。 |
 
 `ToggleGroupItem` 还会透传 Base UI `Toggle` 的 `nativeButton`、`render`、`ref` 等属性。
 
-item 上同样有意禁用 `style`；请使用 `className` 或 `ui` 槽位。
-
-### UI Slots
-
-| 组件 | Slot | 说明 |
-| --- | --- | --- |
-| `ToggleGroup` | `root` | 最外层 group。 |
-| `ToggleGroup` | `glass` | 裁切后的高光层。 |
-| `ToggleGroup` | `indicator` | 共享的移动玻璃滑块。 |
-| `ToggleGroupItem` | `root` | 切换按钮。 |
-| `ToggleGroupItem` | `content` | 图标与文字布局容器。 |
-| `ToggleGroupItem` | `icon` | 图标容器。 |
-| `ToggleGroupItem` | `label` | 文字容器。 |
+item 上同样有意禁用 `style`；请使用 `className`。
