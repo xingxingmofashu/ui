@@ -11,7 +11,7 @@ export default tv({
     viewport:
       "fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4",
     popup: [
-      "relative isolate w-full max-w-md",
+      "relative isolate w-full max-w-md bg-ui-dialog-surface",
       "rounded-[1.75rem] text-ui-ink outline-none",
       "transition-[opacity,scale,translate] duration-200 ease-out",
       "data-[starting-style]:translate-y-2 data-[starting-style]:scale-95 data-[starting-style]:opacity-0",

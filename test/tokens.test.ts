@@ -355,6 +355,8 @@ describe("design tokens", () => {
 
     expect(css).toContain("--ui-ink: #1f1f1f;");
     expect(css).toContain("--ui-ink: #f5f5f5;");
+    expect(css).toContain("--ui-dialog-surface: #fff;");
+    expect(css).toContain("--ui-dialog-surface: #141414;");
     expect(css).toContain("--ui-glass-surface: rgb(0 0 0 / 0.02);");
     expect(css).toContain("--ui-glass-surface: rgb(255 255 255 / 0.06);");
     expect(css).toContain("--ui-glass-inner-border: rgb(0 0 0 / 0.9);");
