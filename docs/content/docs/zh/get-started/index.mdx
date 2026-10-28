@@ -1,0 +1,30 @@
+---
+title: "安装"
+description: "安装 Liquid Glass UI，并在 Tailwind CSS 入口引入玻璃样式。"
+---
+
+需要 Node.js 22+、React 19 与 Tailwind CSS 4。
+
+```bash
+pnpm add @xingxingmofashu/ui
+```
+
+在 Tailwind CSS 入口文件中引入包样式：
+
+```css
+@import "tailwindcss";
+@import "@xingxingmofashu/ui/index.css";
+@source "../node_modules/@xingxingmofashu/ui/dist";
+```
+
+`@source` 需要指向包的 `dist` 目录，Tailwind 才能扫描到组件类名。
+
+然后从包根导入组件：
+
+```tsx
+import { Button } from "@xingxingmofashu/ui";
+
+export function Example() {
+  return <Button label="继续" />;
+}
+```

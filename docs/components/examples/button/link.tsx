@@ -8,7 +8,7 @@ export default function ButtonLinkDemo() {
   return (
     <Button
       nativeButton={false}
-      render={<a href="/docs" />}
+      render={<a href="/en/docs/get-started" />}
       label="Read the docs"
       trailingIcon={<ArrowRight />}
     />

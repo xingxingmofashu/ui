@@ -18,8 +18,6 @@ export const translations = i18n
   });
 
 export function baseOptions(locale: string): BaseLayoutProps {
-  const isZh = locale === "zh";
-
   return {
     nav: {
       url: `/${locale}`,
@@ -40,15 +38,5 @@ export function baseOptions(locale: string): BaseLayoutProps {
     },
     i18n: true,
     githubUrl: "https://github.com/xingxingmofashu/ui",
-    links: [
-      {
-        text: isZh ? "文档" : "Docs",
-        url: `/${locale}/docs`,
-      },
-      {
-        text: isZh ? "组件" : "Components",
-        url: `/${locale}/docs/components/button`,
-      },
-    ],
   };
 }

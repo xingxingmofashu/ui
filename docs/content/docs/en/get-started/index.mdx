@@ -1,0 +1,30 @@
+---
+title: "Installation"
+description: "Install Liquid Glass UI and add the glass styles to your Tailwind CSS entry."
+---
+
+Requires Node.js 22+, React 19, and Tailwind CSS 4.
+
+```bash
+pnpm add @xingxingmofashu/ui
+```
+
+Add the package styles to your Tailwind CSS entry:
+
+```css
+@import "tailwindcss";
+@import "@xingxingmofashu/ui/index.css";
+@source "../node_modules/@xingxingmofashu/ui/dist";
+```
+
+`@source` must point at the package's `dist` directory so Tailwind can scan component class names.
+
+Then import components from the package root:
+
+```tsx
+import { Button } from "@xingxingmofashu/ui";
+
+export function Example() {
+  return <Button label="Continue" />;
+}
+```

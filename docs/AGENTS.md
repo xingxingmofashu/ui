@@ -43,10 +43,10 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
 ## i18n
 
 - `lib/i18n.ts` defines `zh` and `en`, with `parser: "dir"` and `hideLocale: "never"`.
-- `lib/layout.shared.tsx` defines navigation, links, and UI translations.
+- `lib/layout.shared.tsx` defines navigation and UI translations.
 - UI strings use `@fumadocs/language/zh-cn` for Chinese and Fumadocs' English defaults.
 - `app/(root)` is the Chinese home page at `/`; all other localized routes live under `app/[lang]`.
-- The docs sidebar uses the page tree only; `links={[]}` prevents duplicate Docs/Components entries next to pages.
+- The header has no Docs/Components links; the docs sidebar uses the page tree, with Get Started (起步) and Components (组件) as top-level folders.
 - Locale changes perform a full navigation in `components/docs-root-provider.tsx`, so next-themes' theme script is not re-rendered on the client (React 19 warns about script tags).
 
 <!-- BEGIN:nextjs-agent-rules -->
