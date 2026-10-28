@@ -12,6 +12,7 @@ export {
   Button,
   type ButtonStyle,
   type ButtonProps,
+  type ButtonThemeSlot,
 } from "./components/button";
 export {
   Card,

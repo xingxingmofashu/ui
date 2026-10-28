@@ -10,6 +10,7 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { hasContent } from "../lib/has-content";
+import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
 import theme from "../theme/button";
 
 type ButtonThemeSlot =
@@ -80,11 +81,11 @@ function Button({
     Boolean(props["aria-label"]) ||
     Boolean(props["aria-labelledby"]);
   const iconIsDecorative = hasAccessibleName;
-  const rootClassName =
-    typeof className === "function"
-      ? (state: UIButtonState) =>
-          cn(ui.root(), className(state), uiOverrides?.root)
-      : cn(ui.root(), className, uiOverrides?.root);
+  const rootClassName = resolveThemeClassName<UIButtonState>(
+    ui.root(),
+    className,
+    uiOverrides?.root,
+  );
 
   return (
     <UIButton
@@ -139,4 +140,4 @@ function Button({
 }
 
 export { Button };
-export type { ButtonStyle, ButtonProps };
+export type { ButtonStyle, ButtonProps, ButtonThemeSlot };
