@@ -39,15 +39,13 @@ description: "一组带可访问标题的液态玻璃折叠面板。"
 | `multiple` | `boolean` | `false` | 是否允许多个面板同时展开。 |
 | `disabled` | `boolean` | `false` | 禁用所有触发器。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制触发器高度、内边距、文字与指示器尺寸。 |
-| `headingAs` | `"h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6"` | `"h3"` | 包裹每个触发器的标题元素。 |
 | `hiddenUntilFound` | `boolean` | `false` | 使用 `hidden="until-found"` 保留关闭的面板，让浏览器页内查找可以展开匹配内容。 |
 | `keepMounted` | `boolean` | `false` | 关闭时仍保留面板 DOM。 |
-| `className` | `string \| ((state) => string \| undefined)` | — | 合并到 root。回调会收到 Base UI 状态。 |
-| `ui` | `AccordionStyle` | — | 覆盖 root 图层样式。 |
+| `className` | `any` | — | 合并到 root。 |
 
-`Accordion` 还会透传 Base UI `Accordion.Root` 的 `render`、`ref`、`onValueChange` 等属性。
+`Accordion` 还会透传 Base UI `Accordion.Root` 的 `render`、`ref` 等属性。
 
-`style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`，主题扩展请使用 `ui` 槽位。
+`style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`。Accordion 的样式属于内部实现，不支持逐实例修改；请通过共享的 `--ui-glass-*` token 调整。
 
 ### AccordionItem
 
@@ -59,27 +57,8 @@ description: "一组带可访问标题的液态玻璃折叠面板。"
 | `disabled` | `boolean` | `false` | 禁用该 item。 |
 | `onOpenChange` | `(open: boolean, details) => void` | — | 该面板展开或收起时调用。 |
 | `indicator` | `ReactNode` | — | 替换默认的加号指示器。 |
-| `className` | `string \| ((state) => string \| undefined)` | — | 合并到 item root。回调会收到 Base UI item 状态。 |
-| `ui` | `AccordionItemStyle` | — | 覆盖 item 内部 Slot 样式。 |
+| `className` | `any` | — | 合并到 item root。 |
 
 `AccordionItem` 还会透传 Base UI `Accordion.Item` 的 `render`、`ref` 等属性。
 
-item 上同样有意禁用 `style`；请使用 `className` 或 `ui` 槽位。
-
-### UI Slots
-
-| 组件 | Slot | 说明 |
-| --- | --- | --- |
-| `Accordion` | `root` | 最外层 accordion。 |
-| `Accordion` | `glass` | 裁切后的玻璃材质。 |
-| `Accordion` | `overlay` | 内圈高光。 |
-| `Accordion` | `content` | 位于玻璃层上方的 item 布局。 |
-| `AccordionItem` | `root` | item 容器与分隔线。 |
-| `AccordionItem` | `header` | 包裹触发器的标题元素。 |
-| `AccordionItem` | `trigger` | 切换按钮。 |
-| `AccordionItem` | `title` | 触发器内的标题容器。 |
-| `AccordionItem` | `indicator` | 圆形玻璃指示器。 |
-| `AccordionItem` | `indicatorIcon` | 默认加号图标容器。 |
-| `AccordionItem` | `indicatorBar` | 加号图标的横条。 |
-| `AccordionItem` | `panel` | 带高度动画的面板。 |
-| `AccordionItem` | `panelContent` | 带内边距的面板内容。 |
+item 上同样有意禁用 `style`；布局请使用 `className`。

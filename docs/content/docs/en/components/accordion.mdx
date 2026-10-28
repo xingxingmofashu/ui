@@ -39,15 +39,13 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Trigger height, p
 | `multiple` | `boolean` | `false` | Allows more than one panel to stay open. |
 | `disabled` | `boolean` | `false` | Disables every trigger. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and the indicator. |
-| `headingAs` | `"h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6"` | `"h3"` | Heading element wrapped around each trigger. |
 | `hiddenUntilFound` | `boolean` | `false` | Keeps closed panels mounted with `hidden="until-found"` so browser search can reveal them. |
 | `keepMounted` | `boolean` | `false` | Keeps closed panels in the DOM. |
-| `className` | `string \| ((state) => string \| undefined)` | — | Merged into the root. The callback receives Base UI state. |
-| `ui` | `AccordionStyle` | — | Overrides root layers. |
+| `className` | `any` | — | Tailwind classes merged into the root. |
 
-`Accordion` also forwards Base UI `Accordion.Root` props such as `render`, `ref`, and `onValueChange`.
+`Accordion` also forwards Base UI `Accordion.Root` props such as `render` and `ref`.
 
-`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout or the `ui` slots for theme overrides.
+`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout. Accordion styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
 
 ### AccordionItem
 
@@ -59,27 +57,8 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Trigger height, p
 | `disabled` | `boolean` | `false` | Disables this item. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when this panel opens or closes. |
 | `indicator` | `ReactNode` | — | Replaces the default plus indicator. |
-| `className` | `string \| ((state) => string \| undefined)` | — | Merged into the item root. The callback receives Base UI item state. |
-| `ui` | `AccordionItemStyle` | — | Overrides item slots. |
+| `className` | `any` | — | Tailwind classes merged into the item root. |
 
 `AccordionItem` also forwards Base UI `Accordion.Item` props such as `render` and `ref`.
 
-`style` is intentionally not supported on the item either; use `className` or `ui` slots.
-
-### UI Slots
-
-| Component | Slot | Description |
-| --- | --- | --- |
-| `Accordion` | `root` | Outermost accordion. |
-| `Accordion` | `glass` | Clipped glass material. |
-| `Accordion` | `overlay` | Inner rim highlight. |
-| `Accordion` | `content` | Item layout above the glass layer. |
-| `AccordionItem` | `root` | Item wrapper and divider. |
-| `AccordionItem` | `header` | Heading element around the trigger. |
-| `AccordionItem` | `trigger` | Toggle button. |
-| `AccordionItem` | `title` | Title wrapper inside the trigger. |
-| `AccordionItem` | `indicator` | Circular glass indicator. |
-| `AccordionItem` | `indicatorIcon` | Default plus icon wrapper. |
-| `AccordionItem` | `indicatorBar` | Plus icon bar. |
-| `AccordionItem` | `panel` | Animated panel surface. |
-| `AccordionItem` | `panelContent` | Padded panel content. |
+`style` is intentionally not supported on the item either; use `className` for layout.

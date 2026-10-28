@@ -3,126 +3,62 @@
 import { Accordion as UIAccordion } from "@base-ui/react/accordion";
 import { cn } from "cn";
 import * as React from "react";
+import { type VariantProps } from "tailwind-variants";
 
-import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
-import { withoutStyle } from "../lib/without-style";
 import theme from "../theme/accordion";
 
-type AccordionSize = "xs" | "sm" | "md" | "lg" | "xl";
+type AccordionProps<Value extends string = string> = Omit<
+  UIAccordion.Root.Props<Value>,
+  "className" | "style" | "children"
+> &
+  VariantProps<typeof theme> & {
+    /** Tailwind classes merged into the root. */
+    className?: any;
+    children?: React.ReactNode;
+  };
 
-type AccordionHeading = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-
-type AccordionThemeSlot = "root" | "glass" | "overlay" | "content";
-
-type AccordionStyle = Partial<Record<AccordionThemeSlot, string>>;
-
-type AccordionItemThemeSlot =
-  | "root"
-  | "header"
-  | "trigger"
-  | "title"
-  | "indicator"
-  | "indicatorIcon"
-  | "indicatorBar"
-  | "panel"
-  | "panelContent";
-
-type AccordionItemStyle = Partial<Record<AccordionItemThemeSlot, string>>;
-
-type AccordionContextValue = {
-  size: AccordionSize;
-  headingAs: AccordionHeading;
-};
-
-const AccordionContext = React.createContext<AccordionContextValue | null>(
-  null,
-);
-
-type AccordionClassName<Value extends string> =
-  UIAccordion.Root.Props<Value>["className"];
-
-interface AccordionProps<Value extends string = string>
-  extends Omit<
-    UIAccordion.Root.Props<Value>,
-    "className" | "style" | "children"
-  > {
-  /** Classes merged into the root. Accepts a callback that receives Base UI's accordion state. */
-  className?: AccordionClassName<Value>;
-  /** Classes for individual root layers. */
-  ui?: AccordionStyle;
-  /** Control size; defaults to `md`. */
-  size?: AccordionSize;
-  /** Heading element used for every trigger; defaults to `h3`. */
-  headingAs?: AccordionHeading;
-  children?: React.ReactNode;
-}
-
-type AccordionItemClassName = UIAccordion.Item.Props["className"];
-
-interface AccordionItemProps
-  extends Omit<
-    UIAccordion.Item.Props,
-    "className" | "children" | "style" | "value" | "title"
-  > {
+type AccordionItemProps = Omit<
+  UIAccordion.Item.Props,
+  "className" | "children" | "style" | "value" | "title"
+> & {
   /** Value that identifies the item in the accordion value. */
   value: string;
   /** Visible heading inside the trigger. */
   title: React.ReactNode;
   /** Panel content. */
   children?: React.ReactNode;
-  /** Classes merged into the item root. Accepts a callback that receives Base UI's item state. */
-  className?: AccordionItemClassName;
-  /** Classes for individual item slots. */
-  ui?: AccordionItemStyle;
+  /** Tailwind classes merged into the item root. */
+  className?: any;
   /** Replaces the default plus indicator. */
   indicator?: React.ReactNode;
-}
+};
 
 function Accordion<Value extends string = string>({
   className,
-  ui: uiOverrides,
   size,
-  headingAs = "h3",
   children,
   ...props
 }: AccordionProps<Value>) {
   const ui = theme({ size });
-  const rootClassName = resolveThemeClassName<UIAccordion.Root.State<Value>>(
-    ui.root(),
-    className,
-    uiOverrides?.root,
-  );
 
   return (
-    <AccordionContext.Provider
-      value={{ size: size ?? "md", headingAs }}
+    <UIAccordion.Root
+      {...props}
+      data-slot="root"
+      className={cn(ui.root(), className)}
     >
-      <UIAccordion.Root
-        {...withoutStyle(props)}
-        data-slot="root"
-        data-size={size ?? "md"}
-        className={rootClassName}
-      >
+      <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
         <span
           aria-hidden="true"
-          data-slot="glass"
-          className={cn(ui.glass(), uiOverrides?.glass)}
-        >
-          <span
-            aria-hidden="true"
-            data-slot="overlay"
-            className={cn(ui.overlay(), uiOverrides?.overlay)}
-          />
-        </span>
+          data-slot="overlay"
+          className={ui.overlay()}
+        />
+      </span>
 
-        <div
-          data-slot="content"
-          className={cn(ui.content(), uiOverrides?.content)}
-        >
-          {children}
-        </div>
-      </UIAccordion.Root>
-    </AccordionContext.Provider>
+      <div data-slot="content" className={ui.content()}>
+        {children}
+      </div>
+    </UIAccordion.Root>
   );
 }
 
@@ -131,62 +67,36 @@ function AccordionItem({
   title,
   children,
   className,
-  ui: uiOverrides,
   indicator,
   ...props
 }: AccordionItemProps) {
-  const context = React.useContext(AccordionContext);
-  const size = context?.size ?? "md";
-  const headingAs = context?.headingAs ?? "h3";
-  const ui = theme({ size });
-  const itemClassName = resolveThemeClassName<UIAccordion.Item.State>(
-    ui.item(),
-    className,
-    uiOverrides?.root,
-  );
+  const ui = theme();
 
   return (
     <UIAccordion.Item
-      {...withoutStyle(props)}
+      {...props}
       value={value}
       data-slot="item"
-      data-size={size}
-      className={itemClassName}
+      className={cn(ui.item(), className)}
     >
-      <UIAccordion.Header
-        data-slot="header"
-        render={React.createElement(headingAs)}
-        className={cn(ui.header(), uiOverrides?.header)}
-      >
-        <UIAccordion.Trigger
-          data-slot="trigger"
-          className={cn(ui.trigger(), uiOverrides?.trigger)}
-        >
-          <span
-            data-slot="title"
-            className={cn(ui.title(), uiOverrides?.title)}
-          >
+      <UIAccordion.Header data-slot="header" className={ui.header()}>
+        <UIAccordion.Trigger data-slot="trigger" className={ui.trigger()}>
+          <span data-slot="title" className={ui.title()}>
             {title}
           </span>
 
           <span
             aria-hidden="true"
             data-slot="indicator"
-            className={cn(ui.indicator(), uiOverrides?.indicator)}
+            className={ui.indicator()}
           >
             {indicator ?? (
-              <span
-                data-slot="indicator-icon"
-                className={cn(ui.indicatorIcon(), uiOverrides?.indicatorIcon)}
-              >
-                <span
-                  data-slot="indicator-bar"
-                  className={cn(ui.indicatorBar(), uiOverrides?.indicatorBar)}
-                />
+              <span data-slot="indicator-icon" className={ui.indicatorIcon()}>
+                <span data-slot="indicator-bar" className={ui.indicatorBar()} />
                 <span
                   data-slot="indicator-bar"
                   data-orientation="vertical"
-                  className={cn(ui.indicatorBar(), uiOverrides?.indicatorBar)}
+                  className={ui.indicatorBar()}
                 />
               </span>
             )}
@@ -194,14 +104,8 @@ function AccordionItem({
         </UIAccordion.Trigger>
       </UIAccordion.Header>
 
-      <UIAccordion.Panel
-        data-slot="panel"
-        className={cn(ui.panel(), uiOverrides?.panel)}
-      >
-        <div
-          data-slot="panel-content"
-          className={cn(ui.panelContent(), uiOverrides?.panelContent)}
-        >
+      <UIAccordion.Panel data-slot="panel" className={ui.panel()}>
+        <div data-slot="panel-content" className={ui.panelContent()}>
           {children}
         </div>
       </UIAccordion.Panel>
@@ -210,11 +114,4 @@ function AccordionItem({
 }
 
 export { Accordion, AccordionItem };
-export type {
-  AccordionHeading,
-  AccordionItemProps,
-  AccordionItemStyle,
-  AccordionProps,
-  AccordionSize,
-  AccordionStyle,
-};
+export type { AccordionItemProps, AccordionProps };

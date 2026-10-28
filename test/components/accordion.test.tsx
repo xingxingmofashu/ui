@@ -103,17 +103,6 @@ describe("Accordion", () => {
       expect(screen.queryByText(copy.returns)).not.toBeInTheDocument();
     });
 
-    it("renders a configurable heading level", () => {
-      render(<BasicAccordion headingAs="h2" />);
-
-      const heading = screen.getByRole("heading", {
-        level: 2,
-        name: "How long does shipping take?",
-      });
-
-      expect(heading.tagName).toBe("H2");
-    });
-
     it("keeps the material in a private aria-hidden layer", () => {
       render(<BasicAccordion />);
 
@@ -322,34 +311,10 @@ describe("Accordion", () => {
   });
 
   describe("styling", () => {
-    it("merges className and ui into their slots", () => {
+    it("applies className to the root and item only", () => {
       render(
-        <Accordion
-          defaultValue={["one"]}
-          className="custom-root"
-          ui={{
-            root: "slot-root",
-            glass: "slot-glass",
-            overlay: "slot-overlay",
-            content: "slot-content",
-          }}
-        >
-          <AccordionItem
-            value="one"
-            title="One"
-            className="custom-item"
-            ui={{
-              root: "slot-item",
-              header: "slot-header",
-              trigger: "slot-trigger",
-              title: "slot-title",
-              indicator: "slot-indicator",
-              indicatorIcon: "slot-indicator-icon",
-              indicatorBar: "slot-indicator-bar",
-              panel: "slot-panel",
-              panelContent: "slot-panel-content",
-            }}
-          >
+        <Accordion defaultValue={["one"]} className="custom-root">
+          <AccordionItem value="one" title="One" className="custom-item">
             Panel
           </AccordionItem>
         </Accordion>,
@@ -359,71 +324,34 @@ describe("Accordion", () => {
       const item = getSlot(root, "item");
       const trigger = getButton("One");
 
-      expect(root).toHaveClass("custom-root", "slot-root");
-      expect(getSlot(root, "glass")).toHaveClass("slot-glass");
-      expect(getSlot(root, "overlay")).toHaveClass("slot-overlay");
-      expect(getSlot(root, "content")).toHaveClass("slot-content");
-      expect(item).toHaveClass("custom-item", "slot-item");
-      expect(getSlot(item, "header")).toHaveClass("slot-header");
-      expect(trigger).toHaveClass("slot-trigger");
-      expect(getSlot(trigger, "title")).toHaveClass("slot-title");
-      expect(getSlot(trigger, "indicator")).toHaveClass("slot-indicator");
-      expect(getSlot(trigger, "indicator-icon")).toHaveClass(
-        "slot-indicator-icon",
-      );
-      expect(getSlot(trigger, "indicator-bar")).toHaveClass(
-        "slot-indicator-bar",
-      );
-      expect(getSlot(item, "panel")).toHaveClass("slot-panel");
-      expect(getSlot(item, "panel-content")).toHaveClass(
-        "slot-panel-content",
-      );
+      expect(root).toHaveClass("custom-root");
+      expect(item).toHaveClass("custom-item");
+      expect(trigger).not.toHaveClass("custom-root", "custom-item");
+      expect(getSlot(root, "glass")).not.toHaveClass("custom-root");
+      expect(getSlot(root, "content")).not.toHaveClass("custom-root");
+      expect(getSlot(item, "header")).not.toHaveClass("custom-item");
+      expect(getSlot(item, "panel")).not.toHaveClass("custom-item");
     });
 
-    it("resolves className callbacks with Base UI state", async () => {
-      const user = userEvent.setup();
-      const { rerender } = render(
-        <Accordion
-          defaultValue={["one"]}
-          className={(state) =>
-            state.disabled ? "root-disabled" : "root-enabled"
-          }
-        >
-          <AccordionItem
-            value="one"
-            title="One"
-            className={(state) => (state.open ? "item-open" : "item-closed")}
-          >
-            Panel
-          </AccordionItem>
-        </Accordion>,
+    it("does not accept a ui prop", () => {
+      const element = (
+        <>
+          {/* @ts-expect-error Accordion no longer accepts a ui prop. */}
+          <Accordion ui={{ root: "custom-root" }}>
+            <AccordionItem value="one" title="One">
+              Panel
+            </AccordionItem>
+          </Accordion>
+          <Accordion>
+            {/* @ts-expect-error AccordionItem no longer accepts a ui prop. */}
+            <AccordionItem value="one" title="One" ui={{ item: "custom-item" }}>
+              Panel
+            </AccordionItem>
+          </Accordion>
+        </>
       );
 
-      let root = getRoot("One");
-
-      expect(root).toHaveClass("root-enabled");
-      expect(getSlot(root, "item")).toHaveClass("item-open");
-
-      await user.click(getButton("One"));
-
-      root = getRoot("One");
-
-      expect(getSlot(root, "item")).toHaveClass("item-closed");
-
-      rerender(
-        <Accordion
-          disabled
-          className={(state) =>
-            state.disabled ? "root-disabled" : "root-enabled"
-          }
-        >
-          <AccordionItem value="one" title="One">
-            Panel
-          </AccordionItem>
-        </Accordion>,
-      );
-
-      expect(getRoot("One")).toHaveClass("root-disabled");
+      expect(element).toBeTruthy();
     });
 
     it("does not accept inline styles on the root or item", () => {
@@ -464,7 +392,7 @@ describe("Accordion", () => {
       expect(ref.current).toBe(root);
     });
 
-    it("applies the default md size and forwards size to items", () => {
+    it("applies the default md size and shares it with items", () => {
       const { rerender } = render(<BasicAccordion />);
 
       let root = getRoot("How long does shipping take?");
@@ -474,7 +402,6 @@ describe("Accordion", () => {
       expect(button).toHaveClass(
         "min-h-[var(--ui-accordion-trigger-height)]",
       );
-      expect(getSlot(root, "item")).toHaveAttribute("data-size", "md");
 
       rerender(<BasicAccordion size="xs" />);
 
@@ -482,7 +409,9 @@ describe("Accordion", () => {
       button = getButton("How long does shipping take?");
 
       expect(root).toHaveClass("[--ui-accordion-trigger-height:36px]");
-      expect(getSlot(root, "item")).toHaveAttribute("data-size", "xs");
+      expect(button).toHaveClass(
+        "min-h-[var(--ui-accordion-trigger-height)]",
+      );
     });
   });
 
