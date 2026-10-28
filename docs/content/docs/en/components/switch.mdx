@@ -50,9 +50,10 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
 | `disabled` | `boolean` | `false` | Disables the switch. |
 | `readOnly` | `boolean` | `false` | Keeps the switch from toggling. |
 | `className` | `string` | — | Merged into the outermost `root`. |
-| `ui` | `Partial<Record<SwitchSlot, string>>` | — | Overrides internal slot styles. |
+| `style` | `CSSProperties` | — | Inline styles merged into the outermost `root`. |
+| `ui` | `Partial<Record<SwitchThemeSlot, string>>` | — | Overrides internal slot styles. |
 
-All other props are forwarded to Base UI's `Switch.Root`.
+All other props are forwarded to Base UI's `Switch.Root`, including `required`, `name`, `form`, `value`, `uncheckedValue`, `inputRef`, `nativeButton`, `render`, and `ref`.
 
 ### UI Slots
 

@@ -244,6 +244,22 @@ describe("Switch", () => {
       expect(getRoot(switchElement)).toHaveStyle({ width: "120px" });
     });
 
+    it("forwards nativeButton and render to the Base UI switch", () => {
+      render(
+        <Switch
+          aria-label="Native switch"
+          nativeButton
+          render={<button type="button" />}
+        />,
+      );
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Native switch",
+      });
+
+      expect(switchElement.tagName).toBe("BUTTON");
+    });
+
     it("does not render arbitrary children", () => {
       render(
         // @ts-expect-error Switch owns its internal children.

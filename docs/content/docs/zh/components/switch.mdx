@@ -50,9 +50,10 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `disabled` | `boolean` | `false` | 禁用开关。 |
 | `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
 | `className` | `string` | — | 合并到最外层 `root`。 |
-| `ui` | `Partial<Record<SwitchSlot, string>>` | — | 覆盖内部 Slot 样式。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到最外层 `root`。 |
+| `ui` | `Partial<Record<SwitchThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
-其余属性会透传给 Base UI 的 `Switch.Root`。
+其余属性会透传给 Base UI 的 `Switch.Root`，包括 `required`、`name`、`form`、`value`、`uncheckedValue`、`inputRef`、`nativeButton`、`render` 和 `ref`。
 
 ### UI Slots
 

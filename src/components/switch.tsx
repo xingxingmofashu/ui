@@ -7,7 +7,7 @@ import * as React from "react";
 import { hasContent } from "../lib/has-content";
 import theme from "../theme/switch";
 
-type SwitchSlot =
+type SwitchThemeSlot =
   | "root"
   | "container"
   | "base"
@@ -16,7 +16,7 @@ type SwitchSlot =
   | "label"
   | "description";
 
-type SwitchStyle = Partial<Record<SwitchSlot, string>>;
+type SwitchStyle = Partial<Record<SwitchThemeSlot, string>>;
 
 type SwitchSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -35,10 +35,8 @@ type SwitchAccessibleName =
 
 type SwitchRootProps = React.ComponentProps<typeof UISwitch.Root>;
 
-type SwitchProps = Omit<
-  SwitchRootProps,
-  "className" | "nativeButton" | "children" | "style"
-> & {
+interface SwitchBaseProps
+  extends Omit<SwitchRootProps, "className" | "children" | "style"> {
   /** Classes merged into the outer root. Use `ui.base` for the switch itself. */
   className?: string;
   /** Inline styles merged into the outer root. */
@@ -51,7 +49,9 @@ type SwitchProps = Omit<
   description?: React.ReactNode;
   /** Control size; defaults to `md`. */
   size?: SwitchSize;
-} & SwitchAccessibleName;
+}
+
+type SwitchProps = SwitchBaseProps & SwitchAccessibleName;
 
 type LiquidGlassFilterProps = {
   filterId: string;
