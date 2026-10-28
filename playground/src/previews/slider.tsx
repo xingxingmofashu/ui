@@ -11,42 +11,66 @@ function SliderPreview() {
     <>
       <DemoGroup label="Horizontal">
         <div className="grid w-full max-w-3xl gap-8 sm:grid-cols-2">
-          <Slider
-            label="Volume"
-            description="Drag the glass thumb or use the arrow keys."
-            showValue
-            value={volume}
-            onValueChange={setVolume}
-          />
-          <Slider
-            label="Price range"
-            description="One thumb per value, formatted with Intl.NumberFormat."
-            defaultValue={[25, 75]}
-            showValue
-            format={{
-              style: "currency",
-              currency: "USD",
-              maximumFractionDigits: 0,
-            }}
-          />
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between text-sm">
+              <span id="slider-volume-label">Volume</span>
+              <span className="font-mono tabular-nums text-ui-ink/70">
+                {volume}
+              </span>
+            </div>
+            <Slider
+              aria-labelledby="slider-volume-label"
+              value={volume}
+              onValueChange={setVolume}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <span id="slider-price-label" className="text-sm text-ui-ink">
+              Price range
+            </span>
+            <Slider
+              aria-labelledby="slider-price-label"
+              defaultValue={[25, 75]}
+              format={{
+                style: "currency",
+                currency: "USD",
+                maximumFractionDigits: 0,
+              }}
+            />
+          </div>
         </div>
       </DemoGroup>
 
       <DemoGroup label="Vertical">
         <div className="flex items-center gap-10">
-          <Slider
-            aria-label="Level"
-            orientation="vertical"
-            defaultValue={60}
-            ui={{ control: "h-48" }}
-          />
-          <Slider
-            aria-label="Disabled level"
-            orientation="vertical"
-            defaultValue={30}
-            disabled
-            ui={{ control: "h-48" }}
-          />
+          <div className="flex flex-col items-center gap-2">
+            <span
+              id="slider-level-label"
+              className="text-xs text-ui-ink/60"
+            >
+              Level
+            </span>
+            <Slider
+              aria-labelledby="slider-level-label"
+              orientation="vertical"
+              defaultValue={60}
+            />
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <span
+              id="slider-disabled-level-label"
+              className="text-xs text-ui-ink/60"
+            >
+              Disabled level
+            </span>
+            <Slider
+              aria-labelledby="slider-disabled-level-label"
+              orientation="vertical"
+              defaultValue={30}
+              disabled
+            />
+          </div>
         </div>
       </DemoGroup>
     </>

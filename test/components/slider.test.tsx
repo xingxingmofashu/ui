@@ -1,16 +1,16 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, expectTypeOf, it, vi } from "vitest";
 
-import { Slider } from "../../src/components/slider";
+import { Slider, type SliderProps } from "../../src/components/slider";
 import theme from "../../src/theme/slider";
 
-function getSlider(name: string, index = 0) {
-  const slider = screen.getAllByRole("slider", { name })[index];
+function getSlider(index = 0) {
+  const slider = screen.getAllByRole("slider")[index];
 
   if (!(slider instanceof HTMLInputElement)) {
-    throw new Error(`Slider "${name}" was not rendered as a range input.`);
+    throw new Error("Slider was not rendered as a range input.");
   }
 
   return slider;
@@ -48,11 +48,14 @@ function getLayer(element: Element, layer: string) {
 
 describe("Slider", () => {
   describe("accessible names", () => {
-    it("supports aria-label", () => {
-      render(<Slider aria-label="Volume" />);
+    it("passes root aria props through to Base UI", () => {
+      render(<Slider aria-label="Volume" aria-describedby="volume-hint" />);
 
-      const slider = getSlider("Volume");
+      const slider = getSlider();
+      const root = getRoot(slider);
 
+      expect(root).toHaveAttribute("aria-label", "Volume");
+      expect(root).toHaveAttribute("aria-describedby", "volume-hint");
       expect(slider).toHaveAttribute("type", "range");
       expect(slider).toHaveAttribute("aria-valuenow", "0");
     });
@@ -65,37 +68,9 @@ describe("Slider", () => {
         </>,
       );
 
-      expect(getSlider("Volume")).toBeInTheDocument();
-    });
-
-    it("supports a visible label", () => {
-      render(<Slider label="Volume" />);
-
-      const slider = getSlider("Volume");
-      const root = getRoot(slider);
-      const label = getSlot(root, "label");
-
-      expect(label).toHaveTextContent("Volume");
-      expect(slider).toHaveAttribute("aria-labelledby", label.id);
-    });
-
-    it("treats an empty label as absent", () => {
-      render(<Slider label="" aria-label="Volume" />);
-
-      const slider = getSlider("Volume");
-
       expect(
-        getRoot(slider).querySelector('[data-slot="label"]'),
-      ).toBeNull();
-    });
-
-    it("requires an accessible name at the type level", () => {
-      render(
-        // @ts-expect-error Sliders must have an accessible name.
-        <Slider />,
-      );
-
-      expect(screen.getByRole("slider")).toBeInTheDocument();
+        screen.getAllByRole("slider", { name: "Volume" }),
+      ).toHaveLength(1);
     });
   });
 
@@ -103,7 +78,7 @@ describe("Slider", () => {
     it("renders Base UI slider parts", () => {
       render(<Slider aria-label="Volume" defaultValue={40} />);
 
-      const slider = getSlider("Volume");
+      const slider = getSlider();
       const root = getRoot(slider);
       const control = getSlot(root, "control");
       const track = getSlot(control, "track");
@@ -121,7 +96,7 @@ describe("Slider", () => {
     it("renders the liquid glass layers inside the thumb", () => {
       render(<Slider aria-label="Volume" />);
 
-      const thumb = getSlot(getRoot(getSlider("Volume")), "thumb");
+      const thumb = getSlot(getRoot(getSlider()), "thumb");
       const glass = getLayer(thumb, "thumb-glass");
 
       expect(glass).toHaveAttribute("aria-hidden", "true");
@@ -131,106 +106,59 @@ describe("Slider", () => {
       expect(glass).not.toHaveAttribute("data-slot");
     });
 
-    it("renders label, value, and description slots", () => {
-      render(
-        <Slider
-          label="Volume"
-          description="Adjust the output level"
-          showValue
-          defaultValue={40}
-        />,
-      );
+    it("does not render removed content slots", () => {
+      render(<Slider aria-label="Volume" defaultValue={40} />);
 
-      const slider = getSlider("Volume");
-      const root = getRoot(slider);
-      const header = getSlot(root, "header");
-      const label = getSlot(header, "label");
-      const value = getSlot(header, "value");
-      const description = getSlot(root, "description");
+      const root = getRoot(getSlider());
 
-      expect(label).toHaveTextContent("Volume");
-      expect(value.tagName).toBe("OUTPUT");
-      expect(value).toHaveTextContent("40");
-      expect(description.tagName).toBe("P");
-      expect(description).toHaveTextContent("Adjust the output level");
-      expect(slider).toHaveAttribute("aria-describedby", description.id);
-      expect(slider).toHaveAccessibleDescription("Adjust the output level");
+      for (const slot of ["header", "label", "value", "description"]) {
+        expect(root.querySelector(`[data-slot="${slot}"]`)).toBeNull();
+      }
     });
 
-    it("does not render a header without a label or value", () => {
-      render(<Slider aria-label="Volume" />);
+    it("applies className to the root only", () => {
+      render(<Slider aria-label="Styled" className="custom-root" />);
 
-      const root = getRoot(getSlider("Volume"));
-
-      expect(root.querySelector('[data-slot="header"]')).toBeNull();
-      expect(root.querySelector('[data-slot="description"]')).toBeNull();
-    });
-
-    it("merges className and ui into their slots", () => {
-      render(
-        <Slider
-          aria-label="Styled"
-          className="custom-root"
-          label="Styled"
-          description="Description slot"
-          showValue
-          ui={{
-            root: "slot-root",
-            header: "slot-header",
-            label: "slot-label",
-            value: "slot-value",
-            description: "slot-description",
-            control: "slot-control",
-            track: "slot-track",
-            indicator: "slot-indicator",
-            thumb: "slot-thumb",
-          }}
-        />,
-      );
-
-      const slider = getSlider("Styled");
+      const slider = getSlider();
       const root = getRoot(slider);
       const control = getSlot(root, "control");
       const track = getSlot(control, "track");
 
-      expect(root).toHaveClass("custom-root", "slot-root");
-      expect(getSlot(root, "header")).toHaveClass("slot-header");
-      expect(getSlot(root, "label")).toHaveClass("slot-label");
-      expect(getSlot(root, "value")).toHaveClass("slot-value");
-      expect(getSlot(root, "description")).toHaveClass("slot-description");
-      expect(control).toHaveClass("slot-control");
-      expect(track).toHaveClass("slot-track");
-      expect(getSlot(track, "indicator")).toHaveClass("slot-indicator");
-      expect(getSlot(control, "thumb")).toHaveClass("slot-thumb");
+      expect(root).toHaveClass("custom-root");
+      expect(control).not.toHaveClass("custom-root");
+      expect(track).not.toHaveClass("custom-root");
+      expect(getSlot(track, "indicator")).not.toHaveClass("custom-root");
+      expect(getSlot(control, "thumb")).not.toHaveClass("custom-root");
     });
 
-    it("resolves className callbacks with Base UI state", () => {
-      const { rerender } = render(
-        <Slider
-          aria-label="Stateful"
-          disabled
-          className={(state) =>
-            state.disabled ? "slider-disabled" : "slider-enabled"
-          }
-        />,
+    it("does not accept a ui prop", () => {
+      const element = (
+        // @ts-expect-error Slider no longer accepts a ui prop.
+        <Slider aria-label="Internal" ui={{ track: "h-10" }} />
       );
 
-      let root = getRoot(getSlider("Stateful"));
+      expect(element).toBeTruthy();
+    });
 
-      expect(root).toHaveClass("slider-disabled");
+    it("only exposes Base UI Slider.Root props", () => {
+      type RemovedProps =
+        | "label"
+        | "description"
+        | "showValue"
+        | "getThumbAriaLabel";
 
-      rerender(
-        <Slider
-          aria-label="Stateful"
-          className={(state) =>
-            state.disabled ? "slider-disabled" : "slider-enabled"
-          }
-        />,
-      );
+      expectTypeOf<
+        Extract<keyof SliderProps, RemovedProps>
+      >().toEqualTypeOf<never>();
+    });
 
-      root = getRoot(getSlider("Stateful"));
+    it("merges Tailwind classes with the themed root classes", () => {
+      render(<Slider aria-label="Merged" className="w-32" />);
 
-      expect(root).toHaveClass("slider-enabled");
+      const root = getRoot(getSlider());
+
+      expect(root).toHaveClass("w-32");
+      expect(root).not.toHaveClass("w-full");
     });
 
     it("does not accept inline styles", () => {
@@ -254,7 +182,7 @@ describe("Slider", () => {
         />,
       );
 
-      const root = getRoot(getSlider("Custom root"));
+      const root = getRoot(getSlider());
 
       expect(root.tagName).toBe("SECTION");
       expect(ref.current).toBe(root);
@@ -263,7 +191,7 @@ describe("Slider", () => {
     it("uses the fixed xs thumb and sm track scale", () => {
       render(<Slider aria-label="Sized" />);
 
-      const root = getRoot(getSlider("Sized"));
+      const root = getRoot(getSlider());
 
       expect(root).toHaveClass("[--ui-slider-track-height:6px]");
       expect(root).toHaveClass("[--ui-slider-thumb-width:40px]");
@@ -276,7 +204,7 @@ describe("Slider", () => {
         <Slider aria-label="Level" orientation="vertical" defaultValue={60} />,
       );
 
-      const slider = getSlider("Level");
+      const slider = getSlider();
       const root = getRoot(slider);
       const control = getSlot(root, "control");
       const track = getSlot(control, "track");
@@ -294,19 +222,19 @@ describe("Slider", () => {
       render(<Slider aria-label="Volume" defaultValue={40} />);
 
       expect(screen.getAllByRole("slider")).toHaveLength(1);
-      expect(getSlider("Volume")).toHaveAttribute("aria-valuenow", "40");
+      expect(getSlider()).toHaveAttribute("aria-valuenow", "40");
     });
 
     it("renders one thumb when no value is given", () => {
       render(<Slider aria-label="Volume" />);
 
-      expect(screen.getAllByRole("slider", { name: "Volume" })).toHaveLength(1);
+      expect(screen.getAllByRole("slider")).toHaveLength(1);
     });
 
     it("renders two thumbs for a range value", () => {
       render(<Slider aria-label="Price" defaultValue={[20, 80]} />);
 
-      const sliders = screen.getAllByRole("slider", { name: "Price" });
+      const sliders = screen.getAllByRole("slider");
 
       expect(sliders).toHaveLength(2);
       expect(sliders[0]).toHaveAttribute("aria-valuenow", "20");
@@ -316,41 +244,28 @@ describe("Slider", () => {
     it("renders multiple thumbs from a controlled range", () => {
       render(<Slider aria-label="Price" value={[10, 60, 90]} />);
 
-      expect(screen.getAllByRole("slider", { name: "Price" })).toHaveLength(3);
+      expect(screen.getAllByRole("slider")).toHaveLength(3);
     });
 
-    it("supports distinct accessible names for range thumbs", () => {
-      render(
-        <Slider
-          aria-label="Price"
-          defaultValue={[20, 80]}
-          getThumbAriaLabel={(index) =>
-            index === 0 ? "Minimum price" : "Maximum price"
-          }
-        />,
-      );
-
-      expect(
-        screen.getByRole("slider", { name: "Minimum price" }),
-      ).toHaveAttribute("aria-valuenow", "20");
-      expect(
-        screen.getByRole("slider", { name: "Maximum price" }),
-      ).toHaveAttribute("aria-valuenow", "80");
-    });
-
-    it("renders a formatted range in the value slot", () => {
+    it("passes format to Base UI thumb value text", () => {
       render(
         <Slider
           aria-label="Price"
           defaultValue={[0.2, 0.8]}
-          showValue
           format={{ style: "percent" }}
         />,
       );
 
-      const value = getSlot(getRoot(getSlider("Price")), "value");
+      const sliders = screen.getAllByRole("slider");
 
-      expect(value).toHaveTextContent("20% – 80%");
+      expect(sliders[0]).toHaveAttribute(
+        "aria-valuetext",
+        "20% start range",
+      );
+      expect(sliders[1]).toHaveAttribute(
+        "aria-valuetext",
+        "80% end range",
+      );
     });
   });
 
@@ -367,7 +282,7 @@ describe("Slider", () => {
         />,
       );
 
-      const slider = getSlider("Volume");
+      const slider = getSlider();
 
       slider.focus();
       await user.keyboard("{ArrowRight}");
@@ -389,7 +304,7 @@ describe("Slider", () => {
         />,
       );
 
-      const slider = getSlider("Volume");
+      const slider = getSlider();
 
       slider.focus();
       await user.keyboard("{ArrowRight}");
@@ -411,7 +326,7 @@ describe("Slider", () => {
         />,
       );
 
-      const slider = getSlider("Volume");
+      const slider = getSlider();
 
       slider.focus();
       await user.keyboard("{ArrowRight}");
@@ -428,7 +343,7 @@ describe("Slider", () => {
         <Slider aria-label="Volume" defaultValue={0} min={0} max={10} />,
       );
 
-      const slider = getSlider("Volume");
+      const slider = getSlider();
 
       slider.focus();
       await user.keyboard("{ArrowLeft}");
@@ -449,7 +364,7 @@ describe("Slider", () => {
         />,
       );
 
-      const slider = getSlider("Volume");
+      const slider = getSlider();
       const root = getRoot(slider);
 
       expect(slider).toBeDisabled();
@@ -487,7 +402,7 @@ describe("Slider", () => {
         />,
       );
 
-      const slider = getSlider("Level");
+      const slider = getSlider();
 
       slider.focus();
       await user.keyboard("{ArrowUp}");
@@ -500,7 +415,7 @@ describe("Slider", () => {
 
       render(<Slider aria-label="Volume" defaultValue={40} />);
 
-      const thumb = getSlot(getRoot(getSlider("Volume")), "thumb");
+      const thumb = getSlot(getRoot(getSlider()), "thumb");
 
       await user.pointer({ target: thumb, keys: "[MouseLeft>]" });
 
@@ -521,14 +436,10 @@ describe("Slider", () => {
       expect(Object.keys(styles).sort()).toEqual([
         "base",
         "control",
-        "description",
-        "header",
         "indicator",
-        "label",
         "root",
         "thumb",
         "track",
-        "value",
       ]);
     });
 
@@ -580,7 +491,7 @@ describe("Slider", () => {
         "data-[orientation=vertical]:h-[var(--ui-slider-thumb-width)]",
       );
       expect(styles.control()).toContain(
-        "data-[orientation=vertical]:min-h-40",
+        "data-[orientation=vertical]:min-h-48",
       );
     });
 
@@ -596,10 +507,6 @@ describe("Slider", () => {
       const styles = theme();
       const slots = [
         styles.root,
-        styles.header,
-        styles.label,
-        styles.value,
-        styles.description,
         styles.control,
         styles.track,
         styles.indicator,

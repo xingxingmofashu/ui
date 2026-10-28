@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 export default tv({
   slots: {
     root: [
-      "group/slider relative flex w-full min-w-0 flex-col gap-3",
+      "relative w-full min-w-0",
       "[--ui-slider-track:color-mix(in_srgb,var(--ui-ink)_14%,transparent)]",
       "[--ui-slider-fill-from:var(--ui-ink)] [--ui-slider-fill-to:var(--ui-ink-active)]",
       "[--ui-slider-fill-glow:color-mix(in_srgb,var(--ui-ink)_30%,transparent)]",
@@ -12,20 +12,9 @@ export default tv({
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60",
       "data-[orientation=vertical]:w-fit",
     ],
-    header: "flex min-w-0 items-center justify-between gap-4",
-    label: [
-      "block min-w-0 select-none text-sm font-medium text-ui-ink",
-      "group-data-[disabled]/slider:cursor-not-allowed",
-    ],
-    value: [
-      "ui-glass-chip",
-      "ms-auto inline-flex shrink-0 items-center rounded-full px-2 py-0.5",
-      "font-mono text-xs tabular-nums leading-none text-ui-ink/80",
-    ],
-    description: "text-xs leading-5 text-ui-ink/75",
     control: [
       "relative flex h-[var(--ui-slider-control-height)] w-full touch-none select-none items-center",
-      "data-[orientation=vertical]:mx-auto data-[orientation=vertical]:min-h-40 data-[orientation=vertical]:w-[var(--ui-slider-control-height)] data-[orientation=vertical]:flex-col",
+      "data-[orientation=vertical]:mx-auto data-[orientation=vertical]:min-h-48 data-[orientation=vertical]:w-[var(--ui-slider-control-height)] data-[orientation=vertical]:flex-col",
       "data-[disabled]:pointer-events-none",
       "motion-reduce:[&_*]:[transition-duration:0.01ms!important] motion-reduce:[&_*]:[transition-delay:0ms!important]",
     ],

@@ -10,13 +10,7 @@ export {
 } from "./components/accordion";
 export { Button, type ButtonProps } from "./components/button";
 export { Card, type CardProps } from "./components/card";
-export {
-  Slider,
-  type SliderStyle,
-  type SliderProps,
-  type SliderSlot,
-  type SliderThemeSlot,
-} from "./components/slider";
+export { Slider, type SliderProps } from "./components/slider";
 export {
   Switch,
   type SwitchStyle,

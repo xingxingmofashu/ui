@@ -1,17 +1,23 @@
 ---
 title: "Slider"
-description: "A slider with a liquid glass thumb, label, and value display, supporting single values, ranges, and vertical orientation."
+description: "A liquid glass slider built on Base UI Slider.Root, supporting single values, ranges, and vertical orientation."
 ---
+
+`Slider` is a styled wrapper around Base UI's `Slider.Root`. It renders the control, track, indicator, and glass thumb internally. Props are forwarded to `Slider.Root`; `style` and `children` are intentionally not supported.
 
 ## Basic example
 
-The volume slider below renders the real component. Dragging the glass thumb, clicking the track, or using the arrow keys updates the value, and the value display follows automatically.
+The slider below is the real component. Its label and value are rendered outside the slider; dragging, clicking the track, or using the arrow keys updates the value.
 
 <Example name="slider/basic" />
 
+## Accessible name
+
+Slider does not render a visible label. Point `aria-labelledby` at a visible label; Base UI forwards it from the root to every thumb. `aria-label` and `aria-describedby` stay on the root.
+
 ## Range values
 
-Passing an array renders one thumb per value. `format` uses `Intl.NumberFormatOptions` to format the value shown by `Slider.Value`:
+Passing an array renders one thumb per value. `format` follows `Intl.NumberFormatOptions` and is applied to the thumb's accessible value text.
 
 <Example name="slider/range" />
 
@@ -37,38 +43,26 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Visible label. |
-| `description` | `ReactNode` | — | Supporting text. |
-| `showValue` | `boolean` | `false` | Renders the current value or range in the header. |
-| `value` | `number \| readonly number[]` | — | Controlled value; an array renders multiple thumbs. |
+| `value` | `number \| readonly number[]` | — | Controlled value; an array renders one thumb per value. |
 | `defaultValue` | `number \| readonly number[]` | — | Uncontrolled initial value. |
 | `onValueChange` | `(value, details) => void` | — | Called when the value changes. |
+| `onValueCommitted` | `(value, details) => void` | — | Called when a value change is committed. |
+| `name` | `string` | — | Field name used when submitting a form. |
+| `form` | `string` | — | Identifies the form that owns the slider inputs. |
 | `min` | `number` | `0` | Minimum value. |
 | `max` | `number` | `100` | Maximum value. |
 | `step` | `number` | `1` | Step for arrow keys and dragging. |
 | `largeStep` | `number` | `10` | Step for Page Up / Page Down and Shift + arrow keys. |
+| `minStepsBetweenValues` | `number` | `0` | Minimum steps between range thumb values. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
-| `format` | `Intl.NumberFormatOptions` | — | Value display format. |
+| `format` | `Intl.NumberFormatOptions` | — | Value format used by Base UI's accessible value text. |
 | `locale` | `Intl.LocalesArgument` | — | Locale used for number formatting. |
 | `disabled` | `boolean` | `false` | Disables the slider. |
-| `name` | `string` | — | Field name used when submitting a form. |
-| `className` | `string \| ((state) => string \| undefined)` | — | Merged into the outermost `root`. The callback receives Base UI slider state. |
-| `ui` | `Partial<Record<SliderThemeSlot, string>>` | — | Overrides internal slot styles. |
+| `thumbAlignment` | `"center" \| "edge" \| "edge-client-only"` | `"center"` | How thumbs align with the control edges. |
+| `thumbCollisionBehavior` | `"push" \| "swap" \| "none"` | `"push"` | How range thumbs behave when they collide. |
+| `className` | `any` | — | Tailwind classes merged into the outermost `root`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 
-All other props are forwarded to Base UI's `Slider.Root`, including `form`, `name`, `thumbAlignment`, `thumbCollisionBehavior`, `render`, and `ref`.
+`ref` is forwarded to the root. Other native props are forwarded as well.
 
-`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout or the `ui` slots for theme overrides.
-
-### UI Slots
-
-| Slot | Description |
-| --- | --- |
-| `root` | Outermost container with the label, track, and description. |
-| `header` | Label and value display region. |
-| `label` | Visible label. |
-| `value` | Current value or range. |
-| `description` | Supporting text. |
-| `control` | Interactive container for the track and thumb. |
-| `track` | Slider track. |
-| `indicator` | Filled portion of the track. |
-| `thumb` | Liquid glass thumb. |
+`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout. Slider styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.

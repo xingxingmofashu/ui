@@ -4,12 +4,13 @@ import { Slider } from "@xingxingmofashu/ui";
 
 export default function SliderRangeDemo() {
   return (
-    <div className="w-full max-w-md">
+    <div className="flex w-full max-w-md flex-col gap-2">
+      <span id="slider-range-label" className="text-sm text-ui-ink">
+        Price range
+      </span>
       <Slider
-        label="Price range"
-        description="One thumb per value, formatted with Intl.NumberFormat."
+        aria-labelledby="slider-range-label"
         defaultValue={[25, 75]}
-        showValue
         format={{ style: "currency", currency: "USD" }}
       />
     </div>

@@ -52,7 +52,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
             "带可访问标题的玻璃折叠面板，支持单选、多选与高度动画。",
           button: "五种尺寸，支持前置与后置图标。",
           card: "由 header、body 与 footer 组成的玻璃卡片。",
-          slider: "带数值显示、区间选择与纵向布局的玻璃滑块。",
+          slider: "支持区间选择与纵向布局的玻璃滑块。",
           switch: "带液态玻璃滑块、标签与描述文本的开关。",
           toggleGroup: "共享玻璃滑块的切换按钮，支持单选、多选与纵向布局。",
         },
@@ -127,7 +127,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
             "Five sizes with leading and trailing icons.",
           card: "A glass card built from header, body, and footer slots.",
           slider:
-            "A glass slider with value display, range selection, and vertical orientation.",
+            "A glass slider with range selection and vertical orientation.",
           switch: "A switch with a liquid glass thumb, label, and description.",
           toggleGroup:
             "Shared glass thumb toggles for single, multiple, and vertical layouts.",
@@ -244,11 +244,12 @@ export function HomePageContent({ lang }: { lang: Locale }) {
       href: `/${lang}/docs/components/slider`,
       description: copy.componentDescriptions.slider,
       preview: (
-        <Slider
-          label={isZh ? "音量" : "Volume"}
-          defaultValue={60}
-          showValue
-        />
+        <div className="w-full">
+          <span id="slider-home-label" className="sr-only">
+            {isZh ? "音量" : "Volume"}
+          </span>
+          <Slider aria-labelledby="slider-home-label" defaultValue={60} />
+        </div>
       ),
     },
     {

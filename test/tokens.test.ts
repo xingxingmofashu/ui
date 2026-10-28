@@ -97,10 +97,6 @@ function themeCandidates() {
   });
   const sliderSlots = [
     "root",
-    "header",
-    "label",
-    "value",
-    "description",
     "control",
     "track",
     "indicator",
@@ -470,8 +466,8 @@ describe("design tokens", () => {
     ]);
 
     expect(recipe).toContain('from "tailwind-variants"');
-    expect(recipe).toContain("ui-glass-chip");
     expect(recipe).toContain("--ui-glass-lens-blur");
+    expect(recipe).toContain("--ui-glass-lens-surface");
     expect(recipe).not.toContain("--ui-slider-filter");
     expect(recipe).not.toContain("LIQUID_GLASS_MAP");
     expect(component).not.toContain("--ui-slider-filter");

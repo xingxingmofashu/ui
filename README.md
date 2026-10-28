@@ -98,8 +98,8 @@ Use a current evergreen browser.
 - `Switch`
 - `ToggleGroup` / `ToggleGroupItem`
 
-`Slider`, `Switch`, `ToggleGroup`, and `Accordion` expose their public slots
-through the `ui` prop for per-instance overrides. `Button` and `Card` keep their
+`Switch`, `ToggleGroup`, and `Accordion` expose their public slots through the
+`ui` prop for per-instance overrides. `Button`, `Card`, and `Slider` keep their
 glass material internal; use `className` for layout.
 
 ## Development
