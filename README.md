@@ -46,6 +46,16 @@ export function Example() {
 
 Components are client components and opt into `"use client"` themselves.
 
+Deep imports are available for each component and theme recipe:
+
+```tsx
+import { Button } from "@xingxingmofashu/ui/components/button";
+import buttonTheme from "@xingxingmofashu/ui/theme/button";
+```
+
+Use them when you want to import a single component without going through the
+package root.
+
 ## Components
 
 - `Button`

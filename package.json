@@ -18,6 +18,16 @@
       "import": "./dist/index.mjs",
       "default": "./dist/index.mjs"
     },
+    "./components/*": {
+      "types": "./dist/components/*.d.ts",
+      "import": "./dist/components/*.mjs",
+      "default": "./dist/components/*.mjs"
+    },
+    "./theme/*": {
+      "types": "./dist/theme/*.d.ts",
+      "import": "./dist/theme/*.mjs",
+      "default": "./dist/theme/*.mjs"
+    },
     "./index.css": "./dist/index.css",
     "./package.json": "./package.json"
   },
