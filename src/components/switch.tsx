@@ -38,7 +38,7 @@ type SwitchRootProps = React.ComponentProps<typeof UISwitch.Root>;
 
 interface SwitchBaseProps
   extends Omit<SwitchRootProps, "className" | "children" | "style"> {
-  /** Classes merged into the outer root. Use `ui.base` for the switch itself. */
+  /** Classes merged into the Base UI switch root. Use `ui.base` for the visual track. */
   className?: string;
   /** Classes for individual slots. */
   ui?: SwitchStyle;
@@ -179,29 +179,24 @@ function Switch({
   );
 
   return (
-    <div
+    <UISwitch.Root
+      {...withoutStyle(props)}
+      id={switchId}
+      disabled={disabled}
+      readOnly={readOnly}
+      aria-labelledby={labelledBy}
+      aria-describedby={describedBy}
       data-slot="root"
-      data-disabled={disabled || undefined}
-      data-readonly={readOnly || undefined}
+      data-animating={animating || undefined}
+      onCheckedChange={handleCheckedChange}
       className={cn(ui.root(), className, uiOverrides?.root)}
+      style={switchStyle}
     >
-      <div
+      <span
         data-slot="container"
         className={cn(ui.container(), uiOverrides?.container)}
       >
-        <UISwitch.Root
-          {...withoutStyle(props)}
-          id={switchId}
-          disabled={disabled}
-          readOnly={readOnly}
-          aria-labelledby={labelledBy}
-          aria-describedby={describedBy}
-          data-slot="base"
-          data-animating={animating || undefined}
-          onCheckedChange={handleCheckedChange}
-          className={cn(ui.base(), uiOverrides?.base)}
-          style={switchStyle}
-        >
+        <span data-slot="base" className={cn(ui.base(), uiOverrides?.base)}>
           <LiquidGlassFilter filterId={filterId} />
 
           <span aria-hidden="true" data-layer="mask">
@@ -225,36 +220,35 @@ function Switch({
             </span>
             <span data-layer="cover" />
           </UISwitch.Thumb>
-        </UISwitch.Root>
-      </div>
+        </span>
+      </span>
 
       {hasText ? (
-        <div
+        <span
           data-slot="wrapper"
           className={cn(ui.wrapper(), uiOverrides?.wrapper)}
         >
           {hasLabel ? (
-            <label
+            <span
               data-slot="label"
               id={labelId}
-              htmlFor={disabled || readOnly ? undefined : switchId}
               className={cn(ui.label(), uiOverrides?.label)}
             >
               {label}
-            </label>
+            </span>
           ) : null}
           {hasDescription ? (
-            <p
+            <span
               data-slot="description"
               id={descriptionId}
               className={cn(ui.description(), uiOverrides?.description)}
             >
               {description}
-            </p>
+            </span>
           ) : null}
-        </div>
+        </span>
       ) : null}
-    </div>
+    </UISwitch.Root>
   );
 }
 

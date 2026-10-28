@@ -9,6 +9,8 @@ description: "带液态玻璃滑块、标签和描述文本的开关，轨道默
 
 <Example name="switch/basic" />
 
+Base UI 的 `Switch.Root` 就是最外层元素。视觉轨道是内部的 `base` 槽位，整行（包括标签和描述）都可以点击。
+
 ## 尺寸
 
 支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。轨道与文字会随 `size` 缩放。
@@ -49,20 +51,20 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `onCheckedChange` | `(checked: boolean, details) => void` | — | 选中状态变化时触发。 |
 | `disabled` | `boolean` | `false` | 禁用开关。 |
 | `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
-| `className` | `string` | — | 合并到最外层布局容器。 |
+| `className` | `string` | — | 合并到 Base UI switch root。 |
 | `ui` | `Partial<Record<SwitchThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
 其余属性会透传给 Base UI 的 `Switch.Root`，包括 `required`、`name`、`form`、`value`、`uncheckedValue`、`inputRef`、`nativeButton`、`render` 和 `ref`。
 
-`style`、`baseStyle` 与 `baseClassName` 被有意禁用：玻璃主题接管最外层容器和所有 Base UI 部件。布局请使用 `className`，主题扩展请使用 `ui` 槽位（包括 `ui.base`）。
+`style`、`baseStyle` 与 `baseClassName` 被有意禁用：玻璃主题接管根元素和所有 Base UI 部件。请使用 `className` 控制根元素，使用 `ui` 槽位（包括 `ui.base`）做主题扩展。
 
 ### UI Slots
 
 | Slot | 说明 |
 | --- | --- |
-| `root` | 最外层容器，包含开关与文字。 |
-| `container` | 开关本身的布局容器。 |
-| `base` | 开关轨道。 |
+| `root` | 最外层 Base UI switch root，包含开关与文字。 |
+| `container` | 视觉轨道的布局容器。 |
+| `base` | 视觉轨道与玻璃图层。 |
 | `thumb` | 液态玻璃滑块。 |
 | `wrapper` | 标签与描述的文字容器。 |
 | `label` | 可见标签。 |

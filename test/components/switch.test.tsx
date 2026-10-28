@@ -25,6 +25,10 @@ function getRoot(switchElement: HTMLElement) {
   return root;
 }
 
+function getBase(switchElement: HTMLElement) {
+  return getSlot(getRoot(switchElement), "base");
+}
+
 function getLayer(element: Element, layer: string) {
   const node = element.querySelector<HTMLElement>(
     `[data-layer="${layer}"]`,
@@ -88,10 +92,10 @@ describe("Switch", () => {
       const root = getRoot(switchElement);
 
       expect(switchElement.tagName).toBe("SPAN");
-      expect(switchElement).toHaveAttribute("data-slot", "base");
-      expect(root.tagName).toBe("DIV");
-      expect(root).toHaveAttribute("data-slot", "root");
-      expect(getSlot(root, "container").tagName).toBe("DIV");
+      expect(switchElement).toHaveAttribute("data-slot", "root");
+      expect(root).toBe(switchElement);
+      expect(getSlot(root, "container").tagName).toBe("SPAN");
+      expect(getSlot(root, "base").tagName).toBe("SPAN");
       expect(getSlot(switchElement, "thumb")).toHaveAttribute(
         "aria-hidden",
         "true",
@@ -147,10 +151,10 @@ describe("Switch", () => {
       const styles = theme();
 
       expect(styles.base()).toContain(
-        "data-[checked]:[&_[data-layer=fill]]:[translate:calc(100cqi_-_100%)_-50%]",
+        "group-data-[checked]:[&_[data-layer=fill]]:[translate:calc(100cqi_-_100%)_-50%]",
       );
       expect(styles.base()).not.toContain(
-        "data-[checked]:[&_[data-layer=fill]]:[translate:calc(100cqi_-_100%_-_6*var(--ui-switch-border))_-50%]",
+        "group-data-[checked]:[&_[data-layer=fill]]:[translate:calc(100cqi_-_100%_-_6*var(--ui-switch-border))_-50%]",
       );
     });
 
@@ -181,9 +185,9 @@ describe("Switch", () => {
       const label = getSlot(root, "label");
       const description = getSlot(root, "description");
 
-      expect(getSlot(root, "wrapper").tagName).toBe("DIV");
-      expect(label.tagName).toBe("LABEL");
-      expect(description.tagName).toBe("P");
+      expect(getSlot(root, "wrapper").tagName).toBe("SPAN");
+      expect(label.tagName).toBe("SPAN");
+      expect(description.tagName).toBe("SPAN");
       expect(label).toHaveTextContent("Notifications");
       expect(description).toHaveTextContent("Receive alerts");
       expect(switchElement).toHaveAttribute("aria-labelledby", label.id);
@@ -229,8 +233,8 @@ describe("Switch", () => {
 
       expect(root).toHaveClass("custom-root", "slot-root");
       expect(getSlot(root, "container")).toHaveClass("slot-container");
-      expect(switchElement).toHaveClass("slot-base");
-      expect(getSlot(switchElement, "thumb")).toHaveClass("slot-thumb");
+      expect(getSlot(root, "base")).toHaveClass("slot-base");
+      expect(getSlot(root, "thumb")).toHaveClass("slot-thumb");
       expect(getSlot(root, "wrapper")).toHaveClass("slot-wrapper");
       expect(getSlot(root, "label")).toHaveClass("slot-label");
       expect(getSlot(root, "description")).toHaveClass("slot-description");
@@ -337,17 +341,19 @@ describe("Switch", () => {
     it("applies the default md size and supports every size", () => {
       const { rerender } = render(<Switch aria-label="Sized" />);
 
-      const base = screen.getByRole("switch", { name: "Sized" });
+      const switchElement = screen.getByRole("switch", { name: "Sized" });
 
-      expect(base).toHaveClass("[--ui-switch-width:64px]");
-      expect(base).toHaveClass("[--ui-switch-height:32px]");
-      expect(base).toHaveClass("[--ui-switch-border:3px]");
+      expect(getBase(switchElement)).toHaveClass("[--ui-switch-width:64px]");
+      expect(getBase(switchElement)).toHaveClass("[--ui-switch-height:32px]");
+      expect(getBase(switchElement)).toHaveClass("[--ui-switch-border:3px]");
 
       rerender(<Switch aria-label="Sized" size="xs" />);
 
-      expect(base).toHaveClass("[--ui-switch-width:48px]");
-      expect(base).toHaveClass("[--ui-switch-height:24px]");
-      expect(base).toHaveClass("[--ui-switch-border:2px]");
+      const resizedSwitch = screen.getByRole("switch", { name: "Sized" });
+
+      expect(getBase(resizedSwitch)).toHaveClass("[--ui-switch-width:48px]");
+      expect(getBase(resizedSwitch)).toHaveClass("[--ui-switch-height:24px]");
+      expect(getBase(resizedSwitch)).toHaveClass("[--ui-switch-border:2px]");
     });
   });
 
@@ -364,10 +370,10 @@ describe("Switch", () => {
         "thumb",
         "wrapper",
       ]);
-      expect(styles.base()).toContain("group");
+      expect(styles.root()).toContain("group");
       expect(styles.base()).toContain("h-[var(--ui-switch-height)]");
       expect(styles.base()).toContain("w-[var(--ui-switch-width)]");
-      expect(styles.base()).toContain("data-[disabled]:pointer-events-none");
+      expect(styles.root()).toContain("data-[disabled]:cursor-not-allowed");
       expect(styles.base()).toContain(
         "[&_[data-layer=fill]]:left-0",
       );
@@ -387,7 +393,7 @@ describe("Switch", () => {
         "[&_[data-layer=track]]:bg-[var(--ui-switch-off)]",
       );
       expect(styles.base()).toContain(
-        "data-[checked]:[&_[data-layer=track]]:bg-[var(--ui-switch-on)]",
+        "group-data-[checked]:[&_[data-layer=track]]:bg-[var(--ui-switch-on)]",
       );
       expect(styles.base()).toContain(
         "[&_[data-layer=track]]:[box-shadow:inset_0_1px_1px_rgb(255_255_255/0.35),inset_0_-1px_2px_rgb(0_0_0/0.12)]",
@@ -399,19 +405,19 @@ describe("Switch", () => {
         "[&_[data-layer=glass-lens]]:[filter:blur(calc(var(--ui-switch-height)*0.1))]",
       );
       expect(styles.base()).toContain(
-        "active:[&_[data-layer=glass-lens]]:[filter:blur(0)]",
+        "group-active:[&_[data-layer=glass-lens]]:[filter:blur(0)]",
       );
       expect(styles.base()).toContain(
         "[&_[data-layer=inner-glow]]:[--ui-switch-glow-color:var(--ui-switch-off)]",
       );
       expect(styles.base()).toContain(
-        "data-[checked]:[&_[data-layer=inner-glow]]:[--ui-switch-glow-color:var(--ui-switch-on)]",
+        "group-data-[checked]:[&_[data-layer=inner-glow]]:[--ui-switch-glow-color:var(--ui-switch-on)]",
       );
       expect(styles.base()).toContain(
         "[&_[data-layer=cover]]:bg-white",
       );
       expect(styles.base()).toContain(
-        "active:[&_[data-layer=cover]]:opacity-0",
+        "group-active:[&_[data-layer=cover]]:opacity-0",
       );
       expect(styles.thumb()).toContain("group-data-[checked]");
       expect(styles.thumb()).toContain("group-active");
@@ -581,6 +587,20 @@ describe("Switch", () => {
       expect(switchElement).toHaveAttribute("aria-checked", "true");
     });
 
+    it("toggles from the description because the whole row is interactive", async () => {
+      const user = userEvent.setup();
+
+      render(<Switch label="Notifications" description="Receive alerts" />);
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Notifications",
+      });
+
+      await user.click(screen.getByText("Receive alerts"));
+
+      expect(switchElement).toHaveAttribute("aria-checked", "true");
+    });
+
     it("respects controlled checked state", async () => {
       const user = userEvent.setup();
       const onCheckedChange = vi.fn();
@@ -622,6 +642,7 @@ describe("Switch", () => {
       const label = getSlot(getRoot(switchElement), "label");
 
       expect(switchElement).toHaveAttribute("data-disabled");
+      expect(label.tagName).toBe("SPAN");
       expect(label).not.toHaveAttribute("htmlFor");
 
       await user.click(switchElement);
