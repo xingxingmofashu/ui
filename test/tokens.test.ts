@@ -8,8 +8,9 @@ import { describe, expect, it } from "vitest";
 import buttonTheme from "../src/theme/button";
 import cardTheme from "../src/theme/card";
 import sliderTheme from "../src/theme/slider";
-import theme from "../src/theme/switch";
+import switchTheme from "../src/theme/switch";
 import toggleGroupTheme from "../src/theme/toggle-group";
+import accordionTheme from "../src/theme/accordion";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
   "\\",
@@ -54,9 +55,30 @@ function themeCandidates() {
   ] as const;
   const switchSizes = ["xs", "sm", "md", "lg", "xl"] as const;
   const switchCandidates = switchSizes.flatMap((size) => {
-    const switchStyles = theme({ size });
+    const switchStyles = switchTheme({ size });
 
     return switchSlots.map((slot) => switchStyles[slot]());
+  });
+  const accordionSlots = [
+    "root",
+    "glass",
+    "overlay",
+    "content",
+    "item",
+    "header",
+    "trigger",
+    "title",
+    "indicator",
+    "indicatorIcon",
+    "indicatorBar",
+    "panel",
+    "panelContent",
+  ] as const;
+  const accordionSizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const accordionCandidates = accordionSizes.flatMap((size) => {
+    const accordionStyles = accordionTheme({ size });
+
+    return accordionSlots.map((slot) => accordionStyles[slot]());
   });
   const toggleGroupSlots = [
     "root",
@@ -97,6 +119,7 @@ function themeCandidates() {
     buttonStyles.overlay(),
     ...cardSlots.map((slot) => cardStyles[slot]()),
     ...switchCandidates,
+    ...accordionCandidates,
     ...toggleGroupCandidates,
     ...sliderCandidates,
   ]
@@ -201,6 +224,35 @@ describe("design tokens", () => {
     expect(css).toContain("--ui-switch-width: 80px;");
     expect(css).toContain("--ui-switch-border: 2px;");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("compiles the accordion glass controls from the theme recipe", async () => {
+    const css = await buildStyles(themeCandidates());
+
+    expect(css).toContain(
+      "--ui-accordion-divider: color-mix(in srgb,var(--ui-ink) 14%,transparent);",
+    );
+    expect(css).toContain(
+      "--ui-accordion-hover: color-mix(in srgb,var(--ui-ink) 5%,transparent);",
+    );
+    expect(css).toContain("min-height: var(--ui-accordion-trigger-height);");
+    expect(css).toContain("height: var(--accordion-panel-height);");
+    expect(css).toContain("transition-property: height;");
+    expect(css).toContain(
+      "transition-timing-function: cubic-bezier(0.4,0,0.2,1);",
+    );
+    expect(css).toContain("transition-duration: 300ms;");
+    expect(css).toContain("[data-starting-style]");
+    expect(css).toContain("[data-ending-style]");
+    expect(css).toContain("rotate: 45deg;");
+    expect(css).toContain("border-color: var(--ui-accordion-divider);");
+    expect(css).toContain("background-color: var(--ui-accordion-hover);");
+    expect(css).toContain("width: var(--ui-accordion-indicator-size);");
+    expect(css).toContain("color: var(--ui-ink-active);");
+    expect(css).toContain("outline-color: var(--ui-glass-focus);");
+    expect(css).toContain("--ui-accordion-trigger-height: 36px;");
+    expect(css).toContain("--ui-accordion-trigger-height: 64px;");
+    expect(css).toContain("--ui-accordion-panel-font-size: 0.875rem;");
   });
 
   it("compiles the toggle group glass controls from the theme recipe", async () => {
@@ -358,6 +410,30 @@ describe("design tokens", () => {
     expect(tokens).not.toContain(".ui-card-");
     expect(tokens).toContain("backdrop-filter");
     expect(tokens).toContain(".ui-glass");
+  });
+
+  it("keeps accordion styling in the tailwind-variants theme", async () => {
+    const [recipe, component] = await Promise.all([
+      readFile(new URL("../src/theme/accordion.ts", import.meta.url), "utf8"),
+      readFile(
+        new URL("../src/components/accordion.tsx", import.meta.url),
+        "utf8",
+      ),
+    ]);
+
+    expect(recipe).toContain('from "tailwind-variants"');
+    expect(recipe).toContain("ui-glass");
+    expect(recipe).toContain("ui-glass-inner");
+    expect(recipe).toContain("ui-glass-highlight");
+    expect(recipe).toContain("ui-glass-rim");
+    expect(recipe).toContain("--ui-accordion-divider");
+    expect(recipe).toContain("--accordion-panel-height");
+    expect(recipe).not.toContain("bg-glass-surface");
+    expect(recipe).not.toContain("shadow-glass");
+    expect(recipe).not.toContain(".css");
+    expect(component).toContain('data-slot="indicator"');
+    expect(component).not.toContain("LIQUID_GLASS_MAP");
+    expect(component).not.toContain(".css");
   });
 
   it("keeps toggle group styling in the tailwind-variants theme", async () => {

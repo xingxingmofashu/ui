@@ -1,0 +1,83 @@
+---
+title: "Accordion"
+description: "A set of collapsible liquid glass panels with accessible headings."
+---
+
+## Basic example
+
+Each item renders a real heading and button. The default plus indicator rotates into a close icon, and the panel animates its height.
+
+<Example name="accordion/basic" />
+
+## Multiple panels
+
+The default mode keeps a single panel open. Add `multiple` to let several panels stay expanded at once:
+
+<Example name="accordion/multiple" />
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Trigger height, padding, typography, and the indicator scale together.
+
+<Example name="accordion/sizes" />
+
+## Controlled usage
+
+`value` and `onValueChange` make the open panels fully controlled. The example below can open or collapse every panel from one button:
+
+<Example name="accordion/controlled" />
+
+## Props
+
+### Accordion
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string[]` | — | Controlled expanded values. |
+| `defaultValue` | `string[]` | `[]` | Initially expanded values. |
+| `onValueChange` | `(value: string[], details) => void` | — | Called when the expanded values change. |
+| `multiple` | `boolean` | `false` | Allows more than one panel to stay open. |
+| `disabled` | `boolean` | `false` | Disables every trigger. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and the indicator. |
+| `headingAs` | `"h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6"` | `"h3"` | Heading element wrapped around each trigger. |
+| `hiddenUntilFound` | `boolean` | `false` | Keeps closed panels mounted with `hidden="until-found"` so browser search can reveal them. |
+| `keepMounted` | `boolean` | `false` | Keeps closed panels in the DOM. |
+| `className` | `string \| ((state) => string \| undefined)` | — | Merged into the root. The callback receives Base UI state. |
+| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | Forwarded to the Base UI root. |
+| `ui` | `AccordionStyle` | — | Overrides root layers. |
+
+`Accordion` also forwards Base UI `Accordion.Root` props such as `render`, `ref`, and `onValueChange`.
+
+### AccordionItem
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Required identifier used by the accordion value. |
+| `title` | `ReactNode` | — | Visible heading inside the trigger. |
+| `children` | `ReactNode` | — | Panel content. |
+| `disabled` | `boolean` | `false` | Disables this item. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when this panel opens or closes. |
+| `indicator` | `ReactNode` | — | Replaces the default plus indicator. |
+| `className` | `string \| ((state) => string \| undefined)` | — | Merged into the item root. The callback receives Base UI item state. |
+| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | Forwarded to the Base UI item. |
+| `ui` | `AccordionItemStyle` | — | Overrides item slots. |
+
+`AccordionItem` also forwards Base UI `Accordion.Item` props such as `render` and `ref`.
+
+### UI Slots
+
+| Component | Slot | Description |
+| --- | --- | --- |
+| `Accordion` | `root` | Outermost accordion. |
+| `Accordion` | `glass` | Clipped glass material. |
+| `Accordion` | `overlay` | Inner rim highlight. |
+| `Accordion` | `content` | Item layout above the glass layer. |
+| `AccordionItem` | `root` | Item wrapper and divider. |
+| `AccordionItem` | `header` | Heading element around the trigger. |
+| `AccordionItem` | `trigger` | Toggle button. |
+| `AccordionItem` | `title` | Title wrapper inside the trigger. |
+| `AccordionItem` | `indicator` | Circular glass indicator. |
+| `AccordionItem` | `indicatorIcon` | Default plus icon wrapper. |
+| `AccordionItem` | `indicatorBar` | Plus icon bar. |
+| `AccordionItem` | `panel` | Animated panel surface. |
+| `AccordionItem` | `panelContent` | Padded panel content. |

@@ -1,3 +1,11 @@
+import AccordionBasicDemo from "./accordion/basic";
+import accordionBasicSource from "./accordion/basic?raw";
+import AccordionControlledDemo from "./accordion/controlled";
+import accordionControlledSource from "./accordion/controlled?raw";
+import AccordionMultipleDemo from "./accordion/multiple";
+import accordionMultipleSource from "./accordion/multiple?raw";
+import AccordionSizesDemo from "./accordion/sizes";
+import accordionSizesSource from "./accordion/sizes?raw";
 import ButtonBasicDemo from "./button/basic";
 import buttonBasicSource from "./button/basic?raw";
 import ButtonFullWidthDemo from "./button/full-width";
@@ -50,6 +58,22 @@ import ToggleGroupSizesDemo from "./toggle-group/sizes";
 import toggleGroupSizesSource from "./toggle-group/sizes?raw";
 
 export const examples = {
+  "accordion/basic": {
+    Demo: AccordionBasicDemo,
+    source: accordionBasicSource,
+  },
+  "accordion/multiple": {
+    Demo: AccordionMultipleDemo,
+    source: accordionMultipleSource,
+  },
+  "accordion/sizes": {
+    Demo: AccordionSizesDemo,
+    source: accordionSizesSource,
+  },
+  "accordion/controlled": {
+    Demo: AccordionControlledDemo,
+    source: accordionControlledSource,
+  },
   "button/basic": {
     Demo: ButtonBasicDemo,
     source: buttonBasicSource,
