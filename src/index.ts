@@ -8,12 +8,7 @@ export {
   type AccordionSize,
   type AccordionStyle,
 } from "./components/accordion";
-export {
-  Button,
-  type ButtonStyle,
-  type ButtonProps,
-  type ButtonThemeSlot,
-} from "./components/button";
+export { Button, type ButtonProps } from "./components/button";
 export {
   Card,
   type CardStyle,

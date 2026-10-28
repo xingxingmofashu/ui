@@ -277,70 +277,39 @@ describe("Button", () => {
   });
 
   describe("styling", () => {
-    it("applies className to the base and ui to each slot", () => {
+    it("applies className to the root only", () => {
       render(
         <Button
           label="Styled"
-          className="custom-base"
-          ui={{
-            root: "slot-root",
-            base: "bg-white",
-            glass: "slot-glass",
-            label: "slot-label",
-            leadingIcon: "slot-leading-icon",
-            trailingIcon: "slot-trailing-icon",
-            overlay: "slot-overlay",
-          }}
+          className="custom-root"
           leadingIcon={<svg />}
           trailingIcon={<svg />}
         />,
       );
 
       const buttonElement = screen.getByRole("button", { name: "Styled" });
-      const base = getSlot(buttonElement, "base");
 
-      expect(buttonElement).toHaveClass("custom-base", "slot-root");
-      expect(base).toHaveClass("bg-white");
-      expect(base).not.toHaveClass("custom-base");
-      expect(base).not.toHaveClass("bg-glass-surface");
-      expect(getSlot(buttonElement, "glass")).toHaveClass("slot-glass");
-      expect(getSlot(buttonElement, "label")).toHaveClass("slot-label");
-      expect(getSlot(buttonElement, "leading-icon")).toHaveClass(
-        "slot-leading-icon",
-      );
-      expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(
-        "slot-trailing-icon",
-      );
-      expect(getSlot(buttonElement, "overlay")).toHaveClass("slot-overlay");
-    });
-
-    it("allows explicit icon size overrides through slot classes", () => {
-      render(
-        <Button
-          label="Custom"
-          leadingIcon={<svg />}
-          trailingIcon={<svg />}
-          ui={{
-            leadingIcon: "[&_svg]:size-8",
-            trailingIcon: "[&_svg]:size-8",
-          }}
-        />,
-      );
-
-      const buttonElement = screen.getByRole("button", { name: "Custom" });
-
-      expect(getSlot(buttonElement, "leading-icon")).toHaveClass(
-        "[&_svg]:size-8",
-      );
+      expect(buttonElement).toHaveClass("custom-root");
+      expect(getSlot(buttonElement, "base")).not.toHaveClass("custom-root");
+      expect(getSlot(buttonElement, "label")).not.toHaveClass("custom-root");
       expect(getSlot(buttonElement, "leading-icon")).not.toHaveClass(
-        "[&_svg]:size-5",
-      );
-      expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(
-        "[&_svg]:size-8",
+        "custom-root",
       );
       expect(getSlot(buttonElement, "trailing-icon")).not.toHaveClass(
-        "[&_svg]:size-5",
+        "custom-root",
       );
+    });
+
+    it("does not accept style overrides for internal layers", () => {
+      render(
+        // @ts-expect-error Button no longer accepts a ui prop.
+        <Button label="Internal" ui={{ glass: "opacity-0" }} />,
+      );
+
+      const buttonElement = screen.getByRole("button", { name: "Internal" });
+
+      expect(getSlot(buttonElement, "glass")).not.toHaveClass("opacity-0");
+      expect(buttonElement).not.toHaveAttribute("ui");
     });
 
     it("keeps the label and icons on one row", () => {
@@ -415,18 +384,12 @@ describe("Button", () => {
       expect(buttonElement).not.toHaveClass("state-enabled");
     });
 
-    it("merges ui.root into a className function", () => {
-      render(
-        <Button
-          label="Merged"
-          className={() => "from-callback"}
-          ui={{ root: "slot-root" }}
-        />,
-      );
+    it("merges a className function with the themed root classes", () => {
+      render(<Button label="Merged" className={() => "from-callback"} />);
 
       expect(screen.getByRole("button", { name: "Merged" })).toHaveClass(
         "from-callback",
-        "slot-root",
+        "inline-flex",
       );
     });
 

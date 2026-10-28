@@ -49,20 +49,7 @@ description: "可以渲染为其他标签，或在禁用时仍可聚焦的按钮
 | `trailingIcon` | `ReactNode` | — | 标签后的图标，使用与前置图标相同的容器。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距和图标尺寸。 |
 | `className` | `string \| ((state: { disabled: boolean }) => string \| undefined)` | — | 合并到外层 `root`。回调会收到 Base UI 的按钮状态。 |
-| `ui` | `Partial<Record<ButtonThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
 其余属性会透传给 Base UI 的 `Button`，包括 `disabled`、`focusableWhenDisabled`、`nativeButton`、`onClick`、`type`、`render` 和 `ref`。
 
-`style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`，主题扩展请使用 `ui` 槽位。
-
-### UI Slots
-
-| Slot | 说明 |
-| --- | --- |
-| `root` | 外层点击区域。 |
-| `base` | 布局、hover 位移与按压缩放。 |
-| `glass` | 可见的玻璃胶囊，承载共享玻璃材质。 |
-| `label` | 文字容器。 |
-| `leadingIcon` | 前置图标容器。 |
-| `trailingIcon` | 后置图标容器。 |
-| `overlay` | 玻璃边缘高光层。 |
+`style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`。玻璃材质由组件内部维护，不支持按按钮自定义；如需调整，请修改共享的 `--ui-glass-*` tokens。

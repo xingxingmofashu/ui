@@ -5,7 +5,6 @@ import {
   type ButtonProps as UIButtonProps,
   type ButtonState as UIButtonState,
 } from "@base-ui/react/button";
-import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
@@ -14,17 +13,6 @@ import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
 import { withoutStyle } from "../lib/without-style";
 import theme from "../theme/button";
 
-type ButtonThemeSlot =
-  | "root"
-  | "base"
-  | "glass"
-  | "label"
-  | "leadingIcon"
-  | "trailingIcon"
-  | "overlay";
-
-type ButtonStyle = Partial<Record<ButtonThemeSlot, string>>;
-
 interface ButtonContentProps {
   /** Text or content rendered inside the button. */
   label?: React.ReactNode;
@@ -32,8 +20,6 @@ interface ButtonContentProps {
   leadingIcon?: React.ReactNode;
   /** Icon rendered after the label. */
   trailingIcon?: React.ReactNode;
-  /** Classes for individual slots. Use `glass` to style the visible glass surface and `root` for the outer click area. */
-  ui?: ButtonStyle;
 }
 
 /**
@@ -66,7 +52,6 @@ type ButtonProps = ButtonBaseProps &
 
 function Button({
   className,
-  ui: uiOverrides,
   children,
   label,
   leadingIcon,
@@ -85,24 +70,23 @@ function Button({
   const rootClassName = resolveThemeClassName<UIButtonState>(
     ui.root(),
     className,
-    uiOverrides?.root,
   );
+  const { ui: _ui, ...buttonProps } = props as typeof props & {
+    /** Retained only so removed style overrides never leak to the DOM. */
+    ui?: unknown;
+  };
 
   return (
     <UIButton
       data-slot="root"
       className={rootClassName}
-      {...withoutStyle(props)}
+      {...withoutStyle(buttonProps)}
     >
-      <span data-slot="base" className={cn(ui.base(), uiOverrides?.base)}>
-        <span
-          data-slot="glass"
-          aria-hidden="true"
-          className={cn(ui.glass(), uiOverrides?.glass)}
-        >
+      <span data-slot="base" className={ui.base()}>
+        <span data-slot="glass" aria-hidden="true" className={ui.glass()}>
           <span
             data-slot="overlay"
-            className={cn(ui.overlay(), uiOverrides?.overlay)}
+            className={ui.overlay()}
             aria-hidden="true"
           />
         </span>
@@ -110,7 +94,7 @@ function Button({
         {leadingIcon != null ? (
           <span
             data-slot="leading-icon"
-            className={cn(ui.leadingIcon(), uiOverrides?.leadingIcon)}
+            className={ui.leadingIcon()}
             aria-hidden={iconIsDecorative || undefined}
           >
             {leadingIcon}
@@ -118,10 +102,7 @@ function Button({
         ) : null}
 
         {hasLabel ? (
-          <span
-            data-slot="label"
-            className={cn(ui.label(), uiOverrides?.label)}
-          >
+          <span data-slot="label" className={ui.label()}>
             {content}
           </span>
         ) : null}
@@ -129,7 +110,7 @@ function Button({
         {trailingIcon != null ? (
           <span
             data-slot="trailing-icon"
-            className={cn(ui.trailingIcon(), uiOverrides?.trailingIcon)}
+            className={ui.trailingIcon()}
             aria-hidden={iconIsDecorative || undefined}
           >
             {trailingIcon}
@@ -141,4 +122,4 @@ function Button({
 }
 
 export { Button };
-export type { ButtonStyle, ButtonProps, ButtonThemeSlot };
+export type { ButtonProps };
