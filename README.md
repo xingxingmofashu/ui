@@ -98,9 +98,9 @@ Use a current evergreen browser.
 - `Switch`
 - `ToggleGroup` / `ToggleGroupItem`
 
-Each component exposes its public slots through the `ui` prop for
-per-instance overrides. `Card` also accepts `titleAs` for heading semantics and
-`clipContent={false}` when its body needs to host popovers.
+`Slider`, `Switch`, `ToggleGroup`, and `Accordion` expose their public slots
+through the `ui` prop for per-instance overrides. `Button` and `Card` keep their
+glass material internal; use `className` for layout.
 
 ## Development
 

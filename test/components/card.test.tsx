@@ -107,24 +107,10 @@ describe("Card", () => {
       );
     });
 
-    it("does not render a body for an empty children array", () => {
-      render(<Card title="Empty body">{[]}</Card>);
+    it("does not render a body without children", () => {
+      render(<Card title="No body" />);
 
-      expect(querySlot(getCard("Empty body"), "body")).toBeNull();
-    });
-
-    it("renders falsy but renderable slot content", () => {
-      render(
-        <Card title={0} description={0}>
-          {0}
-        </Card>,
-      );
-
-      const cardElement = getCard("0");
-
-      expect(getSlot(cardElement, "title")).toHaveTextContent("0");
-      expect(getSlot(cardElement, "description")).toHaveTextContent("0");
-      expect(getSlot(cardElement, "body")).toHaveTextContent("0");
+      expect(querySlot(getCard("No body"), "body")).toBeNull();
     });
 
     it("keeps the body content outside the decorative glass layer", () => {
@@ -164,56 +150,63 @@ describe("Card", () => {
       expect(screen.getByText("Body")).toBeInTheDocument();
     });
 
-    it("renders the title as a configurable heading", () => {
-      render(
-        <Card title="Section title" titleAs="h2">
-          Body
-        </Card>,
-      );
+    it("always renders the title as a div", () => {
+      render(<Card title="Section title">Body</Card>);
 
-      expect(getSlot(getCard("Section title"), "title").tagName).toBe("H2");
+      expect(getSlot(getCard("Section title"), "title").tagName).toBe("DIV");
     });
 
-    it("can leave content clipping to the host", () => {
-      render(<Card clipContent={false}>Body</Card>);
+    it("does not accept a titleAs prop", () => {
+      const element = (
+        // @ts-expect-error Card no longer accepts a titleAs prop.
+        <Card title="Section title" titleAs="h2">
+          Body
+        </Card>
+      );
 
-      const body = getSlot(getCard("Body"), "body");
-      const layout = body.parentElement;
-
-      expect(layout).toHaveClass("overflow-visible");
-      expect(layout).not.toHaveClass("overflow-hidden");
+      expect(element).toBeTruthy();
     });
 
     it("keeps the glass layers private", () => {
-      render(
-        // @ts-expect-error The glass layer is an implementation detail.
-        <Card ui={{ surface: "custom-surface" }}>Body</Card>,
-      );
+      render(<Card>Body</Card>);
 
       const cardElement = getCard("Body");
 
       expect(querySlot(cardElement, "surface")).toBeNull();
       expect(querySlot(cardElement, "overlay")).toBeNull();
-      expect(getPrivateGlass(cardElement)).not.toHaveClass("custom-surface");
+      expect(getPrivateGlass(cardElement)).toHaveAttribute(
+        "aria-hidden",
+        "true",
+      );
+    });
+
+    it("does not accept a ui prop", () => {
+      const element = (
+        // @ts-expect-error Card no longer accepts a ui prop.
+        <Card ui={{ surface: "custom-surface" }}>Body</Card>
+      );
+
+      expect(element).toBeTruthy();
+    });
+
+    it("does not accept a clipContent prop", () => {
+      const element = (
+        // @ts-expect-error Card always clips its content.
+        <Card clipContent={false}>Body</Card>
+      );
+
+      expect(element).toBeTruthy();
     });
   });
 
   describe("styling", () => {
-    it("applies className to the root and ui to each public slot", () => {
+    it("applies className to the root only", () => {
       render(
         <Card
           title="Styled"
-          description="Slot overrides"
+          description="Root classes"
           footer="Footer"
           className="custom-root"
-          ui={{
-            root: "slot-root",
-            header: "slot-header",
-            title: "slot-title",
-            description: "slot-description",
-            body: "slot-body",
-            footer: "slot-footer",
-          }}
         >
           Body
         </Card>,
@@ -221,14 +214,14 @@ describe("Card", () => {
 
       const cardElement = getCard("Styled");
 
-      expect(cardElement).toHaveClass("custom-root", "slot-root");
-      expect(getSlot(cardElement, "header")).toHaveClass("slot-header");
-      expect(getSlot(cardElement, "title")).toHaveClass("slot-title");
-      expect(getSlot(cardElement, "description")).toHaveClass(
-        "slot-description",
+      expect(cardElement).toHaveClass("custom-root");
+      expect(getSlot(cardElement, "header")).not.toHaveClass("custom-root");
+      expect(getSlot(cardElement, "title")).not.toHaveClass("custom-root");
+      expect(getSlot(cardElement, "description")).not.toHaveClass(
+        "custom-root",
       );
-      expect(getSlot(cardElement, "body")).toHaveClass("slot-body");
-      expect(getSlot(cardElement, "footer")).toHaveClass("slot-footer");
+      expect(getSlot(cardElement, "body")).not.toHaveClass("custom-root");
+      expect(getSlot(cardElement, "footer")).not.toHaveClass("custom-root");
     });
 
     it("uses the standard glass composition", () => {

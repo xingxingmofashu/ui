@@ -22,8 +22,6 @@ import CardBasicDemo from "./card/basic";
 import cardBasicSource from "./card/basic?raw";
 import CardContentOnlyDemo from "./card/content-only";
 import cardContentOnlySource from "./card/content-only?raw";
-import CardCustomSlotsDemo from "./card/custom-slots";
-import cardCustomSlotsSource from "./card/custom-slots?raw";
 import SliderBasicDemo from "./slider/basic";
 import sliderBasicSource from "./slider/basic?raw";
 import SliderDisabledDemo from "./slider/disabled";
@@ -105,10 +103,6 @@ export const examples = {
   "card/content-only": {
     Demo: CardContentOnlyDemo,
     source: cardContentOnlySource,
-  },
-  "card/custom-slots": {
-    Demo: CardCustomSlotsDemo,
-    source: cardCustomSlotsSource,
   },
   "slider/basic": {
     Demo: SliderBasicDemo,

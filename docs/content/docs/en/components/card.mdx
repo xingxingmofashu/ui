@@ -19,32 +19,16 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 
 <Example name="card/content-only" />
 
-## Custom slots
-
-`ui` overrides internal structure such as header, body, and title, while `className` always targets the root:
-
-<Example name="card/custom-slots" />
-
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `ReactNode` | — | Card heading. |
+| `title` | `ReactNode` | — | Card heading, rendered as a `div`. |
 | `description` | `ReactNode` | — | Supporting text below the heading. |
 | `footer` | `ReactNode` | — | Footer action area. |
 | `children` | `ReactNode` | — | Card body content. |
-| `className` | `string` | — | Merged into `root`. |
-| `ui` | `Partial<Record<CardThemeSlot, string>>` | — | Overrides internal slot styles. |
+| `className` | `string` | — | Merged into `root`; use it for layout. |
 
 All other props are forwarded to the root `div`, such as `id`, `role`, and `onClick`.
 
-### UI Slots
-
-| Slot | Description |
-| --- | --- |
-| `root` | Outermost container. |
-| `header` | Title and description region. |
-| `title` | Heading element. |
-| `description` | Description element. |
-| `body` | Main content region. |
-| `footer` | Footer region. |
+The glass material is internal and is not customizable per card; tune it through the shared `--ui-glass-*` tokens instead.

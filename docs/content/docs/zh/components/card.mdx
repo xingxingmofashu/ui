@@ -17,32 +17,16 @@ description: "由 header、body 和 footer 组成的液态玻璃卡片。"
 
 <Example name="card/content-only" />
 
-## 自定义 Slot
-
-`ui` 可以覆盖 header、body、title 等内部结构，而 `className` 始终作用于 root：
-
-<Example name="card/custom-slots" />
-
 ## Props
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `title` | `ReactNode` | — | 卡片标题。 |
+| `title` | `ReactNode` | — | 卡片标题，渲染为 `div`。 |
 | `description` | `ReactNode` | — | 标题下方的说明文字。 |
 | `footer` | `ReactNode` | — | 底部操作区。 |
 | `children` | `ReactNode` | — | 卡片主体内容。 |
-| `className` | `string` | — | 合并到 `root`。 |
-| `ui` | `Partial<Record<CardThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
+| `className` | `string` | — | 合并到 `root`，用于布局。 |
 
 其余属性会透传给根 `div`，例如 `id`、`role`、`onClick`。
 
-### UI Slots
-
-| Slot | 说明 |
-| --- | --- |
-| `root` | 最外层容器。 |
-| `header` | 标题与描述区域。 |
-| `title` | 标题元素。 |
-| `description` | 描述元素。 |
-| `body` | 主体内容区域。 |
-| `footer` | 底部区域。 |
+玻璃材质由组件内部维护，不支持按卡片自定义；如需调整，请修改共享的 `--ui-glass-*` tokens。

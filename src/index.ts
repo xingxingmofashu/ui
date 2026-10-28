@@ -9,12 +9,7 @@ export {
   type AccordionStyle,
 } from "./components/accordion";
 export { Button, type ButtonProps } from "./components/button";
-export {
-  Card,
-  type CardStyle,
-  type CardProps,
-  type CardThemeSlot,
-} from "./components/card";
+export { Card, type CardProps } from "./components/card";
 export {
   Slider,
   type SliderStyle,
