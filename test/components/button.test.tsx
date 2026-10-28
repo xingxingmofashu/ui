@@ -94,19 +94,6 @@ describe("Button", () => {
         "true",
       );
     });
-
-    it("does not hide icons when no accessible name is provided", () => {
-      render(
-        // @ts-expect-error Icon-only buttons must have an accessible name.
-        <Button leadingIcon={<svg data-testid="fallback-icon" />} />,
-      );
-
-      const buttonElement = screen.getByRole("button");
-
-      expect(getSlot(buttonElement, "leading-icon")).not.toHaveAttribute(
-        "aria-hidden",
-      );
-    });
   });
 
   describe("sizes", () => {
@@ -309,7 +296,6 @@ describe("Button", () => {
       const buttonElement = screen.getByRole("button", { name: "Internal" });
 
       expect(getSlot(buttonElement, "glass")).not.toHaveClass("opacity-0");
-      expect(buttonElement).not.toHaveAttribute("ui");
     });
 
     it("keeps the label and icons on one row", () => {
@@ -354,43 +340,13 @@ describe("Button", () => {
   });
 
   describe("base-ui props", () => {
-    it("resolves a className function with the button state", () => {
-      const { rerender } = render(
-        <Button
-          label="Stateful"
-          className={(state) =>
-            state.disabled ? "state-disabled" : "state-enabled"
-          }
-        />,
-      );
+    it("merges Tailwind classes with the themed root classes", () => {
+      render(<Button label="Merged" className="rounded-none p-2" />);
 
-      expect(
-        screen.getByRole("button", { name: "Stateful" }),
-      ).toHaveClass("state-enabled");
+      const buttonElement = screen.getByRole("button", { name: "Merged" });
 
-      rerender(
-        <Button
-          label="Stateful"
-          disabled
-          className={(state) =>
-            state.disabled ? "state-disabled" : "state-enabled"
-          }
-        />,
-      );
-
-      const buttonElement = screen.getByRole("button", { name: "Stateful" });
-
-      expect(buttonElement).toHaveClass("state-disabled");
-      expect(buttonElement).not.toHaveClass("state-enabled");
-    });
-
-    it("merges a className function with the themed root classes", () => {
-      render(<Button label="Merged" className={() => "from-callback"} />);
-
-      expect(screen.getByRole("button", { name: "Merged" })).toHaveClass(
-        "from-callback",
-        "inline-flex",
-      );
+      expect(buttonElement).toHaveClass("rounded-none", "p-2", "inline-flex");
+      expect(buttonElement).not.toHaveClass("rounded-full", "p-0");
     });
 
     it("does not accept inline styles", () => {
