@@ -6,6 +6,7 @@ import {
   within,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createRef } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -263,6 +264,106 @@ describe("ToggleGroup", () => {
       expect(getSlot(item, "content")).toHaveClass("slot-content");
       expect(getSlot(item, "icon")).toHaveClass("slot-icon");
       expect(getSlot(item, "label")).toHaveClass("slot-label");
+    });
+
+    it("resolves className callbacks with Base UI state", async () => {
+      const user = userEvent.setup();
+      const { rerender } = render(
+        <ToggleGroup
+          aria-label="Stateful"
+          defaultValue={["one"]}
+          className={(state) =>
+            state.disabled ? "group-disabled" : "group-enabled"
+          }
+        >
+          <ToggleGroupItem
+            value="one"
+            aria-label="One"
+            className={(state) =>
+              state.pressed ? "item-pressed" : "item-unpressed"
+            }
+          />
+          <ToggleGroupItem value="two" aria-label="Two" />
+        </ToggleGroup>,
+      );
+
+      let group = getGroup("Stateful");
+      let item = getItems(group)[0];
+
+      expect(group).toHaveClass("group-enabled");
+      expect(item).toHaveClass("item-pressed");
+
+      await user.click(getItems(group)[1]);
+
+      group = getGroup("Stateful");
+      item = getItems(group)[0];
+
+      expect(item).toHaveClass("item-unpressed");
+
+      rerender(
+        <ToggleGroup
+          aria-label="Stateful"
+          disabled
+          className={(state) =>
+            state.disabled ? "group-disabled" : "group-enabled"
+          }
+        >
+          <ToggleGroupItem value="one" aria-label="One" />
+        </ToggleGroup>,
+      );
+
+      expect(getGroup("Stateful")).toHaveClass("group-disabled");
+    });
+
+    it("forwards style callbacks to the group and item", () => {
+      const { rerender } = render(
+        <ToggleGroup
+          aria-label="Styled callbacks"
+          defaultValue={["one"]}
+          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
+        >
+          <ToggleGroupItem
+            value="one"
+            aria-label="One"
+            style={(state) => ({ opacity: state.pressed ? 1 : 0.5 })}
+          />
+        </ToggleGroup>,
+      );
+
+      let group = getGroup("Styled callbacks");
+
+      expect(group).toHaveStyle({ opacity: "1" });
+      expect(getItems(group)[0]).toHaveStyle({ opacity: "1" });
+
+      rerender(
+        <ToggleGroup
+          aria-label="Styled callbacks"
+          disabled
+          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
+        >
+          <ToggleGroupItem
+            value="one"
+            aria-label="One"
+            style={(state) => ({ opacity: state.pressed ? 1 : 0.5 })}
+          />
+        </ToggleGroup>,
+      );
+
+      group = getGroup("Styled callbacks");
+
+      expect(group).toHaveStyle({ opacity: "0.5" });
+    });
+
+    it("forwards refs to the Base UI group root", () => {
+      const ref = createRef<HTMLDivElement>();
+
+      render(
+        <ToggleGroup ref={ref} aria-label="Ref group">
+          <ToggleGroupItem value="one" aria-label="One" />
+        </ToggleGroup>,
+      );
+
+      expect(ref.current).toBe(getGroup("Ref group"));
     });
 
     it("applies the default md size and supports every size", () => {

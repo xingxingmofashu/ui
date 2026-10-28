@@ -10,14 +10,14 @@ import theme from "../theme/toggle-group";
 
 type ToggleGroupSize = "xs" | "sm" | "md" | "lg" | "xl";
 
-type ToggleGroupSlot = "root" | "glass" | "indicator";
+type ToggleGroupThemeSlot = "root" | "glass" | "indicator";
 
-type ToggleGroupStyle = Partial<Record<ToggleGroupSlot, string>>;
+type ToggleGroupStyle = Partial<Record<ToggleGroupThemeSlot, string>>;
 
-type ToggleGroupItemSlot = "root" | "content" | "icon" | "label";
+type ToggleGroupItemThemeSlot = "root" | "content" | "icon" | "label";
 
 type ToggleGroupItemStyle = Partial<
-  Record<ToggleGroupItemSlot, string>
+  Record<ToggleGroupItemThemeSlot, string>
 >;
 
 type ToggleGroupContextValue = {
@@ -28,22 +28,30 @@ const ToggleGroupContext = React.createContext<ToggleGroupContextValue | null>(
   null,
 );
 
-type ToggleGroupProps<Value extends string = string> = Omit<
-  UIToggleGroup.Props<Value>,
-  "className" | "style" | "children"
-> & {
-  /** Classes merged into the group root. */
-  className?: string;
+type ToggleGroupClassName<Value extends string> =
+  UIToggleGroup.Props<Value>["className"];
+
+type ToggleGroupStyleProp<Value extends string> =
+  UIToggleGroup.Props<Value>["style"];
+
+interface ToggleGroupBaseProps<Value extends string>
+  extends Omit<
+    UIToggleGroup.Props<Value>,
+    "className" | "style" | "children"
+  > {
+  /** Classes merged into the group root. Accepts a callback that receives Base UI's group state. */
+  className?: ToggleGroupClassName<Value>;
   /** Classes for individual group layers. */
   ui?: ToggleGroupStyle;
-  /** Inline styles merged into the group root. */
-  style?: React.CSSProperties;
+  /** Inline styles merged into the group root. Accepts a callback that receives Base UI's group state. */
+  style?: ToggleGroupStyleProp<Value>;
   /** Control size; defaults to `md`. */
   size?: ToggleGroupSize;
-  /** Ref to the group root. */
-  ref?: React.Ref<HTMLDivElement>;
   children?: React.ReactNode;
-};
+}
+
+type ToggleGroupProps<Value extends string = string> =
+  ToggleGroupBaseProps<Value>;
 
 type ToggleGroupItemAccessibleName =
   | { "aria-label": string }
@@ -54,19 +62,23 @@ type ToggleGroupItemAccessibleName =
       "aria-labelledby"?: string;
     };
 
-type ToggleGroupItemProps<Value extends string = string> = Omit<
-  UIToggle.Props<Value>,
-  "className" | "children"
-> & {
-  /** Classes merged into the item root. */
-  className?: string;
+type ToggleGroupItemClassName<Value extends string> =
+  UIToggle.Props<Value>["className"];
+
+interface ToggleGroupItemBaseProps<Value extends string>
+  extends Omit<UIToggle.Props<Value>, "className" | "children"> {
+  /** Classes merged into the item root. Accepts a callback that receives Base UI's toggle state. */
+  className?: ToggleGroupItemClassName<Value>;
   /** Classes for individual item slots. */
   ui?: ToggleGroupItemStyle;
   /** Icon rendered inside the item. */
   icon?: React.ReactNode;
   /** Text or custom content rendered inside the item. */
   children?: React.ReactNode;
-} & ToggleGroupItemAccessibleName;
+}
+
+type ToggleGroupItemProps<Value extends string = string> =
+  ToggleGroupItemBaseProps<Value> & ToggleGroupItemAccessibleName;
 
 type IndicatorState = {
   x: number;
@@ -89,6 +101,11 @@ function ToggleGroup<Value extends string = string>({
   ...props
 }: ToggleGroupProps<Value>) {
   const ui = theme({ size });
+  const rootClassName =
+    typeof className === "function"
+      ? (state: UIToggleGroup.State) =>
+          cn(ui.root(), className(state), uiOverrides?.root)
+      : cn(ui.root(), className, uiOverrides?.root);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const indicatorRef = React.useRef<HTMLSpanElement>(null);
   const previousState = React.useRef<IndicatorState | null>(null);
@@ -328,7 +345,7 @@ function ToggleGroup<Value extends string = string>({
         data-slot="root"
         data-size={size ?? "md"}
         data-animating={animating || undefined}
-        className={cn(ui.root(), className, uiOverrides?.root)}
+        className={rootClassName}
         style={style}
       >
         <span
@@ -369,6 +386,11 @@ function ToggleGroupItem<Value extends string = string>({
     hasLabel ||
     Boolean(props["aria-label"]) ||
     Boolean(props["aria-labelledby"]);
+  const itemClassName =
+    typeof className === "function"
+      ? (state: UIToggle.State) =>
+          cn(ui.item(), className(state), uiOverrides?.root)
+      : cn(ui.item(), className, uiOverrides?.root);
 
   return (
     <UIToggle
@@ -376,7 +398,7 @@ function ToggleGroupItem<Value extends string = string>({
       data-slot="item"
       data-size={size}
       data-value={props.value}
-      className={cn(ui.item(), className, uiOverrides?.root)}
+      className={itemClassName}
     >
       <span
         data-slot="content"
