@@ -1,0 +1,88 @@
+---
+title: "Slider"
+description: "A slider with a liquid glass thumb, label, and value display, supporting single values, ranges, and vertical orientation."
+---
+
+Slider is built on Base UI's `Slider.Root` and supports controlled and uncontrolled usage. Every slider must have a complete accessible name: use a visible `label`, or provide `aria-label` / `aria-labelledby` for an external label, otherwise type checking fails.
+
+## Basic example
+
+The volume slider below renders the real component. Dragging the glass thumb, clicking the track, or using the arrow keys updates the value, and the value display follows automatically.
+
+<Example name="slider/basic" />
+
+## Range values
+
+Passing an array renders one thumb per value. `format` uses `Intl.NumberFormatOptions` to format the value shown by `Slider.Value`:
+
+<Example name="slider/range" />
+
+## Vertical
+
+`orientation="vertical"` switches the track, indicator, and thumb to a vertical layout:
+
+<Example name="slider/vertical" />
+
+## Disabled
+
+The disabled state uses the native `disabled` attribute, stopping both dragging and keyboard interaction:
+
+<Example name="slider/disabled" />
+
+## Form usage
+
+Slider forwards `name` to Base UI and submits the current value through a hidden `input[type="range"]`:
+
+<Example name="slider/form" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible label, connected to every thumb through `aria-labelledby`. |
+| `description` | `ReactNode` | — | Supporting text, connected to every thumb through `aria-describedby`. |
+| `showValue` | `boolean` | `false` | Renders the current value or range in the header. |
+| `value` | `number \| readonly number[]` | — | Controlled value; an array renders multiple thumbs. |
+| `defaultValue` | `number \| readonly number[]` | — | Uncontrolled initial value. |
+| `onValueChange` | `(value, details) => void` | — | Called when the value changes. |
+| `min` | `number` | `0` | Minimum value. |
+| `max` | `number` | `100` | Maximum value. |
+| `step` | `number` | `1` | Step for arrow keys and dragging. |
+| `largeStep` | `number` | `10` | Step for Page Up / Page Down and Shift + arrow keys. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
+| `format` | `Intl.NumberFormatOptions` | — | Value display format. |
+| `locale` | `Intl.LocalesArgument` | — | Locale used for number formatting. |
+| `disabled` | `boolean` | `false` | Disables the slider. |
+| `name` | `string` | — | Field name used when submitting a form. |
+| `className` | `string` | — | Merged into the outermost `root`. |
+| `style` | `CSSProperties` | — | Inline styles merged into `root`. |
+| `ui` | `Partial<Record<SliderSlot, string>>` | — | Overrides internal slot styles. |
+
+All other props are forwarded to Base UI's `Slider.Root`.
+
+### ui slots
+
+| Slot | Description |
+| --- | --- |
+| `root` | Outermost container with the label, track, and description. |
+| `header` | Label and value display region. |
+| `label` | Visible label. |
+| `value` | Current value or range. |
+| `description` | Supporting text. |
+| `control` | Interactive container for the track and thumb. |
+| `track` | Slider track. |
+| `indicator` | Filled portion of the track. |
+| `thumb` | Liquid glass thumb. |
+
+## Structure and sizing
+
+- Slider has no `size` prop and always uses a 6px track and a 40 × 24px thumb; vertical orientation swaps the dimensions.
+- The vertical control has a `min-h-40` minimum height; override `ui.control` when you need more room.
+- Track and thumb colors, blur, and rim highlights come from `--ui-glass-*` and Slider-local variables in `packages/ui/src/theme/slider.ts`.
+
+## Accessibility
+
+- Provide one of `label`, `aria-label`, or `aria-labelledby`.
+- `description` is connected as `aria-describedby`.
+- Arrow keys move by `step`; Page Up / Page Down and Shift + arrow keys use `largeStep`.
+- Each thumb exposes its current value through `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`.

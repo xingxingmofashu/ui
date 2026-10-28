@@ -1,0 +1,75 @@
+---
+title: "Switch"
+description: "A switch with a liquid glass thumb, label, and description. The track follows the monochrome theme."
+---
+
+Switch is built on Base UI's `Switch.Root` and supports controlled and uncontrolled usage. A visible `label` is automatically connected through `aria-labelledby`; without visible text, you must provide `aria-label` or `aria-labelledby`.
+
+## Basic example
+
+The switch below is the real component and can be clicked directly. Its description is connected through `aria-describedby`.
+
+<Example name="switch/basic" />
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. The track and text scale together with the size.
+
+<Example name="switch/sizes" />
+
+## Controlled usage
+
+`checked` and `onCheckedChange` let external state fully control the switch:
+
+<Example name="switch/controlled" />
+
+## Uncontrolled usage
+
+Without `checked`, Switch owns its state, and `defaultChecked` only sets the initial value:
+
+<Example name="switch/uncontrolled" />
+
+## Form usage
+
+Switch forwards `name` and `value` to Base UI and submits the current value through a hidden checkbox input:
+
+<Example name="switch/form" />
+
+## Disabled and read-only
+
+<Example name="switch/states" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible label, connected through `aria-labelledby`. |
+| `description` | `ReactNode` | — | Supporting text, connected through `aria-describedby`. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls track size and text size. |
+| `checked` | `boolean` | — | Controlled checked state. |
+| `defaultChecked` | `boolean` | — | Uncontrolled initial state. |
+| `onCheckedChange` | `(checked: boolean, details) => void` | — | Called when the checked state changes. |
+| `disabled` | `boolean` | `false` | Disables the switch. |
+| `readOnly` | `boolean` | `false` | Keeps the switch from toggling. |
+| `className` | `string` | — | Merged into the outermost `root`. |
+| `ui` | `Partial<Record<SwitchSlot, string>>` | — | Overrides internal slot styles. |
+
+All other props are forwarded to Base UI's `Switch.Root`.
+
+### ui slots
+
+| Slot | Description |
+| --- | --- |
+| `root` | Outermost container with the switch and text. |
+| `container` | Layout container for the switch itself. |
+| `base` | Switch track. |
+| `thumb` | Liquid glass thumb. |
+| `wrapper` | Label and description container. |
+| `label` | Visible label. |
+| `description` | Supporting text. |
+
+## Accessibility
+
+- With a `label`, the accessible name is connected automatically. Without visible text, provide `aria-label` or `aria-labelledby`.
+- `description` is connected as `aria-describedby`.
+- `disabled` and `readOnly` are reflected on the outer state, and both styles and interactions update accordingly.

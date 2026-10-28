@@ -1,0 +1,81 @@
+---
+title: "Toggle Group"
+description: "A set of toggle buttons with a shared liquid glass thumb, single or multiple selection, and horizontal or vertical orientation."
+---
+
+Toggle Group is built on Base UI's `ToggleGroup` and `Toggle`, with a shared glass thumb that follows the pressed item. The group uses `role="group"`, so provide an accessible name with `aria-label` or `aria-labelledby`.
+
+## Basic example
+
+The view switcher below uses the real Toggle Group. The pressed item drives the shared glass thumb and updates the text underneath.
+
+<Example name="toggle-group/basic" />
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
+
+<Example name="toggle-group/sizes" />
+
+## Selection mode
+
+Use `multiple` to allow more than one pressed item; the default is single selection. Switching `multiple` from `true` to `false` keeps only the first pressed value.
+
+<Example name="toggle-group/selection" />
+
+## Orientation
+
+Use `orientation="vertical"` for a vertical group:
+
+<Example name="toggle-group/orientation" />
+
+## Controlled usage
+
+`value` and `onValueChange` let external state fully control the selection. The example below stays controlled after clearing:
+
+<Example name="toggle-group/controlled" />
+
+## Props
+
+### ToggleGroup
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `readonly string[]` | — | Controlled pressed values. |
+| `defaultValue` | `readonly string[]` | — | Initial pressed values. |
+| `onValueChange` | `(value: string[], details) => void` | — | Called when the pressed values change. |
+| `multiple` | `boolean` | `false` | Allows multiple pressed items. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, and icons. |
+| `disabled` | `boolean` | `false` | Disables every item. |
+| `className` | `string` | — | Merged into the group root. |
+| `ui` | `ToggleGroupStyle` | — | Overrides internal layers. |
+
+`ToggleGroup` also forwards Base UI's `ToggleGroup` props such as `loopFocus` and `render`.
+
+### ToggleGroupItem
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Required value used by the group. |
+| `pressed` | `boolean` | — | Controlled pressed state for standalone usage. |
+| `defaultPressed` | `boolean` | `false` | Initial pressed state for standalone usage. |
+| `disabled` | `boolean` | `false` | Disables the item. |
+| `icon` | `ReactNode` | — | Icon rendered inside the item. |
+| `children` | `ReactNode` | — | Text or custom content. |
+| `className` | `string` | — | Merged into the item button. |
+| `ui` | `ToggleGroupItemStyle` | — | Overrides item slots. |
+
+Provide an accessible name with `children` or `aria-label` / `aria-labelledby`.
+
+### ui slots
+
+| Component | Slot | Description |
+| --- | --- | --- |
+| `ToggleGroup` | `root` | Outermost group. |
+| `ToggleGroup` | `glass` | Clipped highlight layer. |
+| `ToggleGroup` | `indicator` | Shared moving glass thumb. |
+| `ToggleGroupItem` | `root` | Toggle button. |
+| `ToggleGroupItem` | `content` | Icon and label layout wrapper. |
+| `ToggleGroupItem` | `icon` | Icon wrapper. |
+| `ToggleGroupItem` | `label` | Text wrapper. |

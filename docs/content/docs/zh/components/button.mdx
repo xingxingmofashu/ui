@@ -1,0 +1,79 @@
+---
+title: "Button"
+description: "带液态玻璃表面的按钮，支持图标、尺寸与无障碍名称约束。"
+---
+
+`className` 作用于外层点击区域，可见的玻璃表面由内部 `glass` 槽位绘制。图标按钮必须提供 `aria-label` 或 `aria-labelledby`，否则类型检查会报错。
+
+## 基础示例
+
+下面的计数器直接渲染真实 `Button`。点击按钮会更新 React 状态，重置按钮在计数为零时自动禁用。
+
+<Example name="button/basic" />
+
+## 尺寸
+
+支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。文字和图标会随尺寸缩放，不需要给图标单独传 `size`。
+
+<Example name="button/sizes" />
+
+## 图标
+
+前置图标位于文字左侧，后置图标位于文字右侧。两个图标使用相同的普通容器；有可见文字时，图标会自动标记为装饰性。
+
+<Example name="button/icons" />
+
+<Callout title="仅图标按钮">
+  仅图标按钮没有可见文字，必须通过 `aria-label` 或 `aria-labelledby` 提供无障碍名称。
+  遗漏时会在 TypeScript 层被拒绝。
+</Callout>
+
+## 状态
+
+禁用状态使用原生 `disabled`，键盘与指针交互都会停止。
+
+<Example name="button/states" />
+
+## 全宽按钮
+
+`className` 调整外层点击区域，内部的 `base` 布局会自动填满可用宽度：
+
+<Example name="button/full-width" />
+
+## 渲染为链接
+
+需要导航而不是触发操作时，可以告诉 Base UI 不要渲染原生 `<button>`：
+
+<Example name="button/link" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | 按钮文字。与 `children` 同时提供时优先使用 `label`。 |
+| `children` | `ReactNode` | — | `label` 未提供时使用的可见内容。 |
+| `leadingIcon` | `ReactNode` | — | 标签前的图标。 |
+| `trailingIcon` | `ReactNode` | — | 标签后的图标，使用与前置图标相同的容器。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距和图标尺寸。 |
+| `className` | `string` | — | 合并到外层 `root`。 |
+| `ui` | `Partial<Record<ButtonSlot, string>>` | — | 覆盖内部槽位样式。 |
+
+`label`、`children`、`aria-label`、`aria-labelledby` 至少提供一个，否则类型检查会失败。其余属性会透传给 Base UI 的 `Button`，例如 `disabled`、`onClick`、`type`、`render`。
+
+### ui 槽位
+
+| 槽位 | 说明 |
+| --- | --- |
+| `root` | 外层点击区域。 |
+| `base` | 布局、hover 位移与按压缩放。 |
+| `glass` | 可见的玻璃胶囊，承载共享玻璃材质。 |
+| `label` | 文字容器。 |
+| `leadingIcon` | 前置图标容器。 |
+| `trailingIcon` | 后置图标容器。 |
+| `overlay` | 玻璃边缘高光层。 |
+
+## 无障碍
+
+- 可见文字通过 `label` 或 `children` 提供。
+- 仅图标按钮必须提供 `aria-label` 或 `aria-labelledby`。
+- 禁用状态使用原生 `disabled`，并同步到 Base UI 的交互状态。

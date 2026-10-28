@@ -1,0 +1,88 @@
+---
+title: "Slider"
+description: "带液态玻璃滑块、标签和数值显示的滑块，支持单值、区间与纵向布局。"
+---
+
+Slider 基于 Base UI 的 `Slider.Root`，支持受控与非受控用法。每个滑块都必须有完整的可访问名称：使用可见 `label`，或为外部标签提供 `aria-label` / `aria-labelledby`，否则类型检查会报错。
+
+## 基础示例
+
+下面的音量滑块直接渲染真实组件。拖动玻璃滑块、点击轨道或使用方向键都会更新数值，右侧的数值显示会自动跟随。
+
+<Example name="slider/basic" />
+
+## 区间值
+
+传入数组会为每个值渲染一个滑块。`format` 使用 `Intl.NumberFormatOptions` 格式化 `Slider.Value` 的显示内容：
+
+<Example name="slider/range" />
+
+## 纵向
+
+`orientation="vertical"` 会把轨道、指示条和滑块切换为纵向布局：
+
+<Example name="slider/vertical" />
+
+## 禁用
+
+禁用状态使用原生 `disabled`，拖动和键盘交互都会停止：
+
+<Example name="slider/disabled" />
+
+## 表单用法
+
+Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]` 提交当前值：
+
+<Example name="slider/form" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | 可见标签，会与每个滑块建立 `aria-labelledby` 关联。 |
+| `description` | `ReactNode` | — | 辅助说明，会与每个滑块建立 `aria-describedby` 关联。 |
+| `showValue` | `boolean` | `false` | 在 header 中渲染当前值或区间。 |
+| `value` | `number \| readonly number[]` | — | 受控值；数组会渲染多个滑块。 |
+| `defaultValue` | `number \| readonly number[]` | — | 非受控初始值。 |
+| `onValueChange` | `(value, details) => void` | — | 值变化时触发。 |
+| `min` | `number` | `0` | 最小值。 |
+| `max` | `number` | `100` | 最大值。 |
+| `step` | `number` | `1` | 方向键和拖动的步进。 |
+| `largeStep` | `number` | `10` | Page Up / Page Down 与 Shift + 方向键的步进。 |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局与键盘方向。 |
+| `format` | `Intl.NumberFormatOptions` | — | 数值显示格式。 |
+| `locale` | `Intl.LocalesArgument` | — | 数值格式化使用的 locale。 |
+| `disabled` | `boolean` | `false` | 禁用滑块。 |
+| `name` | `string` | — | 表单提交时使用的字段名。 |
+| `className` | `string` | — | 合并到最外层 `root`。 |
+| `style` | `CSSProperties` | — | 合并到 `root` 的内联样式。 |
+| `ui` | `Partial<Record<SliderSlot, string>>` | — | 覆盖内部槽位样式。 |
+
+其余属性会透传给 Base UI 的 `Slider.Root`。
+
+### ui 槽位
+
+| 槽位 | 说明 |
+| --- | --- |
+| `root` | 最外层容器，包含标签、轨道和说明。 |
+| `header` | 标签与数值显示区域。 |
+| `label` | 可见标签。 |
+| `value` | 当前值或区间。 |
+| `description` | 辅助说明。 |
+| `control` | 轨道与滑块的交互容器。 |
+| `track` | 滑块轨道。 |
+| `indicator` | 已选区间填充条。 |
+| `thumb` | 液态玻璃滑块。 |
+
+## 结构与尺寸
+
+- Slider 没有 `size` 属性，固定使用 6px 轨道和 40 × 24px 滑块；纵向布局会交换宽高。
+- 纵向布局的最小高度由 `control` 的 `min-h-40` 提供，需要更高时通过 `ui.control` 覆盖。
+- 轨道与滑块的颜色、模糊和边缘高光来自 `--ui-glass-*` 与 Slider 内部变量，可在 `packages/ui/src/theme/slider.ts` 中调整。
+
+## 无障碍
+
+- 必须提供 `label`、`aria-label` 或 `aria-labelledby` 之一。
+- `description` 会自动关联为 `aria-describedby`。
+- 方向键调整步进，Page Up / Page Down 与 Shift + 方向键使用 `largeStep`。
+- 每个滑块的当前值通过 `aria-valuenow`、`aria-valuemin` 和 `aria-valuemax` 暴露给辅助技术。

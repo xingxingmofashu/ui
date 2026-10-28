@@ -1,0 +1,56 @@
+---
+title: "Card"
+description: "由 header、body 和 footer 组成的液态玻璃卡片。"
+---
+
+Card 使用两层结构：一层负责玻璃表面与高光，另一层负责内容布局。`className` 作用于 `root`，可以用 `ui` 覆盖每个内部槽位。
+
+## 基础示例
+
+下面的卡片来自真实组件，结构与代码示例一致。
+
+<Example name="card/basic" />
+
+## 仅内容
+
+不传 `title`、`description` 或 `footer` 时，对应的区域不会渲染：
+
+<Example name="card/content-only" />
+
+## 自定义槽位
+
+`ui` 可以覆盖 header、body、title 等内部结构，而 `className` 始终作用于 root：
+
+<Example name="card/custom-slots" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | 卡片标题。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `footer` | `ReactNode` | — | 底部操作区。 |
+| `children` | `ReactNode` | — | 卡片主体内容。 |
+| `className` | `string` | — | 合并到 `root`。 |
+| `ui` | `Partial<Record<CardSlot, string>>` | — | 覆盖内部槽位样式。 |
+
+其余属性会透传给根 `div`，例如 `id`、`role`、`onClick`。
+
+### ui 槽位
+
+| 槽位 | 说明 |
+| --- | --- |
+| `root` | 最外层容器。 |
+| `header` | 标题与描述区域。 |
+| `title` | 标题元素。 |
+| `description` | 描述元素。 |
+| `body` | 主体内容区域。 |
+| `footer` | 底部区域。 |
+
+## 结构说明
+
+- Card 没有 `size` 属性。header 与 footer 的内边距为 `p-4 sm:px-6`，body 为 `p-4 sm:p-6`。
+- `title`、`description`、`footer` 或 `children` 为空字符串、`false` 或空数组时，对应区域也不会渲染。
+- 标题使用 `font-semibold`，描述使用 `mt-1 text-sm`。
+- 卡片本身不是按钮。需要整卡可点击时，请由调用方补充 `role`、键盘行为和焦点样式。
+- 玻璃效果需要背景有细节才能显现，纯色背景上会比较克制。

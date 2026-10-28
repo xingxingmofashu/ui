@@ -1,0 +1,79 @@
+---
+title: "Button"
+description: "A liquid glass button with icons, five sizes, and strict accessible-name checks."
+---
+
+`className` targets the outer click area, while the visible glass surface is drawn by the inner `glass` slot. Icon-only buttons must provide `aria-label` or `aria-labelledby`, otherwise type checking fails.
+
+## Basic example
+
+The counter below renders the real `Button`. Clicking updates React state, and the reset button disables itself at zero.
+
+<Example name="button/basic" />
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Text and icons scale with the size, so you do not need to pass `size` to icons separately.
+
+<Example name="button/sizes" />
+
+## Icons
+
+The leading icon sits before the label. The trailing icon sits after the label. Both use the same plain icon container. When visible text exists, icons are automatically marked as decorative.
+
+<Example name="button/icons" />
+
+<Callout title="Icon-only buttons">
+  Icon-only buttons have no visible text and must provide an accessible name through
+  `aria-label` or `aria-labelledby`. Omitting it is rejected by TypeScript.
+</Callout>
+
+## States
+
+The disabled state uses the native `disabled` attribute, stopping both keyboard and pointer interaction.
+
+<Example name="button/states" />
+
+## Full-width buttons
+
+`className` adjusts the outer click area. The inner `base` layout already fills the available width:
+
+<Example name="button/full-width" />
+
+## Render as a link
+
+When the button should navigate instead of trigger an action, tell Base UI not to render a native `<button>`:
+
+<Example name="button/link" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Button text. Takes precedence over `children` when both are provided. |
+| `children` | `ReactNode` | — | Visible content used when `label` is not provided. |
+| `leadingIcon` | `ReactNode` | — | Icon before the label. |
+| `trailingIcon` | `ReactNode` | — | Icon after the label, using the same container as the leading icon. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, and icon size. |
+| `className` | `string` | — | Merged into the outer `root`. |
+| `ui` | `Partial<Record<ButtonSlot, string>>` | — | Overrides internal slot styles. |
+
+Provide at least one of `label`, `children`, `aria-label`, or `aria-labelledby`, otherwise type checking fails. All other props are forwarded to the Base UI `Button`, such as `disabled`, `onClick`, `type`, and `render`.
+
+### ui slots
+
+| Slot | Description |
+| --- | --- |
+| `root` | Outer click area. |
+| `base` | Layout, hover lift, and press scale. |
+| `glass` | Visible glass pill and shared material. |
+| `label` | Text container. |
+| `leadingIcon` | Leading icon container. |
+| `trailingIcon` | Trailing icon container. |
+| `overlay` | Glass rim highlight layer. |
+
+## Accessibility
+
+- Visible text is provided through `label` or `children`.
+- Icon-only buttons must provide `aria-label` or `aria-labelledby`.
+- The disabled state uses native `disabled` and is synchronized with Base UI's interaction state.

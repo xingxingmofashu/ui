@@ -1,0 +1,44 @@
+---
+title: "Introduction"
+description: "A composable, accessible, and themeable set of liquid glass components. Every preview in these docs is a real component, not a screenshot."
+---
+
+This is the documentation site for Liquid Glass UI (`@xingxingmofashu.me/ui`). The components are built with React 19 and Tailwind CSS 4; Button, Slider, Switch, and Toggle Group use Base UI, while Card uses native elements. Surfaces, rim highlights, and inner shadows are all drawn with CSS — no textures and no extra runtime.
+
+The documentation uses a black-and-white theme: navigation, syntax highlighting, callouts, and component examples all stay neutral. The card, buttons, sliders, and switches below render directly from the UI package.
+
+<Preview name="card/basic" />
+
+## Get started
+
+<Cards>
+  <Card title="Button" href="/en/docs/components/button">
+    Five sizes, leading and trailing icons, and strict accessible-name checks.
+  </Card>
+  <Card title="Card" href="/en/docs/components/card">
+    A glass card built from header, body, and footer, with slot-level overrides.
+  </Card>
+  <Card title="Slider" href="/en/docs/components/slider">
+    A liquid glass slider with value display, range selection, and vertical orientation.
+  </Card>
+  <Card title="Switch" href="/en/docs/components/switch">
+    A switch with a liquid glass thumb, label, and description, including controlled usage.
+  </Card>
+  <Card title="Toggle Group" href="/en/docs/components/toggle-group">
+    Single or multiple selection with a shared glass thumb and horizontal or vertical orientation.
+  </Card>
+  <Card title="GitHub" href="https://github.com/xingxingmofashu/xingxingmofashu.me">
+    Browse the source, tests, and the site example in the monorepo.
+  </Card>
+</Cards>
+
+## Design principles
+
+- **Real components**: docs render `@xingxingmofashu.me/ui` directly through MDX, so previews match the component source.
+- **Monochrome first**: the docs use Fumadocs' black theme and override callouts and syntax highlighting to neutral colors.
+- **Accessible**: buttons and switches without an accessible name are rejected at the TypeScript level.
+- **Overridable**: `className` targets the root, `ui` targets internal slots, and tokens control the theme.
+
+<Callout title="About previews">
+  The switches in previews are still the real component, and the track follows the monochrome theme by default. Behavior, focus management, and animation are unchanged.
+</Callout>
