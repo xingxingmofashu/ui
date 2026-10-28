@@ -52,11 +52,11 @@ Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]
 | `locale` | `Intl.LocalesArgument` | — | 数值格式化使用的 locale。 |
 | `disabled` | `boolean` | `false` | 禁用滑块。 |
 | `name` | `string` | — | 表单提交时使用的字段名。 |
-| `className` | `string` | — | 合并到最外层 `root`。 |
-| `style` | `CSSProperties` | — | 合并到 `root` 的内联样式。 |
-| `ui` | `Partial<Record<SliderSlot, string>>` | — | 覆盖内部 Slot 样式。 |
+| `className` | `string \| ((state) => string \| undefined)` | — | 合并到最外层 `root`。回调会收到 Base UI slider 状态。 |
+| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | 合并到 `root` 的内联样式。回调会收到 Base UI slider 状态。 |
+| `ui` | `Partial<Record<SliderThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
-其余属性会透传给 Base UI 的 `Slider.Root`。
+其余属性会透传给 Base UI 的 `Slider.Root`，包括 `form`、`name`、`thumbAlignment`、`thumbCollisionBehavior`、`render` 和 `ref`。
 
 ### UI Slots
 

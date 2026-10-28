@@ -7,7 +7,7 @@ import * as React from "react";
 import { hasContent } from "../lib/has-content";
 import theme from "../theme/slider";
 
-type SliderSlot =
+type SliderThemeSlot =
   | "root"
   | "header"
   | "label"
@@ -18,10 +18,40 @@ type SliderSlot =
   | "indicator"
   | "thumb";
 
-type SliderStyle = Partial<Record<SliderSlot, string>>;
+type SliderStyle = Partial<Record<SliderThemeSlot, string>>;
 
 type SliderRootProps<Value extends number | readonly number[]> =
   UISlider.Root.Props<Value>;
+
+type SliderClassName<Value extends number | readonly number[]> =
+  SliderRootProps<Value>["className"];
+
+type SliderStyleProp<Value extends number | readonly number[]> =
+  SliderRootProps<Value>["style"];
+
+interface SliderBaseProps<Value extends number | readonly number[]>
+  extends Omit<SliderRootProps<Value>, "className" | "style" | "children"> {
+  /** Classes merged into the outer root. Accepts a callback that receives Base UI's slider state. */
+  className?: SliderClassName<Value>;
+  /** Classes for individual slots. */
+  ui?: SliderStyle;
+  /** Inline styles merged into the root. Accepts a callback that receives Base UI's slider state. */
+  style?: SliderStyleProp<Value>;
+  /** Visible label, connected to every thumb through `aria-labelledby`. */
+  label?: React.ReactNode;
+  /** Optional supporting text connected through `aria-describedby`. */
+  description?: React.ReactNode;
+  /** Renders the current value (or range) in the header. */
+  showValue?: boolean;
+  /**
+   * Returns an accessible name for each thumb. Use this on range sliders to
+   * distinguish the minimum and maximum handles.
+   */
+  getThumbAriaLabel?: (index: number) => string;
+}
+
+type SliderProps<Value extends number | readonly number[] = number> =
+  SliderBaseProps<Value> & SliderAccessibleName;
 
 /**
  * Sliders must have an accessible name. Use a visible `label`, or
@@ -35,30 +65,6 @@ type SliderAccessibleName =
       "aria-label"?: string;
       "aria-labelledby"?: string;
     };
-
-type SliderProps<Value extends number | readonly number[] = number> = Omit<
-  SliderRootProps<Value>,
-  "className" | "style" | "children"
-> &
-  SliderAccessibleName & {
-    /** Classes merged into the outer root. */
-    className?: string;
-    /** Classes for individual slots. */
-    ui?: SliderStyle;
-    /** Inline styles merged into the root. */
-    style?: React.CSSProperties;
-    /** Visible label, connected to every thumb through `aria-labelledby`. */
-    label?: React.ReactNode;
-    /** Optional supporting text connected through `aria-describedby`. */
-    description?: React.ReactNode;
-    /** Renders the current value (or range) in the header. */
-    showValue?: boolean;
-    /**
-     * Returns an accessible name for each thumb. Use this on range sliders to
-     * distinguish the minimum and maximum handles.
-     */
-    getThumbAriaLabel?: (index: number) => string;
-  };
 
 function getThumbCount(
   value: number | readonly number[] | undefined,
@@ -104,6 +110,11 @@ function Slider<Value extends number | readonly number[] = number>({
     "aria-labelledby": props["aria-labelledby"],
     "aria-describedby": describedBy,
   };
+  const rootClassName =
+    typeof className === "function"
+      ? (state: UISlider.Root.State) =>
+          cn(ui.root(), className(state), uiOverrides?.root)
+      : cn(ui.root(), className, uiOverrides?.root);
 
   return (
     <UISlider.Root
@@ -111,7 +122,7 @@ function Slider<Value extends number | readonly number[] = number>({
       value={value}
       defaultValue={defaultValue}
       data-slot="root"
-      className={cn(ui.root(), className, uiOverrides?.root)}
+      className={rootClassName}
       style={style}
     >
       {hasHeader ? (
@@ -183,4 +194,4 @@ function Slider<Value extends number | readonly number[] = number>({
 }
 
 export { Slider };
-export type { SliderStyle, SliderProps, SliderSlot };
+export type { SliderStyle, SliderProps, SliderThemeSlot };

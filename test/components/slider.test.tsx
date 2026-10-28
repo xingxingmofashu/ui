@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Slider } from "../../src/components/slider";
@@ -201,6 +202,57 @@ describe("Slider", () => {
       expect(track).toHaveClass("slot-track");
       expect(getSlot(track, "indicator")).toHaveClass("slot-indicator");
       expect(getSlot(control, "thumb")).toHaveClass("slot-thumb");
+    });
+
+    it("resolves className and style callbacks with Base UI state", () => {
+      const { rerender } = render(
+        <Slider
+          aria-label="Stateful"
+          disabled
+          className={(state) =>
+            state.disabled ? "slider-disabled" : "slider-enabled"
+          }
+          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
+        />,
+      );
+
+      let root = getRoot(getSlider("Stateful"));
+
+      expect(root).toHaveClass("slider-disabled");
+      expect(root).toHaveStyle({ opacity: "0.5" });
+
+      rerender(
+        <Slider
+          aria-label="Stateful"
+          className={(state) =>
+            state.disabled ? "slider-disabled" : "slider-enabled"
+          }
+          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
+        />,
+      );
+
+      root = getRoot(getSlider("Stateful"));
+
+      expect(root).toHaveClass("slider-enabled");
+      expect(root).toHaveStyle({ opacity: "1" });
+    });
+
+    it("forwards render and ref to the Base UI root", () => {
+      const ref = createRef<HTMLDivElement>();
+
+      render(
+        <Slider
+          ref={ref}
+          aria-label="Custom root"
+          render={<section />}
+          defaultValue={40}
+        />,
+      );
+
+      const root = getRoot(getSlider("Custom root"));
+
+      expect(root.tagName).toBe("SECTION");
+      expect(ref.current).toBe(root);
     });
 
     it("uses the fixed xs thumb and sm track scale", () => {
