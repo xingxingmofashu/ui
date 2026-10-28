@@ -31,6 +31,7 @@ export {
   type SwitchStyle,
   type SwitchProps,
   type SwitchSize,
+  type SwitchThemeSlot,
 } from "./components/switch";
 export {
   ToggleGroup,

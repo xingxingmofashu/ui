@@ -260,6 +260,47 @@ describe("Switch", () => {
       expect(switchElement.tagName).toBe("BUTTON");
     });
 
+    it("forwards state callbacks to the Base UI switch root", async () => {
+      const user = userEvent.setup();
+      const { rerender } = render(
+        <Switch
+          aria-label="Stateful switch"
+          defaultChecked
+          className="outer-root"
+          baseClassName={(state) =>
+            state.checked ? "base-checked" : "base-unchecked"
+          }
+          baseStyle={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
+        />,
+      );
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Stateful switch",
+      });
+
+      expect(getRoot(switchElement)).toHaveClass("outer-root");
+      expect(switchElement).toHaveClass("base-checked");
+      expect(switchElement).toHaveStyle({ opacity: "1" });
+
+      await user.click(switchElement);
+
+      expect(switchElement).toHaveClass("base-unchecked");
+
+      rerender(
+        <Switch
+          aria-label="Stateful switch"
+          defaultChecked
+          disabled
+          baseClassName={(state) =>
+            state.checked ? "base-checked" : "base-unchecked"
+          }
+          baseStyle={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
+        />,
+      );
+
+      expect(switchElement).toHaveStyle({ opacity: "0.5" });
+    });
+
     it("does not render arbitrary children", () => {
       render(
         // @ts-expect-error Switch owns its internal children.

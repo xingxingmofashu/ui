@@ -49,8 +49,10 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `onCheckedChange` | `(checked: boolean, details) => void` | — | 选中状态变化时触发。 |
 | `disabled` | `boolean` | `false` | 禁用开关。 |
 | `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
-| `className` | `string` | — | 合并到最外层 `root`。 |
-| `style` | `CSSProperties` | — | 内联样式，合并到最外层 `root`。 |
+| `className` | `string` | — | 合并到最外层布局容器。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到最外层布局容器。 |
+| `baseClassName` | `string \| ((state) => string \| undefined)` | — | 合并到 Base UI switch root。回调会收到 Base UI switch 状态。 |
+| `baseStyle` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | 合并到 Base UI switch root 的内联样式。回调会收到 Base UI switch 状态。 |
 | `ui` | `Partial<Record<SwitchThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
 其余属性会透传给 Base UI 的 `Switch.Root`，包括 `required`、`name`、`form`、`value`、`uncheckedValue`、`inputRef`、`nativeButton`、`render` 和 `ref`。

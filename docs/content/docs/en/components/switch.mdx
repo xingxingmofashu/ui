@@ -49,8 +49,10 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
 | `onCheckedChange` | `(checked: boolean, details) => void` | — | Called when the checked state changes. |
 | `disabled` | `boolean` | `false` | Disables the switch. |
 | `readOnly` | `boolean` | `false` | Keeps the switch from toggling. |
-| `className` | `string` | — | Merged into the outermost `root`. |
-| `style` | `CSSProperties` | — | Inline styles merged into the outermost `root`. |
+| `className` | `string` | — | Merged into the outermost layout container. |
+| `style` | `CSSProperties` | — | Inline styles merged into the outermost layout container. |
+| `baseClassName` | `string \| ((state) => string \| undefined)` | — | Merged into the Base UI switch root. The callback receives Base UI switch state. |
+| `baseStyle` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | Inline styles merged into the Base UI switch root. The callback receives Base UI switch state. |
 | `ui` | `Partial<Record<SwitchThemeSlot, string>>` | — | Overrides internal slot styles. |
 
 All other props are forwarded to Base UI's `Switch.Root`, including `required`, `name`, `form`, `value`, `uncheckedValue`, `inputRef`, `nativeButton`, `render`, and `ref`.

@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { hasContent } from "../lib/has-content";
+import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
 import theme from "../theme/switch";
 
 type SwitchThemeSlot =
@@ -41,6 +42,10 @@ interface SwitchBaseProps
   className?: string;
   /** Inline styles merged into the outer root. */
   style?: React.CSSProperties;
+  /** Classes merged into the Base UI switch root. Accepts a callback that receives Base UI's switch state. */
+  baseClassName?: SwitchRootProps["className"];
+  /** Inline styles merged into the Base UI switch root. Accepts a callback that receives Base UI's switch state. */
+  baseStyle?: SwitchRootProps["style"];
   /** Classes for individual slots. */
   ui?: SwitchStyle;
   /** Visible label. It is connected to the switch through `aria-labelledby`. */
@@ -107,6 +112,8 @@ function Switch({
   className,
   ui: uiOverrides,
   style,
+  baseClassName,
+  baseStyle,
   label,
   description,
   size,
@@ -135,6 +142,18 @@ function Switch({
     "--ui-switch-filter-goo": `url(#${filterId}-goo)`,
     "--ui-switch-filter-remove-black": `url(#${filterId}-remove-black)`,
   } as React.CSSProperties;
+  const baseClassNameValue = resolveThemeClassName<UISwitch.Root.State>(
+    ui.base(),
+    baseClassName,
+    uiOverrides?.base,
+  );
+  const baseStyleValue =
+    typeof baseStyle === "function"
+      ? (state: UISwitch.Root.State) => ({
+          ...switchStyle,
+          ...baseStyle(state),
+        })
+      : { ...switchStyle, ...baseStyle };
   const clearAnimationTimeout = React.useCallback(() => {
     if (animationTimeout.current !== null) {
       window.clearTimeout(animationTimeout.current);
@@ -202,8 +221,8 @@ function Switch({
           data-slot="base"
           data-animating={animating || undefined}
           onCheckedChange={handleCheckedChange}
-          className={cn(ui.base(), uiOverrides?.base)}
-          style={switchStyle}
+          className={baseClassNameValue}
+          style={baseStyleValue}
         >
           <LiquidGlassFilter filterId={filterId} />
 
@@ -262,4 +281,4 @@ function Switch({
 }
 
 export { Switch };
-export type { SwitchStyle, SwitchProps, SwitchSize };
+export type { SwitchStyle, SwitchProps, SwitchSize, SwitchThemeSlot };
