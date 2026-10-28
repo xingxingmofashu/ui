@@ -4,7 +4,7 @@ import * as React from "react";
 import { hasContent } from "../lib/has-content";
 import theme from "../theme/card";
 
-type CardSlot =
+type CardThemeSlot =
   | "root"
   | "header"
   | "title"
@@ -14,7 +14,7 @@ type CardSlot =
 
 type CardTitleTag = "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
-type CardStyle = Partial<Record<CardSlot, string>>;
+type CardStyle = Partial<Record<CardThemeSlot, string>>;
 
 type CardProps = Omit<React.ComponentProps<"div">, "title"> & {
   /** Classes merged into the root element. */
