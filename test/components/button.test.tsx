@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Button } from "../../src/components/button";
@@ -380,6 +381,111 @@ describe("Button", () => {
       expect(
         getSlot(buttonElement, "label").closest('[aria-hidden="true"]'),
       ).toBeNull();
+    });
+  });
+
+  describe("base-ui props", () => {
+    it("resolves a className function with the button state", () => {
+      const { rerender } = render(
+        <Button
+          label="Stateful"
+          className={(state) =>
+            state.disabled ? "state-disabled" : "state-enabled"
+          }
+        />,
+      );
+
+      expect(
+        screen.getByRole("button", { name: "Stateful" }),
+      ).toHaveClass("state-enabled");
+
+      rerender(
+        <Button
+          label="Stateful"
+          disabled
+          className={(state) =>
+            state.disabled ? "state-disabled" : "state-enabled"
+          }
+        />,
+      );
+
+      const buttonElement = screen.getByRole("button", { name: "Stateful" });
+
+      expect(buttonElement).toHaveClass("state-disabled");
+      expect(buttonElement).not.toHaveClass("state-enabled");
+    });
+
+    it("merges ui.root into a className function", () => {
+      render(
+        <Button
+          label="Merged"
+          className={() => "from-callback"}
+          ui={{ root: "slot-root" }}
+        />,
+      );
+
+      expect(screen.getByRole("button", { name: "Merged" })).toHaveClass(
+        "from-callback",
+        "slot-root",
+      );
+    });
+
+    it("forwards the style function with the button state", () => {
+      const { rerender } = render(
+        <Button
+          label="Styled"
+          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
+        />,
+      );
+
+      expect(screen.getByRole("button", { name: "Styled" })).toHaveStyle({
+        opacity: "1",
+      });
+
+      rerender(
+        <Button
+          label="Styled"
+          disabled
+          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
+        />,
+      );
+
+      expect(screen.getByRole("button", { name: "Styled" })).toHaveStyle({
+        opacity: "0.5",
+      });
+    });
+
+    it("renders a custom element through render and nativeButton", () => {
+      render(
+        <Button
+          nativeButton={false}
+          render={<a href="/docs" />}
+          label="Docs"
+        />,
+      );
+
+      const link = screen.getByRole("button", { name: "Docs" });
+
+      expect(link.tagName).toBe("A");
+      expect(link).toHaveAttribute("href", "/docs");
+      expect(getSlot(link, "glass")).toHaveAttribute("aria-hidden", "true");
+    });
+
+    it("forwards refs to the rendered root", () => {
+      const ref = createRef<HTMLElement>();
+
+      render(<Button ref={ref} label="Ref" />);
+
+      expect(ref.current).toBe(screen.getByRole("button", { name: "Ref" }));
+    });
+
+    it("keeps disabled buttons focusable with focusableWhenDisabled", () => {
+      render(<Button label="Focusable" disabled focusableWhenDisabled />);
+
+      const buttonElement = screen.getByRole("button", { name: "Focusable" });
+
+      expect(buttonElement).toHaveAttribute("aria-disabled", "true");
+      expect(buttonElement).not.toBeDisabled();
     });
   });
 

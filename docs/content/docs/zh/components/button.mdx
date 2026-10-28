@@ -48,10 +48,11 @@ description: "可以渲染为其他标签，或在禁用时仍可聚焦的按钮
 | `leadingIcon` | `ReactNode` | — | 标签前的图标。 |
 | `trailingIcon` | `ReactNode` | — | 标签后的图标，使用与前置图标相同的容器。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距和图标尺寸。 |
-| `className` | `string` | — | 合并到外层 `root`。 |
-| `ui` | `Partial<Record<ButtonSlot, string>>` | — | 覆盖内部 Slot 样式。 |
+| `className` | `string \| ((state: { disabled: boolean }) => string \| undefined)` | — | 合并到外层 `root`。回调会收到 Base UI 的按钮状态。 |
+| `style` | `CSSProperties \| ((state: { disabled: boolean }) => CSSProperties \| undefined)` | — | 透传给底层 Base UI `Button`。 |
+| `ui` | `Partial<Record<ButtonThemeSlot, string>>` | — | 覆盖内部 Slot 样式。 |
 
-其余属性会透传给 Base UI 的 `Button`，例如 `disabled`、`onClick`、`type`、`render`。
+其余属性会透传给 Base UI 的 `Button`，包括 `disabled`、`focusableWhenDisabled`、`nativeButton`、`onClick`、`type`、`render` 和 `ref`。
 
 ### UI Slots
 

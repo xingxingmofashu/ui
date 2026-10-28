@@ -1,6 +1,10 @@
 "use client";
 
-import { Button as UIButton } from "@base-ui/react/button";
+import {
+  Button as UIButton,
+  type ButtonProps as UIButtonProps,
+  type ButtonState as UIButtonState,
+} from "@base-ui/react/button";
 import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
@@ -8,7 +12,7 @@ import { type VariantProps } from "tailwind-variants";
 import { hasContent } from "../lib/has-content";
 import theme from "../theme/button";
 
-type ButtonSlot =
+type ButtonThemeSlot =
   | "root"
   | "base"
   | "glass"
@@ -17,9 +21,9 @@ type ButtonSlot =
   | "trailingIcon"
   | "overlay";
 
-type ButtonStyle = Partial<Record<ButtonSlot, string>>;
+type ButtonStyle = Partial<Record<ButtonThemeSlot, string>>;
 
-type ButtonContentProps = {
+interface ButtonContentProps {
   /** Text or content rendered inside the button. */
   label?: React.ReactNode;
   /** Icon rendered before the label. */
@@ -28,7 +32,7 @@ type ButtonContentProps = {
   trailingIcon?: React.ReactNode;
   /** Classes for individual slots. Use `glass` to style the visible glass surface and `root` for the outer click area. */
   ui?: ButtonStyle;
-};
+}
 
 /**
  * Buttons must have an accessible name. Use `label`/`children` for visible
@@ -40,12 +44,23 @@ type ButtonAccessibleName =
   | { "aria-label": string }
   | { "aria-labelledby": string };
 
-type ButtonProps = Omit<React.ComponentProps<typeof UIButton>, "className"> &
+type ButtonClassName = UIButtonProps["className"];
+
+interface ButtonBaseProps
+  extends Omit<UIButtonProps, "ref">,
+    ButtonContentProps {
+  /** Ref to the rendered root element. */
+  ref?: React.Ref<HTMLElement>;
+  /**
+   * Classes merged into the outer click area. Accepts a callback that
+   * receives Base UI's button state, like Base UI's own `className` prop.
+   */
+  className?: ButtonClassName;
+}
+
+type ButtonProps = ButtonBaseProps &
   VariantProps<typeof theme> &
-  ButtonContentProps & {
-    /** Classes merged into the outer click area. */
-    className?: string;
-  } & ButtonAccessibleName;
+  ButtonAccessibleName;
 
 function Button({
   className,
@@ -65,11 +80,16 @@ function Button({
     Boolean(props["aria-label"]) ||
     Boolean(props["aria-labelledby"]);
   const iconIsDecorative = hasAccessibleName;
+  const rootClassName =
+    typeof className === "function"
+      ? (state: UIButtonState) =>
+          cn(ui.root(), className(state), uiOverrides?.root)
+      : cn(ui.root(), className, uiOverrides?.root);
 
   return (
     <UIButton
       data-slot="root"
-      className={cn(ui.root(), className, uiOverrides?.root)}
+      className={rootClassName}
       {...props}
     >
       <span data-slot="base" className={cn(ui.base(), uiOverrides?.base)}>
