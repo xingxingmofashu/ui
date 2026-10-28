@@ -1,12 +1,17 @@
 # Docs Package
 
-Bilingual Fumadocs documentation for `@xingxingmofashu.me/ui`.
+Bilingual Fumadocs documentation for `@xingxingmofashu/ui`.
 
 ## Commands
 
-- `pnpm --filter @xingxingmofashu.me/docs dev` — start on port 3001.
-- `pnpm --filter @xingxingmofashu.me/docs build` — static export to `out/`.
-- `pnpm --filter @xingxingmofashu.me/docs typecheck` — TypeScript check.
+From the repository root:
+
+- `pnpm docs:dev` — start on port 3001.
+- `pnpm docs:build` — static export to `out/`.
+- `pnpm docs:typecheck` — TypeScript check.
+
+From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
+`pnpm typecheck`.
 
 ## Editing Content
 

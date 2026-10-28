@@ -2,7 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 
-import { Button } from "@xingxingmofashu.me/ui";
+import { Button } from "@xingxingmofashu/ui";
 
 const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
 

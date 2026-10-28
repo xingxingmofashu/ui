@@ -20,8 +20,8 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@xingxingmofashu.me/ui": ["../ui/src/index.ts"],
-      "@xingxingmofashu.me/ui/*": ["../ui/src/*"]
+      "@xingxingmofashu/ui": ["../src/index.ts"],
+      "@xingxingmofashu/ui/*": ["../src/*"]
     }
   },
   "include": [

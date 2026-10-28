@@ -1,6 +1,6 @@
 "use client";
 
-import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 

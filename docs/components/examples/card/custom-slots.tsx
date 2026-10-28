@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "@xingxingmofashu.me/ui";
+import { Card } from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 

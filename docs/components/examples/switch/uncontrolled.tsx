@@ -1,6 +1,6 @@
 "use client";
 
-import { Switch } from "@xingxingmofashu.me/ui";
+import { Switch } from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 

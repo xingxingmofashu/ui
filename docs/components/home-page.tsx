@@ -16,7 +16,7 @@ import {
   Switch,
   ToggleGroup,
   ToggleGroupItem,
-} from "@xingxingmofashu.me/ui";
+} from "@xingxingmofashu/ui";
 
 type Locale = "zh" | "en";
 
@@ -444,7 +444,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
           </div>
 
           <pre className="overflow-x-auto rounded-2xl border border-fd-border bg-fd-background p-5 text-xs leading-6 text-fd-foreground">
-            <code>{`import { Button, Card, Switch } from "@xingxingmofashu.me/ui";
+            <code>{`import { Button, Card, Switch } from "@xingxingmofashu/ui";
 
 <Card title="Liquid glass" description="CSS-only frosted panel.">
   <Switch label="Notifications" defaultChecked />

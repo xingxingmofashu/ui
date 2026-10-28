@@ -7,7 +7,7 @@ import {
   Button,
   ToggleGroup,
   ToggleGroupItem,
-} from "@xingxingmofashu.me/ui";
+} from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 

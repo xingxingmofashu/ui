@@ -1,16 +1,59 @@
 {
-  "name": "@xingxingmofashu.me/ui",
-  "version": "0.0.0",
-  "private": true,
+  "name": "@xingxingmofashu/ui",
+  "version": "0.1.0",
+  "description": "Liquid Glass UI components for React 19 and Tailwind CSS 4.",
+  "license": "MIT",
+  "author": "xingxingmofashu",
   "type": "module",
+  "packageManager": "pnpm@12.14.0",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
-    ".": "./src/index.ts",
-    "./index.css": "./src/index.css"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./index.css": "./dist/index.css",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xingxingmofashu/ui.git"
+  },
+  "homepage": "https://github.com/xingxingmofashu/ui",
+  "bugs": {
+    "url": "https://github.com/xingxingmofashu/ui/issues"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "tailwindcss",
+    "liquid-glass",
+    "base-ui"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "docs:dev": "pnpm --filter @xingxingmofashu.me/docs dev",
+    "docs:build": "pnpm --filter @xingxingmofashu.me/docs build",
+    "docs:typecheck": "pnpm --filter @xingxingmofashu.me/docs typecheck",
+    "check": "pnpm typecheck && pnpm test && pnpm docs:typecheck",
+    "prepublishOnly": "pnpm build && pnpm typecheck && pnpm test"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
@@ -28,12 +71,14 @@
     "@types/react-dom": "catalog:",
     "jsdom": "catalog:",
     "tailwindcss": "catalog:",
+    "tsup": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "react": "catalog:",
-    "react-dom": "catalog:"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": ">=4.0.0"
   }
 }

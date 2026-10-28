@@ -6,7 +6,7 @@ const withMDX = createMDX();
 const config = {
   output: "export",
   reactStrictMode: true,
-  transpilePackages: ["@xingxingmofashu.me/ui"],
+  transpilePackages: ["@xingxingmofashu/ui"],
   turbopack: {
     rules: {
       "*.tsx": {

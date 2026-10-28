@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@fumadocs/language": "catalog:",
-    "@xingxingmofashu.me/ui": "workspace:*",
+    "@xingxingmofashu/ui": "workspace:*",
     "fumadocs-core": "catalog:",
     "fumadocs-mdx": "catalog:",
     "fumadocs-ui": "catalog:",

@@ -3,7 +3,7 @@
 import { LayoutGrid, List } from "lucide-react";
 import { useState } from "react";
 
-import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu.me/ui";
+import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 

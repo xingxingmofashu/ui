@@ -1,6 +1,6 @@
 "use client";
 
-import { Slider } from "@xingxingmofashu.me/ui";
+import { Slider } from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 

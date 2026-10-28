@@ -3,7 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import { useState, type FormEvent } from "react";
 
-import { Button, Slider } from "@xingxingmofashu.me/ui";
+import { Button, Slider } from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 

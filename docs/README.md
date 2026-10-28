@@ -1,13 +1,23 @@
 # Docs Package
 
-`@xingxingmofashu.me/docs` is the bilingual documentation site for `@xingxingmofashu.me/ui`. It is built with Next.js and Fumadocs, uses a strict black-and-white theme, and renders real components from the UI package through MDX.
+`@xingxingmofashu.me/docs` is the bilingual documentation site for `@xingxingmofashu/ui`. It is built with Next.js and Fumadocs, uses a strict black-and-white theme, and renders real components from the UI package through MDX.
 
 ## Commands
 
+From the repository root:
+
 ```bash
-pnpm --filter @xingxingmofashu.me/docs dev
-pnpm --filter @xingxingmofashu.me/docs build
-pnpm --filter @xingxingmofashu.me/docs typecheck
+pnpm docs:dev
+pnpm docs:build
+pnpm docs:typecheck
+```
+
+Or from `docs/`:
+
+```bash
+pnpm dev
+pnpm build
+pnpm typecheck
 ```
 
 The dev server runs on port 3001. The build uses `output: "export"` and writes to `out/`.
@@ -35,7 +45,7 @@ The dev server runs on port 3001. The build uses `output: "export"` and writes t
 - `components/example.tsx` — renders a live example with its collapsible source.
 - `components/demo-stage.tsx` — shared frame for live examples.
 - `components/mdx.tsx` — exposes `Example` and `Preview` to MDX.
-- `app/globals.css` — Fumadocs black theme, monochrome overrides, and UI source scanning.
+- `app/globals.css` — Fumadocs black theme, monochrome overrides, and UI source scanning (`../../src`).
 
 ## Conventions
 

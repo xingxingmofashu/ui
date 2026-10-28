@@ -2,7 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 
-import { Button, Card } from "@xingxingmofashu.me/ui";
+import { Button, Card } from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 

@@ -1,10 +1,23 @@
 # UI Package
 
-Package: `@xingxingmofashu.me/ui`
+Package: `@xingxingmofashu/ui`
 
 Visual style: Liquid Glass.
 
 Source files and tests are the source of truth.
+
+The repository root is the UI package. The Fumadocs site lives in `docs/` and
+is included in the same pnpm workspace.
+
+## Commands
+
+- `pnpm build` — build the publishable `dist` output with tsup.
+- `pnpm dev` — rebuild `dist` in watch mode.
+- `pnpm test` — run the Vitest suite.
+- `pnpm typecheck` — typecheck the package.
+- `pnpm docs:dev` — start the docs site on port 3001.
+- `pnpm docs:build` — export the docs site to `docs/out`.
+- `pnpm check` — typecheck, test, and typecheck the docs.
 
 ## Components
 
@@ -45,4 +58,5 @@ Source files and tests are the source of truth.
 - Shared token and glass tests: `test/tokens.test.ts`
 - Test setup: `test/setup.ts`
 - Vitest config: `vitest.config.ts`
-- Preview page: `packages/web/app/page.tsx`
+- Build config: `tsup.config.ts`
+- Docs site: `docs/` (see `docs/AGENTS.md`)

@@ -3,7 +3,7 @@
 import { Plus, RotateCcw } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@xingxingmofashu.me/ui";
+import { Button } from "@xingxingmofashu/ui";
 
 import { useDocsLocale } from "@/components/locale-provider";
 
