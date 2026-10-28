@@ -11,7 +11,6 @@ import {
 
 import {
   Accordion,
-  AlertDialog,
   Button,
   Card,
   Slider,
@@ -19,6 +18,8 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@xingxingmofashu/ui";
+
+import { HomeAlertDialog } from "./home-alert-dialog";
 
 type Locale = "zh" | "en";
 
@@ -217,24 +218,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
       name: "Alert Dialog",
       href: `/${lang}/docs/components/alert-dialog`,
       description: copy.componentDescriptions.alertDialog,
-      preview: (
-        <AlertDialog
-          trigger={
-            <Button
-              size="sm"
-              label={isZh ? "删除项目" : "Delete project"}
-            />
-          }
-          title={isZh ? "删除项目？" : "Delete project?"}
-          description={
-            isZh
-              ? "此操作无法撤销，所有文件都会被永久删除。"
-              : "This action cannot be undone. All files will be permanently removed."
-          }
-          confirmLabel={isZh ? "删除" : "Delete"}
-          cancelLabel={isZh ? "取消" : "Cancel"}
-        />
-      ),
+      preview: <HomeAlertDialog isZh={isZh} />,
     },
     {
       name: "Button",

@@ -6,14 +6,22 @@ import { AlertDialog, Button } from "@xingxingmofashu/ui";
 import { DemoGroup, Status } from "../demo";
 
 function AlertDialogPreview() {
-  const [open, setOpen] = useState(false);
+  const [basicOpen, setBasicOpen] = useState(false);
+  const [controlledOpen, setControlledOpen] = useState(false);
+  const [contentOpen, setContentOpen] = useState(false);
   const [status, setStatus] = useState("No changes published.");
 
   return (
     <>
       <DemoGroup label="Basic">
+        <Button
+          label="Delete project"
+          leadingIcon={<Trash2 />}
+          onClick={() => setBasicOpen(true)}
+        />
         <AlertDialog
-          trigger={<Button label="Delete project" leadingIcon={<Trash2 />} />}
+          open={basicOpen}
+          onOpenChange={setBasicOpen}
           title="Delete project?"
           description="This action cannot be undone. All files, deployments, and environment variables will be permanently removed."
           confirmLabel="Delete project"
@@ -26,14 +34,15 @@ function AlertDialogPreview() {
           <Button
             label="Publish changes"
             leadingIcon={<Upload />}
-            onClick={() => setOpen(true)}
+            onClick={() => setControlledOpen(true)}
           />
           <AlertDialog
-            open={open}
-            onOpenChange={setOpen}
+            open={controlledOpen}
+            onOpenChange={setControlledOpen}
             title="Publish changes?"
             description="The current draft will become the live version for everyone."
             confirmLabel="Publish"
+            cancelLabel="Cancel"
             onConfirm={() => setStatus("Changes published.")}
             onCancel={() => setStatus("Publish cancelled.")}
           />
@@ -42,10 +51,14 @@ function AlertDialogPreview() {
       </DemoGroup>
 
       <DemoGroup label="Content">
+        <Button
+          label="Remove member"
+          leadingIcon={<UserMinus />}
+          onClick={() => setContentOpen(true)}
+        />
         <AlertDialog
-          trigger={
-            <Button label="Remove member" leadingIcon={<UserMinus />} />
-          }
+          open={contentOpen}
+          onOpenChange={setContentOpen}
           title="Remove Maya from the workspace?"
           description="Maya will lose access to every project in this workspace immediately."
           confirmLabel="Remove member"

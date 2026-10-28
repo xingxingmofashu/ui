@@ -18,6 +18,7 @@ export default function AlertDialogControlledDemo() {
         title="Publish changes?"
         description="The current draft will become the live version for everyone."
         confirmLabel="Publish"
+        cancelLabel="Cancel"
         onConfirm={() => setStatus("Changes published.")}
         onCancel={() => setStatus("Publish cancelled.")}
       />

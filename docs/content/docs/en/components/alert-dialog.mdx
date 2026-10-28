@@ -1,25 +1,25 @@
 ---
 title: "Alert Dialog"
-description: "A modal confirmation dialog with a liquid glass surface, required response, and built-in cancel and confirm actions."
+description: "A modal confirmation dialog with a liquid glass surface, required response, and fixed cancel and confirm actions."
 ---
 
-`AlertDialog` is an integrated wrapper around Base UI's `AlertDialog`. It renders the trigger, portal, backdrop, centered popup, title, description, optional body, and the action buttons internally.
+`AlertDialog` is an integrated wrapper around Base UI's `AlertDialog`. It renders the portal, backdrop, centered popup, title, description, optional body, and fixed cancel and confirm actions internally.
 
 ## Basic example
 
-The dialog below is the real component. It is modal and pressing the backdrop does not dismiss it; the user has to choose an action.
+The component is fully controlled: `open` controls visibility and the page renders its own trigger button. It is modal and pressing the backdrop does not dismiss it; the user has to choose an action.
 
 <Example name="alert-dialog/basic" />
 
 ## Controlled usage
 
-`open` and `onOpenChange` control the dialog. Omit `trigger` to open it programmatically. `onConfirm` and `onCancel` run before the dialog closes.
+`open` and `onOpenChange` control the dialog. Render your own button and set `open` to `true` to show it; `onConfirm` and `onCancel` handle action side effects.
 
 <Example name="alert-dialog/controlled" />
 
 ## Custom content
 
-`children` adds content between the description and the actions. Set `cancelLabel` or `confirmLabel` to `null` to hide an action.
+`children` adds content between the description and the action buttons.
 
 <Example name="alert-dialog/content" />
 
@@ -27,14 +27,13 @@ The dialog below is the real component. It is modal and pressing the backdrop do
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `trigger` | `ReactElement` | — | Element that opens the dialog. Omit it for a fully controlled dialog. |
 | `title` | `ReactNode` | — | Dialog heading. |
 | `description` | `ReactNode` | — | Supporting copy under the title. |
-| `children` | `ReactNode` | — | Extra content between the description and the actions. |
-| `cancelLabel` | `ReactNode` | `"Cancel"` | Cancel action label. Set to `null` to hide the action. |
-| `confirmLabel` | `ReactNode` | `"Confirm"` | Confirm action label. Set to `null` to hide the action. |
-| `onConfirm` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the confirm action is pressed. |
-| `onCancel` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the cancel action is pressed. |
+| `children` | `ReactNode` | — | Extra content between the description and the action buttons. |
+| `cancelLabel` | `ReactNode` | `"Cancel"` | Cancel button label. |
+| `confirmLabel` | `ReactNode` | `"Confirm"` | Confirm button label. |
+| `onCancel` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the cancel button is pressed. |
+| `onConfirm` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the confirm button is pressed. |
 | `open` | `boolean` | — | Controlled open state. |
 | `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when the dialog opens or closes. |
@@ -45,6 +44,6 @@ The dialog below is the real component. It is modal and pressing the backdrop do
 
 `style` is intentionally not supported: the glass theme owns the backdrop, popup, and content. Use `className` for popup layout. Dialog styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
 
-The cancel and confirm actions use the package `Button`. Confirming closes the dialog after `onConfirm` runs. In controlled mode, update `open` from `onOpenChange`.
+The action area is fixed to a cancel and a confirm button, both using the package `Button`. In controlled mode, update `open` from `onOpenChange`.
 
 Base UI supplies the `alertdialog` role, `aria-labelledby` from the title, `aria-describedby` from the description, focus trapping, scroll locking, and focus return.

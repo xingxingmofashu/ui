@@ -4,7 +4,6 @@ import { type ComponentProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { AlertDialog } from "../../src/components/alert-dialog";
-import { Button } from "../../src/components/button";
 import theme from "../../src/theme/alert-dialog";
 
 function getSlot(element: Element, slot: string) {
@@ -17,12 +16,7 @@ function getSlot(element: Element, slot: string) {
   return node;
 }
 
-function querySlot(element: Element, slot: string) {
-  return element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
-}
-
 function renderDialog({
-  trigger = <Button label="Delete project" />,
   title = "Delete project?",
   description = "This action cannot be undone.",
   confirmLabel = "Delete",
@@ -31,7 +25,7 @@ function renderDialog({
 }: Partial<ComponentProps<typeof AlertDialog>> = {}) {
   return render(
     <AlertDialog
-      trigger={trigger}
+      defaultOpen
       title={title}
       description={description}
       confirmLabel={confirmLabel}
@@ -41,20 +35,16 @@ function renderDialog({
   );
 }
 
-async function openDialog(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole("button", { name: "Delete project" }));
-
+function findDialog() {
   return screen.findByRole("alertdialog");
 }
 
 describe("AlertDialog", () => {
   describe("structure", () => {
     it("renders the glass popup and its parts", async () => {
-      const user = userEvent.setup();
-
       renderDialog();
 
-      const dialog = await openDialog(user);
+      const dialog = await findDialog();
       const backdrop = getSlot(document.body, "backdrop");
       const viewport = getSlot(document.body, "viewport");
       const title = getSlot(dialog, "title");
@@ -93,17 +83,12 @@ describe("AlertDialog", () => {
       );
     });
 
-    it("renders default action labels", async () => {
-      const user = userEvent.setup();
-
+    it("renders the default action labels", async () => {
       render(
-        <AlertDialog
-          trigger={<Button label="Delete project" />}
-          title="Delete project?"
-        />,
+        <AlertDialog defaultOpen title="Delete project?" />,
       );
 
-      const dialog = await openDialog(user);
+      const dialog = await findDialog();
 
       expect(
         within(dialog).getByRole("button", { name: "Cancel" }),
@@ -114,42 +99,14 @@ describe("AlertDialog", () => {
     });
 
     it("renders extra content in the body", async () => {
-      const user = userEvent.setup();
-
       renderDialog({
         children: <p>Members will lose access immediately.</p>,
       });
 
-      const dialog = await openDialog(user);
+      const dialog = await findDialog();
       const body = getSlot(dialog, "body");
 
       expect(body).toHaveTextContent("Members will lose access immediately.");
-    });
-
-    it("can hide the cancel action", async () => {
-      const user = userEvent.setup();
-
-      renderDialog({ cancelLabel: null });
-
-      const dialog = await openDialog(user);
-
-      expect(
-        within(dialog).queryByRole("button", { name: "Cancel" }),
-      ).toBeNull();
-      expect(
-        within(dialog).getByRole("button", { name: "Delete" }),
-      ).toBeInTheDocument();
-    });
-
-    it("can hide every action", async () => {
-      const user = userEvent.setup();
-
-      renderDialog({ cancelLabel: null, confirmLabel: null });
-
-      const dialog = await openDialog(user);
-
-      expect(querySlot(dialog, "footer")).toBeNull();
-      expect(within(dialog).queryAllByRole("button")).toHaveLength(0);
     });
   });
 
@@ -160,7 +117,7 @@ describe("AlertDialog", () => {
 
       renderDialog({ onConfirm });
 
-      const dialog = await openDialog(user);
+      const dialog = await findDialog();
 
       await user.click(within(dialog).getByRole("button", { name: "Delete" }));
 
@@ -177,7 +134,7 @@ describe("AlertDialog", () => {
 
       renderDialog({ onCancel });
 
-      const dialog = await openDialog(user);
+      const dialog = await findDialog();
 
       await user.click(within(dialog).getByRole("button", { name: "Cancel" }));
 
@@ -193,7 +150,7 @@ describe("AlertDialog", () => {
 
       renderDialog();
 
-      const dialog = await openDialog(user);
+      const dialog = await findDialog();
       const backdrop = getSlot(document.body, "backdrop");
 
       await user.click(backdrop);
@@ -201,20 +158,11 @@ describe("AlertDialog", () => {
       expect(screen.getByRole("alertdialog")).toBe(dialog);
     });
 
-    it("supports controlled open state without a trigger", async () => {
+    it("supports controlled open state", async () => {
       const user = userEvent.setup();
       const onOpenChange = vi.fn();
-      const { rerender } = render(
-        <AlertDialog
-          open={false}
-          onOpenChange={onOpenChange}
-          title="Publish changes?"
-        />,
-      );
 
-      expect(screen.queryByRole("alertdialog")).toBeNull();
-
-      rerender(
+      render(
         <AlertDialog
           open
           onOpenChange={onOpenChange}
@@ -222,23 +170,21 @@ describe("AlertDialog", () => {
         />,
       );
 
-      const dialog = await screen.findByRole("alertdialog");
+      const dialog = await findDialog();
 
       await user.click(within(dialog).getByRole("button", { name: "Cancel" }));
 
       expect(onOpenChange).toHaveBeenCalledTimes(1);
       expect(onOpenChange.mock.calls[0]?.[0]).toBe(false);
-      expect(screen.getByRole("alertdialog")).toBeInTheDocument();
+      expect(screen.getByRole("alertdialog")).toBe(dialog);
     });
   });
 
   describe("styling", () => {
     it("merges className into the popup only", async () => {
-      const user = userEvent.setup();
-
       renderDialog({ className: "custom-popup" });
 
-      const dialog = await openDialog(user);
+      const dialog = await findDialog();
 
       expect(dialog).toHaveClass("custom-popup");
       expect(getSlot(dialog, "content")).not.toHaveClass("custom-popup");
