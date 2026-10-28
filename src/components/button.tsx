@@ -32,8 +32,6 @@ type ButtonAccessibleName =
   | { "aria-label": string }
   | { "aria-labelledby": string };
 
-type ButtonClassName = UIButtonProps["className"];
-
 interface ButtonBaseProps
   extends Omit<UIButtonProps, "ref" | "style">,
     ButtonContentProps {
@@ -43,7 +41,7 @@ interface ButtonBaseProps
    * Classes merged into the outer click area. Accepts a callback that
    * receives Base UI's button state, like Base UI's own `className` prop.
    */
-  className?: ButtonClassName;
+  className?: UIButtonProps["className"];
 }
 
 type ButtonProps = ButtonBaseProps &
