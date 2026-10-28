@@ -43,10 +43,11 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Trigger height, p
 | `hiddenUntilFound` | `boolean` | `false` | Keeps closed panels mounted with `hidden="until-found"` so browser search can reveal them. |
 | `keepMounted` | `boolean` | `false` | Keeps closed panels in the DOM. |
 | `className` | `string \| ((state) => string \| undefined)` | — | Merged into the root. The callback receives Base UI state. |
-| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | Forwarded to the Base UI root. |
 | `ui` | `AccordionStyle` | — | Overrides root layers. |
 
 `Accordion` also forwards Base UI `Accordion.Root` props such as `render`, `ref`, and `onValueChange`.
+
+`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout or the `ui` slots for theme overrides.
 
 ### AccordionItem
 
@@ -59,10 +60,11 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Trigger height, p
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when this panel opens or closes. |
 | `indicator` | `ReactNode` | — | Replaces the default plus indicator. |
 | `className` | `string \| ((state) => string \| undefined)` | — | Merged into the item root. The callback receives Base UI item state. |
-| `style` | `CSSProperties \| ((state) => CSSProperties \| undefined)` | — | Forwarded to the Base UI item. |
 | `ui` | `AccordionItemStyle` | — | Overrides item slots. |
 
 `AccordionItem` also forwards Base UI `Accordion.Item` props such as `render` and `ref`.
+
+`style` is intentionally not supported on the item either; use `className` or `ui` slots.
 
 ### UI Slots
 

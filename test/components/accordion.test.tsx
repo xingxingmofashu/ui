@@ -426,32 +426,25 @@ describe("Accordion", () => {
       expect(getRoot("One")).toHaveClass("root-disabled");
     });
 
-    it("forwards the style callback with Base UI state", () => {
-      const { rerender } = render(
-        <Accordion
-          defaultValue={["one"]}
-          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
-        >
-          <AccordionItem value="one" title="One">
-            Panel
-          </AccordionItem>
-        </Accordion>,
+    it("does not accept inline styles on the root or item", () => {
+      const element = (
+        <>
+          {/* @ts-expect-error The glass theme owns inline styles. */}
+          <Accordion style={{ opacity: 0.5 }}>
+            <AccordionItem value="one" title="One">
+              Panel
+            </AccordionItem>
+          </Accordion>
+          <Accordion>
+            {/* @ts-expect-error The glass theme owns inline styles. */}
+            <AccordionItem value="one" title="One" style={{ opacity: 0.5 }}>
+              Panel
+            </AccordionItem>
+          </Accordion>
+        </>
       );
 
-      expect(getRoot("One")).toHaveStyle({ opacity: "1" });
-
-      rerender(
-        <Accordion
-          disabled
-          style={(state) => ({ opacity: state.disabled ? 0.5 : 1 })}
-        >
-          <AccordionItem value="one" title="One">
-            Panel
-          </AccordionItem>
-        </Accordion>,
-      );
-
-      expect(getRoot("One")).toHaveStyle({ opacity: "0.5" });
+      expect(element).toBeTruthy();
     });
 
     it("forwards render and ref to the Base UI root", () => {

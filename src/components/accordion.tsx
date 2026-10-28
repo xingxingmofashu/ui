@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
+import { withoutStyle } from "../lib/without-style";
 import theme from "../theme/accordion";
 
 type AccordionSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -40,9 +41,6 @@ const AccordionContext = React.createContext<AccordionContextValue | null>(
 type AccordionClassName<Value extends string> =
   UIAccordion.Root.Props<Value>["className"];
 
-type AccordionStyleProp<Value extends string> =
-  UIAccordion.Root.Props<Value>["style"];
-
 interface AccordionProps<Value extends string = string>
   extends Omit<
     UIAccordion.Root.Props<Value>,
@@ -52,8 +50,6 @@ interface AccordionProps<Value extends string = string>
   className?: AccordionClassName<Value>;
   /** Classes for individual root layers. */
   ui?: AccordionStyle;
-  /** Inline styles merged into the root. Accepts a callback that receives Base UI's accordion state. */
-  style?: AccordionStyleProp<Value>;
   /** Control size; defaults to `md`. */
   size?: AccordionSize;
   /** Heading element used for every trigger; defaults to `h3`. */
@@ -66,7 +62,7 @@ type AccordionItemClassName = UIAccordion.Item.Props["className"];
 interface AccordionItemProps
   extends Omit<
     UIAccordion.Item.Props,
-    "className" | "children" | "value" | "title"
+    "className" | "children" | "style" | "value" | "title"
   > {
   /** Value that identifies the item in the accordion value. */
   value: string;
@@ -85,7 +81,6 @@ interface AccordionItemProps
 function Accordion<Value extends string = string>({
   className,
   ui: uiOverrides,
-  style,
   size,
   headingAs = "h3",
   children,
@@ -103,11 +98,10 @@ function Accordion<Value extends string = string>({
       value={{ size: size ?? "md", headingAs }}
     >
       <UIAccordion.Root
-        {...props}
+        {...withoutStyle(props)}
         data-slot="root"
         data-size={size ?? "md"}
         className={rootClassName}
-        style={style}
       >
         <span
           aria-hidden="true"
@@ -153,7 +147,7 @@ function AccordionItem({
 
   return (
     <UIAccordion.Item
-      {...props}
+      {...withoutStyle(props)}
       value={value}
       data-slot="item"
       data-size={size}
