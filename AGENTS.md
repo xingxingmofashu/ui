@@ -7,7 +7,8 @@ Visual style: Liquid Glass.
 Source files and tests are the source of truth.
 
 The repository root is the UI package. The Fumadocs site lives in `docs/` and
-is included in the same pnpm workspace.
+the Vite component playground lives in `playground/`; both are included in the
+same pnpm workspace.
 
 ## Commands
 
@@ -19,11 +20,15 @@ is included in the same pnpm workspace.
 - `pnpm docs:dev` — start the docs site on port 3001.
 - `pnpm docs:build` — export the docs site to `docs/out`.
 - `pnpm docs:typecheck` — typecheck the docs package.
+- `pnpm playground:dev` — start the component playground on port 3002.
+- `pnpm playground:build` — build the playground.
+- `pnpm playground:typecheck` — typecheck the playground package.
 
 ## Components
 
 | Component | Component file | Theme file | Test file |
 | --- | --- | --- | --- |
+| Accordion | `src/components/accordion.tsx` | `src/theme/accordion.ts` | `test/components/accordion.test.tsx` |
 | Button | `src/components/button.tsx` | `src/theme/button.ts` | `test/components/button.test.tsx` |
 | Card | `src/components/card.tsx` | `src/theme/card.ts` | `test/components/card.test.tsx` |
 | Slider | `src/components/slider.tsx` | `src/theme/slider.ts` | `test/components/slider.test.tsx` |
@@ -55,6 +60,21 @@ is included in the same pnpm workspace.
 - Tune the material through the tokens in `src/index.css`, not through
   per-component one-off overrides.
 
+## Playground
+
+- `playground/` is a private Vite + React 19 app that previews every component
+  in light and dark mode.
+- It imports the package source directly through Vite and tsconfig aliases, so
+  source changes hot-reload without building `dist`.
+- The header theme toggle writes `.light`/`.dark`, `data-theme`, and
+  `color-scheme` on `<html>`. The initial theme is read from
+  `localStorage` (`ui-playground-theme`) or the system preference before React
+  mounts.
+- Previews live in `playground/src/previews/`, one file per component. The
+  shared stage and label primitives are in `playground/src/demo.tsx`.
+- Playground chrome must stay monochrome; the component glass provides the
+  visual interest.
+
 ## Package files
 
 - Public exports: `src/index.ts`
@@ -64,3 +84,4 @@ is included in the same pnpm workspace.
 - Vitest config: `vitest.config.ts`
 - Build config: `build.config.ts`
 - Docs site: `docs/` (see `docs/AGENTS.md`)
+- Playground app: `playground/`

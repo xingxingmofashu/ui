@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 
 import {
+  Accordion,
+  AccordionItem,
   Button,
   Card,
   Slider,
@@ -42,10 +44,12 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         switchLabel: "启用高光",
         switchDescription: "在玻璃边缘显示斜向高光。",
         componentsEyebrow: "Components",
-        componentsTitle: "五个组件，一套语言",
+        componentsTitle: "六个组件，一套语言",
         componentsDescription:
           "每个组件共享同一套玻璃 token，因此可以自然地组合在一起。下面的内容直接渲染 UI 包里的组件。",
         componentDescriptions: {
+          accordion:
+            "带可访问标题的玻璃折叠面板，支持单选、多选与高度动画。",
           button: "五种尺寸，支持前置与后置图标。",
           card: "由 header、body 与 footer 组成的玻璃卡片。",
           slider: "带数值显示、区间选择与纵向布局的玻璃滑块。",
@@ -113,10 +117,12 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         switchLabel: "Enable highlights",
         switchDescription: "Show a diagonal highlight along the glass rim.",
         componentsEyebrow: "Components",
-        componentsTitle: "Five components, one language",
+        componentsTitle: "Six components, one language",
         componentsDescription:
           "Every component shares the same glass tokens, so they compose naturally. Everything below renders directly from the UI package.",
         componentDescriptions: {
+          accordion:
+            "Collapsible glass panels with accessible headings, single or multiple expansion, and height animation.",
           button:
             "Five sizes with leading and trailing icons.",
           card: "A glass card built from header, body, and footer slots.",
@@ -175,6 +181,31 @@ export function HomePageContent({ lang }: { lang: Locale }) {
       };
 
   const components = [
+    {
+      name: "Accordion",
+      href: `/${lang}/docs/components/accordion`,
+      description: copy.componentDescriptions.accordion,
+      preview: (
+        <Accordion className="w-full" defaultValue={["surface"]} size="sm">
+          <AccordionItem
+            value="surface"
+            title={isZh ? "玻璃表面" : "Glass surface"}
+          >
+            {isZh
+              ? "内容留在滤镜之外。"
+              : "Content stays outside the filter."}
+          </AccordionItem>
+          <AccordionItem
+            value="tokens"
+            title={isZh ? "主题 Token" : "Theme tokens"}
+          >
+            {isZh
+              ? "一套 token 同时服务浅色与深色。"
+              : "One set of tokens serves light and dark."}
+          </AccordionItem>
+        </Accordion>
+      ),
+    },
     {
       name: "Button",
       href: `/${lang}/docs/components/button`,
@@ -336,7 +367,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
               <div className="h-px bg-fd-border" />
               <div className="flex items-center justify-between gap-4 text-xs text-fd-muted-foreground">
                 <span>
-                  {isZh ? "五个组件 · 同一套玻璃" : "Five components · one glass"}
+                  {isZh ? "六个组件 · 同一套玻璃" : "Six components · one glass"}
                 </span>
                 <span className="font-mono uppercase tracking-[0.14em]">
                   .light / .dark

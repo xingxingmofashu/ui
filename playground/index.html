@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta
+      name="description"
+      content="Live previews for @xingxingmofashu/ui with light and dark themes."
+    />
+    <title>Liquid Glass Playground</title>
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem("ui-playground-theme");
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          const theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : prefersDark
+                ? "dark"
+                : "light";
+          const root = document.documentElement;
+
+          root.dataset.theme = theme;
+          root.classList.toggle("dark", theme === "dark");
+          root.classList.toggle("light", theme === "light");
+          root.style.colorScheme = theme;
+        } catch {
+          document.documentElement.dataset.theme = "light";
+          document.documentElement.style.colorScheme = "light";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

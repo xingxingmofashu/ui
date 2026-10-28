@@ -1,0 +1,95 @@
+@import "tailwindcss";
+@import "../../src/index.css";
+
+@source "../index.html";
+@source "./**/*.{ts,tsx}";
+@source "../../src/**/*.{ts,tsx}";
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-pg-canvas: var(--pg-canvas);
+  --color-pg-ink: var(--pg-ink);
+  --color-pg-muted: var(--pg-muted);
+  --color-pg-line: var(--pg-line);
+  --color-pg-panel: var(--pg-panel);
+}
+
+@layer theme {
+  :root {
+    --pg-canvas: #efefed;
+    --pg-ink: #161616;
+    --pg-muted: #63635f;
+    --pg-line: rgb(22 22 22 / 0.1);
+    --pg-panel: rgb(255 255 255 / 0.42);
+    --pg-grid-line: rgb(22 22 22 / 0.055);
+    --pg-halo: rgb(255 255 255 / 0.85);
+    --pg-shadow: 0 24px 70px rgb(0 0 0 / 0.08);
+  }
+
+  .dark,
+  [data-theme="dark"] {
+    --pg-canvas: #0a0a0a;
+    --pg-ink: #f2f2f0;
+    --pg-muted: #9d9d99;
+    --pg-line: rgb(255 255 255 / 0.12);
+    --pg-panel: rgb(255 255 255 / 0.035);
+    --pg-grid-line: rgb(255 255 255 / 0.06);
+    --pg-halo: rgb(255 255 255 / 0.07);
+    --pg-shadow: 0 24px 70px rgb(0 0 0 / 0.4);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background-color: var(--pg-canvas);
+  color: var(--pg-ink);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--pg-ink) 16%, transparent);
+}
+
+.pg-app {
+  background:
+    radial-gradient(56rem 38rem at 78% -10%, var(--pg-halo), transparent 68%),
+    radial-gradient(48rem 32rem at 4% 12%, var(--pg-halo), transparent 70%),
+    var(--pg-canvas);
+}
+
+/* A fine grid and a soft vignette give the glass something to refract. */
+.pg-stage {
+  background-color: var(--pg-panel);
+  background-image:
+    radial-gradient(28rem 16rem at 18% 0%, var(--pg-halo), transparent 72%),
+    linear-gradient(var(--pg-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pg-grid-line) 1px, transparent 1px);
+  background-size:
+    auto,
+    32px 32px,
+    32px 32px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    var(--pg-shadow);
+}

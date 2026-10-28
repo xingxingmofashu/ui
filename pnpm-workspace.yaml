@@ -1,11 +1,13 @@
 packages:
   - "docs"
+  - "playground"
 
 catalog:
   "@base-ui/react": 1.9.0
   "@fumadocs/language": 0.2.16
   "@tailwindcss/node": 4.3.3
   "@tailwindcss/turbopack": 4.3.3
+  "@tailwindcss/vite": 4.3.3
   "@testing-library/dom": 10.4.2
   "@testing-library/jest-dom": 7.0.1
   "@testing-library/react": 16.3.3
@@ -14,6 +16,7 @@ catalog:
   "@types/node": 20.19.43
   "@types/react": 19.3.0
   "@types/react-dom": 19.3.0
+  "@vitejs/plugin-react": 6.1.2
   cn: 0.5.0
   fumadocs-core: 16.17.8
   fumadocs-mdx: 15.4.10

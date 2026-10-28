@@ -65,6 +65,9 @@
     "docs:dev": "pnpm --filter @xingxingmofashu/docs dev",
     "docs:build": "pnpm --filter @xingxingmofashu/docs build",
     "docs:typecheck": "pnpm --filter @xingxingmofashu/docs typecheck",
+    "playground:dev": "pnpm --filter @xingxingmofashu/playground dev",
+    "playground:build": "pnpm --filter @xingxingmofashu/playground build",
+    "playground:typecheck": "pnpm --filter @xingxingmofashu/playground typecheck",
     "prepare": "husky",
     "prepublishOnly": "pnpm lint && pnpm build && pnpm typecheck && pnpm test"
   },
