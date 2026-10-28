@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { hasContent } from "../lib/has-content";
+import { resolveThemeClassName } from "../lib/resolve-theme-class-name";
 import theme from "../theme/slider";
 
 type SliderThemeSlot =
@@ -19,6 +20,9 @@ type SliderThemeSlot =
   | "thumb";
 
 type SliderStyle = Partial<Record<SliderThemeSlot, string>>;
+
+/** @deprecated Use `SliderThemeSlot` instead. */
+type SliderSlot = SliderThemeSlot;
 
 type SliderRootProps<Value extends number | readonly number[]> =
   UISlider.Root.Props<Value>;
@@ -110,11 +114,11 @@ function Slider<Value extends number | readonly number[] = number>({
     "aria-labelledby": props["aria-labelledby"],
     "aria-describedby": describedBy,
   };
-  const rootClassName =
-    typeof className === "function"
-      ? (state: UISlider.Root.State) =>
-          cn(ui.root(), className(state), uiOverrides?.root)
-      : cn(ui.root(), className, uiOverrides?.root);
+  const rootClassName = resolveThemeClassName<UISlider.Root.State>(
+    ui.root(),
+    className,
+    uiOverrides?.root,
+  );
 
   return (
     <UISlider.Root
@@ -194,4 +198,9 @@ function Slider<Value extends number | readonly number[] = number>({
 }
 
 export { Slider };
-export type { SliderStyle, SliderProps, SliderThemeSlot };
+export type {
+  SliderStyle,
+  SliderProps,
+  SliderSlot,
+  SliderThemeSlot,
+};

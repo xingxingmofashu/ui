@@ -24,6 +24,7 @@ export {
   Slider,
   type SliderStyle,
   type SliderProps,
+  type SliderSlot,
   type SliderThemeSlot,
 } from "./components/slider";
 export {
