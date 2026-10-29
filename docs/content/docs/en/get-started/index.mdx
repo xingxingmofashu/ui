@@ -15,11 +15,11 @@ Add the package styles to your Tailwind CSS entry:
 
 ```css
 @import "tailwindcss";
-@import "@xingxingmofashu/ui/index.css";
+@import "@xingxingmofashu/ui";
 @source "../node_modules/@xingxingmofashu/ui/dist";
 ```
 
-`@source` must point at the package's `dist` directory so Tailwind can scan component class names.
+The package root resolves to `dist/index.css` through its `style` export. `@source` must point at the package's `dist` directory so Tailwind can scan component class names; the path is relative to this CSS file.
 
 Then import components from the package root:
 

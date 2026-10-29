@@ -2,11 +2,11 @@
 
 Liquid Glass UI components for React 19 and Tailwind CSS 4.
 
-The package ships eleven components: Accordion, Alert Dialog, Button, Card,
-Checkbox, Dialog, Drawer, Input, Slider, Switch, and Toggle Group. Glass
-surfaces, rim highlights, and inner shadows are drawn entirely with CSS. The
-interactive components are built on Base UI and do not add a custom rendering
-engine; `Card` is a native layout primitive.
+The package ships fourteen components: Accordion, Alert Dialog, Button, Card,
+Checkbox, Dialog, Drawer, Input, Popover, Scroll Area, Slider, Switch, Toast,
+and Toggle Group. Glass surfaces, rim highlights, and inner shadows are drawn
+entirely with CSS. The interactive components are built on Base UI and do not
+add a custom rendering engine; `Card` is a native layout primitive.
 
 ## Requirements
 
@@ -16,8 +16,9 @@ engine; `Card` is a native layout primitive.
 - An ESM-capable bundler. The package publishes ES modules only.
 
 `Accordion`, `AlertDialog`, `Button`, `Checkbox`, `Dialog`, `Drawer`, `Input`,
-`Slider`, `Switch`, and `ToggleGroup` are client components. `Card` is server-safe
-and can be rendered from a React Server Component.
+`Popover`, `ScrollArea`, `Slider`, `Switch`, `ToastProvider`, and
+`ToggleGroup` are client components. `Card` is server-safe and can be rendered
+from a React Server Component.
 
 ## Install
 
@@ -34,12 +35,13 @@ Import the design tokens and glass material from your Tailwind entry file:
 
 ```css
 @import "tailwindcss";
-@import "@xingxingmofashu/ui/index.css";
+@import "@xingxingmofashu/ui";
 
 /* Adjust this path to point at the package inside node_modules. */
 @source "../node_modules/@xingxingmofashu/ui/dist";
 ```
 
+The package root resolves to `dist/index.css` through its `style` export.
 The package ships component class names in `dist`, so Tailwind must scan that
 directory. The `@source` path is relative to the CSS file that contains it.
 
@@ -86,9 +88,9 @@ package stylesheet; override them in your own theme layer. Tailwind aliases use
 the `ui-` prefix (`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid
 colliding with host design tokens.
 
-`Button`, `Card`, `Checkbox`, `Dialog`, `Drawer`, `Input`, `Slider`, `Switch`,
-`ToggleGroup`, `Accordion`, and `AlertDialog` inherit the host font and do not
-force a font family.
+`Button`, `Card`, `Checkbox`, `Dialog`, `Drawer`, `Input`, `Popover`,
+`ScrollArea`, `Slider`, `Switch`, `ToggleGroup`, `ToastProvider`, `Accordion`,
+and `AlertDialog` inherit the host font and do not force a font family.
 
 The visual material relies on modern CSS: `backdrop-filter`, `color-mix`,
 container units, individual `translate` / `scale` properties, and `:has`.
@@ -104,8 +106,11 @@ Use a current evergreen browser.
 - `Dialog`
 - `Drawer`
 - `Input`
+- `Popover`
+- `ScrollArea`
 - `Slider`
 - `Switch`
+- `ToastProvider`
 - `ToggleGroup`
 
 

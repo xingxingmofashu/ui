@@ -15,6 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "style": "./dist/index.css",
       "import": "./dist/index.mjs",
       "default": "./dist/index.mjs"
     },
@@ -39,6 +40,7 @@
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "style": "./dist/index.css",
   "engines": {
     "node": ">=22"
   },

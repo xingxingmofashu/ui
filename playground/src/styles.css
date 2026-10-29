@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "../../src/index.css";
+@import "@xingxingmofashu/ui";
 
 @source "../index.html";
 @source "./**/*.{ts,tsx}";
