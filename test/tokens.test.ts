@@ -10,6 +10,7 @@ import cardTheme from "../src/theme/card";
 import checkboxTheme from "../src/theme/checkbox";
 import sliderTheme from "../src/theme/slider";
 import switchTheme from "../src/theme/switch";
+import toggleTheme from "../src/theme/toggle";
 import toggleGroupTheme from "../src/theme/toggle-group";
 import accordionTheme from "../src/theme/accordion";
 import alertDialogTheme from "../src/theme/alert-dialog";
@@ -182,6 +183,22 @@ function themeCandidates() {
 
     return toggleGroupSlots.map((slot) => toggleGroupStyles[slot]());
   });
+  const toggleSlots = [
+    "root",
+    "glass",
+    "thumb",
+    "rim",
+    "content",
+    "icon",
+    "label",
+  ] as const;
+  const toggleSizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const toggleCandidates = toggleSizes.flatMap((size) => {
+    const toggleStyles = toggleTheme({ size });
+
+    return toggleSlots.map((slot) => toggleStyles[slot]());
+  });
+  toggleCandidates.push(toggleTheme({ iconOnly: true }).root());
   const sliderSlots = [
     "root",
     "control",
@@ -209,6 +226,7 @@ function themeCandidates() {
     ...inputCandidates,
     ...checkboxCandidates,
     ...toggleGroupCandidates,
+    ...toggleCandidates,
     ...sliderCandidates,
   ]
     .join(" ")
@@ -427,6 +445,19 @@ describe("design tokens", () => {
     );
     expect(css).toContain("overflow: hidden;");
     expect(css).toContain("border: 1px solid var(--ui-glass-inner-border);");
+  });
+
+  it("compiles the toggle controls from the theme recipe", async () => {
+    const css = await buildStyles(themeCandidates());
+
+    expect(css).toContain(
+      "--ui-toggle-thumb: color-mix(in srgb,var(--ui-ink) 12%,transparent);",
+    );
+    expect(css).toContain("--ui-toggle-height: 24px;");
+    expect(css).toContain("--ui-toggle-height: 32px;");
+    expect(css).toContain("--ui-toggle-height: 40px;");
+    expect(css).toContain("aspect-ratio: 1 / 1;");
+    expect(css).toContain("data-pressed");
   });
 
   it("compiles the slider glass controls from the theme recipe", async () => {

@@ -1,0 +1,60 @@
+---
+title: "Toggle"
+description: "A two-state glass button with a pressed thumb, optional label and icon, and five sizes."
+---
+
+`Toggle` is a styled wrapper around Base UI's `Toggle`. It renders the glass shell, selected thumb, optional icon and label, and exposes the pressed state through `aria-pressed`.
+
+Use it for a single on/off action. For a set of related options, use `ToggleGroup` instead.
+
+## Basic example
+
+The toggle owns its state when `pressed` is omitted. Use `defaultPressed` to set the initial value; clicking or pressing Space/Enter flips it.
+
+<Example name="toggle/basic" />
+
+## Controlled usage
+
+Pass `pressed` and `onPressedChange` to control the state externally. The callback also receives Base UI's event details.
+
+<Example name="toggle/controlled" />
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Height, padding, type, and icon size scale together.
+
+<Example name="toggle/sizes" />
+
+## Icon-only
+
+Omit `label` to render a square icon button. Provide an accessible name with `aria-label`.
+
+<Example name="toggle/icon-only" />
+
+## Disabled
+
+`disabled` stops pointer and keyboard interaction and dims the control.
+
+<Example name="toggle/disabled" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `pressed` | `boolean` | — | Controlled pressed state. |
+| `defaultPressed` | `boolean` | `false` | Initial pressed state when uncontrolled. |
+| `onPressedChange` | `(pressed, details) => void` | — | Called when the pressed state changes. |
+| `disabled` | `boolean` | `false` | Disables the toggle. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control size. |
+| `label` | `ReactNode` | — | Visible label rendered inside the toggle. |
+| `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
+| `className` | `string` | — | Tailwind classes merged into the toggle root. |
+| `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the rendered button. |
+
+`Toggle` also forwards Base UI `Toggle` props such as `value`, `nativeButton`, and `render`.
+
+`style` is intentionally not supported: the glass theme owns the surface. Use `className` for layout, or tune the shared `--ui-glass-*` tokens.
+
+## Accessibility
+
+Base UI supplies the button role, `aria-pressed`, keyboard activation, and disabled behavior. When `label` is present it contributes to the accessible name; icon-only toggles need `aria-label` or `aria-labelledby`.

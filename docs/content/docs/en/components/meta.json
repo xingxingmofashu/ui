@@ -6,6 +6,7 @@
     "button",
     "card",
     "scroll-area",
+    "toggle",
     "toggle-group",
     "---Form---",
     "checkbox",
