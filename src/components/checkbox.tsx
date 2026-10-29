@@ -93,14 +93,14 @@ function Checkbox({
         </UICheckbox.Indicator>
       </span>
 
-      {label != null || description != null ? (
+      {label || description ? (
         <span data-slot="wrapper" className={ui.wrapper()}>
-          {label != null ? (
+          {label ? (
             <span id={labelId} data-slot="label" className={ui.label()}>
               {label}
             </span>
           ) : null}
-          {description != null ? (
+          {description ? (
             <span
               id={descriptionId}
               data-slot="description"

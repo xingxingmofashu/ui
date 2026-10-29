@@ -65,7 +65,7 @@ function AlertDialog({
                 {title}
               </UIAlertDialog.Title>
 
-              {description != null ? (
+              {description ? (
                 <UIAlertDialog.Description
                   data-slot="description"
                   className={ui.description()}
@@ -74,7 +74,7 @@ function AlertDialog({
                 </UIAlertDialog.Description>
               ) : null}
 
-              {children != null ? (
+              {children ? (
                 <div data-slot="body" className={ui.body()}>
                   {children}
                 </div>

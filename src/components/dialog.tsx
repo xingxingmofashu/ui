@@ -52,7 +52,7 @@ function Dialog({
                 {title}
               </UIDialog.Title>
 
-              {description != null ? (
+              {description ? (
                 <UIDialog.Description
                   data-slot="description"
                   className={ui.description()}
@@ -61,13 +61,13 @@ function Dialog({
                 </UIDialog.Description>
               ) : null}
 
-              {children != null ? (
+              {children ? (
                 <div data-slot="body" className={ui.body()}>
                   {children}
                 </div>
               ) : null}
 
-              {footer != null ? (
+              {footer ? (
                 <div data-slot="footer" className={ui.footer()}>
                   {footer}
                 </div>

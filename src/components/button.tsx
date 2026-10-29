@@ -51,7 +51,7 @@ function Button({
           />
         </span>
 
-        {leadingIcon != null ? (
+        {leadingIcon ? (
           <span
             data-slot="leading-icon"
             className={ui.leadingIcon()}
@@ -65,7 +65,7 @@ function Button({
           {label || children}
         </span>
 
-        {trailingIcon != null ? (
+        {trailingIcon ? (
           <span
             data-slot="trailing-icon"
             className={ui.trailingIcon()}
