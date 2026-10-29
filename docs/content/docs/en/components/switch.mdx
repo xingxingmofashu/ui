@@ -11,7 +11,9 @@ The switch below is the real component and can be clicked directly.
 
 The Base UI `Switch.Root` is the outermost element. The visual track is the
 inner `base` slot, and the whole row, including the label and description, is
-clickable.
+clickable. `label` and `description` render inside the root and therefore
+contribute to its accessible name; pass `aria-label` or `aria-labelledby` when
+you need a shorter or more precise name.
 
 ## Sizes
 

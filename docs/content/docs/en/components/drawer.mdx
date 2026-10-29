@@ -19,11 +19,23 @@ The drawer opens from the bottom by default. `open` controls visibility and `foo
 
 <Example name="drawer/sides" />
 
-## Gestures and snap points
+## Gesture dismissal
 
-Users can dismiss the drawer by pressing the backdrop, pressing Escape, or swiping in the matching direction.
+On touch screens, drag the drawer in the direction set by `direction` to dismiss it. On desktop, the backdrop, Escape key, and action buttons remain available.
+
+<Example name="drawer/gesture" />
+
+## Snap points
 
 `snapPoints`, `defaultSnapPoint`, `snapPoint`, `onSnapPointChange`, and `snapToSequentialPoints` pass through to Base UI and can make a bottom or top drawer settle between preset heights.
+
+<Example name="drawer/snap-points" />
+
+## Backdrop dismissal
+
+`disablePointerDismissal` prevents the backdrop from closing the drawer while Escape and the action buttons still work. Use it for flows that may contain unsaved work.
+
+<Example name="drawer/locked" />
 
 ## Props
 

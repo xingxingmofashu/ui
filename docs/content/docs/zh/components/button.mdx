@@ -23,7 +23,7 @@ description: "可以渲染为其他标签，或在禁用时仍可聚焦的按钮
 
 ## 状态
 
-禁用状态使用原生 `disabled`，键盘与指针交互都会停止。
+禁用状态使用原生 `disabled`，键盘与指针交互都会停止。`focusableWhenDisabled` 会让按钮在禁用时仍保留在 Tab 顺序中，Base UI 通过 `aria-disabled` 表达禁用状态并阻止激活，适合需要提示原因的禁用操作。
 
 <Example name="button/states" />
 

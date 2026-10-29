@@ -9,6 +9,11 @@ export default function ButtonStatesDemo() {
     <div className="flex flex-wrap items-center justify-center gap-4">
       <Button label="Save" trailingIcon={<ArrowRight />} />
       <Button label="Unavailable" disabled />
+      <Button
+        label="Focusable when disabled"
+        disabled
+        focusableWhenDisabled
+      />
     </div>
   );
 }
