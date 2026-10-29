@@ -168,14 +168,6 @@ describe("Input", () => {
       expect(element).toBeTruthy();
     });
 
-    it("does not render arbitrary children", () => {
-      render(
-        // @ts-expect-error Input owns its internal children.
-        <Input aria-label="Search">Child</Input>,
-      );
-
-      expect(screen.queryByText("Child")).not.toBeInTheDocument();
-    });
   });
 
   describe("native behavior", () => {

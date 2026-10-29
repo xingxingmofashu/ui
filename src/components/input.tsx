@@ -23,8 +23,6 @@ interface InputProps
   leadingIcon?: React.ReactNode;
   /** Icon rendered after the input. */
   trailingIcon?: React.ReactNode;
-  /** The native input is a void element and does not accept children. */
-  children?: never;
 }
 
 function Input({
@@ -36,10 +34,8 @@ function Input({
   size,
   id,
   disabled,
-  children: _children,
   ...props
 }: InputProps) {
-  void _children;
   const ui = theme({ size });
   const generatedId = React.useId();
   const inputId = id ?? generatedId;
