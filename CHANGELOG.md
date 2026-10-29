@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 - 2026-10-29
+
+### Changed
+
+- Ship the Tailwind source scan inside `dist/index.css`. Consumers no longer
+  need to add an explicit `@source` directive for the package `dist` directory.
+
 ## 0.1.0 - 2026-10-29
 
 The first non-beta release, published under the `latest` dist-tag.

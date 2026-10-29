@@ -24,6 +24,11 @@ same pnpm workspace.
 - `pnpm playground:build` — build the playground.
 - `pnpm playground:typecheck` — typecheck the playground package.
 
+## Git
+
+- Rebase feature branches onto `main` and merge with `git merge --squash` so
+  `main` stays linear. Do not create merge commits.
+
 ## Components
 
 | Component | Component file | Theme file | Test file |

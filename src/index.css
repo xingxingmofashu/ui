@@ -1,5 +1,9 @@
 @import "./keyframes.css";
 
+/* Scan the shipped component files so consumers only need to import this stylesheet. */
+@source "./**/*.mjs";
+@source "./**/*.{ts,tsx}";
+
 /* Design tokens and the standard glass material. Component recipes live in theme/. */
 @custom-variant ui-light (&:where(.light, .light *, [data-theme="light"], [data-theme="light"] *));
 @custom-variant ui-dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));

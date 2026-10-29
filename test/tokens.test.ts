@@ -527,6 +527,16 @@ describe("design tokens", () => {
     expect(css).not.toContain("--ui-shadow-glass-icon");
   });
 
+  it("ships its Tailwind source scan with the stylesheet", async () => {
+    const source = await readFile(
+      new URL("../src/index.css", import.meta.url),
+      "utf8",
+    );
+
+    expect(source).toContain('@source "./**/*.mjs";');
+    expect(source).toContain('@source "./**/*.{ts,tsx}";');
+  });
+
   it("does not override the host app's global light/dark variants", async () => {
     const source = await readFile(
       new URL("../src/index.css", import.meta.url),

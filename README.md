@@ -1,48 +1,59 @@
 # @xingxingmofashu/ui
 
-Liquid Glass UI components for React 19 and Tailwind CSS 4.
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![License][license-src]][license-href]
+[![React][react-src]][react-href]
+[![Tailwind CSS][tailwind-src]][tailwind-href]
+
+Liquid Glass UI is a collection of accessible, typed [React](https://react.dev)
+components built on [Base UI](https://base-ui.com),
+[Tailwind CSS](https://tailwindcss.com), and
+[Tailwind Variants](https://www.tailwind-variants.org). Glass surfaces, rim
+highlights, and inner shadows are drawn entirely with CSS.
 
 The package ships fifteen components: Accordion, Alert Dialog, Button, Card,
 Checkbox, Dialog, Drawer, Input, Popover, Scroll Area, Slider, Switch, Toast,
-Toggle, and Toggle Group. Glass surfaces, rim highlights, and inner shadows are
-drawn entirely with CSS. The interactive components are built on Base UI and do
-not add a custom rendering engine; `Card` is a native layout primitive.
+Toggle, and Toggle Group.
 
-## Requirements
+> [!NOTE]
+> Requires React 19, React DOM 19, Tailwind CSS 4, Node.js 22+, and an
+> ESM-capable bundler. `Card` is server-safe; the interactive components are
+> client components.
 
-- Node.js 22 or newer.
-- React and React DOM 19.
-- Tailwind CSS 4.
-- An ESM-capable bundler. The package publishes ES modules only.
+## Documentation
 
-`Accordion`, `AlertDialog`, `Button`, `Checkbox`, `Dialog`, `Drawer`, `Input`,
-`Popover`, `ScrollArea`, `Slider`, `Switch`, `ToastProvider`, `Toggle`, and
-`ToggleGroup` are client components. `Card` is server-safe and can be rendered
-from a React Server Component.
+- [English documentation](https://xingxingmofashu.github.io/ui/docs/en/get-started)
+- [简体中文文档](https://xingxingmofashu.github.io/ui/docs/zh/get-started)
 
-## Install
+## Installation
 
-```bash
+```bash [pnpm]
 pnpm add @xingxingmofashu/ui
 ```
 
-The package is published under the `latest` dist-tag.
-
-## Setup
-
-Import the design tokens and glass material from your Tailwind entry file:
-
-```css
-@import "tailwindcss";
-@import "@xingxingmofashu/ui";
-
-/* Adjust this path to point at the package inside node_modules. */
-@source "../node_modules/@xingxingmofashu/ui/dist";
+```bash [yarn]
+yarn add @xingxingmofashu/ui
 ```
 
-The package root resolves to `dist/index.css` through its `style` export.
-The package ships component class names in `dist`, so Tailwind must scan that
-directory. The `@source` path is relative to the CSS file that contains it.
+```bash [npm]
+npm install @xingxingmofashu/ui
+```
+
+```bash [bun]
+bun add @xingxingmofashu/ui
+```
+
+Add the package styles to your Tailwind CSS entry:
+
+```css [app.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+```
+
+The package root resolves to `dist/index.css` through its `style` export. The
+stylesheet includes its own Tailwind source scan, so component utilities are
+generated without an extra `@source` directive.
 
 ## Usage
 
@@ -59,19 +70,47 @@ export function Example() {
 }
 ```
 
-Deep imports are available for each component and theme recipe:
+### Deep imports
+
+Import a single component or theme recipe without going through the package
+root:
 
 ```tsx
 import { Button } from "@xingxingmofashu/ui/components/button";
 import buttonTheme from "@xingxingmofashu/ui/theme/button";
 ```
 
-Use them when you want to import a single component without going through the
-package root.
+Toast hooks live under `@xingxingmofashu/ui/composables`.
+
+## Components
+
+### Element
+
+- Accordion
+- Button
+- Card
+- Scroll Area
+- Toggle
+- Toggle Group
+
+### Form
+
+- Checkbox
+- Input
+- Slider
+- Switch
+
+### Overlay
+
+- Alert Dialog
+- Dialog
+- Drawer
+- Popover
+- Toast
 
 ## Theming
 
-Light and dark values are selected by `.light` / `.dark`, or by
+Light and dark tokens are selected by `.light` / `.dark`, or by
 `data-theme="light"` / `data-theme="dark"`:
 
 ```html
@@ -82,38 +121,14 @@ Light and dark values are selected by `.light` / `.dark`, or by
 ```
 
 A nested `.light` / `[data-theme="light"]` subtree can switch back to light
-tokens. Shared colors and glass parameters live in the `--ui-*` tokens in the
-package stylesheet; override them in your own theme layer. Tailwind aliases use
-the `ui-` prefix (`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid
-colliding with host design tokens.
+tokens. Shared colors and glass parameters live in the `--ui-*` tokens; override
+them in your own theme layer. Tailwind aliases use the `ui-` prefix
+(`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid colliding with
+host tokens.
 
-`Button`, `Card`, `Checkbox`, `Dialog`, `Drawer`, `Input`, `Popover`,
-`ScrollArea`, `Slider`, `Switch`, `Toggle`, `ToggleGroup`, `ToastProvider`,
-`Accordion`, and `AlertDialog` inherit the host font and do not force a font
-family.
-
-The visual material relies on modern CSS: `backdrop-filter`, `color-mix`,
-container units, individual `translate` / `scale` properties, and `:has`.
-Use a current evergreen browser.
-
-## Components
-
-- `Accordion`
-- `AlertDialog`
-- `Button`
-- `Card`
-- `Checkbox`
-- `Dialog`
-- `Drawer`
-- `Input`
-- `Popover`
-- `ScrollArea`
-- `Slider`
-- `Switch`
-- `ToastProvider`
-- `Toggle`
-- `ToggleGroup`
-
+The components inherit the host font. The visual material relies on modern CSS:
+`backdrop-filter`, `color-mix`, container units, individual `translate` /
+`scale` properties, and `:has`. Use a current evergreen browser.
 
 ## Development
 
@@ -121,19 +136,46 @@ Use a current evergreen browser.
 pnpm install
 pnpm build           # build dist with unbuild
 pnpm lint            # lint with oxlint
-pnpm lint:fix        # apply oxlint's safe fixes
 pnpm test            # run the Vitest suite
 pnpm typecheck       # typecheck the package
-pnpm docs:dev        # start the Fumadocs site on port 3001
-pnpm docs:build      # export the docs site to docs/out
-pnpm playground:dev  # start the component playground on port 3002
+pnpm docs:dev        # docs site on http://localhost:3001
+pnpm playground:dev  # component playground on http://localhost:3002
 ```
 
-The documentation site lives in `docs/` and imports this package from the
-workspace, so changes under `src/` are picked up directly during docs
-development. The playground in `playground/` also imports the source directly
-and adds a persistent light/dark toggle for previewing every component.
+The documentation site lives in `docs/` and the playground lives in
+`playground/`; both import the package from the workspace.
+
+## Contribution
+
+Found a bug? [Open an issue](https://github.com/xingxingmofashu/ui/issues) with
+a reproduction. Before opening a pull request, run `pnpm lint`, `pnpm test`, and
+`pnpm typecheck`.
+
+> [!TIP]
+> [`AGENTS.md`](https://github.com/xingxingmofashu/ui/blob/main/AGENTS.md)
+> describes the component, theme, test, and documentation conventions used in
+> this repository.
+
+## Credits
+
+- [Base UI](https://base-ui.com)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Tailwind Variants](https://www.tailwind-variants.org)
+- [cn](https://github.com/shadcn-ui/cn)
 
 ## License
 
-MIT
+Licensed under the [MIT license](https://github.com/xingxingmofashu/ui/blob/main/LICENSE).
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/@xingxingmofashu/ui.svg?style=flat&colorA=18181B&colorB=52525B
+[npm-version-href]: https://www.npmjs.com/package/@xingxingmofashu/ui
+[npm-downloads-src]: https://img.shields.io/npm/dm/@xingxingmofashu/ui.svg?style=flat&colorA=18181B&colorB=52525B
+[npm-downloads-href]: https://npm.chart.dev/@xingxingmofashu/ui
+[license-src]: https://img.shields.io/github/license/xingxingmofashu/ui.svg?style=flat&colorA=18181B&colorB=52525B
+[license-href]: https://github.com/xingxingmofashu/ui/blob/main/LICENSE
+[react-src]: https://img.shields.io/badge/React-19-18181B?style=flat&logo=react&logoColor=white
+[react-href]: https://react.dev
+[tailwind-src]: https://img.shields.io/badge/Tailwind_CSS-4-18181B?style=flat&logo=tailwindcss&logoColor=white
+[tailwind-href]: https://tailwindcss.com
