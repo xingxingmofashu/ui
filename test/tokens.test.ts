@@ -14,6 +14,7 @@ import toggleGroupTheme from "../src/theme/toggle-group";
 import accordionTheme from "../src/theme/accordion";
 import alertDialogTheme from "../src/theme/alert-dialog";
 import dialogTheme from "../src/theme/dialog";
+import inputTheme from "../src/theme/input";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
   "\\",
@@ -112,6 +113,23 @@ function themeCandidates() {
   ] as const;
   const dialogStyles = dialogTheme();
   const dialogCandidates = dialogSlots.map((slot) => dialogStyles[slot]());
+  const inputSlots = [
+    "root",
+    "label",
+    "control",
+    "glass",
+    "overlay",
+    "leadingIcon",
+    "input",
+    "trailingIcon",
+    "description",
+  ] as const;
+  const inputSizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const inputCandidates = inputSizes.flatMap((size) => {
+    const inputStyles = inputTheme({ size });
+
+    return inputSlots.map((slot) => inputStyles[slot]());
+  });
   const checkboxSlots = [
     "root",
     "box",
@@ -168,6 +186,7 @@ function themeCandidates() {
     ...accordionCandidates,
     ...alertDialogCandidates,
     ...dialogCandidates,
+    ...inputCandidates,
     ...checkboxCandidates,
     ...toggleGroupCandidates,
     ...sliderCandidates,

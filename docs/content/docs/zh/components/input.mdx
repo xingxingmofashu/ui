@@ -1,0 +1,49 @@
+---
+title: "Input"
+description: "带玻璃表面、标签、说明文字与图标插槽的文本输入框。"
+---
+
+`Input` 封装 Base UI 的 `Input`，渲染玻璃质感的输入区域、原生 `<input>`、可选标签与说明文字，以及可选的前后图标。
+
+可见标签是真实的 `<label>`，会自动与输入框关联。提供 `description` 时，输入框会通过 `aria-describedby` 指向说明文字，读屏软件会同时朗读两者。
+
+## 基础示例
+
+使用 `value` + `onValueChange` 创建受控输入框，或使用 `defaultValue` 创建非受控输入框。`type`、`name`、`placeholder`、`required`、`readOnly` 等原生输入属性都会透传。
+
+<Example name="input/basic" />
+
+## 尺寸
+
+提供 `xs`、`sm`、`md`、`lg`、`xl` 五种尺寸；高度、内边距、圆角、文字与图标尺寸会同步缩放。
+
+<Example name="input/sizes" />
+
+## 图标
+
+`leadingIcon` 渲染在输入框前方，`trailingIcon` 渲染在后方。两个插槽都是装饰性的，会带有 `aria-hidden="true"`；可访问名称请使用 `label` 或 `aria-label`。
+
+<Example name="input/icons" />
+
+## 状态
+
+`disabled` 会透传给原生输入框，并淡化整个字段。`readOnly` 保留焦点与文本选择能力，但阻止修改。
+
+<Example name="input/states" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | 可见标签，与输入框关联。 |
+| `description` | `ReactNode` | — | 输入框下方的说明文字，通过 `aria-describedby` 关联。 |
+| `leadingIcon` | `ReactNode` | — | 输入框前的装饰图标。 |
+| `trailingIcon` | `ReactNode` | — | 输入框后的装饰图标。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距、圆角、文字与图标尺寸。 |
+| `className` | `string` | — | Tailwind 类名，合并到外层 `root`。 |
+
+其余属性会透传给 Base UI 的 `Input`，包括 `value`、`defaultValue`、`onValueChange`、`type`、`placeholder`、`name`、`id`、`disabled`、`readOnly`、`required` 和 `ref`。
+
+没有可见 `label` 时，请自行提供 `aria-label` 或 `aria-labelledby`。
+
+`style` 被有意禁用：玻璃主题接管输入区域的外观。布局请使用 `className`，主题调整请通过共享的 `--ui-*` tokens 完成。
