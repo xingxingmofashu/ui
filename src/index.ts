@@ -32,6 +32,7 @@ export {
   type ToastManagerUpdateOptions,
   type ToastObject,
 } from "./composables/use-toast";
+export { Toggle, type ToggleProps } from "./components/toggle";
 export {
   ToggleGroup,
   type ToggleGroupItemProps,

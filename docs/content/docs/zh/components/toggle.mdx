@@ -1,0 +1,60 @@
+---
+title: "Toggle"
+description: "带选中滑块、可选标签与图标、五种尺寸的双态玻璃按钮。"
+---
+
+`Toggle` 是 Base UI `Toggle` 的样式封装。它内部渲染玻璃外壳、选中滑块、可选图标与标签，并通过 `aria-pressed` 暴露按下状态。
+
+适合单个开/关操作。需要一组相关选项时，请使用 `ToggleGroup`。
+
+## 基础示例
+
+不传 `pressed` 时，Toggle 自己维护状态。`defaultPressed` 设置初始值；点击或按 Space/Enter 都会切换。
+
+<Example name="toggle/basic" />
+
+## 受控用法
+
+传入 `pressed` 与 `onPressedChange`，由外部状态控制。回调还会收到 Base UI 的事件详情。
+
+<Example name="toggle/controlled" />
+
+## 尺寸
+
+支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。高度、内边距、字号和图标尺寸会一起缩放。
+
+<Example name="toggle/sizes" />
+
+## 纯图标
+
+不传 `label` 时会渲染方形图标按钮。请使用 `aria-label` 提供可访问名称。
+
+<Example name="toggle/icon-only" />
+
+## 禁用
+
+`disabled` 会停止指针与键盘交互，并淡化控件。
+
+<Example name="toggle/disabled" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `pressed` | `boolean` | — | 受控的按下状态。 |
+| `defaultPressed` | `boolean` | `false` | 非受控时的初始按下状态。 |
+| `onPressedChange` | `(pressed, details) => void` | — | 按下状态变化时调用。 |
+| `disabled` | `boolean` | `false` | 禁用 Toggle。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控件尺寸。 |
+| `label` | `ReactNode` | — | 渲染在控件内部的可见标签。 |
+| `icon` | `ReactNode` | — | 标签前的装饰性图标。 |
+| `className` | `string` | — | 合并到 Toggle 根元素的 Tailwind 类名。 |
+| `ref` | `Ref<HTMLButtonElement>` | — | 透传到渲染按钮的 ref。 |
+
+`Toggle` 还会透传 Base UI `Toggle` 的 `value`、`nativeButton`、`render` 等属性。
+
+`style` 被有意禁用：玻璃主题接管表面。布局请使用 `className`，材质请通过共享的 `--ui-glass-*` token 调整。
+
+## 无障碍
+
+Base UI 负责 button 角色、`aria-pressed`、键盘激活和禁用行为。传入 `label` 时它会参与可访问名称；纯图标 Toggle 需要 `aria-label` 或 `aria-labelledby`。

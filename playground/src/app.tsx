@@ -14,6 +14,7 @@ import { ScrollAreaPreview } from "./previews/scroll-area";
 import { SliderPreview } from "./previews/slider";
 import { SwitchPreview } from "./previews/switch";
 import { ToastPreview } from "./previews/toast";
+import { TogglePreview } from "./previews/toggle";
 import { ToggleGroupPreview } from "./previews/toggle-group";
 
 const sections = [
@@ -129,6 +130,14 @@ const sections = [
       "Stacked glass notifications with status icons, actions, promise states, and six positions.",
     Preview: ToastPreview,
   },
+  {
+    id: "toggle",
+    index: "15",
+    title: "Toggle",
+    description:
+      "A two-state glass button with a pressed thumb, labels, icons, and five sizes.",
+    Preview: TogglePreview,
+  },
 ] as const;
 
 function Header() {
@@ -192,7 +201,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Fourteen components · two themes
+        Fifteen components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.

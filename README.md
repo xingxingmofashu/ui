@@ -2,11 +2,11 @@
 
 Liquid Glass UI components for React 19 and Tailwind CSS 4.
 
-The package ships fourteen components: Accordion, Alert Dialog, Button, Card,
+The package ships fifteen components: Accordion, Alert Dialog, Button, Card,
 Checkbox, Dialog, Drawer, Input, Popover, Scroll Area, Slider, Switch, Toast,
-and Toggle Group. Glass surfaces, rim highlights, and inner shadows are drawn
-entirely with CSS. The interactive components are built on Base UI and do not
-add a custom rendering engine; `Card` is a native layout primitive.
+Toggle, and Toggle Group. Glass surfaces, rim highlights, and inner shadows are
+drawn entirely with CSS. The interactive components are built on Base UI and do
+not add a custom rendering engine; `Card` is a native layout primitive.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ add a custom rendering engine; `Card` is a native layout primitive.
 - An ESM-capable bundler. The package publishes ES modules only.
 
 `Accordion`, `AlertDialog`, `Button`, `Checkbox`, `Dialog`, `Drawer`, `Input`,
-`Popover`, `ScrollArea`, `Slider`, `Switch`, `ToastProvider`, and
+`Popover`, `ScrollArea`, `Slider`, `Switch`, `ToastProvider`, `Toggle`, and
 `ToggleGroup` are client components. `Card` is server-safe and can be rendered
 from a React Server Component.
 
@@ -89,8 +89,9 @@ the `ui-` prefix (`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid
 colliding with host design tokens.
 
 `Button`, `Card`, `Checkbox`, `Dialog`, `Drawer`, `Input`, `Popover`,
-`ScrollArea`, `Slider`, `Switch`, `ToggleGroup`, `ToastProvider`, `Accordion`,
-and `AlertDialog` inherit the host font and do not force a font family.
+`ScrollArea`, `Slider`, `Switch`, `Toggle`, `ToggleGroup`, `ToastProvider`,
+`Accordion`, and `AlertDialog` inherit the host font and do not force a font
+family.
 
 The visual material relies on modern CSS: `backdrop-filter`, `color-mix`,
 container units, individual `translate` / `scale` properties, and `:has`.
@@ -111,6 +112,7 @@ Use a current evergreen browser.
 - `Slider`
 - `Switch`
 - `ToastProvider`
+- `Toggle`
 - `ToggleGroup`
 
 
