@@ -1,4 +1,19 @@
 {
   "title": "Components",
-  "pages": ["accordion", "alert-dialog", "button", "card", "checkbox", "dialog", "drawer", "input", "slider", "switch", "toggle-group"]
+  "pages": [
+    "---Element---",
+    "accordion",
+    "button",
+    "card",
+    "toggle-group",
+    "---Form---",
+    "checkbox",
+    "input",
+    "slider",
+    "switch",
+    "---Overlay---",
+    "alert-dialog",
+    "dialog",
+    "drawer"
+  ]
 }
