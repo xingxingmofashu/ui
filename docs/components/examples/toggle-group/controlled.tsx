@@ -3,11 +3,7 @@
 import { Bold, Italic, Underline } from "lucide-react";
 import { useState } from "react";
 
-import {
-  Button,
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@xingxingmofashu/ui";
+import { Button, ToggleGroup } from "@xingxingmofashu/ui";
 
 export default function ToggleGroupControlledDemo() {
   const [value, setValue] = useState<string[]>(["bold"]);
@@ -19,23 +15,12 @@ export default function ToggleGroupControlledDemo() {
         multiple
         value={value}
         onValueChange={setValue}
-      >
-        <ToggleGroupItem
-          value="bold"
-          aria-label="Bold"
-          icon={<Bold />}
-        />
-        <ToggleGroupItem
-          value="italic"
-          aria-label="Italic"
-          icon={<Italic />}
-        />
-        <ToggleGroupItem
-          value="underline"
-          aria-label="Underline"
-          icon={<Underline />}
-        />
-      </ToggleGroup>
+        items={[
+          { value: "bold", "aria-label": "Bold", icon: <Bold /> },
+          { value: "italic", "aria-label": "Italic", icon: <Italic /> },
+          { value: "underline", "aria-label": "Underline", icon: <Underline /> },
+        ]}
+      />
       <div className="flex flex-wrap items-center justify-center gap-3">
         <span className="text-sm text-ui-ink/60">
           Selected: {value.length ? value.join(", ") : "none"}

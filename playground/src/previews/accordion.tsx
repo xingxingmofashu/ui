@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Accordion, ToggleGroup, ToggleGroupItem } from "@xingxingmofashu/ui";
+import { Accordion, ToggleGroup } from "@xingxingmofashu/ui";
 
 import { DemoGroup } from "../demo";
 
@@ -25,13 +25,11 @@ function AccordionPreview() {
               setSize(next);
             }
           }}
-        >
-          {sizes.map((candidate) => (
-            <ToggleGroupItem key={candidate} value={candidate}>
-              {candidate.toUpperCase()}
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
+          items={sizes.map((candidate) => ({
+            value: candidate,
+            label: candidate.toUpperCase(),
+          }))}
+        />
       </DemoGroup>
 
       <DemoGroup label="Preview">

@@ -7,6 +7,8 @@ description: "一组带液态玻璃选中态的切换按钮，支持单选、多
 
 下面的视图切换使用真实 Toggle Group。选中项会显示液态玻璃选中态，并把当前值同步到下方文字。
 
+选项通过 `items` 数组传入，每个条目的 `value` 对应 group 的选中值。
+
 <Example name="toggle-group/basic" />
 
 ## 尺寸
@@ -46,24 +48,23 @@ description: "一组带液态玻璃选中态的切换按钮，支持单选、多
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局和键盘方向。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制 item 高度、内边距、文字和图标尺寸。 |
 | `disabled` | `boolean` | `false` | 禁用所有 item。 |
+| `items` | `readonly ToggleGroupItemProps[]` | — | 渲染在 group 内部的选项。 |
 | `className` | `any` | — | Tailwind 类名，合并到 group root。 |
 
 `ToggleGroup` 还会透传 Base UI `ToggleGroup` 的 `loopFocus`、`render`、`ref` 等属性。
 
 `style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`。
 
-### ToggleGroupItem
+### Item 条目
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `value` | `string` | — | group 使用的必填值。 |
-| `pressed` | `boolean` | — | 独立使用时的受控选中状态。 |
-| `defaultPressed` | `boolean` | `false` | 独立使用时的初始选中状态。 |
-| `disabled` | `boolean` | `false` | 禁用该 item。 |
-| `icon` | `ReactNode` | — | item 内的图标。 |
-| `children` | `ReactNode` | — | 文字或自定义内容。 |
-| `className` | `any` | — | Tailwind 类名，合并到 item root。 |
+| `value` | `string` | — | group value 使用的必填标识。 |
+| `label` | `ReactNode` | — | item 内的可见文字。 |
+| `icon` | `ReactNode` | — | 文字前的图标。 |
+| `aria-label` | `string` | — | 仅图标时使用的无障碍名称。 |
+| `aria-labelledby` | `string` | — | 用外部元素命名仅图标 item。 |
+| `disabled` | `boolean` | `false` | 禁用该项。 |
+| `className` | `string` | — | 合并到 item root。 |
 
-`ToggleGroupItem` 还会透传 Base UI `Toggle` 的 `nativeButton`、`render`、`ref` 等属性。
-
-item 上同样有意禁用 `style`；请使用 `className`。
+Item 条目是普通对象；toggle group 会在内部渲染 Base UI 的 toggle。

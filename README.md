@@ -104,7 +104,7 @@ Use a current evergreen browser.
 - `Dialog`
 - `Slider`
 - `Switch`
-- `ToggleGroup` / `ToggleGroupItem`
+- `ToggleGroup`
 
 
 ## Development
