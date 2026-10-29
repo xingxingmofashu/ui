@@ -22,6 +22,13 @@ pnpm typecheck
 
 The dev server runs on port 3001. The build uses `output: "export"` and writes to `out/`.
 
+## Deployment
+
+The site is deployed to GitHub Pages at
+`https://xingxingmofashu.github.io/ui/` by the `Docs` workflow. The workflow
+reads the Pages base path into `NEXT_PUBLIC_BASE_PATH`, so the site works under
+the `/ui/` project path.
+
 ## Routes
 
 - `/` — Chinese home page.

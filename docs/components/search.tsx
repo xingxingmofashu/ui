@@ -14,9 +14,14 @@ import {
 } from "fumadocs-ui/components/dialog/search";
 import { useI18n } from "fumadocs-ui/contexts/i18n";
 
+const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
+
 export function StaticSearchDialog(props: SharedProps) {
   const { locale } = useI18n();
-  const search = useStaticSearch({ locale });
+  const search = useStaticSearch({
+    locale,
+    from: `${basePath}/api/search`,
+  });
 
   return (
     <SearchDialog {...search} {...props}>

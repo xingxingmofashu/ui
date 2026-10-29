@@ -7,6 +7,8 @@ import type { ReactNode } from "react";
 
 import { StaticSearchDialog } from "@/components/search";
 
+const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
+
 export function DocsRootProvider({
   lang,
   i18n,
@@ -23,9 +25,15 @@ export function DocsRootProvider({
       i18n={{
         ...i18n,
         onLocaleChange(nextLocale) {
-          const rest = pathname.startsWith(`/${lang}`)
-            ? pathname.slice(lang.length + 1)
-            : pathname;
+          const path =
+            basePath && pathname.startsWith(basePath)
+              ? pathname.slice(basePath.length) || "/"
+              : pathname;
+          const localePrefix = `/${lang}`;
+          const rest =
+            path === localePrefix || path.startsWith(`${localePrefix}/`)
+              ? path.slice(localePrefix.length)
+              : path;
 
           // Reload the document instead of remounting the localized layout.
           // next-themes renders its theme script again when the [lang] root
@@ -33,7 +41,7 @@ export function DocsRootProvider({
           // 19 reports as "Encountered a script tag while rendering React
           // component". A full navigation keeps the script in the SSR HTML.
           window.location.assign(
-            `/${nextLocale}${rest === "/" ? "" : rest}`,
+            `${basePath}/${nextLocale}${rest === "/" ? "" : rest}`,
           );
         },
       }}

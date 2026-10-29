@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 type Locale = "zh" | "en";
 
@@ -47,20 +48,20 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a
+          <Link
             href={`/${lang}/docs/get-started`}
             className="inline-flex h-9 items-center gap-2 rounded-full bg-fd-foreground px-4 text-sm font-medium text-fd-background transition-opacity hover:opacity-85"
           >
             {copy.readDocs}
             <ArrowRight className="size-4" aria-hidden="true" />
-          </a>
-          <a
+          </Link>
+          <Link
             href={`/${lang}/docs/components/button`}
             className="inline-flex h-9 items-center gap-2 rounded-full border border-fd-border bg-fd-background/70 px-4 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
           >
             {copy.viewComponents}
             <ArrowRight className="size-4" aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </section>
     </main>
