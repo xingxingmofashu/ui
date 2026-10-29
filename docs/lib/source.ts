@@ -11,4 +11,9 @@ export const source = loader({
   baseUrl: "/docs",
   i18n,
   source: docs.toFumadocsSource(),
+  url: (slugs, locale) => {
+    const base = locale ? `/docs/${locale}` : "/docs";
+
+    return slugs.length > 0 ? `${base}/${slugs.join("/")}` : base;
+  },
 });
