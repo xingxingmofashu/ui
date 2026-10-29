@@ -115,9 +115,12 @@ Light and dark tokens are selected by `.light` / `.dark`, or by
 
 ```html
 <html class="dark">
-  <!-- or -->
-  <html data-theme="dark">
-</html>
+```
+
+or:
+
+```html
+<html data-theme="dark">
 ```
 
 A nested `.light` / `[data-theme="light"]` subtree can switch back to light
