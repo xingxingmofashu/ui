@@ -1,3 +1,5 @@
+<div align="center">
+
 # @xingxingmofashu/ui
 
 [![npm version][npm-version-src]][npm-version-href]
@@ -5,6 +7,10 @@
 [![License][license-src]][license-href]
 [![React][react-src]][react-href]
 [![Tailwind CSS][tailwind-src]][tailwind-href]
+
+**Liquid Glass UI components for React 19 and Tailwind CSS 4.**
+
+</div>
 
 Liquid Glass UI is a collection of accessible, typed [React](https://react.dev)
 components built on [Base UI](https://base-ui.com),
