@@ -1,6 +1,6 @@
 ---
 title: "Accordion"
-description: "A set of collapsible liquid glass panels with accessible headings."
+description: "Accessible, collapsible React accordion panels with a Liquid Glass style and keyboard support."
 ---
 
 ## Basic example
@@ -37,18 +37,56 @@ Set `disabled` on the root to disable every trigger, or on a single item to disa
 
 ### Accordion
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string[]` | — | Controlled expanded values. |
-| `defaultValue` | `string[]` | `[]` | Initially expanded values. |
-| `onValueChange` | `(value: string[], details) => void` | — | Called when the expanded values change. |
-| `multiple` | `boolean` | `false` | Allows more than one panel to stay open. |
-| `disabled` | `boolean` | `false` | Disables every trigger. |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and the indicator. |
-| `items` | `readonly AccordionItemProps[]` | — | Panels rendered inside the accordion. |
-| `hiddenUntilFound` | `boolean` | `false` | Keeps closed panels mounted with `hidden="until-found"` so browser search can reveal them. |
-| `keepMounted` | `boolean` | `false` | Keeps closed panels in the DOM. |
-| `className` | `any` | — | Tailwind classes merged into the root. |
+<TypeTable
+  type={{
+    "value": {
+      type: "string[]",
+      description: "Controlled expanded values.",
+    },
+    "defaultValue": {
+      type: "string[]",
+      default: "[]",
+      description: "Initially expanded values.",
+    },
+    "onValueChange": {
+      type: "(value: string[], details) => void",
+      description: "Called when the expanded values change.",
+    },
+    "multiple": {
+      type: "boolean",
+      default: "false",
+      description: "Allows more than one panel to stay open.",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "Disables every trigger.",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "Controls trigger height, padding, text, and the indicator.",
+    },
+    "items": {
+      type: "readonly AccordionItemProps[]",
+      description: "Panels rendered inside the accordion.",
+    },
+    "hiddenUntilFound": {
+      type: "boolean",
+      default: "false",
+      description: <>{"Keeps closed panels mounted with "}<code>{"hidden=\"until-found\""}</code>{" so browser search can reveal them."}</>,
+    },
+    "keepMounted": {
+      type: "boolean",
+      default: "false",
+      description: "Keeps closed panels in the DOM.",
+    },
+    "className": {
+      type: "any",
+      description: "Tailwind classes merged into the root.",
+    },
+  }}
+/>
 
 `Accordion` also forwards Base UI `Accordion.Root` props such as `render` and `ref`.
 
@@ -56,13 +94,36 @@ Set `disabled` on the root to disable every trigger, or on a single item to disa
 
 ### Item entries
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Required identifier used by the accordion value. |
-| `title` | `ReactNode` | — | Visible heading inside the trigger. |
-| `content` | `ReactNode` | — | Panel content. |
-| `disabled` | `boolean` | `false` | Disables this item. |
-| `onOpenChange` | `(open: boolean, details) => void` | — | Called when this panel opens or closes. |
-| `className` | `any` | — | Tailwind classes merged into the item root. |
+<TypeTable
+  type={{
+    "value": {
+      type: "string",
+      required: true,
+      description: "Required identifier used by the accordion value.",
+    },
+    "title": {
+      type: "ReactNode",
+      required: true,
+      description: "Visible heading inside the trigger.",
+    },
+    "content": {
+      type: "ReactNode",
+      description: "Panel content.",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "Disables this item.",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "Called when this panel opens or closes.",
+    },
+    "className": {
+      type: "any",
+      description: "Tailwind classes merged into the item root.",
+    },
+  }}
+/>
 
 Item entries are plain objects; the accordion renders the Base UI item, header, trigger, and panel internally.

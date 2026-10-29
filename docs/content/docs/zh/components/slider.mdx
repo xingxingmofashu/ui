@@ -1,6 +1,6 @@
 ---
 title: "Slider"
-description: "基于 Base UI Slider.Root 的液态玻璃滑块，支持单值、区间与纵向布局。"
+description: "可访问的 React 滑块，采用 Liquid Glass 轨道，支持单值、区间与纵向布局。"
 ---
 
 `Slider` 是 Base UI `Slider.Root` 的样式封装，内部渲染 control、track、indicator 和玻璃 thumb。属性会透传给 `Slider.Root`；`style` 与 `children` 不支持。
@@ -41,27 +41,95 @@ Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `value` | `number \| readonly number[]` | — | 受控值；数组会为每个值渲染一个 thumb。 |
-| `defaultValue` | `number \| readonly number[]` | — | 非受控初始值。 |
-| `onValueChange` | `(value, details) => void` | — | 值变化时触发。 |
-| `onValueCommitted` | `(value, details) => void` | — | 值变更提交时触发。 |
-| `name` | `string` | — | 表单提交时使用的字段名。 |
-| `form` | `string` | — | 指定拥有滑块 input 的表单。 |
-| `min` | `number` | `0` | 最小值。 |
-| `max` | `number` | `100` | 最大值。 |
-| `step` | `number` | `1` | 方向键和拖动的步进。 |
-| `largeStep` | `number` | `10` | Page Up / Page Down 与 Shift + 方向键的步进。 |
-| `minStepsBetweenValues` | `number` | `0` | 区间 thumb 之间的最小步进。 |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局与键盘方向。 |
-| `format` | `Intl.NumberFormatOptions` | — | Base UI 可访问数值文本使用的格式。 |
-| `locale` | `Intl.LocalesArgument` | — | 数值格式化使用的 locale。 |
-| `disabled` | `boolean` | `false` | 禁用滑块。 |
-| `thumbAlignment` | `"center" \| "edge" \| "edge-client-only"` | `"center"` | thumb 与控制边缘的对齐方式。 |
-| `thumbCollisionBehavior` | `"push" \| "swap" \| "none"` | `"push"` | 区间 thumb 碰撞时的行为。 |
-| `className` | `any` | — | Tailwind 类名，合并到最外层 `root`。 |
-| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
+<TypeTable
+  type={{
+    "value": {
+      type: "number | readonly number[]",
+      description: "受控值；数组会为每个值渲染一个 thumb。",
+    },
+    "defaultValue": {
+      type: "number | readonly number[]",
+      description: "非受控初始值。",
+    },
+    "onValueChange": {
+      type: "(value, details) => void",
+      description: "值变化时触发。",
+    },
+    "onValueCommitted": {
+      type: "(value, details) => void",
+      description: "值变更提交时触发。",
+    },
+    "name": {
+      type: "string",
+      description: "表单提交时使用的字段名。",
+    },
+    "form": {
+      type: "string",
+      description: "指定拥有滑块 input 的表单。",
+    },
+    "min": {
+      type: "number",
+      default: "0",
+      description: "最小值。",
+    },
+    "max": {
+      type: "number",
+      default: "100",
+      description: "最大值。",
+    },
+    "step": {
+      type: "number",
+      default: "1",
+      description: "方向键和拖动的步进。",
+    },
+    "largeStep": {
+      type: "number",
+      default: "10",
+      description: "Page Up / Page Down 与 Shift + 方向键的步进。",
+    },
+    "minStepsBetweenValues": {
+      type: "number",
+      default: "0",
+      description: "区间 thumb 之间的最小步进。",
+    },
+    "orientation": {
+      type: "\"horizontal\" | \"vertical\"",
+      default: "\"horizontal\"",
+      description: "布局与键盘方向。",
+    },
+    "format": {
+      type: "Intl.NumberFormatOptions",
+      description: "Base UI 可访问数值文本使用的格式。",
+    },
+    "locale": {
+      type: "Intl.LocalesArgument",
+      description: "数值格式化使用的 locale。",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "禁用滑块。",
+    },
+    "thumbAlignment": {
+      type: "\"center\" | \"edge\" | \"edge-client-only\"",
+      default: "\"center\"",
+      description: "thumb 与控制边缘的对齐方式。",
+    },
+    "thumbCollisionBehavior": {
+      type: "\"push\" | \"swap\" | \"none\"",
+      default: "\"push\"",
+      description: "区间 thumb 碰撞时的行为。",
+    },
+    "className": {
+      type: "any",
+      description: <>{"Tailwind 类名，合并到最外层 "}<code>{"root"}</code>{"。"}</>,
+    },
+    "render": {
+      type: "ReactElement | ((props, state) => ReactElement)",
+      description: "替换根元素。",
+    },
+  }}
+/>
 
 `ref` 会转发到 root，其余原生属性也会透传。
 

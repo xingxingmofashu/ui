@@ -1,6 +1,6 @@
 ---
 title: "Drawer"
-description: "从屏幕边缘滑入、支持手势关闭的液态玻璃抽屉。"
+description: "从任意边缘滑入的 React 抽屉，采用 Liquid Glass 表面并支持手势关闭。"
 ---
 
 `Drawer` 是 Base UI `Drawer` 的一体化封装。它内部渲染 Portal、遮罩、贴边弹窗、标题、描述、可选正文以及自定义操作区，并支持滑动关闭与可选吸附点。
@@ -39,20 +39,62 @@ description: "从屏幕边缘滑入、支持手势关闭的液态玻璃抽屉。
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | 抽屉标题。 |
-| `description` | `ReactNode` | — | 标题下方的说明文字。 |
-| `children` | `ReactNode` | — | 描述与操作区之间的正文内容。 |
-| `footer` | `ReactNode` | — | 底部操作区，可放置任意数量的按钮。 |
-| `direction` | `"down" \| "up" \| "left" \| "right"` | `"down"` | 滑入边缘与滑动关闭方向，复用 Base UI `swipeDirection` 的类型。 |
-| `open` | `boolean` | — | 受控的打开状态。 |
-| `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
-| `onOpenChange` | `(open: boolean, details) => void` | — | 抽屉打开或关闭时调用。 |
-| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
-| `disablePointerDismissal` | `boolean` | `false` | 禁止点击遮罩关闭。 |
-| `modal` | `boolean \| "trap-focus"` | `true` | 控制焦点锁定与页面滚动锁定。 |
-| `className` | `any` | — | 合并到弹窗的 Tailwind 类名。 |
+<TypeTable
+  type={{
+    "title": {
+      type: "ReactNode",
+      description: "抽屉标题。",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "标题下方的说明文字。",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "描述与操作区之间的正文内容。",
+    },
+    "footer": {
+      type: "ReactNode",
+      description: "底部操作区，可放置任意数量的按钮。",
+    },
+    "direction": {
+      type: "\"down\" | \"up\" | \"left\" | \"right\"",
+      default: "\"down\"",
+      description: <>{"滑入边缘与滑动关闭方向，复用 Base UI "}<code>{"swipeDirection"}</code>{" 的类型。"}</>,
+    },
+    "open": {
+      type: "boolean",
+      description: "受控的打开状态。",
+    },
+    "defaultOpen": {
+      type: "boolean",
+      default: "false",
+      description: "非受控时的初始打开状态。",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "抽屉打开或关闭时调用。",
+    },
+    "onOpenChangeComplete": {
+      type: "(open: boolean) => void",
+      description: "打开或关闭动画结束后调用。",
+    },
+    "disablePointerDismissal": {
+      type: "boolean",
+      default: "false",
+      description: "禁止点击遮罩关闭。",
+    },
+    "modal": {
+      type: "boolean | \"trap-focus\"",
+      default: "true",
+      description: "控制焦点锁定与页面滚动锁定。",
+    },
+    "className": {
+      type: "any",
+      description: "合并到弹窗的 Tailwind 类名。",
+    },
+  }}
+/>
 
 `Drawer` 还会透传 Base UI `Drawer.Root` 的 `actionsRef`、`handle`、`triggerId`、`defaultTriggerId`、`snapPoints`、`defaultSnapPoint`、`snapPoint`、`onSnapPointChange` 和 `snapToSequentialPoints`。
 

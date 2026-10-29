@@ -1,0 +1,124 @@
+---
+title: "Introduction"
+description: "@xingxingmofashu/ui is a collection of accessible, typed React components with a Liquid Glass visual style, built on Base UI, Tailwind CSS 4, and Tailwind Variants."
+---
+
+<Callout type="info">
+@xingxingmofashu/ui is at 0.1.x. APIs may change before 1.0; pin a version and review the changelog when upgrading.
+</Callout>
+
+## What is @xingxingmofashu/ui?
+
+`@xingxingmofashu/ui` is a React component library for building interfaces with a CSS-only Liquid Glass visual style. It ships fifteen components across elements, forms, and overlays, and works in any React 19 application with Tailwind CSS 4.
+
+Glass surfaces, rim highlights, inner shadows, and pressed states are drawn entirely with CSS. Interactive behavior and accessibility come from Base UI, while Tailwind Variants keeps the styling typed and composable.
+
+If you are building a React project with Tailwind CSS and want a distinctive monochrome Liquid Glass aesthetic, `@xingxingmofashu/ui` is a good default choice. It provides high-level components such as Button, Card, Dialog, Drawer, and Toast while still allowing customization through `className` and the shared `--ui-*` tokens.
+
+<Cards>
+  <Card
+    title="Developer experience first"
+    description="Intuitive component APIs, typed props, deep imports, and bilingual documentation."
+  />
+  <Card
+    title="Beautiful by default"
+    description="A monochrome Liquid Glass material that stays consistent across light and dark themes."
+  />
+  <Card
+    title="Accessible by default"
+    description="Base UI supplies WAI-ARIA semantics, keyboard navigation, focus management, and screen reader support."
+  />
+  <Card
+    title="Focused surface area"
+    description="Fifteen carefully styled components instead of a sprawling catalog, with consistent sizing, naming, and visual language."
+  />
+</Cards>
+
+## Core technologies
+
+`@xingxingmofashu/ui` is built on three foundations: Base UI for behavior and accessibility, Tailwind CSS for styling, and Tailwind Variants for typed variants.
+
+<Tabs items={["Base UI", "Tailwind CSS", "Tailwind Variants"]}>
+  <Tab value="Base UI">
+    - **WAI-ARIA compliance**: proper semantics and roles
+    - **Keyboard navigation**: built-in support for dialogs, drawers, popovers, and toggles
+    - **Focus management**: focus trapping and restoration
+    - **Composable primitives**: controlled state and render props
+  </Tab>
+  <Tab value="Tailwind CSS">
+    - **CSS-first configuration**: theme tokens live in CSS
+    - **Modern web features**: `color-mix`, container units, `:has`, and individual transforms
+    - **Source scanning**: the package stylesheet scans its own component files, so no extra `@source` is required
+  </Tab>
+  <Tab value="Tailwind Variants">
+    - **Dynamic styling**: typed size and state variants
+    - **Type safety**: component props derive from the theme recipes
+    - **Conflict resolution**: `cn` merges Tailwind classes predictably
+  </Tab>
+</Tabs>
+
+## Key features
+
+<Accordions>
+  <Accordion title="CSS-only glass material">
+    The glass surface, rim highlight, inner shadow, and pressed thumb are all regular CSS. There is no canvas, WebGL, or image asset behind the material.
+  </Accordion>
+  <Accordion title="Light and dark themes">
+    Tokens switch through `.light` / `.dark` or `data-theme="light"` / `data-theme="dark"`. A nested light subtree can switch back even inside a dark application.
+  </Accordion>
+  <Accordion title="Accessible interactions">
+    Interactive components are built on Base UI primitives with keyboard support, focus management, and ARIA state. Components expose `aria-pressed`, `data-checked`, and other state attributes for styling and testing.
+  </Accordion>
+  <Accordion title="Typed APIs">
+    Component props, size variants, controlled state, and event details are typed. Deep imports are available for each component, composable, and theme recipe.
+  </Accordion>
+  <Accordion title="Server-safe Card">
+    `Card` is a native layout primitive that can render from a React Server Component. The interactive components are client components.
+  </Accordion>
+</Accordions>
+
+## FAQ
+
+<Accordions>
+  <Accordion title="Is the package free to use?">
+    Yes. It is open source under the MIT license.
+  </Accordion>
+  <Accordion title="Does it work with React 18?">
+    No. The package targets React 19 and React DOM 19.
+  </Accordion>
+  <Accordion title="Is Tailwind CSS required?">
+    Yes. Tailwind CSS 4 is a peer dependency; the package stylesheet contains tokens and material classes, not a precompiled utility sheet.
+  </Accordion>
+  <Accordion title="Is it production-ready?">
+    The package is at 0.1.x. The components are tested and documented, but APIs may still change before 1.0. Pin a version and review the changelog when upgrading.
+  </Accordion>
+  <Accordion title="Does it include data tables, date pickers, or a command palette?">
+    Not yet. The current release focuses on fifteen core components: elements, form controls, and overlays. Additional components will ship in later releases.
+  </Accordion>
+  <Accordion title="How does it handle accessibility?">
+    Interactive components are built on Base UI, which provides WAI-ARIA semantics, keyboard support, and focus management. Always test the complete interaction in your own application.
+  </Accordion>
+  <Accordion title="Where can I get help?">
+    Open an issue on [GitHub](https://github.com/xingxingmofashu/ui/issues) with a reproduction.
+  </Accordion>
+</Accordions>
+
+## Explore
+
+<Cards>
+  <Card
+    title="Installation"
+    description="Add the package to a React project."
+    href="/docs/en/get-started/installation"
+  />
+  <Card
+    title="Button"
+    description="Start with the core action component."
+    href="/docs/en/components/button"
+  />
+  <Card
+    title="Toggle"
+    description="See the pressed glass state."
+    href="/docs/en/components/toggle"
+  />
+</Cards>

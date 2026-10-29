@@ -1,6 +1,6 @@
 ---
 title: "Button"
-description: "可以渲染为其他标签，或在禁用时仍可聚焦的按钮组件。"
+description: "可访问的 React 按钮，采用 Liquid Glass 风格，支持五种尺寸、图标插槽与链接渲染。"
 ---
 
 ## 基础示例
@@ -41,14 +41,35 @@ description: "可以渲染为其他标签，或在禁用时仍可聚焦的按钮
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `label` | `ReactNode` | — | 按钮文字。与 `children` 同时提供时优先使用 `label`。 |
-| `children` | `ReactNode` | — | `label` 未提供时使用的可见内容。 |
-| `leadingIcon` | `ReactNode` | — | 标签前的图标。 |
-| `trailingIcon` | `ReactNode` | — | 标签后的图标，使用与前置图标相同的容器。 |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距和图标尺寸。 |
-| `className` | `any` | — | Tailwind 类名，合并到外层 `root`。 |
+<TypeTable
+  type={{
+    "label": {
+      type: "ReactNode",
+      description: <>{"按钮文字。与 "}<code>{"children"}</code>{" 同时提供时优先使用 "}<code>{"label"}</code>{"。"}</>,
+    },
+    "children": {
+      type: "ReactNode",
+      description: <><code>{"label"}</code>{" 未提供时使用的可见内容。"}</>,
+    },
+    "leadingIcon": {
+      type: "ReactNode",
+      description: "标签前的图标。",
+    },
+    "trailingIcon": {
+      type: "ReactNode",
+      description: "标签后的图标，使用与前置图标相同的容器。",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "控制高度、内边距和图标尺寸。",
+    },
+    "className": {
+      type: "any",
+      description: <>{"Tailwind 类名，合并到外层 "}<code>{"root"}</code>{"。"}</>,
+    },
+  }}
+/>
 
 其余属性会透传给 Base UI 的 `Button`，包括 `disabled`、`focusableWhenDisabled`、`nativeButton`、`onClick`、`type`、`render` 和 `ref`。
 

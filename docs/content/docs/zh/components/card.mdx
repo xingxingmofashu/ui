@@ -1,6 +1,6 @@
 ---
 title: "Card"
-description: "由 header、body 和 footer 组成的液态玻璃卡片。"
+description: "可从服务端渲染的 React 卡片，采用 Liquid Glass 表面，包含 header、body 与 footer。"
 ---
 
 `Card` 是原生布局原语，而不是 Base UI 组件：它没有交互状态，属性会直接透传到根 `div`。它可在 React Server Component 中渲染，且不支持 Base UI 的 `render` 属性。
@@ -19,13 +19,30 @@ description: "由 header、body 和 footer 组成的液态玻璃卡片。"
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | 卡片标题，渲染为 `div`。 |
-| `description` | `ReactNode` | — | 标题下方的说明文字。 |
-| `footer` | `ReactNode` | — | 底部操作区。 |
-| `children` | `ReactNode` | — | 卡片主体内容。 |
-| `className` | `string` | — | 合并到 `root`，用于布局。 |
+<TypeTable
+  type={{
+    "title": {
+      type: "ReactNode",
+      description: <>{"卡片标题，渲染为 "}<code>{"div"}</code>{"。"}</>,
+    },
+    "description": {
+      type: "ReactNode",
+      description: "标题下方的说明文字。",
+    },
+    "footer": {
+      type: "ReactNode",
+      description: "底部操作区。",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "卡片主体内容。",
+    },
+    "className": {
+      type: "string",
+      description: <>{"合并到 "}<code>{"root"}</code>{"，用于布局。"}</>,
+    },
+  }}
+/>
 
 其余属性会透传给根 `div`，例如 `id`、`role`、`onClick`。
 

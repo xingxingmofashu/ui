@@ -1,6 +1,6 @@
 ---
 title: "Button"
-description: "A button component that can be rendered as another tag or focusable when disabled."
+description: "An accessible React button with a Liquid Glass style, five sizes, icon slots, and link rendering."
 ---
 
 ## Basic example
@@ -41,14 +41,35 @@ When the button should navigate instead of trigger an action, tell Base UI not t
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Button text. Takes precedence over `children` when both are provided. |
-| `children` | `ReactNode` | — | Visible content used when `label` is not provided. |
-| `leadingIcon` | `ReactNode` | — | Icon before the label. |
-| `trailingIcon` | `ReactNode` | — | Icon after the label, using the same container as the leading icon. |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, and icon size. |
-| `className` | `any` | — | Tailwind classes merged into the outer `root`. |
+<TypeTable
+  type={{
+    "label": {
+      type: "ReactNode",
+      description: <>{"Button text. Takes precedence over "}<code>{"children"}</code>{" when both are provided."}</>,
+    },
+    "children": {
+      type: "ReactNode",
+      description: <>{"Visible content used when "}<code>{"label"}</code>{" is not provided."}</>,
+    },
+    "leadingIcon": {
+      type: "ReactNode",
+      description: "Icon before the label.",
+    },
+    "trailingIcon": {
+      type: "ReactNode",
+      description: "Icon after the label, using the same container as the leading icon.",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "Controls height, padding, and icon size.",
+    },
+    "className": {
+      type: "any",
+      description: <>{"Tailwind classes merged into the outer "}<code>{"root"}</code>{"."}</>,
+    },
+  }}
+/>
 
 All other props are forwarded to the Base UI `Button`, including `disabled`, `focusableWhenDisabled`, `nativeButton`, `onClick`, `type`, `render`, and `ref`.
 

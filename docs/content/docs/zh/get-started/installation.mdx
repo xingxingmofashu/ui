@@ -1,0 +1,141 @@
+---
+title: "安装"
+description: "在 React 项目中安装并配置 @xingxingmofashu/ui。"
+---
+
+<Callout type="info">
+需要 React 19、React DOM 19、Tailwind CSS 4 与 Node.js 22+。
+</Callout>
+
+## 安装步骤
+
+### 添加到 React 项目
+
+<Steps>
+  <Step>
+    #### 安装组件包
+
+    <CodeBlockTabs defaultValue="pnpm">
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm add @xingxingmofashu/ui
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn add @xingxingmofashu/ui
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="npm">
+        ```bash
+        npm install @xingxingmofashu/ui
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bun add @xingxingmofashu/ui
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+  </Step>
+  <Step>
+    #### 引入包样式
+
+    ```css [app.css]
+    @import "tailwindcss";
+    @import "@xingxingmofashu/ui";
+    ```
+
+    包根会通过 `style` 导出解析到 `dist/index.css`。样式表自带 Tailwind 扫描规则，无需额外添加 `@source`。
+  </Step>
+  <Step>
+    #### 导入组件
+
+    ```tsx
+    import { Button } from "@xingxingmofashu/ui";
+
+    export function Example() {
+      return <Button label="继续" />;
+    }
+    ```
+
+    <Callout type="idea" title="提示">
+    单个组件与主题配方支持深层导入：
+
+    ```tsx
+    import { Button } from "@xingxingmofashu/ui/components/button";
+    import buttonTheme from "@xingxingmofashu/ui/theme/button";
+    ```
+    </Callout>
+  </Step>
+</Steps>
+
+## 环境要求
+
+- Node.js 22 或更高版本。
+- React 与 React DOM 19。
+- Tailwind CSS 4。
+- 支持 ESM 的打包器。包只发布 ES 模块。
+- 支持 `backdrop-filter`、`color-mix`、容器单位与 `:has` 的现代浏览器。
+
+`Card` 可以从 React Server Component 渲染；交互组件是客户端组件。
+
+## 主题
+
+明暗 token 通过 `.light` / `.dark` 或 `data-theme="light"` / `data-theme="dark"` 切换：
+
+```html [index.html]
+<html class="dark">
+```
+
+或：
+
+```html [index.html]
+<html data-theme="dark">
+```
+
+嵌套的 `.light` / `[data-theme="light"]` 子树可以切回浅色 token。共享颜色与玻璃参数位于 `--ui-*` token 中，可在自己的主题层覆盖。Tailwind 别名使用 `ui-` 前缀（`text-ui-ink`、`outline-ui-glass-focus` 等），避免与宿主项目的 token 冲突。
+
+## 常见问题
+
+<Accordions>
+  <Accordion title="样式没有生效">
+    确认包样式与 Tailwind 从同一个 CSS 入口引入：
+
+    ```css [app.css]
+    @import "tailwindcss";
+    @import "@xingxingmofashu/ui";
+    ```
+
+    包样式表会扫描 `dist` 中的组件文件，因此不需要手动添加 `@source`。
+  </Accordion>
+  <Accordion title="React 18">
+    组件库面向 React 19。安装 `@xingxingmofashu/ui` 前，请先升级 `react` 与 `react-dom`。
+  </Accordion>
+</Accordions>
+
+## 下一步
+
+<Cards>
+  <Card
+    title="介绍"
+    description="了解组件库提供的能力。"
+    href="/docs/zh/get-started/introduction"
+  />
+  <Card
+    title="Button"
+    description="从核心操作组件开始。"
+    href="/docs/zh/components/button"
+  />
+  <Card
+    title="Toggle"
+    description="查看按下状态的玻璃滑块。"
+    href="/docs/zh/components/toggle"
+  />
+</Cards>

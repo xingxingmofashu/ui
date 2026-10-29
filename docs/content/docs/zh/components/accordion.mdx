@@ -1,6 +1,6 @@
 ---
 title: "Accordion"
-description: "一组带可访问标题的液态玻璃折叠面板。"
+description: "一组可折叠的 React 手风琴面板，采用 Liquid Glass 风格并支持键盘操作。"
 ---
 
 ## 基础示例
@@ -37,18 +37,56 @@ description: "一组带可访问标题的液态玻璃折叠面板。"
 
 ### Accordion
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `value` | `string[]` | — | 受控的展开值。 |
-| `defaultValue` | `string[]` | `[]` | 初始展开值。 |
-| `onValueChange` | `(value: string[], details) => void` | — | 展开值变化时调用。 |
-| `multiple` | `boolean` | `false` | 是否允许多个面板同时展开。 |
-| `disabled` | `boolean` | `false` | 禁用所有触发器。 |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制触发器高度、内边距、文字与指示器尺寸。 |
-| `items` | `readonly AccordionItemProps[]` | — | 渲染在 accordion 内部的面板。 |
-| `hiddenUntilFound` | `boolean` | `false` | 使用 `hidden="until-found"` 保留关闭的面板，让浏览器页内查找可以展开匹配内容。 |
-| `keepMounted` | `boolean` | `false` | 关闭时仍保留面板 DOM。 |
-| `className` | `any` | — | 合并到 root。 |
+<TypeTable
+  type={{
+    "value": {
+      type: "string[]",
+      description: "受控的展开值。",
+    },
+    "defaultValue": {
+      type: "string[]",
+      default: "[]",
+      description: "初始展开值。",
+    },
+    "onValueChange": {
+      type: "(value: string[], details) => void",
+      description: "展开值变化时调用。",
+    },
+    "multiple": {
+      type: "boolean",
+      default: "false",
+      description: "是否允许多个面板同时展开。",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "禁用所有触发器。",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "控制触发器高度、内边距、文字与指示器尺寸。",
+    },
+    "items": {
+      type: "readonly AccordionItemProps[]",
+      description: "渲染在 accordion 内部的面板。",
+    },
+    "hiddenUntilFound": {
+      type: "boolean",
+      default: "false",
+      description: <>{"使用 "}<code>{"hidden=\"until-found\""}</code>{" 保留关闭的面板，让浏览器页内查找可以展开匹配内容。"}</>,
+    },
+    "keepMounted": {
+      type: "boolean",
+      default: "false",
+      description: "关闭时仍保留面板 DOM。",
+    },
+    "className": {
+      type: "any",
+      description: "合并到 root。",
+    },
+  }}
+/>
 
 `Accordion` 还会透传 Base UI `Accordion.Root` 的 `render`、`ref` 等属性。
 
@@ -56,13 +94,36 @@ description: "一组带可访问标题的液态玻璃折叠面板。"
 
 ### Item 条目
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `value` | `string` | — | accordion value 使用的必填标识。 |
-| `title` | `ReactNode` | — | 触发器内的可见标题。 |
-| `content` | `ReactNode` | — | 面板内容。 |
-| `disabled` | `boolean` | `false` | 禁用该 item。 |
-| `onOpenChange` | `(open: boolean, details) => void` | — | 该面板展开或收起时调用。 |
-| `className` | `any` | — | 合并到 item root。 |
+<TypeTable
+  type={{
+    "value": {
+      type: "string",
+      required: true,
+      description: "accordion value 使用的必填标识。",
+    },
+    "title": {
+      type: "ReactNode",
+      required: true,
+      description: "触发器内的可见标题。",
+    },
+    "content": {
+      type: "ReactNode",
+      description: "面板内容。",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "禁用该 item。",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "该面板展开或收起时调用。",
+    },
+    "className": {
+      type: "any",
+      description: "合并到 item root。",
+    },
+  }}
+/>
 
 Item 条目是普通对象；accordion 会在内部渲染 Base UI 的 item、header、trigger 与 panel。

@@ -1,6 +1,6 @@
 ---
 title: "Alert Dialog"
-description: "A modal confirmation dialog with a liquid glass surface, required response, and fixed cancel and confirm actions."
+description: "A React alert dialog for required confirmations, with a Liquid Glass surface and clear cancel and confirm actions."
 ---
 
 `AlertDialog` is an integrated wrapper around Base UI's `AlertDialog`. It renders the portal, backdrop, centered popup, title, description, optional body, and fixed cancel and confirm actions internally.
@@ -25,20 +25,61 @@ The component is fully controlled: `open` controls visibility and the page rende
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | Dialog heading. |
-| `description` | `ReactNode` | — | Supporting copy under the title. |
-| `children` | `ReactNode` | — | Extra content between the description and the action buttons. |
-| `cancelLabel` | `ReactNode` | `"Cancel"` | Cancel button label. |
-| `confirmLabel` | `ReactNode` | `"Confirm"` | Confirm button label. |
-| `onCancel` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the cancel button is pressed. |
-| `onConfirm` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the confirm button is pressed. |
-| `open` | `boolean` | — | Controlled open state. |
-| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the dialog opens or closes. |
-| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
-| `className` | `any` | — | Tailwind classes merged into the popup. |
+<TypeTable
+  type={{
+    "title": {
+      type: "ReactNode",
+      description: "Dialog heading.",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "Supporting copy under the title.",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "Extra content between the description and the action buttons.",
+    },
+    "cancelLabel": {
+      type: "ReactNode",
+      default: "\"Cancel\"",
+      description: "Cancel button label.",
+    },
+    "confirmLabel": {
+      type: "ReactNode",
+      default: "\"Confirm\"",
+      description: "Confirm button label.",
+    },
+    "onCancel": {
+      type: "MouseEventHandler<HTMLButtonElement>",
+      description: "Called when the cancel button is pressed.",
+    },
+    "onConfirm": {
+      type: "MouseEventHandler<HTMLButtonElement>",
+      description: "Called when the confirm button is pressed.",
+    },
+    "open": {
+      type: "boolean",
+      description: "Controlled open state.",
+    },
+    "defaultOpen": {
+      type: "boolean",
+      default: "false",
+      description: "Initial open state when uncontrolled.",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "Called when the dialog opens or closes.",
+    },
+    "onOpenChangeComplete": {
+      type: "(open: boolean) => void",
+      description: "Called after the open or close animation finishes.",
+    },
+    "className": {
+      type: "any",
+      description: "Tailwind classes merged into the popup.",
+    },
+  }}
+/>
 
 `AlertDialog` also forwards Base UI `AlertDialog.Root` props such as `actionsRef`, `handle`, `triggerId`, and `defaultTriggerId`.
 

@@ -1,6 +1,10 @@
-<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset=".github/assets/banner-light.png">
+  <img alt="@xingxingmofashu/ui: Between black and white, glass finds its light." width="1247" src=".github/assets/banner-light.png">
+</picture>
 
-# @xingxingmofashu/ui
+<div align="center">
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -8,12 +12,10 @@
 [![React][react-src]][react-href]
 [![Tailwind CSS][tailwind-src]][tailwind-href]
 
-**Liquid Glass UI components for React 19 and Tailwind CSS 4.**
-
 </div>
 
-Liquid Glass UI is a collection of accessible, typed [React](https://react.dev)
-components built on [Base UI](https://base-ui.com),
+`@xingxingmofashu/ui` is a collection of accessible, typed [React](https://react.dev)
+components with a Liquid Glass visual style, built on [Base UI](https://base-ui.com),
 [Tailwind CSS](https://tailwindcss.com), and
 [Tailwind Variants](https://www.tailwind-variants.org). Glass surfaces, rim
 highlights, and inner shadows are drawn entirely with CSS.
@@ -29,8 +31,8 @@ Toggle, and Toggle Group.
 
 ## Documentation
 
-- [English documentation](https://xingxingmofashu.github.io/ui/docs/en/get-started)
-- [简体中文文档](https://xingxingmofashu.github.io/ui/docs/zh/get-started)
+- [English](https://xingxingmofashu.github.io/ui/docs/en/get-started/introduction)
+- [简体中文](https://xingxingmofashu.github.io/ui/docs/zh/get-started/introduction)
 
 ## Installation
 
@@ -170,7 +172,6 @@ a reproduction. Before opening a pull request, run `pnpm lint`, `pnpm test`, and
 - [Base UI](https://base-ui.com)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Tailwind Variants](https://www.tailwind-variants.org)
-- [cn](https://github.com/shadcn-ui/cn)
 
 ## License
 

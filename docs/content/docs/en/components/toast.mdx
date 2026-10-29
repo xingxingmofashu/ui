@@ -1,9 +1,9 @@
 ---
 title: "Toast"
-description: "Transient liquid glass notifications with stacking, actions, promise states, and six screen positions."
+description: "Transient React toast notifications with a Liquid Glass style, stacking, actions, promise states, and six screen positions."
 ---
 
-`ToastProvider` wraps Base UI's `Toast.Provider`. It renders the portal, viewport, and the liquid glass toast stack internally; call `useToast()` inside it to add, update, close, or track notifications.
+`ToastProvider` wraps Base UI's `Toast.Provider`. It renders the portal, viewport, and the Liquid Glass toast stack internally; call `useToast()` inside it to add, update, close, or track notifications.
 
 Render one provider near the app root. Each provider owns a separate viewport, so pass the same `toastManager` to it when you also create toasts outside React.
 
@@ -43,16 +43,47 @@ Render one provider near the app root. Each provider owns a separate viewport, s
 
 ### ToastProvider
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `ReactNode` | — | App content that can call `useToast()`. |
-| `position` | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-right"` | Corner or edge where the stack is anchored. |
-| `closeLabel` | `string` | `"Dismiss"` | Accessible label for the close button. |
-| `viewportLabel` | `string` | `"Notifications"` | Accessible label for the notification region. |
-| `timeout` | `number` | `5000` | Default auto-dismiss delay in milliseconds; `0` keeps toasts open. |
-| `limit` | `number` | `3` | Maximum number of rendered toasts. Older toasts receive `data-limited`. |
-| `toastManager` | `ToastManager` | — | Global manager created with `createToastManager`. |
-| `className` | `string` | — | Tailwind classes merged into the viewport. |
+<TypeTable
+  type={{
+    "children": {
+      type: "ReactNode",
+      description: <>{"App content that can call "}<code>{"useToast()"}</code>{"."}</>,
+    },
+    "position": {
+      type: "\"top-left\" | \"top-center\" | \"top-right\" | \"bottom-left\" | \"bottom-center\" | \"bottom-right\"",
+      default: "\"bottom-right\"",
+      description: "Corner or edge where the stack is anchored.",
+    },
+    "closeLabel": {
+      type: "string",
+      default: "\"Dismiss\"",
+      description: "Accessible label for the close button.",
+    },
+    "viewportLabel": {
+      type: "string",
+      default: "\"Notifications\"",
+      description: "Accessible label for the notification region.",
+    },
+    "timeout": {
+      type: "number",
+      default: "5000",
+      description: <>{"Default auto-dismiss delay in milliseconds; "}<code>{"0"}</code>{" keeps toasts open."}</>,
+    },
+    "limit": {
+      type: "number",
+      default: "3",
+      description: <>{"Maximum number of rendered toasts. Older toasts receive "}<code>{"data-limited"}</code>{"."}</>,
+    },
+    "toastManager": {
+      type: "ToastManager",
+      description: <>{"Global manager created with "}<code>{"createToastManager"}</code>{"."}</>,
+    },
+    "className": {
+      type: "string",
+      description: "Tailwind classes merged into the viewport.",
+    },
+  }}
+/>
 
 ### useToast
 

@@ -1,6 +1,6 @@
 ---
 title: "Alert Dialog"
-description: "带液态玻璃表面、强制响应以及固定取消/确认操作的模态确认对话框。"
+description: "用于必须确认操作的 React 警告对话框，采用 Liquid Glass 表面与固定取消/确认按钮。"
 ---
 
 `AlertDialog` 是 Base UI `AlertDialog` 的一体化封装。它内部渲染 Portal、遮罩、居中弹窗、标题、描述、可选正文以及固定的取消/确认操作。
@@ -25,20 +25,61 @@ description: "带液态玻璃表面、强制响应以及固定取消/确认操�
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | 对话框标题。 |
-| `description` | `ReactNode` | — | 标题下方的说明文字。 |
-| `children` | `ReactNode` | — | 描述与操作按钮之间的额外内容。 |
-| `cancelLabel` | `ReactNode` | `"Cancel"` | 取消按钮文案。 |
-| `confirmLabel` | `ReactNode` | `"Confirm"` | 确认按钮文案。 |
-| `onCancel` | `MouseEventHandler<HTMLButtonElement>` | — | 点击取消时调用。 |
-| `onConfirm` | `MouseEventHandler<HTMLButtonElement>` | — | 点击确认时调用。 |
-| `open` | `boolean` | — | 受控的打开状态。 |
-| `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
-| `onOpenChange` | `(open: boolean, details) => void` | — | 对话框打开或关闭时调用。 |
-| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
-| `className` | `any` | — | 合并到弹窗的 Tailwind 类名。 |
+<TypeTable
+  type={{
+    "title": {
+      type: "ReactNode",
+      description: "对话框标题。",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "标题下方的说明文字。",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "描述与操作按钮之间的额外内容。",
+    },
+    "cancelLabel": {
+      type: "ReactNode",
+      default: "\"Cancel\"",
+      description: "取消按钮文案。",
+    },
+    "confirmLabel": {
+      type: "ReactNode",
+      default: "\"Confirm\"",
+      description: "确认按钮文案。",
+    },
+    "onCancel": {
+      type: "MouseEventHandler<HTMLButtonElement>",
+      description: "点击取消时调用。",
+    },
+    "onConfirm": {
+      type: "MouseEventHandler<HTMLButtonElement>",
+      description: "点击确认时调用。",
+    },
+    "open": {
+      type: "boolean",
+      description: "受控的打开状态。",
+    },
+    "defaultOpen": {
+      type: "boolean",
+      default: "false",
+      description: "非受控时的初始打开状态。",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "对话框打开或关闭时调用。",
+    },
+    "onOpenChangeComplete": {
+      type: "(open: boolean) => void",
+      description: "打开或关闭动画结束后调用。",
+    },
+    "className": {
+      type: "any",
+      description: "合并到弹窗的 Tailwind 类名。",
+    },
+  }}
+/>
 
 `AlertDialog` 还会透传 Base UI `AlertDialog.Root` 的 `actionsRef`、`handle`、`triggerId`、`defaultTriggerId` 等属性。
 

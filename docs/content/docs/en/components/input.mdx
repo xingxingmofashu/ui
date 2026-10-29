@@ -1,6 +1,6 @@
 ---
 title: "Input"
-description: "A liquid glass text field with a label, description, and icon slots."
+description: "An accessible React input with a Liquid Glass field, label, description, and icon slots."
 ---
 
 `Input` wraps Base UI's `Input` in a glass control. It renders a native `<input>`, an optional label and description, and optional leading and trailing icons.
@@ -33,14 +33,35 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Visible label associated with the input. |
-| `description` | `ReactNode` | — | Supporting text under the control. It is not linked automatically. |
-| `leadingIcon` | `ReactNode` | — | Decorative icon before the input. |
-| `trailingIcon` | `ReactNode` | — | Decorative icon after the input. |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, radius, text, and icon size. |
-| `className` | `string` | — | Tailwind classes merged into the outer root. |
+<TypeTable
+  type={{
+    "label": {
+      type: "ReactNode",
+      description: "Visible label associated with the input.",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "Supporting text under the control. It is not linked automatically.",
+    },
+    "leadingIcon": {
+      type: "ReactNode",
+      description: "Decorative icon before the input.",
+    },
+    "trailingIcon": {
+      type: "ReactNode",
+      description: "Decorative icon after the input.",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "Controls height, padding, radius, text, and icon size.",
+    },
+    "className": {
+      type: "string",
+      description: "Tailwind classes merged into the outer root.",
+    },
+  }}
+/>
 
 `Input` forwards the rest of Base UI `Input`'s props, including `value`, `defaultValue`, `onValueChange`, `type`, `placeholder`, `name`, `id`, `disabled`, `readOnly`, `required`, and `ref`.
 

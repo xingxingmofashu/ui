@@ -11,7 +11,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         badge: "React 19 · Tailwind CSS 4 · Base UI",
         titleLine1: "黑白之间，",
         titleLine2: "玻璃有光。",
-        description: "为 React 19 与 Tailwind CSS 4 打造的纯 CSS 液态玻璃组件。",
+        description: "为 React 19 与 Tailwind CSS 4 打造的纯 CSS Liquid Glass 风格组件。",
         readDocs: "阅读文档",
         viewComponents: "查看组件",
       }
@@ -19,7 +19,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
         badge: "React 19 · Tailwind CSS 4 · Base UI",
         titleLine1: "Between black and white,",
         titleLine2: "glass finds its light.",
-        description: "Pure CSS liquid glass components for React 19 and Tailwind CSS 4.",
+        description: "Pure CSS Liquid Glass style components for React 19 and Tailwind CSS 4.",
         readDocs: "Read the docs",
         viewComponents: "View components",
       };
@@ -49,7 +49,7 @@ export function HomePageContent({ lang }: { lang: Locale }) {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
-            href={`/docs/${lang}/get-started`}
+            href={`/docs/${lang}/get-started/introduction`}
             className="inline-flex h-9 items-center gap-2 rounded-full bg-fd-foreground px-4 text-sm font-medium text-fd-background transition-opacity hover:opacity-85"
           >
             {copy.readDocs}

@@ -30,8 +30,8 @@ export function baseOptions(locale: string): BaseLayoutProps {
             <span className="size-3 rounded-full border border-fd-background/60 bg-fd-background/20" />
           </span>
           <span className="font-semibold tracking-tight">
-            Liquid Glass{" "}
-            <span className="text-fd-muted-foreground">UI</span>
+            @xingxingmofashu/
+            <span className="text-fd-muted-foreground">ui</span>
           </span>
         </span>
       ),

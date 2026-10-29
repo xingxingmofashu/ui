@@ -1,6 +1,6 @@
 ---
 title: "Popover"
-description: "锚定在触发元素旁、非模态的液态玻璃浮层。"
+description: "锚定在触发元素旁的非模态 React 浮层，采用 Liquid Glass 面板。"
 ---
 
 `Popover` 是 Base UI `Popover` 的一体化封装。它内部渲染触发元素、Portal、定位器、玻璃弹窗、指向缺口、标题、描述、可选正文以及可选操作区。指向缺口会自动跟随弹窗实际所在的方位；设置 `arrow={false}` 可以隐藏它。
@@ -27,24 +27,83 @@ description: "锚定在触发元素旁、非模态的液态玻璃浮层。"
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `trigger` | `ReactElement` | — | 打开浮层的元素，需要透传 props 和 ref。 |
-| `title` | `ReactNode` | — | 浮层标题。 |
-| `description` | `ReactNode` | — | 标题下方的说明文字。 |
-| `children` | `ReactNode` | — | 描述与操作区之间的正文内容。 |
-| `footer` | `ReactNode` | — | 底部操作区，可放置任意数量的控件。 |
-| `arrow` | `boolean` | `true` | 是否渲染指向缺口。 |
-| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | 优先放置在触发元素的哪一侧。 |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | 相对于触发元素的对齐方式。 |
-| `sideOffset` | `number \| OffsetFunction` | `10` | 触发元素与弹窗之间的距离（像素）。默认值会为指向缺口留出空间。 |
-| `alignOffset` | `number \| OffsetFunction` | `0` | 沿对齐轴的偏移量（像素）。 |
-| `collisionPadding` | `Padding` | 每侧 5px | 弹窗与碰撞边界之间保留的空间。 |
-| `open` | `boolean` | — | 受控的打开状态。 |
-| `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
-| `onOpenChange` | `(open: boolean, details) => void` | — | 浮层打开或关闭时调用。 |
-| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
-| `className` | `any` | — | 合并到弹窗的 Tailwind 类名。 |
+<TypeTable
+  type={{
+    "trigger": {
+      type: "ReactElement",
+      required: true,
+      description: "打开浮层的元素，需要透传 props 和 ref。",
+    },
+    "title": {
+      type: "ReactNode",
+      required: true,
+      description: "浮层标题。",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "标题下方的说明文字。",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "描述与操作区之间的正文内容。",
+    },
+    "footer": {
+      type: "ReactNode",
+      description: "底部操作区，可放置任意数量的控件。",
+    },
+    "arrow": {
+      type: "boolean",
+      default: "true",
+      description: "是否渲染指向缺口。",
+    },
+    "side": {
+      type: "\"top\" | \"bottom\" | \"left\" | \"right\" | \"inline-start\" | \"inline-end\"",
+      default: "\"bottom\"",
+      description: "优先放置在触发元素的哪一侧。",
+    },
+    "align": {
+      type: "\"start\" | \"center\" | \"end\"",
+      default: "\"center\"",
+      description: "相对于触发元素的对齐方式。",
+    },
+    "sideOffset": {
+      type: "number | OffsetFunction",
+      default: "10",
+      description: "触发元素与弹窗之间的距离（像素）。默认值会为指向缺口留出空间。",
+    },
+    "alignOffset": {
+      type: "number | OffsetFunction",
+      default: "0",
+      description: "沿对齐轴的偏移量（像素）。",
+    },
+    "collisionPadding": {
+      type: "Padding",
+      default: "每侧 5px",
+      description: "弹窗与碰撞边界之间保留的空间。",
+    },
+    "open": {
+      type: "boolean",
+      description: "受控的打开状态。",
+    },
+    "defaultOpen": {
+      type: "boolean",
+      default: "false",
+      description: "非受控时的初始打开状态。",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "浮层打开或关闭时调用。",
+    },
+    "onOpenChangeComplete": {
+      type: "(open: boolean) => void",
+      description: "打开或关闭动画结束后调用。",
+    },
+    "className": {
+      type: "any",
+      description: "合并到弹窗的 Tailwind 类名。",
+    },
+  }}
+/>
 
 `Popover` 还会透传 Base UI `Popover.Root` 的 `actionsRef`、`handle`、`triggerId` 和 `defaultTriggerId` 等属性。
 

@@ -12,10 +12,6 @@ export default defineConfig({
         find: /^@xingxingmofashu\/ui$/,
         replacement: fileURLToPath(new URL("../src/index.ts", import.meta.url)),
       },
-      {
-        find: /^@xingxingmofashu\/ui\/index\.css$/,
-        replacement: fileURLToPath(new URL("../src/index.css", import.meta.url)),
-      },
     ],
     dedupe: ["react", "react-dom"],
   },

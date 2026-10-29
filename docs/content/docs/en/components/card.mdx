@@ -1,6 +1,6 @@
 ---
 title: "Card"
-description: "A liquid glass card composed of header, body, and footer."
+description: "A server-safe React card with a Liquid Glass surface, header, body, and footer."
 ---
 
 `Card` is a native layout primitive rather than a Base UI component: it has no
@@ -21,13 +21,30 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | Card heading, rendered as a `div`. |
-| `description` | `ReactNode` | — | Supporting text below the heading. |
-| `footer` | `ReactNode` | — | Footer action area. |
-| `children` | `ReactNode` | — | Card body content. |
-| `className` | `string` | — | Merged into `root`; use it for layout. |
+<TypeTable
+  type={{
+    "title": {
+      type: "ReactNode",
+      description: <>{"Card heading, rendered as a "}<code>{"div"}</code>{"."}</>,
+    },
+    "description": {
+      type: "ReactNode",
+      description: "Supporting text below the heading.",
+    },
+    "footer": {
+      type: "ReactNode",
+      description: "Footer action area.",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "Card body content.",
+    },
+    "className": {
+      type: "string",
+      description: <>{"Merged into "}<code>{"root"}</code>{"; use it for layout."}</>,
+    },
+  }}
+/>
 
 All other props are forwarded to the root `div`, such as `id`, `role`, and `onClick`.
 

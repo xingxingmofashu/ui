@@ -1,6 +1,6 @@
 ---
 title: "Scroll Area"
-description: "带液态玻璃滚动条与玻璃面板的原生滚动容器。"
+description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动条与玻璃面板。"
 ---
 
 `ScrollArea` 是对 Base UI `ScrollArea` 的集成封装。它在内部渲染玻璃面板、原生滚动视口、内容容器与自定义滚动条。
@@ -33,15 +33,40 @@ description: "带液态玻璃滚动条与玻璃面板的原生滚动容器。"
 
 ### ScrollArea
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `children` | `ReactNode` | — | 渲染在视口内的可滚动内容。 |
-| `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | 要渲染的滚动条方向。 |
-| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | Base UI 将一个边缘标记为溢出前需要越过的像素距离。 |
-| `className` | `any` | — | 合并到根节点的 Tailwind 类。在这里设置高度。 |
-| `aria-label` | `string` | — | 转发到可滚动视口的无障碍名称。 |
-| `aria-labelledby` | `string` | — | 为视口提供名称的元素 ID。 |
-| `aria-describedby` | `string` | — | 为视口提供说明的元素 ID。 |
+<TypeTable
+  type={{
+    "children": {
+      type: "ReactNode",
+      description: "渲染在视口内的可滚动内容。",
+    },
+    "orientation": {
+      type: "\"vertical\" | \"horizontal\" | \"both\"",
+      default: "\"vertical\"",
+      description: "要渲染的滚动条方向。",
+    },
+    "overflowEdgeThreshold": {
+      type: "number | Partial<{ xStart; xEnd; yStart; yEnd }>",
+      default: "0",
+      description: "Base UI 将一个边缘标记为溢出前需要越过的像素距离。",
+    },
+    "className": {
+      type: "any",
+      description: "合并到根节点的 Tailwind 类。在这里设置高度。",
+    },
+    "aria-label": {
+      type: "string",
+      description: "转发到可滚动视口的无障碍名称。",
+    },
+    "aria-labelledby": {
+      type: "string",
+      description: "为视口提供名称的元素 ID。",
+    },
+    "aria-describedby": {
+      type: "string",
+      description: "为视口提供说明的元素 ID。",
+    },
+  }}
+/>
 
 `ScrollArea` 还会透传 Base UI `ScrollArea.Root` 的 `render`、`ref` 等属性。
 

@@ -1,7 +1,7 @@
 {
   "name": "@xingxingmofashu/ui",
   "version": "0.1.1",
-  "description": "Liquid Glass UI components for React 19 and Tailwind CSS 4.",
+  "description": "Accessible React components with a Liquid Glass visual style for React 19 and Tailwind CSS 4.",
   "license": "MIT",
   "author": "xingxingmofashu",
   "type": "module",

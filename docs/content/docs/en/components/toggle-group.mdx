@@ -1,6 +1,6 @@
 ---
 title: "Toggle Group"
-description: "A set of toggle buttons with a liquid glass selected state, single or multiple selection, and horizontal or vertical orientation."
+description: "An accessible React toggle group with Liquid Glass selected states, single or multiple selection, and two orientations."
 ---
 
 ## Basic example
@@ -45,17 +45,50 @@ Set `disabled` on the group to disable every item, or on a single item to disabl
 
 ### ToggleGroup
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `readonly string[]` | — | Controlled pressed values. |
-| `defaultValue` | `readonly string[]` | — | Initial pressed values. |
-| `onValueChange` | `(value: string[], details) => void` | — | Called when the pressed values change. |
-| `multiple` | `boolean` | `false` | Allows multiple pressed items. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, and icons. |
-| `disabled` | `boolean` | `false` | Disables every item. |
-| `items` | `readonly ToggleGroupItemProps[]` | — | Options rendered by the group. |
-| `className` | `any` | — | Tailwind classes merged into the group root. |
+<TypeTable
+  type={{
+    "value": {
+      type: "readonly string[]",
+      description: "Controlled pressed values.",
+    },
+    "defaultValue": {
+      type: "readonly string[]",
+      description: "Initial pressed values.",
+    },
+    "onValueChange": {
+      type: "(value: string[], details) => void",
+      description: "Called when the pressed values change.",
+    },
+    "multiple": {
+      type: "boolean",
+      default: "false",
+      description: "Allows multiple pressed items.",
+    },
+    "orientation": {
+      type: "\"horizontal\" | \"vertical\"",
+      default: "\"horizontal\"",
+      description: "Layout and keyboard orientation.",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "Controls item height, padding, text, and icons.",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "Disables every item.",
+    },
+    "items": {
+      type: "readonly ToggleGroupItemProps[]",
+      description: "Options rendered by the group.",
+    },
+    "className": {
+      type: "any",
+      description: "Tailwind classes merged into the group root.",
+    },
+  }}
+/>
 
 `ToggleGroup` also forwards Base UI's `ToggleGroup` props such as `loopFocus`, `render`, and `ref`.
 
@@ -63,14 +96,39 @@ Set `disabled` on the group to disable every item, or on a single item to disabl
 
 ### Item
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Required value used by the group. |
-| `label` | `ReactNode` | — | Visible content inside the item. |
-| `icon` | `ReactNode` | — | Icon rendered before the label. |
-| `aria-label` | `string` | — | Accessible name for icon-only items. |
-| `aria-labelledby` | `string` | — | Names an icon-only item from another element. |
-| `disabled` | `boolean` | `false` | Disables the item. |
-| `className` | `string` | — | Tailwind classes merged into the item root. |
+<TypeTable
+  type={{
+    "value": {
+      type: "string",
+      required: true,
+      description: "Required value used by the group.",
+    },
+    "label": {
+      type: "ReactNode",
+      description: "Visible content inside the item.",
+    },
+    "icon": {
+      type: "ReactNode",
+      description: "Icon rendered before the label.",
+    },
+    "aria-label": {
+      type: "string",
+      description: "Accessible name for icon-only items.",
+    },
+    "aria-labelledby": {
+      type: "string",
+      description: "Names an icon-only item from another element.",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "Disables the item.",
+    },
+    "className": {
+      type: "string",
+      description: "Tailwind classes merged into the item root.",
+    },
+  }}
+/>
 
 Items are plain objects; the group renders the Base UI toggle internally.

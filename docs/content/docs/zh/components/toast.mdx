@@ -1,9 +1,9 @@
 ---
 title: "Toast"
-description: "支持堆叠、操作、Promise 状态和六种屏幕位置的液态玻璃通知。"
+description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、操作、Promise 状态与六种位置。"
 ---
 
-`ToastProvider` 是 Base UI `Toast.Provider` 的一体化封装。它内部渲染 Portal、Viewport 和液态玻璃 toast 栈；在 Provider 内调用 `useToast()` 即可添加、更新、关闭或跟踪通知。
+`ToastProvider` 是 Base UI `Toast.Provider` 的一体化封装。它内部渲染 Portal、Viewport 和 Liquid Glass toast 栈；在 Provider 内调用 `useToast()` 即可添加、更新、关闭或跟踪通知。
 
 建议在应用根部渲染一个 Provider。每个 Provider 拥有独立的 Viewport；如果还需要在 React 外创建通知，请把同一个 `toastManager` 传给它。
 
@@ -43,16 +43,47 @@ description: "支持堆叠、操作、Promise 状态和六种屏幕位置的液�
 
 ### ToastProvider
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `children` | `ReactNode` | — | 可以调用 `useToast()` 的应用内容。 |
-| `position` | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-right"` | 通知栈固定的角落或边缘。 |
-| `closeLabel` | `string` | `"Dismiss"` | 关闭按钮的可访问名称。 |
-| `viewportLabel` | `string` | `"Notifications"` | 通知区域的可访问名称。 |
-| `timeout` | `number` | `5000` | 默认自动关闭延时（毫秒）；`0` 表示不自动关闭。 |
-| `limit` | `number` | `3` | 最多同时渲染的 Toast 数量；超出的旧 Toast 会带上 `data-limited`。 |
-| `toastManager` | `ToastManager` | — | 由 `createToastManager` 创建的全局管理器。 |
-| `className` | `string` | — | 合并到 Viewport 的 Tailwind 类名。 |
+<TypeTable
+  type={{
+    "children": {
+      type: "ReactNode",
+      description: <>{"可以调用 "}<code>{"useToast()"}</code>{" 的应用内容。"}</>,
+    },
+    "position": {
+      type: "\"top-left\" | \"top-center\" | \"top-right\" | \"bottom-left\" | \"bottom-center\" | \"bottom-right\"",
+      default: "\"bottom-right\"",
+      description: "通知栈固定的角落或边缘。",
+    },
+    "closeLabel": {
+      type: "string",
+      default: "\"Dismiss\"",
+      description: "关闭按钮的可访问名称。",
+    },
+    "viewportLabel": {
+      type: "string",
+      default: "\"Notifications\"",
+      description: "通知区域的可访问名称。",
+    },
+    "timeout": {
+      type: "number",
+      default: "5000",
+      description: <>{"默认自动关闭延时（毫秒）；"}<code>{"0"}</code>{" 表示不自动关闭。"}</>,
+    },
+    "limit": {
+      type: "number",
+      default: "3",
+      description: <>{"最多同时渲染的 Toast 数量；超出的旧 Toast 会带上 "}<code>{"data-limited"}</code>{"。"}</>,
+    },
+    "toastManager": {
+      type: "ToastManager",
+      description: <>{"由 "}<code>{"createToastManager"}</code>{" 创建的全局管理器。"}</>,
+    },
+    "className": {
+      type: "string",
+      description: "合并到 Viewport 的 Tailwind 类名。",
+    },
+  }}
+/>
 
 ### useToast
 

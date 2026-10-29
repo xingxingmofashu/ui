@@ -1,8 +1,9 @@
-import { HomeLayout } from "fumadocs-ui/layouts/home";
+import { DocsLayout } from "fumadocs-ui/layouts/glass";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { baseOptions } from "@/lib/layout.shared";
+import { source } from "@/lib/source";
 
 export async function generateMetadata({
   params,
@@ -10,12 +11,11 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
+  const page = source.getPage(["get-started", "introduction"], lang);
 
   return {
-    description:
-      lang === "zh"
-        ? "基于 React 19、Tailwind CSS 4 与 Base UI 的液态玻璃组件库。"
-        : "Liquid glass components for React, built with React 19, Tailwind CSS 4, and Base UI.",
+    title: page?.data.title,
+    description: page?.data.description,
   };
 }
 
@@ -28,5 +28,9 @@ export default async function Layout({
 }) {
   const { lang } = await params;
 
-  return <HomeLayout {...baseOptions(lang)}>{children}</HomeLayout>;
+  return (
+    <DocsLayout {...baseOptions(lang)} tree={source.getPageTree(lang)}>
+      {children}
+    </DocsLayout>
+  );
 }

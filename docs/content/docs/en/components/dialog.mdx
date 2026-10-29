@@ -1,6 +1,6 @@
 ---
 title: "Dialog"
-description: "A general-purpose modal dialog with a liquid glass surface and a custom action area."
+description: "A general-purpose React dialog with a Liquid Glass surface and a custom action area."
 ---
 
 `Dialog` is an integrated wrapper around Base UI's `Dialog`. It renders the portal, backdrop, centered popup, title, description, optional body, and a custom action area internally.
@@ -27,18 +27,52 @@ The component is typically used in controlled mode: `open` controls visibility a
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | Dialog heading. |
-| `description` | `ReactNode` | — | Supporting copy under the title. |
-| `children` | `ReactNode` | — | Body content between the description and the action area. |
-| `footer` | `ReactNode` | — | Bottom action area that can hold any number of buttons. |
-| `open` | `boolean` | — | Controlled open state. |
-| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the dialog opens or closes. |
-| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
-| `disablePointerDismissal` | `boolean` | `false` | Prevent the backdrop from closing the dialog. |
-| `className` | `any` | — | Tailwind classes merged into the popup. |
+<TypeTable
+  type={{
+    "title": {
+      type: "ReactNode",
+      description: "Dialog heading.",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "Supporting copy under the title.",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "Body content between the description and the action area.",
+    },
+    "footer": {
+      type: "ReactNode",
+      description: "Bottom action area that can hold any number of buttons.",
+    },
+    "open": {
+      type: "boolean",
+      description: "Controlled open state.",
+    },
+    "defaultOpen": {
+      type: "boolean",
+      default: "false",
+      description: "Initial open state when uncontrolled.",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "Called when the dialog opens or closes.",
+    },
+    "onOpenChangeComplete": {
+      type: "(open: boolean) => void",
+      description: "Called after the open or close animation finishes.",
+    },
+    "disablePointerDismissal": {
+      type: "boolean",
+      default: "false",
+      description: "Prevent the backdrop from closing the dialog.",
+    },
+    "className": {
+      type: "any",
+      description: "Tailwind classes merged into the popup.",
+    },
+  }}
+/>
 
 `Dialog` also forwards Base UI `Dialog.Root` props such as `actionsRef`, `handle`, `triggerId`, `defaultTriggerId`, and `modal`.
 

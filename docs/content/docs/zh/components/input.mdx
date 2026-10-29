@@ -1,6 +1,6 @@
 ---
 title: "Input"
-description: "带玻璃表面、标签、说明文字与图标插槽的文本输入框。"
+description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签、说明文字与图标插槽。"
 ---
 
 `Input` 封装 Base UI 的 `Input`，渲染玻璃质感的输入区域、原生 `<input>`、可选标签与说明文字，以及可选的前后图标。
@@ -33,14 +33,35 @@ description: "带玻璃表面、标签、说明文字与图标插槽的文本输
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `label` | `ReactNode` | — | 可见标签，与输入框关联。 |
-| `description` | `ReactNode` | — | 输入框下方的说明文字，不会自动关联。 |
-| `leadingIcon` | `ReactNode` | — | 输入框前的装饰图标。 |
-| `trailingIcon` | `ReactNode` | — | 输入框后的装饰图标。 |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距、圆角、文字与图标尺寸。 |
-| `className` | `string` | — | Tailwind 类名，合并到外层 `root`。 |
+<TypeTable
+  type={{
+    "label": {
+      type: "ReactNode",
+      description: "可见标签，与输入框关联。",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "输入框下方的说明文字，不会自动关联。",
+    },
+    "leadingIcon": {
+      type: "ReactNode",
+      description: "输入框前的装饰图标。",
+    },
+    "trailingIcon": {
+      type: "ReactNode",
+      description: "输入框后的装饰图标。",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "控制高度、内边距、圆角、文字与图标尺寸。",
+    },
+    "className": {
+      type: "string",
+      description: <>{"Tailwind 类名，合并到外层 "}<code>{"root"}</code>{"。"}</>,
+    },
+  }}
+/>
 
 其余属性会透传给 Base UI 的 `Input`，包括 `value`、`defaultValue`、`onValueChange`、`type`、`placeholder`、`name`、`id`、`disabled`、`readOnly`、`required` 和 `ref`。
 

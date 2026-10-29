@@ -39,6 +39,15 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
 - The site uses Fumadocs' `black.css` theme and the Glass layout.
 - Do not add accent colors. Callouts, code highlighting, and examples are neutral.
 - Do not replace live components with screenshots.
+- Prefer Fumadocs MDX components registered in `components/mdx.tsx` — `Callout`,
+  `Cards`, `Steps`, `Tabs`, `Accordions`, and `TypeTable` — over custom markup.
+
+## SEO
+
+- `lib/site.ts` owns the site origin, base path, absolute URL helper, and Open Graph image metadata.
+- `lib/seo.ts` builds page metadata and article JSON-LD; use it from page `generateMetadata` functions.
+- `app/sitemap.ts` and `app/robots.ts` are generated at build time.
+- `public/og.png` is the 1200×630 social preview image.
 
 ## i18n
 

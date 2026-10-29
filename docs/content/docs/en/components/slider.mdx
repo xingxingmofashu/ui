@@ -1,6 +1,6 @@
 ---
 title: "Slider"
-description: "A liquid glass slider built on Base UI Slider.Root, supporting single values, ranges, and vertical orientation."
+description: "An accessible React slider with a Liquid Glass track, single values, ranges, and vertical orientation."
 ---
 
 `Slider` is a styled wrapper around Base UI's `Slider.Root`. It renders the control, track, indicator, and glass thumb internally. Props are forwarded to `Slider.Root`; `style` and `children` are intentionally not supported.
@@ -41,27 +41,95 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number \| readonly number[]` | — | Controlled value; an array renders one thumb per value. |
-| `defaultValue` | `number \| readonly number[]` | — | Uncontrolled initial value. |
-| `onValueChange` | `(value, details) => void` | — | Called when the value changes. |
-| `onValueCommitted` | `(value, details) => void` | — | Called when a value change is committed. |
-| `name` | `string` | — | Field name used when submitting a form. |
-| `form` | `string` | — | Identifies the form that owns the slider inputs. |
-| `min` | `number` | `0` | Minimum value. |
-| `max` | `number` | `100` | Maximum value. |
-| `step` | `number` | `1` | Step for arrow keys and dragging. |
-| `largeStep` | `number` | `10` | Step for Page Up / Page Down and Shift + arrow keys. |
-| `minStepsBetweenValues` | `number` | `0` | Minimum steps between range thumb values. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
-| `format` | `Intl.NumberFormatOptions` | — | Value format used by Base UI's accessible value text. |
-| `locale` | `Intl.LocalesArgument` | — | Locale used for number formatting. |
-| `disabled` | `boolean` | `false` | Disables the slider. |
-| `thumbAlignment` | `"center" \| "edge" \| "edge-client-only"` | `"center"` | How thumbs align with the control edges. |
-| `thumbCollisionBehavior` | `"push" \| "swap" \| "none"` | `"push"` | How range thumbs behave when they collide. |
-| `className` | `any` | — | Tailwind classes merged into the outermost `root`. |
-| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
+<TypeTable
+  type={{
+    "value": {
+      type: "number | readonly number[]",
+      description: "Controlled value; an array renders one thumb per value.",
+    },
+    "defaultValue": {
+      type: "number | readonly number[]",
+      description: "Uncontrolled initial value.",
+    },
+    "onValueChange": {
+      type: "(value, details) => void",
+      description: "Called when the value changes.",
+    },
+    "onValueCommitted": {
+      type: "(value, details) => void",
+      description: "Called when a value change is committed.",
+    },
+    "name": {
+      type: "string",
+      description: "Field name used when submitting a form.",
+    },
+    "form": {
+      type: "string",
+      description: "Identifies the form that owns the slider inputs.",
+    },
+    "min": {
+      type: "number",
+      default: "0",
+      description: "Minimum value.",
+    },
+    "max": {
+      type: "number",
+      default: "100",
+      description: "Maximum value.",
+    },
+    "step": {
+      type: "number",
+      default: "1",
+      description: "Step for arrow keys and dragging.",
+    },
+    "largeStep": {
+      type: "number",
+      default: "10",
+      description: "Step for Page Up / Page Down and Shift + arrow keys.",
+    },
+    "minStepsBetweenValues": {
+      type: "number",
+      default: "0",
+      description: "Minimum steps between range thumb values.",
+    },
+    "orientation": {
+      type: "\"horizontal\" | \"vertical\"",
+      default: "\"horizontal\"",
+      description: "Layout and keyboard orientation.",
+    },
+    "format": {
+      type: "Intl.NumberFormatOptions",
+      description: "Value format used by Base UI's accessible value text.",
+    },
+    "locale": {
+      type: "Intl.LocalesArgument",
+      description: "Locale used for number formatting.",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "Disables the slider.",
+    },
+    "thumbAlignment": {
+      type: "\"center\" | \"edge\" | \"edge-client-only\"",
+      default: "\"center\"",
+      description: "How thumbs align with the control edges.",
+    },
+    "thumbCollisionBehavior": {
+      type: "\"push\" | \"swap\" | \"none\"",
+      default: "\"push\"",
+      description: "How range thumbs behave when they collide.",
+    },
+    "className": {
+      type: "any",
+      description: <>{"Tailwind classes merged into the outermost "}<code>{"root"}</code>{"."}</>,
+    },
+    "render": {
+      type: "ReactElement | ((props, state) => ReactElement)",
+      description: "Replaces the root element.",
+    },
+  }}
+/>
 
 `ref` is forwarded to the root. Other native props are forwarded as well.
 

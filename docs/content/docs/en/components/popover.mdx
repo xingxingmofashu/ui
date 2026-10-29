@@ -1,6 +1,6 @@
 ---
 title: "Popover"
-description: "A non-modal liquid glass panel anchored to a trigger."
+description: "A non-modal React popover with a Liquid Glass panel anchored to a trigger."
 ---
 
 `Popover` is an integrated wrapper around Base UI's `Popover`. It renders the trigger, portal, positioner, glass popup, directional arrow, title, description, optional body, and optional action area internally. The arrow follows the resolved side of the popup automatically; set `arrow={false}` to hide it.
@@ -27,24 +27,83 @@ Pass one element as `trigger`. It must forward props and refs to its root elemen
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `trigger` | `ReactElement` | — | Element that opens the popover. It must forward props and refs. |
-| `title` | `ReactNode` | — | Popover heading. |
-| `description` | `ReactNode` | — | Supporting copy under the title. |
-| `children` | `ReactNode` | — | Body content between the description and the action area. |
-| `footer` | `ReactNode` | — | Bottom action area that can hold any number of controls. |
-| `arrow` | `boolean` | `true` | Whether to render the directional arrow. |
-| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Preferred side of the trigger. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment relative to the trigger. |
-| `sideOffset` | `number \| OffsetFunction` | `10` | Distance between the trigger and the popup in pixels. The default leaves room for the arrow. |
-| `alignOffset` | `number \| OffsetFunction` | `0` | Offset along the alignment axis in pixels. |
-| `collisionPadding` | `Padding` | 5px per side | Space kept between the popup and the collision boundary. |
-| `open` | `boolean` | — | Controlled open state. |
-| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the popover opens or closes. |
-| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
-| `className` | `any` | — | Tailwind classes merged into the popup. |
+<TypeTable
+  type={{
+    "trigger": {
+      type: "ReactElement",
+      required: true,
+      description: "Element that opens the popover. It must forward props and refs.",
+    },
+    "title": {
+      type: "ReactNode",
+      required: true,
+      description: "Popover heading.",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "Supporting copy under the title.",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "Body content between the description and the action area.",
+    },
+    "footer": {
+      type: "ReactNode",
+      description: "Bottom action area that can hold any number of controls.",
+    },
+    "arrow": {
+      type: "boolean",
+      default: "true",
+      description: "Whether to render the directional arrow.",
+    },
+    "side": {
+      type: "\"top\" | \"bottom\" | \"left\" | \"right\" | \"inline-start\" | \"inline-end\"",
+      default: "\"bottom\"",
+      description: "Preferred side of the trigger.",
+    },
+    "align": {
+      type: "\"start\" | \"center\" | \"end\"",
+      default: "\"center\"",
+      description: "Alignment relative to the trigger.",
+    },
+    "sideOffset": {
+      type: "number | OffsetFunction",
+      default: "10",
+      description: "Distance between the trigger and the popup in pixels. The default leaves room for the arrow.",
+    },
+    "alignOffset": {
+      type: "number | OffsetFunction",
+      default: "0",
+      description: "Offset along the alignment axis in pixels.",
+    },
+    "collisionPadding": {
+      type: "Padding",
+      default: "5px per side",
+      description: "Space kept between the popup and the collision boundary.",
+    },
+    "open": {
+      type: "boolean",
+      description: "Controlled open state.",
+    },
+    "defaultOpen": {
+      type: "boolean",
+      default: "false",
+      description: "Initial open state when uncontrolled.",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "Called when the popover opens or closes.",
+    },
+    "onOpenChangeComplete": {
+      type: "(open: boolean) => void",
+      description: "Called after the open or close animation finishes.",
+    },
+    "className": {
+      type: "any",
+      description: "Tailwind classes merged into the popup.",
+    },
+  }}
+/>
 
 `Popover` also forwards Base UI `Popover.Root` props such as `actionsRef`, `handle`, `triggerId`, and `defaultTriggerId`.
 

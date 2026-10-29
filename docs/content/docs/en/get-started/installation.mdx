@@ -1,0 +1,141 @@
+---
+title: "Installation"
+description: "Learn how to install and configure @xingxingmofashu/ui in a React application."
+---
+
+<Callout type="info">
+Requires React 19, React DOM 19, Tailwind CSS 4, and Node.js 22+.
+</Callout>
+
+## Setup
+
+### Add to a React project
+
+<Steps>
+  <Step>
+    #### Install the package
+
+    <CodeBlockTabs defaultValue="pnpm">
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm add @xingxingmofashu/ui
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn add @xingxingmofashu/ui
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="npm">
+        ```bash
+        npm install @xingxingmofashu/ui
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bun add @xingxingmofashu/ui
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+  </Step>
+  <Step>
+    #### Add the package styles
+
+    ```css [app.css]
+    @import "tailwindcss";
+    @import "@xingxingmofashu/ui";
+    ```
+
+    The package root resolves to `dist/index.css` through its `style` export. The stylesheet includes its own Tailwind source scan, so no extra `@source` directive is needed.
+  </Step>
+  <Step>
+    #### Import a component
+
+    ```tsx
+    import { Button } from "@xingxingmofashu/ui";
+
+    export function Example() {
+      return <Button label="Continue" />;
+    }
+    ```
+
+    <Callout type="idea" title="Tip">
+    Deep imports are available for a single component or theme recipe:
+
+    ```tsx
+    import { Button } from "@xingxingmofashu/ui/components/button";
+    import buttonTheme from "@xingxingmofashu/ui/theme/button";
+    ```
+    </Callout>
+  </Step>
+</Steps>
+
+## Requirements
+
+- Node.js 22 or newer.
+- React and React DOM 19.
+- Tailwind CSS 4.
+- An ESM-capable bundler. The package publishes ES modules only.
+- A current evergreen browser with `backdrop-filter`, `color-mix`, container units, and `:has`.
+
+`Card` is server-safe and can render from a React Server Component. The interactive components are client components.
+
+## Theming
+
+Light and dark tokens are selected by `.light` / `.dark`, or by `data-theme="light"` / `data-theme="dark"`:
+
+```html [index.html]
+<html class="dark">
+```
+
+or:
+
+```html [index.html]
+<html data-theme="dark">
+```
+
+A nested `.light` / `[data-theme="light"]` subtree can switch back to light tokens. Shared colors and glass parameters live in the `--ui-*` tokens; override them in your own theme layer. Tailwind aliases use the `ui-` prefix (`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid colliding with host tokens.
+
+## Troubleshooting
+
+<Accordions>
+  <Accordion title="Styles are missing">
+    Make sure the package stylesheet is imported from the same CSS entry that imports Tailwind:
+
+    ```css [app.css]
+    @import "tailwindcss";
+    @import "@xingxingmofashu/ui";
+    ```
+
+    The package stylesheet scans its own component files in `dist`, so you do not need to add a manual `@source` directive.
+  </Accordion>
+  <Accordion title="React 18">
+    The package targets React 19. Upgrade `react` and `react-dom` before installing `@xingxingmofashu/ui`.
+  </Accordion>
+</Accordions>
+
+## Next steps
+
+<Cards>
+  <Card
+    title="Introduction"
+    description="Learn what the library provides."
+    href="/docs/en/get-started/introduction"
+  />
+  <Card
+    title="Button"
+    description="Start with the core action component."
+    href="/docs/en/components/button"
+  />
+  <Card
+    title="Toggle"
+    description="See the pressed glass state."
+    href="/docs/en/components/toggle"
+  />
+</Cards>

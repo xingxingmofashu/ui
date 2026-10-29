@@ -1,6 +1,6 @@
 ---
 title: "Switch"
-description: "带液态玻璃滑块、标签和描述文本的开关，轨道默认跟随黑白主题。"
+description: "可访问的 React 开关，采用 Liquid Glass 滑块、标签、描述与黑白主题。"
 ---
 
 ## 基础示例
@@ -41,17 +41,49 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `label` | `ReactNode` | — | 可见标签。 |
-| `description` | `ReactNode` | — | 辅助说明。 |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制开关尺寸与文字大小。 |
-| `checked` | `boolean` | — | 受控选中状态。 |
-| `defaultChecked` | `boolean` | — | 非受控初始状态。 |
-| `onCheckedChange` | `(checked: boolean, details) => void` | — | 选中状态变化时触发。 |
-| `disabled` | `boolean` | `false` | 禁用开关。 |
-| `readOnly` | `boolean` | `false` | 只读，不允许切换。 |
-| `className` | `string` | — | Tailwind 类名，合并到 Base UI switch root。 |
+<TypeTable
+  type={{
+    "label": {
+      type: "ReactNode",
+      description: "可见标签。",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "辅助说明。",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "控制开关尺寸与文字大小。",
+    },
+    "checked": {
+      type: "boolean",
+      description: "受控选中状态。",
+    },
+    "defaultChecked": {
+      type: "boolean",
+      description: "非受控初始状态。",
+    },
+    "onCheckedChange": {
+      type: "(checked: boolean, details) => void",
+      description: "选中状态变化时触发。",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "禁用开关。",
+    },
+    "readOnly": {
+      type: "boolean",
+      default: "false",
+      description: "只读，不允许切换。",
+    },
+    "className": {
+      type: "string",
+      description: "Tailwind 类名，合并到 Base UI switch root。",
+    },
+  }}
+/>
 
 其余属性会透传给 Base UI 的 `Switch.Root`，包括 `required`、`name`、`form`、`value`、`uncheckedValue`、`inputRef`、`nativeButton`、`render` 和 `ref`。
 

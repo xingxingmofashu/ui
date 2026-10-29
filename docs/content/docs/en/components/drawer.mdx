@@ -1,6 +1,6 @@
 ---
 title: "Drawer"
-description: "A liquid glass panel that slides in from the edge of the screen and supports swipe dismissal."
+description: "A React drawer that slides in from any edge with a Liquid Glass surface and swipe dismissal."
 ---
 
 `Drawer` is an integrated wrapper around Base UI's `Drawer`. It renders the portal, backdrop, edge-aligned popup, title, description, optional body, and a custom action area internally, with swipe dismissal and optional snap points.
@@ -39,20 +39,62 @@ On touch screens, drag the drawer in the direction set by `direction` to dismiss
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | Drawer heading. |
-| `description` | `ReactNode` | — | Supporting copy under the title. |
-| `children` | `ReactNode` | — | Body content between the description and the action area. |
-| `footer` | `ReactNode` | — | Bottom action area that can hold any number of buttons. |
-| `direction` | `"down" \| "up" \| "left" \| "right"` | `"down"` | Edge the drawer slides in from and the swipe dismissal direction, reusing Base UI's `swipeDirection` type. |
-| `open` | `boolean` | — | Controlled open state. |
-| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the drawer opens or closes. |
-| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
-| `disablePointerDismissal` | `boolean` | `false` | Prevent the backdrop from closing the drawer. |
-| `modal` | `boolean \| "trap-focus"` | `true` | Controls focus trapping and page scroll locking. |
-| `className` | `any` | — | Tailwind classes merged into the popup. |
+<TypeTable
+  type={{
+    "title": {
+      type: "ReactNode",
+      description: "Drawer heading.",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "Supporting copy under the title.",
+    },
+    "children": {
+      type: "ReactNode",
+      description: "Body content between the description and the action area.",
+    },
+    "footer": {
+      type: "ReactNode",
+      description: "Bottom action area that can hold any number of buttons.",
+    },
+    "direction": {
+      type: "\"down\" | \"up\" | \"left\" | \"right\"",
+      default: "\"down\"",
+      description: <>{"Edge the drawer slides in from and the swipe dismissal direction, reusing Base UI's "}<code>{"swipeDirection"}</code>{" type."}</>,
+    },
+    "open": {
+      type: "boolean",
+      description: "Controlled open state.",
+    },
+    "defaultOpen": {
+      type: "boolean",
+      default: "false",
+      description: "Initial open state when uncontrolled.",
+    },
+    "onOpenChange": {
+      type: "(open: boolean, details) => void",
+      description: "Called when the drawer opens or closes.",
+    },
+    "onOpenChangeComplete": {
+      type: "(open: boolean) => void",
+      description: "Called after the open or close animation finishes.",
+    },
+    "disablePointerDismissal": {
+      type: "boolean",
+      default: "false",
+      description: "Prevent the backdrop from closing the drawer.",
+    },
+    "modal": {
+      type: "boolean | \"trap-focus\"",
+      default: "true",
+      description: "Controls focus trapping and page scroll locking.",
+    },
+    "className": {
+      type: "any",
+      description: "Tailwind classes merged into the popup.",
+    },
+  }}
+/>
 
 `Drawer` also forwards Base UI `Drawer.Root` props such as `actionsRef`, `handle`, `triggerId`, `defaultTriggerId`, `snapPoints`, `defaultSnapPoint`, `snapPoint`, `onSnapPointChange`, and `snapToSequentialPoints`.
 

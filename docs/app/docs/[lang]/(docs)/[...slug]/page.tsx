@@ -7,8 +7,10 @@ import {
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/json-ld";
 import { getMDXComponents } from "@/components/mdx";
 import { isLocale } from "@/lib/i18n";
+import { docsArticleJsonLd, docsPageMetadata } from "@/lib/seo";
 import { source } from "@/lib/source";
 
 type PageProps = {
@@ -28,10 +30,12 @@ export async function generateMetadata({
   const page = source.getPage(slug, lang);
   if (!page) return {};
 
-  return {
+  return docsPageMetadata({
+    lang,
     title: page.data.title,
     description: page.data.description,
-  };
+    slug,
+  });
 }
 
 export default async function Page({ params }: PageProps) {
@@ -42,16 +46,25 @@ export default async function Page({ params }: PageProps) {
   if (!page) notFound();
 
   const MDX = page.data.body;
+  const articleJsonLd = docsArticleJsonLd({
+    lang,
+    title: page.data.title,
+    description: page.data.description,
+    slug,
+  });
 
   return (
-    <DocsPage toc={page.data.toc}>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      {page.data.description ? (
-        <DocsDescription>{page.data.description}</DocsDescription>
-      ) : null}
-      <DocsBody>
-        <MDX components={getMDXComponents()} />
-      </DocsBody>
-    </DocsPage>
+    <>
+      <DocsPage toc={page.data.toc}>
+        <DocsTitle>{page.data.title}</DocsTitle>
+        {page.data.description ? (
+          <DocsDescription>{page.data.description}</DocsDescription>
+        ) : null}
+        <DocsBody>
+          <MDX components={getMDXComponents()} />
+        </DocsBody>
+      </DocsPage>
+      <JsonLd data={articleJsonLd} />
+    </>
   );
 }

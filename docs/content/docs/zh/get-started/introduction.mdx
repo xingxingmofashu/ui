@@ -1,0 +1,124 @@
+---
+title: "介绍"
+description: "@xingxingmofashu/ui 是一套具有 Liquid Glass 视觉风格的可访问、类型化 React 组件库，基于 Base UI、Tailwind CSS 4 与 Tailwind Variants 构建。"
+---
+
+<Callout type="info">
+@xingxingmofashu/ui 当前为 0.1.x。1.0 之前 API 仍可能变化；请锁定版本，并在升级时查看 changelog。
+</Callout>
+
+## 什么是 @xingxingmofashu/ui？
+
+`@xingxingmofashu/ui` 是一套采用纯 CSS 实现 Liquid Glass 视觉风格的 React 组件库。它提供十五个组件，覆盖基础元素、表单控件与浮层，可运行在任何使用 Tailwind CSS 4 的 React 19 应用中。
+
+玻璃表面、边缘高光、内阴影与按下滑块全部由 CSS 绘制。交互行为和无障碍能力来自 Base UI，样式则由 Tailwind Variants 保持类型化与可组合。
+
+如果你正在使用 Tailwind CSS 构建 React 项目，并且想要一套有辨识度的黑白 Liquid Glass 视觉，`@xingxingmofashu/ui` 是一个合适的选择。它提供 Button、Card、Dialog、Drawer、Toast 等高层组件，同时允许通过 `className` 与共享的 `--ui-*` token 定制。
+
+<Cards>
+  <Card
+    title="开发者体验优先"
+    description="直观的组件 API、类型化属性、深层导入与双语文档。"
+  />
+  <Card
+    title="默认好看"
+    description="黑白 Liquid Glass 材质在明暗主题下保持一致。"
+  />
+  <Card
+    title="默认可访问"
+    description="Base UI 提供 WAI-ARIA 语义、键盘导航、焦点管理与屏幕阅读器支持。"
+  />
+  <Card
+    title="聚焦的组件范围"
+    description="十五个精心打磨的组件，而不是庞大的组件目录，尺寸、命名与视觉语言保持一致。"
+  />
+</Cards>
+
+## 核心技术
+
+`@xingxingmofashu/ui` 建立在三块基础之上：Base UI 负责行为与无障碍，Tailwind CSS 负责样式，Tailwind Variants 负责类型化变体。
+
+<Tabs items={["Base UI", "Tailwind CSS", "Tailwind Variants"]}>
+  <Tab value="Base UI">
+    - **WAI-ARIA 合规**：正确的语义与角色
+    - **键盘导航**：对话框、抽屉、浮层与切换控件内置键盘支持
+    - **焦点管理**：焦点捕获与恢复
+    - **可组合原语**：受控状态与 render props
+  </Tab>
+  <Tab value="Tailwind CSS">
+    - **CSS-first 配置**：主题 token 直接写在 CSS 中
+    - **现代 Web 特性**：`color-mix`、容器单位、`:has` 与独立 transform
+    - **源码扫描**：包样式表会扫描自己的组件文件，无需额外添加 `@source`
+  </Tab>
+  <Tab value="Tailwind Variants">
+    - **动态样式**：类型化的尺寸与状态变体
+    - **类型安全**：组件属性从主题配方推导
+    - **冲突合并**：`cn` 可预测地合并 Tailwind 类名
+  </Tab>
+</Tabs>
+
+## 主要特性
+
+<Accordions>
+  <Accordion title="纯 CSS 玻璃材质">
+    玻璃表面、边缘高光、内阴影与按下滑块都是普通 CSS。材质背后没有 canvas、WebGL 或图片资源。
+  </Accordion>
+  <Accordion title="明暗主题">
+    Token 通过 `.light` / `.dark` 或 `data-theme="light"` / `data-theme="dark"` 切换。嵌套的 light 子树可以在深色应用中切回浅色。
+  </Accordion>
+  <Accordion title="可访问的交互">
+    交互组件基于 Base UI 原语，具备键盘支持、焦点管理与 ARIA 状态。组件会暴露 `aria-pressed`、`data-checked` 等状态属性，便于样式与测试。
+  </Accordion>
+  <Accordion title="类型化 API">
+    组件属性、尺寸变体、受控状态与事件详情都有类型。每个组件、composable 与主题配方都支持深层导入。
+  </Accordion>
+  <Accordion title="服务端安全的 Card">
+    `Card` 是原生布局原语，可以从 React Server Component 渲染。交互组件则是客户端组件。
+  </Accordion>
+</Accordions>
+
+## FAQ
+
+<Accordions>
+  <Accordion title="这个包免费吗？">
+    免费。项目以 MIT 许可证开源。
+  </Accordion>
+  <Accordion title="支持 React 18 吗？">
+    不支持。当前版本面向 React 19 与 React DOM 19。
+  </Accordion>
+  <Accordion title="必须使用 Tailwind CSS 吗？">
+    是。Tailwind CSS 4 是 peer dependency；包样式表提供 token 与材质类，不包含预编译的工具类。
+  </Accordion>
+  <Accordion title="可以用于生产环境吗？">
+    当前版本是 0.1.x。组件已有测试与文档，但在 1.0 之前 API 仍可能变化。请锁定版本，并在升级时查看 changelog。
+  </Accordion>
+  <Accordion title="包含数据表格、日期选择器或命令面板吗？">
+    暂不包含。当前版本聚焦十五个核心组件：基础元素、表单控件与浮层。后续版本会继续补充。
+  </Accordion>
+  <Accordion title="无障碍能力如何实现？">
+    交互组件基于 Base UI，提供 WAI-ARIA 语义、键盘支持与焦点管理。仍建议在真实业务中完整测试交互。
+  </Accordion>
+  <Accordion title="在哪里获取帮助？">
+    在 [GitHub](https://github.com/xingxingmofashu/ui/issues) 提交 issue，并附上复现步骤。
+  </Accordion>
+</Accordions>
+
+## 继续阅读
+
+<Cards>
+  <Card
+    title="安装"
+    description="在 React 项目中安装组件库。"
+    href="/docs/zh/get-started/installation"
+  />
+  <Card
+    title="Button"
+    description="从核心操作组件开始。"
+    href="/docs/zh/components/button"
+  />
+  <Card
+    title="Toggle"
+    description="查看按下状态的玻璃滑块。"
+    href="/docs/zh/components/toggle"
+  />
+</Cards>

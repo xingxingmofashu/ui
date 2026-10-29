@@ -5,12 +5,74 @@ import type { ReactNode } from "react";
 
 import { DocsRootProvider } from "@/components/docs-root-provider";
 import { baseOptions, translations } from "@/lib/layout.shared";
+import {
+  absoluteUrl,
+  githubUrl,
+  ogImage,
+  siteDescriptionZh,
+  siteName,
+  siteUrl,
+} from "@/lib/site";
 
 import "../globals.css";
 
+const title = `${siteName} — Liquid Glass React components`;
+
 export const metadata: Metadata = {
-  title: "Liquid Glass UI",
-  description: "基于 React、Tailwind CSS 4 与 Base UI 的液态玻璃组件库。",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: title,
+    template: `%s · ${siteName}`,
+  },
+  description: siteDescriptionZh,
+  applicationName: siteName,
+  authors: [{ name: "xingxingmofashu", url: githubUrl }],
+  creator: "xingxingmofashu",
+  publisher: "xingxingmofashu",
+  category: "technology",
+  keywords: [
+    "React",
+    "Tailwind CSS",
+    "Base UI",
+    "Liquid Glass",
+    "React 组件库",
+    "@xingxingmofashu/ui",
+  ],
+  alternates: {
+    canonical: absoluteUrl("/"),
+    languages: {
+      "zh-CN": absoluteUrl("/"),
+      en: absoluteUrl("/docs/en"),
+      "x-default": absoluteUrl("/"),
+    },
+  },
+  openGraph: {
+    type: "website",
+    url: absoluteUrl("/"),
+    title,
+    description: siteDescriptionZh,
+    siteName,
+    locale: "zh_CN",
+    alternateLocale: ["en_US"],
+    images: [ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: siteDescriptionZh,
+    images: [ogImage.url],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

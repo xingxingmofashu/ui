@@ -40,6 +40,9 @@ allowBuilds:
   sharp: false
   unrs-resolver: false
 
+overrides:
+  lightningcss: 1.33.0
+
 minimumReleaseAgeExclude:
   - "@oxlint/binding-android-arm-eabi@1.90.0"
   - "@oxlint/binding-android-arm64@1.90.0"

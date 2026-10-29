@@ -1,6 +1,6 @@
 ---
 title: "Switch"
-description: "A switch with a liquid glass thumb, label, and description. The track follows the monochrome theme."
+description: "An accessible React switch with a Liquid Glass thumb, label, description, and monochrome theme."
 ---
 
 ## Basic example
@@ -45,17 +45,49 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Visible label. |
-| `description` | `ReactNode` | — | Supporting text. |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls track size and text size. |
-| `checked` | `boolean` | — | Controlled checked state. |
-| `defaultChecked` | `boolean` | — | Uncontrolled initial state. |
-| `onCheckedChange` | `(checked: boolean, details) => void` | — | Called when the checked state changes. |
-| `disabled` | `boolean` | `false` | Disables the switch. |
-| `readOnly` | `boolean` | `false` | Keeps the switch from toggling. |
-| `className` | `string` | — | Tailwind classes merged into the Base UI switch root. |
+<TypeTable
+  type={{
+    "label": {
+      type: "ReactNode",
+      description: "Visible label.",
+    },
+    "description": {
+      type: "ReactNode",
+      description: "Supporting text.",
+    },
+    "size": {
+      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      default: "\"md\"",
+      description: "Controls track size and text size.",
+    },
+    "checked": {
+      type: "boolean",
+      description: "Controlled checked state.",
+    },
+    "defaultChecked": {
+      type: "boolean",
+      description: "Uncontrolled initial state.",
+    },
+    "onCheckedChange": {
+      type: "(checked: boolean, details) => void",
+      description: "Called when the checked state changes.",
+    },
+    "disabled": {
+      type: "boolean",
+      default: "false",
+      description: "Disables the switch.",
+    },
+    "readOnly": {
+      type: "boolean",
+      default: "false",
+      description: "Keeps the switch from toggling.",
+    },
+    "className": {
+      type: "string",
+      description: "Tailwind classes merged into the Base UI switch root.",
+    },
+  }}
+/>
 
 All other props are forwarded to Base UI's `Switch.Root`, including `required`, `name`, `form`, `value`, `uncheckedValue`, `inputRef`, `nativeButton`, `render`, and `ref`.
 
