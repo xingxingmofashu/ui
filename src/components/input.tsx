@@ -9,7 +9,7 @@ import theme from "../theme/input";
 
 interface InputProps
   extends Omit<
-      React.ComponentProps<typeof UIInput>,
+      UIInput.Props,
       "className" | "children" | "size" | "style"
     >,
     VariantProps<typeof theme> {

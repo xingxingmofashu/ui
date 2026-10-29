@@ -19,11 +19,23 @@ description: "从屏幕边缘滑入、支持手势关闭的液态玻璃抽屉。
 
 <Example name="drawer/sides" />
 
-## 手势与吸附点
+## 手势关闭
 
-用户可以通过点击遮罩、按 Esc 或朝对应方向滑动来关闭抽屉。
+触摸设备上可以朝 `direction` 对应的方向拖动抽屉来关闭；桌面端仍可使用遮罩、Esc 或操作区按钮。
+
+<Example name="drawer/gesture" />
+
+## 吸附点
 
 `snapPoints`、`defaultSnapPoint`、`snapPoint`、`onSnapPointChange` 与 `snapToSequentialPoints` 会透传给 Base UI，可用于让底部或顶部抽屉在预设高度之间吸附。
+
+<Example name="drawer/snap-points" />
+
+## 禁止遮罩关闭
+
+`disablePointerDismissal` 会阻止点击遮罩关闭抽屉，Esc 键和操作区按钮仍然可用；适合包含未保存内容的流程。
+
+<Example name="drawer/locked" />
 
 ## Props
 
