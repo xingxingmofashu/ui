@@ -37,16 +37,12 @@ function Input({
   id,
   disabled,
   children: _children,
-  "aria-describedby": ariaDescribedBy,
   ...props
 }: InputProps) {
   void _children;
   const ui = theme({ size });
   const generatedId = React.useId();
   const inputId = id ?? generatedId;
-  const descriptionId = description ? `${generatedId}-description` : undefined;
-  const describedBy =
-    [ariaDescribedBy, descriptionId].filter(Boolean).join(" ") || undefined;
 
   return (
     <div
@@ -83,7 +79,6 @@ function Input({
           {...props}
           id={inputId}
           disabled={disabled}
-          aria-describedby={describedBy}
           data-slot="input"
           className={ui.input()}
         />
@@ -100,11 +95,7 @@ function Input({
       </span>
 
       {description ? (
-        <span
-          id={descriptionId}
-          data-slot="description"
-          className={ui.description()}
-        >
+        <span data-slot="description" className={ui.description()}>
           {description}
         </span>
       ) : null}

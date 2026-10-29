@@ -61,7 +61,7 @@ describe("Input", () => {
       ).toBeInTheDocument();
     });
 
-    it("associates a description with the input", () => {
+    it("does not wire the visible description automatically", () => {
       render(
         <Input
           label="Email"
@@ -71,16 +71,11 @@ describe("Input", () => {
 
       const input = screen.getByRole("textbox", { name: "Email" });
 
-      expect(input).toHaveAccessibleDescription(
-        "We only use this for account notices.",
-      );
-      expect(getSlot(getRoot(input), "description")).toHaveAttribute(
-        "id",
-        input.getAttribute("aria-describedby"),
-      );
+      expect(input).not.toHaveAttribute("aria-describedby");
+      expect(getSlot(getRoot(input), "description")).not.toHaveAttribute("id");
     });
 
-    it("appends the description id to a custom aria-describedby", () => {
+    it("forwards aria-describedby unchanged", () => {
       render(
         <>
           <span id="hint">Enter your work email.</span>
@@ -93,10 +88,9 @@ describe("Input", () => {
       );
 
       const input = screen.getByRole("textbox", { name: "Email" });
-      const describedBy = input.getAttribute("aria-describedby")?.split(" ");
 
-      expect(describedBy).toContain("hint");
-      expect(describedBy).toHaveLength(2);
+      expect(input).toHaveAttribute("aria-describedby", "hint");
+      expect(input).toHaveAccessibleDescription("Enter your work email.");
     });
   });
 

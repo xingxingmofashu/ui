@@ -5,7 +5,7 @@ description: "带玻璃表面、标签、说明文字与图标插槽的文本输
 
 `Input` 封装 Base UI 的 `Input`，渲染玻璃质感的输入区域、原生 `<input>`、可选标签与说明文字，以及可选的前后图标。
 
-可见标签是真实的 `<label>`，会自动与输入框关联。提供 `description` 时，输入框会通过 `aria-describedby` 指向说明文字，读屏软件会同时朗读两者。
+可见标签是真实的 `<label>`，会自动与输入框关联。`description` 仅用于视觉展示；如果说明文字需要被读屏软件朗读，请自行传入 `aria-describedby`。
 
 ## 基础示例
 
@@ -36,7 +36,7 @@ description: "带玻璃表面、标签、说明文字与图标插槽的文本输
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `label` | `ReactNode` | — | 可见标签，与输入框关联。 |
-| `description` | `ReactNode` | — | 输入框下方的说明文字，通过 `aria-describedby` 关联。 |
+| `description` | `ReactNode` | — | 输入框下方的说明文字，不会自动关联。 |
 | `leadingIcon` | `ReactNode` | — | 输入框前的装饰图标。 |
 | `trailingIcon` | `ReactNode` | — | 输入框后的装饰图标。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距、圆角、文字与图标尺寸。 |
@@ -44,6 +44,6 @@ description: "带玻璃表面、标签、说明文字与图标插槽的文本输
 
 其余属性会透传给 Base UI 的 `Input`，包括 `value`、`defaultValue`、`onValueChange`、`type`、`placeholder`、`name`、`id`、`disabled`、`readOnly`、`required` 和 `ref`。
 
-没有可见 `label` 时，请自行提供 `aria-label` 或 `aria-labelledby`。
+没有可见 `label` 时，请自行提供 `aria-label` 或 `aria-labelledby`。如果需要让读屏软件朗读可见说明文字，请传入指向对应元素的 `aria-describedby`。
 
 `style` 被有意禁用：玻璃主题接管输入区域的外观。布局请使用 `className`，主题调整请通过共享的 `--ui-*` tokens 完成。
