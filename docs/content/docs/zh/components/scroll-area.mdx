@@ -1,0 +1,57 @@
+---
+title: "Scroll Area"
+description: "带液态玻璃滚动条与玻璃面板的原生滚动容器。"
+---
+
+`ScrollArea` 是对 Base UI `ScrollArea` 的集成封装。它在内部渲染玻璃面板、原生滚动视口、内容容器与自定义滚动条。
+
+原生滚动条会被隐藏。主题滚动条在静止时保持低调，当指针位于区域上方或视口滚动时会变得更明显；只有内容真正溢出时才会渲染。
+
+## 基础示例
+
+`ScrollArea` 没有内置高度。通过 `className` 给根节点设置高度即可创建可滚动视口。下面的示例还传入了 `aria-label`，它会转发到可滚动视口，而不是仅用于展示的根节点。
+
+<Example name="scroll-area/basic" />
+
+## 横向滚动
+
+设置 `orientation="horizontal"` 只渲染横向滚动条。宽度超出视口的内容仍可通过触控板、滚轮或键盘滚动。
+
+<Example name="scroll-area/horizontal" />
+
+## 双轴滚动
+
+使用 `orientation="both"` 处理二维内容。此时会渲染转角，避免两条滚动条互相重叠。
+
+<Example name="scroll-area/both" />
+
+## 尺寸与内容
+
+根节点负责玻璃表面。使用 `className` 控制其宽高、圆角与外部布局。内边距应放在内容内部（如示例所示），这样列表行在需要时也可以贴边排列。
+
+## Props
+
+### ScrollArea
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | 渲染在视口内的可滚动内容。 |
+| `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | 要渲染的滚动条方向。 |
+| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | Base UI 将一个边缘标记为溢出前需要越过的像素距离。 |
+| `className` | `any` | — | 合并到根节点的 Tailwind 类。在这里设置高度。 |
+| `aria-label` | `string` | — | 转发到可滚动视口的无障碍名称。 |
+| `aria-labelledby` | `string` | — | 为视口提供名称的元素 ID。 |
+| `aria-describedby` | `string` | — | 为视口提供说明的元素 ID。 |
+
+`ScrollArea` 还会透传 Base UI `ScrollArea.Root` 的 `render`、`ref` 等属性。
+
+`style` 被有意禁用：玻璃主题接管表面与滚动条。布局请使用 `className`；需要微调时可通过共享变量控制滚动条：
+
+- `--ui-scroll-area-bar-size` — 滚动条滑块厚度。
+- `--ui-scroll-area-bar-padding` — 滑块与面板边缘之间的内缩距离。
+- `--ui-scroll-area-thumb` — 静止状态下的滑块颜色。
+- `--ui-scroll-area-thumb-hover` — 悬停与滚动时的滑块颜色。
+
+## 无障碍
+
+只有视口可以滚动时它才会进入焦点顺序，这与原生滚动容器一致。使用 `aria-label` 或 `aria-labelledby` 为区域命名，使用 `aria-describedby` 补充说明。Base UI 保留原生指针与键盘滚动，自定义滚动条仅作装饰，不暴露给辅助技术。

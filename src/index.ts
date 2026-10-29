@@ -11,6 +11,11 @@ export { Dialog, type DialogProps } from "./components/dialog";
 export { Drawer, type DrawerProps } from "./components/drawer";
 export { Input, type InputProps } from "./components/input";
 export { Popover, type PopoverProps } from "./components/popover";
+export {
+  ScrollArea,
+  type ScrollAreaOrientation,
+  type ScrollAreaProps,
+} from "./components/scroll-area";
 export { Slider, type SliderProps } from "./components/slider";
 export { Switch, type SwitchProps } from "./components/switch";
 export {

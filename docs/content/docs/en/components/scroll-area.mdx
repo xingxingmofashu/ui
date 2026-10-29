@@ -1,0 +1,57 @@
+---
+title: "Scroll Area"
+description: "A native scroll container with liquid glass scrollbars and a glass panel."
+---
+
+`ScrollArea` is an integrated wrapper around Base UI's `ScrollArea`. It renders the glass panel, native scroll viewport, content container, and custom scrollbars internally.
+
+Native scrollbars are hidden. The themed scrollbars stay subtle at rest and brighten while the pointer is over the area or the viewport is scrolling. They only render when the content actually overflows.
+
+## Basic example
+
+`ScrollArea` has no intrinsic height. Give the root a height with `className` to create a scrollable viewport. The example below also passes `aria-label`, which is forwarded to the scrollable viewport instead of the presentation root.
+
+<Example name="scroll-area/basic" />
+
+## Horizontal scrolling
+
+Set `orientation="horizontal"` to render only the horizontal scrollbar. Content wider than the viewport can still be scrolled with a trackpad, wheel, or keyboard.
+
+<Example name="scroll-area/horizontal" />
+
+## Both axes
+
+Use `orientation="both"` for two-dimensional content. The corner is rendered so the two scrollbars never overlap.
+
+<Example name="scroll-area/both" />
+
+## Sizing and content
+
+The root owns the glass surface. Use `className` for its width, height, radius, and outer layout. Padding belongs inside the content, as the examples do, so list rows can also run edge to edge when needed.
+
+## Props
+
+### ScrollArea
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Scrollable content rendered inside the viewport. |
+| `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | Scrollbar axes to render. |
+| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | Distance in pixels before Base UI marks an edge as overflowing. |
+| `className` | `any` | — | Tailwind classes merged into the root. Set the height here. |
+| `aria-label` | `string` | — | Accessible name forwarded to the scrollable viewport. |
+| `aria-labelledby` | `string` | — | ID of an element that labels the viewport. |
+| `aria-describedby` | `string` | — | ID of an element that describes the viewport. |
+
+`ScrollArea` also forwards Base UI `ScrollArea.Root` props such as `render` and `ref`.
+
+`style` is intentionally not supported: the glass theme owns the surface and the scrollbars. Use `className` for root layout and tune the shared scrollbar variables when needed:
+
+- `--ui-scroll-area-bar-size` — scrollbar thumb thickness.
+- `--ui-scroll-area-bar-padding` — inset between the thumb and the panel edge.
+- `--ui-scroll-area-thumb` — resting thumb color.
+- `--ui-scroll-area-thumb-hover` — hover and scrolling thumb color.
+
+## Accessibility
+
+The viewport is focusable only while it can scroll, matching the native scroll container behavior. Pass `aria-label` or `aria-labelledby` to name the region, and `aria-describedby` for extra instructions. Base UI keeps pointer and keyboard scrolling native, while the custom scrollbars remain decorative and hidden from assistive technology.
