@@ -167,6 +167,15 @@ describe("Switch", () => {
       );
     });
 
+    it("keeps reduced-motion transitions observable", () => {
+      const styles = theme();
+
+      expect(styles.thumb()).not.toContain("motion-reduce:transition-none");
+      expect(styles.base()).toContain(
+        "motion-reduce:[&_*]:[transition-duration:0.01ms!important]",
+      );
+    });
+
     it("renders label and description", () => {
       render(<Switch label="Notifications" description="Receive alerts" />);
 
@@ -273,7 +282,7 @@ describe("Switch", () => {
       ).toBeNull();
     });
 
-    it("renders the liquid glass filters", () => {
+    it("scopes the liquid glass filters to each switch", () => {
       render(
         <>
           <Switch aria-label="First" />
@@ -282,17 +291,35 @@ describe("Switch", () => {
       );
 
       const switches = screen.getAllByRole("switch");
+      const filterIds = switches.flatMap((switchElement) =>
+        Array.from(switchElement.querySelectorAll("filter")).map(
+          (filter) => filter.id,
+        ),
+      );
+
+      expect(filterIds).toHaveLength(4);
+      expect(new Set(filterIds).size).toBe(filterIds.length);
 
       switches.forEach((switchElement) => {
-        const gooFilter = switchElement.querySelector(
-          'filter[id="ui-switch-goo"]',
+        const filters = Array.from(
+          switchElement.querySelectorAll("filter"),
         );
-        const removeBlackFilter = switchElement.querySelector(
-          'filter[id="ui-switch-remove-black"]',
+        const gooFilter = filters.find((filter) =>
+          filter.id.endsWith("-goo"),
         );
+        const removeBlackFilter = filters.find((filter) =>
+          filter.id.endsWith("-remove-black"),
+        );
+        const base = getBase(switchElement);
 
-        expect(gooFilter).not.toBeNull();
-        expect(removeBlackFilter).not.toBeNull();
+        expect(gooFilter).toBeDefined();
+        expect(removeBlackFilter).toBeDefined();
+        expect(base.style.getPropertyValue("--ui-switch-goo-filter")).toBe(
+          `url("#${gooFilter?.id}")`,
+        );
+        expect(
+          base.style.getPropertyValue("--ui-switch-remove-black-filter"),
+        ).toBe(`url("#${removeBlackFilter?.id}")`);
         expect(gooFilter?.children).toHaveLength(3);
         expect(gooFilter?.children[0].getAttribute("stdDeviation")).toBe("2");
         expect(gooFilter?.children[1].getAttribute("values")).toContain(

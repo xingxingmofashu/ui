@@ -126,6 +126,7 @@ describe("Button", () => {
       expect(styles.glass()).toContain("overflow-hidden");
       expect(styles.base()).toContain("gap-1.5");
       expect(styles.base()).toContain("text-sm");
+      expect(styles.root()).toContain("data-[disabled]:opacity-50");
       expect(styles.leadingIcon()).toContain("[&_svg]:size-5");
       expect(styles.trailingIcon()).toContain("[&_svg]:size-5");
       expect(styles.leadingIcon()).toBe(styles.trailingIcon());

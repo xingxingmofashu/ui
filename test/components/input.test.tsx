@@ -172,7 +172,7 @@ describe("Input", () => {
 
   describe("native behavior", () => {
     it("forwards native input props and the ref", () => {
-      const ref = createRef<HTMLElement>();
+      const ref = createRef<HTMLInputElement>();
 
       render(
         <Input

@@ -6,7 +6,7 @@ export default tv({
       "group relative inline-flex items-center min-w-0 max-w-full cursor-pointer select-none whitespace-nowrap",
       "appearance-none rounded-full border-0 bg-transparent p-0",
       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-glass-focus",
-      "disabled:pointer-events-none disabled:opacity-50",
+      "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
     ],
     base: [
       "relative isolate flex w-full min-w-0 max-w-full flex-row flex-nowrap items-center justify-center rounded-full",

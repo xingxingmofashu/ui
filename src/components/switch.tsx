@@ -9,10 +9,12 @@ import theme from "../theme/switch";
 
 interface SwitchProps
   extends Omit<
-      React.ComponentProps<typeof UISwitch.Root>,
-      "className" | "children" | "style"
+      UISwitch.Root.Props,
+      "className" | "children" | "style" | "ref"
     >,
     VariantProps<typeof theme> {
+  /** Ref to the rendered root element. */
+  ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the Base UI switch root. */
   className?: string;
   /** Visible label. */
@@ -21,11 +23,11 @@ interface SwitchProps
   description?: React.ReactNode;
 }
 
-function LiquidGlassFilter() {
+function LiquidGlassFilter({ id }: { id: string }) {
   return (
     <svg aria-hidden="true" focusable="false" data-layer="filter">
       <defs>
-        <filter id="ui-switch-goo">
+        <filter id={`${id}-goo`}>
           <feGaussianBlur
             in="SourceGraphic"
             stdDeviation="2"
@@ -42,7 +44,10 @@ function LiquidGlassFilter() {
           />
           <feComposite in="matrix" operator="atop" result="goo" />
         </filter>
-        <filter id="ui-switch-remove-black" colorInterpolationFilters="sRGB">
+        <filter
+          id={`${id}-remove-black`}
+          colorInterpolationFilters="sRGB"
+        >
           <feColorMatrix
             type="matrix"
             values="1 0 0 0 0
@@ -75,6 +80,11 @@ function Switch({
   ...props
 }: SwitchProps) {
   const ui = theme({ size });
+  const filterId = React.useId();
+  const filterStyles = {
+    "--ui-switch-goo-filter": `url("#${filterId}-goo")`,
+    "--ui-switch-remove-black-filter": `url("#${filterId}-remove-black")`,
+  } as React.CSSProperties;
   const [animating, setAnimating] = React.useState(false);
   const handleCheckedChange: NonNullable<
     SwitchProps["onCheckedChange"]
@@ -110,12 +120,13 @@ function Switch({
       onCheckedChange={handleCheckedChange}
       className={cn(ui.root(), className)}
     >
-      <span
-        data-slot="container"
-        className={ui.container()}
-      >
-        <span data-slot="base" className={ui.base()}>
-          <LiquidGlassFilter />
+      <span data-slot="container" className={ui.container()}>
+        <span
+          data-slot="base"
+          className={ui.base()}
+          style={filterStyles}
+        >
+          <LiquidGlassFilter id={filterId} />
 
           <span aria-hidden="true" data-layer="mask">
             <span data-layer="track">

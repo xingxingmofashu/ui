@@ -9,10 +9,12 @@ import theme from "../theme/checkbox";
 
 interface CheckboxProps
   extends Omit<
-      React.ComponentProps<typeof UICheckbox.Root>,
-      "className" | "children" | "style"
+      UICheckbox.Root.Props,
+      "className" | "children" | "style" | "ref"
     >,
     VariantProps<typeof theme> {
+  /** Ref to the rendered root element. */
+  ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the Base UI checkbox root. */
   className?: string;
   /** Visible label. */
