@@ -1,4 +1,4 @@
 {
   "title": "组件",
-  "pages": ["accordion", "alert-dialog", "button", "card", "checkbox", "dialog", "input", "slider", "switch", "toggle-group"]
+  "pages": ["accordion", "alert-dialog", "button", "card", "checkbox", "dialog", "drawer", "input", "slider", "switch", "toggle-group"]
 }

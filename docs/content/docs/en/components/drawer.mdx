@@ -1,0 +1,49 @@
+---
+title: "Drawer"
+description: "A liquid glass panel that slides in from the edge of the screen and supports swipe dismissal."
+---
+
+`Drawer` is an integrated wrapper around Base UI's `Drawer`. It renders the portal, backdrop, edge-aligned popup, title, description, optional body, and a custom action area internally, with swipe dismissal and optional snap points.
+
+Unlike the centered `Dialog`, `Drawer` slides in from an edge of the screen, which makes it a good fit for mobile settings panels, filters, and side navigation.
+
+## Basic example
+
+The drawer opens from the bottom by default. `open` controls visibility and `footer` holds your own buttons; buttons do not close the drawer automatically, so update `open` yourself as the example does.
+
+<Example name="drawer/basic" />
+
+## Side panels
+
+`direction` reuses Base UI's `swipeDirection` values: `down` slides in from the bottom, `up` from the top, and `left` and `right` from the matching side. It defaults to `down`, and the component adjusts the popup position, corner radii, enter animation, and swipe dismissal direction together.
+
+<Example name="drawer/sides" />
+
+## Gestures and snap points
+
+Users can dismiss the drawer by pressing the backdrop, pressing Escape, or swiping in the matching direction.
+
+`snapPoints`, `defaultSnapPoint`, `snapPoint`, `onSnapPointChange`, and `snapToSequentialPoints` pass through to Base UI and can make a bottom or top drawer settle between preset heights.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | Drawer heading. |
+| `description` | `ReactNode` | — | Supporting copy under the title. |
+| `children` | `ReactNode` | — | Body content between the description and the action area. |
+| `footer` | `ReactNode` | — | Bottom action area that can hold any number of buttons. |
+| `direction` | `"down" \| "up" \| "left" \| "right"` | `"down"` | Edge the drawer slides in from and the swipe dismissal direction, reusing Base UI's `swipeDirection` type. |
+| `open` | `boolean` | — | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the drawer opens or closes. |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
+| `disablePointerDismissal` | `boolean` | `false` | Prevent the backdrop from closing the drawer. |
+| `modal` | `boolean \| "trap-focus"` | `true` | Controls focus trapping and page scroll locking. |
+| `className` | `any` | — | Tailwind classes merged into the popup. |
+
+`Drawer` also forwards Base UI `Drawer.Root` props such as `actionsRef`, `handle`, `triggerId`, `defaultTriggerId`, `snapPoints`, `defaultSnapPoint`, `snapPoint`, `onSnapPointChange`, and `snapToSequentialPoints`.
+
+`style` is intentionally not supported: the glass theme owns the backdrop, popup, and content. Use `className` for popup layout. Drawer styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
+
+Base UI supplies the `dialog` role, `aria-labelledby` from the title, `aria-describedby` from the description, focus trapping, scroll locking, focus return, backdrop and Escape dismissal, and swipe gestures.

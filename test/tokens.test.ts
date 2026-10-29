@@ -14,6 +14,7 @@ import toggleGroupTheme from "../src/theme/toggle-group";
 import accordionTheme from "../src/theme/accordion";
 import alertDialogTheme from "../src/theme/alert-dialog";
 import dialogTheme from "../src/theme/dialog";
+import drawerTheme from "../src/theme/drawer";
 import inputTheme from "../src/theme/input";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
@@ -113,6 +114,24 @@ function themeCandidates() {
   ] as const;
   const dialogStyles = dialogTheme();
   const dialogCandidates = dialogSlots.map((slot) => dialogStyles[slot]());
+  const drawerSlots = [
+    "backdrop",
+    "viewport",
+    "popup",
+    "glass",
+    "overlay",
+    "content",
+    "title",
+    "description",
+    "body",
+    "footer",
+  ] as const;
+  const drawerDirections = ["down", "up", "left", "right"] as const;
+  const drawerCandidates = drawerDirections.flatMap((direction) => {
+    const drawerStyles = drawerTheme({ direction });
+
+    return drawerSlots.map((slot) => drawerStyles[slot]());
+  });
   const inputSlots = [
     "root",
     "label",
@@ -186,6 +205,7 @@ function themeCandidates() {
     ...accordionCandidates,
     ...alertDialogCandidates,
     ...dialogCandidates,
+    ...drawerCandidates,
     ...inputCandidates,
     ...checkboxCandidates,
     ...toggleGroupCandidates,
@@ -346,6 +366,38 @@ describe("design tokens", () => {
     expect(css).toContain("opacity: 60%;");
     expect(css).toContain("opacity: 75%;");
     expect(css).toContain("justify-content: flex-end;");
+  });
+
+  it("compiles the drawer edges and glass popup", async () => {
+    const css = await buildStyles(themeCandidates());
+
+    expect(css).toContain("z-index: 40;");
+    expect(css).toContain("z-index: 50;");
+    expect(css).toContain("opacity: calc(1 - var(--drawer-swipe-progress));");
+    expect(css).toContain("cubic-bezier(0.32,0.72,0,1)");
+    expect(css).toContain("max-height: 85dvh;");
+    expect(css).toContain("border-top-left-radius: 1.75rem;");
+    expect(css).toContain("border-top-right-radius: 1.75rem;");
+    expect(css).toContain("border-bottom-right-radius: 1.75rem;");
+    expect(css).toContain("border-bottom-left-radius: 1.75rem;");
+    expect(css).toContain("width: min(20rem, 100vw);");
+    expect(css).toContain(
+      "padding-bottom: env(safe-area-inset-bottom);",
+    );
+    expect(css).toContain("padding-top: env(safe-area-inset-top);");
+    expect(css).toContain(
+      "transform: translateY(calc(var(--drawer-snap-point-offset) + var(--drawer-swipe-movement-y)));",
+    );
+    expect(css).toContain(
+      "transform: translateX(var(--drawer-swipe-movement-x));",
+    );
+    expect(css).toContain("transform: translateY(calc(100% + 2px));");
+    expect(css).toContain("transform: translateY(calc(-100% - 2px));");
+    expect(css).toContain("transform: translateX(calc(100% + 2px));");
+    expect(css).toContain("transform: translateX(calc(-100% - 2px));");
+    expect(css).toContain("overflow-y: auto;");
+    expect(css).toContain("overscroll-behavior: contain;");
+    expect(css).toContain("border: 1px solid var(--ui-glass-rim);");
   });
 
   it("compiles the toggle group glass controls from the theme recipe", async () => {
@@ -571,6 +623,35 @@ describe("design tokens", () => {
     expect(component).toContain("UIDialog.Portal");
     expect(component).toContain("UIDialog.Backdrop");
     expect(component).toContain("UIDialog.Viewport");
+    expect(component).toContain("footer");
+    expect(component).not.toContain("LIQUID_GLASS_MAP");
+    expect(component).not.toContain(".css");
+  });
+
+  it("keeps drawer styling in the tailwind-variants theme", async () => {
+    const [recipe, component] = await Promise.all([
+      readFile(new URL("../src/theme/drawer.ts", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/drawer.tsx", import.meta.url), "utf8"),
+    ]);
+
+    expect(recipe).toContain('from "tailwind-variants"');
+    expect(recipe).toContain("ui-glass");
+    expect(recipe).toContain("ui-glass-inner");
+    expect(recipe).toContain("ui-glass-highlight");
+    expect(recipe).toContain("ui-glass-rim");
+    expect(recipe).toContain("bg-ui-dialog-surface");
+    expect(recipe).toContain("data-[starting-style]");
+    expect(recipe).toContain("data-[ending-style]");
+    expect(recipe).toContain("--drawer-swipe-progress");
+    expect(recipe).toContain("--drawer-swipe-movement-y");
+    expect(recipe).toContain("--drawer-swipe-movement-x");
+    expect(recipe).not.toContain("bg-glass-surface");
+    expect(recipe).not.toContain("shadow-glass");
+    expect(recipe).not.toContain(".css");
+    expect(component).toContain("UIDrawer.Portal");
+    expect(component).toContain("UIDrawer.Backdrop");
+    expect(component).toContain("UIDrawer.Viewport");
+    expect(component).toContain("UIDrawer.Content");
     expect(component).toContain("footer");
     expect(component).not.toContain("LIQUID_GLASS_MAP");
     expect(component).not.toContain(".css");

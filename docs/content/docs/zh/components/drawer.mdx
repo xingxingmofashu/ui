@@ -1,0 +1,49 @@
+---
+title: "Drawer"
+description: "从屏幕边缘滑入、支持手势关闭的液态玻璃抽屉。"
+---
+
+`Drawer` 是 Base UI `Drawer` 的一体化封装。它内部渲染 Portal、遮罩、贴边弹窗、标题、描述、可选正文以及自定义操作区，并支持滑动关闭与可选吸附点。
+
+与居中的 `Dialog` 不同，`Drawer` 从屏幕边缘滑入，适合移动端设置面板、筛选条件和侧边导航。
+
+## 基础示例
+
+默认从底部滑入。`open` 控制显示，`footer` 放置自己的按钮；按钮不会自动关闭抽屉，需要像示例一样更新 `open`。
+
+<Example name="drawer/basic" />
+
+## 侧边抽屉
+
+`direction` 复用 Base UI `swipeDirection` 的取值：`down` 从底部滑入，`up` 从顶部滑入，`left` 和 `right` 从对应侧边滑入。默认 `down`，组件会同时调整弹窗位置、圆角、进入动画和滑动关闭方向。
+
+<Example name="drawer/sides" />
+
+## 手势与吸附点
+
+用户可以通过点击遮罩、按 Esc 或朝对应方向滑动来关闭抽屉。
+
+`snapPoints`、`defaultSnapPoint`、`snapPoint`、`onSnapPointChange` 与 `snapToSequentialPoints` 会透传给 Base UI，可用于让底部或顶部抽屉在预设高度之间吸附。
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | 抽屉标题。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `children` | `ReactNode` | — | 描述与操作区之间的正文内容。 |
+| `footer` | `ReactNode` | — | 底部操作区，可放置任意数量的按钮。 |
+| `direction` | `"down" \| "up" \| "left" \| "right"` | `"down"` | 滑入边缘与滑动关闭方向，复用 Base UI `swipeDirection` 的类型。 |
+| `open` | `boolean` | — | 受控的打开状态。 |
+| `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
+| `onOpenChange` | `(open: boolean, details) => void` | — | 抽屉打开或关闭时调用。 |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
+| `disablePointerDismissal` | `boolean` | `false` | 禁止点击遮罩关闭。 |
+| `modal` | `boolean \| "trap-focus"` | `true` | 控制焦点锁定与页面滚动锁定。 |
+| `className` | `any` | — | 合并到弹窗的 Tailwind 类名。 |
+
+`Drawer` 还会透传 Base UI `Drawer.Root` 的 `actionsRef`、`handle`、`triggerId`、`defaultTriggerId`、`snapPoints`、`defaultSnapPoint`、`snapPoint`、`onSnapPointChange` 和 `snapToSequentialPoints`。
+
+`style` 被有意禁用：玻璃主题接管遮罩、弹窗与内容。布局请使用 `className`。抽屉样式属于内部实现，不支持逐实例修改；请通过共享的 `--ui-glass-*` token 调整。
+
+Base UI 负责 `dialog` 角色、由标题生成 `aria-labelledby`、由描述生成 `aria-describedby`、焦点锁定、滚动锁定、关闭后的焦点恢复、遮罩点击、Esc 关闭以及滑动手势。
