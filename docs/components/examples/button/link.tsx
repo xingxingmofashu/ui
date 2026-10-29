@@ -8,8 +8,8 @@ export default function ButtonLinkDemo() {
   return (
     <Button
       nativeButton={false}
-      render={<a href="/en/docs/get-started" />}
-      label="Read the docs"
+      render={<a href="https://github.com/xingxingmofashu/ui" />}
+      label="View on GitHub"
       trailingIcon={<ArrowRight />}
     />
   );
