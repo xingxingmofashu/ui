@@ -23,11 +23,10 @@ from a React Server Component.
 ## Install
 
 ```bash
-pnpm add @xingxingmofashu/ui@beta
+pnpm add @xingxingmofashu/ui
 ```
 
-The package is currently in beta and is published under the `beta` dist-tag.
-Drop `@beta` once a stable release is available.
+The package is published under the `latest` dist-tag.
 
 ## Setup
 
