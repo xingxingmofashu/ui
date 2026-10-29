@@ -10,6 +10,7 @@ export { Checkbox, type CheckboxProps } from "./components/checkbox";
 export { Dialog, type DialogProps } from "./components/dialog";
 export { Drawer, type DrawerProps } from "./components/drawer";
 export { Input, type InputProps } from "./components/input";
+export { Popover, type PopoverProps } from "./components/popover";
 export { Slider, type SliderProps } from "./components/slider";
 export { Switch, type SwitchProps } from "./components/switch";
 export {

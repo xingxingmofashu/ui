@@ -9,6 +9,7 @@ import { CheckboxPreview } from "./previews/checkbox";
 import { DialogPreview } from "./previews/dialog";
 import { DrawerPreview } from "./previews/drawer";
 import { InputPreview } from "./previews/input";
+import { PopoverPreview } from "./previews/popover";
 import { SliderPreview } from "./previews/slider";
 import { SwitchPreview } from "./previews/switch";
 import { ToggleGroupPreview } from "./previews/toggle-group";
@@ -71,8 +72,16 @@ const sections = [
     Preview: DrawerPreview,
   },
   {
-    id: "switch",
+    id: "popover",
     index: "08",
+    title: "Popover",
+    description:
+      "A non-modal glass panel with a directional arrow, anchored to its trigger.",
+    Preview: PopoverPreview,
+  },
+  {
+    id: "switch",
+    index: "09",
     title: "Switch",
     description:
       "A liquid thumb that stretches while it moves, in all five sizes.",
@@ -80,7 +89,7 @@ const sections = [
   },
   {
     id: "slider",
-    index: "09",
+    index: "10",
     title: "Slider",
     description:
       "Single values, ranges, and vertical controls with a glass thumb.",
@@ -88,7 +97,7 @@ const sections = [
   },
   {
     id: "toggle-group",
-    index: "10",
+    index: "11",
     title: "Toggle Group",
     description:
       "Single and multiple selection with a liquid glass selected state.",
@@ -96,7 +105,7 @@ const sections = [
   },
   {
     id: "input",
-    index: "11",
+    index: "12",
     title: "Input",
     description:
       "A glass text field with labels, descriptions, icons, and five sizes.",
@@ -165,7 +174,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Eleven components · two themes
+        Twelve components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.

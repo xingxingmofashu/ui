@@ -1,0 +1,53 @@
+---
+title: "Popover"
+description: "锚定在触发元素旁、非模态的液态玻璃浮层。"
+---
+
+`Popover` 是 Base UI `Popover` 的一体化封装。它内部渲染触发元素、Portal、定位器、玻璃弹窗、指向缺口、标题、描述、可选正文以及可选操作区。指向缺口会自动跟随弹窗实际所在的方位；设置 `arrow={false}` 可以隐藏它。
+
+与 `Dialog` 和 `Drawer` 不同，`Popover` 默认是非模态的：不会锁定焦点，页面仍可滚动，点击外部或按 Esc 会关闭。适合紧凑的设置面板、上下文操作和筛选条件。
+
+## 基础示例
+
+`trigger` 接收单个元素，并且该元素需要把 props 和 ref 透传到根元素，例如内置的 `Button`。Base UI 会自动为触发元素添加 `aria-haspopup="dialog"` 和 `aria-expanded`，点击即可切换浮层。此示例为非受控用法。
+
+<Example name="popover/basic" />
+
+## 受控用法
+
+`open` 与 `onOpenChange` 控制显示状态。`footer` 中的按钮不会自动关闭浮层，需要像示例一样自行更新 `open`。
+
+<Example name="popover/controlled" />
+
+## 定位
+
+`side`、`align`、`sideOffset` 和 `alignOffset` 会透传给 Base UI 的定位器。空间不足时，Base UI 会自动翻转或平移弹窗。
+
+<Example name="popover/placement" />
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `trigger` | `ReactElement` | — | 打开浮层的元素，需要透传 props 和 ref。 |
+| `title` | `ReactNode` | — | 浮层标题。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `children` | `ReactNode` | — | 描述与操作区之间的正文内容。 |
+| `footer` | `ReactNode` | — | 底部操作区，可放置任意数量的控件。 |
+| `arrow` | `boolean` | `true` | 是否渲染指向缺口。 |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | 优先放置在触发元素的哪一侧。 |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | 相对于触发元素的对齐方式。 |
+| `sideOffset` | `number \| OffsetFunction` | `10` | 触发元素与弹窗之间的距离（像素）。默认值会为指向缺口留出空间。 |
+| `alignOffset` | `number \| OffsetFunction` | `0` | 沿对齐轴的偏移量（像素）。 |
+| `collisionPadding` | `Padding` | 每侧 5px | 弹窗与碰撞边界之间保留的空间。 |
+| `open` | `boolean` | — | 受控的打开状态。 |
+| `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
+| `onOpenChange` | `(open: boolean, details) => void` | — | 浮层打开或关闭时调用。 |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
+| `className` | `any` | — | 合并到弹窗的 Tailwind 类名。 |
+
+`Popover` 还会透传 Base UI `Popover.Root` 的 `actionsRef`、`handle`、`triggerId` 和 `defaultTriggerId` 等属性。
+
+`style` 被有意禁用：玻璃主题接管定位器、弹窗与内容。布局请使用 `className`。浮层样式属于内部实现，不支持逐实例修改；请通过共享的 `--ui-glass-*` token 调整。
+
+Base UI 负责 `dialog` 角色、由标题生成 `aria-labelledby`、由描述生成 `aria-describedby`、关闭后的焦点恢复、点击外部关闭以及 Esc 关闭。
