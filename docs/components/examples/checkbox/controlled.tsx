@@ -10,6 +10,7 @@ export default function CheckboxControlledDemo() {
   return (
     <div className="flex flex-col gap-4">
       <Checkbox
+        aria-label="Enable two-factor authentication"
         label="Enable two-factor authentication"
         description="Require a verification code when signing in."
         checked={enabled}

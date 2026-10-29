@@ -11,6 +11,7 @@ export default function CheckboxSizesDemo() {
         <Checkbox
           key={size}
           size={size}
+          aria-label={`Size ${size}`}
           label={`Size ${size}`}
           defaultChecked
         />

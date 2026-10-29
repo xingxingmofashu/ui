@@ -30,6 +30,7 @@ export default function CheckboxIndeterminateDemo() {
   return (
     <div className="flex flex-col gap-3">
       <Checkbox
+        aria-label="Email notifications"
         label="Email notifications"
         description="Choose the channels you want to hear about."
         checked={allChecked}
@@ -43,6 +44,7 @@ export default function CheckboxIndeterminateDemo() {
         {channels.map((channel) => (
           <Checkbox
             key={channel.id}
+            aria-label={channel.label}
             label={channel.label}
             description={channel.description}
             checked={selected.includes(channel.id)}

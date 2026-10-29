@@ -45,28 +45,14 @@ function Checkbox({
   description,
   size,
   indeterminate = false,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
   ...props
 }: CheckboxProps) {
   const ui = theme({ size });
-  const id = React.useId();
-  const labelId = `${id}-label`;
-  const descriptionId = `${id}-description`;
 
   return (
     <UICheckbox.Root
       {...props}
       indeterminate={indeterminate}
-      aria-label={ariaLabel}
-      aria-labelledby={
-        ariaLabelledBy ??
-        (label != null && ariaLabel == null ? labelId : undefined)
-      }
-      aria-describedby={
-        ariaDescribedBy ?? (description != null ? descriptionId : undefined)
-      }
       data-slot="root"
       className={cn(ui.root(), className)}
     >
@@ -96,16 +82,12 @@ function Checkbox({
       {label || description ? (
         <span data-slot="wrapper" className={ui.wrapper()}>
           {label ? (
-            <span id={labelId} data-slot="label" className={ui.label()}>
+            <span data-slot="label" className={ui.label()}>
               {label}
             </span>
           ) : null}
           {description ? (
-            <span
-              id={descriptionId}
-              data-slot="description"
-              className={ui.description()}
-            >
+            <span data-slot="description" className={ui.description()}>
               {description}
             </span>
           ) : null}

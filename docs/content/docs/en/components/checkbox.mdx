@@ -35,7 +35,7 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Visible label, also used as the checkbox's accessible name. |
+| `label` | `ReactNode` | — | Visible label only; use `aria-label` or `aria-labelledby` for the accessible name. |
 | `description` | `ReactNode` | — | Supporting copy under the label. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Tile, icon, and text size. |
 | `checked` | `boolean` | — | Controlled checked state. |
@@ -53,4 +53,4 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 
 `style` is intentionally not supported: the glass theme owns the tile visuals. Use `className` for root layout and tune the shared `--ui-*` tokens for theming.
 
-Base UI supplies the `checkbox` role, `aria-checked` (including `mixed`), focus management, the hidden native input, and form submission. `label` or `aria-label` / `aria-labelledby` provides the accessible name.
+Base UI supplies the `checkbox` role, `aria-checked` (including `mixed`), focus management, the hidden native input, and form submission. `label` is not wired automatically; provide the accessible name with `aria-label` or `aria-labelledby`.
