@@ -44,7 +44,8 @@ export default tv({
     ],
     indicatorIcon: "block size-[var(--ui-checkbox-icon-size)]",
     wrapper: "ms-[var(--ui-checkbox-gap)] min-w-0",
-    label: "block font-medium text-ui-ink",
+    label:
+      "block font-medium text-ui-ink leading-[var(--ui-checkbox-size)]",
     description: "block text-ui-ink opacity-60",
   },
   variants: {
