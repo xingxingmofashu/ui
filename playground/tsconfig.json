@@ -12,7 +12,6 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "types": ["vite/client", "node"],
-    "baseUrl": ".",
     "paths": {
       "@xingxingmofashu/ui": ["../src/index.ts"]
     }

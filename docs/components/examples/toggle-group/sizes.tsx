@@ -1,8 +1,14 @@
 "use client";
 
-import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu/ui";
+import { ToggleGroup } from "@xingxingmofashu/ui";
 
 const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+
+const items = [
+  { value: "one", label: "One" },
+  { value: "two", label: "Two" },
+  { value: "three", label: "Three" },
+];
 
 export default function ToggleGroupSizesDemo() {
   return (
@@ -13,17 +19,8 @@ export default function ToggleGroupSizesDemo() {
             aria-label={`${size} toggle group`}
             defaultValue={["one"]}
             size={size}
-          >
-            <ToggleGroupItem value="one" aria-label="One">
-              One
-            </ToggleGroupItem>
-            <ToggleGroupItem value="two" aria-label="Two">
-              Two
-            </ToggleGroupItem>
-            <ToggleGroupItem value="three" aria-label="Three">
-              Three
-            </ToggleGroupItem>
-          </ToggleGroup>
+            items={items}
+          />
           <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-ui-ink/60">
             {size}
           </span>

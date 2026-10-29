@@ -3,7 +3,7 @@
 import { LayoutGrid, List } from "lucide-react";
 import { useState } from "react";
 
-import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu/ui";
+import { ToggleGroup } from "@xingxingmofashu/ui";
 
 export default function ToggleGroupBasicDemo() {
   const [value, setValue] = useState<string[]>(["grid"]);
@@ -11,18 +11,15 @@ export default function ToggleGroupBasicDemo() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <ToggleGroup aria-label="View" value={value} onValueChange={setValue}>
-        <ToggleGroupItem
-          value="grid"
-          aria-label="Grid"
-          icon={<LayoutGrid />}
-        >
-          Grid
-        </ToggleGroupItem>
-        <ToggleGroupItem value="list" aria-label="List" icon={<List />}>
-          List
-        </ToggleGroupItem>
-      </ToggleGroup>
+      <ToggleGroup
+        aria-label="View"
+        value={value}
+        onValueChange={setValue}
+        items={[
+          { value: "grid", label: "Grid", icon: <LayoutGrid /> },
+          { value: "list", label: "List", icon: <List /> },
+        ]}
+      />
       <p className="text-sm text-ui-ink/60">
         Current view:{" "}
         {selected === "grid" ? "Grid" : selected === "list" ? "List" : "None"}

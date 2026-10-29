@@ -1,11 +1,17 @@
 import { LayoutGrid, List } from "lucide-react";
 import { useState } from "react";
 
-import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu/ui";
+import { ToggleGroup } from "@xingxingmofashu/ui";
 
 import { Caption, DemoGroup, Status } from "../demo";
 
 const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+
+const sizeItems = [
+  { value: "one", label: "One" },
+  { value: "two", label: "Two" },
+  { value: "three", label: "Three" },
+];
 
 function ToggleGroupPreview() {
   const [view, setView] = useState<string[]>(["grid"]);
@@ -15,18 +21,15 @@ function ToggleGroupPreview() {
     <>
       <DemoGroup label="Controlled">
         <div className="flex flex-col items-start gap-3">
-          <ToggleGroup aria-label="View" value={view} onValueChange={setView}>
-            <ToggleGroupItem
-              value="grid"
-              aria-label="Grid"
-              icon={<LayoutGrid />}
-            >
-              Grid
-            </ToggleGroupItem>
-            <ToggleGroupItem value="list" aria-label="List" icon={<List />}>
-              List
-            </ToggleGroupItem>
-          </ToggleGroup>
+          <ToggleGroup
+            aria-label="View"
+            value={view}
+            onValueChange={setView}
+            items={[
+              { value: "grid", label: "Grid", icon: <LayoutGrid /> },
+              { value: "list", label: "List", icon: <List /> },
+            ]}
+          />
           <Status>
             Current view:{" "}
             {selected === "grid"
@@ -46,11 +49,8 @@ function ToggleGroupPreview() {
                 aria-label={`${size} toggle group`}
                 size={size}
                 defaultValue={["one"]}
-              >
-                <ToggleGroupItem value="one">One</ToggleGroupItem>
-                <ToggleGroupItem value="two">Two</ToggleGroupItem>
-                <ToggleGroupItem value="three">Three</ToggleGroupItem>
-              </ToggleGroup>
+                items={sizeItems}
+              />
               <Caption>{size}</Caption>
             </div>
           ))}
@@ -62,11 +62,12 @@ function ToggleGroupPreview() {
           aria-label="Text style"
           multiple
           defaultValue={["bold", "italic"]}
-        >
-          <ToggleGroupItem value="bold">Bold</ToggleGroupItem>
-          <ToggleGroupItem value="italic">Italic</ToggleGroupItem>
-          <ToggleGroupItem value="underline">Underline</ToggleGroupItem>
-        </ToggleGroup>
+          items={[
+            { value: "bold", label: "Bold" },
+            { value: "italic", label: "Italic" },
+            { value: "underline", label: "Underline" },
+          ]}
+        />
       </DemoGroup>
 
       <DemoGroup label="Orientation">
@@ -75,11 +76,12 @@ function ToggleGroupPreview() {
             <ToggleGroup
               aria-label="Horizontal position"
               defaultValue={["left"]}
-            >
-              <ToggleGroupItem value="left">Left</ToggleGroupItem>
-              <ToggleGroupItem value="center">Center</ToggleGroupItem>
-              <ToggleGroupItem value="right">Right</ToggleGroupItem>
-            </ToggleGroup>
+              items={[
+                { value: "left", label: "Left" },
+                { value: "center", label: "Center" },
+                { value: "right", label: "Right" },
+              ]}
+            />
             <Caption>horizontal</Caption>
           </div>
 
@@ -88,11 +90,12 @@ function ToggleGroupPreview() {
               aria-label="Vertical position"
               orientation="vertical"
               defaultValue={["top"]}
-            >
-              <ToggleGroupItem value="top">Top</ToggleGroupItem>
-              <ToggleGroupItem value="middle">Middle</ToggleGroupItem>
-              <ToggleGroupItem value="bottom">Bottom</ToggleGroupItem>
-            </ToggleGroup>
+              items={[
+                { value: "top", label: "Top" },
+                { value: "middle", label: "Middle" },
+                { value: "bottom", label: "Bottom" },
+              ]}
+            />
             <Caption>vertical</Caption>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react";
 
-import { ToggleGroup, ToggleGroupItem } from "@xingxingmofashu/ui";
+import { ToggleGroup } from "@xingxingmofashu/ui";
 
 import { useTheme } from "../theme";
 
@@ -19,14 +19,11 @@ function ThemeToggle() {
           setTheme(next);
         }
       }}
-    >
-      <ToggleGroupItem value="light" aria-label="Light theme" icon={<Sun />}>
-        Light
-      </ToggleGroupItem>
-      <ToggleGroupItem value="dark" aria-label="Dark theme" icon={<Moon />}>
-        Dark
-      </ToggleGroupItem>
-    </ToggleGroup>
+      items={[
+        { value: "light", label: "Light", icon: <Sun /> },
+        { value: "dark", label: "Dark", icon: <Moon /> },
+      ]}
+    />
   );
 }
 

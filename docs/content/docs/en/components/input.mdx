@@ -1,0 +1,49 @@
+---
+title: "Input"
+description: "A liquid glass text field with a label, description, and icon slots."
+---
+
+`Input` wraps Base UI's `Input` in a glass control. It renders a native `<input>`, an optional label and description, and optional leading and trailing icons.
+
+The visible label is a real `<label>` associated with the input. `description` is visual only; when supporting copy should be announced by screen readers, pass `aria-describedby` yourself.
+
+## Basic example
+
+Use `value` with `onValueChange` for a controlled field, or `defaultValue` for an uncontrolled one. All native input attributes such as `type`, `name`, `placeholder`, `required`, and `readOnly` are forwarded.
+
+<Example name="input/basic" />
+
+## Sizes
+
+Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, radius, text, and icon sizes scale together.
+
+<Example name="input/sizes" />
+
+## Icons
+
+`leadingIcon` renders before the input and `trailingIcon` after it. Both slots are decorative and receive `aria-hidden="true"`; use the label or `aria-label` for the accessible name.
+
+<Example name="input/icons" />
+
+## States
+
+`disabled` is forwarded to the native input and fades the whole field. `readOnly` keeps the value focusable and selectable while preventing edits.
+
+<Example name="input/states" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible label associated with the input. |
+| `description` | `ReactNode` | — | Supporting text under the control. It is not linked automatically. |
+| `leadingIcon` | `ReactNode` | — | Decorative icon before the input. |
+| `trailingIcon` | `ReactNode` | — | Decorative icon after the input. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, radius, text, and icon size. |
+| `className` | `string` | — | Tailwind classes merged into the outer root. |
+
+`Input` forwards the rest of Base UI `Input`'s props, including `value`, `defaultValue`, `onValueChange`, `type`, `placeholder`, `name`, `id`, `disabled`, `readOnly`, `required`, and `ref`.
+
+When no visible `label` is rendered, provide `aria-label` or `aria-labelledby` yourself. To expose a visible description to assistive technology, pass `aria-describedby` pointing at your own element.
+
+`style` is intentionally not supported: the glass theme owns the control surface. Use `className` for root layout and tune the shared `--ui-*` tokens for theme changes.

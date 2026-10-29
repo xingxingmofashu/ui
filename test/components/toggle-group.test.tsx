@@ -3,10 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "../../src/components/toggle-group";
+import { ToggleGroup } from "../../src/components/toggle-group";
 import theme from "../../src/theme/toggle-group";
 
 function getGroup(name: string) {
@@ -35,17 +32,27 @@ function getItems(group: HTMLElement) {
 
 function ThemeGroup() {
   return (
-    <ToggleGroup defaultValue={["light"]} aria-label="Theme">
-      <ToggleGroupItem value="light" aria-label="Light">
-        <svg data-testid="light-icon" />
-      </ToggleGroupItem>
-      <ToggleGroupItem value="dark" aria-label="Dark">
-        <svg data-testid="dark-icon" />
-      </ToggleGroupItem>
-      <ToggleGroupItem value="dim" aria-label="Dim">
-        <svg data-testid="dim-icon" />
-      </ToggleGroupItem>
-    </ToggleGroup>
+    <ToggleGroup
+      defaultValue={["light"]}
+      aria-label="Theme"
+      items={[
+        {
+          value: "light",
+          "aria-label": "Light",
+          icon: <svg data-testid="light-icon" />,
+        },
+        {
+          value: "dark",
+          "aria-label": "Dark",
+          icon: <svg data-testid="dark-icon" />,
+        },
+        {
+          value: "dim",
+          "aria-label": "Dim",
+          icon: <svg data-testid="dim-icon" />,
+        },
+      ]}
+    />
   );
 }
 
@@ -64,50 +71,49 @@ describe("ToggleGroup", () => {
       expect(items[2]).toHaveAttribute("aria-pressed", "false");
     });
 
-    it("uses children as the item accessible name", () => {
+    it("uses the item label as the accessible name", () => {
       render(
-        <ToggleGroup aria-label="View">
-          <ToggleGroupItem value="grid">Grid</ToggleGroupItem>
-          <ToggleGroupItem value="list">List</ToggleGroupItem>
-        </ToggleGroup>,
+        <ToggleGroup
+          aria-label="View"
+          items={[
+            { value: "grid", label: "Grid" },
+            { value: "list", label: "List" },
+          ]}
+        />,
       );
 
-      expect(
-        screen.getByRole("button", { name: "Grid" }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: "List" }),
-      ).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Grid" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "List" })).toBeInTheDocument();
     });
 
     it("supports aria-labelledby for icon-only items", () => {
       render(
         <>
           <span id="bold-label">Bold</span>
-          <ToggleGroup aria-label="Formatting">
-            <ToggleGroupItem
-              value="bold"
-              aria-labelledby="bold-label"
-              icon={<svg />}
-            />
-          </ToggleGroup>
+          <ToggleGroup
+            aria-label="Formatting"
+            items={[
+              {
+                value: "bold",
+                "aria-labelledby": "bold-label",
+                icon: <svg />,
+              },
+            ]}
+          />
         </>,
       );
 
-      expect(
-        screen.getByRole("button", { name: "Bold" }),
-      ).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Bold" })).toBeInTheDocument();
     });
 
     it("hides an icon from assistive technology when the item has a name", () => {
       render(
-        <ToggleGroup aria-label="Theme">
-          <ToggleGroupItem
-            value="light"
-            aria-label="Light"
-            icon={<svg />}
-          />
-        </ToggleGroup>,
+        <ToggleGroup
+          aria-label="Theme"
+          items={[
+            { value: "light", "aria-label": "Light", icon: <svg /> },
+          ]}
+        />,
       );
 
       const item = screen.getByRole("button", { name: "Light" });
@@ -124,27 +130,26 @@ describe("ToggleGroup", () => {
       const glass = getSlot(group, "glass");
 
       expect(glass).toHaveAttribute("aria-hidden", "true");
-      expect(glass).toHaveClass(
-        "overflow-hidden",
-        "ui-glass",
-        "ui-glass-inner",
+      expect(glass).toHaveClass("overflow-hidden", "ui-glass", "ui-glass-inner");
+      expect(glass.querySelector('[data-layer="rim"]')).toHaveClass(
+        "ui-glass-rim",
       );
-      expect(
-        glass.querySelector('[data-layer="rim"]'),
-      ).toHaveClass("ui-glass-rim");
     });
 
     it("applies className to the group and item roots", () => {
       render(
-        <ToggleGroup aria-label="Styled" className="custom-root">
-          <ToggleGroupItem
-            value="one"
-            className="custom-item"
-            icon={<svg />}
-          >
-            One
-          </ToggleGroupItem>
-        </ToggleGroup>,
+        <ToggleGroup
+          aria-label="Styled"
+          className="custom-root"
+          items={[
+            {
+              value: "one",
+              label: "One",
+              icon: <svg />,
+              className: "custom-item",
+            },
+          ]}
+        />,
       );
 
       const group = getGroup("Styled");
@@ -163,11 +168,18 @@ describe("ToggleGroup", () => {
 
     it("merges Tailwind classes with the themed roots", () => {
       render(
-        <ToggleGroup aria-label="Merged" className="rounded-none">
-          <ToggleGroupItem value="one" aria-label="One" className="rounded-none">
-            One
-          </ToggleGroupItem>
-        </ToggleGroup>,
+        <ToggleGroup
+          aria-label="Merged"
+          className="rounded-none"
+          items={[
+            {
+              value: "one",
+              label: "One",
+              "aria-label": "One",
+              className: "rounded-none",
+            },
+          ]}
+        />,
       );
 
       const group = getGroup("Merged");
@@ -183,17 +195,18 @@ describe("ToggleGroup", () => {
       const element = (
         <>
           {/* @ts-expect-error ToggleGroup no longer accepts a ui prop. */}
-          <ToggleGroup aria-label="Internal" ui={{ root: "rounded-none" }}>
-            <ToggleGroupItem value="one" aria-label="One" />
-          </ToggleGroup>
-          <ToggleGroup aria-label="Internal">
-            <ToggleGroupItem
-              value="one"
-              aria-label="One"
-              // @ts-expect-error ToggleGroupItem no longer accepts a ui prop.
-              ui={{ root: "rounded-none" }}
-            />
-          </ToggleGroup>
+          <ToggleGroup aria-label="Internal" ui={{ root: "rounded-none" }} items={[{ value: "one", label: "One" }]} />
+          <ToggleGroup
+            aria-label="Internal"
+            items={[
+              {
+                value: "one",
+                label: "One",
+                // @ts-expect-error Toggle group items no longer accept a ui prop.
+                ui: { root: "rounded-none" },
+              },
+            ]}
+          />
         </>
       );
 
@@ -204,17 +217,18 @@ describe("ToggleGroup", () => {
       const element = (
         <>
           {/* @ts-expect-error The glass theme owns inline styles. */}
-          <ToggleGroup aria-label="Styled" style={{ opacity: 0.5 }}>
-            <ToggleGroupItem value="one" aria-label="One" />
-          </ToggleGroup>
-          <ToggleGroup aria-label="Styled">
-            <ToggleGroupItem
-              value="one"
-              aria-label="One"
-              // @ts-expect-error The glass theme owns inline styles.
-              style={{ opacity: 0.5 }}
-            />
-          </ToggleGroup>
+          <ToggleGroup aria-label="Styled" style={{ opacity: 0.5 }} items={[{ value: "one", label: "One" }]} />
+          <ToggleGroup
+            aria-label="Styled"
+            items={[
+              {
+                value: "one",
+                label: "One",
+                // @ts-expect-error The glass theme owns inline styles.
+                style: { opacity: 0.5 },
+              },
+            ]}
+          />
         </>
       );
 
@@ -225,9 +239,11 @@ describe("ToggleGroup", () => {
       const ref = createRef<HTMLDivElement>();
 
       render(
-        <ToggleGroup ref={ref} aria-label="Ref group">
-          <ToggleGroupItem value="one" aria-label="One" />
-        </ToggleGroup>,
+        <ToggleGroup
+          ref={ref}
+          aria-label="Ref group"
+          items={[{ value: "one", label: "One" }]}
+        />,
       );
 
       expect(ref.current).toBe(getGroup("Ref group"));
@@ -235,9 +251,11 @@ describe("ToggleGroup", () => {
 
     it("applies the default md size and supports every size", () => {
       const { rerender } = render(
-        <ToggleGroup aria-label="Sized" defaultValue={["one"]}>
-          <ToggleGroupItem value="one" aria-label="One" icon={<svg />} />
-        </ToggleGroup>,
+        <ToggleGroup
+          aria-label="Sized"
+          defaultValue={["one"]}
+          items={[{ value: "one", label: "One", icon: <svg /> }]}
+        />,
       );
 
       let group = getGroup("Sized");
@@ -248,9 +266,12 @@ describe("ToggleGroup", () => {
       expect(item).toHaveClass("text-[length:var(--ui-toggle-group-font-size)]");
 
       rerender(
-        <ToggleGroup aria-label="Sized" size="xs" defaultValue={["one"]}>
-          <ToggleGroupItem value="one" aria-label="One" icon={<svg />} />
-        </ToggleGroup>,
+        <ToggleGroup
+          aria-label="Sized"
+          size="xs"
+          defaultValue={["one"]}
+          items={[{ value: "one", label: "One", icon: <svg /> }]}
+        />,
       );
 
       group = getGroup("Sized");
@@ -267,11 +288,8 @@ describe("ToggleGroup", () => {
           multiple
           orientation="vertical"
           defaultValue={["bold"]}
-        >
-          <ToggleGroupItem value="bold" aria-label="Bold">
-            Bold
-          </ToggleGroupItem>
-        </ToggleGroup>,
+          items={[{ value: "bold", label: "Bold" }]}
+        />,
       );
 
       const group = getGroup("Formatting");
@@ -291,14 +309,11 @@ describe("ToggleGroup", () => {
           aria-label="Theme"
           defaultValue={["light"]}
           onValueChange={onValueChange}
-        >
-          <ToggleGroupItem value="light" aria-label="Light">
-            Light
-          </ToggleGroupItem>
-          <ToggleGroupItem value="dark" aria-label="Dark">
-            Dark
-          </ToggleGroupItem>
-        </ToggleGroup>,
+          items={[
+            { value: "light", label: "Light" },
+            { value: "dark", label: "Dark" },
+          ]}
+        />,
       );
 
       const light = screen.getByRole("button", { name: "Light" });
@@ -321,14 +336,11 @@ describe("ToggleGroup", () => {
           aria-label="Formatting"
           multiple
           onValueChange={onValueChange}
-        >
-          <ToggleGroupItem value="bold" aria-label="Bold">
-            Bold
-          </ToggleGroupItem>
-          <ToggleGroupItem value="italic" aria-label="Italic">
-            Italic
-          </ToggleGroupItem>
-        </ToggleGroup>,
+          items={[
+            { value: "bold", label: "Bold" },
+            { value: "italic", label: "Italic" },
+          ]}
+        />,
       );
 
       const bold = screen.getByRole("button", { name: "Bold" });
@@ -351,14 +363,11 @@ describe("ToggleGroup", () => {
           aria-label="Theme"
           value={["light"]}
           onValueChange={onValueChange}
-        >
-          <ToggleGroupItem value="light" aria-label="Light">
-            Light
-          </ToggleGroupItem>
-          <ToggleGroupItem value="dark" aria-label="Dark">
-            Dark
-          </ToggleGroupItem>
-        </ToggleGroup>,
+          items={[
+            { value: "light", label: "Light" },
+            { value: "dark", label: "Dark" },
+          ]}
+        />,
       );
 
       const light = screen.getByRole("button", { name: "Light" });
@@ -381,11 +390,8 @@ describe("ToggleGroup", () => {
           aria-label="Theme"
           disabled
           onValueChange={onValueChange}
-        >
-          <ToggleGroupItem value="light" aria-label="Light">
-            Light
-          </ToggleGroupItem>
-        </ToggleGroup>,
+          items={[{ value: "light", label: "Light" }]}
+        />,
       );
 
       const group = getGroup("Theme");
@@ -397,6 +403,30 @@ describe("ToggleGroup", () => {
       await user.click(light);
 
       expect(light).toHaveAttribute("aria-pressed", "false");
+      expect(onValueChange).not.toHaveBeenCalled();
+    });
+
+    it("disables a single item", async () => {
+      const user = userEvent.setup();
+      const onValueChange = vi.fn();
+
+      render(
+        <ToggleGroup
+          aria-label="Theme"
+          onValueChange={onValueChange}
+          items={[
+            { value: "light", label: "Light" },
+            { value: "dark", label: "Dark", disabled: true },
+          ]}
+        />,
+      );
+
+      const dark = screen.getByRole("button", { name: "Dark" });
+
+      expect(dark).toBeDisabled();
+
+      await user.click(dark);
+
       expect(onValueChange).not.toHaveBeenCalled();
     });
 

@@ -20,7 +20,7 @@ export const translations = i18n
 export function baseOptions(locale: string): BaseLayoutProps {
   return {
     nav: {
-      url: `/${locale}`,
+      url: `/docs/${locale}`,
       title: (
         <span className="inline-flex items-center gap-2">
           <span

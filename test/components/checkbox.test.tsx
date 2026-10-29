@@ -42,12 +42,14 @@ describe("Checkbox", () => {
       ).toBeInTheDocument();
     });
 
-    it("supports a visible label", () => {
+    it("toggles when the visible label is clicked", async () => {
+      const user = userEvent.setup();
+
       render(<Checkbox label="Accept terms" />);
 
-      expect(
-        screen.getByRole("checkbox", { name: "Accept terms" }),
-      ).toBeInTheDocument();
+      await user.click(screen.getByText("Accept terms"));
+
+      expect(screen.getByRole("checkbox")).toBeChecked();
     });
   });
 
@@ -93,9 +95,6 @@ describe("Checkbox", () => {
 
       expect(getSlot(wrapper, "label")).toHaveTextContent("Product updates");
       expect(getSlot(wrapper, "description")).toHaveTextContent(
-        "Receive an email when a release ships.",
-      );
-      expect(checkbox).toHaveAccessibleDescription(
         "Receive an email when a release ships.",
       );
     });

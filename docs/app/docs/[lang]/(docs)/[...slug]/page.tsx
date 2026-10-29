@@ -12,11 +12,11 @@ import { isLocale } from "@/lib/i18n";
 import { source } from "@/lib/source";
 
 type PageProps = {
-  params: Promise<{ lang: string; slug?: string[] }>;
+  params: Promise<{ lang: string; slug: string[] }>;
 };
 
 export function generateStaticParams() {
-  return source.generateParams();
+  return source.generateParams().filter(({ slug }) => slug.length > 0);
 }
 
 export async function generateMetadata({
@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { lang, slug } = await params;
   if (!isLocale(lang)) return {};
 
-  const page = source.getPage(slug ?? [], lang);
+  const page = source.getPage(slug, lang);
   if (!page) return {};
 
   return {
@@ -38,7 +38,7 @@ export default async function Page({ params }: PageProps) {
   const { lang, slug } = await params;
   if (!isLocale(lang)) notFound();
 
-  const page = source.getPage(slug ?? [], lang);
+  const page = source.getPage(slug, lang);
   if (!page) notFound();
 
   const MDX = page.data.body;

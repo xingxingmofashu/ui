@@ -22,16 +22,19 @@ function CheckboxPreview() {
       <DemoGroup label="Basic">
         <div className="flex flex-col gap-4">
           <Checkbox
+            aria-label="Product updates"
             label="Product updates"
             description="Receive an email when a new release ships."
             defaultChecked
           />
           <Checkbox
+            aria-label="Security alerts"
             label="Security alerts"
             description="Get notified about sign-ins from new devices."
             defaultChecked
           />
           <Checkbox
+            aria-label="Research invites"
             label="Research invites"
             description="Occasional invitations to product interviews."
           />
@@ -44,6 +47,7 @@ function CheckboxPreview() {
             <Checkbox
               key={size}
               size={size}
+              aria-label={`Size ${size}`}
               label={`Size ${size}`}
               defaultChecked
             />
@@ -54,6 +58,7 @@ function CheckboxPreview() {
       <DemoGroup label="Indeterminate">
         <div className="flex flex-col gap-3">
           <Checkbox
+            aria-label="Email notifications"
             label="Email notifications"
             description="Choose the channels you want to hear about."
             checked={allChecked}
@@ -67,6 +72,7 @@ function CheckboxPreview() {
             {channels.map((channel) => (
               <Checkbox
                 key={channel.id}
+                aria-label={channel.label}
                 label={channel.label}
                 checked={selected.includes(channel.id)}
                 onCheckedChange={(checked) =>

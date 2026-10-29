@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { DocsRootProvider } from "@/components/docs-root-provider";
-import { i18n, isLocale, locales } from "@/lib/i18n";
+import { isLocale, locales } from "@/lib/i18n";
 import { translations } from "@/lib/layout.shared";
 
-import "../globals.css";
+import "../../globals.css";
 
 export const metadata: Metadata = {
   title: {

@@ -49,14 +49,14 @@ export function HomePageContent({ lang }: { lang: Locale }) {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
-            href={`/${lang}/docs/get-started`}
+            href={`/docs/${lang}/get-started`}
             className="inline-flex h-9 items-center gap-2 rounded-full bg-fd-foreground px-4 text-sm font-medium text-fd-background transition-opacity hover:opacity-85"
           >
             {copy.readDocs}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
           <Link
-            href={`/${lang}/docs/components/button`}
+            href={`/docs/${lang}/components/button`}
             className="inline-flex h-9 items-center gap-2 rounded-full border border-fd-border bg-fd-background/70 px-4 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
           >
             {copy.viewComponents}
