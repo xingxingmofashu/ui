@@ -1,0 +1,81 @@
+---
+title: "Toast"
+description: "Transient liquid glass notifications with stacking, actions, promise states, and six screen positions."
+---
+
+`ToastProvider` wraps Base UI's `Toast.Provider`. It renders the portal, viewport, and the liquid glass toast stack internally; call `useToast()` inside it to add, update, close, or track notifications.
+
+Render one provider near the app root. Each provider owns a separate viewport, so pass the same `toastManager` to it when you also create toasts outside React.
+
+## Basic example
+
+`add` queues a toast with a title, description, and optional type. Toasts dismiss after `timeout` (5000 ms by default), and the timer pauses while the viewport is hovered or focused.
+
+<Example name="toast/basic" />
+
+## Types
+
+`type` selects a built-in status icon: `info`, `success`, `warning`, `error`, or `loading`. Unknown types still render, just without an icon. Use `priority: "high"` for an assertive announcement.
+
+<Example name="toast/types" />
+
+`loading` is rendered automatically by `toast.promise`, so it is usually not created directly.
+
+## Actions
+
+`actionProps` renders an action button inside the toast. Base UI forwards `children` and native button props; close the toast yourself from `onClick` when the action is complete.
+
+<Example name="toast/action" />
+
+## Promise toasts
+
+`toast.promise` starts with a loading toast and updates the same toast to success or error when the promise settles.
+
+<Example name="toast/promise" />
+
+## Positions
+
+`position` anchors the stack to a corner or edge: `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, or `bottom-right`. Toasts stack away from the nearest edge, and swipe dismissal follows the vertical placement.
+
+<Example name="toast/positions" />
+
+## Props
+
+### ToastProvider
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | App content that can call `useToast()`. |
+| `position` | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-right"` | Corner or edge where the stack is anchored. |
+| `closeLabel` | `string` | `"Dismiss"` | Accessible label for the close button. |
+| `viewportLabel` | `string` | `"Notifications"` | Accessible label for the notification region. |
+| `timeout` | `number` | `5000` | Default auto-dismiss delay in milliseconds; `0` keeps toasts open. |
+| `limit` | `number` | `3` | Maximum number of rendered toasts. Older toasts receive `data-limited`. |
+| `toastManager` | `ToastManager` | — | Global manager created with `createToastManager`. |
+| `className` | `string` | — | Tailwind classes merged into the viewport. |
+
+### useToast
+
+`useToast()` returns Base UI's toast manager. It is also available from `@xingxingmofashu/ui/composables/use-toast`.
+
+| Method | Description |
+| --- | --- |
+| `add(options)` | Adds a toast and returns its ID. |
+| `update(id, options)` | Updates an existing toast. |
+| `close(id?)` | Closes one toast, or every toast when `id` is omitted. |
+| `promise(promise, options)` | Tracks a promise with `loading`, `success`, and `error` options. |
+| `toasts` | The current toast objects. |
+
+`add` accepts Base UI's `ToastManagerAddOptions`: `title`, `description`, `type`, `timeout`, `priority`, `actionProps`, and `data`.
+
+`createToastManager` is available from `@xingxingmofashu/ui/composables/create-toast-manager` for toasts created outside React. Attach the manager with the `toastManager` prop before adding notifications so the provider can receive them.
+
+## Accessibility
+
+Base UI renders the viewport as a live region, gives high-priority toasts an `alertdialog` role and the rest a `dialog` role, connects titles and descriptions with `aria-labelledby` and `aria-describedby`, and supports F6 focus entry plus swipe dismissal. Timers pause while the viewport is hovered or focused.
+
+Use `closeLabel` and `viewportLabel` to localize the built-in accessible names.
+
+## Styling
+
+The glass surface, stack geometry, and motion are internal. `style` is not supported; tune the shared `--ui-glass-*` tokens or merge layout classes into the viewport with `className`.

@@ -16,6 +16,7 @@
     "alert-dialog",
     "dialog",
     "drawer",
-    "popover"
+    "popover",
+    "toast"
   ]
 }

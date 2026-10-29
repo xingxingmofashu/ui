@@ -1,0 +1,81 @@
+---
+title: "Toast"
+description: "支持堆叠、操作、Promise 状态和六种屏幕位置的液态玻璃通知。"
+---
+
+`ToastProvider` 是 Base UI `Toast.Provider` 的一体化封装。它内部渲染 Portal、Viewport 和液态玻璃 toast 栈；在 Provider 内调用 `useToast()` 即可添加、更新、关闭或跟踪通知。
+
+建议在应用根部渲染一个 Provider。每个 Provider 拥有独立的 Viewport；如果还需要在 React 外创建通知，请把同一个 `toastManager` 传给它。
+
+## 基础示例
+
+`add` 接收标题、描述和可选的类型。Toast 默认在 `timeout`（5000 ms）后自动关闭，Viewport 被悬停或聚焦时计时会暂停。
+
+<Example name="toast/basic" />
+
+## 类型
+
+`type` 会选择内置状态图标：`info`、`success`、`warning`、`error` 或 `loading`。未知类型仍会渲染，只是不显示图标。`priority: "high"` 会使用更紧急的无障碍播报。
+
+<Example name="toast/types" />
+
+`loading` 通常由 `toast.promise` 自动生成，不需要直接创建。
+
+## 操作按钮
+
+`actionProps` 会在 Toast 内渲染操作按钮。Base UI 会透传 `children` 和原生 button 属性；操作完成后需要在 `onClick` 中自行关闭 Toast。
+
+<Example name="toast/action" />
+
+## Promise 通知
+
+`toast.promise` 会先显示 loading Toast，并在 Promise 完成或失败时把同一个 Toast 更新为 success 或 error。
+
+<Example name="toast/promise" />
+
+## 位置
+
+`position` 会把通知栈固定在某个角落或边缘：`top-left`、`top-center`、`top-right`、`bottom-left`、`bottom-center` 或 `bottom-right`。Toast 会朝远离最近边缘的方向堆叠，滑动关闭方向也会跟随上下位置变化。
+
+<Example name="toast/positions" />
+
+## Props
+
+### ToastProvider
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | 可以调用 `useToast()` 的应用内容。 |
+| `position` | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-right"` | 通知栈固定的角落或边缘。 |
+| `closeLabel` | `string` | `"Dismiss"` | 关闭按钮的可访问名称。 |
+| `viewportLabel` | `string` | `"Notifications"` | 通知区域的可访问名称。 |
+| `timeout` | `number` | `5000` | 默认自动关闭延时（毫秒）；`0` 表示不自动关闭。 |
+| `limit` | `number` | `3` | 最多同时渲染的 Toast 数量；超出的旧 Toast 会带上 `data-limited`。 |
+| `toastManager` | `ToastManager` | — | 由 `createToastManager` 创建的全局管理器。 |
+| `className` | `string` | — | 合并到 Viewport 的 Tailwind 类名。 |
+
+### useToast
+
+`useToast()` 返回 Base UI 的 toast manager，也可以从 `@xingxingmofashu/ui/composables/use-toast` 单独导入。
+
+| 方法 | 说明 |
+| --- | --- |
+| `add(options)` | 添加一个 Toast，并返回它的 ID。 |
+| `update(id, options)` | 更新已有的 Toast。 |
+| `close(id?)` | 关闭指定 Toast；省略 `id` 时关闭全部。 |
+| `promise(promise, options)` | 跟踪 Promise，并在 loading、success、error 之间更新。 |
+| `toasts` | 当前 Toast 对象列表。 |
+
+`add` 接受 Base UI 的 `ToastManagerAddOptions`：`title`、`description`、`type`、`timeout`、`priority`、`actionProps` 和 `data`。
+
+`createToastManager` 位于 `@xingxingmofashu/ui/composables/create-toast-manager`，用于在 React 外创建通知。请先通过 `toastManager` 属性把管理器交给 Provider，再开始添加通知，这样 Provider 才能收到事件。
+
+## 无障碍
+
+Base UI 会把 Viewport 渲染为 live region，高优先级 Toast 使用 `alertdialog` 角色，其余使用 `dialog` 角色，并通过 `aria-labelledby` 与 `aria-describedby` 关联标题和描述；同时支持 F6 进入通知区域和滑动关闭。Viewport 被悬停或聚焦时计时会暂停。
+
+使用 `closeLabel` 与 `viewportLabel` 可以本地化内置的可访问名称。
+
+## 样式
+
+玻璃表面、堆叠几何和动效都由主题接管。`style` 不被支持；请通过共享的 `--ui-glass-*` token 调整材质，或使用 `className` 合并 Viewport 的布局类名。

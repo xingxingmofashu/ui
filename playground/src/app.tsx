@@ -13,6 +13,7 @@ import { PopoverPreview } from "./previews/popover";
 import { ScrollAreaPreview } from "./previews/scroll-area";
 import { SliderPreview } from "./previews/slider";
 import { SwitchPreview } from "./previews/switch";
+import { ToastPreview } from "./previews/toast";
 import { ToggleGroupPreview } from "./previews/toggle-group";
 
 const sections = [
@@ -120,6 +121,14 @@ const sections = [
       "A glass panel with custom scrollbars for vertical, horizontal, and two-dimensional content.",
     Preview: ScrollAreaPreview,
   },
+  {
+    id: "toast",
+    index: "14",
+    title: "Toast",
+    description:
+      "Stacked glass notifications with status icons, actions, promise states, and six positions.",
+    Preview: ToastPreview,
+  },
 ] as const;
 
 function Header() {
@@ -183,7 +192,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Thirteen components · two themes
+        Fourteen components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.

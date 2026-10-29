@@ -19,6 +19,20 @@ export {
 export { Slider, type SliderProps } from "./components/slider";
 export { Switch, type SwitchProps } from "./components/switch";
 export {
+  ToastProvider,
+  type ToastPosition,
+  type ToastProviderProps,
+} from "./components/toast";
+export { createToastManager } from "./composables/create-toast-manager";
+export {
+  useToast,
+  type ToastManager,
+  type ToastManagerAddOptions,
+  type ToastManagerPromiseOptions,
+  type ToastManagerUpdateOptions,
+  type ToastObject,
+} from "./composables/use-toast";
+export {
   ToggleGroup,
   type ToggleGroupItemProps,
   type ToggleGroupProps,
