@@ -1,13 +1,11 @@
 import { i18nProvider } from "fumadocs-ui/i18n";
-import { DocsLayout } from "fumadocs-ui/layouts/glass";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { DocsRootProvider } from "@/components/docs-root-provider";
-import { i18n, isLocale, locales } from "@/lib/i18n";
-import { baseOptions, translations } from "@/lib/layout.shared";
-import { source } from "@/lib/source";
+import { isLocale, locales } from "@/lib/i18n";
+import { translations } from "@/lib/layout.shared";
 
 import "../../globals.css";
 
@@ -24,7 +22,7 @@ export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
-export default async function DocsLocaleLayout({
+export default async function LocaleLayout({
   params,
   children,
 }: {
@@ -38,9 +36,7 @@ export default async function DocsLocaleLayout({
     <html lang={lang === "zh" ? "zh-CN" : "en"} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col antialiased">
         <DocsRootProvider lang={lang} i18n={i18nProvider(translations, lang)}>
-          <DocsLayout {...baseOptions(lang)} tree={source.getPageTree(lang)}>
-            {children}
-          </DocsLayout>
+          {children}
         </DocsRootProvider>
       </body>
     </html>

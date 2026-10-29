@@ -31,19 +31,18 @@ the `/ui/` project path.
 
 ## Routes
 
-- `/` — Chinese home page.
-- `/zh` — Chinese home page alias used by the language switcher.
-- `/en` — English home page.
-- `/docs/zh` — Chinese documentation.
-- `/docs/en` — English documentation.
+- `/` — Chinese entry page.
+- `/docs/zh` — Chinese home page and documentation.
+- `/docs/en` — English home page and documentation.
 - `/api/search` — statically generated search index.
 
 ## Structure
 
 - `content/docs/zh` and `content/docs/en` — MDX content and per-locale `meta.json` files.
-- `app/(root)` — the Chinese home page at `/`.
-- `app/[lang]` — localized home pages at `/zh` and `/en`.
-- `app/docs/[lang]` — localized documentation layout and routes.
+- `app/(root)` — the Chinese entry page at `/`.
+- `app/docs/[lang]` — the single localized page tree for `/docs/zh` and `/docs/en`.
+- `app/docs/[lang]/(home)` — localized home pages.
+- `app/docs/[lang]/(docs)` — the Fumadocs layout and catch-all documentation routes.
 - `lib/i18n.ts` — locales, default language, and directory-based locale parsing.
 - `lib/source.ts` — Fumadocs loader with i18n.
 - `lib/layout.shared.tsx` — navigation, links, and UI translations.
@@ -53,7 +52,7 @@ the `/ui/` project path.
 - `components/example.tsx` — renders a live example with optional collapsible source.
 - `components/demo-stage.tsx` — shared frame for live examples.
 - `components/mdx.tsx` — exposes `Example` to MDX.
-- `app/docs/[lang]/[[...slug]]/page.tsx` — renders docs pages and their metadata.
+- `app/docs/[lang]/(docs)/[...slug]/page.tsx` — renders docs pages and their metadata.
 - `app/globals.css` — Fumadocs black theme, monochrome overrides, and UI source scanning (`../../src`).
 
 ## Conventions

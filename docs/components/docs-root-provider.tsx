@@ -31,25 +31,12 @@ export function DocsRootProvider({
               ? pathname.slice(basePath.length) || "/"
               : pathname;
           const docsLocalePrefix = `${docsPrefix}/${lang}`;
-          let nextPath: string;
-
-          if (path === docsPrefix || path.startsWith(`${docsPrefix}/`)) {
-            const rest =
-              path === docsLocalePrefix ||
-              path.startsWith(`${docsLocalePrefix}/`)
-                ? path.slice(docsLocalePrefix.length)
-                : "";
-
-            nextPath = `${docsPrefix}/${nextLocale}${rest}`;
-          } else {
-            const localePrefix = `/${lang}`;
-            const rest =
-              path === localePrefix || path.startsWith(`${localePrefix}/`)
-                ? path.slice(localePrefix.length)
-                : path;
-
-            nextPath = `/${nextLocale}${rest === "/" ? "" : rest}`;
-          }
+          const rest =
+            path === docsLocalePrefix ||
+            path.startsWith(`${docsLocalePrefix}/`)
+              ? path.slice(docsLocalePrefix.length)
+              : "";
+          const nextPath = `${docsPrefix}/${nextLocale}${rest}`;
 
           // Reload the document instead of remounting the localized layout.
           // next-themes renders its theme script again when the [lang] root
