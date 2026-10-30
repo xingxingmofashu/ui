@@ -42,6 +42,77 @@ describe("Checkbox", () => {
       ).toBeInTheDocument();
     });
 
+    it("uses the visible label as its name and links the description", () => {
+      render(
+        <Checkbox
+          label="Product updates"
+          description="Receive an email when a release ships."
+        />,
+      );
+
+      const checkbox = screen.getByRole("checkbox", {
+        name: "Product updates",
+        description: "Receive an email when a release ships.",
+      });
+      const label = getSlot(checkbox, "label");
+      const description = getSlot(checkbox, "description");
+
+      expect(checkbox).toHaveAttribute("aria-labelledby", label.id);
+      expect(checkbox).toHaveAttribute("aria-describedby", description.id);
+    });
+
+    it("merges external aria-labelledby and aria-describedby", () => {
+      render(
+        <>
+          <span id="terms-label">Terms</span>
+          <span id="terms-hint">Read carefully.</span>
+          <Checkbox
+            label="Accept terms"
+            description="You can change this later."
+            aria-labelledby="terms-label"
+            aria-describedby="terms-hint"
+          />
+        </>,
+      );
+
+      const checkbox = screen.getByRole("checkbox", { name: "Terms" });
+      const description = getSlot(checkbox, "description");
+
+      expect(checkbox).toHaveAttribute("aria-labelledby", "terms-label");
+      expect(checkbox).toHaveAttribute(
+        "aria-describedby",
+        `terms-hint ${description.id}`,
+      );
+      expect(checkbox).toHaveAccessibleDescription(
+        "Read carefully. You can change this later.",
+      );
+    });
+
+    it("keeps aria-label and still links the description", () => {
+      render(
+        <Checkbox
+          aria-label="Select all"
+          description="Applies to every row."
+        />,
+      );
+
+      const checkbox = screen.getByRole("checkbox", {
+        name: "Select all",
+        description: "Applies to every row.",
+      });
+
+      expect(checkbox).not.toHaveAttribute("aria-labelledby");
+      expect(checkbox).toHaveAttribute("aria-describedby");
+    });
+
+    it("uses a description-only control as its name", () => {
+      render(<Checkbox description="Select all" />);
+
+      const checkbox = screen.getByRole("checkbox", { name: "Select all" });
+
+      expect(checkbox).not.toHaveAttribute("aria-describedby");
+    });
+
     it("toggles when the visible label is clicked", async () => {
       const user = userEvent.setup();
 

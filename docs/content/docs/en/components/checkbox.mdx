@@ -43,11 +43,11 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
   type={{
     "label": {
       type: "ReactNode",
-      description: "Visible label rendered inside the control; it contributes to the accessible name.",
+      description: "Visible label rendered inside the control; it becomes the accessible name unless aria-label or aria-labelledby is provided.",
     },
     "description": {
       type: "ReactNode",
-      description: "Supporting copy under the label.",
+      description: "Supporting copy under the label; it is linked with aria-describedby when the control has a label or explicit name.",
     },
     "size": {
       type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
@@ -106,4 +106,4 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 
 `style` is intentionally not supported: the glass theme owns the tile visuals. Use `className` for root layout and tune the shared `--ui-*` tokens for theming.
 
-Base UI supplies the `checkbox` role, `aria-checked` (including `mixed`), focus management, the hidden native input, and form submission. `label` and `description` both render inside the control and therefore contribute to its accessible name; pass `aria-label` or `aria-labelledby` when you need a shorter or more precise name.
+Base UI supplies the `checkbox` role, `aria-checked` (including `mixed`), focus management, the hidden native input, and form submission. `label` becomes the accessible name through `aria-labelledby`; when the control has a label or explicit name, `description` is linked through `aria-describedby`. An explicit `aria-label` or `aria-labelledby` takes precedence for the name, and an explicit `aria-describedby` is merged with the description. A description-only control uses the description as its name and does not add `aria-describedby`.

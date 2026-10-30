@@ -2,6 +2,7 @@
 
 import { Slider as UISlider } from "@base-ui/react/slider";
 import { cn } from "cn";
+import * as React from "react";
 
 import theme from "../theme/slider";
 
@@ -11,20 +12,56 @@ type SliderProps<Value extends number | readonly number[] = number> = Omit<
 > & {
   /** Tailwind classes merged into the root. */
   className?: any;
+  /** Accessible name for the thumb at `index`. Useful for range sliders. */
+  getAriaLabel?: UISlider.Thumb.Props["getAriaLabel"];
+  /** Accessible value text for the thumb at `index`. */
+  getAriaValueText?: UISlider.Thumb.Props["getAriaValueText"];
 };
 
+function setAriaAttribute(
+  input: HTMLInputElement,
+  name: "aria-errormessage" | "aria-invalid",
+  value: React.AriaAttributes[typeof name],
+) {
+  if (value === undefined || value === null) {
+    input.removeAttribute(name);
+    return;
+  }
+
+  input.setAttribute(name, String(value));
+}
+
 /**
- * Sliders need an accessible name. Pass `aria-labelledby`; Base UI forwards it
- * from the root to every thumb.
+ * Sliders need an accessible name. Pass `aria-label` or `aria-labelledby`;
+ * both are forwarded from the root to every thumb. `aria-describedby` is also
+ * forwarded so supporting copy is announced with each thumb.
  */
 
 function Slider<Value extends number | readonly number[] = number>({
   className,
   value,
   defaultValue,
+  "aria-describedby": ariaDescribedBy,
+  "aria-errormessage": ariaErrorMessage,
+  "aria-invalid": ariaInvalid,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  getAriaLabel,
+  getAriaValueText,
   ...props
 }: SliderProps<Value>) {
   const ui = theme();
+  const syncThumbAria = React.useCallback(
+    (input: HTMLInputElement | null) => {
+      if (!input) {
+        return;
+      }
+
+      setAriaAttribute(input, "aria-invalid", ariaInvalid);
+      setAriaAttribute(input, "aria-errormessage", ariaErrorMessage);
+    },
+    [ariaErrorMessage, ariaInvalid],
+  );
 
   // Base UI renders one thumb per <Slider.Thumb>, so mirror value arrays to
   // support range sliders without exposing the component anatomy.
@@ -34,6 +71,8 @@ function Slider<Value extends number | readonly number[] = number>({
   return (
     <UISlider.Root
       {...props}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
       value={value}
       defaultValue={defaultValue}
       data-slot="root"
@@ -51,6 +90,12 @@ function Slider<Value extends number | readonly number[] = number>({
           <UISlider.Thumb
             key={index}
             index={index}
+            aria-describedby={ariaDescribedBy}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            getAriaLabel={getAriaLabel}
+            getAriaValueText={getAriaValueText}
+            inputRef={syncThumbAria}
             data-slot="thumb"
             className={ui.thumb()}
           >

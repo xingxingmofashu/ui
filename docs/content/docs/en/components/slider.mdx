@@ -13,7 +13,9 @@ The slider below is the real component. Its label and value are rendered outside
 
 ## Accessible name
 
-Slider does not render a visible label. Point `aria-labelledby` at a visible label; Base UI forwards it from the root to every thumb. `aria-label` and `aria-describedby` stay on the root.
+Slider does not render a visible label. Point `aria-labelledby` at a visible label, or pass `aria-label`; both are forwarded from the root to every thumb, and `aria-describedby` is forwarded as well. For range sliders, use `getAriaLabel` to name each thumb.
+
+`aria-invalid` and `aria-errormessage` are applied to the underlying `input[type="range"]`, so validation state supplied by a form library reaches the focusable control. A plain `aria-label` is shared by every thumb in a range slider; pass `getAriaLabel` when each thumb needs a distinct name.
 
 ## Range values
 
@@ -104,6 +106,22 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
     "locale": {
       type: "Intl.LocalesArgument",
       description: "Locale used for number formatting.",
+    },
+    "getAriaLabel": {
+      type: "(index: number) => string",
+      description: "Accessible name for the thumb at the given index. Use it for range sliders.",
+    },
+    "getAriaValueText": {
+      type: "(formattedValue, value, index) => string",
+      description: "Custom accessible value text for each thumb.",
+    },
+    "aria-invalid": {
+      type: "boolean | \"grammar\" | \"spelling\" | \"true\" | \"false\"",
+      description: "Marks the underlying range input as invalid.",
+    },
+    "aria-errormessage": {
+      type: "string",
+      description: "ID of the error message associated with the underlying range input.",
     },
     "disabled": {
       type: "boolean",
