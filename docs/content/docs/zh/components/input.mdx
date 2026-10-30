@@ -5,7 +5,7 @@ description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签
 
 `Input` 封装 Base UI 的 `Input`，渲染玻璃质感的输入区域、原生 `<input>`、可选标签与说明文字，以及可选的前后图标。
 
-可见标签是真实的 `<label>`，会自动与输入框关联。`description` 仅用于视觉展示；如果说明文字需要被读屏软件朗读，请自行传入 `aria-describedby`。
+可见标签是真实的 `<label>`，会自动与输入框关联。传入 `description` 时，说明文字会获得 id，输入框通过 `aria-describedby` 指向它；你传入的 `aria-describedby` 会与它合并。
 
 ## 基础示例
 
@@ -41,7 +41,7 @@ description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签
     },
     "description": {
       type: "ReactNode",
-      description: "输入框下方的说明文字，不会自动关联。",
+      description: <>{"输入框下方的说明文字，会自动通过 "}<code>{"aria-describedby"}</code>{" 关联。"}</>,
     },
     "leadingIcon": {
       type: "ReactNode",
@@ -65,6 +65,6 @@ description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签
 
 其余属性会透传给 Base UI 的 `Input`，包括 `value`、`defaultValue`、`onValueChange`、`type`、`placeholder`、`name`、`id`、`disabled`、`readOnly`、`required` 和 `ref`。
 
-没有可见 `label` 时，请自行提供 `aria-label` 或 `aria-labelledby`。如果需要让读屏软件朗读可见说明文字，请传入指向对应元素的 `aria-describedby`。
+没有可见 `label` 时，请自行提供 `aria-label` 或 `aria-labelledby`。可见 `description` 会被自动朗读；如果还需要自己的 `aria-describedby`，两个引用会合并。
 
 `style` 被有意禁用：玻璃主题接管输入区域的外观。布局请使用 `className`，主题调整请通过共享的 `--ui-*` tokens 完成。

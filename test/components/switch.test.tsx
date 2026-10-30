@@ -72,6 +72,70 @@ describe("Switch", () => {
       ).toBeInTheDocument();
     });
 
+    it("uses the visible label as its name and links the description", () => {
+      render(<Switch label="Notifications" description="Receive alerts" />);
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Notifications",
+        description: "Receive alerts",
+      });
+      const root = getRoot(switchElement);
+      const label = getSlot(root, "label");
+      const description = getSlot(root, "description");
+
+      expect(switchElement).toHaveAttribute("aria-labelledby", label.id);
+      expect(switchElement).toHaveAttribute(
+        "aria-describedby",
+        description.id,
+      );
+    });
+
+    it("merges external aria-describedby with the visible description", () => {
+      render(
+        <>
+          <span id="alerts-hint">Sent once per release.</span>
+          <Switch
+            label="Notifications"
+            description="Receive alerts"
+            aria-describedby="alerts-hint"
+          />
+        </>,
+      );
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Notifications",
+        description: "Sent once per release. Receive alerts",
+      });
+      const description = getSlot(getRoot(switchElement), "description");
+
+      expect(switchElement).toHaveAttribute(
+        "aria-describedby",
+        `alerts-hint ${description.id}`,
+      );
+    });
+
+    it("keeps aria-label and still links the description", () => {
+      render(<Switch aria-label="Notifications" description="Receive alerts" />);
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Notifications",
+        description: "Receive alerts",
+      });
+
+      expect(switchElement).not.toHaveAttribute("aria-labelledby");
+      expect(switchElement).toHaveAttribute("aria-describedby");
+    });
+
+    it("uses a description-only control as its name", () => {
+      render(<Switch description="Receive alerts" />);
+
+      const switchElement = screen.getByRole("switch", {
+        name: "Receive alerts",
+      });
+
+      expect(switchElement).not.toHaveAttribute("aria-describedby");
+    });
+
   });
 
   describe("structure", () => {
@@ -180,7 +244,7 @@ describe("Switch", () => {
       render(<Switch label="Notifications" description="Receive alerts" />);
 
       const switchElement = screen.getByRole("switch", {
-        name: /Notifications/,
+        name: "Notifications",
       });
       const root = getRoot(switchElement);
       const label = getSlot(root, "label");
@@ -191,8 +255,13 @@ describe("Switch", () => {
       expect(description.tagName).toBe("SPAN");
       expect(label).toHaveTextContent("Notifications");
       expect(description).toHaveTextContent("Receive alerts");
-      expect(switchElement).not.toHaveAttribute("aria-labelledby");
-      expect(switchElement).not.toHaveAttribute("aria-describedby");
+      expect(label).toHaveAttribute("id");
+      expect(description).toHaveAttribute("id");
+      expect(switchElement).toHaveAttribute("aria-labelledby", label.id);
+      expect(switchElement).toHaveAttribute(
+        "aria-describedby",
+        description.id,
+      );
     });
 
     it("does not render a text wrapper without label or description", () => {

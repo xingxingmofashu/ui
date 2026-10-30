@@ -9,7 +9,7 @@ description: "可访问的 React 开关，采用 Liquid Glass 滑块、标签、
 
 <Example name="switch/basic" />
 
-Base UI 的 `Switch.Root` 就是最外层元素。视觉轨道是内部的 `base` 槽位，整行（包括标签和描述）都可以点击。`label` 与 `description` 位于 root 内部，会一起参与可访问名称；需要更精确或更简短的名称时，请传入 `aria-label` 或 `aria-labelledby`。
+Base UI 的 `Switch.Root` 就是最外层元素。视觉轨道是内部的 `base` 槽位，整行（包括标签和描述）都可以点击。`label` 会通过 `aria-labelledby` 成为可访问名称；当控件有标签或显式名称时，`description` 会通过 `aria-describedby` 关联。显式传入的 `aria-label` 或 `aria-labelledby` 优先决定名称，显式传入的 `aria-describedby` 会与描述合并。只有 description 的控件会把描述作为名称，不再添加 `aria-describedby`。
 
 ## 尺寸
 
@@ -45,11 +45,11 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
   type={{
     "label": {
       type: "ReactNode",
-      description: "可见标签。",
+      description: "可见标签；未提供 aria-label 或 aria-labelledby 时会成为可访问名称。",
     },
     "description": {
       type: "ReactNode",
-      description: "辅助说明。",
+      description: "辅助说明；控件有标签或显式名称时会通过 aria-describedby 关联。",
     },
     "size": {
       type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",

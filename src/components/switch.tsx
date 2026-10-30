@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { mergeIds } from "../internal/aria";
 import theme from "../theme/switch";
 
 interface SwitchProps
@@ -77,10 +78,22 @@ function Switch({
   disabled,
   readOnly,
   onCheckedChange,
+  "aria-describedby": ariaDescribedBy,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
   ...props
 }: SwitchProps) {
   const ui = theme({ size });
   const filterId = React.useId();
+  const labelId = React.useId();
+  const descriptionId = React.useId();
+  const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
+  const labelledBy =
+    ariaLabelledBy || (label && !ariaLabel ? labelId : undefined);
+  const describedBy = mergeIds(
+    ariaDescribedBy,
+    description && hasName ? descriptionId : undefined,
+  );
   const filterStyles = {
     "--ui-switch-goo-filter": `url("#${filterId}-goo")`,
     "--ui-switch-remove-black-filter": `url("#${filterId}-remove-black")`,
@@ -113,6 +126,9 @@ function Switch({
   return (
     <UISwitch.Root
       {...props}
+      aria-describedby={describedBy}
+      aria-label={ariaLabel}
+      aria-labelledby={labelledBy}
       disabled={disabled}
       readOnly={readOnly}
       data-slot="root"
@@ -155,12 +171,16 @@ function Switch({
       {label || description ? (
         <span data-slot="wrapper" className={ui.wrapper()}>
           {label ? (
-            <span data-slot="label" className={ui.label()}>
+            <span id={labelId} data-slot="label" className={ui.label()}>
               {label}
             </span>
           ) : null}
           {description ? (
-            <span data-slot="description" className={ui.description()}>
+            <span
+              id={descriptionId}
+              data-slot="description"
+              className={ui.description()}
+            >
               {description}
             </span>
           ) : null}

@@ -61,7 +61,7 @@ describe("Input", () => {
       ).toBeInTheDocument();
     });
 
-    it("does not wire the visible description automatically", () => {
+    it("links the visible description with aria-describedby", () => {
       render(
         <Input
           label="Email"
@@ -70,12 +70,16 @@ describe("Input", () => {
       );
 
       const input = screen.getByRole("textbox", { name: "Email" });
+      const description = getSlot(getRoot(input), "description");
 
-      expect(input).not.toHaveAttribute("aria-describedby");
-      expect(getSlot(getRoot(input), "description")).not.toHaveAttribute("id");
+      expect(description).toHaveAttribute("id");
+      expect(input).toHaveAttribute("aria-describedby", description.id);
+      expect(input).toHaveAccessibleDescription(
+        "We only use this for account notices.",
+      );
     });
 
-    it("forwards aria-describedby unchanged", () => {
+    it("merges aria-describedby with the visible description", () => {
       render(
         <>
           <span id="hint">Enter your work email.</span>
@@ -88,9 +92,32 @@ describe("Input", () => {
       );
 
       const input = screen.getByRole("textbox", { name: "Email" });
+      const description = getSlot(getRoot(input), "description");
 
-      expect(input).toHaveAttribute("aria-describedby", "hint");
-      expect(input).toHaveAccessibleDescription("Enter your work email.");
+      expect(input).toHaveAttribute(
+        "aria-describedby",
+        `hint ${description.id}`,
+      );
+      expect(input).toHaveAccessibleDescription(
+        "Enter your work email. We only use this for account notices.",
+      );
+    });
+
+    it("gives each description a unique id", () => {
+      render(
+        <>
+          <Input label="Email" description="Work email." />
+          <Input label="Phone" description="Mobile number." />
+        </>,
+      );
+
+      const [email, phone] = screen.getAllByRole("textbox");
+      const emailDescription = getSlot(getRoot(email!), "description");
+      const phoneDescription = getSlot(getRoot(phone!), "description");
+
+      expect(emailDescription.id).not.toBe(phoneDescription.id);
+      expect(email).toHaveAttribute("aria-describedby", emailDescription.id);
+      expect(phone).toHaveAttribute("aria-describedby", phoneDescription.id);
     });
   });
 

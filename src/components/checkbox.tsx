@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { mergeIds } from "../internal/aria";
 import theme from "../theme/checkbox";
 
 interface CheckboxProps
@@ -47,13 +48,28 @@ function Checkbox({
   description,
   size,
   indeterminate = false,
+  "aria-describedby": ariaDescribedBy,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
   ...props
 }: CheckboxProps) {
   const ui = theme({ size });
+  const labelId = React.useId();
+  const descriptionId = React.useId();
+  const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
+  const labelledBy =
+    ariaLabelledBy || (label && !ariaLabel ? labelId : undefined);
+  const describedBy = mergeIds(
+    ariaDescribedBy,
+    description && hasName ? descriptionId : undefined,
+  );
 
   return (
     <UICheckbox.Root
       {...props}
+      aria-describedby={describedBy}
+      aria-label={ariaLabel}
+      aria-labelledby={labelledBy}
       indeterminate={indeterminate}
       data-slot="root"
       className={cn(ui.root(), className)}
@@ -84,12 +100,16 @@ function Checkbox({
       {label || description ? (
         <span data-slot="wrapper" className={ui.wrapper()}>
           {label ? (
-            <span data-slot="label" className={ui.label()}>
+            <span id={labelId} data-slot="label" className={ui.label()}>
               {label}
             </span>
           ) : null}
           {description ? (
-            <span data-slot="description" className={ui.description()}>
+            <span
+              id={descriptionId}
+              data-slot="description"
+              className={ui.description()}
+            >
               {description}
             </span>
           ) : null}

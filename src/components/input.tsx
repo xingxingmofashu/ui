@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { mergeIds } from "../internal/aria";
 import theme from "../theme/input";
 
 interface InputProps
@@ -34,11 +35,17 @@ function Input({
   size,
   id,
   disabled,
+  "aria-describedby": ariaDescribedBy,
   ...props
 }: InputProps) {
   const ui = theme({ size });
   const generatedId = React.useId();
+  const descriptionId = React.useId();
   const inputId = id ?? generatedId;
+  const describedBy = mergeIds(
+    ariaDescribedBy,
+    description ? descriptionId : undefined,
+  );
 
   return (
     <div
@@ -75,6 +82,7 @@ function Input({
           {...props}
           id={inputId}
           disabled={disabled}
+          aria-describedby={describedBy}
           data-slot="input"
           className={ui.input()}
         />
@@ -91,7 +99,11 @@ function Input({
       </span>
 
       {description ? (
-        <span data-slot="description" className={ui.description()}>
+        <span
+          id={descriptionId}
+          data-slot="description"
+          className={ui.description()}
+        >
           {description}
         </span>
       ) : null}

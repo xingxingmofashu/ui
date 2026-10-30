@@ -5,7 +5,7 @@ description: "An accessible React input with a Liquid Glass field, label, descri
 
 `Input` wraps Base UI's `Input` in a glass control. It renders a native `<input>`, an optional label and description, and optional leading and trailing icons.
 
-The visible label is a real `<label>` associated with the input. `description` is visual only; when supporting copy should be announced by screen readers, pass `aria-describedby` yourself.
+The visible label is a real `<label>` associated with the input. When `description` is set, it receives an id and the input points at it with `aria-describedby`; any `aria-describedby` you pass is merged with that id.
 
 ## Basic example
 
@@ -41,7 +41,7 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
     },
     "description": {
       type: "ReactNode",
-      description: "Supporting text under the control. It is not linked automatically.",
+      description: <>{"Supporting text under the control. It is linked automatically through "}<code>{"aria-describedby"}</code>{"."}</>,
     },
     "leadingIcon": {
       type: "ReactNode",
@@ -65,6 +65,6 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
 
 `Input` forwards the rest of Base UI `Input`'s props, including `value`, `defaultValue`, `onValueChange`, `type`, `placeholder`, `name`, `id`, `disabled`, `readOnly`, `required`, and `ref`.
 
-When no visible `label` is rendered, provide `aria-label` or `aria-labelledby` yourself. To expose a visible description to assistive technology, pass `aria-describedby` pointing at your own element.
+When no visible `label` is rendered, provide `aria-label` or `aria-labelledby` yourself. A visible `description` is announced automatically; if you pass your own `aria-describedby`, both references are merged.
 
 `style` is intentionally not supported: the glass theme owns the control surface. Use `className` for root layout and tune the shared `--ui-*` tokens for theme changes.

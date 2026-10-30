@@ -11,9 +11,12 @@ The switch below is the real component and can be clicked directly.
 
 The Base UI `Switch.Root` is the outermost element. The visual track is the
 inner `base` slot, and the whole row, including the label and description, is
-clickable. `label` and `description` render inside the root and therefore
-contribute to its accessible name; pass `aria-label` or `aria-labelledby` when
-you need a shorter or more precise name.
+clickable. `label` becomes the accessible name through `aria-labelledby`; when
+the control has a label or explicit name, `description` is linked through
+`aria-describedby`. An explicit `aria-label` or `aria-labelledby` takes
+precedence for the name, and an explicit `aria-describedby` is merged with the
+description. A description-only control uses the description as its name and
+does not add `aria-describedby`.
 
 ## Sizes
 
@@ -49,11 +52,11 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
   type={{
     "label": {
       type: "ReactNode",
-      description: "Visible label.",
+      description: "Visible label; it becomes the accessible name unless aria-label or aria-labelledby is provided.",
     },
     "description": {
       type: "ReactNode",
-      description: "Supporting text.",
+      description: "Supporting text; it is linked with aria-describedby when the control has a label or explicit name.",
     },
     "size": {
       type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",

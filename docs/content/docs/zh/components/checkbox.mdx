@@ -43,11 +43,11 @@ description: "可访问的 React 复选框，采用 Liquid Glass 方块、勾选
   type={{
     "label": {
       type: "ReactNode",
-      description: "可见标签；位于控件内部，会参与可访问名称。",
+      description: "可见标签；位于控件内部，未提供 aria-label 或 aria-labelledby 时会成为可访问名称。",
     },
     "description": {
       type: "ReactNode",
-      description: "标签下方的说明文字。",
+      description: "标签下方的说明文字；控件有标签或显式名称时会通过 aria-describedby 关联。",
     },
     "size": {
       type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
@@ -106,4 +106,4 @@ description: "可访问的 React 复选框，采用 Liquid Glass 方块、勾选
 
 `style` 被有意禁用：玻璃主题接管方块视觉。请使用 `className` 调整根元素布局，通过共享的 `--ui-*` token 调整主题。
 
-Base UI 负责 `checkbox` 角色、`aria-checked`（包含 `mixed`）、焦点管理、隐藏原生输入以及表单提交。`label` 与 `description` 都位于控件内部，会一起参与可访问名称；需要更精确或更简短的名称时，请传入 `aria-label` 或 `aria-labelledby`。
+Base UI 负责 `checkbox` 角色、`aria-checked`（包含 `mixed`）、焦点管理、隐藏原生输入以及表单提交。`label` 会通过 `aria-labelledby` 成为可访问名称；当控件有标签或显式名称时，`description` 会通过 `aria-describedby` 关联。显式传入的 `aria-label` 或 `aria-labelledby` 优先决定名称，显式传入的 `aria-describedby` 会与描述合并。只有 description 的控件会把描述作为名称，不再添加 `aria-describedby`。

@@ -48,14 +48,21 @@ function getLayer(element: Element, layer: string) {
 
 describe("Slider", () => {
   describe("accessible names", () => {
-    it("passes root aria props through to Base UI", () => {
-      render(<Slider aria-label="Volume" aria-describedby="volume-hint" />);
+    it("forwards aria-label and aria-describedby to the thumb", () => {
+      render(
+        <>
+          <span id="volume-hint">Adjusts the output level.</span>
+          <Slider aria-label="Volume" aria-describedby="volume-hint" />
+        </>,
+      );
 
       const slider = getSlider();
       const root = getRoot(slider);
 
       expect(root).toHaveAttribute("aria-label", "Volume");
-      expect(root).toHaveAttribute("aria-describedby", "volume-hint");
+      expect(slider).toHaveAttribute("aria-label", "Volume");
+      expect(slider).toHaveAttribute("aria-describedby", "volume-hint");
+      expect(slider).toHaveAccessibleDescription("Adjusts the output level.");
       expect(slider).toHaveAttribute("type", "range");
       expect(slider).toHaveAttribute("aria-valuenow", "0");
     });
@@ -71,6 +78,106 @@ describe("Slider", () => {
       expect(
         screen.getAllByRole("slider", { name: "Volume" }),
       ).toHaveLength(1);
+    });
+
+    it("labels every thumb in a range slider", () => {
+      render(<Slider aria-label="Price range" defaultValue={[20, 80]} />);
+
+      expect(
+        screen.getAllByRole("slider", { name: "Price range" }),
+      ).toHaveLength(2);
+    });
+
+    it("supports per-thumb labels for range sliders", () => {
+      render(
+        <Slider
+          defaultValue={[20, 80]}
+          getAriaLabel={(index) =>
+            index === 0 ? "Minimum price" : "Maximum price"
+          }
+        />,
+      );
+
+      expect(
+        screen.getByRole("slider", { name: "Minimum price" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("slider", { name: "Maximum price" }),
+      ).toBeInTheDocument();
+    });
+
+    it("supports custom value text", () => {
+      render(
+        <Slider
+          aria-label="Volume"
+          defaultValue={40}
+          getAriaValueText={(formattedValue) => `${formattedValue} percent`}
+        />,
+      );
+
+      expect(screen.getByRole("slider", { name: "Volume" })).toHaveAttribute(
+        "aria-valuetext",
+        "40 percent",
+      );
+    });
+  });
+
+  describe("validation", () => {
+    it("forwards aria-invalid and aria-errormessage to the thumb input", () => {
+      render(
+        <>
+          <span id="volume-error">Volume must be between 0 and 100.</span>
+          <Slider
+            aria-label="Volume"
+            aria-invalid
+            aria-errormessage="volume-error"
+          />
+        </>,
+      );
+
+      const slider = getSlider();
+
+      expect(slider).toHaveAttribute("aria-invalid", "true");
+      expect(slider).toHaveAttribute("aria-errormessage", "volume-error");
+    });
+
+    it("removes validation attributes when they are cleared", () => {
+      const { rerender } = render(
+        <Slider
+          aria-label="Volume"
+          aria-invalid
+          aria-errormessage="volume-error"
+        />,
+      );
+
+      const slider = getSlider();
+
+      expect(slider).toHaveAttribute("aria-invalid", "true");
+
+      rerender(<Slider aria-label="Volume" />);
+
+      expect(slider).not.toHaveAttribute("aria-invalid");
+      expect(slider).not.toHaveAttribute("aria-errormessage");
+    });
+
+    it("applies validation attributes to every range thumb", () => {
+      render(
+        <Slider
+          aria-label="Price range"
+          aria-invalid
+          aria-errormessage="price-error"
+          defaultValue={[20, 80]}
+        />,
+      );
+
+      const sliders = screen.getAllByRole("slider");
+
+      expect(sliders).toHaveLength(2);
+
+      sliders.forEach((slider) => {
+        expect(slider).toHaveAttribute("aria-invalid", "true");
+        expect(slider).toHaveAttribute("aria-errormessage", "price-error");
+      });
     });
   });
 

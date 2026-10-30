@@ -13,7 +13,9 @@ description: "可访问的 React 滑块，采用 Liquid Glass 轨道，支持单
 
 ## 可访问名称
 
-Slider 不渲染可见标签。请用 `aria-labelledby` 指向外部可见标签；Base UI 会把它从 root 转发给每个 thumb。`aria-label` 与 `aria-describedby` 只保留在 root 上。
+Slider 不渲染可见标签。请用 `aria-labelledby` 指向外部可见标签，或传入 `aria-label`；两者都会从 root 转发给每个 thumb，`aria-describedby` 也会一并转发。区间滑块可用 `getAriaLabel` 为每个 thumb 分别命名。
+
+`aria-invalid` 与 `aria-errormessage` 会应用到内部的 `input[type="range"]`，因此表单库提供的校验状态可以到达可聚焦控件。区间滑块中的普通 `aria-label` 会被所有 thumb 共享；如果每个 thumb 需要不同名称，请传入 `getAriaLabel`。
 
 ## 区间值
 
@@ -104,6 +106,22 @@ Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]
     "locale": {
       type: "Intl.LocalesArgument",
       description: "数值格式化使用的 locale。",
+    },
+    "getAriaLabel": {
+      type: "(index: number) => string",
+      description: "为指定索引的 thumb 提供可访问名称，适用于区间滑块。",
+    },
+    "getAriaValueText": {
+      type: "(formattedValue, value, index) => string",
+      description: "为每个 thumb 自定义可访问数值文本。",
+    },
+    "aria-invalid": {
+      type: "boolean | \"grammar\" | \"spelling\" | \"true\" | \"false\"",
+      description: "将内部 range input 标记为无效。",
+    },
+    "aria-errormessage": {
+      type: "string",
+      description: "与内部 range input 关联的错误信息 id。",
     },
     "disabled": {
       type: "boolean",
