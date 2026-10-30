@@ -701,10 +701,18 @@ describe("design tokens", () => {
   });
 
   it("keeps checkbox styling in the tailwind-variants theme", async () => {
-    const [recipe, component] = await Promise.all([
+    const [recipe, component, check, dash] = await Promise.all([
       readFile(new URL("../src/theme/checkbox.ts", import.meta.url), "utf8"),
       readFile(
         new URL("../src/components/checkbox.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(
+        new URL("../src/components/icons/check.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(
+        new URL("../src/components/icons/dash.tsx", import.meta.url),
         "utf8",
       ),
     ]);
@@ -719,7 +727,10 @@ describe("design tokens", () => {
     expect(recipe).not.toContain(".css");
     expect(component).toContain("UICheckbox.Root");
     expect(component).toContain("UICheckbox.Indicator");
-    expect(component).toContain('data-icon={indeterminate ? "dash" : "check"}');
+    expect(component).toContain("CheckIcon");
+    expect(component).toContain("DashIcon");
+    expect(check).toContain('data-icon="check"');
+    expect(dash).toContain('data-icon="dash"');
     expect(component).not.toContain("LIQUID_GLASS_MAP");
     expect(component).not.toContain(".css");
   });

@@ -7,6 +7,8 @@ import { type VariantProps } from "tailwind-variants";
 
 import theme from "../theme/accordion";
 
+import { PlusIcon } from "./icons/plus";
+
 /** One panel managed by the accordion. */
 type AccordionItemProps = {
   /** Value that identifies the item in the accordion value. */
@@ -92,17 +94,10 @@ function AccordionItem({
             data-slot="indicator"
             className={ui.indicator()}
           >
-            <svg
+            <PlusIcon
               data-slot="indicator-icon"
               className={ui.indicatorIcon()}
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="square"
-              strokeLinejoin="round"
-            >
-              <path d="M1.5 8h13M8 14.5v-13" />
-            </svg>
+            />
           </span>
         </UIAccordion.Trigger>
       </UIAccordion.Header>

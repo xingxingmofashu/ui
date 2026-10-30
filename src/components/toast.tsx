@@ -7,6 +7,13 @@ import * as React from "react";
 import { useToast } from "../composables/use-toast";
 import theme from "../theme/toast";
 
+import { CloseIcon } from "./icons/close";
+import { ErrorIcon } from "./icons/error";
+import { InfoIcon } from "./icons/info";
+import { LoadingIcon } from "./icons/loading";
+import { SuccessIcon } from "./icons/success";
+import { WarningIcon } from "./icons/warning";
+
 /** Corner where the toast stack is anchored. */
 type ToastPosition =
   | "top-left"
@@ -43,76 +50,13 @@ interface ToastProps
   className?: string;
 }
 
-function CloseIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      className="size-4"
-    >
-      <path d="m4 4 8 8M12 4l-8 8" />
-    </svg>
-  );
-}
-
-function statusIconContent(type: string | undefined): React.ReactNode {
-  const svgProps = {
-    viewBox: "0 0 20 20",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.5,
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    className: "size-full",
-  } as const;
-
-  switch (type) {
-    case "info":
-      return (
-        <svg {...svgProps}>
-          <circle cx="10" cy="10" r="7.25" />
-          <path d="M10 9.25v4" />
-          <path d="M10 6.75h.01" />
-        </svg>
-      );
-    case "success":
-      return (
-        <svg {...svgProps}>
-          <circle cx="10" cy="10" r="7.25" />
-          <path d="m6.75 10.25 2.1 2.1 4.4-4.7" />
-        </svg>
-      );
-    case "warning":
-      return (
-        <svg {...svgProps}>
-          <path d="M10 3.25 17 16.5H3L10 3.25Z" />
-          <path d="M10 8v3.5" />
-          <path d="M10 14.25h.01" />
-        </svg>
-      );
-    case "error":
-      return (
-        <svg {...svgProps}>
-          <circle cx="10" cy="10" r="7.25" />
-          <path d="M10 6.5v4.25" />
-          <path d="M10 13.75h.01" />
-        </svg>
-      );
-    case "loading":
-      return (
-        <svg {...svgProps}>
-          <circle cx="10" cy="10" r="6.75" opacity="0.25" />
-          <path d="M10 3.25a6.75 6.75 0 0 1 6.75 6.75" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
+const STATUS_ICONS = {
+  info: InfoIcon,
+  success: SuccessIcon,
+  warning: WarningIcon,
+  error: ErrorIcon,
+  loading: LoadingIcon,
+} as const;
 
 function ToastStatusIcon({
   type,
@@ -121,9 +65,11 @@ function ToastStatusIcon({
   type: string | undefined;
   className: string;
 }) {
-  const content = statusIconContent(type);
+  const Icon = type
+    ? STATUS_ICONS[type as keyof typeof STATUS_ICONS]
+    : undefined;
 
-  if (!content) {
+  if (!Icon) {
     return null;
   }
 
@@ -134,7 +80,7 @@ function ToastStatusIcon({
       data-icon={type}
       className={className}
     >
-      {content}
+      <Icon className="size-full" />
     </span>
   );
 }
@@ -193,7 +139,7 @@ function Toast({
                   close
                 ) : (
                   <UIToast.Close data-slot="close" className={ui.close()}>
-                    <CloseIcon />
+                    <CloseIcon className="size-4" />
                   </UIToast.Close>
                 )}
               </div>

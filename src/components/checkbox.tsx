@@ -8,6 +8,9 @@ import { type VariantProps } from "tailwind-variants";
 import { mergeIds } from "../internal/aria";
 import theme from "../theme/checkbox";
 
+import { CheckIcon } from "./icons/check";
+import { DashIcon } from "./icons/dash";
+
 interface CheckboxProps
   extends Omit<
       UICheckbox.Root.Props,
@@ -22,24 +25,6 @@ interface CheckboxProps
   label?: React.ReactNode;
   /** Optional supporting text. */
   description?: React.ReactNode;
-}
-
-function CheckIcon({ indeterminate }: { indeterminate: boolean }) {
-  return (
-    <svg
-      aria-hidden="true"
-      data-icon={indeterminate ? "dash" : "check"}
-      focusable="false"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.5"
-    >
-      <path d={indeterminate ? "M3.5 8h9" : "m2.5 8.5 4 4 7-9"} />
-    </svg>
-  );
 }
 
 function Checkbox({
@@ -92,7 +77,7 @@ function Checkbox({
           className={ui.indicator()}
         >
           <span data-slot="indicator-icon" className={ui.indicatorIcon()}>
-            <CheckIcon indeterminate={indeterminate} />
+            {indeterminate ? <DashIcon /> : <CheckIcon />}
           </span>
         </UICheckbox.Indicator>
       </span>
