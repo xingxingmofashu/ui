@@ -12,7 +12,7 @@ on:
         type: string
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 concurrency:
@@ -65,3 +65,27 @@ jobs:
 
       - name: Publish to npm
         run: pnpm publish --tag "${{ steps.release.outputs.dist_tag }}" --no-git-checks --provenance
+
+      - name: Pack release assets
+        run: |
+          mkdir -p "$RUNNER_TEMP/release"
+          pnpm pack --pack-destination "$RUNNER_TEMP/release"
+          cd "$RUNNER_TEMP/release"
+          tgz="$(ls *.tgz)"
+          sha256sum "$tgz" > "$tgz.sha256"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          cd "$RUNNER_TEMP/release"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" ./*.tgz ./*.tgz.sha256 --clobber
+          else
+            gh release create "$TAG" ./*.tgz ./*.tgz.sha256 \
+              --verify-tag \
+              --title "$TAG" \
+              --generate-notes
+          fi
