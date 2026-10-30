@@ -3,7 +3,7 @@
 import { Rocket } from "lucide-react";
 import { useState } from "react";
 
-import { Button, ToastProvider, useToast } from "@xingxingmofashu/ui";
+import { Button, Toast, ToastProvider, useToast } from "@xingxingmofashu/ui";
 
 function ToastPromise() {
   const toast = useToast();
@@ -56,6 +56,7 @@ export default function ToastPromiseDemo() {
   return (
     <ToastProvider>
       <ToastPromise />
+      <Toast />
     </ToastProvider>
   );
 }

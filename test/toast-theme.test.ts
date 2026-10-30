@@ -16,12 +16,10 @@ const input = `@import "tailwindcss";
 `;
 
 const positions = [
-  ["top", "left"],
-  ["top", "center"],
-  ["top", "right"],
-  ["bottom", "left"],
-  ["bottom", "center"],
-  ["bottom", "right"],
+  "top-left",
+  "top-right",
+  "bottom-left",
+  "bottom-right",
 ] as const;
 
 const slots = [
@@ -41,8 +39,8 @@ const slots = [
 
 function themeCandidates() {
   return positions
-    .flatMap(([placement, align]) => {
-      const styles = toastTheme({ placement, align });
+    .flatMap((position) => {
+      const styles = toastTheme({ position });
 
       return slots.map((slot) => styles[slot]());
     })
@@ -76,11 +74,13 @@ describe("Toast theme compilation", () => {
     );
   });
 
-  it("compiles both swipe exit directions", async () => {
+  it("compiles every swipe exit direction", async () => {
     const css = await buildStyles();
 
     expect(css).toContain('[data-swipe-direction="up"]');
     expect(css).toContain('[data-swipe-direction="down"]');
+    expect(css).toContain('[data-swipe-direction="left"]');
+    expect(css).toContain('[data-swipe-direction="right"]');
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
   });
 

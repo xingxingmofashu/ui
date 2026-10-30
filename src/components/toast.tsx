@@ -7,29 +7,39 @@ import * as React from "react";
 import { useToast } from "../composables/use-toast";
 import theme from "../theme/toast";
 
-/** Corner or edge where the toast stack is anchored. */
+/** Corner where the toast stack is anchored. */
 type ToastPosition =
   | "top-left"
-  | "top-center"
   | "top-right"
   | "bottom-left"
-  | "bottom-center"
   | "bottom-right";
 
-type ToastPlacement = "top" | "bottom";
-type ToastAlign = "left" | "center" | "right";
+const SWIPE_DIRECTIONS = {
+  "top-left": ["up", "left"],
+  "top-right": ["up", "right"],
+  "bottom-left": ["down", "left"],
+  "bottom-right": ["down", "right"],
+} satisfies Record<
+  ToastPosition,
+  ("up" | "down" | "left" | "right")[]
+>;
 
 interface ToastProviderProps
   extends Omit<UIToast.Provider.Props, "children"> {
   /** App content that can call `useToast`. */
   children?: React.ReactNode;
-  /** Corner or edge where the toast stack is anchored. */
+}
+
+interface ToastProps
+  extends Omit<
+    UIToast.Root.Props,
+    "children" | "className" | "swipeDirection" | "toast"
+  > {
+  /** Corner where the toast stack is anchored. */
   position?: ToastPosition;
-  /** Accessible label for the close button. */
-  closeLabel?: string;
-  /** Accessible label for the notification region. */
-  viewportLabel?: string;
-  /** Tailwind classes merged into the viewport. */
+  /** Content rendered in place of the default close button. */
+  close?: React.ReactNode;
+  /** Tailwind classes merged into each toast. */
   className?: string;
 }
 
@@ -129,84 +139,71 @@ function ToastStatusIcon({
   );
 }
 
-function ToastList({
-  placement,
-  closeLabel,
-}: {
-  placement: ToastPlacement;
-  closeLabel: string;
-}) {
-  const { toasts } = useToast();
-  const ui = theme({ placement });
-
-  return toasts.map((toast) => (
-    <UIToast.Root
-      key={toast.id}
-      toast={toast}
-      data-slot="toast"
-      className={ui.root()}
-      swipeDirection={placement === "top" ? "up" : "down"}
-    >
-      <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
-        <span aria-hidden="true" data-slot="overlay" className={ui.overlay()} />
-      </span>
-
-      <UIToast.Content data-slot="content" className={ui.content()}>
-        <ToastStatusIcon type={toast.type} className={ui.icon()} />
-
-        <div data-slot="text" className={ui.text()}>
-          <UIToast.Title data-slot="title" className={ui.title()} />
-          <UIToast.Description
-            data-slot="description"
-            className={ui.description()}
-          />
-        </div>
-
-        <div data-slot="actions" className={ui.actions()}>
-          <UIToast.Action data-slot="action" className={ui.action()} />
-          <UIToast.Close
-            data-slot="close"
-            className={ui.close()}
-            aria-label={closeLabel}
-          >
-            <CloseIcon />
-          </UIToast.Close>
-        </div>
-      </UIToast.Content>
-    </UIToast.Root>
-  ));
+function ToastProvider({ children, ...props }: ToastProviderProps) {
+  return <UIToast.Provider {...props}>{children}</UIToast.Provider>;
 }
 
-function ToastProvider({
-  children,
+function Toast({
   position = "bottom-right",
-  closeLabel = "Dismiss",
-  viewportLabel = "Notifications",
+  close,
   className,
   ...props
-}: ToastProviderProps) {
-  const [placement, align] = position.split("-") as [
-    ToastPlacement,
-    ToastAlign,
-  ];
-  const ui = theme({ placement, align });
+}: ToastProps) {
+  const { toasts } = useToast();
+  const ui = theme({ position });
 
   return (
-    <UIToast.Provider {...props}>
-      {children}
-      <UIToast.Portal>
-        <UIToast.Viewport
-          data-slot="viewport"
-          data-position={position}
-          aria-label={viewportLabel}
-          className={cn(ui.viewport(), className)}
-        >
-          <ToastList placement={placement} closeLabel={closeLabel} />
-        </UIToast.Viewport>
-      </UIToast.Portal>
-    </UIToast.Provider>
+    <UIToast.Portal>
+      <UIToast.Viewport
+        data-slot="viewport"
+        data-position={position}
+        className={ui.viewport()}
+      >
+        {toasts.map((toast) => (
+          <UIToast.Root
+            {...props}
+            key={toast.id}
+            toast={toast}
+            data-slot="toast"
+            className={cn(ui.root(), className)}
+            swipeDirection={SWIPE_DIRECTIONS[position]}
+          >
+            <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+              <span
+                aria-hidden="true"
+                data-slot="overlay"
+                className={ui.overlay()}
+              />
+            </span>
+
+            <UIToast.Content data-slot="content" className={ui.content()}>
+              <ToastStatusIcon type={toast.type} className={ui.icon()} />
+
+              <div data-slot="text" className={ui.text()}>
+                <UIToast.Title data-slot="title" className={ui.title()} />
+                <UIToast.Description
+                  data-slot="description"
+                  className={ui.description()}
+                />
+              </div>
+
+              <div data-slot="actions" className={ui.actions()}>
+                <UIToast.Action data-slot="action" className={ui.action()} />
+                {close ? (
+                  close
+                ) : (
+                  <UIToast.Close data-slot="close" className={ui.close()}>
+                    <CloseIcon />
+                  </UIToast.Close>
+                )}
+              </div>
+            </UIToast.Content>
+          </UIToast.Root>
+        ))}
+      </UIToast.Viewport>
+    </UIToast.Portal>
   );
 }
 
-export { ToastProvider };
-export type { ToastPosition, ToastProviderProps };
+export { Toast, ToastProvider };
+export type { ToastPosition, ToastProps, ToastProviderProps };

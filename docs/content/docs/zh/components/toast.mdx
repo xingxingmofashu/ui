@@ -1,11 +1,11 @@
 ---
 title: "Toast"
-description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、操作、Promise 状态与六种位置。"
+description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、操作、Promise 状态与四种角落位置。"
 ---
 
-`ToastProvider` 是 Base UI `Toast.Provider` 的一体化封装。它内部渲染 Portal、Viewport 和 Liquid Glass toast 栈；在 Provider 内调用 `useToast()` 即可添加、更新、关闭或跟踪通知。
+`ToastProvider` 是 Base UI `Toast.Provider` 的封装，负责提供 toast manager。在它内部渲染 `Toast` 来绘制 Portal、Viewport 和 Liquid Glass toast 栈；在 Provider 内任意位置调用 `useToast()` 即可添加、更新、关闭或跟踪通知。
 
-建议在应用根部渲染一个 Provider。每个 Provider 拥有独立的 Viewport；如果还需要在 React 外创建通知，请把同一个 `toastManager` 传给它。
+建议在应用根部渲染一个 `ToastProvider`，并把 `Toast` 放在应用内容之后。每个 Provider 拥有独立的 Viewport；如果还需要在 React 外创建通知，请把同一个 `toastManager` 传给它。
 
 ## 基础示例
 
@@ -35,7 +35,7 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 
 ## 位置
 
-`position` 会把通知栈固定在某个角落或边缘：`top-left`、`top-center`、`top-right`、`bottom-left`、`bottom-center` 或 `bottom-right`。Toast 会朝远离最近边缘的方向堆叠，滑动关闭方向也会跟随上下位置变化。
+`position` 会把通知栈固定在某个角落：`top-left`、`top-right`、`bottom-left` 或 `bottom-right`。Toast 会朝远离上下边缘的方向堆叠，滑动关闭方向也会跟随所在角落变化。
 
 <Example name="toast/positions" />
 
@@ -48,21 +48,6 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
     "children": {
       type: "ReactNode",
       description: <>{"可以调用 "}<code>{"useToast()"}</code>{" 的应用内容。"}</>,
-    },
-    "position": {
-      type: "\"top-left\" | \"top-center\" | \"top-right\" | \"bottom-left\" | \"bottom-center\" | \"bottom-right\"",
-      default: "\"bottom-right\"",
-      description: "通知栈固定的角落或边缘。",
-    },
-    "closeLabel": {
-      type: "string",
-      default: "\"Dismiss\"",
-      description: "关闭按钮的可访问名称。",
-    },
-    "viewportLabel": {
-      type: "string",
-      default: "\"Notifications\"",
-      description: "通知区域的可访问名称。",
     },
     "timeout": {
       type: "number",
@@ -78,9 +63,26 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
       type: "ToastManager",
       description: <>{"由 "}<code>{"createToastManager"}</code>{" 创建的全局管理器。"}</>,
     },
+  }}
+/>
+
+### Toast
+
+<TypeTable
+  type={{
+    "position": {
+      type: "\"top-left\" | \"top-right\" | \"bottom-left\" | \"bottom-right\"",
+      default: "\"bottom-right\"",
+      description: "通知栈固定的角落。",
+    },
+    "close": {
+      type: "ReactNode",
+      default: "内置关闭按钮",
+      description: "替换默认关闭按钮的自定义内容。",
+    },
     "className": {
       type: "string",
-      description: "合并到 Viewport 的 Tailwind 类名。",
+      description: "合并到每条 Toast 的 Tailwind 类名。",
     },
   }}
 />
@@ -99,13 +101,13 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 
 `add` 接受 Base UI 的 `ToastManagerAddOptions`：`title`、`description`、`type`、`timeout`、`priority`、`actionProps` 和 `data`。
 
-`createToastManager` 位于 `@xingxingmofashu/ui/composables/create-toast-manager`，用于在 React 外创建通知。请先通过 `toastManager` 属性把管理器交给 Provider，再开始添加通知，这样 Provider 才能收到事件。
+`createToastManager` 位于 `@xingxingmofashu/ui/composables/create-toast-manager`，用于在 React 外创建通知。请先通过 `toastManager` 属性把管理器交给 `ToastProvider`，再开始添加通知，这样 Provider 才能收到事件。
 
 ## 无障碍
 
 Base UI 会把 Viewport 渲染为 live region，高优先级 Toast 使用 `alertdialog` 角色，其余使用 `dialog` 角色，并通过 `aria-labelledby` 与 `aria-describedby` 关联标题和描述；同时支持 F6 进入通知区域和滑动关闭。Viewport 被悬停或聚焦时计时会暂停。
 
-使用 `closeLabel` 与 `viewportLabel` 可以本地化内置的可访问名称。
+替换默认关闭按钮时，请为自定义的 `close` 控件提供可访问名称。
 
 ## 样式
 

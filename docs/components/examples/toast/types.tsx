@@ -2,7 +2,12 @@
 
 import { AlertTriangle, CheckCircle2, Info, XCircle } from "lucide-react";
 
-import { Button, ToastProvider, useToast } from "@xingxingmofashu/ui";
+import {
+  Button,
+  Toast,
+  ToastProvider,
+  useToast,
+} from "@xingxingmofashu/ui";
 
 const notifications = [
   {
@@ -57,6 +62,7 @@ export default function ToastTypesDemo() {
   return (
     <ToastProvider>
       <ToastTypeButtons />
+      <Toast />
     </ToastProvider>
   );
 }

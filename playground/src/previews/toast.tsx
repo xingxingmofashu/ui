@@ -12,6 +12,7 @@ import { useState } from "react";
 
 import {
   Button,
+  Toast,
   ToastProvider,
   ToggleGroup,
   useToast,
@@ -27,7 +28,6 @@ const placementOptions = [
 
 const alignOptions = [
   { value: "left", label: "Left" },
-  { value: "center", label: "Center" },
   { value: "right", label: "Right" },
 ] as const;
 
@@ -209,7 +209,7 @@ function ToastPlayground({
               onValueChange={(value) => {
                 const next = value[0];
 
-                if (next === "left" || next === "center" || next === "right") {
+                if (next === "left" || next === "right") {
                   onAlignChange(next);
                 }
               }}
@@ -239,7 +239,7 @@ function ToastPreview() {
   const position = `${placement}-${align}` as ToastPosition;
 
   return (
-    <ToastProvider position={position}>
+    <ToastProvider>
       <ToastPlayground
         position={position}
         placement={placement}
@@ -247,6 +247,7 @@ function ToastPreview() {
         onPlacementChange={setPlacement}
         onAlignChange={setAlign}
       />
+      <Toast position={position} />
     </ToastProvider>
   );
 }

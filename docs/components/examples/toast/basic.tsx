@@ -2,7 +2,7 @@
 
 import { Bell } from "lucide-react";
 
-import { Button, ToastProvider, useToast } from "@xingxingmofashu/ui";
+import { Button, Toast, ToastProvider, useToast } from "@xingxingmofashu/ui";
 
 function ToastTrigger() {
   const toast = useToast();
@@ -25,6 +25,7 @@ export default function ToastBasicDemo() {
   return (
     <ToastProvider>
       <ToastTrigger />
+      <Toast />
     </ToastProvider>
   );
 }
