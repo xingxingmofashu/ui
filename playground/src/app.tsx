@@ -19,32 +19,7 @@ import { ToggleGroupPreview } from "./previews/toggle-group";
 
 const sections = [
   {
-    id: "button",
-    index: "01",
-    title: "Button",
-    description:
-      "Rounded glass actions with icon slots, five sizes, and hover and press motion.",
-    Preview: ButtonPreview,
-  },
-  {
-    id: "card",
-    index: "02",
-    title: "Card",
-    description:
-      "A composed panel with a glass surface, header, body, and optional footer.",
-    Preview: CardPreview,
-  },
-  {
-    id: "checkbox",
-    index: "03",
-    title: "Checkbox",
-    description:
-      "A glass tile with an animated check, labels, five sizes, and an indeterminate state.",
-    Preview: CheckboxPreview,
-  },
-  {
     id: "accordion",
-    index: "04",
     title: "Accordion",
     description:
       "Disclosure rows that share one glass surface. Change the size to see every value.",
@@ -52,15 +27,34 @@ const sections = [
   },
   {
     id: "alert-dialog",
-    index: "05",
     title: "Alert Dialog",
     description:
       "A modal confirmation with a glass popup, built-in actions, and controlled usage.",
     Preview: AlertDialogPreview,
   },
   {
+    id: "button",
+    title: "Button",
+    description:
+      "Rounded glass actions with icon slots, five sizes, and hover and press motion.",
+    Preview: ButtonPreview,
+  },
+  {
+    id: "card",
+    title: "Card",
+    description:
+      "A composed panel with a glass surface, header, body, and optional footer.",
+    Preview: CardPreview,
+  },
+  {
+    id: "checkbox",
+    title: "Checkbox",
+    description:
+      "A glass tile with an animated check, labels, five sizes, and an indeterminate state.",
+    Preview: CheckboxPreview,
+  },
+  {
     id: "dialog",
-    index: "06",
     title: "Dialog",
     description:
       "A general-purpose modal with a custom action area for any number of buttons.",
@@ -68,63 +62,48 @@ const sections = [
   },
   {
     id: "drawer",
-    index: "07",
     title: "Drawer",
     description:
       "An edge-aligned glass panel with swipe dismissal and four sides.",
     Preview: DrawerPreview,
   },
   {
-    id: "popover",
-    index: "08",
-    title: "Popover",
-    description:
-      "A non-modal glass panel with a directional arrow, anchored to its trigger.",
-    Preview: PopoverPreview,
-  },
-  {
-    id: "switch",
-    index: "09",
-    title: "Switch",
-    description:
-      "A liquid thumb that stretches while it moves, in all five sizes.",
-    Preview: SwitchPreview,
-  },
-  {
-    id: "slider",
-    index: "10",
-    title: "Slider",
-    description:
-      "Single values, ranges, and vertical controls with a glass thumb.",
-    Preview: SliderPreview,
-  },
-  {
-    id: "toggle-group",
-    index: "11",
-    title: "Toggle Group",
-    description:
-      "Single and multiple selection with a liquid glass selected state.",
-    Preview: ToggleGroupPreview,
-  },
-  {
     id: "input",
-    index: "12",
     title: "Input",
     description:
       "A glass text field with labels, descriptions, icons, and five sizes.",
     Preview: InputPreview,
   },
   {
+    id: "popover",
+    title: "Popover",
+    description:
+      "A non-modal glass panel with a directional arrow, anchored to its trigger.",
+    Preview: PopoverPreview,
+  },
+  {
     id: "scroll-area",
-    index: "13",
     title: "Scroll Area",
     description:
       "A glass panel with custom scrollbars for vertical, horizontal, and two-dimensional content.",
     Preview: ScrollAreaPreview,
   },
   {
+    id: "slider",
+    title: "Slider",
+    description:
+      "Single values, ranges, and vertical controls with a glass thumb.",
+    Preview: SliderPreview,
+  },
+  {
+    id: "switch",
+    title: "Switch",
+    description:
+      "A liquid thumb that stretches while it moves, in all five sizes.",
+    Preview: SwitchPreview,
+  },
+  {
     id: "toast",
-    index: "14",
     title: "Toast",
     description:
       "Stacked glass notifications with status icons, actions, promise states, and four corners.",
@@ -132,11 +111,17 @@ const sections = [
   },
   {
     id: "toggle",
-    index: "15",
     title: "Toggle",
     description:
       "A two-state glass button with a pressed thumb, labels, icons, and five sizes.",
     Preview: TogglePreview,
+  },
+  {
+    id: "toggle-group",
+    title: "Toggle Group",
+    description:
+      "Single and multiple selection with a liquid glass selected state.",
+    Preview: ToggleGroupPreview,
   },
 ] as const;
 
@@ -263,11 +248,11 @@ function App() {
           <Intro />
 
           <div className="mt-14 flex flex-col gap-16">
-            {sections.map(({ id, index, title, description, Preview }) => (
+            {sections.map(({ id, title, description, Preview }, index) => (
               <Section
                 key={id}
                 id={id}
-                index={index}
+                index={String(index + 1).padStart(2, "0")}
                 title={title}
                 description={description}
               >
