@@ -16,6 +16,8 @@ export default tv({
       "data-[expanded]:h-[var(--toast-height)]",
       "data-[limited]:pointer-events-none data-[limited]:opacity-0",
       "data-[swiping]:cursor-grabbing",
+      "data-[ending-style]:data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)_-_150%))]",
+      "data-[ending-style]:data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)_+_150%))]",
       "outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-glass-focus",
       "motion-reduce:transition-none",
     ],
@@ -60,9 +62,29 @@ export default tv({
     ],
   },
   variants: {
-    placement: {
-      top: {
-        viewport: "top-[max(1rem,env(safe-area-inset-top))] bottom-auto",
+    position: {
+      "top-left": {
+        viewport:
+          "top-[max(1rem,env(safe-area-inset-top))] bottom-auto left-[max(1rem,env(safe-area-inset-left))] right-auto",
+      },
+      "top-right": {
+        viewport:
+          "top-[max(1rem,env(safe-area-inset-top))] bottom-auto right-[max(1rem,env(safe-area-inset-right))] left-auto",
+      },
+      "bottom-left": {
+        viewport:
+          "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto left-[max(1rem,env(safe-area-inset-left))] right-auto",
+      },
+      "bottom-right": {
+        viewport:
+          "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto right-[max(1rem,env(safe-area-inset-right))] left-auto",
+      },
+    },
+  },
+  compoundVariants: [
+    {
+      position: ["top-left", "top-right"],
+      class: {
         root: [
           "top-0 origin-top",
           "[--offset-y:calc(var(--toast-offset-y)_+_(var(--toast-index)*var(--gap))_+_var(--toast-swipe-movement-y))]",
@@ -74,8 +96,10 @@ export default tv({
           "after:absolute after:bottom-full after:left-0 after:h-[calc(var(--gap)_+_1px)] after:w-full after:content-['']",
         ],
       },
-      bottom: {
-        viewport: "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto",
+    },
+    {
+      position: ["bottom-left", "bottom-right"],
+      class: {
         root: [
           "bottom-0 origin-bottom",
           "[--offset-y:calc(var(--toast-offset-y)*-1_+_(var(--toast-index)*var(--gap)*-1)_+_var(--toast-swipe-movement-y))]",
@@ -88,20 +112,8 @@ export default tv({
         ],
       },
     },
-    align: {
-      left: {
-        viewport: "left-[max(1rem,env(safe-area-inset-left))] right-auto",
-      },
-      center: {
-        viewport: "left-1/2 -translate-x-1/2",
-      },
-      right: {
-        viewport: "right-[max(1rem,env(safe-area-inset-right))] left-auto",
-      },
-    },
-  },
+  ],
   defaultVariants: {
-    placement: "bottom",
-    align: "right",
+    position: "bottom-right",
   },
 });

@@ -3,13 +3,13 @@ import userEvent from "@testing-library/user-event";
 import { type ComponentProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import { ToastProvider } from "../../src/components/toast";
+import { Toast, ToastProvider } from "../../src/components/toast";
 import { createToastManager } from "../../src/composables/create-toast-manager";
 import { useToast } from "../../src/composables/use-toast";
 import theme from "../../src/theme/toast";
 
 type AddOptions = Parameters<ReturnType<typeof useToast>["add"]>[0];
-type ProviderProps = Omit<ComponentProps<typeof ToastProvider>, "children">;
+type ToastComponentProps = ComponentProps<typeof Toast>;
 
 function getSlot(element: Element, slot: string) {
   const node = element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
@@ -37,10 +37,14 @@ function Trigger({
   );
 }
 
-function renderToast(options: AddOptions, providerProps: ProviderProps = {}) {
+function renderToast(
+  options: AddOptions,
+  toastProps: ToastComponentProps = {},
+) {
   return render(
-    <ToastProvider {...providerProps}>
+    <ToastProvider>
       <Trigger options={options} />
+      <Toast {...toastProps} />
     </ToastProvider>,
   );
 }
@@ -110,22 +114,17 @@ describe("Toast", () => {
     it("applies the requested viewport position", async () => {
       const user = userEvent.setup();
 
-      renderToast(
-        { title: "Positioned" },
-        { position: "top-center", viewportLabel: "Hinweise" },
-      );
+      renderToast({ title: "Positioned" }, { position: "top-left" });
 
       await user.click(screen.getByRole("button", { name: "Notify" }));
 
       const toast = await findToast();
       const viewport = getSlot(document.body, "viewport");
 
-      expect(viewport).toHaveAttribute("data-position", "top-center");
-      expect(viewport).toHaveAttribute("aria-label", "Hinweise");
+      expect(viewport).toHaveAttribute("data-position", "top-left");
       expect(viewport).toHaveClass(
         "top-[max(1rem,env(safe-area-inset-top))]",
-        "left-1/2",
-        "-translate-x-1/2",
+        "left-[max(1rem,env(safe-area-inset-left))]",
       );
       expect(toast).toHaveClass("top-0", "origin-top");
       expect(toast).not.toHaveClass("bottom-0");
@@ -142,10 +141,12 @@ describe("Toast", () => {
 
       const toast = await findToast();
       const viewport = getSlot(document.body, "viewport");
+      const close = getSlot(toast, "close");
 
       await user.hover(viewport);
 
-      const close = within(toast).getByRole("button", { name: "Dismiss" });
+      expect(close.tagName).toBe("BUTTON");
+      expect(close.querySelector("svg")).not.toBeNull();
 
       await user.click(close);
 
@@ -154,21 +155,25 @@ describe("Toast", () => {
       });
     });
 
-    it("supports a custom close label", async () => {
+    it("renders a custom close slot", async () => {
       const user = userEvent.setup();
 
       renderToast(
         { title: "Changes saved" },
-        { closeLabel: "Fermer" },
+        {
+          close: (
+            <button type="button" aria-label="Fermer">
+              <span aria-hidden="true">×</span>
+            </button>
+          ),
+        },
       );
 
       await user.click(screen.getByRole("button", { name: "Notify" }));
 
       const toast = await findToast();
-      const viewport = getSlot(document.body, "viewport");
 
-      await user.hover(viewport);
-
+      expect(toast.querySelector('[data-slot="close"]')).toBeNull();
       expect(
         within(toast).getByRole("button", { name: "Fermer" }),
       ).toBeInTheDocument();
@@ -199,6 +204,7 @@ describe("Toast", () => {
             label="unknown"
             options={{ type: "custom", title: "Custom" }}
           />
+          <Toast />
         </ToastProvider>,
       );
 
@@ -255,6 +261,7 @@ describe("Toast", () => {
       render(
         <ToastProvider toastManager={toastManager}>
           <div>App</div>
+          <Toast />
         </ToastProvider>,
       );
 
@@ -292,8 +299,8 @@ describe("Toast theme", () => {
   });
 
   it("stacks away from the anchored edge", () => {
-    const top = theme({ placement: "top", align: "center" });
-    const bottom = theme({ placement: "bottom", align: "right" });
+    const top = theme({ position: "top-left" });
+    const bottom = theme({ position: "bottom-right" });
 
     expect(top.viewport()).toContain(
       "top-[max(1rem,env(safe-area-inset-top))]",
@@ -316,16 +323,18 @@ describe("Toast theme", () => {
     );
   });
 
-  it("anchors the viewport to each alignment", () => {
-    expect(theme({ align: "left" }).viewport()).toContain(
+  it("anchors the viewport to each corner", () => {
+    expect(theme({ position: "bottom-left" }).viewport()).toContain(
       "left-[max(1rem,env(safe-area-inset-left))]",
     );
-    expect(theme({ align: "center" }).viewport()).toContain("left-1/2");
-    expect(theme({ align: "center" }).viewport()).toContain(
-      "-translate-x-1/2",
-    );
-    expect(theme({ align: "right" }).viewport()).toContain(
+    expect(theme({ position: "bottom-right" }).viewport()).toContain(
       "right-[max(1rem,env(safe-area-inset-right))]",
+    );
+    expect(theme({ position: "top-left" }).viewport()).toContain(
+      "top-[max(1rem,env(safe-area-inset-top))]",
+    );
+    expect(theme({ position: "top-right" }).viewport()).toContain(
+      "top-[max(1rem,env(safe-area-inset-top))]",
     );
   });
 });

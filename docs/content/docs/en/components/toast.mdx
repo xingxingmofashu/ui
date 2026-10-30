@@ -1,11 +1,11 @@
 ---
 title: "Toast"
-description: "Transient React toast notifications with a Liquid Glass style, stacking, actions, promise states, and six screen positions."
+description: "Transient React toast notifications with a Liquid Glass style, stacking, actions, promise states, and four corner positions."
 ---
 
-`ToastProvider` wraps Base UI's `Toast.Provider`. It renders the portal, viewport, and the Liquid Glass toast stack internally; call `useToast()` inside it to add, update, close, or track notifications.
+`ToastProvider` wraps Base UI's `Toast.Provider` and supplies the toast manager. Render `Toast` inside it to draw the portal, viewport, and Liquid Glass stack; call `useToast()` anywhere inside the provider to add, update, close, or track notifications.
 
-Render one provider near the app root. Each provider owns a separate viewport, so pass the same `toastManager` to it when you also create toasts outside React.
+Render one `ToastProvider` near the app root and place `Toast` after your app content. Each provider owns a separate viewport, so pass the same `toastManager` to it when you also create toasts outside React.
 
 ## Basic example
 
@@ -35,7 +35,7 @@ Render one provider near the app root. Each provider owns a separate viewport, s
 
 ## Positions
 
-`position` anchors the stack to a corner or edge: `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, or `bottom-right`. Toasts stack away from the nearest edge, and swipe dismissal follows the vertical placement.
+`position` anchors the stack to a corner: `top-left`, `top-right`, `bottom-left`, or `bottom-right`. Toasts stack away from the nearest vertical edge, and swipe dismissal follows the anchored corner.
 
 <Example name="toast/positions" />
 
@@ -48,21 +48,6 @@ Render one provider near the app root. Each provider owns a separate viewport, s
     "children": {
       type: "ReactNode",
       description: <>{"App content that can call "}<code>{"useToast()"}</code>{"."}</>,
-    },
-    "position": {
-      type: "\"top-left\" | \"top-center\" | \"top-right\" | \"bottom-left\" | \"bottom-center\" | \"bottom-right\"",
-      default: "\"bottom-right\"",
-      description: "Corner or edge where the stack is anchored.",
-    },
-    "closeLabel": {
-      type: "string",
-      default: "\"Dismiss\"",
-      description: "Accessible label for the close button.",
-    },
-    "viewportLabel": {
-      type: "string",
-      default: "\"Notifications\"",
-      description: "Accessible label for the notification region.",
     },
     "timeout": {
       type: "number",
@@ -78,9 +63,26 @@ Render one provider near the app root. Each provider owns a separate viewport, s
       type: "ToastManager",
       description: <>{"Global manager created with "}<code>{"createToastManager"}</code>{"."}</>,
     },
+  }}
+/>
+
+### Toast
+
+<TypeTable
+  type={{
+    "position": {
+      type: "\"top-left\" | \"top-right\" | \"bottom-left\" | \"bottom-right\"",
+      default: "\"bottom-right\"",
+      description: "Corner where the stack is anchored.",
+    },
+    "close": {
+      type: "ReactNode",
+      default: "Built-in close button",
+      description: "Custom content rendered in place of the default close button.",
+    },
     "className": {
       type: "string",
-      description: "Tailwind classes merged into the viewport.",
+      description: "Tailwind classes merged into each toast.",
     },
   }}
 />
@@ -99,13 +101,13 @@ Render one provider near the app root. Each provider owns a separate viewport, s
 
 `add` accepts Base UI's `ToastManagerAddOptions`: `title`, `description`, `type`, `timeout`, `priority`, `actionProps`, and `data`.
 
-`createToastManager` is available from `@xingxingmofashu/ui/composables/create-toast-manager` for toasts created outside React. Attach the manager with the `toastManager` prop before adding notifications so the provider can receive them.
+`createToastManager` is available from `@xingxingmofashu/ui/composables/create-toast-manager` for toasts created outside React. Attach the manager with the `toastManager` prop before adding notifications so the component can receive them.
 
 ## Accessibility
 
 Base UI renders the viewport as a live region, gives high-priority toasts an `alertdialog` role and the rest a `dialog` role, connects titles and descriptions with `aria-labelledby` and `aria-describedby`, and supports F6 focus entry plus swipe dismissal. Timers pause while the viewport is hovered or focused.
 
-Use `closeLabel` and `viewportLabel` to localize the built-in accessible names.
+When you replace the default close button, give your `close` control an accessible name.
 
 ## Styling
 

@@ -127,7 +127,7 @@ const sections = [
     index: "14",
     title: "Toast",
     description:
-      "Stacked glass notifications with status icons, actions, promise states, and six positions.",
+      "Stacked glass notifications with status icons, actions, promise states, and four corners.",
     Preview: ToastPreview,
   },
   {
