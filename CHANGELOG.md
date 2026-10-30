@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.2 - 2026-10-30
+
+### Changed
+
+- Split Toast into `ToastProvider` and `Toast`: the provider supplies the
+  manager, and `Toast` renders the viewport and stacked notifications.
+- Replace the Toast `closeLabel` prop with a `close` slot, remove
+  `viewportLabel`, and limit positions to the four corners with per-corner
+  swipe directions.
+- Improve ARIA relationships for checkbox, input, slider, and switch labels,
+  descriptions, and validation messages.
+- Extract shared icon components and standardize their SVG viewBox on 24×24.
+
+### Documentation
+
+- Add the Vite starter template and document the updated form control
+  accessibility APIs.
+- Sort playground components alphabetically.
+
 ## 0.1.1 - 2026-10-29
 
 ### Changed
