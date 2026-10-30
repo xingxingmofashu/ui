@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@xingxingmofashu/ui": "0.1.1",
+    "@xingxingmofashu/ui": "0.1.2",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@xingxingmofashu/ui':
-        specifier: 0.1.1
-        version: 0.1.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(tailwindcss@4.3.3)
+        specifier: 0.1.2
+        version: 0.1.2(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(tailwindcss@4.3.3)
       react:
         specifier: ^19.3.1
         version: 19.3.1
@@ -574,8 +574,8 @@ packages:
       oxc-transform-react:
         optional: true
 
-  '@xingxingmofashu/ui@0.1.1':
-    resolution: {integrity: sha512-shSI6t3VGLzn62KxwBSOSGiOA7SC4EguT8EMmxdLgu9FBiS8bqFLRorPLTPcAepOvheUARNxl+9ocFDe81R7uw==}
+  '@xingxingmofashu/ui@0.1.2':
+    resolution: {integrity: sha512-4Devw6vUVvzE7O9ohCiNh2u2svKBMU2+ytZodvQmfL9txpxF0enbDifEG3yImdjcHDeNexpyBVh2MyZZeE4EuA==}
     engines: {node: '>=22'}
     peerDependencies:
       react: ^19.0.0
@@ -1216,7 +1216,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.1
       vite: 8.3.5(@types/node@24.19.2)(jiti@2.7.0)
 
-  '@xingxingmofashu/ui@0.1.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(tailwindcss@4.3.3)':
+  '@xingxingmofashu/ui@0.1.2(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@base-ui/react': 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       cn: 0.5.0
