@@ -4,11 +4,15 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { DocsRootProvider } from "@/components/docs-root-provider";
+import { SiteAnalytics } from "@/components/site-analytics";
 import { isLocale, locales } from "@/lib/i18n";
 import { translations } from "@/lib/layout.shared";
 import { githubUrl, ogImage, siteDescription, siteName, siteUrl } from "@/lib/site";
 
 import "../../globals.css";
+
+const analyticsDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
+const analyticsSrc = process.env.NEXT_PUBLIC_PLAUSIBLE_SRC;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -71,6 +75,7 @@ export default async function LocaleLayout({
   return (
     <html lang={lang === "zh" ? "zh-CN" : "en"} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col antialiased">
+        <SiteAnalytics domain={analyticsDomain} scriptSrc={analyticsSrc} />
         <DocsRootProvider lang={lang} i18n={i18nProvider(translations, lang)}>
           {children}
         </DocsRootProvider>

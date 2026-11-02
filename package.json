@@ -56,9 +56,14 @@
     "react",
     "ui",
     "components",
+    "component-library",
+    "react-components",
+    "design-system",
     "tailwindcss",
     "liquid-glass",
-    "base-ui"
+    "base-ui",
+    "tailwind-variants",
+    "accessible"
   ],
   "publishConfig": {
     "access": "public"

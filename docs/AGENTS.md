@@ -46,8 +46,10 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
 
 - `lib/site.ts` owns the site origin, base path, absolute URL helper, and Open Graph image metadata.
 - `lib/seo.ts` builds page metadata and article JSON-LD; use it from page `generateMetadata` functions.
+- `lib/llms.ts` builds `/llms.txt` and `/llms-full.txt` from the MDX sources at build time.
 - `app/sitemap.ts` and `app/robots.ts` are generated at build time.
 - `public/og.png` is the 1200×630 social preview image.
+- `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` enables the optional Plausible loader; `NEXT_PUBLIC_PLAUSIBLE_SRC` overrides the script URL.
 
 ## i18n
 

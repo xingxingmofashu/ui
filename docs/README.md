@@ -29,12 +29,24 @@ The site is deployed to GitHub Pages at
 reads the Pages base path into `NEXT_PUBLIC_BASE_PATH`, so the site works under
 the `/ui/` project path.
 
+## Analytics
+
+The site can load privacy-friendly [Plausible](https://plausible.io) analytics.
+Set `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` at build time to enable it. For a self-hosted
+instance, also set `NEXT_PUBLIC_PLAUSIBLE_SRC` to the script URL. Leave both
+unset to ship without analytics.
+
+The loader injects the script after hydration, so it works with static export
+and does not trigger React's script-tag warning.
+
 ## Routes
 
 - `/` — English marketing home page.
 - `/zh` — Chinese marketing home page.
 - `/docs/en` — English documentation.
 - `/docs/zh` — Chinese documentation.
+- `/llms.txt` — machine-readable documentation index.
+- `/llms-full.txt` — every documentation page in one text file.
 - `/api/search` — statically generated search index.
 
 `components/locale-detect.tsx` sends first-time Chinese browsers to `/zh`.
@@ -52,11 +64,13 @@ the marketing links and the docs language switch.
 - `app/docs/[lang]/(docs)` — the Fumadocs layout and catch-all documentation routes.
 - `lib/i18n.ts` — locales, default language, and directory-based locale parsing.
 - `lib/source.ts` — Fumadocs loader with i18n.
+- `lib/llms.ts` — builds `llms.txt` and `llms-full.txt` from the MDX sources.
 - `lib/layout.shared.tsx` — navigation, links, and UI translations.
 - `lib/seo.ts` — marketing metadata, hreflang, and JSON-LD.
 - `components/marketing-shell.tsx` — shared marketing layout.
 - `components/locale-detect.tsx` — browser-language redirect.
 - `components/locale-link.tsx` — marketing links that persist the locale choice.
+- `components/site-analytics.tsx` — optional Plausible analytics loader.
 - `components/docs-root-provider.tsx` — Fumadocs provider and locale-change handling.
 - `components/examples/<component>/<demo>.tsx` — one live example per file.
 - `components/examples/registry.ts` — auto-discovers demos and their raw source with `import.meta.glob`.

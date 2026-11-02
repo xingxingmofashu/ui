@@ -45,6 +45,10 @@ dark to compare the same previews in both themes.
 
 - [English](https://xingxingmofashu.github.io/ui/docs/en/get-started/introduction)
 - [简体中文](https://xingxingmofashu.github.io/ui/docs/zh/get-started/introduction)
+- [llms.txt](https://xingxingmofashu.github.io/ui/llms.txt) — a compact index for
+  language models and agents
+- [llms-full.txt](https://xingxingmofashu.github.io/ui/llms-full.txt) — every
+  guide and component page in one file
 
 ## Installation
 
