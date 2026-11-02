@@ -37,67 +37,42 @@ On touch screens, drag the drawer in the direction set by `direction` to dismiss
 
 <Example name="drawer/locked" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "title": {
-      type: "ReactNode",
-      description: "Drawer heading.",
-    },
-    "description": {
-      type: "ReactNode",
-      description: "Supporting copy under the title.",
-    },
-    "children": {
-      type: "ReactNode",
-      description: "Body content between the description and the action area.",
-    },
-    "footer": {
-      type: "ReactNode",
-      description: "Bottom action area that can hold any number of buttons.",
-    },
-    "direction": {
-      type: "\"down\" | \"up\" | \"left\" | \"right\"",
-      default: "\"down\"",
-      description: <>{"Edge the drawer slides in from and the swipe dismissal direction, reusing Base UI's "}<code>{"swipeDirection"}</code>{" type."}</>,
-    },
-    "open": {
-      type: "boolean",
-      description: "Controlled open state.",
-    },
-    "defaultOpen": {
-      type: "boolean",
-      default: "false",
-      description: "Initial open state when uncontrolled.",
-    },
-    "onOpenChange": {
-      type: "(open: boolean, details) => void",
-      description: "Called when the drawer opens or closes.",
-    },
-    "onOpenChangeComplete": {
-      type: "(open: boolean) => void",
-      description: "Called after the open or close animation finishes.",
-    },
-    "disablePointerDismissal": {
-      type: "boolean",
-      default: "false",
-      description: "Prevent the backdrop from closing the drawer.",
-    },
-    "modal": {
-      type: "boolean | \"trap-focus\"",
-      default: "true",
-      description: "Controls focus trapping and page scroll locking.",
-    },
-    "className": {
-      type: "any",
-      description: "Tailwind classes merged into the popup.",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | Drawer heading. Required. |
+| `description` | `ReactNode` | — | Supporting copy under the title. |
+| `children` | `ReactNode` | — | Body content between the description and the action area. |
+| `footer` | `ReactNode` | — | Bottom action area that can hold any number of controls. |
+| `direction` | `"down" \| "up" \| "left" \| "right"` | `"down"` | Edge the drawer slides in from, also used as the swipe dismissal direction. |
+| `open` | `boolean` | — | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the drawer opens or closes. |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
+| `modal` | `boolean \| "trap-focus"` | `true` | Controls focus trapping and page scroll locking. |
+| `disablePointerDismissal` | `boolean` | `false` | Prevents the backdrop from closing the drawer. |
+| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `handle` | `DrawerHandle` | — | Associates the drawer with external triggers. |
+| `triggerId` | `string \| null` | — | ID of the trigger associated with the drawer. |
+| `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open drawer. |
+| `snapPoints` | `DrawerSnapPoint[]` | — | Snap heights, as viewport fractions, pixel numbers, or `px`/`rem` strings. |
+| `snapToSequentialPoints` | `boolean` | `false` | Uses drag distance instead of velocity to choose the next snap point. |
+| `snapPoint` | `DrawerSnapPoint \| null` | — | Controlled active snap point. |
+| `defaultSnapPoint` | `DrawerSnapPoint \| null` | — | Initial snap point when uncontrolled. |
+| `onSnapPointChange` | `(snapPoint: DrawerSnapPoint \| null, details) => void` | — | Called when the active snap point changes. |
+| `className` | `string` | — | Tailwind classes merged into the popup. |
 
-`Drawer` also forwards Base UI `Drawer.Root` props such as `actionsRef`, `handle`, `triggerId`, `defaultTriggerId`, `snapPoints`, `defaultSnapPoint`, `snapPoint`, `onSnapPointChange`, and `snapToSequentialPoints`.
-
-`style` is intentionally not supported: the glass theme owns the backdrop, popup, and content. Use `className` for popup layout. Drawer styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
-
-Base UI supplies the `dialog` role, `aria-labelledby` from the title, `aria-describedby` from the description, focus trapping, scroll locking, focus return, backdrop and Escape dismissal, and swipe gestures.
+| Attribute | Description |
+| --- | --- |
+| `data-open` | Present when the drawer is open. |
+| `data-closed` | Present when the drawer is closed. |
+| `data-starting-style` | Present when the drawer begins animating in. |
+| `data-ending-style` | Present when the drawer is animating out. |
+| `data-expanded` | Present when the drawer is at the expanded snap point. |
+| `data-nested` | Present when the drawer is nested within another drawer. |
+| `data-nested-drawer-open` | Present when another drawer is open inside this one. |
+| `data-nested-drawer-swiping` | Present while a nested drawer is being swiped. |
+| `data-swipe-dismiss` | Present when the drawer is dismissed by a swipe. |
+| `data-swipe-direction` | Indicates the swipe direction (`up`, `down`, `left`, or `right`). |
+| `data-swiping` | Present while the drawer is being swiped. |

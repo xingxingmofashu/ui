@@ -37,55 +37,27 @@ Omit `label` to render a square icon button. Provide an accessible name with `ar
 
 <Example name="toggle/disabled" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "pressed": {
-      type: "boolean",
-      description: "Controlled pressed state.",
-    },
-    "defaultPressed": {
-      type: "boolean",
-      default: "false",
-      description: "Initial pressed state when uncontrolled.",
-    },
-    "onPressedChange": {
-      type: "(pressed, details) => void",
-      description: "Called when the pressed state changes.",
-    },
-    "disabled": {
-      type: "boolean",
-      default: "false",
-      description: "Disables the toggle.",
-    },
-    "size": {
-      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
-      default: "\"md\"",
-      description: "Control size.",
-    },
-    "label": {
-      type: "ReactNode",
-      description: "Visible label rendered inside the toggle.",
-    },
-    "icon": {
-      type: "ReactNode",
-      description: "Decorative icon rendered before the label.",
-    },
-    "className": {
-      type: "string",
-      description: "Tailwind classes merged into the toggle root.",
-    },
-    "ref": {
-      type: "Ref<HTMLButtonElement>",
-      description: "Ref forwarded to the rendered button.",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `pressed` | `boolean` | — | Controlled pressed state. |
+| `defaultPressed` | `boolean` | `false` | Initial pressed state when uncontrolled. |
+| `onPressedChange` | `(pressed, details) => void` | — | Called when the pressed state changes. |
+| `disabled` | `boolean` | `false` | Disables the toggle. |
+| `value` | `string` | — | Identifies the toggle when it is used inside a toggle group. |
+| `nativeButton` | `boolean` | `true` | Whether the rendered element is a native `<button>`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered element. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control size. |
+| `label` | `ReactNode` | — | Visible label rendered inside the toggle. |
+| `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
+| `className` | `string` | — | Tailwind classes merged into the toggle root. |
+| `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the rendered button. |
 
-`Toggle` also forwards Base UI `Toggle` props such as `value`, `nativeButton`, and `render`.
-
-`style` is intentionally not supported: the glass theme owns the surface. Use `className` for layout, or tune the shared `--ui-glass-*` tokens.
+| Attribute | Description |
+| --- | --- |
+| `data-pressed` | Present when the toggle is pressed. |
+| `data-disabled` | Present when the toggle is disabled. |
 
 ## Accessibility
 

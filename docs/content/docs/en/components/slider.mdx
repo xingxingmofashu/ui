@@ -41,114 +41,46 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 
 <Example name="slider/form" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "value": {
-      type: "number | readonly number[]",
-      description: "Controlled value; an array renders one thumb per value.",
-    },
-    "defaultValue": {
-      type: "number | readonly number[]",
-      description: "Uncontrolled initial value.",
-    },
-    "onValueChange": {
-      type: "(value, details) => void",
-      description: "Called when the value changes.",
-    },
-    "onValueCommitted": {
-      type: "(value, details) => void",
-      description: "Called when a value change is committed.",
-    },
-    "name": {
-      type: "string",
-      description: "Field name used when submitting a form.",
-    },
-    "form": {
-      type: "string",
-      description: "Identifies the form that owns the slider inputs.",
-    },
-    "min": {
-      type: "number",
-      default: "0",
-      description: "Minimum value.",
-    },
-    "max": {
-      type: "number",
-      default: "100",
-      description: "Maximum value.",
-    },
-    "step": {
-      type: "number",
-      default: "1",
-      description: "Step for arrow keys and dragging.",
-    },
-    "largeStep": {
-      type: "number",
-      default: "10",
-      description: "Step for Page Up / Page Down and Shift + arrow keys.",
-    },
-    "minStepsBetweenValues": {
-      type: "number",
-      default: "0",
-      description: "Minimum steps between range thumb values.",
-    },
-    "orientation": {
-      type: "\"horizontal\" | \"vertical\"",
-      default: "\"horizontal\"",
-      description: "Layout and keyboard orientation.",
-    },
-    "format": {
-      type: "Intl.NumberFormatOptions",
-      description: "Value format used by Base UI's accessible value text.",
-    },
-    "locale": {
-      type: "Intl.LocalesArgument",
-      description: "Locale used for number formatting.",
-    },
-    "getAriaLabel": {
-      type: "(index: number) => string",
-      description: "Accessible name for the thumb at the given index. Use it for range sliders.",
-    },
-    "getAriaValueText": {
-      type: "(formattedValue, value, index) => string",
-      description: "Custom accessible value text for each thumb.",
-    },
-    "aria-invalid": {
-      type: "boolean | \"grammar\" | \"spelling\" | \"true\" | \"false\"",
-      description: "Marks the underlying range input as invalid.",
-    },
-    "aria-errormessage": {
-      type: "string",
-      description: "ID of the error message associated with the underlying range input.",
-    },
-    "disabled": {
-      type: "boolean",
-      default: "false",
-      description: "Disables the slider.",
-    },
-    "thumbAlignment": {
-      type: "\"center\" | \"edge\" | \"edge-client-only\"",
-      default: "\"center\"",
-      description: "How thumbs align with the control edges.",
-    },
-    "thumbCollisionBehavior": {
-      type: "\"push\" | \"swap\" | \"none\"",
-      default: "\"push\"",
-      description: "How range thumbs behave when they collide.",
-    },
-    "className": {
-      type: "any",
-      description: <>{"Tailwind classes merged into the outermost "}<code>{"root"}</code>{"."}</>,
-    },
-    "render": {
-      type: "ReactElement | ((props, state) => ReactElement)",
-      description: "Replaces the root element.",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number \| readonly number[]` | — | Controlled value; an array renders one thumb per value. |
+| `defaultValue` | `number \| readonly number[]` | — | Uncontrolled initial value. |
+| `onValueChange` | `(value, details) => void` | — | Called when the value changes. |
+| `onValueCommitted` | `(value, details) => void` | — | Called when a value change is committed. |
+| `name` | `string` | — | Field name used when submitting a form. |
+| `form` | `string` | — | Identifies the form that owns the slider inputs. |
+| `min` | `number` | `0` | Minimum value. |
+| `max` | `number` | `100` | Maximum value. |
+| `step` | `number` | `1` | Step for dragging and arrow keys. |
+| `largeStep` | `number` | `10` | Step for Page Up / Page Down and Shift + arrow keys. |
+| `minStepsBetweenValues` | `number` | `0` | Minimum steps between range thumb values. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
+| `format` | `Intl.NumberFormatOptions` | — | Value format used by Base UI's accessible value text. |
+| `locale` | `Intl.LocalesArgument` | — | Locale used for number formatting. |
+| `getAriaLabel` | `(index: number) => string` | — | Accessible name for the thumb at the given index. Use it for range sliders. |
+| `getAriaValueText` | `(formattedValue, value, index) => string` | — | Custom accessible value text for each thumb. |
+| `aria-label` | `string` | — | Accessible name shared by every thumb. |
+| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
+| `aria-describedby` | `string` | — | ID reference for supporting text announced with each thumb. |
+| `aria-invalid` | `boolean \| "grammar" \| "spelling" \| "true" \| "false"` | — | Marks the underlying range input as invalid. |
+| `aria-errormessage` | `string` | — | ID of the error message associated with the underlying range input. |
+| `disabled` | `boolean` | `false` | Disables the slider. |
+| `thumbAlignment` | `"center" \| "edge" \| "edge-client-only"` | `"center"` | How thumbs align with the control edges. |
+| `thumbCollisionBehavior` | `"push" \| "swap" \| "none"` | `"push"` | How range thumbs behave when they collide. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
+| `className` | `string` | — | Tailwind classes merged into the outermost root. |
 
-`ref` is forwarded to the root. Other native props are forwarded as well.
-
-`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout. Slider styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
+| Attribute | Description |
+| --- | --- |
+| `data-dragging` | Present while a thumb is being dragged. |
+| `data-orientation` | Indicates the orientation (`horizontal` or `vertical`). |
+| `data-disabled` | Present when the slider is disabled. |
+| `data-index` | Indicates the thumb index on range sliders. |
+| `data-valid` | Present when the slider is valid (inside `Field.Root`). |
+| `data-invalid` | Present when the slider is invalid (inside `Field.Root`). |
+| `data-touched` | Present after the slider is touched (inside `Field.Root`). |
+| `data-dirty` | Present after the slider value changes (inside `Field.Root`). |
+| `data-focused` | Present when the slider is focused (inside `Field.Root`). |

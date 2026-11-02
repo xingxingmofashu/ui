@@ -29,53 +29,31 @@ Use `orientation="both"` for two-dimensional content. The corner is rendered so 
 
 The root owns the glass surface. Use `className` for its width, height, radius, and outer layout. Padding belongs inside the content, as the examples do, so list rows can also run edge to edge when needed.
 
-## Props
+## API reference
 
-### ScrollArea
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Scrollable content rendered inside the viewport. |
+| `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | Scrollbar axes to render. |
+| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | Distance in pixels before Base UI marks an edge as overflowing. |
+| `aria-label` | `string` | — | Accessible name forwarded to the scrollable viewport. |
+| `aria-labelledby` | `string` | — | ID of an element that labels the viewport. |
+| `aria-describedby` | `string` | — | ID of an element that describes the viewport. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
+| `className` | `string` | — | Tailwind classes merged into the root. Set the height here. |
 
-<TypeTable
-  type={{
-    "children": {
-      type: "ReactNode",
-      description: "Scrollable content rendered inside the viewport.",
-    },
-    "orientation": {
-      type: "\"vertical\" | \"horizontal\" | \"both\"",
-      default: "\"vertical\"",
-      description: "Scrollbar axes to render.",
-    },
-    "overflowEdgeThreshold": {
-      type: "number | Partial<{ xStart; xEnd; yStart; yEnd }>",
-      default: "0",
-      description: "Distance in pixels before Base UI marks an edge as overflowing.",
-    },
-    "className": {
-      type: "any",
-      description: "Tailwind classes merged into the root. Set the height here.",
-    },
-    "aria-label": {
-      type: "string",
-      description: "Accessible name forwarded to the scrollable viewport.",
-    },
-    "aria-labelledby": {
-      type: "string",
-      description: "ID of an element that labels the viewport.",
-    },
-    "aria-describedby": {
-      type: "string",
-      description: "ID of an element that describes the viewport.",
-    },
-  }}
-/>
-
-`ScrollArea` also forwards Base UI `ScrollArea.Root` props such as `render` and `ref`.
-
-`style` is intentionally not supported: the glass theme owns the surface and the scrollbars. Use `className` for root layout and tune the shared scrollbar variables when needed:
-
-- `--ui-scroll-area-bar-size` — scrollbar thumb thickness.
-- `--ui-scroll-area-bar-padding` — inset between the thumb and the panel edge.
-- `--ui-scroll-area-thumb` — resting thumb color.
-- `--ui-scroll-area-thumb-hover` — hover and scrolling thumb color.
+| Attribute | Description |
+| --- | --- |
+| `data-orientation` | Indicates the enabled scrollbar axes (`horizontal`, `vertical`, or `both`). |
+| `data-scrolling` | Present while the user scrolls inside the area. |
+| `data-has-overflow-x` | Present when content is wider than the viewport. |
+| `data-has-overflow-y` | Present when content is taller than the viewport. |
+| `data-overflow-x-start` | Present when there is horizontal overflow on the start side. |
+| `data-overflow-x-end` | Present when there is horizontal overflow on the end side. |
+| `data-overflow-y-start` | Present when there is vertical overflow on the start side. |
+| `data-overflow-y-end` | Present when there is vertical overflow on the end side. |
+| `data-hovering` | Present on a scrollbar while the pointer is over the area. |
 
 ## Accessibility
 

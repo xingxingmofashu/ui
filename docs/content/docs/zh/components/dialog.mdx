@@ -25,57 +25,31 @@ description: "通用 React 对话框，采用 Liquid Glass 表面与自定义操
 
 <Example name="dialog/dismissal" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "title": {
-      type: "ReactNode",
-      description: "对话框标题。",
-    },
-    "description": {
-      type: "ReactNode",
-      description: "标题下方的说明文字。",
-    },
-    "children": {
-      type: "ReactNode",
-      description: "描述与操作区之间的正文内容。",
-    },
-    "footer": {
-      type: "ReactNode",
-      description: "底部操作区，可放置任意数量的按钮。",
-    },
-    "open": {
-      type: "boolean",
-      description: "受控的打开状态。",
-    },
-    "defaultOpen": {
-      type: "boolean",
-      default: "false",
-      description: "非受控时的初始打开状态。",
-    },
-    "onOpenChange": {
-      type: "(open: boolean, details) => void",
-      description: "对话框打开或关闭时调用。",
-    },
-    "onOpenChangeComplete": {
-      type: "(open: boolean) => void",
-      description: "打开或关闭动画结束后调用。",
-    },
-    "disablePointerDismissal": {
-      type: "boolean",
-      default: "false",
-      description: "禁止点击遮罩关闭。",
-    },
-    "className": {
-      type: "any",
-      description: "合并到弹窗的 Tailwind 类名。",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | 对话框标题，必填。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `children` | `ReactNode` | — | 描述与操作区之间的正文内容。 |
+| `footer` | `ReactNode` | — | 底部操作区，可放置任意数量的控件。 |
+| `open` | `boolean` | — | 受控的打开状态。 |
+| `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
+| `onOpenChange` | `(open: boolean, details) => void` | — | 对话框打开或关闭时调用。 |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
+| `modal` | `boolean \| "trap-focus"` | `true` | 控制焦点锁定与页面滚动锁定。 |
+| `disablePointerDismissal` | `boolean` | `false` | 禁止点击遮罩关闭。 |
+| `actionsRef` | `RefObject<Actions \| null>` | — | 命令式的 `close` 与 `unmount` 操作。 |
+| `handle` | `DialogHandle` | — | 将对话框与外部触发器关联。 |
+| `triggerId` | `string \| null` | — | 与对话框关联的触发器 ID。 |
+| `defaultTriggerId` | `string \| null` | — | 初始打开时使用的触发器 ID。 |
+| `className` | `string` | — | 合并到弹窗的 Tailwind 类名。 |
 
-`Dialog` 还会透传 Base UI `Dialog.Root` 的 `actionsRef`、`handle`、`triggerId`、`defaultTriggerId`、`modal` 等属性。
-
-`style` 被有意禁用：玻璃主题接管遮罩、弹窗与内容。布局请使用 `className`。对话框样式属于内部实现，不支持逐实例修改；请通过共享的 `--ui-glass-*` token 调整。
-
-Base UI 负责 `dialog` 角色、由标题生成 `aria-labelledby`、由描述生成 `aria-describedby`、焦点锁定、滚动锁定、关闭后的焦点恢复，以及遮罩点击和 Esc 关闭。
+| Attribute | Description |
+| --- | --- |
+| `data-open` | 对话框打开时存在。 |
+| `data-closed` | 对话框关闭时存在。 |
+| `data-starting-style` | 对话框开始进入动画时存在。 |
+| `data-ending-style` | 对话框正在退出动画时存在。 |
+| `data-nested` | 对话框嵌套在另一个对话框内时存在。 |
+| `data-nested-dialog-open` | 对话框内部还有另一个对话框打开时存在。 |

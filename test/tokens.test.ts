@@ -17,6 +17,7 @@ import alertDialogTheme from "../src/theme/alert-dialog";
 import dialogTheme from "../src/theme/dialog";
 import drawerTheme from "../src/theme/drawer";
 import inputTheme from "../src/theme/input";
+import progressTheme from "../src/theme/progress";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
   "\\",
@@ -208,6 +209,21 @@ function themeCandidates() {
   ] as const;
   const sliderStyles = sliderTheme();
   const sliderCandidates = sliderSlots.map((slot) => sliderStyles[slot]());
+  const progressSlots = [
+    "root",
+    "header",
+    "label",
+    "value",
+    "track",
+    "indicator",
+    "description",
+  ] as const;
+  const progressSizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const progressCandidates = progressSizes.flatMap((size) => {
+    const progressStyles = progressTheme({ size });
+
+    return progressSlots.map((slot) => progressStyles[slot]());
+  });
 
   return [
     buttonStyles.root(),
@@ -228,6 +244,7 @@ function themeCandidates() {
     ...toggleGroupCandidates,
     ...toggleCandidates,
     ...sliderCandidates,
+    ...progressCandidates,
   ]
     .join(" ")
     .split(/\s+/)
@@ -488,6 +505,37 @@ describe("design tokens", () => {
     expect(css).toContain("[data-layer=thumb-glass]");
     expect(css).toContain("--ui-slider-control-height: calc(");
     expect(css).toContain("background-image: radial-gradient(");
+  });
+
+  it("compiles the progress glass controls from the theme recipe", async () => {
+    const css = await buildStyles(themeCandidates());
+
+    expect(css).toContain(
+      "--ui-progress-track: color-mix(in srgb,var(--ui-ink) 12%,transparent);",
+    );
+    expect(css).toContain("--ui-progress-fill-from: var(--ui-ink);");
+    expect(css).toContain("--ui-progress-fill-to: var(--ui-ink-active);");
+    expect(css).toContain(
+      "--ui-progress-glow: color-mix(in srgb,var(--ui-ink) 28%,transparent);",
+    );
+    expect(css).toContain("--ui-progress-height: 6px;");
+    expect(css).toContain("--ui-progress-height: 10px;");
+    expect(css).toContain("--ui-progress-gap: 8px;");
+    expect(css).toContain("--ui-progress-font-size: 0.875rem;");
+    expect(css).toContain("height: var(--ui-progress-height);");
+    expect(css).toContain("background-color: var(--ui-progress-track);");
+    expect(css).toContain(
+      "background-image: linear-gradient(117deg,var(--ui-progress-fill-from) 0%,var(--ui-progress-fill-to) 100%);",
+    );
+    expect(css).toContain("transition-property: width;");
+    expect(css).toContain(
+      "animation: ui-progress-indeterminate 1.4s ease-in-out infinite;",
+    );
+    expect(css).toContain("@keyframes ui-progress-indeterminate");
+    expect(css).toContain("translate: -120% 0;");
+    expect(css).toContain("translate: 320% 0;");
+    expect(css).toContain("width: 38%;");
+    expect(css).toContain("@media (prefers-reduced-motion: reduce)");
   });
 
   it("ships light and dark runtime values", async () => {
@@ -776,6 +824,28 @@ describe("design tokens", () => {
     expect(recipe).not.toContain("--ui-slider-filter");
     expect(recipe).not.toContain("LIQUID_GLASS_MAP");
     expect(component).not.toContain("--ui-slider-filter");
+    expect(component).not.toContain("LIQUID_GLASS_MAP");
+    expect(component).not.toContain(".css");
+  });
+
+  it("keeps progress styling in the tailwind-variants theme", async () => {
+    const [recipe, component] = await Promise.all([
+      readFile(new URL("../src/theme/progress.ts", import.meta.url), "utf8"),
+      readFile(
+        new URL("../src/components/progress.tsx", import.meta.url),
+        "utf8",
+      ),
+    ]);
+
+    expect(recipe).toContain('from "tailwind-variants"');
+    expect(recipe).toContain("--ui-progress-track");
+    expect(recipe).toContain("ui-progress-indeterminate");
+    expect(recipe).toContain("motion-reduce");
+    expect(recipe).not.toContain("LIQUID_GLASS_MAP");
+    expect(recipe).not.toContain(".css");
+    expect(component).toContain("UIProgress.Root");
+    expect(component).toContain("UIProgress.Track");
+    expect(component).toContain("UIProgress.Indicator");
     expect(component).not.toContain("LIQUID_GLASS_MAP");
     expect(component).not.toContain(".css");
   });

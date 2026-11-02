@@ -11,6 +11,7 @@ export { Dialog, type DialogProps } from "./components/dialog";
 export { Drawer, type DrawerProps } from "./components/drawer";
 export { Input, type InputProps } from "./components/input";
 export { Popover, type PopoverProps } from "./components/popover";
+export { Progress, type ProgressProps } from "./components/progress";
 export {
   ScrollArea,
   type ScrollAreaOrientation,

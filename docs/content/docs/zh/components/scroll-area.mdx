@@ -29,53 +29,31 @@ description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动
 
 根节点负责玻璃表面。使用 `className` 控制其宽高、圆角与外部布局。内边距应放在内容内部（如示例所示），这样列表行在需要时也可以贴边排列。
 
-## Props
+## API reference
 
-### ScrollArea
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | 渲染在视口内的可滚动内容。 |
+| `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | 要渲染的滚动条方向。 |
+| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | Base UI 将一个边缘标记为溢出前需要越过的像素距离。 |
+| `aria-label` | `string` | — | 转发到可滚动视口的无障碍名称。 |
+| `aria-labelledby` | `string` | — | 为视口提供名称的元素 ID。 |
+| `aria-describedby` | `string` | — | 为视口提供说明的元素 ID。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
+| `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
+| `className` | `string` | — | 合并到根节点的 Tailwind 类；在这里设置高度。 |
 
-<TypeTable
-  type={{
-    "children": {
-      type: "ReactNode",
-      description: "渲染在视口内的可滚动内容。",
-    },
-    "orientation": {
-      type: "\"vertical\" | \"horizontal\" | \"both\"",
-      default: "\"vertical\"",
-      description: "要渲染的滚动条方向。",
-    },
-    "overflowEdgeThreshold": {
-      type: "number | Partial<{ xStart; xEnd; yStart; yEnd }>",
-      default: "0",
-      description: "Base UI 将一个边缘标记为溢出前需要越过的像素距离。",
-    },
-    "className": {
-      type: "any",
-      description: "合并到根节点的 Tailwind 类。在这里设置高度。",
-    },
-    "aria-label": {
-      type: "string",
-      description: "转发到可滚动视口的无障碍名称。",
-    },
-    "aria-labelledby": {
-      type: "string",
-      description: "为视口提供名称的元素 ID。",
-    },
-    "aria-describedby": {
-      type: "string",
-      description: "为视口提供说明的元素 ID。",
-    },
-  }}
-/>
-
-`ScrollArea` 还会透传 Base UI `ScrollArea.Root` 的 `render`、`ref` 等属性。
-
-`style` 被有意禁用：玻璃主题接管表面与滚动条。布局请使用 `className`；需要微调时可通过共享变量控制滚动条：
-
-- `--ui-scroll-area-bar-size` — 滚动条滑块厚度。
-- `--ui-scroll-area-bar-padding` — 滑块与面板边缘之间的内缩距离。
-- `--ui-scroll-area-thumb` — 静止状态下的滑块颜色。
-- `--ui-scroll-area-thumb-hover` — 悬停与滚动时的滑块颜色。
+| Attribute | Description |
+| --- | --- |
+| `data-orientation` | 表示启用的滚动条方向（`horizontal`、`vertical` 或 `both`）。 |
+| `data-scrolling` | 用户正在区域内滚动时存在。 |
+| `data-has-overflow-x` | 内容宽度超出视口时存在。 |
+| `data-has-overflow-y` | 内容高度超出视口时存在。 |
+| `data-overflow-x-start` | 横向起点方向存在溢出时存在。 |
+| `data-overflow-x-end` | 横向终点方向存在溢出时存在。 |
+| `data-overflow-y-start` | 纵向起点方向存在溢出时存在。 |
+| `data-overflow-y-end` | 纵向终点方向存在溢出时存在。 |
+| `data-hovering` | 指针位于区域上方时存在于滚动条上。 |
 
 ## 无障碍
 

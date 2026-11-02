@@ -40,7 +40,9 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
 - Do not add accent colors. Callouts, code highlighting, and examples are neutral.
 - Do not replace live components with screenshots.
 - Prefer Fumadocs MDX components registered in `components/mdx.tsx` — `Callout`,
-  `Cards`, `Steps`, `Tabs`, `Accordions`, and `TypeTable` — over custom markup.
+  `Cards`, `Steps`, `Tabs`, and `Accordions` — over custom markup.
+- Document component APIs with an `## API reference` section that contains
+  Markdown `Props` and `Attribute` tables. Do not use `TypeTable`.
 
 ## SEO
 

@@ -25,57 +25,31 @@ The component is typically used in controlled mode: `open` controls visibility a
 
 <Example name="dialog/dismissal" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "title": {
-      type: "ReactNode",
-      description: "Dialog heading.",
-    },
-    "description": {
-      type: "ReactNode",
-      description: "Supporting copy under the title.",
-    },
-    "children": {
-      type: "ReactNode",
-      description: "Body content between the description and the action area.",
-    },
-    "footer": {
-      type: "ReactNode",
-      description: "Bottom action area that can hold any number of buttons.",
-    },
-    "open": {
-      type: "boolean",
-      description: "Controlled open state.",
-    },
-    "defaultOpen": {
-      type: "boolean",
-      default: "false",
-      description: "Initial open state when uncontrolled.",
-    },
-    "onOpenChange": {
-      type: "(open: boolean, details) => void",
-      description: "Called when the dialog opens or closes.",
-    },
-    "onOpenChangeComplete": {
-      type: "(open: boolean) => void",
-      description: "Called after the open or close animation finishes.",
-    },
-    "disablePointerDismissal": {
-      type: "boolean",
-      default: "false",
-      description: "Prevent the backdrop from closing the dialog.",
-    },
-    "className": {
-      type: "any",
-      description: "Tailwind classes merged into the popup.",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | Dialog heading. Required. |
+| `description` | `ReactNode` | — | Supporting copy under the title. |
+| `children` | `ReactNode` | — | Body content between the description and the action area. |
+| `footer` | `ReactNode` | — | Bottom action area that can hold any number of controls. |
+| `open` | `boolean` | — | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the dialog opens or closes. |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
+| `modal` | `boolean \| "trap-focus"` | `true` | Controls focus trapping and page scroll locking. |
+| `disablePointerDismissal` | `boolean` | `false` | Prevents the backdrop from closing the dialog. |
+| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `handle` | `DialogHandle` | — | Associates the dialog with external triggers. |
+| `triggerId` | `string \| null` | — | ID of the trigger associated with the dialog. |
+| `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open dialog. |
+| `className` | `string` | — | Tailwind classes merged into the popup. |
 
-`Dialog` also forwards Base UI `Dialog.Root` props such as `actionsRef`, `handle`, `triggerId`, `defaultTriggerId`, and `modal`.
-
-`style` is intentionally not supported: the glass theme owns the backdrop, popup, and content. Use `className` for popup layout. Dialog styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
-
-Base UI supplies the `dialog` role, `aria-labelledby` from the title, `aria-describedby` from the description, focus trapping, scroll locking, focus return, and backdrop and Escape dismissal.
+| Attribute | Description |
+| --- | --- |
+| `data-open` | Present when the dialog is open. |
+| `data-closed` | Present when the dialog is closed. |
+| `data-starting-style` | Present when the dialog begins animating in. |
+| `data-ending-style` | Present when the dialog is animating out. |
+| `data-nested` | Present when the dialog is nested within another dialog. |
+| `data-nested-dialog-open` | Present when another dialog is open inside this one. |

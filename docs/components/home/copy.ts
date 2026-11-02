@@ -31,7 +31,7 @@ const zh = {
   },
   components: {
     eyebrow: "组件",
-    title: "十五个组件，一套语言",
+    title: "十六个组件，一套语言",
     description:
       "每个组件共享同一套玻璃 token，因此可以自然组合。下面的内容直接渲染 UI 包里的组件。",
     activity: [
@@ -111,6 +111,11 @@ const zh = {
         title: "工作区设置",
         descriptionText: "更改会应用到整个团队。",
         switchLabel: "邮件通知",
+      },
+      progress: {
+        name: "Progress",
+        description: "支持确定与不确定状态的线性玻璃进度条。",
+        label: "正在导入工作区",
       },
       scrollArea: {
         name: "Scroll Area",
@@ -221,7 +226,7 @@ const en: typeof zh = {
   },
   components: {
     eyebrow: "Components",
-    title: "Fifteen components, one language",
+    title: "Sixteen components, one language",
     description:
       "Every component shares the same glass tokens, so they compose naturally. Everything below renders directly from the UI package.",
     activity: [
@@ -304,6 +309,11 @@ const en: typeof zh = {
         title: "Workspace settings",
         descriptionText: "Changes apply to everyone on the team.",
         switchLabel: "Email notifications",
+      },
+      progress: {
+        name: "Progress",
+        description: "A linear glass progress bar with determinate and indeterminate states.",
+        label: "Importing workspace",
       },
       scrollArea: {
         name: "Scroll Area",

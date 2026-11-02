@@ -19,33 +19,16 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 
 <Example name="card/content-only" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "title": {
-      type: "ReactNode",
-      description: <>{"Card heading, rendered as a "}<code>{"div"}</code>{"."}</>,
-    },
-    "description": {
-      type: "ReactNode",
-      description: "Supporting text below the heading.",
-    },
-    "footer": {
-      type: "ReactNode",
-      description: "Footer action area.",
-    },
-    "children": {
-      type: "ReactNode",
-      description: "Card body content.",
-    },
-    "className": {
-      type: "string",
-      description: <>{"Merged into "}<code>{"root"}</code>{"; use it for layout."}</>,
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | Card heading, rendered as a `div`. |
+| `description` | `ReactNode` | — | Supporting text below the heading. |
+| `footer` | `ReactNode` | — | Footer action area. |
+| `children` | `ReactNode` | — | Card body content. |
+| `className` | `string` | — | Merged into `root`; use it for layout. |
 
-All other props are forwarded to the root `div`, such as `id`, `role`, and `onClick`.
-
-The glass material is internal and is not customizable per card; tune it through the shared `--ui-glass-*` tokens instead.
+| Attribute | Description |
+| --- | --- |
+| `data-slot` | Marks internal parts (`root`, `header`, `title`, `description`, `body`, `footer`) for styling. |

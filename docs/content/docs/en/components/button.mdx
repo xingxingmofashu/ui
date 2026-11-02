@@ -39,38 +39,28 @@ When the button should navigate instead of trigger an action, tell Base UI not t
 
 <Example name="button/link" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "label": {
-      type: "ReactNode",
-      description: <>{"Button text. Takes precedence over "}<code>{"children"}</code>{" when both are provided."}</>,
-    },
-    "children": {
-      type: "ReactNode",
-      description: <>{"Visible content used when "}<code>{"label"}</code>{" is not provided."}</>,
-    },
-    "leadingIcon": {
-      type: "ReactNode",
-      description: "Icon before the label.",
-    },
-    "trailingIcon": {
-      type: "ReactNode",
-      description: "Icon after the label, using the same container as the leading icon.",
-    },
-    "size": {
-      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
-      default: "\"md\"",
-      description: "Controls height, padding, and icon size.",
-    },
-    "className": {
-      type: "any",
-      description: <>{"Tailwind classes merged into the outer "}<code>{"root"}</code>{"."}</>,
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Button text. Takes precedence over `children` when both are provided. |
+| `children` | `ReactNode` | — | Visible content used when `label` is not provided. |
+| `leadingIcon` | `ReactNode` | — | Decorative icon before the label. |
+| `trailingIcon` | `ReactNode` | — | Decorative icon after the label. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, text, and icon size. |
+| `disabled` | `boolean` | `false` | Disables the button. |
+| `focusableWhenDisabled` | `boolean` | `false` | Keeps a disabled button in the Tab order and exposes it with `aria-disabled`. |
+| `nativeButton` | `boolean` | `true` | Whether the rendered element is a native `<button>`. Set it to `false` when rendering a link or another element. |
+| `type` | `"button" \| "submit" \| "reset"` | — | Native button type. |
+| `form` | `string` | — | ID of the form that owns the button. |
+| `name` | `string` | — | Name submitted with the form. |
+| `value` | `string` | — | Value submitted with the form. |
+| `onClick` | `MouseEventHandler<HTMLElement>` | — | Called when the button is pressed. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered element. |
+| `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the rendered element. |
+| `className` | `string` | — | Tailwind classes merged into the outer `root`. |
 
-All other props are forwarded to the Base UI `Button`, including `disabled`, `focusableWhenDisabled`, `nativeButton`, `onClick`, `type`, `render`, and `ref`.
-
-`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout. The glass material is internal and is not customizable per button; tune it through the shared `--ui-glass-*` tokens instead.
+| Attribute | Description |
+| --- | --- |
+| `data-disabled` | Present when the button is disabled. |
+| `data-slot` | Marks internal parts (`root`, `base`, `glass`, `overlay`, `leading-icon`, `label`, `trailing-icon`) for styling. |

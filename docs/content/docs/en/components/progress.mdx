@@ -1,0 +1,83 @@
+---
+title: "Progress"
+description: "An accessible React progress bar with a linear Liquid Glass track, determinate and indeterminate states, and five sizes."
+---
+
+`Progress` wraps Base UI's `Progress` in a linear glass track. It supports determinate values, an indeterminate state, an optional label and description, and a formatted value readout.
+
+The component composes the Base UI root, label, value, track, and indicator internally, so you use one component instead of assembling the parts yourself.
+
+## Basic example
+
+Pass `value` between `min` and `max`. The default range is `0` to `100`, and the visible value uses the current locale's percentage format.
+
+<Example name="progress/basic" />
+
+## Indeterminate
+
+Set `value={null}` when the duration is unknown. The bar animates horizontally and exposes an indeterminate state to assistive technology.
+
+<Example name="progress/indeterminate" />
+
+## Sizes
+
+Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Track height, spacing, and text size scale together.
+
+<Example name="progress/sizes" />
+
+## Formatting
+
+Use `format` for `Intl.NumberFormat` options. The formatted value is also used for the default `aria-valuetext`.
+
+<Example name="progress/format" />
+
+## API reference
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number \| null` | `null` | Current value. Use `null` for an indeterminate progress bar. |
+| `label` | `ReactNode` | — | Visible label for the progress bar. |
+| `description` | `ReactNode` | — | Supporting text under the bar. It is linked automatically through `aria-describedby`. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls track height, spacing, and text size. |
+| `min` | `number` | `0` | The minimum value. |
+| `max` | `number` | `100` | The maximum value. |
+| `format` | `Intl.NumberFormatOptions` | — | Options used to format the visible value and the default `aria-valuetext`. |
+| `locale` | `Intl.LocalesArgument` | — | The locale used by `Intl.NumberFormat`. Defaults to the runtime locale. |
+| `getAriaValueText` | `(formattedValue: string, value: number \| null) => string` | — | Returns a human-readable text alternative for the current value. |
+| `aria-valuetext` | `string` | — | Overrides the accessible value text. |
+| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
+| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
+| `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered root element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
+| `className` | `string` | — | Tailwind classes merged into the root. |
+
+| Attribute | Description |
+| --- | --- |
+| `data-complete` | Present when the progress has completed. |
+| `data-indeterminate` | Present when the progress is indeterminate. |
+| `data-progressing` | Present while the progress is progressing. |
+
+## Accessibility
+
+A visible `label` gives the progress bar its accessible name. When no visible label is rendered, provide `aria-label` or `aria-labelledby` yourself.
+
+The default `aria-valuetext` is the formatted percentage. Use `getAriaValueText` when the value needs a more meaningful description, such as “7 of 10 files uploaded”.
+
+An indeterminate bar has no `aria-valuenow`; Base UI announces it as indeterminate progress.
+
+## Theming
+
+The bar stays neutral by design. Override the component-scoped tokens from `src/theme/progress.ts` to change the material:
+
+```css
+.my-progress {
+  --ui-progress-height: 8px;
+  --ui-progress-track: color-mix(in srgb, var(--ui-ink) 16%, transparent);
+  --ui-progress-fill-from: var(--ui-ink);
+  --ui-progress-fill-to: var(--ui-ink-active);
+  --ui-progress-glow: color-mix(in srgb, var(--ui-ink) 32%, transparent);
+}
+```
+
+`style` is intentionally not supported: the glass theme owns the track surface. Use `className` for layout and tune the `--ui-progress-*` tokens for theme changes.

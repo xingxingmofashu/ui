@@ -39,59 +39,30 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 
 <Example name="toast/positions" />
 
-## Props
+## API reference
 
-### ToastProvider
+**ToastProvider**
 
-<TypeTable
-  type={{
-    "children": {
-      type: "ReactNode",
-      description: <>{"可以调用 "}<code>{"useToast()"}</code>{" 的应用内容。"}</>,
-    },
-    "timeout": {
-      type: "number",
-      default: "5000",
-      description: <>{"默认自动关闭延时（毫秒）；"}<code>{"0"}</code>{" 表示不自动关闭。"}</>,
-    },
-    "limit": {
-      type: "number",
-      default: "3",
-      description: <>{"最多同时渲染的 Toast 数量；超出的旧 Toast 会带上 "}<code>{"data-limited"}</code>{"。"}</>,
-    },
-    "toastManager": {
-      type: "ToastManager",
-      description: <>{"由 "}<code>{"createToastManager"}</code>{" 创建的全局管理器。"}</>,
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | 可以调用 `useToast()` 的应用内容。 |
+| `timeout` | `number` | `5000` | 默认自动关闭延时（毫秒）；`0` 表示不自动关闭。 |
+| `limit` | `number` | `3` | 最多同时渲染的 Toast 数量；超出的旧 Toast 会带上 `data-limited`。 |
+| `toastManager` | `ToastManager` | — | 由 `createToastManager` 创建的全局管理器。 |
 
-### Toast
+**Toast**
 
-<TypeTable
-  type={{
-    "position": {
-      type: "\"top-left\" | \"top-right\" | \"bottom-left\" | \"bottom-right\"",
-      default: "\"bottom-right\"",
-      description: "通知栈固定的角落。",
-    },
-    "close": {
-      type: "ReactNode",
-      default: "内置关闭按钮",
-      description: "替换默认关闭按钮的自定义内容。",
-    },
-    "className": {
-      type: "string",
-      description: "合并到每条 Toast 的 Tailwind 类名。",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | 通知栈固定的角落。 |
+| `close` | `ReactNode` | 内置关闭按钮 | 替换默认关闭按钮的自定义内容。 |
+| `className` | `string` | — | 合并到每条 Toast 的 Tailwind 类名。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换每条 Toast 的根元素。 |
+| `ref` | `Ref<HTMLDivElement>` | — | 转发到每条 Toast 根元素的 ref。 |
 
-### useToast
+**useToast**
 
-`useToast()` 返回 Base UI 的 toast manager，也可以从 `@xingxingmofashu/ui/composables/use-toast` 单独导入。
-
-| 方法 | 说明 |
+| Method | Description |
 | --- | --- |
 | `add(options)` | 添加一个 Toast，并返回它的 ID。 |
 | `update(id, options)` | 更新已有的 Toast。 |
@@ -99,9 +70,18 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 | `promise(promise, options)` | 跟踪 Promise，并在 loading、success、error 之间更新。 |
 | `toasts` | 当前 Toast 对象列表。 |
 
-`add` 接受 Base UI 的 `ToastManagerAddOptions`：`title`、`description`、`type`、`timeout`、`priority`、`actionProps` 和 `data`。
-
-`createToastManager` 位于 `@xingxingmofashu/ui/composables/create-toast-manager`，用于在 React 外创建通知。请先通过 `toastManager` 属性把管理器交给 `ToastProvider`，再开始添加通知，这样 Provider 才能收到事件。
+| Attribute | Description |
+| --- | --- |
+| `data-expanded` | Toast 在视口中展开时存在。 |
+| `data-limited` | Toast 因超出数量限制而被标记时存在。 |
+| `data-type` | 表示 Toast 类型（`info`、`success`、`warning`、`error` 或 `loading`）。 |
+| `data-swiping` | Toast 正在滑动时存在。 |
+| `data-swipe-direction` | 表示滑动方向（`up`、`down`、`left` 或 `right`）。 |
+| `data-starting-style` | Toast 开始进入动画时存在。 |
+| `data-ending-style` | Toast 正在退出动画时存在。 |
+| `data-behind` | Toast 位于栈中非最前位置时存在。 |
+| `data-position` | 在视口上表示固定的角落。 |
+| `data-icon` | 在图标槽位上表示状态图标类型。 |
 
 ## 无障碍
 

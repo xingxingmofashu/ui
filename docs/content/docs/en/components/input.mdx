@@ -31,40 +31,38 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
 
 <Example name="input/states" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "label": {
-      type: "ReactNode",
-      description: "Visible label associated with the input.",
-    },
-    "description": {
-      type: "ReactNode",
-      description: <>{"Supporting text under the control. It is linked automatically through "}<code>{"aria-describedby"}</code>{"."}</>,
-    },
-    "leadingIcon": {
-      type: "ReactNode",
-      description: "Decorative icon before the input.",
-    },
-    "trailingIcon": {
-      type: "ReactNode",
-      description: "Decorative icon after the input.",
-    },
-    "size": {
-      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
-      default: "\"md\"",
-      description: "Controls height, padding, radius, text, and icon size.",
-    },
-    "className": {
-      type: "string",
-      description: "Tailwind classes merged into the outer root.",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible label associated with the input. |
+| `description` | `ReactNode` | — | Supporting text under the control, linked through `aria-describedby`. |
+| `leadingIcon` | `ReactNode` | — | Decorative icon before the input. |
+| `trailingIcon` | `ReactNode` | — | Decorative icon after the input. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, radius, text, and icon size. |
+| `value` | `string \| number \| readonly string[]` | — | Controlled value. |
+| `defaultValue` | `string \| number \| readonly string[]` | — | Initial value when uncontrolled. |
+| `onValueChange` | `(value: string, details) => void` | — | Called when the value changes. |
+| `type` | `HTMLInputTypeAttribute` | `"text"` | Native input type. |
+| `placeholder` | `string` | — | Placeholder text. |
+| `name` | `string` | — | Form field name. |
+| `id` | `string` | generated | ID of the input. A generated ID is used when omitted. |
+| `disabled` | `boolean` | `false` | Disables the input and fades the whole field. |
+| `readOnly` | `boolean` | `false` | Prevents edits while keeping the value focusable and selectable. |
+| `required` | `boolean` | `false` | Requires a value for form submission. |
+| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
+| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
+| `aria-describedby` | `string` | — | ID reference for extra supporting text. A visible `description` is merged with this value. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the input element. |
+| `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the input element. |
+| `className` | `string` | — | Tailwind classes merged into the outer root. |
 
-`Input` forwards the rest of Base UI `Input`'s props, including `value`, `defaultValue`, `onValueChange`, `type`, `placeholder`, `name`, `id`, `disabled`, `readOnly`, `required`, and `ref`.
-
-When no visible `label` is rendered, provide `aria-label` or `aria-labelledby` yourself. A visible `description` is announced automatically; if you pass your own `aria-describedby`, both references are merged.
-
-`style` is intentionally not supported: the glass theme owns the control surface. Use `className` for root layout and tune the shared `--ui-*` tokens for theme changes.
+| Attribute | Description |
+| --- | --- |
+| `data-disabled` | Present when the input is disabled. |
+| `data-valid` | Present when the input is valid (inside `Field.Root`). |
+| `data-invalid` | Present when the input is invalid (inside `Field.Root`). |
+| `data-touched` | Present after the input is touched (inside `Field.Root`). |
+| `data-dirty` | Present after the input value changes (inside `Field.Root`). |
+| `data-filled` | Present when the input has a value (inside `Field.Root`). |
+| `data-focused` | Present when the input is focused (inside `Field.Root`). |

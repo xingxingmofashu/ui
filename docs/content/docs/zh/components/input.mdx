@@ -31,40 +31,38 @@ description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签
 
 <Example name="input/states" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "label": {
-      type: "ReactNode",
-      description: "可见标签，与输入框关联。",
-    },
-    "description": {
-      type: "ReactNode",
-      description: <>{"输入框下方的说明文字，会自动通过 "}<code>{"aria-describedby"}</code>{" 关联。"}</>,
-    },
-    "leadingIcon": {
-      type: "ReactNode",
-      description: "输入框前的装饰图标。",
-    },
-    "trailingIcon": {
-      type: "ReactNode",
-      description: "输入框后的装饰图标。",
-    },
-    "size": {
-      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
-      default: "\"md\"",
-      description: "控制高度、内边距、圆角、文字与图标尺寸。",
-    },
-    "className": {
-      type: "string",
-      description: <>{"Tailwind 类名，合并到外层 "}<code>{"root"}</code>{"。"}</>,
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | 可见标签，与输入框关联。 |
+| `description` | `ReactNode` | — | 输入框下方的说明文字，会自动通过 `aria-describedby` 关联。 |
+| `leadingIcon` | `ReactNode` | — | 输入框前的装饰图标。 |
+| `trailingIcon` | `ReactNode` | — | 输入框后的装饰图标。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距、圆角、文字与图标尺寸。 |
+| `value` | `string \| number \| readonly string[]` | — | 受控值。 |
+| `defaultValue` | `string \| number \| readonly string[]` | — | 非受控时的初始值。 |
+| `onValueChange` | `(value: string, details) => void` | — | 值变化时调用。 |
+| `type` | `HTMLInputTypeAttribute` | `"text"` | 原生输入类型。 |
+| `placeholder` | `string` | — | 占位文字。 |
+| `name` | `string` | — | 表单字段名。 |
+| `id` | `string` | 自动生成 | 输入框 ID；省略时会自动生成。 |
+| `disabled` | `boolean` | `false` | 禁用输入框并淡化整个字段。 |
+| `readOnly` | `boolean` | `false` | 阻止修改，但保留焦点与文本选择能力。 |
+| `required` | `boolean` | `false` | 表单提交前必须有值。 |
+| `aria-label` | `string` | — | 没有可见标签时使用的可访问名称。 |
+| `aria-labelledby` | `string` | — | 指向外部可访问名称的 ID 引用。 |
+| `aria-describedby` | `string` | — | 指向额外辅助说明的 ID 引用。可见 `description` 会与它合并。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换输入元素。 |
+| `ref` | `Ref<HTMLElement>` | — | 转发到输入元素的 ref。 |
+| `className` | `string` | — | Tailwind 类名，合并到外层 `root`。 |
 
-其余属性会透传给 Base UI 的 `Input`，包括 `value`、`defaultValue`、`onValueChange`、`type`、`placeholder`、`name`、`id`、`disabled`、`readOnly`、`required` 和 `ref`。
-
-没有可见 `label` 时，请自行提供 `aria-label` 或 `aria-labelledby`。可见 `description` 会被自动朗读；如果还需要自己的 `aria-describedby`，两个引用会合并。
-
-`style` 被有意禁用：玻璃主题接管输入区域的外观。布局请使用 `className`，主题调整请通过共享的 `--ui-*` tokens 完成。
+| Attribute | Description |
+| --- | --- |
+| `data-disabled` | 输入框禁用时存在。 |
+| `data-valid` | 输入框有效时存在（位于 `Field.Root` 内）。 |
+| `data-invalid` | 输入框无效时存在（位于 `Field.Root` 内）。 |
+| `data-touched` | 输入框被触碰后存在（位于 `Field.Root` 内）。 |
+| `data-dirty` | 输入框值变化后存在（位于 `Field.Root` 内）。 |
+| `data-filled` | 输入框有值时存在（位于 `Field.Root` 内）。 |
+| `data-focused` | 输入框聚焦时存在（位于 `Field.Root` 内）。 |

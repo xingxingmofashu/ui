@@ -1,0 +1,83 @@
+---
+title: "Progress"
+description: "带线性 Liquid Glass 轨道、确定与不确定状态以及五种尺寸的可访问 React 进度条。"
+---
+
+`Progress` 将 Base UI 的 `Progress` 封装在一条线性玻璃轨道中。它支持确定值、不确定状态、可选标签与描述，以及格式化后的数值文本。
+
+组件内部组合 Base UI 的 root、label、value、track 与 indicator，因此使用时只需要一个组件，不需要手动拼装各个部分。
+
+## 基础示例
+
+在 `min` 与 `max` 之间传入 `value`。默认范围是 `0` 到 `100`，可见数值使用当前 locale 的百分比格式。
+
+<Example name="progress/basic" />
+
+## 不确定状态
+
+当无法预估完成时间时，设置 `value={null}`。进度条会横向循环动画，并向辅助技术暴露不确定状态。
+
+<Example name="progress/indeterminate" />
+
+## 尺寸
+
+提供 `xs`、`sm`、`md`、`lg`、`xl` 五种尺寸。轨道高度、间距与文字大小会一起缩放。
+
+<Example name="progress/sizes" />
+
+## 格式化
+
+使用 `format` 传入 `Intl.NumberFormat` 选项。格式化后的数值也会作为默认的 `aria-valuetext`。
+
+<Example name="progress/format" />
+
+## API reference
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number \| null` | `null` | 当前值。使用 `null` 表示不确定进度。 |
+| `label` | `ReactNode` | — | 进度条的可见标签。 |
+| `description` | `ReactNode` | — | 进度条下方的辅助说明。它会通过 `aria-describedby` 自动关联。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制轨道高度、间距与文字大小。 |
+| `min` | `number` | `0` | 最小值。 |
+| `max` | `number` | `100` | 最大值。 |
+| `format` | `Intl.NumberFormatOptions` | — | 用于格式化可见数值与默认 `aria-valuetext` 的选项。 |
+| `locale` | `Intl.LocalesArgument` | — | `Intl.NumberFormat` 使用的 locale。默认使用运行环境 locale。 |
+| `getAriaValueText` | `(formattedValue: string, value: number \| null) => string` | — | 返回当前值的可读文本替代。 |
+| `aria-valuetext` | `string` | — | 覆盖无障碍数值文本。 |
+| `aria-label` | `string` | — | 没有可见标签时使用的可访问名称。 |
+| `aria-labelledby` | `string` | — | 指向外部可访问名称的 ID 引用。 |
+| `aria-describedby` | `string` | — | 指向外部辅助说明的 ID 引用。可见 `description` 会与它合并。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素的渲染结果。 |
+| `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
+| `className` | `string` | — | 合并到根元素的 Tailwind 类名。 |
+
+| Attribute | Description |
+| --- | --- |
+| `data-complete` | 进度完成时存在。 |
+| `data-indeterminate` | 进度不确定时存在。 |
+| `data-progressing` | 进度推进时存在。 |
+
+## 无障碍
+
+可见的 `label` 会为进度条提供可访问名称。没有可见标签时，请自行提供 `aria-label` 或 `aria-labelledby`。
+
+默认的 `aria-valuetext` 是格式化后的百分比。当数值需要更有意义的描述时，使用 `getAriaValueText`，例如“已上传 7 / 10 个文件”。
+
+不确定进度条没有 `aria-valuenow`；Base UI 会将其播报为不确定进度。
+
+## 主题
+
+进度条默认保持中性色。可以覆盖 `src/theme/progress.ts` 中的组件级 token 来调整材质：
+
+```css
+.my-progress {
+  --ui-progress-height: 8px;
+  --ui-progress-track: color-mix(in srgb, var(--ui-ink) 16%, transparent);
+  --ui-progress-fill-from: var(--ui-ink);
+  --ui-progress-fill-to: var(--ui-ink-active);
+  --ui-progress-glow: color-mix(in srgb, var(--ui-ink) 32%, transparent);
+}
+```
+
+`style` 有意不支持：玻璃主题负责轨道表面。使用 `className` 控制布局，并通过 `--ui-progress-*` token 调整主题。

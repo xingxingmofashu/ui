@@ -37,73 +37,45 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 
 <Example name="checkbox/states" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "label": {
-      type: "ReactNode",
-      description: "Visible label rendered inside the control; it becomes the accessible name unless aria-label or aria-labelledby is provided.",
-    },
-    "description": {
-      type: "ReactNode",
-      description: "Supporting copy under the label; it is linked with aria-describedby when the control has a label or explicit name.",
-    },
-    "size": {
-      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
-      default: "\"md\"",
-      description: "Tile, icon, and text size.",
-    },
-    "checked": {
-      type: "boolean",
-      description: "Controlled checked state.",
-    },
-    "defaultChecked": {
-      type: "boolean",
-      default: "false",
-      description: "Initial checked state when uncontrolled.",
-    },
-    "indeterminate": {
-      type: "boolean",
-      default: "false",
-      description: <>{"Mixed state; sets "}<code>{"aria-checked=\"mixed\""}</code>{" when true."}</>,
-    },
-    "onCheckedChange": {
-      type: "(checked: boolean, details) => void",
-      description: "Called when the checked state changes.",
-    },
-    "disabled": {
-      type: "boolean",
-      default: "false",
-      description: "Disables interaction.",
-    },
-    "readOnly": {
-      type: "boolean",
-      default: "false",
-      description: "Prevents changes while remaining focusable.",
-    },
-    "required": {
-      type: "boolean",
-      default: "false",
-      description: "Requires the checkbox to be checked for form submission.",
-    },
-    "name": {
-      type: "string",
-      description: "Form field name.",
-    },
-    "value": {
-      type: "string",
-      description: "Value submitted with the form.",
-    },
-    "className": {
-      type: "string",
-      description: "Tailwind classes merged into the Base UI checkbox root.",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible label rendered inside the control. It becomes the accessible name unless `aria-label` or `aria-labelledby` is provided. |
+| `description` | `ReactNode` | — | Supporting copy under the label, linked with `aria-describedby` when the control has a name. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Tile, icon, and text size. |
+| `checked` | `boolean` | — | Controlled checked state. |
+| `defaultChecked` | `boolean` | `false` | Initial checked state when uncontrolled. |
+| `indeterminate` | `boolean` | `false` | Mixed state; sets `aria-checked="mixed"` when true. |
+| `onCheckedChange` | `(checked: boolean, details) => void` | — | Called when the checked state changes. |
+| `disabled` | `boolean` | `false` | Disables interaction. |
+| `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
+| `required` | `boolean` | `false` | Requires the checkbox to be checked for form submission. |
+| `name` | `string` | — | Form field name. |
+| `form` | `string` | — | ID of the form that owns the hidden input. |
+| `value` | `string` | — | Value submitted with the form when checked. |
+| `uncheckedValue` | `string` | — | Value submitted with the form when unchecked. |
+| `id` | `string` | — | ID of the hidden input element. |
+| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
+| `parent` | `boolean` | `false` | Marks the checkbox as a parent within a Checkbox Group. |
+| `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
+| `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the root element. |
+| `className` | `string` | — | Tailwind classes merged into the Base UI checkbox root. |
 
-`Checkbox` also forwards Base UI `Checkbox.Root` props such as `id`, `form`, `inputRef`, `uncheckedValue`, and `parent`.
-
-`style` is intentionally not supported: the glass theme owns the tile visuals. Use `className` for root layout and tune the shared `--ui-*` tokens for theming.
-
-Base UI supplies the `checkbox` role, `aria-checked` (including `mixed`), focus management, the hidden native input, and form submission. `label` becomes the accessible name through `aria-labelledby`; when the control has a label or explicit name, `description` is linked through `aria-describedby`. An explicit `aria-label` or `aria-labelledby` takes precedence for the name, and an explicit `aria-describedby` is merged with the description. A description-only control uses the description as its name and does not add `aria-describedby`.
+| Attribute | Description |
+| --- | --- |
+| `data-checked` | Present when the checkbox is checked. |
+| `data-unchecked` | Present when the checkbox is not checked. |
+| `data-indeterminate` | Present when the checkbox is in an indeterminate state. |
+| `data-disabled` | Present when the checkbox is disabled. |
+| `data-readonly` | Present when the checkbox is read-only. |
+| `data-required` | Present when the checkbox is required. |
+| `data-valid` | Present when the checkbox is valid (inside `Field.Root`). |
+| `data-invalid` | Present when the checkbox is invalid (inside `Field.Root`). |
+| `data-touched` | Present after the checkbox is touched (inside `Field.Root`). |
+| `data-dirty` | Present after the checkbox value changes (inside `Field.Root`). |
+| `data-filled` | Present when the checkbox is checked (inside `Field.Root`). |
+| `data-focused` | Present when the checkbox is focused (inside `Field.Root`). |
+| `data-starting-style` | Present when the indicator begins animating in. |
+| `data-ending-style` | Present when the indicator is animating out. |

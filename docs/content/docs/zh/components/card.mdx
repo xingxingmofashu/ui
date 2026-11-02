@@ -17,33 +17,16 @@ description: "可从服务端渲染的 React 卡片，采用 Liquid Glass 表面
 
 <Example name="card/content-only" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "title": {
-      type: "ReactNode",
-      description: <>{"卡片标题，渲染为 "}<code>{"div"}</code>{"。"}</>,
-    },
-    "description": {
-      type: "ReactNode",
-      description: "标题下方的说明文字。",
-    },
-    "footer": {
-      type: "ReactNode",
-      description: "底部操作区。",
-    },
-    "children": {
-      type: "ReactNode",
-      description: "卡片主体内容。",
-    },
-    "className": {
-      type: "string",
-      description: <>{"合并到 "}<code>{"root"}</code>{"，用于布局。"}</>,
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | 卡片标题，渲染为 `div`。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `footer` | `ReactNode` | — | 底部操作区。 |
+| `children` | `ReactNode` | — | 卡片主体内容。 |
+| `className` | `string` | — | 合并到 `root`，用于布局。 |
 
-其余属性会透传给根 `div`，例如 `id`、`role`、`onClick`。
-
-玻璃材质由组件内部维护，不支持按卡片自定义；如需调整，请修改共享的 `--ui-glass-*` tokens。
+| Attribute | Description |
+| --- | --- |
+| `data-slot` | 标记内部部件（`root`、`header`、`title`、`description`、`body`、`footer`），用于样式选择。 |

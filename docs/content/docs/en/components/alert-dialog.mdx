@@ -23,68 +23,32 @@ The component is fully controlled: `open` controls visibility and the page rende
 
 <Example name="alert-dialog/content" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "title": {
-      type: "ReactNode",
-      description: "Dialog heading.",
-    },
-    "description": {
-      type: "ReactNode",
-      description: "Supporting copy under the title.",
-    },
-    "children": {
-      type: "ReactNode",
-      description: "Extra content between the description and the action buttons.",
-    },
-    "cancelLabel": {
-      type: "ReactNode",
-      default: "\"Cancel\"",
-      description: "Cancel button label.",
-    },
-    "confirmLabel": {
-      type: "ReactNode",
-      default: "\"Confirm\"",
-      description: "Confirm button label.",
-    },
-    "onCancel": {
-      type: "MouseEventHandler<HTMLButtonElement>",
-      description: "Called when the cancel button is pressed.",
-    },
-    "onConfirm": {
-      type: "MouseEventHandler<HTMLButtonElement>",
-      description: "Called when the confirm button is pressed.",
-    },
-    "open": {
-      type: "boolean",
-      description: "Controlled open state.",
-    },
-    "defaultOpen": {
-      type: "boolean",
-      default: "false",
-      description: "Initial open state when uncontrolled.",
-    },
-    "onOpenChange": {
-      type: "(open: boolean, details) => void",
-      description: "Called when the dialog opens or closes.",
-    },
-    "onOpenChangeComplete": {
-      type: "(open: boolean) => void",
-      description: "Called after the open or close animation finishes.",
-    },
-    "className": {
-      type: "any",
-      description: "Tailwind classes merged into the popup.",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | Dialog heading. Required. |
+| `description` | `ReactNode` | — | Supporting copy under the title. |
+| `children` | `ReactNode` | — | Extra content between the description and the action buttons. |
+| `cancelLabel` | `ReactNode` | `"Cancel"` | Cancel button label. |
+| `confirmLabel` | `ReactNode` | `"Confirm"` | Confirm button label. |
+| `onCancel` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the cancel button is pressed. |
+| `onConfirm` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the confirm button is pressed. |
+| `open` | `boolean` | — | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the dialog opens or closes. |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
+| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `handle` | `AlertDialogHandle` | — | Associates the dialog with external triggers. |
+| `triggerId` | `string \| null` | — | ID of the trigger associated with the dialog. |
+| `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open dialog. |
+| `className` | `string` | — | Tailwind classes merged into the popup. |
 
-`AlertDialog` also forwards Base UI `AlertDialog.Root` props such as `actionsRef`, `handle`, `triggerId`, and `defaultTriggerId`.
-
-`style` is intentionally not supported: the glass theme owns the backdrop, popup, and content. Use `className` for popup layout. Dialog styling is internal and is not customizable per instance; tune it through the shared `--ui-glass-*` tokens instead.
-
-The action area is fixed to a cancel and a confirm button, both using the package `Button`. In controlled mode, update `open` from `onOpenChange`.
-
-Base UI supplies the `alertdialog` role, `aria-labelledby` from the title, `aria-describedby` from the description, focus trapping, scroll locking, and focus return.
+| Attribute | Description |
+| --- | --- |
+| `data-open` | Present when the dialog is open. |
+| `data-closed` | Present when the dialog is closed. |
+| `data-starting-style` | Present when the dialog begins animating in. |
+| `data-ending-style` | Present when the dialog is animating out. |
+| `data-nested` | Present when the dialog is nested within another dialog. |
+| `data-nested-dialog-open` | Present when another dialog is open inside this one. |

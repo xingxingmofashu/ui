@@ -41,114 +41,46 @@ Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]
 
 <Example name="slider/form" />
 
-## Props
+## API reference
 
-<TypeTable
-  type={{
-    "value": {
-      type: "number | readonly number[]",
-      description: "受控值；数组会为每个值渲染一个 thumb。",
-    },
-    "defaultValue": {
-      type: "number | readonly number[]",
-      description: "非受控初始值。",
-    },
-    "onValueChange": {
-      type: "(value, details) => void",
-      description: "值变化时触发。",
-    },
-    "onValueCommitted": {
-      type: "(value, details) => void",
-      description: "值变更提交时触发。",
-    },
-    "name": {
-      type: "string",
-      description: "表单提交时使用的字段名。",
-    },
-    "form": {
-      type: "string",
-      description: "指定拥有滑块 input 的表单。",
-    },
-    "min": {
-      type: "number",
-      default: "0",
-      description: "最小值。",
-    },
-    "max": {
-      type: "number",
-      default: "100",
-      description: "最大值。",
-    },
-    "step": {
-      type: "number",
-      default: "1",
-      description: "方向键和拖动的步进。",
-    },
-    "largeStep": {
-      type: "number",
-      default: "10",
-      description: "Page Up / Page Down 与 Shift + 方向键的步进。",
-    },
-    "minStepsBetweenValues": {
-      type: "number",
-      default: "0",
-      description: "区间 thumb 之间的最小步进。",
-    },
-    "orientation": {
-      type: "\"horizontal\" | \"vertical\"",
-      default: "\"horizontal\"",
-      description: "布局与键盘方向。",
-    },
-    "format": {
-      type: "Intl.NumberFormatOptions",
-      description: "Base UI 可访问数值文本使用的格式。",
-    },
-    "locale": {
-      type: "Intl.LocalesArgument",
-      description: "数值格式化使用的 locale。",
-    },
-    "getAriaLabel": {
-      type: "(index: number) => string",
-      description: "为指定索引的 thumb 提供可访问名称，适用于区间滑块。",
-    },
-    "getAriaValueText": {
-      type: "(formattedValue, value, index) => string",
-      description: "为每个 thumb 自定义可访问数值文本。",
-    },
-    "aria-invalid": {
-      type: "boolean | \"grammar\" | \"spelling\" | \"true\" | \"false\"",
-      description: "将内部 range input 标记为无效。",
-    },
-    "aria-errormessage": {
-      type: "string",
-      description: "与内部 range input 关联的错误信息 id。",
-    },
-    "disabled": {
-      type: "boolean",
-      default: "false",
-      description: "禁用滑块。",
-    },
-    "thumbAlignment": {
-      type: "\"center\" | \"edge\" | \"edge-client-only\"",
-      default: "\"center\"",
-      description: "thumb 与控制边缘的对齐方式。",
-    },
-    "thumbCollisionBehavior": {
-      type: "\"push\" | \"swap\" | \"none\"",
-      default: "\"push\"",
-      description: "区间 thumb 碰撞时的行为。",
-    },
-    "className": {
-      type: "any",
-      description: <>{"Tailwind 类名，合并到最外层 "}<code>{"root"}</code>{"。"}</>,
-    },
-    "render": {
-      type: "ReactElement | ((props, state) => ReactElement)",
-      description: "替换根元素。",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number \| readonly number[]` | — | 受控值；数组会为每个值渲染一个 thumb。 |
+| `defaultValue` | `number \| readonly number[]` | — | 非受控初始值。 |
+| `onValueChange` | `(value, details) => void` | — | 值变化时调用。 |
+| `onValueCommitted` | `(value, details) => void` | — | 值变更提交时调用。 |
+| `name` | `string` | — | 表单提交时使用的字段名。 |
+| `form` | `string` | — | 指定拥有滑块 input 的表单。 |
+| `min` | `number` | `0` | 最小值。 |
+| `max` | `number` | `100` | 最大值。 |
+| `step` | `number` | `1` | 拖动与方向键的步进。 |
+| `largeStep` | `number` | `10` | Page Up / Page Down 与 Shift + 方向键的步进。 |
+| `minStepsBetweenValues` | `number` | `0` | 区间 thumb 之间的最小步进。 |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局与键盘方向。 |
+| `format` | `Intl.NumberFormatOptions` | — | Base UI 可访问数值文本使用的格式。 |
+| `locale` | `Intl.LocalesArgument` | — | 数值格式化使用的 locale。 |
+| `getAriaLabel` | `(index: number) => string` | — | 为指定索引的 thumb 提供可访问名称，适用于区间滑块。 |
+| `getAriaValueText` | `(formattedValue, value, index) => string` | — | 为每个 thumb 自定义可访问数值文本。 |
+| `aria-label` | `string` | — | 所有 thumb 共享的可访问名称。 |
+| `aria-labelledby` | `string` | — | 指向外部可访问名称的 ID 引用。 |
+| `aria-describedby` | `string` | — | 指向辅助说明的 ID 引用，会随每个 thumb 朗读。 |
+| `aria-invalid` | `boolean \| "grammar" \| "spelling" \| "true" \| "false"` | — | 将内部 range input 标记为无效。 |
+| `aria-errormessage` | `string` | — | 与内部 range input 关联的错误信息 id。 |
+| `disabled` | `boolean` | `false` | 禁用滑块。 |
+| `thumbAlignment` | `"center" \| "edge" \| "edge-client-only"` | `"center"` | thumb 与控制边缘的对齐方式。 |
+| `thumbCollisionBehavior` | `"push" \| "swap" \| "none"` | `"push"` | 区间 thumb 碰撞时的行为。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
+| `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
+| `className` | `string` | — | Tailwind 类名，合并到最外层 `root`。 |
 
-`ref` 会转发到 root，其余原生属性也会透传。
-
-`style` 被有意禁用：玻璃主题接管表面与 Base UI 元素本身。布局请使用 `className`。滑块样式由组件内部维护，不支持按实例自定义；如需调整，请修改共享的 `--ui-glass-*` tokens。
+| Attribute | Description |
+| --- | --- |
+| `data-dragging` | 用户正在拖动 thumb 时存在。 |
+| `data-orientation` | 表示方向（`horizontal` 或 `vertical`）。 |
+| `data-disabled` | 滑块禁用时存在。 |
+| `data-index` | 在区间滑块中表示 thumb 索引。 |
+| `data-valid` | 滑块有效时存在（位于 `Field.Root` 内）。 |
+| `data-invalid` | 滑块无效时存在（位于 `Field.Root` 内）。 |
+| `data-touched` | 滑块被触碰后存在（位于 `Field.Root` 内）。 |
+| `data-dirty` | 滑块值变化后存在（位于 `Field.Root` 内）。 |
+| `data-focused` | 滑块聚焦时存在（位于 `Field.Root` 内）。 |

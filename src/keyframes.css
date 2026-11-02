@@ -11,3 +11,13 @@
     translate: 0 0;
   }
 }
+
+@keyframes ui-progress-indeterminate {
+  0% {
+    translate: -120% 0;
+  }
+
+  100% {
+    translate: 320% 0;
+  }
+}

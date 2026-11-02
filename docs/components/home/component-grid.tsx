@@ -16,6 +16,7 @@ import {
   Checkbox,
   Input,
   Popover,
+  Progress,
   ScrollArea,
   Switch,
   Toggle,
@@ -166,6 +167,19 @@ export function ComponentGrid({ lang }: { lang: HomeLocale }) {
         >
           <Switch size="sm" label={items.popover.switchLabel} defaultChecked />
         </Popover>
+      ),
+    },
+    {
+      id: "progress",
+      name: items.progress.name,
+      description: items.progress.description,
+      preview: (
+        <Progress
+          className="w-full max-w-[16rem]"
+          size="sm"
+          label={items.progress.label}
+          value={64}
+        />
       ),
     },
     {

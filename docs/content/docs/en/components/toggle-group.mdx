@@ -41,94 +41,43 @@ Set `disabled` on the group to disable every item, or on a single item to disabl
 
 <Example name="toggle-group/disabled" />
 
-## Props
+## API reference
 
-### ToggleGroup
+**ToggleGroup**
 
-<TypeTable
-  type={{
-    "value": {
-      type: "readonly string[]",
-      description: "Controlled pressed values.",
-    },
-    "defaultValue": {
-      type: "readonly string[]",
-      description: "Initial pressed values.",
-    },
-    "onValueChange": {
-      type: "(value: string[], details) => void",
-      description: "Called when the pressed values change.",
-    },
-    "multiple": {
-      type: "boolean",
-      default: "false",
-      description: "Allows multiple pressed items.",
-    },
-    "orientation": {
-      type: "\"horizontal\" | \"vertical\"",
-      default: "\"horizontal\"",
-      description: "Layout and keyboard orientation.",
-    },
-    "size": {
-      type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
-      default: "\"md\"",
-      description: "Controls item height, padding, text, and icons.",
-    },
-    "disabled": {
-      type: "boolean",
-      default: "false",
-      description: "Disables every item.",
-    },
-    "items": {
-      type: "readonly ToggleGroupItemProps[]",
-      description: "Options rendered by the group.",
-    },
-    "className": {
-      type: "any",
-      description: "Tailwind classes merged into the group root.",
-    },
-  }}
-/>
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `readonly string[]` | — | Controlled pressed values. |
+| `defaultValue` | `readonly string[]` | `[]` | Initial pressed values when uncontrolled. |
+| `onValueChange` | `(value: string[], details) => void` | — | Called when the pressed values change. |
+| `multiple` | `boolean` | `false` | Allows multiple pressed items. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
+| `loopFocus` | `boolean` | `true` | Loops keyboard focus back to the first item after the last one. |
+| `disabled` | `boolean` | `false` | Disables every item. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, and icons. |
+| `items` | `readonly ToggleGroupItemProps[]` | — | Options rendered by the group. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
+| `className` | `string` | — | Tailwind classes merged into the group root. |
 
-`ToggleGroup` also forwards Base UI's `ToggleGroup` props such as `loopFocus`, `render`, and `ref`.
+**ToggleGroupItem**
 
-`style` is intentionally not supported: the glass theme owns the surface and the Base UI element. Use `className` for layout.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Required value used by the group. |
+| `label` | `ReactNode` | — | Visible content inside the item. |
+| `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
+| `onPressedChange` | `(pressed, details) => void` | — | Called when this item's pressed state changes. |
+| `disabled` | `boolean` | `false` | Disables the item. |
+| `aria-label` | `string` | — | Accessible name for icon-only items. |
+| `aria-labelledby` | `string` | — | Names an icon-only item from another element. |
+| `nativeButton` | `boolean` | `true` | Whether the item renders a native `<button>`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
+| `className` | `string` | — | Tailwind classes merged into the item root. |
 
-### Item
-
-<TypeTable
-  type={{
-    "value": {
-      type: "string",
-      required: true,
-      description: "Required value used by the group.",
-    },
-    "label": {
-      type: "ReactNode",
-      description: "Visible content inside the item.",
-    },
-    "icon": {
-      type: "ReactNode",
-      description: "Icon rendered before the label.",
-    },
-    "aria-label": {
-      type: "string",
-      description: "Accessible name for icon-only items.",
-    },
-    "aria-labelledby": {
-      type: "string",
-      description: "Names an icon-only item from another element.",
-    },
-    "disabled": {
-      type: "boolean",
-      default: "false",
-      description: "Disables the item.",
-    },
-    "className": {
-      type: "string",
-      description: "Tailwind classes merged into the item root.",
-    },
-  }}
-/>
-
-Items are plain objects; the group renders the Base UI toggle internally.
+| Attribute | Description |
+| --- | --- |
+| `data-disabled` | Present when the group or an item is disabled. |
+| `data-orientation` | Indicates the orientation (`horizontal` or `vertical`). |
+| `data-multiple` | Present when the group allows multiple pressed items. |
+| `data-pressed` | Present on a pressed item. |
