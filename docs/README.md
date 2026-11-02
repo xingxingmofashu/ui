@@ -45,8 +45,8 @@ and does not trigger React's script-tag warning.
 - `/zh` — Chinese marketing home page.
 - `/docs/en` — English documentation.
 - `/docs/zh` — Chinese documentation.
-- `/llms.txt` — machine-readable documentation index.
-- `/llms-full.txt` — every documentation page in one text file.
+- `/llms.txt` — English-only machine-readable documentation index.
+- `/llms-full.txt` — every English documentation page in one text file.
 - `/api/search` — statically generated search index.
 
 `components/locale-detect.tsx` sends first-time Chinese browsers to `/zh`.

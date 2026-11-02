@@ -7,7 +7,6 @@ import {
   githubUrl,
   npmUrl,
   siteDescription,
-  siteDescriptionZh,
   siteName,
 } from "@/lib/site";
 
@@ -21,11 +20,9 @@ type DocPage = {
 };
 
 const contentRoot = path.join(process.cwd(), "content", "docs");
-const llmsLocales: Locale[] = ["en", "zh"];
-const localeLabel: Record<Locale, string> = {
-  en: "English",
-  zh: "中文",
-};
+// llms.txt and llms-full.txt are machine-readable artifacts for agents, so
+// they intentionally expose the English docs only.
+const llmsLocales: Locale[] = ["en"];
 
 async function listMdxFiles(directory: string): Promise<string[]> {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -394,18 +391,14 @@ export async function getLlmsIndex() {
     "",
   ];
 
-  for (const locale of llmsLocales) {
-    lines.push(`## ${localeLabel[locale]}`, "");
+  lines.push("## Documentation", "");
 
-    for (const page of pages.filter((item) => item.locale === locale)) {
-      const description = page.description ? `: ${page.description}` : "";
-      lines.push(
-        `- [${page.title}](${absoluteUrl(page.url)})${description}`,
-      );
-    }
-
-    lines.push("");
+  for (const page of pages) {
+    const description = page.description ? `: ${page.description}` : "";
+    lines.push(`- [${page.title}](${absoluteUrl(page.url)})${description}`);
   }
+
+  lines.push("");
 
   lines.push(
     "## Full documentation",
@@ -419,31 +412,24 @@ export async function getLlmsIndex() {
 
 export async function getLlmsFull() {
   const pages = await getDocPages();
-  const sections = llmsLocales.map((locale) => {
-    const localePages = pages.filter((page) => page.locale === locale);
-    const content = localePages
-      .map(
-        (page) =>
-          `## ${page.title}\n\nURL: ${absoluteUrl(page.url)}\n\n${
-            page.description ? `${page.description}\n\n` : ""
-          }${page.body}`,
-      )
-      .join("\n\n---\n\n");
-
-    return `# ${locale === "en" ? "English documentation" : "中文文档"}\n\n${
-      locale === "en" ? siteDescription : siteDescriptionZh
-    }\n\n${content}`;
-  });
+  const content = pages
+    .map(
+      (page) =>
+        `## ${page.title}\n\nURL: ${absoluteUrl(page.url)}\n\n${
+          page.description ? `${page.description}\n\n` : ""
+        }${page.body}`,
+    )
+    .join("\n\n---\n\n");
 
   return [
     `# ${siteName} — Full documentation`,
     "",
     `> ${siteDescription}`,
     "",
-    "This file combines every documentation page in both languages.",
+    "This file contains every English documentation page.",
     "Use the URL line above each section to cite the canonical page.",
     "",
-    ...sections,
+    content,
     "",
   ].join("\n");
 }
