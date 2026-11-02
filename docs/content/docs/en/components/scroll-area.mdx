@@ -42,6 +42,7 @@ The root owns the glass surface. Use `className` for its width, height, radius, 
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Tailwind classes merged into the root. Set the height here. |
+| `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; viewport?: ClassValue; content?: ClassValue; scrollbar?: ClassValue; thumb?: ClassValue; corner?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
@@ -54,6 +55,7 @@ The root owns the glass surface. Use `className` for its width, height, radius, 
 | `data-overflow-y-start` | Present when there is vertical overflow on the start side. |
 | `data-overflow-y-end` | Present when there is vertical overflow on the end side. |
 | `data-hovering` | Present on a scrollbar while the pointer is over the area. |
+| `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `viewport`, `content`, `scrollbar`, `thumb`, `corner`) for styling. |
 
 ## Accessibility
 

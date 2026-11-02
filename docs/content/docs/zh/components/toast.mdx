@@ -57,6 +57,7 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 | `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | 通知栈固定的角落。 |
 | `close` | `ReactNode` | 内置关闭按钮 | 替换默认关闭按钮的自定义内容。 |
 | `className` | `string` | — | 合并到每条 Toast 的 Tailwind 类名。 |
+| `ui` | `{ viewport?: ClassValue; root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; icon?: ClassValue; text?: ClassValue; title?: ClassValue; description?: ClassValue; actions?: ClassValue; action?: ClassValue; close?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换每条 Toast 的根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到每条 Toast 根元素的 ref。 |
 
@@ -82,6 +83,7 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 | `data-behind` | Toast 位于栈中非最前位置时存在。 |
 | `data-position` | 在视口上表示固定的角落。 |
 | `data-icon` | 在图标槽位上表示状态图标类型。 |
+| `data-slot` | 标记内部部件（`viewport`、`root`、`glass`、`overlay`、`content`、`icon`、`text`、`title`、`description`、`actions`、`action`、`close`），用于样式选择。 |
 
 ## 无障碍
 

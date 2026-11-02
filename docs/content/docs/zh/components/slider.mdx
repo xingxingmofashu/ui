@@ -72,6 +72,7 @@ Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | Tailwind 类名，合并到最外层 `root`。 |
+| `ui` | `{ root?: ClassValue; control?: ClassValue; track?: ClassValue; indicator?: ClassValue; thumb?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | Attribute | Description |
 | --- | --- |
@@ -83,4 +84,5 @@ Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]
 | `data-invalid` | 滑块无效时存在（位于 `Field.Root` 内）。 |
 | `data-touched` | 滑块被触碰后存在（位于 `Field.Root` 内）。 |
 | `data-dirty` | 滑块值变化后存在（位于 `Field.Root` 内）。 |
+| `data-slot` | 标记内部部件（`root`、`control`、`track`、`indicator`、`thumb`），用于样式选择。 |
 | `data-focused` | 滑块聚焦时存在（位于 `Field.Root` 内）。 |

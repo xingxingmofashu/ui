@@ -72,6 +72,7 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Tailwind classes merged into the outermost root. |
+| `ui` | `{ root?: ClassValue; control?: ClassValue; track?: ClassValue; indicator?: ClassValue; thumb?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
@@ -83,4 +84,5 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 | `data-invalid` | Present when the slider is invalid (inside `Field.Root`). |
 | `data-touched` | Present after the slider is touched (inside `Field.Root`). |
 | `data-dirty` | Present after the slider value changes (inside `Field.Root`). |
+| `data-slot` | Marks internal parts (`root`, `control`, `track`, `indicator`, `thumb`) for styling. |
 | `data-focused` | Present when the slider is focused (inside `Field.Root`). |
