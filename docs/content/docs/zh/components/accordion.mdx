@@ -53,17 +53,22 @@ description: "一组可折叠的 React 手风琴面板，采用 Liquid Glass 风
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | 合并到根元素的 Tailwind 类名。 |
+| `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-**AccordionItem**
+**AccordionItemProps**
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `string` | — | 必填，accordion value 使用的标识。 |
 | `title` | `ReactNode` | — | 必填，触发器内的可见标题。 |
 | `content` | `ReactNode` | — | 面板内容。 |
+| `indicator` | `ReactNode \| false` | 内置加号图标 | 替换默认指示器；设为 `false` 时隐藏。 |
 | `disabled` | `boolean` | `false` | 禁用该 item。 |
 | `onOpenChange` | `(open: boolean, details) => void` | — | 该面板展开或收起时调用。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 item 根元素。 |
+| `ref` | `Ref<HTMLDivElement>` | — | 转发到 item 根元素的 ref。 |
 | `className` | `string` | — | 合并到 item root 的 Tailwind 类名。 |
+| `ui` | `{ item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的该 item 内部槽位类名。 |
 
 | Attribute | Description |
 | --- | --- |
@@ -74,3 +79,4 @@ description: "一组可折叠的 React 手风琴面板，采用 Liquid Glass 风
 | `data-panel-open` | 触发器的面板展开时存在。 |
 | `data-starting-style` | 面板开始进入动画时存在。 |
 | `data-ending-style` | 面板正在退出动画时存在。 |
+| `data-slot` | 标记内部部件（`root`、`glass`、`overlay`、`content`、`item`、`header`、`trigger`、`title`、`indicator`、`indicator-icon`、`panel`、`panel-content`）。 |

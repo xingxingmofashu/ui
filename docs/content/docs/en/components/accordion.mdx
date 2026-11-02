@@ -53,17 +53,22 @@ Set `disabled` on the root to disable every trigger, or on a single item to disa
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Tailwind classes merged into the root. |
+| `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
-**AccordionItem**
+**AccordionItemProps**
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `string` | — | Required identifier used by the accordion value. |
 | `title` | `ReactNode` | — | Required visible heading inside the trigger. |
 | `content` | `ReactNode` | — | Panel content. |
+| `indicator` | `ReactNode \| false` | Built-in plus icon | Replaces the default indicator. Set to `false` to hide it. |
 | `disabled` | `boolean` | `false` | Disables this item. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when this panel opens or closes. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item root element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the item root. |
 | `className` | `string` | — | Tailwind classes merged into the item root. |
+| `ui` | `{ item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this item's internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
@@ -74,3 +79,4 @@ Set `disabled` on the root to disable every trigger, or on a single item to disa
 | `data-panel-open` | Present on a trigger while its panel is open. |
 | `data-starting-style` | Present when a panel begins animating in. |
 | `data-ending-style` | Present when a panel is animating out. |
+| `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `content`, `item`, `header`, `trigger`, `title`, `indicator`, `indicator-icon`, `panel`, `panel-content`). |

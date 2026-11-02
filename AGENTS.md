@@ -57,6 +57,52 @@ same pnpm workspace.
 - Light/dark tokens support `.light` / `.dark` and
   `data-theme="light"` / `data-theme="dark"`.
 
+## Component API
+
+- Components are single-structure wrappers: they own the Base UI anatomy. Do
+  not export Base UI parts or add a second composition API.
+- `className` targets the component's primary element. Internal slots are
+  styled with `ui`, keyed by `data-slot`.
+- Derive `ui` types from the tailwind-variants theme. Never hand-write a slot
+  map or add aliases such as `AccordionUi` or `AccordionItemUi`.
+- `src/internal/tv.ts` owns the minimal `ComponentConfig` helper used to map
+  theme slots to prop types, mirroring Nuxt UI.
+
+```ts
+type Accordion = ComponentConfig<typeof theme>;
+
+type AccordionProps<Value extends string = string> = /* ... */ & {
+  ui?: Accordion["slots"];
+};
+
+type AccordionItemProps<Value extends string = string> = /* ... */ & {
+  ui?: Partial<
+    Pick<
+      Accordion["slots"],
+      | "item"
+      | "header"
+      | "trigger"
+      | "title"
+      | "indicator"
+      | "indicatorIcon"
+      | "panel"
+      | "panelContent"
+    >
+  >;
+};
+```
+
+- `ui` values are `ClassValue`, not only `string`, so arrays and class maps
+  work.
+- Merge order: theme -> root `ui` -> item `ui` -> `className`. Do not introduce
+  an internal prop such as `sharedUi`; merge root and item `ui` at the call
+  site.
+- `data-slot` is the public styling contract. `data-layer` stays private.
+- `style` is not supported. Use `className` for layout and the shared `--ui-*`
+  tokens for material.
+- Component docs list the derived slot object for `ui` and include `data-slot`
+  in the Attribute table.
+
 ## Package files
 
 - Public exports: `src/index.ts`
