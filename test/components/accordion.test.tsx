@@ -132,6 +132,42 @@ describe("Accordion", () => {
       expect(content).toContainElement(trigger);
     });
 
+    it("supports a custom indicator", () => {
+      render(
+        <Accordion
+          items={[
+            {
+              value: "one",
+              title: "One",
+              content: "Panel",
+              indicator: <span data-testid="custom-indicator" />,
+            },
+          ]}
+        />,
+      );
+
+      expect(screen.getByTestId("custom-indicator")).toBeInTheDocument();
+    });
+
+    it("can hide the indicator", () => {
+      render(
+        <Accordion
+          items={[
+            {
+              value: "one",
+              title: "One",
+              content: "Panel",
+              indicator: false,
+            },
+          ]}
+        />,
+      );
+
+      expect(
+        getButton("One").querySelector('[data-slot="indicator"]'),
+      ).toBeNull();
+    });
+
     it("renders the default plus indicator", () => {
       render(<BasicAccordion />);
 
@@ -324,13 +360,73 @@ describe("Accordion", () => {
       expect(getSlot(item, "panel")).not.toHaveClass("custom-item");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Accordion does not accept a ui prop.
-        <Accordion items={items} ui={{ root: "custom-root" }} />
+    it("applies ui classes to internal slots", () => {
+      render(
+        <Accordion
+          defaultValue={["one"]}
+          ui={{
+            root: "ui-root",
+            glass: "ui-glass",
+            overlay: "ui-overlay",
+            content: "ui-content",
+            item: "ui-item",
+            header: "ui-header",
+            trigger: "ui-trigger",
+            title: "ui-title",
+            indicator: "ui-indicator",
+            panel: "ui-panel",
+            panelContent: "ui-panel-content",
+          }}
+          items={[
+            {
+              value: "one",
+              title: "One",
+              content: "Panel",
+              className: "item-class",
+              ui: {
+                trigger: "item-trigger",
+                panel: "item-panel",
+              },
+            },
+          ]}
+        />,
       );
 
-      expect(element).toBeTruthy();
+      const root = getRoot("One");
+      const item = getSlot(root, "item");
+      const trigger = getButton("One");
+
+      expect(root).toHaveClass("ui-root");
+      expect(getSlot(root, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(root, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(root, "content")).toHaveClass("ui-content");
+      expect(item).toHaveClass("ui-item", "item-class");
+      expect(getSlot(item, "header")).toHaveClass("ui-header");
+      expect(trigger).toHaveClass("ui-trigger", "item-trigger");
+      expect(getSlot(trigger, "title")).toHaveClass("ui-title");
+      expect(getSlot(trigger, "indicator")).toHaveClass("ui-indicator");
+      expect(getSlot(item, "panel")).toHaveClass("ui-panel", "item-panel");
+      expect(getSlot(item, "panel-content")).toHaveClass("ui-panel-content");
+    });
+
+    it("forwards refs to item roots", () => {
+      const ref = createRef<HTMLDivElement>();
+
+      render(
+        <Accordion
+          defaultValue={["one"]}
+          items={[
+            {
+              value: "one",
+              title: "One",
+              content: "Panel",
+              ref,
+            },
+          ]}
+        />,
+      );
+
+      expect(ref.current).toBe(getSlot(getRoot("One"), "item"));
     });
 
     it("does not accept inline styles", () => {

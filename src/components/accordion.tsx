@@ -5,24 +5,42 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/accordion";
 
 import { PlusIcon } from "./icons/plus";
 
+type Accordion = ComponentConfig<typeof theme>;
+
 /** One panel managed by the accordion. */
-type AccordionItemProps = {
+type AccordionItemProps<Value extends string = string> = Omit<
+  UIAccordion.Item.Props,
+  "children" | "className" | "style" | "title" | "value"
+> & {
   /** Value that identifies the item in the accordion value. */
-  value: string;
+  value: Value;
   /** Visible heading inside the trigger. */
   title: React.ReactNode;
   /** Panel content. */
   content?: React.ReactNode;
-  /** Disables this item. */
-  disabled?: boolean;
-  /** Called when this panel opens or closes. */
-  onOpenChange?: UIAccordion.Item.Props["onOpenChange"];
+  /** Replaces the default plus icon. Set to `false` to hide the indicator. */
+  indicator?: React.ReactNode | false;
   /** Tailwind classes merged into the item root. */
-  className?: any;
+  className?: string;
+  /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
+  ui?: Partial<
+    Pick<
+      Accordion["slots"],
+      | "item"
+      | "header"
+      | "trigger"
+      | "title"
+      | "indicator"
+      | "indicatorIcon"
+      | "panel"
+      | "panelContent"
+    >
+  >;
 };
 
 type AccordionProps<Value extends string = string> = Omit<
@@ -31,79 +49,121 @@ type AccordionProps<Value extends string = string> = Omit<
 > &
   VariantProps<typeof theme> & {
     /** Panels rendered by the accordion. */
-    items: readonly AccordionItemProps[];
+    items: readonly AccordionItemProps<Value>[];
     /** Tailwind classes merged into the root. */
-    className?: any;
+    className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: Accordion["slots"];
   };
 
 function Accordion<Value extends string = string>({
   className,
+  ui,
   size,
   items,
   ...props
 }: AccordionProps<Value>) {
-  const ui = theme({ size });
+  const styles = theme({ size });
 
   return (
     <UIAccordion.Root
       {...props}
       data-slot="root"
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
     >
-      <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+      <span
+        aria-hidden="true"
+        data-slot="glass"
+        className={cn(styles.glass(), ui?.glass)}
+      >
         <span
           aria-hidden="true"
           data-slot="overlay"
-          className={ui.overlay()}
+          className={cn(styles.overlay(), ui?.overlay)}
         />
       </span>
 
-      <div data-slot="content" className={ui.content()}>
+      <div data-slot="content" className={cn(styles.content(), ui?.content)}>
         {items.map((item) => (
-          <AccordionItem key={item.value} {...item} />
+          <AccordionItem
+            key={item.value}
+            {...item}
+            ui={{
+              item: cn(ui?.item, item.ui?.item),
+              header: cn(ui?.header, item.ui?.header),
+              trigger: cn(ui?.trigger, item.ui?.trigger),
+              title: cn(ui?.title, item.ui?.title),
+              indicator: cn(ui?.indicator, item.ui?.indicator),
+              indicatorIcon: cn(ui?.indicatorIcon, item.ui?.indicatorIcon),
+              panel: cn(ui?.panel, item.ui?.panel),
+              panelContent: cn(ui?.panelContent, item.ui?.panelContent),
+            }}
+          />
         ))}
       </div>
     </UIAccordion.Root>
   );
 }
 
-function AccordionItem({
+function AccordionItem<Value extends string = string>({
   value,
   title,
   content,
   className,
+  ui,
+  indicator,
+  ref,
   ...props
-}: AccordionItemProps) {
-  const ui = theme();
+}: AccordionItemProps<Value>) {
+  const styles = theme();
 
   return (
     <UIAccordion.Item
       {...props}
+      ref={ref}
       value={value}
       data-slot="item"
-      className={cn(ui.item(), className)}
+      className={cn(styles.item(), ui?.item, className)}
     >
-      <UIAccordion.Header data-slot="header" className={ui.header()}>
-        <UIAccordion.Trigger data-slot="trigger" className={ui.trigger()}>
-          <span data-slot="title" className={ui.title()}>
+      <UIAccordion.Header
+        data-slot="header"
+        className={cn(styles.header(), ui?.header)}
+      >
+        <UIAccordion.Trigger
+          data-slot="trigger"
+          className={cn(styles.trigger(), ui?.trigger)}
+        >
+          <span data-slot="title" className={cn(styles.title(), ui?.title)}>
             {title}
           </span>
 
-          <span
-            aria-hidden="true"
-            data-slot="indicator"
-            className={ui.indicator()}
-          >
-            <PlusIcon
-              data-slot="indicator-icon"
-              className={ui.indicatorIcon()}
-            />
-          </span>
+          {indicator === false ? null : (
+            <span
+              aria-hidden="true"
+              data-slot="indicator"
+              className={cn(styles.indicator(), ui?.indicator)}
+            >
+              {indicator === undefined ? (
+                <PlusIcon
+                  data-slot="indicator-icon"
+                  className={cn(styles.indicatorIcon(), ui?.indicatorIcon)}
+                />
+              ) : (
+                indicator
+              )}
+            </span>
+          )}
         </UIAccordion.Trigger>
       </UIAccordion.Header>
 
-      <UIAccordion.Panel data-slot="panel" className={ui.panel()}>
-        <div data-slot="panel-content" className={ui.panelContent()}>
+      <UIAccordion.Panel
+        data-slot="panel"
+        className={cn(styles.panel(), ui?.panel)}
+      >
+        <div
+          data-slot="panel-content"
+          className={cn(styles.panelContent(), ui?.panelContent)}
+        >
           {content}
         </div>
       </UIAccordion.Panel>

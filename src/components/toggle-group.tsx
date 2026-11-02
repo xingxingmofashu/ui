@@ -6,21 +6,28 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toggle-group";
 
+type ToggleGroup = ComponentConfig<typeof theme>;
+
 /** One option managed by the toggle group. */
-type ToggleGroupItemProps = Omit<
-  UIToggle.Props,
+type ToggleGroupItemProps<Value extends string = string> = Omit<
+  UIToggle.Props<Value>,
   "className" | "children" | "style" | "value" | "pressed" | "defaultPressed"
 > & {
   /** Value that identifies the option in the group value. */
-  value: string;
+  value: Value;
   /** Visible content inside the item. */
   label?: React.ReactNode;
   /** Icon rendered before the label. */
   icon?: React.ReactNode;
   /** Tailwind classes merged into the item root. */
   className?: string;
+  /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
+  ui?: Partial<
+    Pick<ToggleGroup["slots"], "item" | "content" | "icon" | "label">
+  >;
 };
 
 type ToggleGroupProps<Value extends string = string> = Omit<
@@ -29,55 +36,86 @@ type ToggleGroupProps<Value extends string = string> = Omit<
 > &
   VariantProps<typeof theme> & {
     /** Options rendered by the toggle group. */
-    items: readonly ToggleGroupItemProps[];
+    items: readonly ToggleGroupItemProps<Value>[];
     /** Tailwind classes merged into the group root. */
-    className?: any;
+    className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: ToggleGroup["slots"];
   };
 
 function ToggleGroup<Value extends string = string>({
   className,
+  ui,
   size,
   items,
   ...props
 }: ToggleGroupProps<Value>) {
-  const ui = theme({ size });
+  const styles = theme({ size });
 
   return (
     <UIToggleGroup
       {...props}
       data-slot="root"
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
     >
-      <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
-        <span aria-hidden="true" data-layer="rim" className={ui.rim()} />
+      <span
+        aria-hidden="true"
+        data-slot="glass"
+        className={cn(styles.glass(), ui?.glass)}
+      >
+        <span
+          aria-hidden="true"
+          data-layer="rim"
+          className={cn(styles.rim(), ui?.rim)}
+        />
       </span>
 
       {items.map((item) => (
-        <ToggleGroupItem key={item.value} {...item} />
+        <ToggleGroupItem
+          key={item.value}
+          {...item}
+          ui={{
+            item: cn(ui?.item, item.ui?.item),
+            content: cn(ui?.content, item.ui?.content),
+            icon: cn(ui?.icon, item.ui?.icon),
+            label: cn(ui?.label, item.ui?.label),
+          }}
+        />
       ))}
     </UIToggleGroup>
   );
 }
 
-function ToggleGroupItem({
+function ToggleGroupItem<Value extends string = string>({
   className,
+  ui,
   icon,
   label,
+  ref,
   ...props
-}: ToggleGroupItemProps) {
-  const ui = theme();
+}: ToggleGroupItemProps<Value>) {
+  const styles = theme();
 
   return (
-    <UIToggle {...props} data-slot="item" className={cn(ui.item(), className)}>
-      <span data-slot="content" className={ui.content()}>
+    <UIToggle
+      {...props}
+      ref={ref}
+      data-slot="item"
+      className={cn(styles.item(), ui?.item, className)}
+    >
+      <span data-slot="content" className={cn(styles.content(), ui?.content)}>
         {icon ? (
-          <span data-slot="icon" aria-hidden="true" className={ui.icon()}>
+          <span
+            aria-hidden="true"
+            data-slot="icon"
+            className={cn(styles.icon(), ui?.icon)}
+          >
             {icon}
           </span>
         ) : null}
 
         {label ? (
-          <span data-slot="label" className={ui.label()}>
+          <span data-slot="label" className={cn(styles.label(), ui?.label)}>
             {label}
           </span>
         ) : null}

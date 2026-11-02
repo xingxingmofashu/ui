@@ -191,26 +191,59 @@ describe("ToggleGroup", () => {
       expect(item).not.toHaveClass("rounded-full");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        <>
-          {/* @ts-expect-error ToggleGroup no longer accepts a ui prop. */}
-          <ToggleGroup aria-label="Internal" ui={{ root: "rounded-none" }} items={[{ value: "one", label: "One" }]} />
-          <ToggleGroup
-            aria-label="Internal"
-            items={[
-              {
-                value: "one",
-                label: "One",
-                // @ts-expect-error Toggle group items no longer accept a ui prop.
-                ui: { root: "rounded-none" },
+    it("applies ui classes to internal slots", () => {
+      render(
+        <ToggleGroup
+          aria-label="Styled"
+          ui={{
+            root: "ui-root",
+            glass: "ui-glass",
+            rim: "ui-rim",
+            item: "ui-item",
+            content: "ui-content",
+            icon: "ui-icon",
+            label: "ui-label",
+          }}
+          items={[
+            {
+              value: "one",
+              label: "One",
+              icon: <svg />,
+              className: "item-class",
+              ui: {
+                item: "item-item",
+                content: "item-content",
+                icon: "item-icon",
+                label: "item-label",
               },
-            ]}
-          />
-        </>
+            },
+          ]}
+        />,
       );
 
-      expect(element).toBeTruthy();
+      const group = getGroup("Styled");
+      const item = getItems(group)[0];
+
+      expect(group).toHaveClass("ui-root");
+      expect(getSlot(group, "glass")).toHaveClass("ui-glass");
+      expect(group.querySelector('[data-layer="rim"]')).toHaveClass("ui-rim");
+      expect(item).toHaveClass("ui-item", "item-item", "item-class");
+      expect(getSlot(item, "content")).toHaveClass("ui-content", "item-content");
+      expect(getSlot(item, "icon")).toHaveClass("ui-icon", "item-icon");
+      expect(getSlot(item, "label")).toHaveClass("ui-label", "item-label");
+    });
+
+    it("forwards refs to item roots", () => {
+      const ref = createRef<HTMLButtonElement>();
+
+      render(
+        <ToggleGroup
+          aria-label="Ref item"
+          items={[{ value: "one", label: "One", ref }]}
+        />,
+      );
+
+      expect(ref.current).toBe(screen.getByRole("button", { name: "One" }));
     });
 
     it("does not accept inline styles on the group or item", () => {
