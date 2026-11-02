@@ -22,7 +22,7 @@ interface DrawerProps
   /** Edge the drawer slides in from. */
   direction?: NonNullable<UIDrawer.Root.Props["swipeDirection"]>;
   /** Tailwind classes merged into the popup. */
-  className?: any;
+  className?: string;
 }
 
 function Drawer({

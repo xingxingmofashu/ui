@@ -18,7 +18,7 @@ type ScrollAreaProps = Omit<
   /** Scrollbar axes to render. Defaults to `"vertical"`. */
   orientation?: ScrollAreaOrientation;
   /** Tailwind classes merged into the root. */
-  className?: any;
+  className?: string;
 };
 
 /**

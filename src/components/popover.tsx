@@ -32,7 +32,7 @@ type PopoverProps = Omit<UIPopover.Root.Props, "children"> & {
   /** Padding between the popup and the edge of the collision boundary. */
   collisionPadding?: PositionerProps["collisionPadding"];
   /** Tailwind classes merged into the popup. */
-  className?: any;
+  className?: string;
 };
 
 function Popover({

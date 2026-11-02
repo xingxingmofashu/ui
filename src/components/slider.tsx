@@ -11,7 +11,7 @@ type SliderProps<Value extends number | readonly number[] = number> = Omit<
   "children" | "style" | "className"
 > & {
   /** Tailwind classes merged into the root. */
-  className?: any;
+  className?: string;
   /** Accessible name for the thumb at `index`. Useful for range sliders. */
   getAriaLabel?: UISlider.Thumb.Props["getAriaLabel"];
   /** Accessible value text for the thumb at `index`. */

@@ -16,7 +16,7 @@ interface ButtonProps
   /** Ref to the rendered root element. */
   ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the outer click area. */
-  className?: any;
+  className?: string;
   /** Text or content rendered inside the button. */
   label?: React.ReactNode;
   /** Icon rendered before the label. */

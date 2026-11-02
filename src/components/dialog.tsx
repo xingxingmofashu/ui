@@ -16,7 +16,7 @@ type DialogProps = Omit<UIDialog.Root.Props, "children"> & {
   /** Action area rendered at the bottom of the dialog. */
   footer?: React.ReactNode;
   /** Tailwind classes merged into the popup. */
-  className?: any;
+  className?: string;
 };
 
 function Dialog({

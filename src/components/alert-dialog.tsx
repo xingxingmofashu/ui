@@ -23,7 +23,7 @@ type AlertDialogProps = Omit<UIAlertDialog.Root.Props, "children"> & {
   /** Called when the confirm button is pressed. */
   onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
   /** Tailwind classes merged into the popup. */
-  className?: any;
+  className?: string;
 };
 
 function AlertDialog({
