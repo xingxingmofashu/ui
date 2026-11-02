@@ -288,15 +288,36 @@ describe("Button", () => {
       );
     });
 
-    it("does not accept style overrides for internal layers", () => {
+    it("applies ui classes to internal slots", () => {
       render(
-        // @ts-expect-error Button no longer accepts a ui prop.
-        <Button label="Internal" ui={{ glass: "opacity-0" }} />,
+        <Button
+          label="Internal"
+          className="custom-root"
+          leadingIcon={<svg />}
+          trailingIcon={<svg />}
+          ui={{
+            root: "ui-root",
+            base: "ui-base",
+            glass: "ui-glass",
+            overlay: "ui-overlay",
+            label: "ui-label",
+            leadingIcon: "ui-leading",
+            trailingIcon: "ui-trailing",
+          }}
+        />,
       );
 
       const buttonElement = screen.getByRole("button", { name: "Internal" });
 
-      expect(getSlot(buttonElement, "glass")).not.toHaveClass("opacity-0");
+      expect(buttonElement).toHaveClass("ui-root", "custom-root");
+      expect(getSlot(buttonElement, "base")).toHaveClass("ui-base");
+      expect(getSlot(buttonElement, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(buttonElement, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(buttonElement, "label")).toHaveClass("ui-label");
+      expect(getSlot(buttonElement, "leading-icon")).toHaveClass("ui-leading");
+      expect(getSlot(buttonElement, "trailing-icon")).toHaveClass(
+        "ui-trailing",
+      );
     });
 
     it("keeps the label and icons on one row", () => {

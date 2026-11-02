@@ -6,10 +6,13 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/checkbox";
 
 import { CheckIcon } from "./icons/check";
 import { DashIcon } from "./icons/dash";
+
+type Checkbox = ComponentConfig<typeof theme>;
 
 interface CheckboxProps
   extends Omit<
@@ -21,6 +24,8 @@ interface CheckboxProps
   ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the Base UI checkbox root. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Checkbox["slots"];
   /** Visible label. */
   label?: React.ReactNode;
   /** Optional supporting text. */
@@ -29,6 +34,7 @@ interface CheckboxProps
 
 function Checkbox({
   className,
+  ui,
   label,
   description,
   size,
@@ -38,7 +44,7 @@ function Checkbox({
   "aria-labelledby": ariaLabelledBy,
   ...props
 }: CheckboxProps) {
-  const ui = theme({ size });
+  const styles = theme({ size });
   const labelId = React.useId();
   const descriptionId = React.useId();
   const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
@@ -57,16 +63,24 @@ function Checkbox({
       aria-labelledby={labelledBy}
       indeterminate={indeterminate}
       data-slot="root"
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
     >
-      <span data-slot="box" className={ui.box()}>
-        <span aria-hidden="true" data-slot="fill" className={ui.fill()} />
+      <span data-slot="box" className={cn(styles.box(), ui?.box)}>
+        <span
+          aria-hidden="true"
+          data-slot="fill"
+          className={cn(styles.fill(), ui?.fill)}
+        />
 
-        <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+        <span
+          aria-hidden="true"
+          data-slot="glass"
+          className={cn(styles.glass(), ui?.glass)}
+        >
           <span
             aria-hidden="true"
             data-slot="overlay"
-            className={ui.overlay()}
+            className={cn(styles.overlay(), ui?.overlay)}
           />
         </span>
 
@@ -74,18 +88,28 @@ function Checkbox({
           keepMounted
           aria-hidden="true"
           data-slot="indicator"
-          className={ui.indicator()}
+          className={cn(styles.indicator(), ui?.indicator)}
         >
-          <span data-slot="indicator-icon" className={ui.indicatorIcon()}>
+          <span
+            data-slot="indicator-icon"
+            className={cn(styles.indicatorIcon(), ui?.indicatorIcon)}
+          >
             {indeterminate ? <DashIcon /> : <CheckIcon />}
           </span>
         </UICheckbox.Indicator>
       </span>
 
       {label || description ? (
-        <span data-slot="wrapper" className={ui.wrapper()}>
+        <span
+          data-slot="wrapper"
+          className={cn(styles.wrapper(), ui?.wrapper)}
+        >
           {label ? (
-            <span id={labelId} data-slot="label" className={ui.label()}>
+            <span
+              id={labelId}
+              data-slot="label"
+              className={cn(styles.label(), ui?.label)}
+            >
               {label}
             </span>
           ) : null}
@@ -93,7 +117,7 @@ function Checkbox({
             <span
               id={descriptionId}
               data-slot="description"
-              className={ui.description()}
+              className={cn(styles.description(), ui?.description)}
             >
               {description}
             </span>

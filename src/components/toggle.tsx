@@ -5,7 +5,10 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toggle";
+
+type Toggle = ComponentConfig<typeof theme>;
 
 type ToggleProps<Value extends string = string> = Omit<
   UIToggle.Props<Value>,
@@ -16,6 +19,8 @@ type ToggleProps<Value extends string = string> = Omit<
     ref?: React.Ref<HTMLButtonElement>;
     /** Tailwind classes merged into the toggle root. */
     className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: Toggle["slots"];
     /** Visible label rendered inside the toggle. */
     label?: React.ReactNode;
     /** Icon rendered before the label. */
@@ -24,34 +29,51 @@ type ToggleProps<Value extends string = string> = Omit<
 
 function Toggle<Value extends string = string>({
   className,
+  ui,
   icon,
   label,
   size,
   ...props
 }: ToggleProps<Value>) {
-  const ui = theme({ size, iconOnly: !label });
+  const styles = theme({ size, iconOnly: !label });
 
   return (
     <UIToggle
       {...props}
       data-slot="root"
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
     >
-      <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
-        <span aria-hidden="true" data-slot="overlay" className={ui.rim()} />
+      <span
+        aria-hidden="true"
+        data-slot="glass"
+        className={cn(styles.glass(), ui?.glass)}
+      >
+        <span
+          aria-hidden="true"
+          data-slot="rim"
+          className={cn(styles.rim(), ui?.rim)}
+        />
       </span>
 
-      <span aria-hidden="true" data-slot="thumb" className={ui.thumb()} />
+      <span
+        aria-hidden="true"
+        data-slot="thumb"
+        className={cn(styles.thumb(), ui?.thumb)}
+      />
 
-      <span data-slot="content" className={ui.content()}>
+      <span data-slot="content" className={cn(styles.content(), ui?.content)}>
         {icon ? (
-          <span data-slot="icon" aria-hidden="true" className={ui.icon()}>
+          <span
+            data-slot="icon"
+            aria-hidden="true"
+            className={cn(styles.icon(), ui?.icon)}
+          >
             {icon}
           </span>
         ) : null}
 
         {label ? (
-          <span data-slot="label" className={ui.label()}>
+          <span data-slot="label" className={cn(styles.label(), ui?.label)}>
             {label}
           </span>
         ) : null}

@@ -6,7 +6,10 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/switch";
+
+type Switch = ComponentConfig<typeof theme>;
 
 interface SwitchProps
   extends Omit<
@@ -18,6 +21,8 @@ interface SwitchProps
   ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the Base UI switch root. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Switch["slots"];
   /** Visible label. */
   label?: React.ReactNode;
   /** Optional supporting text. */
@@ -72,6 +77,7 @@ function LiquidGlassFilter({ id }: { id: string }) {
 
 function Switch({
   className,
+  ui,
   label,
   description,
   size,
@@ -83,7 +89,7 @@ function Switch({
   "aria-labelledby": ariaLabelledBy,
   ...props
 }: SwitchProps) {
-  const ui = theme({ size });
+  const styles = theme({ size });
   const filterId = React.useId();
   const labelId = React.useId();
   const descriptionId = React.useId();
@@ -134,12 +140,15 @@ function Switch({
       data-slot="root"
       data-animating={animating || undefined}
       onCheckedChange={handleCheckedChange}
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
     >
-      <span data-slot="container" className={ui.container()}>
+      <span
+        data-slot="container"
+        className={cn(styles.container(), ui?.container)}
+      >
         <span
           data-slot="base"
-          className={ui.base()}
+          className={cn(styles.base(), ui?.base)}
           style={filterStyles}
         >
           <LiquidGlassFilter id={filterId} />
@@ -154,7 +163,7 @@ function Switch({
             data-slot="thumb"
             aria-hidden="true"
             onTransitionEnd={handleThumbTransitionEnd}
-            className={ui.thumb()}
+            className={cn(styles.thumb(), ui?.thumb)}
           >
             <span aria-hidden="true" data-layer="glass-rim" />
             <span data-layer="glass-lens">
@@ -169,9 +178,16 @@ function Switch({
       </span>
 
       {label || description ? (
-        <span data-slot="wrapper" className={ui.wrapper()}>
+        <span
+          data-slot="wrapper"
+          className={cn(styles.wrapper(), ui?.wrapper)}
+        >
           {label ? (
-            <span id={labelId} data-slot="label" className={ui.label()}>
+            <span
+              id={labelId}
+              data-slot="label"
+              className={cn(styles.label(), ui?.label)}
+            >
               {label}
             </span>
           ) : null}
@@ -179,7 +195,7 @@ function Switch({
             <span
               id={descriptionId}
               data-slot="description"
-              className={ui.description()}
+              className={cn(styles.description(), ui?.description)}
             >
               {description}
             </span>

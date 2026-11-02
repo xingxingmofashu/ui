@@ -290,13 +290,34 @@ describe("Switch", () => {
       expect(getSlot(root, "label")).not.toHaveClass("custom-root");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Switch no longer accepts a ui prop.
-        <Switch aria-label="Internal" ui={{ base: "h-10" }} />
+    it("applies ui classes to internal slots", () => {
+      render(
+        <Switch
+          label="Wi-Fi"
+          description="Wireless"
+          className="custom-root"
+          ui={{
+            root: "ui-root",
+            container: "ui-container",
+            base: "ui-base",
+            thumb: "ui-thumb",
+            wrapper: "ui-wrapper",
+            label: "ui-label",
+            description: "ui-description",
+          }}
+        />,
       );
 
-      expect(element).toBeTruthy();
+      const switchElement = screen.getByRole("switch", { name: "Wi-Fi" });
+      const root = getRoot(switchElement);
+
+      expect(root).toHaveClass("ui-root", "custom-root");
+      expect(getSlot(root, "container")).toHaveClass("ui-container");
+      expect(getSlot(root, "base")).toHaveClass("ui-base");
+      expect(getSlot(root, "thumb")).toHaveClass("ui-thumb");
+      expect(getSlot(root, "wrapper")).toHaveClass("ui-wrapper");
+      expect(getSlot(root, "label")).toHaveClass("ui-label");
+      expect(getSlot(root, "description")).toHaveClass("ui-description");
     });
 
     it("does not accept inline styles on the wrapper or Base UI root", () => {

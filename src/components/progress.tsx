@@ -6,7 +6,10 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/progress";
+
+type Progress = ComponentConfig<typeof theme>;
 
 type ProgressProps = Omit<
   UIProgress.Root.Props,
@@ -21,10 +24,13 @@ type ProgressProps = Omit<
     description?: React.ReactNode;
     /** Tailwind classes merged into the root. */
     className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: Progress["slots"];
   };
 
 function Progress({
   className,
+  ui,
   label,
   description,
   size,
@@ -32,7 +38,7 @@ function Progress({
   "aria-describedby": ariaDescribedBy,
   ...props
 }: ProgressProps) {
-  const ui = theme({ size });
+  const styles = theme({ size });
   const descriptionId = React.useId();
   const describedBy = mergeIds(
     ariaDescribedBy,
@@ -45,22 +51,31 @@ function Progress({
       value={value}
       aria-describedby={describedBy}
       data-slot="root"
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
     >
-      <div data-slot="header" className={ui.header()}>
+      <div data-slot="header" className={cn(styles.header(), ui?.header)}>
         {label ? (
-          <UIProgress.Label data-slot="label" className={ui.label()}>
+          <UIProgress.Label
+            data-slot="label"
+            className={cn(styles.label(), ui?.label)}
+          >
             {label}
           </UIProgress.Label>
         ) : null}
 
-        <UIProgress.Value data-slot="value" className={ui.value()} />
+        <UIProgress.Value
+          data-slot="value"
+          className={cn(styles.value(), ui?.value)}
+        />
       </div>
 
-      <UIProgress.Track data-slot="track" className={ui.track()}>
+      <UIProgress.Track
+        data-slot="track"
+        className={cn(styles.track(), ui?.track)}
+      >
         <UIProgress.Indicator
           data-slot="indicator"
-          className={ui.indicator()}
+          className={cn(styles.indicator(), ui?.indicator)}
         />
       </UIProgress.Track>
 
@@ -68,7 +83,7 @@ function Progress({
         <span
           id={descriptionId}
           data-slot="description"
-          className={ui.description()}
+          className={cn(styles.description(), ui?.description)}
         >
           {description}
         </span>

@@ -177,13 +177,40 @@ describe("Input", () => {
       expect(getSlot(root, "label")).not.toHaveClass("custom-root");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Input does not accept a ui prop.
-        <Input aria-label="Search" ui={{ input: "h-10" }} />
+    it("applies ui classes to internal slots", () => {
+      render(
+        <Input
+          label="Search"
+          description="Help"
+          leadingIcon={<svg />}
+          trailingIcon={<svg />}
+          className="custom-root"
+          ui={{
+            root: "ui-root",
+            label: "ui-label",
+            control: "ui-control",
+            glass: "ui-glass",
+            overlay: "ui-overlay",
+            leadingIcon: "ui-leading",
+            input: "ui-input",
+            trailingIcon: "ui-trailing",
+            description: "ui-description",
+          }}
+        />,
       );
 
-      expect(element).toBeTruthy();
+      const input = screen.getByRole("textbox", { name: "Search" });
+      const root = getRoot(input);
+
+      expect(root).toHaveClass("ui-root", "custom-root");
+      expect(getSlot(root, "label")).toHaveClass("ui-label");
+      expect(getSlot(root, "control")).toHaveClass("ui-control");
+      expect(getSlot(root, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(root, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(root, "leading-icon")).toHaveClass("ui-leading");
+      expect(input).toHaveClass("ui-input");
+      expect(getSlot(root, "trailing-icon")).toHaveClass("ui-trailing");
+      expect(getSlot(root, "description")).toHaveClass("ui-description");
     });
 
     it("does not accept inline styles", () => {

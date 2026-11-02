@@ -152,13 +152,36 @@ describe("Progress", () => {
       expect(getSlot(progress, "indicator")).not.toHaveClass("custom-root");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Progress does not accept a ui prop.
-        <Progress aria-label="Uploading files" ui={{ track: "h-4" }} />
+    it("applies ui classes to internal slots", () => {
+      render(
+        <Progress
+          label="Uploading files"
+          description="12 files"
+          value={64}
+          className="custom-root"
+          ui={{
+            root: "ui-root",
+            header: "ui-header",
+            label: "ui-label",
+            value: "ui-value",
+            track: "ui-track",
+            indicator: "ui-indicator",
+            description: "ui-description",
+          }}
+        />,
       );
 
-      expect(element).toBeTruthy();
+      const progress = screen.getByRole("progressbar", {
+        name: "Uploading files",
+      });
+
+      expect(progress).toHaveClass("ui-root", "custom-root");
+      expect(getSlot(progress, "header")).toHaveClass("ui-header");
+      expect(getSlot(progress, "label")).toHaveClass("ui-label");
+      expect(getSlot(progress, "value")).toHaveClass("ui-value");
+      expect(getSlot(progress, "track")).toHaveClass("ui-track");
+      expect(getSlot(progress, "indicator")).toHaveClass("ui-indicator");
+      expect(getSlot(progress, "description")).toHaveClass("ui-description");
     });
 
     it("does not accept inline styles", () => {

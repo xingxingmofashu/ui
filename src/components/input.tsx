@@ -6,7 +6,10 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/input";
+
+type Input = ComponentConfig<typeof theme>;
 
 interface InputProps
   extends Omit<
@@ -16,6 +19,8 @@ interface InputProps
     VariantProps<typeof theme> {
   /** Tailwind classes merged into the root element. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Input["slots"];
   /** Visible label associated with the input. */
   label?: React.ReactNode;
   /** Optional supporting text under the field. */
@@ -28,6 +33,7 @@ interface InputProps
 
 function Input({
   className,
+  ui,
   label,
   description,
   leadingIcon,
@@ -38,7 +44,7 @@ function Input({
   "aria-describedby": ariaDescribedBy,
   ...props
 }: InputProps) {
-  const ui = theme({ size });
+  const styles = theme({ size });
   const generatedId = React.useId();
   const descriptionId = React.useId();
   const inputId = id ?? generatedId;
@@ -51,27 +57,38 @@ function Input({
     <div
       data-slot="root"
       data-disabled={disabled || undefined}
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
     >
       {label ? (
-        <label htmlFor={inputId} data-slot="label" className={ui.label()}>
+        <label
+          htmlFor={inputId}
+          data-slot="label"
+          className={cn(styles.label(), ui?.label)}
+        >
           {label}
         </label>
       ) : null}
 
-      <span data-slot="control" className={ui.control()}>
-        <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+      <span
+        data-slot="control"
+        className={cn(styles.control(), ui?.control)}
+      >
+        <span
+          aria-hidden="true"
+          data-slot="glass"
+          className={cn(styles.glass(), ui?.glass)}
+        >
           <span
             aria-hidden="true"
             data-slot="overlay"
-            className={ui.overlay()}
+            className={cn(styles.overlay(), ui?.overlay)}
           />
         </span>
 
         {leadingIcon ? (
           <span
             data-slot="leading-icon"
-            className={ui.leadingIcon()}
+            className={cn(styles.leadingIcon(), ui?.leadingIcon)}
             aria-hidden="true"
           >
             {leadingIcon}
@@ -84,13 +101,13 @@ function Input({
           disabled={disabled}
           aria-describedby={describedBy}
           data-slot="input"
-          className={ui.input()}
+          className={cn(styles.input(), ui?.input)}
         />
 
         {trailingIcon ? (
           <span
             data-slot="trailing-icon"
-            className={ui.trailingIcon()}
+            className={cn(styles.trailingIcon(), ui?.trailingIcon)}
             aria-hidden="true"
           >
             {trailingIcon}
@@ -102,7 +119,7 @@ function Input({
         <span
           id={descriptionId}
           data-slot="description"
-          className={ui.description()}
+          className={cn(styles.description(), ui?.description)}
         >
           {description}
         </span>

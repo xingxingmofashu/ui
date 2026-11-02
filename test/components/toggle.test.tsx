@@ -23,7 +23,7 @@ describe("Toggle", () => {
 
       const toggle = screen.getByRole("button", { name: "Mute" });
       const glass = getSlot(toggle, "glass");
-      const overlay = getSlot(toggle, "overlay");
+      const rim = getSlot(toggle, "rim");
       const thumb = getSlot(toggle, "thumb");
       const content = getSlot(toggle, "content");
       const label = getSlot(toggle, "label");
@@ -38,7 +38,7 @@ describe("Toggle", () => {
         "overflow-hidden",
         "rounded-[inherit]",
       );
-      expect(overlay).toHaveClass("ui-glass-rim");
+      expect(rim).toHaveClass("ui-glass-rim");
       expect(thumb).toHaveAttribute("aria-hidden", "true");
       expect(content).toContainElement(label);
       expect(label).toHaveTextContent("Mute");
@@ -63,6 +63,35 @@ describe("Toggle", () => {
       expect(toggle).toHaveClass("aspect-square", "px-0");
       expect(toggle.querySelector('[data-slot="label"]')).toBeNull();
       expect(icon).toContainElement(screen.getByTestId("icon"));
+    });
+
+    it("applies ui classes to internal slots", () => {
+      render(
+        <Toggle
+          label="Mute"
+          icon={<svg />}
+          className="custom-root"
+          ui={{
+            root: "ui-root",
+            glass: "ui-glass",
+            rim: "ui-rim",
+            thumb: "ui-thumb",
+            content: "ui-content",
+            icon: "ui-icon",
+            label: "ui-label",
+          }}
+        />,
+      );
+
+      const toggle = screen.getByRole("button", { name: "Mute" });
+
+      expect(toggle).toHaveClass("ui-root", "custom-root");
+      expect(getSlot(toggle, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(toggle, "rim")).toHaveClass("ui-rim");
+      expect(getSlot(toggle, "thumb")).toHaveClass("ui-thumb");
+      expect(getSlot(toggle, "content")).toHaveClass("ui-content");
+      expect(getSlot(toggle, "icon")).toHaveClass("ui-icon");
+      expect(getSlot(toggle, "label")).toHaveClass("ui-label");
     });
 
     it("forwards a ref to the rendered button", () => {

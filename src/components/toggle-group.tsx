@@ -65,6 +65,7 @@ function ToggleGroup<Value extends string = string>({
       >
         <span
           aria-hidden="true"
+          data-slot="rim"
           data-layer="rim"
           className={cn(styles.rim(), ui?.rim)}
         />

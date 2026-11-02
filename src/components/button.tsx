@@ -8,7 +8,10 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/button";
+
+type Button = ComponentConfig<typeof theme>;
 
 interface ButtonProps
   extends Omit<UIButtonProps, "ref" | "style" | "className">,
@@ -17,6 +20,8 @@ interface ButtonProps
   ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the outer click area. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Button["slots"];
   /** Text or content rendered inside the button. */
   label?: React.ReactNode;
   /** Icon rendered before the label. */
@@ -27,6 +32,7 @@ interface ButtonProps
 
 function Button({
   className,
+  ui,
   children,
   label,
   leadingIcon,
@@ -34,19 +40,23 @@ function Button({
   size,
   ...props
 }: ButtonProps) {
-  const ui = theme({ size });
+  const styles = theme({ size });
 
   return (
     <UIButton
       data-slot="root"
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
       {...props}
     >
-      <span data-slot="base" className={ui.base()}>
-        <span data-slot="glass" aria-hidden="true" className={ui.glass()}>
+      <span data-slot="base" className={cn(styles.base(), ui?.base)}>
+        <span
+          data-slot="glass"
+          aria-hidden="true"
+          className={cn(styles.glass(), ui?.glass)}
+        >
           <span
             data-slot="overlay"
-            className={ui.overlay()}
+            className={cn(styles.overlay(), ui?.overlay)}
             aria-hidden="true"
           />
         </span>
@@ -54,21 +64,21 @@ function Button({
         {leadingIcon ? (
           <span
             data-slot="leading-icon"
-            className={ui.leadingIcon()}
+            className={cn(styles.leadingIcon(), ui?.leadingIcon)}
             aria-hidden="true"
           >
             {leadingIcon}
           </span>
         ) : null}
 
-        <span data-slot="label" className={ui.label()}>
+        <span data-slot="label" className={cn(styles.label(), ui?.label)}>
           {label || children}
         </span>
 
         {trailingIcon ? (
           <span
             data-slot="trailing-icon"
-            className={ui.trailingIcon()}
+            className={cn(styles.trailingIcon(), ui?.trailingIcon)}
             aria-hidden="true"
           >
             {trailingIcon}

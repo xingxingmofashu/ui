@@ -327,13 +327,41 @@ describe("Checkbox", () => {
       });
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Checkbox does not accept a ui prop.
-        <Checkbox aria-label="Accept terms" ui={{ root: "custom-root" }} />
+    it("applies ui classes to internal slots", () => {
+      render(
+        <Checkbox
+          label="Accept terms"
+          description="Required"
+          className="custom-root"
+          ui={{
+            root: "ui-root",
+            box: "ui-box",
+            fill: "ui-fill",
+            glass: "ui-glass",
+            overlay: "ui-overlay",
+            indicator: "ui-indicator",
+            indicatorIcon: "ui-indicator-icon",
+            wrapper: "ui-wrapper",
+            label: "ui-label",
+            description: "ui-description",
+          }}
+        />,
       );
 
-      expect(element).toBeTruthy();
+      const checkbox = getCheckbox();
+
+      expect(checkbox).toHaveClass("ui-root", "custom-root");
+      expect(getSlot(checkbox, "box")).toHaveClass("ui-box");
+      expect(getSlot(checkbox, "fill")).toHaveClass("ui-fill");
+      expect(getSlot(checkbox, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(checkbox, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(checkbox, "indicator")).toHaveClass("ui-indicator");
+      expect(getSlot(checkbox, "indicator-icon")).toHaveClass(
+        "ui-indicator-icon",
+      );
+      expect(getSlot(checkbox, "wrapper")).toHaveClass("ui-wrapper");
+      expect(getSlot(checkbox, "label")).toHaveClass("ui-label");
+      expect(getSlot(checkbox, "description")).toHaveClass("ui-description");
     });
 
     it("does not accept inline styles", () => {

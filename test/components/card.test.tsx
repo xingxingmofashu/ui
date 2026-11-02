@@ -18,16 +18,6 @@ function querySlot(element: HTMLElement, slot: string) {
   return element.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
 }
 
-function getPrivateGlass(element: HTMLElement) {
-  const glass = element.querySelector<HTMLElement>('[aria-hidden="true"]');
-
-  if (!(glass instanceof HTMLElement)) {
-    throw new Error("Card private glass layer was not rendered.");
-  }
-
-  return glass;
-}
-
 function getCard(text: string, index = 0) {
   const matches = screen.getAllByText(text);
   const node = matches[index]?.closest<HTMLElement>('[data-slot="root"]');
@@ -167,26 +157,56 @@ describe("Card", () => {
       expect(element).toBeTruthy();
     });
 
-    it("keeps the glass layers private", () => {
+    it("exposes the glass layers through data-slot", () => {
       render(<Card>Body</Card>);
 
       const cardElement = getCard("Body");
 
       expect(querySlot(cardElement, "surface")).toBeNull();
-      expect(querySlot(cardElement, "overlay")).toBeNull();
-      expect(getPrivateGlass(cardElement)).toHaveAttribute(
+      expect(getSlot(cardElement, "glass")).toHaveAttribute(
+        "aria-hidden",
+        "true",
+      );
+      expect(getSlot(cardElement, "overlay")).toHaveAttribute(
         "aria-hidden",
         "true",
       );
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Card no longer accepts a ui prop.
-        <Card ui={{ surface: "custom-surface" }}>Body</Card>
+    it("applies ui classes to internal slots", () => {
+      render(
+        <Card
+          title="Styled"
+          description="Slots"
+          footer="Footer"
+          className="custom-root"
+          ui={{
+            root: "ui-root",
+            glass: "ui-glass",
+            overlay: "ui-overlay",
+            layout: "ui-layout",
+            header: "ui-header",
+            title: "ui-title",
+            description: "ui-description",
+            body: "ui-body",
+            footer: "ui-footer",
+          }}
+        >
+          Body
+        </Card>,
       );
 
-      expect(element).toBeTruthy();
+      const cardElement = getCard("Styled");
+
+      expect(cardElement).toHaveClass("ui-root", "custom-root");
+      expect(getSlot(cardElement, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(cardElement, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(cardElement, "layout")).toHaveClass("ui-layout");
+      expect(getSlot(cardElement, "header")).toHaveClass("ui-header");
+      expect(getSlot(cardElement, "title")).toHaveClass("ui-title");
+      expect(getSlot(cardElement, "description")).toHaveClass("ui-description");
+      expect(getSlot(cardElement, "body")).toHaveClass("ui-body");
+      expect(getSlot(cardElement, "footer")).toHaveClass("ui-footer");
     });
 
     it("does not accept a clipContent prop", () => {
