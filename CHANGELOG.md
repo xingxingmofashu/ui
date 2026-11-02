@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.1.3 - 2026-11-02
+
+### Added
+
+- Add the Progress component with determinate, indeterminate, labeled, and
+  sized variants.
+- Expose a typed `ui` prop on every component for styling internal slots. Slot
+  names follow the public `data-slot` contract.
+
+### Changed
+
+- Rename `--ui-dialog-surface` to `--ui-surface` and the
+  `bg-ui-dialog-surface` utility to `bg-ui-surface`.
+- Move component-specific custom properties (checkbox rim, slider lens, switch
+  shadows) from `src/index.css` into their component theme recipes.
+- Type `className` as `string` across component props.
+- Standardize component API documentation around the single-structure wrapper
+  and `ui` slot model.
+
+### Documentation
+
+- Add the bilingual marketing home, component overview, and guides for theming,
+  forms, accessibility, SSR, and templates.
+- Add English-only `llms.txt` and `llms-full.txt` exports for agents and
+  optional Plausible analytics.
+- Add playground light and dark preview screenshots to the README.
+
 ## 0.1.2 - 2026-10-30
 
 ### Changed
