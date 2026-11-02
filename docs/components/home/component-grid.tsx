@@ -17,7 +17,6 @@ import {
   Input,
   Popover,
   ScrollArea,
-  Slider,
   Switch,
   Toggle,
   ToggleGroup,
@@ -28,6 +27,7 @@ import { HomeDialog } from "@/components/home-dialog";
 
 import { homeCopy, type HomeLocale } from "./copy";
 import { DrawerPreview } from "./previews/drawer-preview";
+import { SliderPreview } from "./previews/slider-preview";
 import { ToastPreview } from "./previews/toast-preview";
 
 type ComponentItem = {
@@ -194,15 +194,7 @@ export function ComponentGrid({ lang }: { lang: HomeLocale }) {
       id: "slider",
       name: items.slider.name,
       description: items.slider.description,
-      preview: (
-        <div className="w-full max-w-[16rem] space-y-2">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-ui-ink/70">{items.slider.label}</span>
-            <span className="font-mono tabular-nums text-ui-ink/50">64</span>
-          </div>
-          <Slider aria-label={items.slider.label} defaultValue={64} />
-        </div>
-      ),
+      preview: <SliderPreview lang={lang} />,
     },
     {
       id: "switch",

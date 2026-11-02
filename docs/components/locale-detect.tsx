@@ -11,6 +11,7 @@ export function LocaleDetect({ basePath }: { basePath: string }) {
     if (window.location.search.indexOf("noredirect") !== -1) return;
     if (navigator.webdriver) return;
 
+    const chinesePath = `${basePath}/zh${window.location.search}${window.location.hash}`;
     const ua = navigator.userAgent.toLowerCase();
     if (
       ua.indexOf("bot") !== -1 ||
@@ -31,7 +32,7 @@ export function LocaleDetect({ basePath }: { basePath: string }) {
     if (stored === "en") return;
 
     if (stored === "zh") {
-      window.location.replace(`${basePath}/zh`);
+      window.location.replace(chinesePath);
       return;
     }
 
@@ -42,7 +43,7 @@ export function LocaleDetect({ basePath }: { basePath: string }) {
     const primary = String(languages[0] ?? "").toLowerCase();
 
     if (primary.startsWith("zh")) {
-      window.location.replace(`${basePath}/zh`);
+      window.location.replace(chinesePath);
     }
   }, [basePath, pathname]);
 

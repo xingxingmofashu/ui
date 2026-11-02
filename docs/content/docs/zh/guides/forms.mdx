@@ -100,24 +100,31 @@ const [email, setEmail] = useState("");
 `aria-errormessage` 关联：
 
 ```tsx
-const invalid = email.length > 0 && !email.includes("@");
+import { useState } from "react";
+import { Input } from "@xingxingmofashu/ui";
 
-<Input
-  label="邮箱"
-  name="email"
-  type="email"
-  value={email}
-  onValueChange={setEmail}
-  aria-invalid={invalid || undefined}
-  aria-describedby={invalid ? "email-error" : undefined}
-/>;
+function EmailField() {
+  const [email, setEmail] = useState("");
+  const invalid = email.length > 0 && !email.includes("@");
 
-{
-  invalid ? (
-    <p id="email-error" className="text-sm text-ui-ink/70">
-      请输入有效的邮箱地址。
-    </p>
-  ) : null;
+  return (
+    <div className="flex flex-col gap-2">
+      <Input
+        label="邮箱"
+        name="email"
+        type="email"
+        value={email}
+        onValueChange={setEmail}
+        aria-invalid={invalid || undefined}
+        aria-describedby={invalid ? "email-error" : undefined}
+      />
+      {invalid ? (
+        <p id="email-error" className="text-sm text-ui-ink/70">
+          请输入有效的邮箱地址。
+        </p>
+      ) : null}
+    </div>
+  );
 }
 ```
 

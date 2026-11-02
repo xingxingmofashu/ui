@@ -103,24 +103,31 @@ forwarded to the input. For custom validation, keep the message next to the
 field and connect it with `aria-describedby` or `aria-errormessage`:
 
 ```tsx
-const invalid = email.length > 0 && !email.includes("@");
+import { useState } from "react";
+import { Input } from "@xingxingmofashu/ui";
 
-<Input
-  label="Email"
-  name="email"
-  type="email"
-  value={email}
-  onValueChange={setEmail}
-  aria-invalid={invalid || undefined}
-  aria-describedby={invalid ? "email-error" : undefined}
-/>;
+function EmailField() {
+  const [email, setEmail] = useState("");
+  const invalid = email.length > 0 && !email.includes("@");
 
-{
-  invalid ? (
-    <p id="email-error" className="text-sm text-ui-ink/70">
-      Enter a valid email address.
-    </p>
-  ) : null;
+  return (
+    <div className="flex flex-col gap-2">
+      <Input
+        label="Email"
+        name="email"
+        type="email"
+        value={email}
+        onValueChange={setEmail}
+        aria-invalid={invalid || undefined}
+        aria-describedby={invalid ? "email-error" : undefined}
+      />
+      {invalid ? (
+        <p id="email-error" className="text-sm text-ui-ink/70">
+          Enter a valid email address.
+        </p>
+      ) : null}
+    </div>
+  );
 }
 ```
 
