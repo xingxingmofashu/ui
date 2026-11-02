@@ -43,6 +43,7 @@ The component is fully controlled: `open` controls visibility and the page rende
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the dialog. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open dialog. |
 | `className` | `string` | — | Tailwind classes merged into the popup. |
+| `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
@@ -52,3 +53,4 @@ The component is fully controlled: `open` controls visibility and the page rende
 | `data-ending-style` | Present when the dialog is animating out. |
 | `data-nested` | Present when the dialog is nested within another dialog. |
 | `data-nested-dialog-open` | Present when another dialog is open inside this one. |
+| `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |

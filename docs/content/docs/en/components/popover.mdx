@@ -50,6 +50,7 @@ Pass one element as `trigger`. It must forward props and refs to its root elemen
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the popover. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open popover. |
 | `className` | `string` | — | Tailwind classes merged into the popup. |
+| `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
@@ -64,3 +65,4 @@ Pass one element as `trigger`. It must forward props and refs to its root elemen
 | `data-uncentered` | Present when the arrow is uncentered. |
 | `data-popup-open` | Present on the trigger while the popup is open. |
 | `data-pressed` | Present while the trigger is pressed. |
+| `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`, `title`, `description`, `body`, `footer`) for styling. |

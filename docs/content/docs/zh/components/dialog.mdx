@@ -44,6 +44,7 @@ description: "通用 React 对话框，采用 Liquid Glass 表面与自定义操
 | `triggerId` | `string \| null` | — | 与对话框关联的触发器 ID。 |
 | `defaultTriggerId` | `string \| null` | — | 初始打开时使用的触发器 ID。 |
 | `className` | `string` | — | 合并到弹窗的 Tailwind 类名。 |
+| `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | Attribute | Description |
 | --- | --- |
@@ -53,3 +54,4 @@ description: "通用 React 对话框，采用 Liquid Glass 表面与自定义操
 | `data-ending-style` | 对话框正在退出动画时存在。 |
 | `data-nested` | 对话框嵌套在另一个对话框内时存在。 |
 | `data-nested-dialog-open` | 对话框内部还有另一个对话框打开时存在。 |
+| `data-slot` | 标记内部部件（`backdrop`、`viewport`、`popup`、`glass`、`overlay`、`content`、`title`、`description`、`body`、`footer`），用于样式选择。 |

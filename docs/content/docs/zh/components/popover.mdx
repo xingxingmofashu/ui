@@ -50,6 +50,7 @@ description: "锚定在触发元素旁的非模态 React 浮层，采用 Liquid 
 | `triggerId` | `string \| null` | — | 与浮层关联的触发器 ID。 |
 | `defaultTriggerId` | `string \| null` | — | 初始打开时使用的触发器 ID。 |
 | `className` | `string` | — | 合并到弹窗的 Tailwind 类名。 |
+| `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | Attribute | Description |
 | --- | --- |
@@ -64,3 +65,4 @@ description: "锚定在触发元素旁的非模态 React 浮层，采用 Liquid 
 | `data-uncentered` | 指向缺口未居中时存在。 |
 | `data-popup-open` | 弹窗打开时存在于触发元素上。 |
 | `data-pressed` | 触发元素被按下时存在。 |
+| `data-slot` | 标记内部部件（`positioner`、`popup`、`glass`、`overlay`、`arrow`、`content`、`title`、`description`、`body`、`footer`），用于样式选择。 |

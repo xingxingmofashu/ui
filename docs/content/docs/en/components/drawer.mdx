@@ -62,6 +62,7 @@ On touch screens, drag the drawer in the direction set by `direction` to dismiss
 | `defaultSnapPoint` | `DrawerSnapPoint \| null` | — | Initial snap point when uncontrolled. |
 | `onSnapPointChange` | `(snapPoint: DrawerSnapPoint \| null, details) => void` | — | Called when the active snap point changes. |
 | `className` | `string` | — | Tailwind classes merged into the popup. |
+| `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
@@ -76,3 +77,4 @@ On touch screens, drag the drawer in the direction set by `direction` to dismiss
 | `data-swipe-dismiss` | Present when the drawer is dismissed by a swipe. |
 | `data-swipe-direction` | Indicates the swipe direction (`up`, `down`, `left`, or `right`). |
 | `data-swiping` | Present while the drawer is being swiped. |
+| `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
