@@ -3,13 +3,13 @@ title: "Popover"
 description: "A non-modal React popover with a Liquid Glass panel anchored to a trigger."
 ---
 
-`Popover` is an integrated wrapper around Base UI's `Popover`. It renders the trigger, portal, positioner, glass popup, directional arrow, title, description, optional body, and optional action area internally. The arrow follows the resolved side of the popup automatically; set `arrow={false}` to hide it.
+`Popover` renders the trigger, portal, positioner, glass popup, directional arrow, title, description, optional body, and optional action area internally. The arrow follows the resolved side of the popup automatically; set `arrow={false}` to hide it.
 
 Unlike `Dialog` and `Drawer`, `Popover` is non-modal by default: focus is not trapped, the page stays scrollable, and pressing outside or Escape closes it. Use it for compact settings, contextual actions, and filters.
 
 ## Basic example
 
-Pass one element as `trigger`. It must forward props and refs to its root element, as `Button` does. Base UI adds `aria-haspopup="dialog"` and `aria-expanded` to the trigger automatically, and clicking it toggles the popover. This example is uncontrolled.
+Pass one element as `trigger`. It must forward props and refs to its root element, as `Button` does. The component adds `aria-haspopup="dialog"` and `aria-expanded` to the trigger automatically, and clicking it toggles the popover. This example is uncontrolled.
 
 <Example name="popover/basic" />
 
@@ -21,7 +21,7 @@ Pass one element as `trigger`. It must forward props and refs to its root elemen
 
 ## Placement
 
-`side`, `align`, `sideOffset`, and `alignOffset` are forwarded to Base UI's positioner. Base UI flips or shifts the popup when it would overflow the viewport.
+`side`, `align`, `sideOffset`, and `alignOffset` control the popup position. The popup flips or shifts when it would overflow the viewport.
 
 <Example name="popover/placement" />
 

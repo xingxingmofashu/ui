@@ -13,7 +13,7 @@ export default tv({
     ],
     viewport: "fixed inset-0 z-50 flex overflow-hidden",
     popup: [
-      "relative isolate flex min-h-0 flex-col overflow-hidden bg-ui-dialog-surface",
+      "relative isolate flex min-h-0 flex-col overflow-hidden bg-ui-surface",
       "text-ui-ink outline-none touch-auto overscroll-contain will-change-transform",
       "transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]",
       "data-[swiping]:select-none",

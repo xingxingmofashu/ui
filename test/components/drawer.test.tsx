@@ -296,7 +296,7 @@ describe("Drawer", () => {
       expect(styles.viewport()).toContain("items-end");
       expect(styles.popup()).toContain("max-h-[85dvh]");
       expect(styles.popup()).toContain("rounded-t-[1.75rem]");
-      expect(styles.popup()).toContain("bg-ui-dialog-surface");
+      expect(styles.popup()).toContain("bg-ui-surface");
       expect(styles.popup()).toContain(
         "translateY(calc(var(--drawer-snap-point-offset)_+_var(--drawer-swipe-movement-y)))",
       );

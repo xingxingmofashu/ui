@@ -56,7 +56,6 @@ export function docsPageMetadata({
     keywords: [
       "React",
       "Tailwind CSS",
-      "Base UI",
       "Liquid Glass",
       "React component library",
       title,
@@ -148,7 +147,6 @@ export function marketingMetadata(lang: Locale): Metadata {
     keywords: [
       "React",
       "Tailwind CSS",
-      "Base UI",
       "Liquid Glass",
       isZh ? "React 组件库" : "React component library",
       siteName,

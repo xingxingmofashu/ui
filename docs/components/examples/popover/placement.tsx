@@ -45,8 +45,7 @@ export default function PopoverPlacementDemo() {
         description={`This popover prefers the ${side} side of its trigger.`}
       >
         <p>
-          Base UI flips the popup to the opposite side when there is not enough
-          room.
+          The popup flips to the opposite side when there is not enough room.
         </p>
       </Popover>
     </div>

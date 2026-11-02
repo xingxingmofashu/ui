@@ -401,7 +401,7 @@ describe("Checkbox", () => {
       expect(styles.root()).toContain("[--ui-checkbox-size:20px]");
       expect(styles.root()).toContain("[--ui-checkbox-radius:6px]");
       expect(styles.box()).toContain("rounded-[var(--ui-checkbox-radius)]");
-      expect(styles.box()).toContain("--ui-shadow-glass:var(--ui-checkbox-shadow)");
+      expect(styles.box()).toContain("--ui-shadow-glass");
       expect(styles.box()).toContain("[--ui-glass-tone:brightness(1)]");
       expect(styles.box()).toContain("[--ui-glass-contrast:1.1]");
       expect(styles.fill()).toContain("bg-ui-ink");
@@ -411,7 +411,7 @@ describe("Checkbox", () => {
       expect(styles.glass()).toContain("ui-glass");
       expect(styles.overlay()).toContain("ui-glass-rim");
       expect(styles.indicator()).toContain(
-        "text-[var(--ui-checkbox-mark)]",
+        "text-ui-surface",
       );
       expect(styles.indicator()).toContain(
         "group-data-[indeterminate]:opacity-100",

@@ -51,11 +51,35 @@ same pnpm workspace.
 
 ## Glass
 
-- `src/index.css` owns the standard glass material: `--ui-glass-*` tokens and the
-  `.ui-glass`, `.ui-glass-inner`, `.ui-glass-highlight`, `.ui-glass-rim`, and
-  `.ui-glass-chip` classes.
-- Light/dark tokens support `.light` / `.dark` and
-  `data-theme="light"` / `data-theme="dark"`.
+- `src/index.css` owns only the global runtime tokens and the shared glass
+  material. Component-specific values (the checkbox rim, slider lens, switch
+  shadows, and similar) stay in `src/theme/<component>.ts`; do not add
+  `--ui-<component>-*` tokens to `index.css`.
+- Global runtime tokens: `--ui-ink`, `--ui-ink-active`, `--ui-surface`,
+  `--ui-shadow-glass`, and `--ui-drop-shadow-label`.
+- `--ui-surface` is the opaque theme surface (`#fff` in light, `#141414` in
+  dark) used by overlays and as a base for component themes.
+  `--ui-glass-surface` is the translucent glass fill. Use `bg-ui-surface` for
+  solid surfaces and `bg-ui-glass-surface` only for the glass fill.
+- Shared glass tokens: `--ui-glass-surface`, `--ui-glass-border`,
+  `--ui-glass-focus`, `--ui-glass-inner-border`, `--ui-glass-rim`,
+  `--ui-glass-highlight`, `--ui-glass-glare-stop`, `--ui-glass-tone`, and
+  `--ui-glass-contrast`.
+- Shared geometry and optics: `--ui-glass-blur`, `--ui-glass-saturate`,
+  `--ui-glass-chip-blur`, `--ui-glass-inner-inset`, `--ui-glass-inner-offset`,
+  `--ui-glass-inner-blur`, `--ui-glass-highlight-blur`, `--ui-glass-rim-inset`,
+  and `--ui-glass-rim-blur`.
+- Material classes: `.ui-glass` owns the fill, double border, shadow, blur, and
+  tone; `.ui-glass-inner` adds the inset outline; `.ui-glass-highlight` adds the
+  diagonal glare; `.ui-glass-rim` is the decorative child rim; and
+  `.ui-glass-chip` is the compact surface.
+- Light is the default at `:root`. `.dark` / `data-theme="dark"` switches to
+  dark, while `.light` / `data-theme="light"` re-applies light and wins inside a
+  dark ancestor. The `ui-light` / `ui-dark` Tailwind variants mirror these
+  selectors.
+- Tokens live in `@layer theme`, so an unlayered `:root` override in a consumer
+  app wins without `!important`. Keep component-specific values in the
+  component theme and shared material values in `index.css`.
 
 ## Component API
 

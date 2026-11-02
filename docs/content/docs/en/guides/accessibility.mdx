@@ -3,10 +3,10 @@ title: "Accessibility"
 description: "Labeling, keyboard behavior, focus management, and live-region support in the Liquid Glass components."
 ---
 
-Accessibility comes from the behavior layer, not from the glass styling. The
-interactive components wrap [Base UI](https://base-ui.com) primitives, which
-provide roles, states, keyboard interaction, focus management, and native form
-integration. The visual layer only changes the surface.
+Accessibility is built into the behavior layer, not the glass styling. The
+interactive components provide roles, states, keyboard interaction, focus
+management, and native form integration. The visual layer only changes the
+surface.
 
 This guide describes the guarantees you can rely on and the decisions you still
 need to make in your application.
@@ -51,21 +51,23 @@ the description through `aria-describedby`. Decorative icons inside `Button`,
 
 ## Keyboard behavior
 
-The components follow the native patterns supplied by Base UI:
+The components follow these native interaction patterns:
 
 | Interaction | Expected behavior |
 | --- | --- |
 | `Tab` / `Shift+Tab` | Move focus between controls |
 | `Enter` / `Space` | Activate buttons, toggles, checkboxes, and switches |
-| Arrow keys | Move the slider thumb; navigate accordion triggers and toggle groups |
+| Arrow keys | Move the slider thumb; navigate toggle groups |
 | `Escape` | Close dialog, alert dialog, drawer, and popover |
 | `Home` / `End` | Move a slider to its minimum or maximum |
 | `Page Up` / `Page Down` | Move a slider by `largeStep` |
 
-Accordion triggers use real buttons and expose `aria-expanded`. Toggle groups
-support single and multiple selection with the expected arrow-key roving focus.
-Scroll areas keep native wheel, trackpad, and keyboard scrolling; the custom
-scrollbars are decorative and hidden from assistive technology.
+Accordion triggers use real buttons and expose `aria-expanded`; they follow the
+document tab order. `loopFocus` and `orientation` are deprecated and no longer
+change keyboard focus. Toggle groups support single and multiple selection with
+the expected arrow-key roving focus. Scroll areas keep native wheel, trackpad,
+and keyboard scrolling; the custom scrollbars are decorative and hidden from
+assistive technology.
 
 ## Overlays and focus
 
@@ -89,7 +91,7 @@ plain `Dialog` when the user must choose between explicit actions.
 
 ## Toasts and live regions
 
-`ToastProvider` renders a Base UI toast viewport with live-region semantics.
+`ToastProvider` renders a toast viewport with live-region semantics.
 Keep one provider near the application root, and render `<Toast />` after the
 app content so the viewport is available.
 

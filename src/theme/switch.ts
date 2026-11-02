@@ -13,6 +13,7 @@ const theme = tv({
     base: [
       "relative inline-flex h-[var(--ui-switch-height)] w-[var(--ui-switch-width)] shrink-0 select-none overflow-visible rounded-[100px] border-0 bg-transparent p-0 text-inherit",
       "[container-type:inline-size]",
+      "[--ui-glass-edge-shadow:inset_1px_-1px_2px_rgb(255_255_255/0.55),inset_-1px_1px_2px_rgb(0_0_0/0.18),0_1px_3px_rgb(0_0_0/0.2)]",
       "[--ui-switch-off:color-mix(in_srgb,var(--ui-ink)_20%,transparent)] [--ui-switch-on:var(--ui-ink)]",
       "group-focus-visible:outline-2 group-focus-visible:outline-offset-4 group-focus-visible:outline-ui-glass-focus",
       "[&_*]:pointer-events-none",
@@ -50,6 +51,7 @@ const theme = tv({
     ],
     thumb: [
       "absolute left-[var(--ui-switch-border)] top-1/2 h-[calc(100%_-_2*var(--ui-switch-border))] w-[calc(60%_-_2*var(--ui-switch-border))] rounded-[100px] bg-transparent [box-shadow:var(--ui-glass-thumb-shadow)]",
+      "[--ui-glass-thumb-shadow:0_1px_3px_rgb(0_0_0/0.2),inset_0_0_0_1px_rgb(255_255_255/0.55)]",
       "[container-type:inline-size]",
       "[translate:0_-50%] group-data-[checked]:[translate:calc(100cqi_-_100%_-_2*var(--ui-switch-border))_-50%]",
       "[transition:translate_120ms_ease-out_180ms,scale_300ms_ease-out]",

@@ -3,7 +3,7 @@ title: "Slider"
 description: "可访问的 React 滑块，采用 Liquid Glass 轨道，支持单值、区间与纵向布局。"
 ---
 
-`Slider` 是 Base UI `Slider.Root` 的样式封装，内部渲染 control、track、indicator 和玻璃 thumb。属性会透传给 `Slider.Root`；`style` 与 `children` 不支持。
+`Slider` 内部渲染 control、track、indicator 和玻璃 thumb；`style` 与 `children` 不支持。
 
 ## 基础示例
 
@@ -37,7 +37,7 @@ Slider 不渲染可见标签。请用 `aria-labelledby` 指向外部可见标签
 
 ## 表单用法
 
-Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]` 提交当前值：
+Slider 会把 `name` 用于表单，并通过隐藏的 `input[type="range"]` 提交当前值：
 
 <Example name="slider/form" />
 
@@ -57,7 +57,7 @@ Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]
 | `largeStep` | `number` | `10` | Page Up / Page Down 与 Shift + 方向键的步进。 |
 | `minStepsBetweenValues` | `number` | `0` | 区间 thumb 之间的最小步进。 |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局与键盘方向。 |
-| `format` | `Intl.NumberFormatOptions` | — | Base UI 可访问数值文本使用的格式。 |
+| `format` | `Intl.NumberFormatOptions` | — | 可访问数值文本使用的格式。 |
 | `locale` | `Intl.LocalesArgument` | — | 数值格式化使用的 locale。 |
 | `getAriaLabel` | `(index: number) => string` | — | 为指定索引的 thumb 提供可访问名称，适用于区间滑块。 |
 | `getAriaValueText` | `(formattedValue, value, index) => string` | — | 为每个 thumb 自定义可访问数值文本。 |
@@ -80,9 +80,9 @@ Slider 会把 `name` 透传给 Base UI，并通过隐藏的 `input[type="range"]
 | `data-orientation` | 表示方向（`horizontal` 或 `vertical`）。 |
 | `data-disabled` | 滑块禁用时存在。 |
 | `data-index` | 在区间滑块中表示 thumb 索引。 |
-| `data-valid` | 滑块有效时存在（位于 `Field.Root` 内）。 |
-| `data-invalid` | 滑块无效时存在（位于 `Field.Root` 内）。 |
-| `data-touched` | 滑块被触碰后存在（位于 `Field.Root` 内）。 |
-| `data-dirty` | 滑块值变化后存在（位于 `Field.Root` 内）。 |
+| `data-valid` | 滑块有效时存在。 |
+| `data-invalid` | 滑块无效时存在。 |
+| `data-touched` | 滑块被触碰后存在。 |
+| `data-dirty` | 滑块值变化后存在。 |
 | `data-slot` | 标记内部部件（`root`、`control`、`track`、`indicator`、`thumb`），用于样式选择。 |
-| `data-focused` | 滑块聚焦时存在（位于 `Field.Root` 内）。 |
+| `data-focused` | 滑块聚焦时存在。 |

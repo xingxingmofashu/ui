@@ -23,7 +23,7 @@ The leading icon sits before the label. The trailing icon sits after the label. 
 
 ## States
 
-The disabled state uses the native `disabled` attribute, stopping both keyboard and pointer interaction. `focusableWhenDisabled` keeps the button in the Tab order while disabled; Base UI exposes it with `aria-disabled` and blocks activation.
+The disabled state uses the native `disabled` attribute, stopping both keyboard and pointer interaction. `focusableWhenDisabled` keeps the button in the Tab order while disabled; the component exposes it with `aria-disabled` and blocks activation.
 
 <Example name="button/states" />
 
@@ -35,7 +35,7 @@ The disabled state uses the native `disabled` attribute, stopping both keyboard 
 
 ## Render as a link
 
-When the button should navigate instead of trigger an action, tell Base UI not to render a native `<button>`:
+When the button should navigate instead of trigger an action, set `nativeButton={false}` and render a link instead of a native `<button>`:
 
 <Example name="button/link" />
 

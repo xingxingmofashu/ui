@@ -3,7 +3,7 @@ title: "Toast"
 description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、操作、Promise 状态与四种角落位置。"
 ---
 
-`ToastProvider` 是 Base UI `Toast.Provider` 的封装，负责提供 toast manager。在它内部渲染 `Toast` 来绘制 Portal、Viewport 和 Liquid Glass toast 栈；在 Provider 内任意位置调用 `useToast()` 即可添加、更新、关闭或跟踪通知。
+`ToastProvider` 负责提供 toast manager。在它内部渲染 `Toast` 来绘制 Portal、Viewport 和 Liquid Glass toast 栈；在 Provider 内任意位置调用 `useToast()` 即可添加、更新、关闭或跟踪通知。
 
 建议在应用根部渲染一个 `ToastProvider`，并把 `Toast` 放在应用内容之后。每个 Provider 拥有独立的 Viewport；如果还需要在 React 外创建通知，请把同一个 `toastManager` 传给它。
 
@@ -23,7 +23,7 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 
 ## 操作按钮
 
-`actionProps` 会在 Toast 内渲染操作按钮。Base UI 会透传 `children` 和原生 button 属性；操作完成后需要在 `onClick` 中自行关闭 Toast。
+`actionProps` 会在 Toast 内渲染操作按钮。操作按钮会透传 `children` 和原生 button 属性；操作完成后需要在 `onClick` 中自行关闭 Toast。
 
 <Example name="toast/action" />
 
@@ -87,10 +87,10 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 
 ## 无障碍
 
-Base UI 会把 Viewport 渲染为 live region，高优先级 Toast 使用 `alertdialog` 角色，其余使用 `dialog` 角色，并通过 `aria-labelledby` 与 `aria-describedby` 关联标题和描述；同时支持 F6 进入通知区域和滑动关闭。Viewport 被悬停或聚焦时计时会暂停。
+Viewport 是 live region，高优先级 Toast 使用 `alertdialog` 角色，其余使用 `dialog` 角色，并通过 `aria-labelledby` 与 `aria-describedby` 关联标题和描述；同时支持 F6 进入通知区域和滑动关闭。Viewport 被悬停或聚焦时计时会暂停。
 
 替换默认关闭按钮时，请为自定义的 `close` 控件提供可访问名称。
 
 ## 样式
 
-玻璃表面、堆叠几何和动效都由主题接管。`style` 不被支持；请通过共享的 `--ui-glass-*` token 调整材质，或使用 `className` 合并 Viewport 的布局类名。
+玻璃表面、堆叠几何和动效由各槽位共享。使用 `ui.root`、`ui.glass`、`ui.overlay` 与 `ui.content` 调整单个槽位；`ui.viewport` 控制堆叠定位，`className` 则合并到每条 Toast 的根元素。`style` 不被支持；请通过共享的 `--ui-glass-*` token 调整材质。

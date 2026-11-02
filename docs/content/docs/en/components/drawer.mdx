@@ -3,7 +3,7 @@ title: "Drawer"
 description: "A React drawer that slides in from any edge with a Liquid Glass surface and swipe dismissal."
 ---
 
-`Drawer` is an integrated wrapper around Base UI's `Drawer`. It renders the portal, backdrop, edge-aligned popup, title, description, optional body, and a custom action area internally, with swipe dismissal and optional snap points.
+`Drawer` is an edge-aligned panel with swipe dismissal. It renders the portal, backdrop, popup, title, description, optional body, and a custom action area internally, with optional snap points.
 
 Unlike the centered `Dialog`, `Drawer` slides in from an edge of the screen, which makes it a good fit for mobile settings panels, filters, and side navigation.
 
@@ -15,7 +15,7 @@ The drawer opens from the bottom by default. `open` controls visibility and `foo
 
 ## Side panels
 
-`direction` reuses Base UI's `swipeDirection` values: `down` slides in from the bottom, `up` from the top, and `left` and `right` from the matching side. It defaults to `down`, and the component adjusts the popup position, corner radii, enter animation, and swipe dismissal direction together.
+`direction` accepts four values: `down` slides in from the bottom, `up` from the top, and `left` and `right` from the matching side. It defaults to `down`, and the component adjusts the popup position, corner radii, enter animation, and swipe dismissal direction together.
 
 <Example name="drawer/sides" />
 
@@ -27,7 +27,7 @@ On touch screens, drag the drawer in the direction set by `direction` to dismiss
 
 ## Snap points
 
-`snapPoints`, `defaultSnapPoint`, `snapPoint`, `onSnapPointChange`, and `snapToSequentialPoints` pass through to Base UI and can make a bottom or top drawer settle between preset heights.
+`snapPoints`, `defaultSnapPoint`, `snapPoint`, `onSnapPointChange`, and `snapToSequentialPoints` configure snap heights and can make a bottom or top drawer settle between preset heights.
 
 <Example name="drawer/snap-points" />
 

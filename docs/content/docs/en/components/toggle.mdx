@@ -3,7 +3,7 @@ title: "Toggle"
 description: "An accessible React toggle button with a Liquid Glass pressed thumb, optional label and icon, and five sizes."
 ---
 
-`Toggle` is a styled wrapper around Base UI's `Toggle`. It renders the glass shell, selected thumb, optional icon and label, and exposes the pressed state through `aria-pressed`.
+`Toggle` renders the glass shell, selected thumb, optional icon and label, and exposes the pressed state through `aria-pressed`.
 
 Use it for a single on/off action. For a set of related options, use `ToggleGroup` instead.
 
@@ -15,7 +15,7 @@ The toggle owns its state when `pressed` is omitted. Use `defaultPressed` to set
 
 ## Controlled usage
 
-Pass `pressed` and `onPressedChange` to control the state externally. The callback also receives Base UI's event details.
+Pass `pressed` and `onPressedChange` to control the state externally. The callback also receives event details.
 
 <Example name="toggle/controlled" />
 
@@ -63,4 +63,4 @@ Omit `label` to render a square icon button. Provide an accessible name with `ar
 
 ## Accessibility
 
-Base UI supplies the button role, `aria-pressed`, keyboard activation, and disabled behavior. When `label` is present it contributes to the accessible name; icon-only toggles need `aria-label` or `aria-labelledby`.
+The component supplies the button role, `aria-pressed`, keyboard activation, and disabled behavior. When `label` is present it contributes to the accessible name; icon-only toggles need `aria-label` or `aria-labelledby`.

@@ -383,7 +383,7 @@ export async function getLlmsIndex() {
     `> ${siteDescription}`,
     "",
     "Open-source React 19 components with a CSS-only Liquid Glass visual style,",
-    "built on Base UI, Tailwind CSS 4, and Tailwind Variants.",
+    "built with Tailwind CSS 4 and Tailwind Variants.",
     "",
     `- Documentation: ${absoluteUrl("/docs/en")}`,
     `- GitHub: ${githubUrl}`,

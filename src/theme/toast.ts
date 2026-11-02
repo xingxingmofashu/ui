@@ -10,7 +10,7 @@ export default tv({
       "[--shrink:calc(1_-_var(--scale))]",
       "[--height:var(--toast-frontmost-height,var(--toast-height))]",
       "absolute inset-x-0 isolate h-[var(--height)] w-full rounded-[1.25rem]",
-      "bg-ui-dialog-surface text-ui-ink select-none",
+      "bg-ui-surface text-ui-ink select-none",
       "z-[calc(1000-var(--toast-index))]",
       "[transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
       "data-[expanded]:h-[var(--toast-height)]",

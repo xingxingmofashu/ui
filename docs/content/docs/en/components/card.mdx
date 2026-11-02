@@ -3,10 +3,10 @@ title: "Card"
 description: "A server-safe React card with a Liquid Glass surface, header, body, and footer."
 ---
 
-`Card` is a native layout primitive rather than a Base UI component: it has no
-interactive state and forwards its props directly to the root `div`. It is
-server-safe and does not support Base UI's `render` prop. Use `ui` to style the
-glass layers or any internal section.
+`Card` is a native layout primitive: it has no interactive state and forwards
+its remaining native props to the root `div`. It is server-safe and does not
+support the `render` prop. Use `ui` to style
+the glass layers or any internal section.
 
 ## Basic example
 
@@ -28,6 +28,7 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 | `description` | `ReactNode` | — | Supporting text below the heading. |
 | `footer` | `ReactNode` | — | Footer action area. |
 | `children` | `ReactNode` | — | Card body content. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Merged into `root`; use it for layout. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; layout?: ClassValue; header?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

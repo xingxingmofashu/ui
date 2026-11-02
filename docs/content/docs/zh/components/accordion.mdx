@@ -70,6 +70,8 @@ description: "一组可折叠的 React 手风琴面板，采用 Liquid Glass 风
 | `className` | `string` | — | 合并到 item root 的 Tailwind 类名。 |
 | `ui` | `{ item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的该 item 内部槽位类名。 |
 
+根 `ui` 会先合并到每个 item，再合并该 item 的 `ui`，最后合并 item 的 `className`。
+
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | accordion 或 item 被禁用时存在。 |

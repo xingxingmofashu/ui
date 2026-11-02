@@ -76,7 +76,7 @@ describe("Popover", () => {
       expect(arrow).toHaveAttribute("aria-hidden", "true");
       expect(arrow).toHaveClass(
         "rotate-45",
-        "bg-ui-dialog-surface",
+        "bg-ui-surface",
         "border-ui-glass-border",
         "data-[side=bottom]:border-t",
         "data-[side=bottom]:border-l",
@@ -323,7 +323,7 @@ describe("Popover", () => {
 
       expect(styles.positioner()).toContain("z-50");
       expect(styles.popup()).toContain("w-80");
-      expect(styles.popup()).toContain("bg-ui-dialog-surface");
+      expect(styles.popup()).toContain("bg-ui-surface");
       expect(styles.popup()).toContain("rounded-[1.5rem]");
       expect(styles.popup()).toContain("data-[starting-style]:scale-95");
       expect(styles.popup()).toContain("data-[starting-style]:opacity-0");
@@ -338,7 +338,7 @@ describe("Popover", () => {
       expect(styles.overlay()).toContain("ui-glass-rim");
       expect(styles.arrow()).toContain("size-3");
       expect(styles.arrow()).toContain("rotate-45");
-      expect(styles.arrow()).toContain("bg-ui-dialog-surface");
+      expect(styles.arrow()).toContain("bg-ui-surface");
       expect(styles.arrow()).toContain("data-[side=bottom]:-top-[6px]");
       expect(styles.arrow()).toContain("data-[side=top]:-bottom-[6px]");
       expect(styles.arrow()).toContain("data-[side=left]:border-r");

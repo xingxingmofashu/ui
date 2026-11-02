@@ -3,7 +3,7 @@ title: "Scroll Area"
 description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动条与玻璃面板。"
 ---
 
-`ScrollArea` 是对 Base UI `ScrollArea` 的集成封装。它在内部渲染玻璃面板、原生滚动视口、内容容器与自定义滚动条。
+`ScrollArea` 在内部渲染玻璃面板、原生滚动视口、内容容器与自定义滚动条。
 
 原生滚动条会被隐藏。主题滚动条在静止时保持低调，当指针位于区域上方或视口滚动时会变得更明显；只有内容真正溢出时才会渲染。
 
@@ -35,7 +35,7 @@ description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | — | 渲染在视口内的可滚动内容。 |
 | `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | 要渲染的滚动条方向。 |
-| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | Base UI 将一个边缘标记为溢出前需要越过的像素距离。 |
+| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | 将一个边缘标记为溢出前需要越过的像素距离。 |
 | `aria-label` | `string` | — | 转发到可滚动视口的无障碍名称。 |
 | `aria-labelledby` | `string` | — | 为视口提供名称的元素 ID。 |
 | `aria-describedby` | `string` | — | 为视口提供说明的元素 ID。 |
@@ -59,4 +59,4 @@ description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动
 
 ## 无障碍
 
-只有视口可以滚动时它才会进入焦点顺序，这与原生滚动容器一致。使用 `aria-label` 或 `aria-labelledby` 为区域命名，使用 `aria-describedby` 补充说明。Base UI 保留原生指针与键盘滚动，自定义滚动条仅作装饰，不暴露给辅助技术。
+只有视口可以滚动时它才会进入焦点顺序，这与原生滚动容器一致。使用 `aria-label` 或 `aria-labelledby` 为区域命名，使用 `aria-describedby` 补充说明。指针与键盘滚动保持原生行为，自定义滚动条仅作装饰，不暴露给辅助技术。

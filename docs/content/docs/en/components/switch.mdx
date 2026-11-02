@@ -9,9 +9,8 @@ The switch below is the real component and can be clicked directly.
 
 <Example name="switch/basic" />
 
-The Base UI `Switch.Root` is the outermost element. The visual track is the
-inner `base` slot, and the whole row, including the label and description, is
-clickable. `label` becomes the accessible name through `aria-labelledby`; when
+The switch root is the outermost element. The visual track is the inner `base`
+slot, and the whole row, including the label and description, is clickable. `label` becomes the accessible name through `aria-labelledby`; when
 the control has a label or explicit name, `description` is linked through
 `aria-describedby`. An explicit `aria-label` or `aria-labelledby` takes
 precedence for the name, and an explicit `aria-describedby` is merged with the
@@ -38,7 +37,7 @@ Without `checked`, Switch owns its state, and `defaultChecked` only sets the ini
 
 ## Form usage
 
-Switch forwards `name` and `value` to Base UI and submits the current value through a hidden checkbox input:
+Switch forwards `name` and `value` and submits the current value through a hidden checkbox input:
 
 <Example name="switch/form" />
 
@@ -68,7 +67,7 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the Base UI switch root. |
+| `className` | `string` | — | Tailwind classes merged into the switch root. |
 | `ui` | `{ root?: ClassValue; container?: ClassValue; base?: ClassValue; thumb?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
@@ -78,11 +77,11 @@ Switch forwards `name` and `value` to Base UI and submits the current value thro
 | `data-disabled` | Present when the switch is disabled. |
 | `data-readonly` | Present when the switch is read-only. |
 | `data-required` | Present when the switch is required. |
-| `data-valid` | Present when the switch is valid (inside `Field.Root`). |
-| `data-invalid` | Present when the switch is invalid (inside `Field.Root`). |
-| `data-touched` | Present after the switch is touched (inside `Field.Root`). |
-| `data-dirty` | Present after the switch value changes (inside `Field.Root`). |
-| `data-filled` | Present when the switch is on (inside `Field.Root`). |
-| `data-focused` | Present when the switch is focused (inside `Field.Root`). |
+| `data-valid` | Present when the switch is valid. |
+| `data-invalid` | Present when the switch is invalid. |
+| `data-touched` | Present after the switch is touched. |
+| `data-dirty` | Present after the switch value changes. |
+| `data-filled` | Present when the switch is on. |
+| `data-focused` | Present when the switch is focused. |
 | `data-animating` | Present while the thumb transition is running. |
 | `data-slot` | Marks internal parts (`root`, `container`, `base`, `thumb`, `wrapper`, `label`, `description`) for styling. |

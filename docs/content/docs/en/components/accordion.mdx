@@ -70,6 +70,8 @@ Set `disabled` on the root to disable every trigger, or on a single item to disa
 | `className` | `string` | — | Tailwind classes merged into the item root. |
 | `ui` | `{ item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this item's internal slots, keyed by `data-slot`. |
 
+Root `ui` is merged into every item first, then the item's `ui`, then the item's `className`.
+
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | Present when the accordion or an item is disabled. |

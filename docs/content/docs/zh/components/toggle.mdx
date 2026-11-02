@@ -3,7 +3,7 @@ title: "Toggle"
 description: "可访问的 React 切换按钮，采用 Liquid Glass 选中滑块、可选标签与图标以及五种尺寸。"
 ---
 
-`Toggle` 是 Base UI `Toggle` 的样式封装。它内部渲染玻璃外壳、选中滑块、可选图标与标签，并通过 `aria-pressed` 暴露按下状态。
+`Toggle` 内部渲染玻璃外壳、选中滑块、可选图标与标签，并通过 `aria-pressed` 暴露按下状态。
 
 适合单个开/关操作。需要一组相关选项时，请使用 `ToggleGroup`。
 
@@ -15,7 +15,7 @@ description: "可访问的 React 切换按钮，采用 Liquid Glass 选中滑块
 
 ## 受控用法
 
-传入 `pressed` 与 `onPressedChange`，由外部状态控制。回调还会收到 Base UI 的事件详情。
+传入 `pressed` 与 `onPressedChange`，由外部状态控制。回调还会收到事件详情。
 
 <Example name="toggle/controlled" />
 
@@ -63,4 +63,4 @@ description: "可访问的 React 切换按钮，采用 Liquid Glass 选中滑块
 
 ## 无障碍
 
-Base UI 负责 button 角色、`aria-pressed`、键盘激活和禁用行为。传入 `label` 时它会参与可访问名称；纯图标 Toggle 需要 `aria-label` 或 `aria-labelledby`。
+组件负责 button 角色、`aria-pressed`、键盘激活和禁用行为。传入 `label` 时它会参与可访问名称；纯图标 Toggle 需要 `aria-label` 或 `aria-labelledby`。

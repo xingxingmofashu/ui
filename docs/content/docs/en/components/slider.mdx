@@ -3,7 +3,7 @@ title: "Slider"
 description: "An accessible React slider with a Liquid Glass track, single values, ranges, and vertical orientation."
 ---
 
-`Slider` is a styled wrapper around Base UI's `Slider.Root`. It renders the control, track, indicator, and glass thumb internally. Props are forwarded to `Slider.Root`; `style` and `children` are intentionally not supported.
+`Slider` renders the control, track, indicator, and glass thumb internally. `style` and `children` are intentionally not supported.
 
 ## Basic example
 
@@ -37,7 +37,7 @@ The disabled state uses the native `disabled` attribute, stopping both dragging 
 
 ## Form usage
 
-Slider forwards `name` to Base UI and submits the current value through a hidden `input[type="range"]`:
+Slider forwards `name` and submits the current value through a hidden `input[type="range"]`:
 
 <Example name="slider/form" />
 
@@ -57,7 +57,7 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 | `largeStep` | `number` | `10` | Step for Page Up / Page Down and Shift + arrow keys. |
 | `minStepsBetweenValues` | `number` | `0` | Minimum steps between range thumb values. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
-| `format` | `Intl.NumberFormatOptions` | — | Value format used by Base UI's accessible value text. |
+| `format` | `Intl.NumberFormatOptions` | — | Value format used by the accessible value text. |
 | `locale` | `Intl.LocalesArgument` | — | Locale used for number formatting. |
 | `getAriaLabel` | `(index: number) => string` | — | Accessible name for the thumb at the given index. Use it for range sliders. |
 | `getAriaValueText` | `(formattedValue, value, index) => string` | — | Custom accessible value text for each thumb. |
@@ -80,9 +80,9 @@ Slider forwards `name` to Base UI and submits the current value through a hidden
 | `data-orientation` | Indicates the orientation (`horizontal` or `vertical`). |
 | `data-disabled` | Present when the slider is disabled. |
 | `data-index` | Indicates the thumb index on range sliders. |
-| `data-valid` | Present when the slider is valid (inside `Field.Root`). |
-| `data-invalid` | Present when the slider is invalid (inside `Field.Root`). |
-| `data-touched` | Present after the slider is touched (inside `Field.Root`). |
-| `data-dirty` | Present after the slider value changes (inside `Field.Root`). |
+| `data-valid` | Present when the slider is valid. |
+| `data-invalid` | Present when the slider is invalid. |
+| `data-touched` | Present after the slider is touched. |
+| `data-dirty` | Present after the slider value changes. |
 | `data-slot` | Marks internal parts (`root`, `control`, `track`, `indicator`, `thumb`) for styling. |
-| `data-focused` | Present when the slider is focused (inside `Field.Root`). |
+| `data-focused` | Present when the slider is focused. |

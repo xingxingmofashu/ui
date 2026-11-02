@@ -3,9 +3,9 @@ title: "Progress"
 description: "带线性 Liquid Glass 轨道、确定与不确定状态以及五种尺寸的可访问 React 进度条。"
 ---
 
-`Progress` 将 Base UI 的 `Progress` 封装在一条线性玻璃轨道中。它支持确定值、不确定状态、可选标签与描述，以及格式化后的数值文本。
+`Progress` 渲染一条线性玻璃轨道。它支持确定值、不确定状态、可选标签与描述，以及格式化后的数值文本。
 
-组件内部组合 Base UI 的 root、label、value、track 与 indicator，因此使用时只需要一个组件，不需要手动拼装各个部分。
+组件内部组合 root、label、value、track 与 indicator，因此使用时只需要一个组件，不需要手动拼装各个部分。
 
 ## 基础示例
 
@@ -66,7 +66,7 @@ description: "带线性 Liquid Glass 轨道、确定与不确定状态以及五�
 
 默认的 `aria-valuetext` 是格式化后的百分比。当数值需要更有意义的描述时，使用 `getAriaValueText`，例如“已上传 7 / 10 个文件”。
 
-不确定进度条没有 `aria-valuenow`；Base UI 会将其播报为不确定进度。
+不确定进度条没有 `aria-valuenow`；它会被播报为不确定进度。
 
 ## 主题
 

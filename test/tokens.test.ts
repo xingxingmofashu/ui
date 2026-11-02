@@ -543,15 +543,15 @@ describe("design tokens", () => {
 
     expect(css).toContain("--ui-ink: #1f1f1f;");
     expect(css).toContain("--ui-ink: #f5f5f5;");
-    expect(css).toContain("--ui-checkbox-mark: #fff;");
-    expect(css).toContain("--ui-checkbox-mark: #141414;");
-    expect(css).toContain("--ui-checkbox-rim: rgb(255 255 255 / 0.18);");
-    expect(css).toContain("--ui-checkbox-rim: rgb(255 255 255 / 0.14);");
-    expect(css).toContain("--ui-checkbox-shadow:");
-    expect(css).toContain("--ui-dialog-surface: #fff;");
-    expect(css).toContain("--ui-dialog-surface: #141414;");
+    expect(css).not.toContain("--ui-checkbox-mark");
+    expect(css).not.toContain("--ui-checkbox-rim");
+    expect(css).not.toContain("--ui-checkbox-shadow");
+    expect(css).toContain("--ui-surface: #fff;");
+    expect(css).toContain("--ui-surface: #141414;");
     expect(css).toContain("--ui-glass-surface: rgb(0 0 0 / 0.02);");
     expect(css).toContain("--ui-glass-surface: rgb(255 255 255 / 0.06);");
+    expect(css).toContain("--ui-glass-blur: 2px;");
+    expect(css).toContain("--ui-glass-saturate: 150%;");
     expect(css).toContain("--ui-glass-inner-border: rgb(0 0 0 / 0.9);");
     expect(css).toContain("--ui-glass-inner-border: rgb(255 255 255 / 0.4);");
     expect(css).toContain("--ui-glass-tone: brightness(0.9);");
@@ -706,7 +706,7 @@ describe("design tokens", () => {
     expect(recipe).toContain("ui-glass-inner");
     expect(recipe).toContain("ui-glass-highlight");
     expect(recipe).toContain("ui-glass-rim");
-    expect(recipe).toContain("bg-ui-dialog-surface");
+    expect(recipe).toContain("bg-ui-surface");
     expect(recipe).toContain("data-[starting-style]:opacity-0");
     expect(recipe).not.toContain("bg-glass-surface");
     expect(recipe).not.toContain("shadow-glass");
@@ -730,7 +730,7 @@ describe("design tokens", () => {
     expect(recipe).toContain("ui-glass-inner");
     expect(recipe).toContain("ui-glass-highlight");
     expect(recipe).toContain("ui-glass-rim");
-    expect(recipe).toContain("bg-ui-dialog-surface");
+    expect(recipe).toContain("bg-ui-surface");
     expect(recipe).toContain("data-[starting-style]");
     expect(recipe).toContain("data-[ending-style]");
     expect(recipe).toContain("--drawer-swipe-progress");
@@ -769,7 +769,7 @@ describe("design tokens", () => {
     expect(recipe).toContain("ui-glass");
     expect(recipe).toContain("ui-glass-rim");
     expect(recipe).toContain("--ui-checkbox-size");
-    expect(recipe).toContain("--ui-checkbox-shadow");
+    expect(recipe).toContain("--ui-shadow-glass");
     expect(recipe).not.toContain("bg-glass-surface");
     expect(recipe).not.toContain(" shadow-glass");
     expect(recipe).not.toContain(".css");

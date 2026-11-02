@@ -15,8 +15,8 @@
 </div>
 
 `@xingxingmofashu/ui` is a collection of accessible, typed [React](https://react.dev)
-components with a Liquid Glass visual style, built on [Base UI](https://base-ui.com),
-[Tailwind CSS](https://tailwindcss.com), and
+components with a Liquid Glass visual style, built with
+[Tailwind CSS](https://tailwindcss.com) and
 [Tailwind Variants](https://www.tailwind-variants.org). Glass surfaces, rim
 highlights, and inner shadows are drawn entirely with CSS.
 
@@ -185,7 +185,6 @@ a reproduction. Before opening a pull request, run `pnpm lint`, `pnpm test`, and
 
 ## Credits
 
-- [Base UI](https://base-ui.com)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Tailwind Variants](https://www.tailwind-variants.org)
 

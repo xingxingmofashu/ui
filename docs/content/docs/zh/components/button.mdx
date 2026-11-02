@@ -23,7 +23,7 @@ description: "可访问的 React 按钮，采用 Liquid Glass 风格，支持五
 
 ## 状态
 
-禁用状态使用原生 `disabled`，键盘与指针交互都会停止。`focusableWhenDisabled` 会让按钮在禁用时仍保留在 Tab 顺序中，Base UI 通过 `aria-disabled` 表达禁用状态并阻止激活，适合需要提示原因的禁用操作。
+禁用状态使用原生 `disabled`，键盘与指针交互都会停止。`focusableWhenDisabled` 会让按钮在禁用时仍保留在 Tab 顺序中，组件通过 `aria-disabled` 表达禁用状态并阻止激活，适合需要提示原因的禁用操作。
 
 <Example name="button/states" />
 
@@ -35,7 +35,7 @@ description: "可访问的 React 按钮，采用 Liquid Glass 风格，支持五
 
 ## 渲染为链接
 
-需要导航而不是触发操作时，可以告诉 Base UI 不要渲染原生 `<button>`：
+需要导航而不是触发操作时，可以传入 `nativeButton={false}` 并渲染链接，而不是原生 `<button>`：
 
 <Example name="button/link" />
 

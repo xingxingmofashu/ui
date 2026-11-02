@@ -3,7 +3,7 @@ title: "Input"
 description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签、说明文字与图标插槽。"
 ---
 
-`Input` 封装 Base UI 的 `Input`，渲染玻璃质感的输入区域、原生 `<input>`、可选标签与说明文字，以及可选的前后图标。
+`Input` 渲染玻璃质感的输入区域、原生 `<input>`、可选标签与说明文字，以及可选的前后图标。
 
 可见标签是真实的 `<label>`，会自动与输入框关联。传入 `description` 时，说明文字会获得 id，输入框通过 `aria-describedby` 指向它；你传入的 `aria-describedby` 会与它合并。
 
@@ -61,10 +61,10 @@ description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | 输入框禁用时存在。 |
-| `data-valid` | 输入框有效时存在（位于 `Field.Root` 内）。 |
-| `data-invalid` | 输入框无效时存在（位于 `Field.Root` 内）。 |
-| `data-touched` | 输入框被触碰后存在（位于 `Field.Root` 内）。 |
-| `data-dirty` | 输入框值变化后存在（位于 `Field.Root` 内）。 |
-| `data-filled` | 输入框有值时存在（位于 `Field.Root` 内）。 |
-| `data-focused` | 输入框聚焦时存在（位于 `Field.Root` 内）。 |
+| `data-valid` | 输入框有效时存在。 |
+| `data-invalid` | 输入框无效时存在。 |
+| `data-touched` | 输入框被触碰后存在。 |
+| `data-dirty` | 输入框值变化后存在。 |
+| `data-filled` | 输入框有值时存在。 |
+| `data-focused` | 输入框聚焦时存在。 |
 | `data-slot` | 标记内部部件（`root`、`label`、`control`、`glass`、`overlay`、`leading-icon`、`input`、`trailing-icon`、`description`），用于样式选择。 |

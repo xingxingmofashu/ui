@@ -29,7 +29,6 @@ export const metadata: Metadata = {
   keywords: [
     "React",
     "Tailwind CSS",
-    "Base UI",
     "Liquid Glass",
     "React component library",
     siteName,

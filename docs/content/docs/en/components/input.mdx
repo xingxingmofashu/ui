@@ -3,7 +3,7 @@ title: "Input"
 description: "An accessible React input with a Liquid Glass field, label, description, and icon slots."
 ---
 
-`Input` wraps Base UI's `Input` in a glass control. It renders a native `<input>`, an optional label and description, and optional leading and trailing icons.
+`Input` renders a glass control with a native `<input>`, an optional label and description, and optional leading and trailing icons.
 
 The visible label is a real `<label>` associated with the input. When `description` is set, it receives an id and the input points at it with `aria-describedby`; any `aria-describedby` you pass is merged with that id.
 
@@ -61,10 +61,10 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | Present when the input is disabled. |
-| `data-valid` | Present when the input is valid (inside `Field.Root`). |
-| `data-invalid` | Present when the input is invalid (inside `Field.Root`). |
-| `data-touched` | Present after the input is touched (inside `Field.Root`). |
-| `data-dirty` | Present after the input value changes (inside `Field.Root`). |
-| `data-filled` | Present when the input has a value (inside `Field.Root`). |
-| `data-focused` | Present when the input is focused (inside `Field.Root`). |
+| `data-valid` | Present when the input is valid. |
+| `data-invalid` | Present when the input is invalid. |
+| `data-touched` | Present after the input is touched. |
+| `data-dirty` | Present after the input value changes. |
+| `data-filled` | Present when the input has a value. |
+| `data-focused` | Present when the input is focused. |
 | `data-slot` | Marks internal parts (`root`, `label`, `control`, `glass`, `overlay`, `leading-icon`, `input`, `trailing-icon`, `description`) for styling. |

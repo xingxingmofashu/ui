@@ -61,7 +61,7 @@ Set `disabled` on the group to disable every item, or on a single item to disabl
 | `className` | `string` | — | Tailwind classes merged into the group root. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
-**ToggleGroupItem**
+**ToggleGroupItemProps**
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -74,8 +74,11 @@ Set `disabled` on the group to disable every item, or on a single item to disabl
 | `aria-labelledby` | `string` | — | Names an icon-only item from another element. |
 | `nativeButton` | `boolean` | `true` | Whether the item renders a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
+| `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the item element. |
 | `className` | `string` | — | Tailwind classes merged into the item root. |
 | `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for this item's internal slots, keyed by `data-slot`. |
+
+Items do not accept `pressed` or `defaultPressed`; the group `value` / `defaultValue` is the single source of truth for selection. Root `ui` is merged into every item first, then the item's `ui`, then the item's `className`.
 
 | Attribute | Description |
 | --- | --- |

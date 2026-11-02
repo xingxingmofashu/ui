@@ -3,9 +3,9 @@ title: "Progress"
 description: "An accessible React progress bar with a linear Liquid Glass track, determinate and indeterminate states, and five sizes."
 ---
 
-`Progress` wraps Base UI's `Progress` in a linear glass track. It supports determinate values, an indeterminate state, an optional label and description, and a formatted value readout.
+`Progress` renders a linear glass track. It supports determinate values, an indeterminate state, an optional label and description, and a formatted value readout.
 
-The component composes the Base UI root, label, value, track, and indicator internally, so you use one component instead of assembling the parts yourself.
+The component composes the root, label, value, track, and indicator internally, so you use one component instead of assembling the parts yourself.
 
 ## Basic example
 
@@ -66,7 +66,7 @@ A visible `label` gives the progress bar its accessible name. When no visible la
 
 The default `aria-valuetext` is the formatted percentage. Use `getAriaValueText` when the value needs a more meaningful description, such as “7 of 10 files uploaded”.
 
-An indeterminate bar has no `aria-valuenow`; Base UI announces it as indeterminate progress.
+An indeterminate bar has no `aria-valuenow`; it is announced as indeterminate progress.
 
 ## Theming
 

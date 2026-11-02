@@ -3,7 +3,7 @@ title: "Drawer"
 description: "从任意边缘滑入的 React 抽屉，采用 Liquid Glass 表面并支持手势关闭。"
 ---
 
-`Drawer` 是 Base UI `Drawer` 的一体化封装。它内部渲染 Portal、遮罩、贴边弹窗、标题、描述、可选正文以及自定义操作区，并支持滑动关闭与可选吸附点。
+`Drawer` 是贴边滑入的面板。它内部渲染 Portal、遮罩、弹窗、标题、描述、可选正文以及自定义操作区，并支持滑动关闭与可选吸附点。
 
 与居中的 `Dialog` 不同，`Drawer` 从屏幕边缘滑入，适合移动端设置面板、筛选条件和侧边导航。
 
@@ -15,7 +15,7 @@ description: "从任意边缘滑入的 React 抽屉，采用 Liquid Glass 表面
 
 ## 侧边抽屉
 
-`direction` 复用 Base UI `swipeDirection` 的取值：`down` 从底部滑入，`up` 从顶部滑入，`left` 和 `right` 从对应侧边滑入。默认 `down`，组件会同时调整弹窗位置、圆角、进入动画和滑动关闭方向。
+`direction` 支持四个取值：`down` 从底部滑入，`up` 从顶部滑入，`left` 和 `right` 从对应侧边滑入。默认 `down`，组件会同时调整弹窗位置、圆角、进入动画和滑动关闭方向。
 
 <Example name="drawer/sides" />
 
@@ -27,7 +27,7 @@ description: "从任意边缘滑入的 React 抽屉，采用 Liquid Glass 表面
 
 ## 吸附点
 
-`snapPoints`、`defaultSnapPoint`、`snapPoint`、`onSnapPointChange` 与 `snapToSequentialPoints` 会透传给 Base UI，可用于让底部或顶部抽屉在预设高度之间吸附。
+`snapPoints`、`defaultSnapPoint`、`snapPoint`、`onSnapPointChange` 与 `snapToSequentialPoints` 用于配置吸附高度，让底部或顶部抽屉在预设高度之间停靠。
 
 <Example name="drawer/snap-points" />
 

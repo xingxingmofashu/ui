@@ -3,9 +3,8 @@ title: "可访问性"
 description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实时区域支持。"
 ---
 
-可访问性来自行为层，而不是玻璃样式。交互组件封装了
-[Base UI](https://base-ui.com) 原语，由它提供角色、状态、键盘交互、焦点管理与
-原生表单集成。视觉层只改变表面。
+可访问性内置于行为层，而不是玻璃样式。交互组件提供角色、状态、键盘交互、
+焦点管理与原生表单集成。视觉层只改变表面。
 
 本指南说明组件库已经保证的行为，以及应用仍然需要自行决定的部分。
 
@@ -48,18 +47,19 @@ description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实�
 
 ## 键盘行为
 
-组件遵循 Base UI 提供的原生模式：
+组件遵循以下原生交互模式：
 
 | 交互 | 预期行为 |
 | --- | --- |
 | `Tab` / `Shift+Tab` | 在控件之间移动焦点 |
 | `Enter` / `Space` | 激活按钮、Toggle、Checkbox 与 Switch |
-| 方向键 | 移动 Slider thumb；在 Accordion 触发器与 Toggle Group 中导航 |
+| 方向键 | 移动 Slider thumb；在 Toggle Group 中导航 |
 | `Escape` | 关闭 Dialog、Alert Dialog、Drawer 与 Popover |
 | `Home` / `End` | 将 Slider 移到最小值或最大值 |
 | `Page Up` / `Page Down` | 按 `largeStep` 移动 Slider |
 
-Accordion 触发器使用真实按钮并暴露 `aria-expanded`。Toggle Group 支持单选与
+Accordion 触发器使用真实按钮并暴露 `aria-expanded`，遵循文档的 Tab 顺序。
+`loopFocus` 与 `orientation` 已废弃，不再影响键盘焦点。Toggle Group 支持单选与
 多选，并具备预期的方向键 roving focus。Scroll Area 保留原生滚轮、触控板与键盘
 滚动；自定义滚动条是装饰性的，对辅助技术隐藏。
 
@@ -84,7 +84,7 @@ Accordion 触发器使用真实按钮并暴露 `aria-expanded`。Toggle Group �
 
 ## Toast 与实时区域
 
-`ToastProvider` 渲染带实时区域语义的 Base UI toast viewport。在应用根部保留
+`ToastProvider` 渲染带实时区域语义的 toast viewport。在应用根部保留
 一个 provider，并把 `<Toast />` 放在应用内容之后，确保 viewport 可用。
 
 - 用 `type` 添加状态图标：`info`、`success`、`warning`、`error` 或

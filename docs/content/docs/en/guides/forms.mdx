@@ -20,7 +20,7 @@ state container.
 | `Switch` | Hidden checkbox with `name` and `value` | `null` when off |
 | `Slider` | Hidden `input[type="range"]` named by `name` | Defaults to the current value |
 
-`Button` forwards `type` to Base UI's button. Set `type="submit"` when it should
+`Button` forwards `type` to its root button element. Set `type="submit"` when it should
 submit the surrounding form.
 
 ```tsx
@@ -133,7 +133,7 @@ function EmailField() {
 
 `Slider` forwards `aria-invalid` and `aria-errormessage` to its underlying
 range input, so validation state reaches the focusable control. `Checkbox` and
-`Switch` forward Base UI props and hidden inputs, so the same pattern applies.
+`Switch` forward their props and hidden inputs, so the same pattern applies.
 
 ## Disabled and read-only
 

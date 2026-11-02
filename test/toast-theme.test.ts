@@ -62,7 +62,7 @@ describe("Toast theme compilation", () => {
   it("compiles the glass surface and stack geometry", async () => {
     const css = await buildStyles();
 
-    expect(css).toContain("background-color: var(--ui-dialog-surface);");
+    expect(css).toContain("background-color: var(--ui-surface);");
     expect(css).toContain("height: var(--height);");
     expect(css).toContain("height: var(--toast-height);");
     expect(css).toContain("var(--toast-frontmost-height,var(--toast-height))");

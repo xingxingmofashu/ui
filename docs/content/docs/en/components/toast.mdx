@@ -3,7 +3,7 @@ title: "Toast"
 description: "Transient React toast notifications with a Liquid Glass style, stacking, actions, promise states, and four corner positions."
 ---
 
-`ToastProvider` wraps Base UI's `Toast.Provider` and supplies the toast manager. Render `Toast` inside it to draw the portal, viewport, and Liquid Glass stack; call `useToast()` anywhere inside the provider to add, update, close, or track notifications.
+`ToastProvider` supplies the toast manager. Render `Toast` inside it to draw the portal, viewport, and Liquid Glass stack; call `useToast()` anywhere inside the provider to add, update, close, or track notifications.
 
 Render one `ToastProvider` near the app root and place `Toast` after your app content. Each provider owns a separate viewport, so pass the same `toastManager` to it when you also create toasts outside React.
 
@@ -23,7 +23,7 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 
 ## Actions
 
-`actionProps` renders an action button inside the toast. Base UI forwards `children` and native button props; close the toast yourself from `onClick` when the action is complete.
+`actionProps` renders an action button inside the toast. The action forwards `children` and native button props; close the toast yourself from `onClick` when the action is complete.
 
 <Example name="toast/action" />
 
@@ -87,10 +87,10 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 
 ## Accessibility
 
-Base UI renders the viewport as a live region, gives high-priority toasts an `alertdialog` role and the rest a `dialog` role, connects titles and descriptions with `aria-labelledby` and `aria-describedby`, and supports F6 focus entry plus swipe dismissal. Timers pause while the viewport is hovered or focused.
+The viewport is a live region, high-priority toasts use an `alertdialog` role and the rest use a `dialog` role, titles and descriptions are connected with `aria-labelledby` and `aria-describedby`, and the stack supports F6 focus entry plus swipe dismissal. Timers pause while the viewport is hovered or focused.
 
 When you replace the default close button, give your `close` control an accessible name.
 
 ## Styling
 
-The glass surface, stack geometry, and motion are internal. `style` is not supported; tune the shared `--ui-glass-*` tokens or merge layout classes into the viewport with `className`.
+The glass surface, stack geometry, and motion are shared across slots. Use `ui.root`, `ui.glass`, `ui.overlay`, and `ui.content` for per-slot styling; `ui.viewport` positions the stack, while `className` merges into each toast root. `style` is not supported; tune the shared `--ui-glass-*` tokens for material changes.

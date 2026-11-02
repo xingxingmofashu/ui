@@ -2,7 +2,7 @@ export type HomeLocale = "zh" | "en";
 
 const zh = {
   hero: {
-    badge: "React 19 · Tailwind CSS 4 · Base UI",
+    badge: "React 19 · Tailwind CSS 4 · Liquid Glass",
     titleLine1: "黑白之间，",
     titleLine2: "玻璃有光。",
     description:
@@ -157,7 +157,7 @@ const zh = {
     eyebrow: "为什么是 Liquid Glass",
     title: "轻量，但不轻薄",
     description:
-      "视觉效果来自 CSS 的多层叠加，交互行为交给 Base UI，主题则完全由 token 控制。",
+      "视觉效果来自 CSS 的多层叠加，交互与无障碍能力内置于组件，主题则完全由 token 控制。",
     items: [
       {
         title: "纯 CSS 玻璃",
@@ -175,7 +175,7 @@ const zh = {
       },
       {
         title: "默认可访问",
-        description: "Base UI 提供 WAI-ARIA 语义、键盘导航与焦点管理。",
+        description: "组件内置 WAI-ARIA 语义、键盘导航与焦点管理。",
       },
     ],
   },
@@ -197,7 +197,7 @@ const zh = {
 
 const en: typeof zh = {
   hero: {
-    badge: "React 19 · Tailwind CSS 4 · Base UI",
+    badge: "React 19 · Tailwind CSS 4 · Liquid Glass",
     titleLine1: "Between black and white,",
     titleLine2: "glass finds its light.",
     description:
@@ -355,7 +355,7 @@ const en: typeof zh = {
     eyebrow: "Why Liquid Glass",
     title: "Lightweight, not shallow",
     description:
-      "The visuals come from layered CSS, interactions come from Base UI, and theming is controlled entirely by tokens.",
+      "The visuals come from layered CSS, interaction and accessibility are built into the components, and theming is controlled entirely by tokens.",
     items: [
       {
         title: "CSS-only glass",
@@ -375,7 +375,7 @@ const en: typeof zh = {
       {
         title: "Accessible by default",
         description:
-          "Base UI supplies WAI-ARIA semantics, keyboard navigation, and focus management.",
+          "Components ship with WAI-ARIA semantics, keyboard navigation, and focus management.",
       },
     ],
   },
