@@ -31,21 +31,32 @@ the `/ui/` project path.
 
 ## Routes
 
-- `/` — Chinese entry page.
-- `/docs/zh` — Chinese home page and documentation.
-- `/docs/en` — English home page and documentation.
+- `/` — English marketing home page.
+- `/zh` — Chinese marketing home page.
+- `/docs/en` — English documentation.
+- `/docs/zh` — Chinese documentation.
 - `/api/search` — statically generated search index.
+
+`components/locale-detect.tsx` sends first-time Chinese browsers to `/zh`.
+Manual choices are stored in `localStorage` under `ui-locale` and respected by
+the marketing links and the docs language switch.
 
 ## Structure
 
 - `content/docs/zh` and `content/docs/en` — MDX content and per-locale `meta.json` files.
-- `app/(root)` — the Chinese entry page at `/`.
+- `content/docs/{en,zh}/guides` — theming, forms, accessibility, SSR, and template guides.
+- `app/(root)` — the English marketing home page at `/`.
+- `app/zh` — the Chinese marketing home page at `/zh`.
 - `app/docs/[lang]` — the single localized page tree for `/docs/zh` and `/docs/en`.
-- `app/docs/[lang]/(home)` — localized home pages.
+- `app/docs/[lang]/(home)` — localized docs home pages.
 - `app/docs/[lang]/(docs)` — the Fumadocs layout and catch-all documentation routes.
 - `lib/i18n.ts` — locales, default language, and directory-based locale parsing.
 - `lib/source.ts` — Fumadocs loader with i18n.
 - `lib/layout.shared.tsx` — navigation, links, and UI translations.
+- `lib/seo.ts` — marketing metadata, hreflang, and JSON-LD.
+- `components/marketing-shell.tsx` — shared marketing layout.
+- `components/locale-detect.tsx` — browser-language redirect.
+- `components/locale-link.tsx` — marketing links that persist the locale choice.
 - `components/docs-root-provider.tsx` — Fumadocs provider and locale-change handling.
 - `components/examples/<component>/<demo>.tsx` — one live example per file.
 - `components/examples/registry.ts` — auto-discovers demos and their raw source with `import.meta.glob`.
