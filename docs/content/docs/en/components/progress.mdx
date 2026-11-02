@@ -51,12 +51,14 @@ Use `format` for `Intl.NumberFormat` options. The formatted value is also used f
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Tailwind classes merged into the root. |
+| `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; value?: ClassValue; track?: ClassValue; indicator?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
 | `data-complete` | Present when the progress has completed. |
 | `data-indeterminate` | Present when the progress is indeterminate. |
 | `data-progressing` | Present while the progress is progressing. |
+| `data-slot` | Marks internal parts (`root`, `header`, `label`, `value`, `track`, `indicator`, `description`) for styling. |
 
 ## Accessibility
 

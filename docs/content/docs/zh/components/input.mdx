@@ -56,6 +56,7 @@ description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换输入元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到输入元素的 ref。 |
 | `className` | `string` | — | Tailwind 类名，合并到外层 `root`。 |
+| `ui` | `{ root?: ClassValue; label?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | Attribute | Description |
 | --- | --- |
@@ -66,3 +67,4 @@ description: "可访问的 React 输入框，采用 Liquid Glass 字段、标签
 | `data-dirty` | 输入框值变化后存在（位于 `Field.Root` 内）。 |
 | `data-filled` | 输入框有值时存在（位于 `Field.Root` 内）。 |
 | `data-focused` | 输入框聚焦时存在（位于 `Field.Root` 内）。 |
+| `data-slot` | 标记内部部件（`root`、`label`、`control`、`glass`、`overlay`、`leading-icon`、`input`、`trailing-icon`、`description`），用于样式选择。 |

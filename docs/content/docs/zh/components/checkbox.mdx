@@ -62,6 +62,7 @@ description: "可访问的 React 复选框，采用 Liquid Glass 方块、勾选
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | 合并到 Base UI 复选框根元素的 Tailwind 类名。 |
+| `ui` | `{ root?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | Attribute | Description |
 | --- | --- |
@@ -79,3 +80,4 @@ description: "可访问的 React 复选框，采用 Liquid Glass 方块、勾选
 | `data-focused` | 复选框聚焦时存在（位于 `Field.Root` 内）。 |
 | `data-starting-style` | 指示器开始进入动画时存在。 |
 | `data-ending-style` | 指示器正在退出动画时存在。 |
+| `data-slot` | 标记内部部件（`root`、`box`、`fill`、`glass`、`overlay`、`indicator`、`indicator-icon`、`wrapper`、`label`、`description`），用于样式选择。 |

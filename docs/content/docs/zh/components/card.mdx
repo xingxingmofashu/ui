@@ -3,7 +3,7 @@ title: "Card"
 description: "可从服务端渲染的 React 卡片，采用 Liquid Glass 表面，包含 header、body 与 footer。"
 ---
 
-`Card` 是原生布局原语，而不是 Base UI 组件：它没有交互状态，属性会直接透传到根 `div`。它可在 React Server Component 中渲染，且不支持 Base UI 的 `render` 属性。
+`Card` 是原生布局原语，而不是 Base UI 组件：它没有交互状态，属性会直接透传到根 `div`。它可在 React Server Component 中渲染，且不支持 Base UI 的 `render` 属性。可以用 `ui` 调整玻璃层或任意内部区域。
 
 ## 基础示例
 
@@ -26,7 +26,8 @@ description: "可从服务端渲染的 React 卡片，采用 Liquid Glass 表面
 | `footer` | `ReactNode` | — | 底部操作区。 |
 | `children` | `ReactNode` | — | 卡片主体内容。 |
 | `className` | `string` | — | 合并到 `root`，用于布局。 |
+| `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; layout?: ClassValue; header?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | Attribute | Description |
 | --- | --- |
-| `data-slot` | 标记内部部件（`root`、`header`、`title`、`description`、`body`、`footer`），用于样式选择。 |
+| `data-slot` | 标记内部部件（`root`、`glass`、`overlay`、`layout`、`header`、`title`、`description`、`body`、`footer`），用于样式选择。 |

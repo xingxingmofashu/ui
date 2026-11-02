@@ -62,6 +62,7 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | Tailwind 类名，合并到 Base UI switch root。 |
+| `ui` | `{ root?: ClassValue; container?: ClassValue; base?: ClassValue; thumb?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | Attribute | Description |
 | --- | --- |
@@ -77,3 +78,4 @@ Switch 会把 `name` 与 `value` 透传给 Base UI，并在提交表单时通过
 | `data-filled` | 开关开启时存在（位于 `Field.Root` 内）。 |
 | `data-focused` | 开关聚焦时存在（位于 `Field.Root` 内）。 |
 | `data-animating` | thumb 过渡动画运行时存在。 |
+| `data-slot` | 标记内部部件（`root`、`container`、`base`、`thumb`、`wrapper`、`label`、`description`），用于样式选择。 |

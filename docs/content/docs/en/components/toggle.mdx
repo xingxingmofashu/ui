@@ -52,12 +52,14 @@ Omit `label` to render a square icon button. Provide an accessible name with `ar
 | `label` | `ReactNode` | — | Visible label rendered inside the toggle. |
 | `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
 | `className` | `string` | — | Tailwind classes merged into the toggle root. |
+| `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; thumb?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 | `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the rendered button. |
 
 | Attribute | Description |
 | --- | --- |
 | `data-pressed` | Present when the toggle is pressed. |
 | `data-disabled` | Present when the toggle is disabled. |
+| `data-slot` | Marks internal parts (`root`, `glass`, `rim`, `thumb`, `content`, `icon`, `label`) for styling. |
 
 ## Accessibility
 

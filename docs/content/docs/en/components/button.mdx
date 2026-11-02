@@ -59,6 +59,7 @@ When the button should navigate instead of trigger an action, tell Base UI not t
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the rendered element. |
 | `className` | `string` | — | Tailwind classes merged into the outer `root`. |
+| `ui` | `{ root?: ClassValue; base?: ClassValue; glass?: ClassValue; overlay?: ClassValue; label?: ClassValue; leadingIcon?: ClassValue; trailingIcon?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |

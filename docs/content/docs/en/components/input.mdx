@@ -56,6 +56,7 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the input element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the input element. |
 | `className` | `string` | — | Tailwind classes merged into the outer root. |
+| `ui` | `{ root?: ClassValue; label?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
@@ -66,3 +67,4 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
 | `data-dirty` | Present after the input value changes (inside `Field.Root`). |
 | `data-filled` | Present when the input has a value (inside `Field.Root`). |
 | `data-focused` | Present when the input is focused (inside `Field.Root`). |
+| `data-slot` | Marks internal parts (`root`, `label`, `control`, `glass`, `overlay`, `leading-icon`, `input`, `trailing-icon`, `description`) for styling. |
