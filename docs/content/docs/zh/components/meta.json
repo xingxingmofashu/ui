@@ -1,6 +1,7 @@
 {
   "title": "组件",
   "pages": [
+    "index",
     "---Element---",
     "accordion",
     "button",
