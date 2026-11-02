@@ -261,13 +261,48 @@ describe("ScrollArea", () => {
       expect(root).not.toHaveClass("rounded-[1.5rem]");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error ScrollArea does not expose internal slot recipes.
-        <ScrollArea ui={{ root: "rounded-none" }}>Body</ScrollArea>
+    it("applies ui classes to internal slots", async () => {
+      mockOverflow();
+
+      const { container } = render(
+        <ScrollArea
+          orientation="both"
+          className="h-64 custom-root"
+          ui={{
+            root: "ui-root",
+            glass: "ui-glass",
+            overlay: "ui-overlay",
+            viewport: "ui-viewport",
+            content: "ui-content",
+            scrollbar: "ui-scrollbar",
+            thumb: "ui-thumb",
+            corner: "ui-corner",
+          }}
+        >
+          <p>Body</p>
+        </ScrollArea>,
       );
 
-      expect(element).toBeTruthy();
+      const root = getSlot(container, "root");
+
+      await waitFor(() => {
+        expect(root.querySelectorAll('[data-slot="scrollbar"]')).toHaveLength(
+          2,
+        );
+      });
+
+      expect(root).toHaveClass("ui-root", "h-64", "custom-root");
+      expect(getSlot(root, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(root, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(root, "viewport")).toHaveClass("ui-viewport");
+      expect(getSlot(root, "content")).toHaveClass("ui-content");
+      expect(root.querySelectorAll('[data-slot="scrollbar"]')[0]).toHaveClass(
+        "ui-scrollbar",
+      );
+      expect(root.querySelectorAll('[data-slot="thumb"]')[0]).toHaveClass(
+        "ui-thumb",
+      );
+      expect(getSlot(root, "corner")).toHaveClass("ui-corner");
     });
 
     it("does not accept inline styles", () => {

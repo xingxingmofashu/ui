@@ -73,7 +73,7 @@ describe("Toast", () => {
       const overlay = getSlot(toast, "overlay");
       const content = getSlot(toast, "content");
 
-      expect(toast).toHaveAttribute("data-slot", "toast");
+      expect(toast).toHaveAttribute("data-slot", "root");
       expect(toast).toHaveAttribute("role", "dialog");
       expect(toast).toHaveAttribute("aria-labelledby", title.id);
       expect(toast).toHaveAttribute("aria-describedby", description.id);
@@ -96,6 +96,54 @@ describe("Toast", () => {
       expect(content).toContainElement(title);
       expect(content).toContainElement(description);
       expect(toast.querySelector('[data-slot="icon"]')).toBeNull();
+    });
+
+    it("applies ui classes to internal slots", async () => {
+      const user = userEvent.setup();
+
+      renderToast(
+        {
+          title: "Saved",
+          description: "Changes stored",
+          type: "success",
+          actionProps: { children: "Undo" },
+        },
+        {
+          className: "custom-toast",
+          ui: {
+            viewport: "ui-viewport",
+            root: "ui-root",
+            glass: "ui-glass",
+            overlay: "ui-overlay",
+            content: "ui-content",
+            icon: "ui-icon",
+            text: "ui-text",
+            title: "ui-title",
+            description: "ui-description",
+            actions: "ui-actions",
+            action: "ui-action",
+            close: "ui-close",
+          },
+        },
+      );
+
+      await user.click(screen.getByRole("button", { name: "Notify" }));
+
+      const toast = await findToast();
+      const viewport = getSlot(document.body, "viewport");
+
+      expect(viewport).toHaveClass("ui-viewport");
+      expect(toast).toHaveClass("ui-root", "custom-toast");
+      expect(getSlot(toast, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(toast, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(toast, "content")).toHaveClass("ui-content");
+      expect(getSlot(toast, "icon")).toHaveClass("ui-icon");
+      expect(getSlot(toast, "text")).toHaveClass("ui-text");
+      expect(getSlot(toast, "title")).toHaveClass("ui-title");
+      expect(getSlot(toast, "description")).toHaveClass("ui-description");
+      expect(getSlot(toast, "actions")).toHaveClass("ui-actions");
+      expect(getSlot(toast, "action")).toHaveClass("ui-action");
+      expect(getSlot(toast, "close")).toHaveClass("ui-close");
     });
 
     it("renders a title-only toast without a description", async () => {

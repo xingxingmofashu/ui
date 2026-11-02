@@ -238,13 +238,28 @@ describe("Slider", () => {
       expect(getSlot(control, "thumb")).not.toHaveClass("custom-root");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Slider no longer accepts a ui prop.
-        <Slider aria-label="Internal" ui={{ track: "h-10" }} />
+    it("applies ui classes to internal slots", () => {
+      render(
+        <Slider
+          aria-label="Styled"
+          className="custom-root"
+          ui={{
+            root: "ui-root",
+            control: "ui-control",
+            track: "ui-track",
+            indicator: "ui-indicator",
+            thumb: "ui-thumb",
+          }}
+        />,
       );
 
-      expect(element).toBeTruthy();
+      const root = getRoot(getSlider());
+
+      expect(root).toHaveClass("ui-root", "custom-root");
+      expect(getSlot(root, "control")).toHaveClass("ui-control");
+      expect(getSlot(root, "track")).toHaveClass("ui-track");
+      expect(getSlot(root, "indicator")).toHaveClass("ui-indicator");
+      expect(getSlot(root, "thumb")).toHaveClass("ui-thumb");
     });
 
     it("only exposes Base UI Slider.Root props", () => {

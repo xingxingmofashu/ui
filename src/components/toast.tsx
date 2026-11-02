@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { useToast } from "../composables/use-toast";
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toast";
 
 import { CloseIcon } from "./icons/close";
@@ -37,6 +38,8 @@ interface ToastProviderProps
   children?: React.ReactNode;
 }
 
+type Toast = ComponentConfig<typeof theme>;
+
 interface ToastProps
   extends Omit<
     UIToast.Root.Props,
@@ -48,6 +51,8 @@ interface ToastProps
   close?: React.ReactNode;
   /** Tailwind classes merged into each toast. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Toast["slots"];
 }
 
 const STATUS_ICONS = {
@@ -93,61 +98,77 @@ function Toast({
   position = "bottom-right",
   close,
   className,
+  ui,
   ...props
 }: ToastProps) {
   const { toasts } = useToast();
-  const ui = theme({ position });
+  const styles = theme({ position });
 
   return (
     <UIToast.Portal>
       <UIToast.Viewport
         data-slot="viewport"
         data-position={position}
-        className={ui.viewport()}
+        className={cn(styles.viewport(), ui?.viewport)}
       >
         {toasts.map((toast) => (
           <UIToast.Root
             {...props}
             key={toast.id}
             toast={toast}
-            data-slot="toast"
-            className={cn(ui.root(), className)}
+            data-slot="root"
+            className={cn(styles.root(), ui?.root, className)}
             swipeDirection={SWIPE_DIRECTIONS[position]}
           >
             <span
               key="glass"
               aria-hidden="true"
               data-slot="glass"
-              className={ui.glass()}
+              className={cn(styles.glass(), ui?.glass)}
             >
               <span
                 aria-hidden="true"
                 data-slot="overlay"
-                className={ui.overlay()}
+                className={cn(styles.overlay(), ui?.overlay)}
               />
             </span>
 
             <UIToast.Content
               key="content"
               data-slot="content"
-              className={ui.content()}
+              className={cn(styles.content(), ui?.content)}
             >
-              <ToastStatusIcon type={toast.type} className={ui.icon()} />
+              <ToastStatusIcon
+                type={toast.type}
+                className={cn(styles.icon(), ui?.icon)}
+              />
 
-              <div data-slot="text" className={ui.text()}>
-                <UIToast.Title data-slot="title" className={ui.title()} />
+              <div data-slot="text" className={cn(styles.text(), ui?.text)}>
+                <UIToast.Title
+                  data-slot="title"
+                  className={cn(styles.title(), ui?.title)}
+                />
                 <UIToast.Description
                   data-slot="description"
-                  className={ui.description()}
+                  className={cn(styles.description(), ui?.description)}
                 />
               </div>
 
-              <div data-slot="actions" className={ui.actions()}>
-                <UIToast.Action data-slot="action" className={ui.action()} />
+              <div
+                data-slot="actions"
+                className={cn(styles.actions(), ui?.actions)}
+              >
+                <UIToast.Action
+                  data-slot="action"
+                  className={cn(styles.action(), ui?.action)}
+                />
                 {close ? (
                   close
                 ) : (
-                  <UIToast.Close data-slot="close" className={ui.close()}>
+                  <UIToast.Close
+                    data-slot="close"
+                    className={cn(styles.close(), ui?.close)}
+                  >
                     <CloseIcon className="size-4" />
                   </UIToast.Close>
                 )}

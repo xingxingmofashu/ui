@@ -4,7 +4,10 @@ import { Slider as UISlider } from "@base-ui/react/slider";
 import { cn } from "cn";
 import * as React from "react";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/slider";
+
+type Slider = ComponentConfig<typeof theme>;
 
 type SliderProps<Value extends number | readonly number[] = number> = Omit<
   UISlider.Root.Props<Value>,
@@ -12,6 +15,8 @@ type SliderProps<Value extends number | readonly number[] = number> = Omit<
 > & {
   /** Tailwind classes merged into the root. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Slider["slots"];
   /** Accessible name for the thumb at `index`. Useful for range sliders. */
   getAriaLabel?: UISlider.Thumb.Props["getAriaLabel"];
   /** Accessible value text for the thumb at `index`. */
@@ -39,6 +44,7 @@ function setAriaAttribute(
 
 function Slider<Value extends number | readonly number[] = number>({
   className,
+  ui,
   value,
   defaultValue,
   "aria-describedby": ariaDescribedBy,
@@ -50,7 +56,7 @@ function Slider<Value extends number | readonly number[] = number>({
   getAriaValueText,
   ...props
 }: SliderProps<Value>) {
-  const ui = theme();
+  const styles = theme();
   const syncThumbAria = React.useCallback(
     (input: HTMLInputElement | null) => {
       if (!input) {
@@ -76,13 +82,19 @@ function Slider<Value extends number | readonly number[] = number>({
       value={value}
       defaultValue={defaultValue}
       data-slot="root"
-      className={cn(ui.root(), className)}
+      className={cn(styles.root(), ui?.root, className)}
     >
-      <UISlider.Control data-slot="control" className={ui.control()}>
-        <UISlider.Track data-slot="track" className={ui.track()}>
+      <UISlider.Control
+        data-slot="control"
+        className={cn(styles.control(), ui?.control)}
+      >
+        <UISlider.Track
+          data-slot="track"
+          className={cn(styles.track(), ui?.track)}
+        >
           <UISlider.Indicator
             data-slot="indicator"
-            className={ui.indicator()}
+            className={cn(styles.indicator(), ui?.indicator)}
           />
         </UISlider.Track>
 
@@ -97,7 +109,7 @@ function Slider<Value extends number | readonly number[] = number>({
             getAriaValueText={getAriaValueText}
             inputRef={syncThumbAria}
             data-slot="thumb"
-            className={ui.thumb()}
+            className={cn(styles.thumb(), ui?.thumb)}
           >
             <span aria-hidden="true" data-layer="thumb-glass">
               <span data-layer="thumb-lens" />
