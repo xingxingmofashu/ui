@@ -207,13 +207,41 @@ describe("Drawer", () => {
       expect(getSlot(drawer, "glass")).not.toHaveClass("custom-popup");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Drawer does not accept a ui prop.
-        <Drawer title="One" ui={{ popup: "custom-popup" }} />
-      );
+    it("applies ui classes to internal slots", async () => {
+      renderDrawer({
+        title: "Styled",
+        description: "Slots",
+        children: "Body",
+        footer: "Actions",
+        className: "custom-popup",
+        ui: {
+          backdrop: "ui-backdrop",
+          viewport: "ui-viewport",
+          popup: "ui-popup",
+          glass: "ui-glass",
+          overlay: "ui-overlay",
+          content: "ui-content",
+          title: "ui-title",
+          description: "ui-description",
+          body: "ui-body",
+          footer: "ui-footer",
+        },
+      });
 
-      expect(element).toBeTruthy();
+      const drawer = await findDrawer();
+      const backdrop = getSlot(document.body, "backdrop");
+      const viewport = getSlot(document.body, "viewport");
+
+      expect(backdrop).toHaveClass("ui-backdrop");
+      expect(viewport).toHaveClass("ui-viewport");
+      expect(drawer).toHaveClass("ui-popup", "custom-popup");
+      expect(getSlot(drawer, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(drawer, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(drawer, "content")).toHaveClass("ui-content");
+      expect(getSlot(drawer, "title")).toHaveClass("ui-title");
+      expect(getSlot(drawer, "description")).toHaveClass("ui-description");
+      expect(getSlot(drawer, "body")).toHaveClass("ui-body");
+      expect(getSlot(drawer, "footer")).toHaveClass("ui-footer");
     });
 
     it("does not accept inline styles", () => {

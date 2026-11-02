@@ -4,7 +4,10 @@ import { Dialog as UIDialog } from "@base-ui/react/dialog";
 import { cn } from "cn";
 import * as React from "react";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/dialog";
+
+type Dialog = ComponentConfig<typeof theme>;
 
 type DialogProps = Omit<UIDialog.Root.Props, "children"> & {
   /** Dialog heading. */
@@ -17,6 +20,8 @@ type DialogProps = Omit<UIDialog.Root.Props, "children"> & {
   footer?: React.ReactNode;
   /** Tailwind classes merged into the popup. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Dialog["slots"];
 };
 
 function Dialog({
@@ -25,50 +30,70 @@ function Dialog({
   children,
   footer,
   className,
+  ui,
   ...props
 }: DialogProps) {
-  const ui = theme();
+  const styles = theme();
 
   return (
     <UIDialog.Root {...props}>
       <UIDialog.Portal>
-        <UIDialog.Backdrop data-slot="backdrop" className={ui.backdrop()} />
+        <UIDialog.Backdrop
+          data-slot="backdrop"
+          className={cn(styles.backdrop(), ui?.backdrop)}
+        />
 
-        <UIDialog.Viewport data-slot="viewport" className={ui.viewport()}>
+        <UIDialog.Viewport
+          data-slot="viewport"
+          className={cn(styles.viewport(), ui?.viewport)}
+        >
           <UIDialog.Popup
             data-slot="popup"
-            className={cn(ui.popup(), className)}
+            className={cn(styles.popup(), ui?.popup, className)}
           >
-            <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+            <span
+              aria-hidden="true"
+              data-slot="glass"
+              className={cn(styles.glass(), ui?.glass)}
+            >
               <span
                 aria-hidden="true"
                 data-slot="overlay"
-                className={ui.overlay()}
+                className={cn(styles.overlay(), ui?.overlay)}
               />
             </span>
 
-            <div data-slot="content" className={ui.content()}>
-              <UIDialog.Title data-slot="title" className={ui.title()}>
+            <div
+              data-slot="content"
+              className={cn(styles.content(), ui?.content)}
+            >
+              <UIDialog.Title
+                data-slot="title"
+                className={cn(styles.title(), ui?.title)}
+              >
                 {title}
               </UIDialog.Title>
 
               {description ? (
                 <UIDialog.Description
                   data-slot="description"
-                  className={ui.description()}
+                  className={cn(styles.description(), ui?.description)}
                 >
                   {description}
                 </UIDialog.Description>
               ) : null}
 
               {children ? (
-                <div data-slot="body" className={ui.body()}>
+                <div data-slot="body" className={cn(styles.body(), ui?.body)}>
                   {children}
                 </div>
               ) : null}
 
               {footer ? (
-                <div data-slot="footer" className={ui.footer()}>
+                <div
+                  data-slot="footer"
+                  className={cn(styles.footer(), ui?.footer)}
+                >
                   {footer}
                 </div>
               ) : null}

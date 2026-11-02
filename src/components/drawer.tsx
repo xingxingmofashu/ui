@@ -4,7 +4,10 @@ import { Drawer as UIDrawer } from "@base-ui/react/drawer";
 import { cn } from "cn";
 import * as React from "react";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/drawer";
+
+type Drawer = ComponentConfig<typeof theme>;
 
 interface DrawerProps
   extends Omit<
@@ -23,6 +26,8 @@ interface DrawerProps
   direction?: NonNullable<UIDrawer.Root.Props["swipeDirection"]>;
   /** Tailwind classes merged into the popup. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Drawer["slots"];
 }
 
 function Drawer({
@@ -32,50 +37,70 @@ function Drawer({
   footer,
   direction = "down",
   className,
+  ui,
   ...props
 }: DrawerProps) {
-  const ui = theme({ direction });
+  const styles = theme({ direction });
 
   return (
     <UIDrawer.Root {...props} swipeDirection={direction}>
       <UIDrawer.Portal>
-        <UIDrawer.Backdrop data-slot="backdrop" className={ui.backdrop()} />
+        <UIDrawer.Backdrop
+          data-slot="backdrop"
+          className={cn(styles.backdrop(), ui?.backdrop)}
+        />
 
-        <UIDrawer.Viewport data-slot="viewport" className={ui.viewport()}>
+        <UIDrawer.Viewport
+          data-slot="viewport"
+          className={cn(styles.viewport(), ui?.viewport)}
+        >
           <UIDrawer.Popup
             data-slot="popup"
-            className={cn(ui.popup(), className)}
+            className={cn(styles.popup(), ui?.popup, className)}
           >
-            <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+            <span
+              aria-hidden="true"
+              data-slot="glass"
+              className={cn(styles.glass(), ui?.glass)}
+            >
               <span
                 aria-hidden="true"
                 data-slot="overlay"
-                className={ui.overlay()}
+                className={cn(styles.overlay(), ui?.overlay)}
               />
             </span>
 
-            <UIDrawer.Content data-slot="content" className={ui.content()}>
-              <UIDrawer.Title data-slot="title" className={ui.title()}>
+            <UIDrawer.Content
+              data-slot="content"
+              className={cn(styles.content(), ui?.content)}
+            >
+              <UIDrawer.Title
+                data-slot="title"
+                className={cn(styles.title(), ui?.title)}
+              >
                 {title}
               </UIDrawer.Title>
 
               {description ? (
                 <UIDrawer.Description
                   data-slot="description"
-                  className={ui.description()}
+                  className={cn(styles.description(), ui?.description)}
                 >
                   {description}
                 </UIDrawer.Description>
               ) : null}
 
               {children ? (
-                <div data-slot="body" className={ui.body()}>
+                <div data-slot="body" className={cn(styles.body(), ui?.body)}>
                   {children}
                 </div>
               ) : null}
 
               {footer ? (
-                <div data-slot="footer" className={ui.footer()}>
+                <div
+                  data-slot="footer"
+                  className={cn(styles.footer(), ui?.footer)}
+                >
                   {footer}
                 </div>
               ) : null}

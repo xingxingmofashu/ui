@@ -4,8 +4,12 @@ import { AlertDialog as UIAlertDialog } from "@base-ui/react/alert-dialog";
 import { cn } from "cn";
 import * as React from "react";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/alert-dialog";
+
 import { Button } from "./button";
+
+type AlertDialog = ComponentConfig<typeof theme>;
 
 type AlertDialogProps = Omit<UIAlertDialog.Root.Props, "children"> & {
   /** Dialog heading. */
@@ -24,6 +28,8 @@ type AlertDialogProps = Omit<UIAlertDialog.Root.Props, "children"> & {
   onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
   /** Tailwind classes merged into the popup. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: AlertDialog["slots"];
 };
 
 function AlertDialog({
@@ -35,52 +41,69 @@ function AlertDialog({
   onCancel,
   onConfirm,
   className,
+  ui,
   ...props
 }: AlertDialogProps) {
-  const ui = theme();
+  const styles = theme();
 
   return (
     <UIAlertDialog.Root {...props}>
       <UIAlertDialog.Portal>
         <UIAlertDialog.Backdrop
           data-slot="backdrop"
-          className={ui.backdrop()}
+          className={cn(styles.backdrop(), ui?.backdrop)}
         />
 
-        <UIAlertDialog.Viewport data-slot="viewport" className={ui.viewport()}>
+        <UIAlertDialog.Viewport
+          data-slot="viewport"
+          className={cn(styles.viewport(), ui?.viewport)}
+        >
           <UIAlertDialog.Popup
             data-slot="popup"
-            className={cn(ui.popup(), className)}
+            className={cn(styles.popup(), ui?.popup, className)}
           >
-            <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+            <span
+              aria-hidden="true"
+              data-slot="glass"
+              className={cn(styles.glass(), ui?.glass)}
+            >
               <span
                 aria-hidden="true"
                 data-slot="overlay"
-                className={ui.overlay()}
+                className={cn(styles.overlay(), ui?.overlay)}
               />
             </span>
 
-            <div data-slot="content" className={ui.content()}>
-              <UIAlertDialog.Title data-slot="title" className={ui.title()}>
+            <div
+              data-slot="content"
+              className={cn(styles.content(), ui?.content)}
+            >
+              <UIAlertDialog.Title
+                data-slot="title"
+                className={cn(styles.title(), ui?.title)}
+              >
                 {title}
               </UIAlertDialog.Title>
 
               {description ? (
                 <UIAlertDialog.Description
                   data-slot="description"
-                  className={ui.description()}
+                  className={cn(styles.description(), ui?.description)}
                 >
                   {description}
                 </UIAlertDialog.Description>
               ) : null}
 
               {children ? (
-                <div data-slot="body" className={ui.body()}>
+                <div data-slot="body" className={cn(styles.body(), ui?.body)}>
                   {children}
                 </div>
               ) : null}
 
-              <div data-slot="footer" className={ui.footer()}>
+              <div
+                data-slot="footer"
+                className={cn(styles.footer(), ui?.footer)}
+              >
                 <UIAlertDialog.Close
                   onClick={onCancel}
                   render={<Button label={cancelLabel} />}

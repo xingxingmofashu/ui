@@ -4,7 +4,10 @@ import { Popover as UIPopover } from "@base-ui/react/popover";
 import { cn } from "cn";
 import * as React from "react";
 
+import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/popover";
+
+type Popover = ComponentConfig<typeof theme>;
 
 type PositionerProps = React.ComponentProps<typeof UIPopover.Positioner>;
 
@@ -33,6 +36,8 @@ type PopoverProps = Omit<UIPopover.Root.Props, "children"> & {
   collisionPadding?: PositionerProps["collisionPadding"];
   /** Tailwind classes merged into the popup. */
   className?: string;
+  /** Tailwind classes for internal slots, keyed by `data-slot`. */
+  ui?: Popover["slots"];
 };
 
 function Popover({
@@ -48,9 +53,10 @@ function Popover({
   alignOffset,
   collisionPadding,
   className,
+  ui,
   ...props
 }: PopoverProps) {
-  const ui = theme();
+  const styles = theme();
 
   return (
     <UIPopover.Root {...props}>
@@ -64,46 +70,62 @@ function Popover({
           sideOffset={sideOffset}
           alignOffset={alignOffset}
           collisionPadding={collisionPadding}
-          className={ui.positioner()}
+          className={cn(styles.positioner(), ui?.positioner)}
         >
           <UIPopover.Popup
             data-slot="popup"
-            className={cn(ui.popup(), className)}
+            className={cn(styles.popup(), ui?.popup, className)}
           >
-            <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+            <span
+              aria-hidden="true"
+              data-slot="glass"
+              className={cn(styles.glass(), ui?.glass)}
+            >
               <span
                 aria-hidden="true"
                 data-slot="overlay"
-                className={ui.overlay()}
+                className={cn(styles.overlay(), ui?.overlay)}
               />
             </span>
 
             {arrow ? (
-              <UIPopover.Arrow data-slot="arrow" className={ui.arrow()} />
+              <UIPopover.Arrow
+                data-slot="arrow"
+                className={cn(styles.arrow(), ui?.arrow)}
+              />
             ) : null}
 
-            <div data-slot="content" className={ui.content()}>
-              <UIPopover.Title data-slot="title" className={ui.title()}>
+            <div
+              data-slot="content"
+              className={cn(styles.content(), ui?.content)}
+            >
+              <UIPopover.Title
+                data-slot="title"
+                className={cn(styles.title(), ui?.title)}
+              >
                 {title}
               </UIPopover.Title>
 
               {description ? (
                 <UIPopover.Description
                   data-slot="description"
-                  className={ui.description()}
+                  className={cn(styles.description(), ui?.description)}
                 >
                   {description}
                 </UIPopover.Description>
               ) : null}
 
               {children ? (
-                <div data-slot="body" className={ui.body()}>
+                <div data-slot="body" className={cn(styles.body(), ui?.body)}>
                   {children}
                 </div>
               ) : null}
 
               {footer ? (
-                <div data-slot="footer" className={ui.footer()}>
+                <div
+                  data-slot="footer"
+                  className={cn(styles.footer(), ui?.footer)}
+                >
                   {footer}
                 </div>
               ) : null}

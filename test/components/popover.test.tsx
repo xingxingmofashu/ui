@@ -253,13 +253,40 @@ describe("Popover", () => {
       expect(getSlot(popover, "glass")).not.toHaveClass("custom-popup");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error Popover does not accept a ui prop.
-        <Popover title="One" trigger={<button type="button">Open</button>} ui={{ popup: "custom-popup" }} />
-      );
+    it("applies ui classes to internal slots", async () => {
+      renderPopover({
+        title: "Styled",
+        description: "Slots",
+        children: "Body",
+        footer: "Actions",
+        className: "custom-popup",
+        ui: {
+          positioner: "ui-positioner",
+          popup: "ui-popup",
+          glass: "ui-glass",
+          overlay: "ui-overlay",
+          arrow: "ui-arrow",
+          content: "ui-content",
+          title: "ui-title",
+          description: "ui-description",
+          body: "ui-body",
+          footer: "ui-footer",
+        },
+      });
 
-      expect(element).toBeTruthy();
+      const popover = await findPopover();
+      const positioner = getSlot(document.body, "positioner");
+
+      expect(positioner).toHaveClass("ui-positioner");
+      expect(popover).toHaveClass("ui-popup", "custom-popup");
+      expect(getSlot(popover, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(popover, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(popover, "arrow")).toHaveClass("ui-arrow");
+      expect(getSlot(popover, "content")).toHaveClass("ui-content");
+      expect(getSlot(popover, "title")).toHaveClass("ui-title");
+      expect(getSlot(popover, "description")).toHaveClass("ui-description");
+      expect(getSlot(popover, "body")).toHaveClass("ui-body");
+      expect(getSlot(popover, "footer")).toHaveClass("ui-footer");
     });
 
     it("does not accept inline styles", () => {

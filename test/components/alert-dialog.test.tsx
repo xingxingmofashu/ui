@@ -191,13 +191,40 @@ describe("AlertDialog", () => {
       expect(getSlot(dialog, "glass")).not.toHaveClass("custom-popup");
     });
 
-    it("does not accept a ui prop", () => {
-      const element = (
-        // @ts-expect-error AlertDialog does not accept a ui prop.
-        <AlertDialog title="One" ui={{ popup: "custom-popup" }} />
-      );
+    it("applies ui classes to internal slots", async () => {
+      renderDialog({
+        title: "Styled",
+        description: "Slots",
+        children: "Body",
+        className: "custom-popup",
+        ui: {
+          backdrop: "ui-backdrop",
+          viewport: "ui-viewport",
+          popup: "ui-popup",
+          glass: "ui-glass",
+          overlay: "ui-overlay",
+          content: "ui-content",
+          title: "ui-title",
+          description: "ui-description",
+          body: "ui-body",
+          footer: "ui-footer",
+        },
+      });
 
-      expect(element).toBeTruthy();
+      const dialog = await findDialog();
+      const backdrop = getSlot(document.body, "backdrop");
+      const viewport = getSlot(document.body, "viewport");
+
+      expect(backdrop).toHaveClass("ui-backdrop");
+      expect(viewport).toHaveClass("ui-viewport");
+      expect(dialog).toHaveClass("ui-popup", "custom-popup");
+      expect(getSlot(dialog, "glass")).toHaveClass("ui-glass");
+      expect(getSlot(dialog, "overlay")).toHaveClass("ui-overlay");
+      expect(getSlot(dialog, "content")).toHaveClass("ui-content");
+      expect(getSlot(dialog, "title")).toHaveClass("ui-title");
+      expect(getSlot(dialog, "description")).toHaveClass("ui-description");
+      expect(getSlot(dialog, "body")).toHaveClass("ui-body");
+      expect(getSlot(dialog, "footer")).toHaveClass("ui-footer");
     });
 
     it("does not accept inline styles", () => {
