@@ -38,6 +38,12 @@ export function DocsRootProvider({
               : "";
           const nextPath = `${docsPrefix}/${nextLocale}${rest}`;
 
+          try {
+            window.localStorage.setItem("ui-locale", nextLocale);
+          } catch {
+            // Storage can be unavailable in private or restricted contexts.
+          }
+
           // Reload the document instead of remounting the localized layout.
           // next-themes renders its theme script again when the [lang] root
           // layout is re-rendered on a client-side locale change, which React

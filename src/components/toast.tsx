@@ -114,7 +114,12 @@ function Toast({
             className={cn(ui.root(), className)}
             swipeDirection={SWIPE_DIRECTIONS[position]}
           >
-            <span aria-hidden="true" data-slot="glass" className={ui.glass()}>
+            <span
+              key="glass"
+              aria-hidden="true"
+              data-slot="glass"
+              className={ui.glass()}
+            >
               <span
                 aria-hidden="true"
                 data-slot="overlay"
@@ -122,7 +127,11 @@ function Toast({
               />
             </span>
 
-            <UIToast.Content data-slot="content" className={ui.content()}>
+            <UIToast.Content
+              key="content"
+              data-slot="content"
+              className={ui.content()}
+            >
               <ToastStatusIcon type={toast.type} className={ui.icon()} />
 
               <div data-slot="text" className={ui.text()}>

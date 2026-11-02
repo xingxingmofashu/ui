@@ -36,19 +36,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
+  const marketingAlternates = {
+    languages: {
+      "zh-CN": absoluteUrl("/zh"),
+      en: absoluteUrl("/"),
+      "x-default": absoluteUrl("/"),
+    },
+  };
+
   return [
     {
       url: absoluteUrl("/"),
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 1,
-      alternates: {
-        languages: {
-          "zh-CN": absoluteUrl("/"),
-          en: absoluteUrl("/docs/en"),
-          "x-default": absoluteUrl("/"),
-        },
-      },
+      alternates: marketingAlternates,
+    },
+    {
+      url: absoluteUrl("/zh"),
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 1,
+      alternates: marketingAlternates,
     },
     ...pages,
   ];

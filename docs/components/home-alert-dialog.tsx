@@ -4,28 +4,27 @@ import { useState } from "react";
 
 import { AlertDialog, Button } from "@xingxingmofashu/ui";
 
-export function HomeAlertDialog({ isZh }: { isZh: boolean }) {
+import { homeCopy, type HomeLocale } from "./home/copy";
+
+export function HomeAlertDialog({ lang }: { lang: HomeLocale }) {
+  const copy = homeCopy[lang].components.items.alertDialog;
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button
         size="sm"
-        label={isZh ? "删除项目" : "Delete project"}
+        label={copy.trigger}
         onClick={() => setOpen(true)}
       />
 
       <AlertDialog
         open={open}
         onOpenChange={setOpen}
-        title={isZh ? "删除项目？" : "Delete project?"}
-        description={
-          isZh
-            ? "此操作无法撤销，所有文件都会被永久删除。"
-            : "This action cannot be undone. All files will be permanently removed."
-        }
-        cancelLabel={isZh ? "取消" : "Cancel"}
-        confirmLabel={isZh ? "删除" : "Delete"}
+        title={copy.title}
+        description={copy.descriptionText}
+        cancelLabel={copy.cancel}
+        confirmLabel={copy.confirm}
       />
     </>
   );
