@@ -29,6 +29,18 @@ Toggle, and Toggle Group.
 > ESM-capable bundler. `Card` is server-safe; the interactive components are
 > client components.
 
+## Preview
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/playground-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset=".github/assets/playground-light.png">
+  <img alt="The Liquid Glass playground showing live component previews in light mode." width="1440" src=".github/assets/playground-light.png">
+</picture>
+
+Every component is rendered live in the local playground. Run
+`pnpm playground:dev`, open <http://localhost:3002>, and switch between light and
+dark to compare the same previews in both themes.
+
 ## Documentation
 
 - [English](https://xingxingmofashu.github.io/ui/docs/en/get-started/introduction)
