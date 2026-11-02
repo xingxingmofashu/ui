@@ -1,0 +1,135 @@
+---
+title: "可访问性"
+description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实时区域支持。"
+---
+
+可访问性来自行为层，而不是玻璃样式。交互组件封装了
+[Base UI](https://base-ui.com) 原语，由它提供角色、状态、键盘交互、焦点管理与
+原生表单集成。视觉层只改变表面。
+
+本指南说明组件库已经保证的行为，以及应用仍然需要自行决定的部分。
+
+## 为每个控件命名
+
+| 组件 | 可访问名称来源 |
+| --- | --- |
+| `Input` | `label`，或 `aria-label` / `aria-labelledby` |
+| `Checkbox` | `label`，或 `aria-label` / `aria-labelledby` |
+| `Switch` | `label`，或 `aria-label` / `aria-labelledby` |
+| `Slider` | `aria-label` / `aria-labelledby`，或每个 thumb 的 `getAriaLabel` |
+| `ScrollArea` | viewport 上的 `aria-label` / `aria-labelledby` |
+| `Dialog`、`AlertDialog`、`Drawer` | 必填的 `title` 属性 |
+| `Popover` | 必填的 `title` 属性 |
+
+优先使用可见标签。标签渲染在组件外部也可以，只要正确关联：
+
+```tsx
+<span id="volume-label" className="text-sm text-ui-ink">
+  音量
+</span>
+<Slider aria-labelledby="volume-label" defaultValue={40} />
+```
+
+区间滑块请传入 `getAriaLabel`，让每个 thumb 都有不同的名称：
+
+```tsx
+<Slider
+  aria-label="价格区间"
+  defaultValue={[20, 80]}
+  getAriaLabel={(index) => (index === 0 ? "最低价格" : "最高价格")}
+/>
+```
+
+<Example name="switch/basic" showCode={false} />
+
+`Switch` 与 `Checkbox` 使用可见标签作为可访问名称，并通过
+`aria-describedby` 关联描述。`Button`、`Input` 等组件内部的装饰性图标都标记了
+`aria-hidden="true"`。
+
+## 键盘行为
+
+组件遵循 Base UI 提供的原生模式：
+
+| 交互 | 预期行为 |
+| --- | --- |
+| `Tab` / `Shift+Tab` | 在控件之间移动焦点 |
+| `Enter` / `Space` | 激活按钮、Toggle、Checkbox 与 Switch |
+| 方向键 | 移动 Slider thumb；在 Accordion 触发器与 Toggle Group 中导航 |
+| `Escape` | 关闭 Dialog、Alert Dialog、Drawer 与 Popover |
+| `Home` / `End` | 将 Slider 移到最小值或最大值 |
+| `Page Up` / `Page Down` | 按 `largeStep` 移动 Slider |
+
+Accordion 触发器使用真实按钮并暴露 `aria-expanded`。Toggle Group 支持单选与
+多选，并具备预期的方向键 roving focus。Scroll Area 保留原生滚轮、触控板与键盘
+滚动；自定义滚动条是装饰性的，对辅助技术隐藏。
+
+## 浮层与焦点
+
+`Dialog`、`AlertDialog` 与 `Drawer` 是模态的：
+
+- 打开时焦点移动到弹窗内。
+- 打开期间 `Tab` 被限制在弹窗内。
+- 除非禁用，`Escape` 与点击背景会关闭弹窗。
+- 关闭后焦点返回触发器。
+- 打开期间锁定页面滚动。
+
+`Popover` 有意保持非模态：焦点不会被限制，页面仍可滚动，点击外部或按
+`Escape` 会关闭。它适合紧凑设置、筛选器与上下文操作，不适合需要用户全神贯注的
+多步流程。
+
+`AlertDialog` 用于破坏性或不可逆决定。当用户必须在明确操作之间选择时，应使用
+它而不是普通 `Dialog`。
+
+<Example name="dialog/basic" showCode={false} />
+
+## Toast 与实时区域
+
+`ToastProvider` 渲染带实时区域语义的 Base UI toast viewport。在应用根部保留
+一个 provider，并把 `<Toast />` 放在应用内容之后，确保 viewport 可用。
+
+- 用 `type` 添加状态图标：`info`、`success`、`warning`、`error` 或
+  `loading`。
+- 保存失败等需要立即播报的消息使用 `priority: "high"`。
+- 消息保持简短、可操作。不要把焦点移到 toast 上。
+- 用户可以撤销或重试时，通过 `actionProps` 提供操作。
+- `timeout` 要足够阅读；需要用户操作时设为 `timeout: 0`。
+
+`toast.promise` 会先显示 loading，再在原 toast 上更新成功或失败状态，避免重复
+播报。
+
+## 动效与对比度
+
+所有装饰性过渡都包含 `motion-reduce` 变体。用户设置
+`prefers-reduced-motion: reduce` 时，布局与状态变化仍然保留，但动效会被移除或
+缩短。
+
+玻璃表面是半透明的。请在实际背景上检查文字对比度，尤其是图片、渐变与信息密集的
+仪表盘。默认黑白配色面向安静的界面；自定义 token 时，应在明暗两套主题中维持相同
+的对比关系。
+
+## 测试清单
+
+- 不用鼠标，只用 Tab 走完页面，确认每个控件都能到达。
+- 关闭 Dialog 或 Drawer 后，确认焦点返回触发器。
+- 用屏幕阅读器阅读表单：名称、描述与错误应只播报一次，并且上下文正确。
+- 确认 `Switch` 与 `Checkbox` 会播报选中状态。
+- 确认区间滑块会播报两个 thumb 的值与名称。
+- 触发 Toast，确认消息被播报且不会抢走焦点。
+- 开启减少动效与高对比度主题分别测试页面。
+- 用真实内容测试；占位文本经常会掩盖标签问题。
+
+可访问性是共同责任。组件提供交互基础，但页面标题、错误信息、页面结构与内容仍然
+属于你的应用。
+
+## 相关组件
+
+- [Button](/docs/zh/components/button)
+- [Checkbox](/docs/zh/components/checkbox)
+- [Input](/docs/zh/components/input)
+- [Slider](/docs/zh/components/slider)
+- [Switch](/docs/zh/components/switch)
+- [Dialog](/docs/zh/components/dialog)
+- [Alert Dialog](/docs/zh/components/alert-dialog)
+- [Drawer](/docs/zh/components/drawer)
+- [Popover](/docs/zh/components/popover)
+- [Toast](/docs/zh/components/toast)

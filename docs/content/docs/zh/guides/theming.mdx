@@ -1,0 +1,161 @@
+---
+title: "主题定制"
+description: "定制 Liquid Glass 材质、明暗 token 与 Tailwind 别名。"
+---
+
+组件包提供一个样式表，其中包含设计 token、共享玻璃材质与 Tailwind 源码扫描配置。
+在全局 CSS 中导入一次，其余布局围绕它来组织。
+
+```css [app.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+```
+
+## 明暗主题
+
+Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
+`data-theme="dark"` 属性切换。即使没有主题选择器，默认也是浅色。
+
+```html [index.html]
+<html class="dark">
+```
+
+```html [index.html]
+<html data-theme="dark">
+```
+
+两种机制可以互换。在深色文档中，嵌套的 `.light` 或
+`[data-theme="light"]` 子树可以切回浅色 token，适合局部预览与独立面板。
+
+```html
+<html class="dark">
+  <body>
+    <main class="dark">...</main>
+    <aside data-theme="light">...</aside>
+  </body>
+</html>
+```
+
+尽量在首次绘制前设置主题。在渲染期间读取 `localStorage` 会导致 hydration
+不匹配；应在内联脚本中设置类名，或使用 `next-themes` 之类的主题库，并在
+`<html>` 上添加 `suppressHydrationWarning`。
+
+## Token 分层
+
+材质分为两层：
+
+- **运行时 token** 随主题变化：`--ui-ink`、`--ui-glass-surface`、
+  `--ui-glass-border`、`--ui-glass-highlight`、`--ui-glass-rim`、
+  `--ui-glass-focus`、`--ui-dialog-surface`、`--ui-shadow-glass`，以及
+  checkbox 与 lens 相关变量。
+- **共享几何参数** 在明暗主题中保持一致：`--ui-glass-blur`、
+  `--ui-glass-saturate`、`--ui-glass-inner-inset`、`--ui-glass-rim-inset`
+  等 `--ui-glass-*` 参数。
+
+组件包在 `@layer theme` 中定义这些值。因此应用里未分层的 `:root` 无需
+`!important` 就能覆盖：
+
+```css [app.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+
+:root {
+  --ui-glass-surface: rgb(255 255 255 / 0.55);
+  --ui-glass-border: rgb(15 23 42 / 0.14);
+  --ui-glass-blur: 12px;
+  --ui-glass-saturate: 180%;
+}
+
+.dark,
+[data-theme="dark"] {
+  --ui-glass-surface: rgb(255 255 255 / 0.08);
+  --ui-glass-border: rgb(255 255 255 / 0.18);
+}
+```
+
+注意对比度：玻璃表面是半透明的，最终效果取决于背后的内容。请在实际应用中最
+复杂的背景上测试 token 值，而不只是纯色页面。
+
+## Tailwind 别名
+
+样式表为常用 token 提供了 Tailwind 颜色别名：
+
+| 工具类 | Token |
+| --- | --- |
+| `text-ui-ink`、`bg-ui-ink` | `--ui-ink` |
+| `bg-ui-glass-surface` | `--ui-glass-surface` |
+| `border-ui-glass-border` | `--ui-glass-border` |
+| `outline-ui-glass-focus` | `--ui-glass-focus` |
+| `bg-ui-dialog-surface` | `--ui-dialog-surface` |
+
+为自己的布局使用这些别名，可以让自定义界面跟随组件主题。需要一次性数值时，
+仍然可以使用任意值：
+
+```tsx
+<div className="rounded-3xl border border-ui-glass-border bg-ui-glass-surface p-6 text-ui-ink">
+  与组件材质保持一致。
+</div>
+```
+
+## 自定义玻璃表面
+
+共享材质也以 CSS 类导出。需要组件库未提供的玻璃面板时，可以组合这些类：
+
+```tsx
+<div className="ui-glass ui-glass-inner ui-glass-highlight relative overflow-hidden rounded-3xl p-6">
+  <span aria-hidden="true" className="ui-glass-rim" />
+  <p className="relative z-10 text-sm text-ui-ink">自定义玻璃面板</p>
+</div>
+```
+
+- `.ui-glass` 绘制半透明填充、双层边框、镜面阴影与背景模糊。
+- `.ui-glass-inner` 通过 `::before` 添加柔和内轮廓。
+- `.ui-glass-highlight` 通过 `::after` 添加对角高光。
+- `.ui-glass-rim` 是装饰性子元素，请加上 `aria-hidden="true"`。
+- `.ui-glass-chip` 是用于小型读数等紧凑表面的样式。
+
+大多数组件已经组合了这些类。只有组件库没有提供对应表面时，才需要直接使用它们。
+
+## 组件级样式
+
+每个交互组件都接受 `className`，并合并到根元素。用它处理布局，而不是替换材质：
+
+```tsx
+<Button className="w-full" label="继续" />
+```
+
+大多数组件有意不支持 `style`，因为玻璃主题拥有表面。用 `className` 处理间距、
+宽度与定位，用共享 token 调整颜色、模糊与阴影。
+
+需要完全控制时，可以导入编译后的主题配方：
+
+```tsx
+import buttonTheme from "@xingxingmofashu/ui/theme/button";
+
+const styles = buttonTheme({ size: "lg" });
+
+export function CustomButton() {
+  return <button className={styles.root()}>自定义操作</button>;
+}
+```
+
+配方返回各插槽的类名，自定义组件可以复用相同的几何与材质，而不必复制
+Tailwind 类。
+
+## 动效与浏览器支持
+
+过渡与按压效果都包含 `motion-reduce` 变体。设置
+`prefers-reduced-motion: reduce` 的用户仍会看到布局与状态变化，但装饰性动效会
+被移除或缩短。
+
+视觉材质依赖现代 CSS：`backdrop-filter`、`color-mix`、容器单位、独立的
+`translate` / `scale` 属性，以及 `:has`。对于不支持 `backdrop-filter` 的
+浏览器，请提供合理的背景回退，或将支持范围限制在现代常青浏览器。
+
+## 检查清单
+
+- 只导入一次组件样式表，并放在自定义覆盖之前。
+- 在首次绘制前设置 `.dark` 或 `data-theme="dark"`。
+- 在未分层的 `:root` 与 `.dark` 块中覆盖 token。
+- 在应用中最复杂的背景上测试玻璃对比度。
+- 布局优先用 `className`，材质变化优先用 token。

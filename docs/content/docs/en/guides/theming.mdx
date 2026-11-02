@@ -1,0 +1,173 @@
+---
+title: "Theming"
+description: "Customize the Liquid Glass material, light and dark tokens, and Tailwind aliases."
+---
+
+The package ships one stylesheet that contains the design tokens, the shared
+glass material, and the Tailwind source scan. Import it once in your global CSS
+and style the rest of the application around it.
+
+```css [app.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+```
+
+## Light and dark
+
+Tokens switch through `.light` / `.dark` classes or
+`data-theme="light"` / `data-theme="dark"` attributes. Light is the default even
+when no selector is present.
+
+```html [index.html]
+<html class="dark">
+```
+
+```html [index.html]
+<html data-theme="dark">
+```
+
+The two mechanisms are interchangeable. A nested `.light` or
+`[data-theme="light"]` subtree can switch back to light tokens inside a dark
+document, which is useful for previews and isolated panels.
+
+```html
+<html class="dark">
+  <body>
+    <main class="dark">...</main>
+    <aside data-theme="light">...</aside>
+  </body>
+</html>
+```
+
+Set the theme before the first paint when possible. Reading `localStorage`
+during render causes a hydration mismatch; set the class in an inline script or
+use a theme library such as `next-themes` with `suppressHydrationWarning` on the
+`<html>` element.
+
+## Token layers
+
+The material is split into two layers:
+
+- **Runtime tokens** change with the theme: `--ui-ink`, `--ui-glass-surface`,
+  `--ui-glass-border`, `--ui-glass-highlight`, `--ui-glass-rim`,
+  `--ui-glass-focus`, `--ui-dialog-surface`, `--ui-shadow-glass`, and the
+  checkbox and lens variables.
+- **Shared geometry** stays stable across themes: `--ui-glass-blur`,
+  `--ui-glass-saturate`, `--ui-glass-inner-inset`, `--ui-glass-rim-inset`, and
+  the other `--ui-glass-*` parameters.
+
+The package defines them inside `@layer theme`. An unlayered `:root` block in
+your application therefore wins without an `!important`:
+
+```css [app.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+
+:root {
+  --ui-glass-surface: rgb(255 255 255 / 0.55);
+  --ui-glass-border: rgb(15 23 42 / 0.14);
+  --ui-glass-blur: 12px;
+  --ui-glass-saturate: 180%;
+}
+
+.dark,
+[data-theme="dark"] {
+  --ui-glass-surface: rgb(255 255 255 / 0.08);
+  --ui-glass-border: rgb(255 255 255 / 0.18);
+}
+```
+
+Keep contrast in mind: the glass surface is translucent, so the result depends
+on what sits behind it. Test the token values over the busiest background in
+your application, not only over a plain page.
+
+## Tailwind aliases
+
+The stylesheet exposes Tailwind color aliases for the most common tokens:
+
+| Utility family | Token |
+| --- | --- |
+| `text-ui-ink`, `bg-ui-ink` | `--ui-ink` |
+| `bg-ui-glass-surface` | `--ui-glass-surface` |
+| `border-ui-glass-border` | `--ui-glass-border` |
+| `outline-ui-glass-focus` | `--ui-glass-focus` |
+| `bg-ui-dialog-surface` | `--ui-dialog-surface` |
+
+Use these aliases for your own layout so custom chrome follows the same theme as
+the components. Arbitrary values still work when you need a one-off:
+
+```tsx
+<div className="rounded-3xl border border-ui-glass-border bg-ui-glass-surface p-6 text-ui-ink">
+  Matches the component material.
+</div>
+```
+
+## Custom glass surfaces
+
+The shared material is also exported as CSS classes. Combine them when you need
+a glass panel that is not one of the shipped components:
+
+```tsx
+<div className="ui-glass ui-glass-inner ui-glass-highlight relative overflow-hidden rounded-3xl p-6">
+  <span aria-hidden="true" className="ui-glass-rim" />
+  <p className="relative z-10 text-sm text-ui-ink">Custom glass panel</p>
+</div>
+```
+
+- `.ui-glass` draws the translucent fill, double border, specular shadow, and
+  backdrop blur.
+- `.ui-glass-inner` adds the soft inner outline through `::before`.
+- `.ui-glass-highlight` adds the diagonal glare through `::after`.
+- `.ui-glass-rim` is a decorative child element; render it with
+  `aria-hidden="true"`.
+- `.ui-glass-chip` is a compact surface for small readouts.
+
+Most components already compose these classes. Use them directly only for
+surfaces the package does not provide.
+
+## Component-level styling
+
+Every interactive component accepts `className` and merges it into its root.
+Use it for layout, not for replacing the material:
+
+```tsx
+<Button className="w-full" label="Continue" />
+```
+
+`style` is intentionally unsupported on most components because the glass theme
+owns the surface. Use `className` for spacing, width, and positioning, and tune
+the shared tokens for color, blur, and shadow changes.
+
+For full control, import a compiled theme recipe:
+
+```tsx
+import buttonTheme from "@xingxingmofashu/ui/theme/button";
+
+const styles = buttonTheme({ size: "lg" });
+
+export function CustomButton() {
+  return <button className={styles.root()}>Custom action</button>;
+}
+```
+
+The recipe returns slot classes, so a custom component can reuse the same
+geometry and material without copying Tailwind classes.
+
+## Motion and browser support
+
+Transitions and pressed effects include `motion-reduce` variants. Users who set
+`prefers-reduced-motion: reduce` keep the layout and state changes but lose the
+decorative motion.
+
+The visual material relies on modern CSS: `backdrop-filter`, `color-mix`,
+container units, individual `translate` / `scale` properties, and `:has`.
+Provide a sensible fallback background for browsers that do not support
+`backdrop-filter`, or limit support to current evergreen browsers.
+
+## Checklist
+
+- Import the package stylesheet exactly once, before your own overrides.
+- Set `.dark` or `data-theme="dark"` before first paint.
+- Override tokens in an unlayered `:root` and `.dark` block.
+- Test glass contrast over the busiest background in the app.
+- Prefer `className` for layout and tokens for material changes.

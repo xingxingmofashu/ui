@@ -1,0 +1,176 @@
+---
+title: "服务端渲染"
+description: "在 Next.js 等 React 19 框架中使用服务端安全的 Card、创建客户端岛屿，并避免 hydration 问题。"
+---
+
+组件库面向 React 19，可在服务端优先的框架中工作。大多数组件是客户端组件，因为
+它们要管理交互、焦点或 portal。`Card` 是例外：它是无状态的普通布局原语，可以完全
+在服务端渲染。
+
+## 各部分在哪里运行
+
+| 组件 | 边界 |
+| --- | --- |
+| `Card` | 服务端安全 |
+| `Button`、`Input`、`Checkbox`、`Switch`、`Slider` | 客户端 |
+| `Accordion`、`Toggle`、`ToggleGroup` | 客户端 |
+| `Dialog`、`AlertDialog`、`Drawer`、`Popover`、`Toast` | 客户端 |
+| `ScrollArea` | 客户端 |
+
+服务端组件可以直接导入并渲染客户端组件。客户端组件在服务端渲染时会序列化为
+HTML，并在浏览器中 hydration。不能跨越边界的是在服务端组件中定义函数，再作为
+prop 传给客户端组件。
+
+## 服务端渲染 Card
+
+只希望加载服务端安全模块时，使用深层导入：
+
+```tsx [app/page.tsx]
+import { Card } from "@xingxingmofashu/ui/components/card";
+
+export default function Page() {
+  return (
+    <Card
+      title="服务端渲染"
+      description="这张卡片是初始 HTML 的一部分。"
+    >
+      <p className="text-sm text-ui-ink/70">
+        卡片本身不需要客户端 JavaScript。
+      </p>
+    </Card>
+  );
+}
+```
+
+从根入口导入也可以，但深层导入能更明确地表达边界。
+
+## 客户端岛屿
+
+把状态、副作用与事件处理移入客户端组件：
+
+```tsx [app/settings-dialog.tsx]
+"use client";
+
+import { Settings } from "lucide-react";
+import { useState } from "react";
+
+import { Button, Dialog, Switch } from "@xingxingmofashu/ui";
+
+export function SettingsDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        label="打开设置"
+        leadingIcon={<Settings />}
+        onClick={() => setOpen(true)}
+      />
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        title="工作区设置"
+        description="选择工作区的行为。"
+        footer={<Button label="完成" onClick={() => setOpen(false)} />}
+      >
+        <Switch label="邮件通知" defaultChecked />
+      </Dialog>
+    </>
+  );
+}
+```
+
+然后在服务端组件中渲染这个岛屿：
+
+```tsx [app/page.tsx]
+import { SettingsDialog } from "./settings-dialog";
+
+export default function Page() {
+  return (
+    <main>
+      <h1>工作区</h1>
+      <SettingsDialog />
+    </main>
+  );
+}
+```
+
+在最小的交互边界切分。只有一个按钮的页面不需要变成客户端组件；设置表单通常需要。
+
+## Hydration 与主题
+
+首次 HTML 与首次客户端渲染必须一致。两条规则可以避免大多数 hydration 警告：
+
+1. 渲染期间不要读取 `window`、`document` 或 `localStorage`。在 effect 中读取，
+   或在 hydration 前设置好值。
+2. 在首次绘制前设置主题类或 `data-theme` 属性。
+
+常见做法是在文档 head 中放一个阻塞脚本，把已存储的主题应用到 `<html>`，并在
+`<html>` 上添加 `suppressHydrationWarning`，因为服务端与客户端的类名可能不同：
+
+```tsx [app/layout.tsx]
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+`next-themes` 之类的主题库可以代为管理脚本与存储。任何框架都适用同一思路：在
+React hydration 之前解析主题，而不是在组件函数体中读取。
+
+Portal 实际上也只在客户端工作。`Dialog`、`Drawer` 与 `Popover` 打开时会把弹窗
+渲染到 portal，因此触发器与打开状态必须在客户端可用。
+
+## 静态导出
+
+文档站就是静态导出，同一方式适用于任何内容站：
+
+```js [next.config.mjs]
+const nextConfig = {
+  output: "export",
+  images: { unoptimized: true },
+};
+
+export default nextConfig;
+```
+
+使用 `output: "export"` 时，`next build` 写出 HTML 文件，而不是启动服务器。交互
+组件仍会正常 hydration，`Card` 已经存在于导出的 HTML 中。如果部署在子路径下，请
+配置 `basePath`，并确保资源 URL 遵守它。
+
+## Vite 与其他纯客户端应用
+
+Vite starter 在无服务端边界的情况下使用同一个组件包：
+
+```bash
+pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
+cd my-app
+pnpm install
+pnpm dev
+```
+
+在 `src/index.css` 中导入一次组件样式，然后在 `src/App.tsx` 中渲染组件。完整步骤
+见[模板](/docs/zh/guides/templates)。
+
+## 常见问题
+
+- 在组件中导入 `@xingxingmofashu/ui` 的 CSS，而不是在全局样式表中导入。
+- 从服务端组件向客户端组件传递 `onClick`。
+- 在渲染期间读取 `localStorage` 或 `matchMedia`。
+- hydration 之后才设置主题，导致闪烁与不匹配。
+- 假设关闭状态的 Dialog portal 会出现在初始 HTML 中。
+- 忘记给使用状态的包装组件添加 `"use client"`。
+
+## 验证结果
+
+- 运行生产构建，确认生成的 HTML 中包含 `Card` 内容。
+- 打开控制台，检查是否有 hydration 警告。
+- 禁用 JavaScript，确认服务端渲染内容仍然可读。
+- 重新启用 JavaScript，测试焦点、浮层与表单提交。

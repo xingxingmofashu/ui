@@ -1,0 +1,175 @@
+---
+title: "Forms"
+description: "Submit values, validate fields, and compose accessible React forms with the Liquid Glass controls."
+---
+
+The form controls are designed to work with native `<form>` behavior first.
+`Input` renders a native `<input>`, while `Checkbox`, `Switch`, and `Slider`
+render an internal native input for submission. That means `FormData`, server
+actions, and progressive-enhancement patterns keep working without a custom
+state container.
+
+<Example name="guides/form" />
+
+## Submitted values
+
+| Component | Submitted as | Empty state |
+| --- | --- | --- |
+| `Input` | Native input named by `name` | Empty string |
+| `Checkbox` | Hidden checkbox with `name` and `value` | `null` when unchecked |
+| `Switch` | Hidden checkbox with `name` and `value` | `null` when off |
+| `Slider` | Hidden `input[type="range"]` named by `name` | Defaults to the current value |
+
+`Button` forwards `type` to Base UI's button. Set `type="submit"` when it should
+submit the surrounding form.
+
+```tsx
+<form action={savePreferences}>
+  <Input label="Email" name="email" type="email" required />
+  <Switch label="Notifications" name="notifications" value="enabled" />
+  <Button type="submit" label="Save" />
+</form>
+```
+
+When handling submission in the client, read the values from `FormData`:
+
+```tsx
+function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+  const email = String(data.get("email") ?? "");
+  const notifications = data.get("notifications") !== null;
+  // Send the values to your API or update local state.
+}
+```
+
+## Labels and descriptions
+
+Use the built-in label props instead of rendering separate text:
+
+- `Input` renders a real `<label>` associated with the input.
+- `Checkbox` and `Switch` use their visible label as the accessible name.
+- `Slider` does not render a visible label, so point `aria-labelledby` at one.
+
+Descriptions are linked automatically through `aria-describedby`. If you pass
+your own `aria-describedby`, it is merged with the generated one.
+
+```tsx
+<div className="flex flex-col gap-2">
+  <span id="volume-label" className="text-sm text-ui-ink">
+    Volume
+  </span>
+  <Slider aria-labelledby="volume-label" name="volume" defaultValue={40} />
+</div>
+```
+
+For a group of related controls, use a native `<fieldset>` and `<legend>`:
+
+```tsx
+<fieldset className="flex flex-col gap-3">
+  <legend className="text-sm font-medium text-ui-ink">Notifications</legend>
+  <Switch label="Email" name="email-notifications" value="on" />
+  <Switch label="Mentions" name="mention-notifications" value="on" />
+</fieldset>
+```
+
+## Controlled and uncontrolled
+
+Every stateful control supports both modes:
+
+```tsx
+// Uncontrolled: the component owns the state.
+<Input label="Name" name="name" defaultValue="Ada" />
+<Switch label="Public profile" name="public" defaultChecked />
+
+// Controlled: you own the state.
+const [email, setEmail] = useState("");
+<Input
+  label="Email"
+  name="email"
+  value={email}
+  onValueChange={setEmail}
+/>
+```
+
+Do not pass `value` without a corresponding change handler. For `Slider`,
+`onValueChange` receives the current number or array; use `onValueCommitted`
+when you only need the settled value.
+
+## Validation
+
+Native constraints such as `required`, `minLength`, `pattern`, and `type` are
+forwarded to the input. For custom validation, keep the message next to the
+field and connect it with `aria-describedby` or `aria-errormessage`:
+
+```tsx
+const invalid = email.length > 0 && !email.includes("@");
+
+<Input
+  label="Email"
+  name="email"
+  type="email"
+  value={email}
+  onValueChange={setEmail}
+  aria-invalid={invalid || undefined}
+  aria-describedby={invalid ? "email-error" : undefined}
+/>;
+
+{
+  invalid ? (
+    <p id="email-error" className="text-sm text-ui-ink/70">
+      Enter a valid email address.
+    </p>
+  ) : null;
+}
+```
+
+`Slider` forwards `aria-invalid` and `aria-errormessage` to its underlying
+range input, so validation state reaches the focusable control. `Checkbox` and
+`Switch` forward Base UI props and hidden inputs, so the same pattern applies.
+
+## Disabled and read-only
+
+- `disabled` blocks interaction and removes the control from submission.
+- `readOnly` keeps the value focusable and selectable but prevents changes.
+- `focusableWhenDisabled` on `Button` keeps a disabled action in the Tab order
+  while exposing `aria-disabled` and blocking activation.
+
+Use read-only for values the user should be able to copy, and disabled for
+controls that are not relevant in the current state.
+
+## Server actions
+
+Because the controls submit through native inputs, a React 19 server action can
+receive a regular `FormData` object:
+
+```tsx
+"use server";
+
+export async function savePreferences(formData: FormData) {
+  const email = String(formData.get("email") ?? "");
+  const notifications = formData.get("notifications") !== null;
+  // Persist the values.
+}
+```
+
+The `action` prop belongs to the surrounding `<form>`; the components only
+supply the fields.
+
+## Common pitfalls
+
+- Using `value` without `onValueChange` freezes a controlled field.
+- Reading `FormData` before the submit event sees stale or empty values.
+- A `Switch` that is off submits `null`, not `"false"`. Normalize it explicitly.
+- A `Slider` needs an accessible name; `aria-labelledby` is usually the
+  cleanest option when the label is rendered outside the component.
+- Do not wrap controls in a `<label>` yourself; the components already render
+  the correct label relationship.
+
+## Related components
+
+- [Input](/docs/en/components/input)
+- [Checkbox](/docs/en/components/checkbox)
+- [Switch](/docs/en/components/switch)
+- [Slider](/docs/en/components/slider)
+- [Button](/docs/en/components/button)

@@ -1,0 +1,47 @@
+---
+title: "指南"
+description: "主题定制、表单、可访问性、服务端渲染与模板的实用指南。"
+---
+
+安装之后，真正的集成工作才刚开始：让玻璃材质匹配品牌、把组件接入真实表单、
+交付可访问的交互，以及在服务端优先的应用中正确渲染组件库。
+
+<Cards>
+  <Card
+    title="主题定制"
+    description="覆盖玻璃 token、切换明暗主题，并组合自定义玻璃表面。"
+    href="/docs/zh/guides/theming"
+  />
+  <Card
+    title="表单"
+    description="提交值、校验字段，并用原生表单语义组合各个控件。"
+    href="/docs/zh/guides/forms"
+  />
+  <Card
+    title="可访问性"
+    description="了解标签、键盘行为、焦点管理与实时区域支持。"
+    href="/docs/zh/guides/accessibility"
+  />
+  <Card
+    title="服务端渲染"
+    description="使用服务端安全的 Card、创建客户端岛屿，并避免 hydration 问题。"
+    href="/docs/zh/guides/ssr"
+  />
+  <Card
+    title="模板"
+    description="从 Vite starter 开始，或复制 Next.js 设置面板与确认对话框配方。"
+    href="/docs/zh/guides/templates"
+  />
+</Cards>
+
+## 开始之前
+
+每篇指南都假设：
+
+- React 19 与 React DOM 19。
+- Tailwind CSS 4，并在全局样式表中写入
+  `@import "@xingxingmofashu/ui";`。
+- 使用支持 `backdrop-filter`、`color-mix`、容器单位与 `:has` 的现代常青浏览器。
+
+如果还没有安装组件包，请先阅读[安装](/docs/zh/get-started/installation)。
+组件级示例与属性表位于[组件](/docs/zh/components)。

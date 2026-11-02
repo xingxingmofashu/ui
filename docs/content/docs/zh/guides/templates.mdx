@@ -1,0 +1,197 @@
+---
+title: "模板"
+description: "从 Vite starter 开始，或复制 Next.js 设置面板与破坏性确认对话框配方。"
+---
+
+## Vite starter
+
+仓库提供一个最小的 Vite + React 19 + TypeScript starter，已经导入组件样式并渲染
+一个可交互的 `Button`。
+
+```bash
+pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
+cd my-app
+pnpm install
+pnpm dev
+```
+
+Starter 固定了一个已发布的组件包版本。克隆后需要新版本时，更新 `package.json` 中
+的 `@xingxingmofashu/ui`。
+
+关键文件：
+
+- `src/index.css` 导入 Tailwind CSS 与 `@xingxingmofashu/ui`。
+- `src/App.tsx` 展示带本地状态的实时组件。
+- `vite.config.ts` 包含 Tailwind 与 React 插件。
+
+## Next.js App Router
+
+在现有的 Next.js 16 项目中安装组件包：
+
+```bash
+pnpm add @xingxingmofashu/ui
+```
+
+在全局 CSS 文件中导入样式：
+
+```css [app/globals.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+```
+
+从服务端组件渲染服务端安全的 `Card`：
+
+```tsx [app/page.tsx]
+import { Card } from "@xingxingmofashu/ui/components/card";
+
+export default function Page() {
+  return (
+    <main className="mx-auto max-w-3xl p-8">
+      <Card title="Liquid glass" description="在服务端渲染。">
+        <p className="text-sm text-ui-ink/70">
+          需要交互时，在卡片内添加客户端组件。
+        </p>
+      </Card>
+    </main>
+  );
+}
+```
+
+在拥有状态或事件处理的文件顶部添加 `"use client"`。边界规则见
+[服务端渲染](/docs/zh/guides/ssr)。
+
+## 配方：设置面板
+
+一个完整的设置面板，包含卡片、开关与保存操作。按钮和开关需要客户端状态，因此整个
+面板是客户端组件。
+
+```tsx [app/settings-panel.tsx]
+"use client";
+
+import { useState } from "react";
+
+import { Button, Card, Switch } from "@xingxingmofashu/ui";
+
+export function SettingsPanel() {
+  const [saved, setSaved] = useState(false);
+
+  return (
+    <Card
+      className="w-full max-w-lg"
+      title="通知"
+      description="选择工作区向你的收件箱发送哪些内容。"
+      footer={
+        <Button
+          size="sm"
+          label={saved ? "已保存" : "保存更改"}
+          onClick={() => setSaved(true)}
+        />
+      }
+    >
+      <div className="flex flex-col gap-5">
+        <Switch
+          label="邮件通知"
+          description="队友发布更改时发送摘要。"
+          defaultChecked
+        />
+        <Switch
+          label="每周摘要"
+          description="每周一早上给团队发邮件。"
+        />
+        <Switch
+          label="@ 提及"
+          description="有人提到你的名字时通知你。"
+          defaultChecked
+        />
+      </div>
+    </Card>
+  );
+}
+```
+
+## 配方：破坏性确认
+
+`AlertDialog` 专为不可逆操作设计。确认与取消按钮会自动关闭对话框；用回调执行副作用。
+
+```tsx [app/delete-project.tsx]
+"use client";
+
+import { Trash2 } from "lucide-react";
+import { useState } from "react";
+
+import { AlertDialog, Button } from "@xingxingmofashu/ui";
+
+export function DeleteProject() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        label="删除项目"
+        leadingIcon={<Trash2 />}
+        onClick={() => setOpen(true)}
+      />
+      <AlertDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="删除项目？"
+        description="此操作无法撤销。所有文件与部署都会被移除。"
+        confirmLabel="删除项目"
+        cancelLabel="取消"
+        onConfirm={() => {
+          // 在这里调用删除接口。
+        }}
+      />
+    </>
+  );
+}
+```
+
+## 配方：移动端设置抽屉
+
+当面板需要从边缘滑入时，使用 `Drawer` 而不是 `Dialog`。底部按钮不会自动关闭
+抽屉，因此需要自行更新 `open`。
+
+```tsx [app/mobile-settings.tsx]
+"use client";
+
+import { Settings } from "lucide-react";
+import { useState } from "react";
+
+import { Button, Drawer, Switch } from "@xingxingmofashu/ui";
+
+export function MobileSettings() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        label="设置"
+        leadingIcon={<Settings />}
+        onClick={() => setOpen(true)}
+      />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        title="设置"
+        description="更改仅应用于此设备。"
+        footer={
+          <>
+            <Button size="sm" label="取消" onClick={() => setOpen(false)} />
+            <Button size="sm" label="完成" onClick={() => setOpen(false)} />
+          </>
+        }
+      >
+        <Switch label="通知" defaultChecked />
+      </Drawer>
+    </>
+  );
+}
+```
+
+## 下一步
+
+- 浏览[组件总览](/docs/zh/components)，查看全部实时示例。
+- 阅读[主题定制](/docs/zh/guides/theming)，让材质匹配品牌。
+- 接入 API 前阅读[表单](/docs/zh/guides/forms)。
+- 发布前阅读[可访问性](/docs/zh/guides/accessibility)。

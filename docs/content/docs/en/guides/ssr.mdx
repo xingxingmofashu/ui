@@ -1,0 +1,189 @@
+---
+title: "Server rendering"
+description: "Use the server-safe Card, create client islands, and avoid hydration issues in Next.js and other React 19 frameworks."
+---
+
+The package targets React 19 and works in server-first frameworks. Most
+components are client components because they manage interaction, focus, or
+portals. `Card` is the exception: it is a plain layout primitive with no state,
+so it can render entirely on the server.
+
+## What runs where
+
+| Component | Boundary |
+| --- | --- |
+| `Card` | Server-safe |
+| `Button`, `Input`, `Checkbox`, `Switch`, `Slider` | Client |
+| `Accordion`, `Toggle`, `ToggleGroup` | Client |
+| `Dialog`, `AlertDialog`, `Drawer`, `Popover`, `Toast` | Client |
+| `ScrollArea` | Client |
+
+A Server Component can import and render a Client Component directly. The
+client component is serialized into the HTML during server rendering and
+hydrates in the browser. What cannot cross the boundary is a function defined in
+a Server Component and passed as a prop.
+
+## A server-rendered Card
+
+Use a deep import when you want to guarantee that only the server-safe module is
+loaded:
+
+```tsx [app/page.tsx]
+import { Card } from "@xingxingmofashu/ui/components/card";
+
+export default function Page() {
+  return (
+    <Card
+      title="Server rendered"
+      description="This card is part of the initial HTML."
+    >
+      <p className="text-sm text-ui-ink/70">
+        No client JavaScript is required for the card itself.
+      </p>
+    </Card>
+  );
+}
+```
+
+The root import works too, but the deep import makes the boundary explicit.
+
+## Client islands
+
+Move state, effects, and event handlers into a client component:
+
+```tsx [app/settings-dialog.tsx]
+"use client";
+
+import { Settings } from "lucide-react";
+import { useState } from "react";
+
+import { Button, Dialog, Switch } from "@xingxingmofashu/ui";
+
+export function SettingsDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        label="Open settings"
+        leadingIcon={<Settings />}
+        onClick={() => setOpen(true)}
+      />
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Workspace settings"
+        description="Choose how your workspace behaves."
+        footer={<Button label="Done" onClick={() => setOpen(false)} />}
+      >
+        <Switch label="Email notifications" defaultChecked />
+      </Dialog>
+    </>
+  );
+}
+```
+
+Then render the island from a Server Component:
+
+```tsx [app/page.tsx]
+import { SettingsDialog } from "./settings-dialog";
+
+export default function Page() {
+  return (
+    <main>
+      <h1>Workspace</h1>
+      <SettingsDialog />
+    </main>
+  );
+}
+```
+
+Split at the smallest interactive boundary. A page with one button does not
+need to become a client component; a settings form probably does.
+
+## Hydration and theme
+
+The first HTML and the first client render must agree. Two rules prevent most
+hydration warnings:
+
+1. Do not read `window`, `document`, or `localStorage` during render. Read them
+   in an effect or set the value before hydration.
+2. Set the theme class or `data-theme` attribute before the first paint.
+
+A common pattern is a blocking script in the document head that applies the
+stored theme to `<html>`, plus `suppressHydrationWarning` because the class may
+differ between the server and the client:
+
+```tsx [app/layout.tsx]
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+A theme library such as `next-themes` can manage the script and storage for you.
+Apply the same idea in any framework: resolve the theme before React hydrates,
+not inside a component body.
+
+Portals are also client-only in practice. `Dialog`, `Drawer`, and `Popover`
+render their popup into a portal when they open, so the trigger and the open
+state must be available on the client.
+
+## Static export
+
+The documentation site is a static export, and the same approach works for any
+content site:
+
+```js [next.config.mjs]
+const nextConfig = {
+  output: "export",
+  images: { unoptimized: true },
+};
+
+export default nextConfig;
+```
+
+With `output: "export"`, `next build` writes HTML files instead of starting a
+server. The interactive components still hydrate normally, and `Card` is
+already present in the exported HTML. If you host under a subpath, configure
+`basePath` and make asset URLs respect it.
+
+## Vite and other client-only apps
+
+The Vite starter uses the same package without a server boundary:
+
+```bash
+pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
+cd my-app
+pnpm install
+pnpm dev
+```
+
+Import the package stylesheet once in `src/index.css`, then render components
+from `src/App.tsx`. See [Templates](/docs/en/guides/templates) for the full
+walkthrough.
+
+## Common pitfalls
+
+- Importing `@xingxingmofashu/ui` CSS from a component instead of the global
+  stylesheet.
+- Passing `onClick` from a Server Component to a client component.
+- Reading `localStorage` or `matchMedia` while rendering.
+- Setting the theme after hydration, which causes a flash and a mismatch.
+- Assuming a closed dialog's portal exists in the initial HTML.
+- Forgetting `"use client"` on a wrapper that uses state.
+
+## Verify the result
+
+- Run your production build and confirm `Card` content appears in the generated
+  HTML.
+- Open the console and check for hydration warnings.
+- Disable JavaScript and confirm server-rendered content is still readable.
+- Re-enable JavaScript and test focus, overlays, and form submission.

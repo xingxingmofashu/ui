@@ -1,0 +1,145 @@
+---
+title: "Accessibility"
+description: "Labeling, keyboard behavior, focus management, and live-region support in the Liquid Glass components."
+---
+
+Accessibility comes from the behavior layer, not from the glass styling. The
+interactive components wrap [Base UI](https://base-ui.com) primitives, which
+provide roles, states, keyboard interaction, focus management, and native form
+integration. The visual layer only changes the surface.
+
+This guide describes the guarantees you can rely on and the decisions you still
+need to make in your application.
+
+## Label every control
+
+| Component | Accessible name source |
+| --- | --- |
+| `Input` | `label`, or `aria-label` / `aria-labelledby` |
+| `Checkbox` | `label`, or `aria-label` / `aria-labelledby` |
+| `Switch` | `label`, or `aria-label` / `aria-labelledby` |
+| `Slider` | `aria-label` / `aria-labelledby`, or `getAriaLabel` per thumb |
+| `ScrollArea` | `aria-label` / `aria-labelledby` on the viewport |
+| `Dialog`, `AlertDialog`, `Drawer` | Required `title` prop |
+| `Popover` | Required `title` prop |
+
+Visible labels are preferred. A label rendered outside the component is fine as
+long as it is associated correctly:
+
+```tsx
+<span id="volume-label" className="text-sm text-ui-ink">
+  Volume
+</span>
+<Slider aria-labelledby="volume-label" defaultValue={40} />
+```
+
+For a range slider, pass `getAriaLabel` so each thumb gets a distinct name:
+
+```tsx
+<Slider
+  aria-label="Price range"
+  defaultValue={[20, 80]}
+  getAriaLabel={(index) => (index === 0 ? "Minimum price" : "Maximum price")}
+/>
+```
+
+<Example name="switch/basic" showCode={false} />
+
+`Switch` and `Checkbox` use the visible label as the accessible name and link
+the description through `aria-describedby`. Decorative icons inside `Button`,
+`Input`, and other components are marked `aria-hidden="true"`.
+
+## Keyboard behavior
+
+The components follow the native patterns supplied by Base UI:
+
+| Interaction | Expected behavior |
+| --- | --- |
+| `Tab` / `Shift+Tab` | Move focus between controls |
+| `Enter` / `Space` | Activate buttons, toggles, checkboxes, and switches |
+| Arrow keys | Move the slider thumb; navigate accordion triggers and toggle groups |
+| `Escape` | Close dialog, alert dialog, drawer, and popover |
+| `Home` / `End` | Move a slider to its minimum or maximum |
+| `Page Up` / `Page Down` | Move a slider by `largeStep` |
+
+Accordion triggers use real buttons and expose `aria-expanded`. Toggle groups
+support single and multiple selection with the expected arrow-key roving focus.
+Scroll areas keep native wheel, trackpad, and keyboard scrolling; the custom
+scrollbars are decorative and hidden from assistive technology.
+
+## Overlays and focus
+
+`Dialog`, `AlertDialog`, and `Drawer` are modal:
+
+- Focus moves into the popup when it opens.
+- `Tab` stays inside the popup while it is open.
+- `Escape` and backdrop dismissal close it unless disabled.
+- Focus returns to the trigger after closing.
+- Page scroll is locked while the overlay is open.
+
+`Popover` is deliberately non-modal: focus is not trapped, the page stays
+scrollable, and outside press or `Escape` closes it. Use it for compact
+settings, filters, and contextual actions, not for multi-step flows that need
+the user's full attention.
+
+`AlertDialog` is for destructive or irreversible decisions. Use it instead of a
+plain `Dialog` when the user must choose between explicit actions.
+
+<Example name="dialog/basic" showCode={false} />
+
+## Toasts and live regions
+
+`ToastProvider` renders a Base UI toast viewport with live-region semantics.
+Keep one provider near the application root, and render `<Toast />` after the
+app content so the viewport is available.
+
+- Use `type` to add a status icon: `info`, `success`, `warning`, `error`, or
+  `loading`.
+- Use `priority: "high"` for an assertive announcement, such as a failed save.
+- Keep messages short and actionable. Do not move focus to a toast.
+- Provide an action through `actionProps` when the user can undo or retry.
+- Leave `timeout` long enough to read the message, or set `timeout: 0` when the
+  toast requires action.
+
+`toast.promise` starts with a loading state and updates the same toast when the
+promise settles, which avoids announcing duplicate messages.
+
+## Motion and contrast
+
+All decorative transitions include `motion-reduce` variants. When the user sets
+`prefers-reduced-motion: reduce`, the layout and state changes remain but the
+motion is removed or shortened.
+
+The glass surface is translucent. Check text contrast against the actual
+background, especially over images, gradients, and busy dashboards. The default
+monochrome palette is designed for a quiet interface; custom tokens should keep
+the same contrast relationship in both themes.
+
+## Testing checklist
+
+- Tab through the page without a mouse and confirm every control is reachable.
+- Confirm focus returns to the trigger after closing a dialog or drawer.
+- Read the form with a screen reader: names, descriptions, and errors should be
+  announced once, in context.
+- Check that a `Switch` and `Checkbox` announce their checked state.
+- Verify a range slider announces both thumb values and their names.
+- Trigger a toast and confirm the message is announced without stealing focus.
+- Run the page with reduced motion enabled and with a high-contrast theme.
+- Test with your real content; placeholder text often hides labeling problems.
+
+Accessibility is a shared responsibility. The components provide the
+interaction foundation, but the surrounding headings, error messages, page
+structure, and content still belong to your application.
+
+## Related components
+
+- [Button](/docs/en/components/button)
+- [Checkbox](/docs/en/components/checkbox)
+- [Input](/docs/en/components/input)
+- [Slider](/docs/en/components/slider)
+- [Switch](/docs/en/components/switch)
+- [Dialog](/docs/en/components/dialog)
+- [Alert Dialog](/docs/en/components/alert-dialog)
+- [Drawer](/docs/en/components/drawer)
+- [Popover](/docs/en/components/popover)
+- [Toast](/docs/en/components/toast)

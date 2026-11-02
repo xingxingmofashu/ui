@@ -1,0 +1,199 @@
+---
+title: "Templates"
+description: "Start from the Vite starter or copy a Next.js settings panel and destructive confirmation recipe."
+---
+
+## Vite starter
+
+The repository ships a minimal Vite + React 19 + TypeScript starter that already
+imports the package stylesheet and renders a live `Button`.
+
+```bash
+pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
+cd my-app
+pnpm install
+pnpm dev
+```
+
+The starter pins a released package version. After cloning, bump
+`@xingxingmofashu/ui` in `package.json` when you want a newer release.
+
+Useful files:
+
+- `src/index.css` imports Tailwind CSS and `@xingxingmofashu/ui`.
+- `src/App.tsx` shows a live component with local state.
+- `vite.config.ts` contains the Tailwind and React plugins.
+
+## Next.js App Router
+
+Install the package in an existing Next.js 16 project:
+
+```bash
+pnpm add @xingxingmofashu/ui
+```
+
+Import the stylesheet in the global CSS file:
+
+```css [app/globals.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+```
+
+Render a server-safe `Card` from a Server Component:
+
+```tsx [app/page.tsx]
+import { Card } from "@xingxingmofashu/ui/components/card";
+
+export default function Page() {
+  return (
+    <main className="mx-auto max-w-3xl p-8">
+      <Card title="Liquid glass" description="Rendered on the server.">
+        <p className="text-sm text-ui-ink/70">
+          Add client components inside the card when you need interaction.
+        </p>
+      </Card>
+    </main>
+  );
+}
+```
+
+Add `"use client"` to the file that owns state or event handlers. See
+[Server rendering](/docs/en/guides/ssr) for the boundary rules.
+
+## Recipe: settings panel
+
+A complete settings panel with a card, switches, and a save action. The buttons
+and switches need client state, so the whole panel is a client component.
+
+```tsx [app/settings-panel.tsx]
+"use client";
+
+import { useState } from "react";
+
+import { Button, Card, Switch } from "@xingxingmofashu/ui";
+
+export function SettingsPanel() {
+  const [saved, setSaved] = useState(false);
+
+  return (
+    <Card
+      className="w-full max-w-lg"
+      title="Notifications"
+      description="Choose what your workspace sends to your inbox."
+      footer={
+        <Button
+          size="sm"
+          label={saved ? "Saved" : "Save changes"}
+          onClick={() => setSaved(true)}
+        />
+      }
+    >
+      <div className="flex flex-col gap-5">
+        <Switch
+          label="Email notifications"
+          description="Send a summary when a teammate publishes changes."
+          defaultChecked
+        />
+        <Switch
+          label="Weekly digest"
+          description="Email the team every Monday morning."
+        />
+        <Switch
+          label="Mentions"
+          description="Notify you when someone mentions your name."
+          defaultChecked
+        />
+      </div>
+    </Card>
+  );
+}
+```
+
+## Recipe: destructive confirmation
+
+`AlertDialog` is built for irreversible actions. The confirm and cancel buttons
+close the dialog automatically; use the callbacks for the side effect.
+
+```tsx [app/delete-project.tsx]
+"use client";
+
+import { Trash2 } from "lucide-react";
+import { useState } from "react";
+
+import { AlertDialog, Button } from "@xingxingmofashu/ui";
+
+export function DeleteProject() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        label="Delete project"
+        leadingIcon={<Trash2 />}
+        onClick={() => setOpen(true)}
+      />
+      <AlertDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Delete project?"
+        description="This action cannot be undone. All files and deployments will be removed."
+        confirmLabel="Delete project"
+        cancelLabel="Cancel"
+        onConfirm={() => {
+          // Call your delete endpoint here.
+        }}
+      />
+    </>
+  );
+}
+```
+
+## Recipe: mobile settings drawer
+
+Use `Drawer` instead of `Dialog` when the panel should slide in from an edge.
+The footer buttons do not close the drawer automatically, so update `open`
+yourself.
+
+```tsx [app/mobile-settings.tsx]
+"use client";
+
+import { Settings } from "lucide-react";
+import { useState } from "react";
+
+import { Button, Drawer, Switch } from "@xingxingmofashu/ui";
+
+export function MobileSettings() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        label="Settings"
+        leadingIcon={<Settings />}
+        onClick={() => setOpen(true)}
+      />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        title="Settings"
+        description="Changes apply to this device."
+        footer={
+          <>
+            <Button size="sm" label="Cancel" onClick={() => setOpen(false)} />
+            <Button size="sm" label="Done" onClick={() => setOpen(false)} />
+          </>
+        }
+      >
+        <Switch label="Notifications" defaultChecked />
+      </Drawer>
+    </>
+  );
+}
+```
+
+## Next steps
+
+- Browse the [component overview](/docs/en/components) for every live example.
+- Read [Theming](/docs/en/guides/theming) to match the material to your brand.
+- Read [Forms](/docs/en/guides/forms) before wiring the controls to an API.
+- Read [Accessibility](/docs/en/guides/accessibility) before shipping.
