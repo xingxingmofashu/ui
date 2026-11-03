@@ -20,6 +20,7 @@ import {
   RadioGroup,
   ScrollArea,
   Switch,
+  Tabs,
   Toggle,
   ToggleGroup,
 } from "@xingxingmofashu/ui";
@@ -235,6 +236,48 @@ export function ComponentGrid({ lang }: { lang: HomeLocale }) {
       description: items.switch.description,
       preview: (
         <Switch size="sm" label={items.switch.label} defaultChecked />
+      ),
+    },
+    {
+      id: "tabs",
+      name: items.tabs.name,
+      description: items.tabs.description,
+      preview: (
+        <Tabs
+          className="w-full max-w-[16rem]"
+          size="sm"
+          aria-label={items.tabs.ariaLabel}
+          defaultValue="overview"
+          items={[
+            {
+              value: "overview",
+              label: items.tabs.overview,
+              content: (
+                <p className="text-xs leading-5 text-ui-ink/65">
+                  {items.tabs.overviewBody}
+                </p>
+              ),
+            },
+            {
+              value: "projects",
+              label: items.tabs.projects,
+              content: (
+                <p className="text-xs leading-5 text-ui-ink/65">
+                  {items.tabs.projectsBody}
+                </p>
+              ),
+            },
+            {
+              value: "account",
+              label: items.tabs.account,
+              content: (
+                <p className="text-xs leading-5 text-ui-ink/65">
+                  {items.tabs.accountBody}
+                </p>
+              ),
+            },
+          ]}
+        />
       ),
     },
     {

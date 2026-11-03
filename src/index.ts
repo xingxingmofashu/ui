@@ -24,6 +24,7 @@ export {
 } from "./components/scroll-area";
 export { Slider, type SliderProps } from "./components/slider";
 export { Switch, type SwitchProps } from "./components/switch";
+export { Tabs, type TabsItemProps, type TabsProps } from "./components/tabs";
 export {
   Toast,
   ToastProvider,

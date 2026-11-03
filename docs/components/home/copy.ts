@@ -31,7 +31,7 @@ const zh = {
   },
   components: {
     eyebrow: "组件",
-    title: "十七个组件，一套语言",
+    title: "十八个组件，一套语言",
     description:
       "每个组件共享同一套玻璃 token，因此可以自然组合。下面的内容直接渲染 UI 包里的组件。",
     activity: [
@@ -140,6 +140,17 @@ const zh = {
         description: "滑动时会拉伸的液态玻璃开关。",
         label: "接收通知",
       },
+      tabs: {
+        name: "Tabs",
+        description: "带滑动指示器的玻璃标签栏，支持水平与纵向布局。",
+        ariaLabel: "工作区视图",
+        overview: "概览",
+        projects: "项目",
+        account: "账户",
+        overviewBody: "工作区统计与最近活动。",
+        projectsBody: "当前团队正在推进的项目。",
+        accountBody: "个人资料与偏好设置。",
+      },
       toast: {
         name: "Toast",
         description: "带状态图标与操作的堆叠玻璃通知。",
@@ -234,7 +245,7 @@ const en: typeof zh = {
   },
   components: {
     eyebrow: "Components",
-    title: "Seventeen components, one language",
+    title: "Eighteen components, one language",
     description:
       "Every component shares the same glass tokens, so they compose naturally. Everything below renders directly from the UI package.",
     activity: [
@@ -345,6 +356,17 @@ const en: typeof zh = {
         name: "Switch",
         description: "A liquid thumb that stretches while it moves.",
         label: "Receive notifications",
+      },
+      tabs: {
+        name: "Tabs",
+        description: "A glass tab list with a sliding indicator, horizontal or vertical.",
+        ariaLabel: "Workspace views",
+        overview: "Overview",
+        projects: "Projects",
+        account: "Account",
+        overviewBody: "Workspace stats and recent activity.",
+        projectsBody: "Projects the team is working on.",
+        accountBody: "Personal profile and preferences.",
       },
       toast: {
         name: "Toast",

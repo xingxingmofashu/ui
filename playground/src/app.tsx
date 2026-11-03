@@ -15,6 +15,7 @@ import { RadioGroupPreview } from "./previews/radio-group";
 import { ScrollAreaPreview } from "./previews/scroll-area";
 import { SliderPreview } from "./previews/slider";
 import { SwitchPreview } from "./previews/switch";
+import { TabsPreview } from "./previews/tabs";
 import { ToastPreview } from "./previews/toast";
 import { TogglePreview } from "./previews/toggle";
 import { ToggleGroupPreview } from "./previews/toggle-group";
@@ -120,6 +121,13 @@ const sections = [
     Preview: SwitchPreview,
   },
   {
+    id: "tabs",
+    title: "Tabs",
+    description:
+      "A glass tab list with a sliding indicator, horizontal and vertical layouts, and five sizes.",
+    Preview: TabsPreview,
+  },
+  {
     id: "toast",
     title: "Toast",
     description:
@@ -209,7 +217,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Seventeen components · two themes
+        Eighteen components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.

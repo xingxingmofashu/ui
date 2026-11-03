@@ -1,0 +1,92 @@
+---
+title: "Tabs"
+description: "An accessible React tabs component with a Liquid Glass tab list, animated active indicator, and keyboard navigation."
+---
+
+`Tabs` switches between related panels on the same page. The tab list sits on a shared glass surface, and a translucent lens follows the active tab.
+
+Tabs are passed through the `items` array. Each item's `value` links its tab button to the matching panel, while `content` renders inside that panel. Use `defaultValue` for uncontrolled usage or `value` with `onValueChange` for a controlled component.
+
+## Basic example
+
+Labels and icons share the tab button. The first enabled tab is active by default.
+
+<Example name="tabs/basic" />
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Tab height, padding, text, icons, spacing, and panel text scale together.
+
+<Example name="tabs/sizes" />
+
+## Controlled usage
+
+`value` and `onValueChange` let external state fully control the active tab. Set `value` to `null` when no tab should be active.
+
+<Example name="tabs/controlled" />
+
+## Vertical orientation
+
+Use `orientation="vertical"` for a side-by-side layout. Arrow keys follow the orientation, so `ArrowDown` and `ArrowUp` move through vertical tabs.
+
+<Example name="tabs/vertical" />
+
+## Disabled tabs
+
+Set `disabled` on the component to disable every tab, or on a single item to disable only that tab. Disabled tabs stay visible and remain part of the tab list.
+
+<Example name="tabs/disabled" />
+
+## API reference
+
+**Tabs**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `readonly TabsItemProps[]` | — | Tabs and panels rendered by the component. |
+| `value` | `string \| null` | — | Controlled active value. Use `null` to render no active tab. |
+| `defaultValue` | `string \| null` | First enabled item | Initial active value when uncontrolled. |
+| `onValueChange` | `(value: string, details) => void` | — | Called when the active value changes. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
+| `activateOnFocus` | `boolean` | `false` | Activates a tab as arrow-key focus moves. |
+| `loopFocus` | `boolean` | `true` | Loops keyboard focus back to the first tab after the last one. |
+| `disabled` | `boolean` | `false` | Disables every tab. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Tab height, padding, text, icons, and spacing. |
+| `aria-label` | `string` | — | Accessible name for the tab list. |
+| `aria-labelledby` | `string` | — | ID of an external element that names the tab list. |
+| `aria-describedby` | `string` | — | ID of external text that describes the tab list. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
+| `className` | `string` | — | Tailwind classes merged into the root. |
+| `ui` | `{ root?: ClassValue; list?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panels?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+**TabsItem**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Value that links the tab to its panel. |
+| `label` | `ReactNode` | — | Visible label inside the tab. |
+| `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
+| `content` | `ReactNode` | — | Panel content shown while the tab is active. |
+| `keepMounted` | `boolean` | `false` | Keeps the panel in the DOM while another tab is active. |
+| `disabled` | `boolean` | `false` | Disables this tab. |
+| `aria-label` | `string` | — | Accessible name for an icon-only tab. |
+| `aria-labelledby` | `string` | — | Names an icon-only tab from another element. |
+| `nativeButton` | `boolean` | `true` | Whether the tab renders a native `<button>`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the tab element. |
+| `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the tab element. |
+| `className` | `string` | — | Tailwind classes merged into the tab button. Use `ui.panel` for the panel. |
+| `ui` | `{ tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this tab's internal slots, keyed by `data-slot`. |
+
+Root `ui` is merged into every tab and panel first, then the item's `ui`, then the item's `className`.
+
+| Attribute | Description |
+| --- | --- |
+| `data-active` | Present on the active tab. |
+| `data-disabled` | Present when the component or tab is disabled. |
+| `data-orientation` | Indicates the orientation (`horizontal` or `vertical`). |
+| `data-activation-direction` | Indicates the direction of the newly active tab relative to the previous one. |
+| `data-hidden` | Present on a mounted panel that is not active. |
+| `data-starting-style` | Present when a panel begins animating in. |
+| `data-ending-style` | Present when a panel is animating out. |
+| `data-slot` | Marks internal parts (`root`, `list`, `glass`, `overlay`, `indicator`, `tab`, `icon`, `label`, `panels`, `panel`, `panel-content`). |
