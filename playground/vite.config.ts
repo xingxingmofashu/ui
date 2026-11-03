@@ -9,6 +9,18 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        find: /^@xingxingmofashu\/ui\/plugins\/glass-preset\/preset\.css$/,
+        replacement: fileURLToPath(
+          new URL("../src/plugins/glass-preset/preset.css", import.meta.url),
+        ),
+      },
+      {
+        find: /^@xingxingmofashu\/ui\/plugins\/glass-preset$/,
+        replacement: fileURLToPath(
+          new URL("../src/plugins/glass-preset/index.tsx", import.meta.url),
+        ),
+      },
+      {
         find: /^@xingxingmofashu\/ui$/,
         replacement: fileURLToPath(new URL("../src/index.ts", import.meta.url)),
       },

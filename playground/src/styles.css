@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../../src/index.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
 
 @source "../index.html";
 @source "./**/*.{ts,tsx}";
@@ -43,6 +44,12 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
+}
+
+@media (max-width: 639px) {
+  html {
+    scroll-padding-top: 9rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

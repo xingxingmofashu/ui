@@ -76,6 +76,9 @@ same pnpm workspace.
   tone; `.ui-glass-inner` adds the inset outline; `.ui-glass-highlight` adds the
   diagonal glare; `.ui-glass-rim` is the decorative child rim; and
   `.ui-glass-chip` is the compact surface.
+- `src/plugins/glass-preset/preset.css` owns the
+  `data-glass="thin | regular | thick"` presets. They only override shared
+  `--ui-glass-*` variables; do not add component styles there.
 - Light is the default at `:root`. `.dark` / `data-theme="dark"` switches to
   dark, while `.light` / `data-theme="light"` re-applies light and wins inside a
   dark ancestor. The `ui-light` / `ui-dark` Tailwind variants mirror these
@@ -83,6 +86,21 @@ same pnpm workspace.
 - Tokens live in `@layer theme`, so an unlayered `:root` override in a consumer
   app wins without `!important`. Keep component-specific values in the
   component theme and shared material values in `index.css`.
+
+## Plugins
+
+- Optional plugins live under `src/plugins/<name>/` and are not re-exported
+  from `src/index.ts`.
+- Package exports are wildcarded. `src/plugins/<name>/index.tsx` is published
+  as `@xingxingmofashu/ui/plugins/<name>`. CSS files keep their path through
+  `./plugins/*.css`, so `src/plugins/<name>/<file>.css` is published as
+  `@xingxingmofashu/ui/plugins/<name>/<file>.css`.
+- A plugin owns its state, UI, and optional stylesheet. Do not import plugin
+  CSS from `src/index.css`; plugin styles stay explicit and opt-in.
+- Add `"use client"` only to modules that use hooks or browser APIs. Pure
+  components and generated inline scripts may stay server-safe.
+- Plugin tests live in `test/plugins/<name>.test.tsx`.
+- `src/plugins/glass-preset/` is the reference plugin.
 
 ## Component API
 
@@ -133,8 +151,12 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 ## Package files
 
 - Public exports: `src/index.ts`
+- Plugins: `src/plugins/<name>/`
+- Glass preset plugin: `src/plugins/glass-preset/`
 - Design tokens and glass material: `src/index.css`
+- Shared glass presets: `src/plugins/glass-preset/preset.css`
 - Shared token and glass tests: `test/tokens.test.ts`
+- Plugin tests: `test/plugins/<name>.test.tsx`
 - Test setup: `test/setup.ts`
 - Vitest config: `vitest.config.ts`
 - Build config: `build.config.ts`

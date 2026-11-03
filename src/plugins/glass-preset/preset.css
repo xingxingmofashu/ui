@@ -1,0 +1,55 @@
+/*
+ * Shared glass material presets.
+ *
+ * Put the attribute on the root or on any container:
+ *
+ *   <html data-glass="thin">
+ *   <section data-glass="thick">...</section>
+ *
+ * The presets only override shared `--ui-glass-*` variables. They inherit into
+ * descendants, and `light-dark()` follows the active `color-scheme`, so a
+ * preset inside a dark page resolves its dark values automatically.
+ */
+@layer theme {
+  [data-glass="thin"],
+  [data-glass="thin"]:is(.light, .dark, [data-theme="light"], [data-theme="dark"]) {
+    --ui-glass-surface: light-dark(
+      rgb(255 255 255 / 0.2),
+      rgb(20 20 20 / 0.62)
+    );
+    --ui-glass-border: light-dark(
+      rgb(31 31 31 / 0.16),
+      rgb(255 255 255 / 0.2)
+    );
+    --ui-glass-blur: 4px;
+    --ui-glass-saturate: 150%;
+  }
+
+  [data-glass="regular"],
+  [data-glass="regular"]:is(.light, .dark, [data-theme="light"], [data-theme="dark"]) {
+    --ui-glass-surface: light-dark(
+      rgb(255 255 255 / 0.35),
+      rgb(20 20 20 / 0.68)
+    );
+    --ui-glass-border: light-dark(
+      rgb(31 31 31 / 0.2),
+      rgb(255 255 255 / 0.24)
+    );
+    --ui-glass-blur: 16px;
+    --ui-glass-saturate: 140%;
+  }
+
+  [data-glass="thick"],
+  [data-glass="thick"]:is(.light, .dark, [data-theme="light"], [data-theme="dark"]) {
+    --ui-glass-surface: light-dark(
+      rgb(255 255 255 / 0.45),
+      rgb(20 20 20 / 0.72)
+    );
+    --ui-glass-border: light-dark(
+      rgb(31 31 31 / 0.24),
+      rgb(255 255 255 / 0.28)
+    );
+    --ui-glass-blur: 16px;
+    --ui-glass-saturate: 140%;
+  }
+}

@@ -35,6 +35,12 @@
       "default": "./dist/theme/*.mjs"
     },
     "./index.css": "./dist/index.css",
+    "./plugins/*.css": "./dist/plugins/*.css",
+    "./plugins/*": {
+      "types": "./dist/plugins/*/index.d.ts",
+      "import": "./dist/plugins/*/index.mjs",
+      "default": "./dist/plugins/*/index.mjs"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.mjs",

@@ -17,6 +17,7 @@ import {
   Switch,
   ToggleGroup,
 } from "@xingxingmofashu/ui";
+import { useGlassPreset } from "@xingxingmofashu/ui/plugins/glass-preset";
 
 import { Caption, cx } from "./demo";
 import { useTheme } from "./theme";
@@ -135,6 +136,7 @@ function resolveImageUrl(value: string) {
 
 function SurfaceLab() {
   const { theme } = useTheme();
+  const { preset: glassPreset } = useGlassPreset();
   const [presetId, setPresetId] = useState("image");
   const [customImage, setCustomImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -224,7 +226,7 @@ function SurfaceLab() {
           </p>
         </div>
         <span className="hidden rounded-full border border-pg-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-pg-muted sm:inline-block">
-          {theme === "light" ? "Light material" : "Dark material"}
+          {theme === "light" ? "Light" : "Dark"} · {glassPreset}
         </span>
       </div>
 
@@ -341,7 +343,7 @@ function SurfaceLab() {
               Glass on {backgroundLabel}
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/70">
-              {theme}
+              {theme} · {glassPreset}
             </span>
           </div>
 

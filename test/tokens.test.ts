@@ -295,7 +295,7 @@ describe("design tokens", () => {
       "filter: var(--ui-glass-tone, brightness(0.98)) contrast(var(--ui-glass-contrast, 1.05));",
     );
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 4px)) saturate(var(--ui-glass-saturate, 150%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 16px)) saturate(var(--ui-glass-saturate, 140%));",
     );
     expect(css).toContain(
       "top: calc(var(--ui-glass-inner-inset, 8px) + var(--ui-glass-inner-offset, 1px));",
@@ -311,7 +311,7 @@ describe("design tokens", () => {
     expect(css).toContain("background-color: var(--ui-glass-surface);");
     expect(css).toContain("box-shadow: var(--ui-shadow-glass);");
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 4px)) saturate(var(--ui-glass-saturate, 150%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 16px)) saturate(var(--ui-glass-saturate, 140%));",
     );
     expect(css).toContain("border: 1px double var(--ui-glass-border);");
     expect(css).toContain("border: 1px solid var(--ui-glass-inner-border);");
@@ -466,7 +466,7 @@ describe("design tokens", () => {
     const css = await buildStyles(themeCandidates());
 
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 4px)) saturate(var(--ui-glass-saturate, 150%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 16px)) saturate(var(--ui-glass-saturate, 140%));",
     );
     expect(css).toContain("background-color: var(--ui-toggle-group-thumb);");
     expect(css).toContain(
@@ -592,19 +592,21 @@ describe("design tokens", () => {
 
     expect(css).toContain("--ui-ink: #1f1f1f;");
     expect(css).toContain("--ui-ink: #f5f5f5;");
+    expect(css).toContain("color-scheme: light;");
+    expect(css).toContain("color-scheme: dark;");
     expect(css).not.toContain("--ui-checkbox-mark");
     expect(css).not.toContain("--ui-checkbox-rim");
     expect(css).not.toContain("--ui-checkbox-shadow");
     expect(css).toContain("--ui-surface: #fff;");
     expect(css).toContain("--ui-surface: #141414;");
     expect(css).toContain(
-      "--ui-glass-surface: rgb(255 255 255 / 0.2);",
+      "--ui-glass-surface: rgb(255 255 255 / 0.35);",
     );
     expect(css).toContain(
-      "--ui-glass-surface: rgb(20 20 20 / 0.62);",
+      "--ui-glass-surface: rgb(20 20 20 / 0.68);",
     );
-    expect(css).toContain("--ui-glass-blur: 4px;");
-    expect(css).toContain("--ui-glass-saturate: 150%;");
+    expect(css).toContain("--ui-glass-blur: 16px;");
+    expect(css).toContain("--ui-glass-saturate: 140%;");
     expect(css).toContain("--ui-glass-inner-border: rgb(0 0 0 / 0.9);");
     expect(css).toContain("--ui-glass-inner-border: rgb(255 255 255 / 0.4);");
     expect(css).toContain("--ui-glass-tone: brightness(0.98);");
@@ -627,6 +629,28 @@ describe("design tokens", () => {
     expect(css).toContain('[data-theme="light"]');
     expect(css).not.toContain("--ui-drop-shadow-icon");
     expect(css).not.toContain("--ui-shadow-glass-icon");
+  });
+
+  it("ships the shared glass material presets", async () => {
+    const [source, index] = await Promise.all([
+      readFile(
+        new URL("../src/plugins/glass-preset/preset.css", import.meta.url),
+        "utf8",
+      ),
+      readFile(new URL("../src/index.css", import.meta.url), "utf8"),
+    ]);
+
+    expect(index).not.toContain("plugins/glass-preset/preset.css");
+    expect(source).toContain('[data-glass="thin"]');
+    expect(source).toContain('[data-glass="regular"]');
+    expect(source).toContain('[data-glass="thick"]');
+    expect(source).toContain("light-dark(");
+    expect(source).toContain("rgb(255 255 255 / 0.2)");
+    expect(source).toContain("rgb(20 20 20 / 0.62)");
+    expect(source).toContain("rgb(255 255 255 / 0.35)");
+    expect(source).toContain("rgb(20 20 20 / 0.68)");
+    expect(source).toContain("rgb(255 255 255 / 0.45)");
+    expect(source).toContain("rgb(20 20 20 / 0.72)");
   });
 
   it("ships its Tailwind source scan with the stylesheet", async () => {

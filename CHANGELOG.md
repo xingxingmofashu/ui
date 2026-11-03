@@ -1,5 +1,31 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Add the `data-glass="thin | regular | thick"` shared-material presets in
+  `plugins/glass-preset/preset.css`. Set the attribute on the root or any
+  container; presets inherit into descendants, follow the active
+  `color-scheme`, and only override `--ui-glass-*` variables, so switching
+  material does not require component or theme changes.
+- Add the optional
+  `@xingxingmofashu/ui/plugins/glass-preset` entry with
+  `GlassPresetProvider`, `useGlassPreset`, `GlassPresetScope`,
+  `GlassPresetScript`, `getGlassPresetScript`, and `storageKey` persistence.
+  The plugin does not import CSS; the preset stylesheet stays opt-in and the
+  main stylesheet keeps the `regular` defaults when it is not imported.
+
+### Changed
+
+- Tune the default `regular` material to a 35% light veil, a 68% dark veil, a
+  16px backdrop blur, and 140% saturation.
+
+### Documentation
+
+- Document the glass presets, their variable values, and the `data-glass`
+  attribute, and refresh the Surface Lab screenshots.
+
 ## 0.1.5 - 2026-11-03
 
 ### Added

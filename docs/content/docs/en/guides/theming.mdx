@@ -44,6 +44,113 @@ during render causes a hydration mismatch; set the class in an inline script or
 use a theme library such as `next-themes` with `suppressHydrationWarning` on the
 `<html>` element.
 
+## Glass presets
+
+The optional preset stylesheet ships three shared-material presets. Import it
+after the main stylesheet:
+
+```css [app.css]
+@import "@xingxingmofashu/ui";
+@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+```
+
+Without `preset.css`, the main stylesheet still uses the default `regular`
+material; the `data-glass` attribute only has an effect when the preset file is
+imported. Set it on the root or on any container:
+
+```html [index.html]
+<html data-glass="thin">
+```
+
+```html
+<section data-glass="thick">
+  <Card>...</Card>
+</section>
+```
+
+| Preset | Light veil | Dark veil | Blur | Saturate | Use it for |
+| --- | --- | --- | --- | --- | --- |
+| `thin` | `20%` | `62%` | `4px` | `150%` | Decorative surfaces over calm backgrounds |
+| `regular` | `35%` | `68%` | `16px` | `140%` | The default material for most pages |
+| `thick` | `45%` | `72%` | `16px` | `140%` | Dense text and busy photography |
+
+`regular` is also the default when no attribute is present. The presets only
+change the shared `--ui-glass-*` variables; component internals, layout, and
+text styles stay the same. They inherit into descendants, and the `light-dark()`
+values follow the active `color-scheme`, so a preset inside a dark page resolves
+its dark values automatically. A nested `.light` or `.dark` subtree starts from
+the default `regular` material; add `data-glass` there too if the preset should
+continue across that theme boundary.
+
+To switch at runtime, change the attribute. No component code changes are
+needed:
+
+```tsx
+document.documentElement.dataset.glass = "thick";
+```
+
+### Preset plugin
+
+The optional React entry manages the attribute, controlled state, and
+persistence. It does not import CSS, so keep the preset stylesheet import above.
+
+```tsx [app/layout.tsx]
+import type { ReactNode } from "react";
+
+import {
+  GlassPresetProvider,
+  GlassPresetScript,
+} from "@xingxingmofashu/ui/plugins/glass-preset";
+
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <GlassPresetScript storageKey="app-glass" defaultPreset="regular" />
+      </head>
+      <body>
+        <GlassPresetProvider
+          defaultPreset="regular"
+          storageKey="app-glass"
+        >
+          {children}
+        </GlassPresetProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`GlassPresetScript` runs before React hydrates and restores the stored preset,
+which avoids a flash of the default material. The provider reads the same key,
+writes `data-glass` to `<html>`, and exposes the current value through
+`useGlassPreset`:
+
+```tsx
+const { preset, setPreset } = useGlassPreset();
+```
+
+For controlled state, pass `preset` and `onPresetChange`. The `storageKey` prop
+is optional; omit it when the application manages persistence itself.
+
+Use `GlassPresetScope` to apply a preset to one container without changing the
+global value. It renders a `div` with `data-glass` and accepts normal `div`
+props:
+
+```tsx
+<GlassPresetScope preset="thick">
+  <Card>...</Card>
+</GlassPresetScope>
+```
+
+If the inline script cannot be rendered as part of the document head, use
+`getGlassPresetScript` to generate the same script for your framework's script
+injection API.
+
 ## Token layers
 
 The material is split into two layers:
@@ -65,23 +172,23 @@ your application therefore wins without an `!important`:
 @import "@xingxingmofashu/ui";
 
 :root {
-  --ui-glass-surface: rgb(255 255 255 / 0.55);
-  --ui-glass-border: rgb(15 23 42 / 0.14);
-  --ui-glass-blur: 12px;
-  --ui-glass-saturate: 180%;
+  --ui-glass-surface: rgb(255 255 255 / 0.5);
+  --ui-glass-border: rgb(15 23 42 / 0.16);
+  --ui-glass-blur: 20px;
+  --ui-glass-saturate: 160%;
 }
 
 .dark,
 [data-theme="dark"] {
-  --ui-glass-surface: rgb(255 255 255 / 0.08);
-  --ui-glass-border: rgb(255 255 255 / 0.18);
+  --ui-glass-surface: rgb(20 20 20 / 0.75);
+  --ui-glass-border: rgb(255 255 255 / 0.24);
 }
 ```
 
-The default material pairs a translucent theme veil with a backdrop blur. The
-veil strength balances transparency against text contrast, so tune it for the
-imagery in your application: test over the busiest and darkest background, not
-only over a plain page.
+The default `regular` material pairs a 35% light veil or 68% dark veil with a
+16px backdrop blur at 140% saturation. The veil strength balances transparency
+against text contrast, so tune it for the imagery in your application: test over
+the busiest and darkest background, not only over a plain page.
 
 ## Tailwind aliases
 
@@ -195,6 +302,7 @@ Provide a sensible fallback background for browsers that do not support
 
 - Import the package stylesheet exactly once, before your own overrides.
 - Set `.dark` or `data-theme="dark"` before first paint.
-- Override tokens in an unlayered `:root` and `.dark` block.
+- Use `data-glass="thin | regular | thick"` for the shared material.
+- Override tokens in an unlayered `:root` and `.dark` block for custom material.
 - Test glass contrast over the busiest background in the app.
 - Prefer `ui` for internal slots, `className` for layout, and tokens for material changes.

@@ -67,6 +67,51 @@ The package root resolves to `dist/index.css` through its `style` export. The
 stylesheet includes its own Tailwind source scan, so component utilities are
 generated without an extra `@source` directive.
 
+### Glass presets
+
+Import the optional preset stylesheet:
+
+```css [app.css]
+@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+```
+
+Then switch the shared glass material with `data-glass` on the root or any
+container:
+
+```html
+<html data-glass="thin">
+<section data-glass="thick">...</section>
+```
+
+`thin` is the clearest, `regular` is the default, and `thick` is the most
+readable over busy imagery. Presets only override shared CSS variables. Without
+`preset.css`, the main stylesheet still uses the `regular` material.
+
+The optional React plugin manages the attribute and persistence:
+
+```tsx
+import {
+  GlassPresetProvider,
+  GlassPresetScope,
+  GlassPresetScript,
+} from "@xingxingmofashu/ui/plugins/glass-preset";
+
+// In <head>, before React hydrates.
+<GlassPresetScript storageKey="app-glass" />;
+
+// Around the application.
+<GlassPresetProvider storageKey="app-glass">
+  {children}
+</GlassPresetProvider>;
+
+// Or scope one container without changing the global preset.
+<GlassPresetScope preset="thick">{children}</GlassPresetScope>;
+```
+
+The provider writes `data-glass` to `<html>` and exposes
+`useGlassPreset()`. Pass `preset` and `onPresetChange` for controlled state, or
+`defaultPreset` for an uncontrolled initial value.
+
 ## Usage
 
 ```tsx

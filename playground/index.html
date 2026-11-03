@@ -22,14 +22,23 @@
               : prefersDark
                 ? "dark"
                 : "light";
+          const storedGlass = localStorage.getItem("ui-playground-glass");
+          const glass =
+            storedGlass === "thin" ||
+            storedGlass === "regular" ||
+            storedGlass === "thick"
+              ? storedGlass
+              : "regular";
           const root = document.documentElement;
 
           root.dataset.theme = theme;
+          root.dataset.glass = glass;
           root.classList.toggle("dark", theme === "dark");
           root.classList.toggle("light", theme === "light");
           root.style.colorScheme = theme;
         } catch {
           document.documentElement.dataset.theme = "light";
+          document.documentElement.dataset.glass = "regular";
           document.documentElement.style.colorScheme = "light";
         }
       })();

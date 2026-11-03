@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { GlassPresetToggle } from "./components/glass-preset-toggle";
 import { ThemeToggle } from "./components/theme-toggle";
 import { AccordionPreview } from "./previews/accordion";
 import { AlertDialogPreview } from "./previews/alert-dialog";
@@ -153,7 +154,7 @@ const sections = [
 function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-pg-line bg-pg-canvas/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-16 w-full max-w-7xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:flex-nowrap sm:px-6 sm:py-0 lg:px-8">
         <a
           href="#top"
           className="flex min-w-0 items-center gap-3 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-glass-focus"
@@ -174,7 +175,10 @@ function Header() {
           </span>
         </a>
 
-        <ThemeToggle />
+        <div className="flex flex-wrap items-center gap-2">
+          <GlassPresetToggle />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
@@ -227,9 +231,9 @@ function Intro() {
         <code className="rounded-md border border-pg-line bg-pg-panel px-1.5 py-0.5 font-mono text-[0.9em] text-pg-ink">
           @xingxingmofashu/ui
         </code>
-        . Use the toggle in the header to compare the same components across
-        both themes; your choice is remembered on the next visit. The surface
-        lab puts the material over saturated backgrounds and custom images.
+        . Use the toggles in the header to compare themes and glass presets;
+        your choices are remembered on the next visit. The surface lab puts the
+        material over saturated backgrounds and custom images.
       </p>
     </div>
   );
