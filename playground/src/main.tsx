@@ -17,7 +17,7 @@ createRoot(container).render(
   <React.StrictMode>
     <ThemeProvider>
       <GlassPresetProvider
-        defaultPreset="regular"
+        defaultPreset="thin"
         storageKey="ui-playground-glass"
       >
         <App />

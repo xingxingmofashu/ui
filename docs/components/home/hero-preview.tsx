@@ -10,17 +10,17 @@ import {
   type GlassPreset,
 } from "@xingxingmofashu/ui/plugins/glass-preset";
 
-import { homeCopy } from "./copy";
+import content from "./content.json";
 
 const presetItems = [
-  { value: "thin", label: homeCopy.hero.preview.presets.thin },
-  { value: "regular", label: homeCopy.hero.preview.presets.regular },
-  { value: "thick", label: homeCopy.hero.preview.presets.thick },
+  { value: "thin", label: content.hero.preview.presets.thin },
+  { value: "regular", label: content.hero.preview.presets.regular },
+  { value: "thick", label: content.hero.preview.presets.thick },
 ] as const;
 
 export function HeroPreview() {
-  const copy = homeCopy.hero.preview;
-  const [preset, setPreset] = useState<GlassPreset>("regular");
+  const preview = content.hero.preview;
+  const [preset, setPreset] = useState<GlassPreset>("thin");
   const [glare, setGlare] = useState(64);
 
   return (
@@ -36,21 +36,21 @@ export function HeroPreview() {
 
       <span className="relative z-10 inline-flex items-center gap-2 rounded-full border border-fd-border bg-fd-background/80 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-fd-muted-foreground backdrop-blur">
         <span className="size-1.5 rounded-full bg-fd-foreground" />
-        {copy.label}
+        {preview.label}
       </span>
 
       <GlassPresetScope preset={preset} className="relative z-10 mt-4">
-        <Card title={copy.title} description={copy.description}>
+        <Card title={preview.title} description={preview.description}>
           <div className="space-y-5">
             <div className="flex items-center justify-between gap-4 text-xs">
-              <span className="text-ui-ink/65">{copy.presetLabel}</span>
+              <span className="text-ui-ink/65">{preview.presetLabel}</span>
               <span className="font-mono uppercase tracking-[0.14em] text-ui-ink/45">
-                {copy.presets[preset]}
+                {preview.presets[preset]}
               </span>
             </div>
 
             <ToggleGroup
-              aria-label={copy.presetLabel}
+              aria-label={preview.presetLabel}
               size="sm"
               value={[preset]}
               onValueChange={(value) => {
@@ -69,17 +69,17 @@ export function HeroPreview() {
 
             <div className="h-px bg-ui-glass-border" />
 
-            <Switch label={copy.switchLabel} defaultChecked />
+            <Switch label={preview.switchLabel} defaultChecked />
 
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-4 text-xs">
-                <span className="text-ui-ink/65">{copy.glareLabel}</span>
+                <span className="text-ui-ink/65">{preview.glareLabel}</span>
                 <span className="font-mono tabular-nums text-ui-ink/45">
                   {glare}
                 </span>
               </div>
               <Slider
-                aria-label={copy.glareLabel}
+                aria-label={preview.glareLabel}
                 value={glare}
                 onValueChange={setGlare}
               />
@@ -89,12 +89,12 @@ export function HeroPreview() {
       </GlassPresetScope>
 
       <div className="relative z-10 mt-4 flex items-center justify-between gap-4 text-xs text-fd-muted-foreground">
-        <span>{copy.footerLabel}</span>
+        <span>{preview.footerLabel}</span>
         <Link
           href="/docs/en/components/card"
           className="inline-flex items-center gap-1.5 font-medium text-fd-foreground underline decoration-fd-border underline-offset-4 transition-colors hover:decoration-fd-foreground"
         >
-          {copy.footerLink}
+          {preview.footerLink}
           <ArrowUpRight className="size-3.5" aria-hidden="true" />
         </Link>
       </div>

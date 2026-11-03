@@ -70,7 +70,7 @@ test("playground switches the shared glass material", async ({ page }) => {
   const root = page.locator("html");
   const thick = page.getByRole("button", { name: "Thick", exact: true });
 
-  await expect(root).toHaveAttribute("data-glass", "regular");
+  await expect(root).toHaveAttribute("data-glass", "thin");
   await thick.click();
   await expect(root).toHaveAttribute("data-glass", "thick");
   await expect(thick).toHaveAttribute("aria-pressed", "true");

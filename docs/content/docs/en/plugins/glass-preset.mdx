@@ -21,8 +21,8 @@ Import the stylesheet after the core stylesheet:
 
 <Callout type="info">
 Without the plugin stylesheet, the core stylesheet still renders the default
-`regular` material. The `data-glass` attribute only has an effect after the
-preset stylesheet is imported.
+`thin` material. The `data-glass` attribute only has an effect after the preset
+stylesheet is imported.
 </Callout>
 
 ## Apply a preset
@@ -42,15 +42,15 @@ Set `data-glass` on the root or on any container:
 | Preset | Light veil | Dark veil | Blur | Saturate | Use it for |
 | --- | --- | --- | --- | --- | --- |
 | `thin` | `20%` | `62%` | `4px` | `150%` | Decorative surfaces over calm backgrounds |
-| `regular` | `35%` | `68%` | `16px` | `140%` | The default material for most pages |
+| `regular` | `35%` | `68%` | `16px` | `140%` | A balanced alternative for most pages |
 | `thick` | `45%` | `72%` | `16px` | `140%` | Dense text and busy photography |
 
-`regular` is also the default when no attribute is present. The presets only
+`thin` is also the default when no attribute is present. The presets only
 change the shared `--ui-glass-*` variables; component internals, layout, and
 text styles stay the same. They inherit into descendants, and the `light-dark()`
 values follow the active `color-scheme`, so a preset inside a dark page resolves
 its dark values automatically. A nested `.light` or `.dark` subtree starts from
-the default `regular` material; add `data-glass` there too if the preset should
+the default `thin` material; add `data-glass` there too if the preset should
 continue across that theme boundary.
 
 ## React setup
@@ -74,11 +74,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <GlassPresetScript storageKey="app-glass" defaultPreset="regular" />
+        <GlassPresetScript storageKey="app-glass" defaultPreset="thin" />
       </head>
       <body>
         <GlassPresetProvider
-          defaultPreset="regular"
+          defaultPreset="thin"
           storageKey="app-glass"
         >
           {children}
@@ -154,7 +154,7 @@ import {
 } from "@xingxingmofashu/ui/plugins/glass-preset";
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const [preset, setPreset] = useState<GlassPreset>("regular");
+  const [preset, setPreset] = useState<GlassPreset>("thin");
 
   return (
     <GlassPresetProvider preset={preset} onPresetChange={setPreset}>
@@ -210,13 +210,13 @@ import {
 
 <GlassPresetScript
   storageKey="app-glass"
-  defaultPreset="regular"
+  defaultPreset="thin"
   nonce={nonce}
 />;
 
 const script = getGlassPresetScript({
   storageKey: "app-glass",
-  defaultPreset: "regular",
+  defaultPreset: "thin",
 });
 ```
 
@@ -236,7 +236,7 @@ value, then a valid `data-glass` attribute already on `<html>`, then
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `preset` | `GlassPreset` | — | Controlled preset. When provided, the provider does not update its internal value; update this prop from `onPresetChange`. |
-| `defaultPreset` | `GlassPreset` | `"regular"` | Initial value for uncontrolled mode, including the server render and the first client render before persisted state is read. Ignored when `preset` is provided. |
+| `defaultPreset` | `GlassPreset` | `"thin"` | Initial value for uncontrolled mode, including the server render and the first client render before persisted state is read. Ignored when `preset` is provided. |
 | `storageKey` | `string` | — | `localStorage` key used to persist the preset. In uncontrolled mode it also restores the value after hydration. Omit to let the application manage persistence. |
 | `onPresetChange` | `(preset: GlassPreset) => void` | — | Called when `setPreset` requests a change, in both controlled and uncontrolled mode. |
 | `children` | `ReactNode` | — | Subtree that can read the preset with `useGlassPreset`. |
@@ -270,7 +270,7 @@ Returns the provider state. It throws when called outside `GlassPresetProvider`.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `storageKey` | `string` | — | `localStorage` key read before React hydrates. |
-| `defaultPreset` | `GlassPreset` | `"regular"` | Preset used when storage and the existing attribute are empty or invalid. |
+| `defaultPreset` | `GlassPreset` | `"thin"` | Preset used when storage and the existing attribute are empty or invalid. |
 | `nonce` | `string` | — | CSP nonce for the inline script. |
 
 ### `getGlassPresetScript`

@@ -7,10 +7,10 @@ import {
   type GlassPreset,
 } from "@xingxingmofashu/ui/plugins/glass-preset";
 
-import { homeCopy } from "./copy";
+import content from "./content.json";
 
 export function MaterialStudy() {
-  const copy = homeCopy.material;
+  const material = content.material;
 
   return (
     <section className="border-y border-fd-border bg-fd-muted/20">
@@ -18,25 +18,25 @@ export function MaterialStudy() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:items-start">
           <div className="lg:sticky lg:top-28">
             <span className="text-[0.68rem] font-medium uppercase tracking-[0.18em] text-fd-muted-foreground">
-              {copy.eyebrow}
+              {material.eyebrow}
             </span>
             <h2 className="mt-3 max-w-sm text-3xl font-semibold tracking-[-0.04em] text-fd-foreground sm:text-4xl">
-              {copy.title}
+              {material.title}
             </h2>
             <p className="mt-4 max-w-md text-sm leading-7 text-fd-muted-foreground">
-              {copy.description}
+              {material.description}
             </p>
             <Link
               href="/docs/en/plugins/glass-preset"
               className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-fd-foreground underline decoration-fd-border underline-offset-4 transition-colors hover:decoration-fd-foreground"
             >
-              {copy.link}
+              {material.link}
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
-            {copy.presets.map((preset, index) => (
+            {material.presets.map((preset, index) => (
               <GlassPresetScope
                 key={preset.value}
                 preset={preset.value as GlassPreset}
@@ -57,7 +57,7 @@ export function MaterialStudy() {
                     </div>
 
                     <div className="grid grid-cols-3 gap-2">
-                      {copy.swatches.map((swatch) => (
+                      {material.swatches.map((swatch) => (
                         <div
                           key={swatch}
                           className={

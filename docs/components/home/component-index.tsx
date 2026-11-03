@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Card } from "@xingxingmofashu/ui";
 
 import { CompositionPreview } from "./composition-preview";
-import { homeCopy } from "./copy";
+import content from "./content.json";
 
 const groups = [
   {
@@ -46,7 +46,7 @@ const groups = [
 ] as const;
 
 export function ComponentIndex() {
-  const copy = homeCopy.components;
+  const components = content.components;
 
   return (
     <section
@@ -56,22 +56,22 @@ export function ComponentIndex() {
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start">
         <div>
           <span className="text-[0.68rem] font-medium uppercase tracking-[0.18em] text-fd-muted-foreground">
-            {copy.eyebrow}
+            {components.eyebrow}
           </span>
           <h2 className="mt-3 max-w-xl text-3xl font-semibold tracking-[-0.04em] text-fd-foreground sm:text-4xl">
-            {copy.title}
+            {components.title}
           </h2>
           <p className="mt-4 max-w-xl text-sm leading-7 text-fd-muted-foreground">
-            {copy.description}
+            {components.description}
           </p>
 
           <Card
             className="mt-8"
-            title={copy.featured.title}
-            description={copy.featured.description}
+            title={components.featured.title}
+            description={components.featured.description}
             footer={
               <span className="text-xs text-ui-ink/55">
-                {copy.featured.footer}
+                {components.featured.footer}
               </span>
             }
           >
@@ -110,7 +110,7 @@ export function ComponentIndex() {
         href="/docs/en/components"
         className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-fd-foreground underline decoration-fd-border underline-offset-4 transition-colors hover:decoration-fd-foreground"
       >
-        {copy.link}
+        {components.link}
         <ArrowUpRight className="size-4" aria-hidden="true" />
       </Link>
     </section>

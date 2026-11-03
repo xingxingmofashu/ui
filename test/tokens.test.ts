@@ -295,7 +295,7 @@ describe("design tokens", () => {
       "filter: var(--ui-glass-tone, brightness(0.98)) contrast(var(--ui-glass-contrast, 1.05));",
     );
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 16px)) saturate(var(--ui-glass-saturate, 140%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 4px)) saturate(var(--ui-glass-saturate, 150%));",
     );
     expect(css).toContain(
       "top: calc(var(--ui-glass-inner-inset, 8px) + var(--ui-glass-inner-offset, 1px));",
@@ -311,7 +311,7 @@ describe("design tokens", () => {
     expect(css).toContain("background-color: var(--ui-glass-surface);");
     expect(css).toContain("box-shadow: var(--ui-shadow-glass);");
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 16px)) saturate(var(--ui-glass-saturate, 140%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 4px)) saturate(var(--ui-glass-saturate, 150%));",
     );
     expect(css).toContain("border: 1px double var(--ui-glass-border);");
     expect(css).toContain("border: 1px solid var(--ui-glass-inner-border);");
@@ -466,7 +466,7 @@ describe("design tokens", () => {
     const css = await buildStyles(themeCandidates());
 
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 16px)) saturate(var(--ui-glass-saturate, 140%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 4px)) saturate(var(--ui-glass-saturate, 150%));",
     );
     expect(css).toContain("background-color: var(--ui-toggle-group-thumb);");
     expect(css).toContain(
@@ -600,13 +600,13 @@ describe("design tokens", () => {
     expect(css).toContain("--ui-surface: #fff;");
     expect(css).toContain("--ui-surface: #141414;");
     expect(css).toContain(
-      "--ui-glass-surface: rgb(255 255 255 / 0.35);",
+      "--ui-glass-surface: rgb(255 255 255 / 0.2);",
     );
     expect(css).toContain(
-      "--ui-glass-surface: rgb(20 20 20 / 0.68);",
+      "--ui-glass-surface: rgb(20 20 20 / 0.62);",
     );
-    expect(css).toContain("--ui-glass-blur: 16px;");
-    expect(css).toContain("--ui-glass-saturate: 140%;");
+    expect(css).toContain("--ui-glass-blur: 4px;");
+    expect(css).toContain("--ui-glass-saturate: 150%;");
     expect(css).toContain("--ui-glass-inner-border: rgb(0 0 0 / 0.9);");
     expect(css).toContain("--ui-glass-inner-border: rgb(255 255 255 / 0.4);");
     expect(css).toContain("--ui-glass-tone: brightness(0.98);");

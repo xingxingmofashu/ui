@@ -83,9 +83,10 @@ container:
 <section data-glass="thick">...</section>
 ```
 
-`thin` is the clearest, `regular` is the default, and `thick` is the most
-readable over busy imagery. Presets only override shared CSS variables. Without
-the plugin stylesheet, the main stylesheet still uses the `regular` material.
+`thin` is the default and the clearest, `regular` balances transparency with
+text separation, and `thick` is the most readable over busy imagery. Presets
+only override shared CSS variables. Without the plugin stylesheet, the main
+stylesheet still uses the `thin` material.
 
 The optional React plugin manages the attribute and persistence:
 

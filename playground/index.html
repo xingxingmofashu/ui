@@ -28,7 +28,7 @@
             storedGlass === "regular" ||
             storedGlass === "thick"
               ? storedGlass
-              : "regular";
+              : "thin";
           const root = document.documentElement;
 
           root.dataset.theme = theme;
@@ -38,7 +38,7 @@
           root.style.colorScheme = theme;
         } catch {
           document.documentElement.dataset.theme = "light";
-          document.documentElement.dataset.glass = "regular";
+          document.documentElement.dataset.glass = "thin";
           document.documentElement.style.colorScheme = "light";
         }
       })();

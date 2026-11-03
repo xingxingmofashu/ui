@@ -2,10 +2,10 @@
 
 import { Progress, Switch, Tabs } from "@xingxingmofashu/ui";
 
-import { homeCopy } from "./copy";
+import content from "./content.json";
 
 export function CompositionPreview() {
-  const copy = homeCopy.components.featured;
+  const featured = content.components.featured;
 
   return (
     <Tabs
@@ -16,11 +16,11 @@ export function CompositionPreview() {
       items={[
         {
           value: "overview",
-          label: copy.overview,
+          label: featured.overview,
           content: (
             <div className="space-y-4 pt-4">
               <div className="grid grid-cols-3 gap-2">
-                {copy.metrics.map((metric) => (
+                {featured.metrics.map((metric) => (
                   <div
                     key={metric.label}
                     className="rounded-xl border border-ui-glass-border bg-ui-glass-surface p-3"
@@ -38,29 +38,29 @@ export function CompositionPreview() {
               <div className="flex items-center justify-between gap-4 rounded-xl border border-ui-glass-border bg-ui-glass-surface p-3">
                 <div className="min-w-0">
                   <p className="text-xs font-medium text-ui-ink">
-                    {copy.updatesLabel}
+                    {featured.updatesLabel}
                   </p>
                   <p className="mt-1 text-[0.68rem] leading-5 text-ui-ink/55">
-                    {copy.updatesDescription}
+                    {featured.updatesDescription}
                   </p>
                 </div>
                 <Switch
-                  aria-label={copy.updatesLabel}
+                  aria-label={featured.updatesLabel}
                   size="sm"
                   defaultChecked
                 />
               </div>
 
-              <Progress size="sm" label={copy.syncLabel} value={72} />
+              <Progress size="sm" label={featured.syncLabel} value={72} />
             </div>
           ),
         },
         {
           value: "activity",
-          label: copy.activity,
+          label: featured.activity,
           content: (
             <div className="space-y-2 pt-4">
-              {copy.activityItems.map((item) => (
+              {featured.activityItems.map((item) => (
                 <div
                   key={`${item.time}-${item.title}`}
                   className="flex items-center gap-4 rounded-xl border border-ui-glass-border bg-ui-glass-surface px-3 py-2.5"

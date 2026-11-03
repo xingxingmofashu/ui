@@ -57,7 +57,7 @@ describe("glass preset plugin", () => {
     document.documentElement.dataset.glass = "thin";
 
     render(
-      <GlassPresetProvider defaultPreset="regular" storageKey="app-glass">
+      <GlassPresetProvider defaultPreset="thin" storageKey="app-glass">
         <GlassPresetProbe />
       </GlassPresetProvider>,
     );
@@ -99,12 +99,12 @@ describe("glass preset plugin", () => {
 
     document.body.append(container);
     container.innerHTML = renderToString(
-      <GlassPresetProvider defaultPreset="regular" storageKey="app-glass">
+      <GlassPresetProvider defaultPreset="thin" storageKey="app-glass">
         <GlassPresetProbe />
       </GlassPresetProvider>,
     );
 
-    expect(container).toHaveTextContent("regular");
+    expect(container).toHaveTextContent("thin");
 
     const recoverableErrors: unknown[] = [];
     let root: ReturnType<typeof hydrateRoot> | undefined;
@@ -112,7 +112,7 @@ describe("glass preset plugin", () => {
     await act(async () => {
       root = hydrateRoot(
         container,
-        <GlassPresetProvider defaultPreset="regular" storageKey="app-glass">
+        <GlassPresetProvider defaultPreset="thin" storageKey="app-glass">
           <GlassPresetProbe />
         </GlassPresetProvider>,
         {
@@ -163,7 +163,7 @@ describe("glass preset plugin", () => {
   it("keeps an existing preset when storage is empty", () => {
     document.documentElement.dataset.glass = "thick";
 
-    new Function(getGlassPresetScript({ defaultPreset: "regular" }))();
+    new Function(getGlassPresetScript({ defaultPreset: "thin" }))();
 
     expect(document.documentElement.dataset.glass).toBe("thick");
   });
@@ -173,7 +173,7 @@ describe("glass preset plugin", () => {
 
     new Function(getGlassPresetScript({ storageKey: "app-glass" }))();
 
-    expect(document.documentElement.dataset.glass).toBe("regular");
+    expect(document.documentElement.dataset.glass).toBe("thin");
   });
 
   it("escapes script terminators in the storage key", () => {

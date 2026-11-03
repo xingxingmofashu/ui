@@ -7,7 +7,7 @@ const GLASS_PRESETS = ["thin", "regular", "thick"] as const;
 
 type GlassPreset = (typeof GLASS_PRESETS)[number];
 
-const DEFAULT_GLASS_PRESET: GlassPreset = "regular";
+const DEFAULT_GLASS_PRESET: GlassPreset = "thin";
 
 function isGlassPreset(value: unknown): value is GlassPreset {
   return (
@@ -19,7 +19,7 @@ function isGlassPreset(value: unknown): value is GlassPreset {
 type GlassPresetProviderProps = {
   /** Controlled preset. Omit to let the provider manage its own state. */
   preset?: GlassPreset;
-  /** Initial preset when the provider is uncontrolled. @default "regular" */
+  /** Initial preset when the provider is uncontrolled. @default "thin" */
   defaultPreset?: GlassPreset;
   /** Optional `localStorage` key used to persist and restore the preset. */
   storageKey?: string;

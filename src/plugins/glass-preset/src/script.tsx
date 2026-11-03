@@ -28,7 +28,7 @@ function toScriptLiteral(value: unknown) {
  */
 function getGlassPresetScript({
   storageKey,
-  defaultPreset = "regular",
+  defaultPreset = "thin",
 }: GlassPresetScriptOptions = {}) {
   const key = storageKey === undefined ? "null" : toScriptLiteral(storageKey);
   const fallback = toScriptLiteral(defaultPreset);

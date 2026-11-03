@@ -3,10 +3,10 @@ import Link from "next/link";
 
 import { githubUrl } from "@/lib/site";
 
-import { homeCopy } from "./copy";
+import content from "./content.json";
 
 export function Cta() {
-  const copy = homeCopy.cta;
+  const cta = content.cta;
 
   return (
     <section className="mx-auto w-full max-w-7xl px-6 pb-24 pt-8">
@@ -18,13 +18,13 @@ export function Cta() {
 
         <div className="relative">
           <span className="text-[0.68rem] font-medium uppercase tracking-[0.18em] text-fd-muted-foreground">
-            {copy.eyebrow}
+            {cta.eyebrow}
           </span>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-[-0.04em] text-fd-foreground sm:text-4xl">
-            {copy.title}
+            {cta.title}
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-fd-muted-foreground">
-            {copy.description}
+            {cta.description}
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -32,21 +32,21 @@ export function Cta() {
               href="/docs/en/get-started/introduction"
               className="inline-flex h-10 items-center gap-2 rounded-full bg-fd-foreground px-5 text-sm font-medium text-fd-background transition-opacity hover:opacity-85"
             >
-              {copy.readDocs}
+              {cta.readDocs}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link
               href="/playground/"
               className="inline-flex h-10 items-center gap-2 rounded-full border border-fd-border bg-fd-background/70 px-5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
             >
-              {copy.playground}
+              {cta.playground}
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
             <a
               href={githubUrl}
               className="inline-flex h-10 items-center rounded-full border border-fd-border px-5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
             >
-              {copy.github}
+              {cta.github}
             </a>
           </div>
         </div>

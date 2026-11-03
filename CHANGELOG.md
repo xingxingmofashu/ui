@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Make `thin` the default glass material in the core stylesheet, the
+  glass-preset plugin, and the playground. The default now uses a 20% light
+  veil, a 62% dark veil, a 4px backdrop blur, and 150% saturation.
+
 ## 0.1.6 - 2026-11-03
 
 ### Added
