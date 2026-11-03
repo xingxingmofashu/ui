@@ -11,7 +11,7 @@ export default defineConfig({
   reporter: process.env.CI
     ? [["github"], ["html", { open: "never" }]]
     : [["list"], ["html", { open: "never" }]],
-  snapshotPathTemplate: "{testDir}/__screenshots__/{arg}{ext}",
+  snapshotPathTemplate: "{testDir}/__screenshots__/{arg}-{platform}{ext}",
   use: {
     baseURL,
     ...devices["Desktop Chrome"],
