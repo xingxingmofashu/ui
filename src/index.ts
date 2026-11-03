@@ -13,6 +13,11 @@ export { Input, type InputProps } from "./components/input";
 export { Popover, type PopoverProps } from "./components/popover";
 export { Progress, type ProgressProps } from "./components/progress";
 export {
+  RadioGroup,
+  type RadioGroupItemProps,
+  type RadioGroupProps,
+} from "./components/radio-group";
+export {
   ScrollArea,
   type ScrollAreaOrientation,
   type ScrollAreaProps,

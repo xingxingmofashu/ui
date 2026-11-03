@@ -1,0 +1,92 @@
+---
+title: "Radio Group"
+description: "An accessible React radio group with circular Liquid Glass controls, labels, descriptions, and keyboard navigation."
+---
+
+`RadioGroup` renders a labelled group of circular glass radio controls. Each option can include a label and supporting description, and the entire row is clickable.
+
+Options are passed through the `items` array; each item's `value` maps to the group value. Arrow keys move the selection between options, and the selected value is submitted through a hidden native radio input.
+
+## Basic example
+
+`label` and `description` name the group and explain its purpose. Set `defaultValue` to start with an option selected, or use `value` with `onValueChange` for a controlled group.
+
+<Example name="radio-group/basic" />
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. The control, indicator, label, description, and spacing scale together.
+
+<Example name="radio-group/sizes" />
+
+## Controlled usage
+
+`value` and `onValueChange` let external state fully control the selection. `onValueChange` also receives event details.
+
+<Example name="radio-group/controlled" />
+
+## Disabled and read-only
+
+Set `disabled` on the group to disable every option, or on a single item to disable only that option. `readOnly` keeps the group focusable while preventing changes.
+
+<Example name="radio-group/disabled" />
+
+## API reference
+
+**RadioGroup**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible label for the group. |
+| `description` | `ReactNode` | — | Supporting text under the group label, linked with `aria-describedby`. |
+| `items` | `readonly RadioGroupItemProps[]` | — | Options rendered by the group. |
+| `value` | `string` | — | Controlled selected value. |
+| `defaultValue` | `string` | — | Initial selected value when uncontrolled. |
+| `onValueChange` | `(value: string, details) => void` | — | Called when the selected value changes. |
+| `disabled` | `boolean` | `false` | Disables every option. |
+| `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
+| `required` | `boolean` | `false` | Requires a selection for form submission. |
+| `name` | `string` | — | Form field name. |
+| `form` | `string` | — | ID of the form that owns the hidden inputs. |
+| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control, indicator, and text size. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
+| `className` | `string` | — | Tailwind classes merged into the group root. |
+| `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+**RadioGroupItem**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Value that identifies the option in the group value. |
+| `label` | `ReactNode` | — | Visible label next to the control. It becomes the accessible name unless `aria-label` or `aria-labelledby` is provided. |
+| `description` | `ReactNode` | — | Supporting copy under the label, linked with `aria-describedby` when the option has a name. |
+| `disabled` | `boolean` | `false` | Disables this option. |
+| `readOnly` | `boolean` | `false` | Prevents changes to this option while remaining focusable. |
+| `required` | `boolean` | `false` | Marks this option as required for form submission. |
+| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
+| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
+| `aria-labelledby` | `string` | — | ID of an external label. |
+| `aria-describedby` | `string` | — | ID of external supporting text. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the option element. |
+| `ref` | `Ref<HTMLSpanElement>` | — | Ref forwarded to the option element. |
+| `className` | `string` | — | Tailwind classes merged into the option root. |
+| `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for this option's internal slots, keyed by `data-slot`. |
+
+| Attribute | Description |
+| --- | --- |
+| `data-checked` | Present when the option is selected. |
+| `data-unchecked` | Present when the option is not selected. |
+| `data-disabled` | Present when the option or group is disabled. |
+| `data-readonly` | Present when the option is read-only. |
+| `data-required` | Present when the option is required. |
+| `data-valid` | Present when the option is valid. |
+| `data-invalid` | Present when the option is invalid. |
+| `data-touched` | Present after the option is touched. |
+| `data-dirty` | Present after the option value changes. |
+| `data-filled` | Present when the option is selected. |
+| `data-focused` | Present when the option is focused. |
+| `data-starting-style` | Present when the indicator begins animating in. |
+| `data-ending-style` | Present when the indicator is animating out. |
+| `data-slot` | Marks internal parts (`root`, `header`, `label`, `description`, `items`, `item`, `box`, `glass`, `overlay`, `indicator`, `dot`, `wrapper`, `item-label`, `item-description`) for styling. |

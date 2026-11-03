@@ -17,6 +17,7 @@ import {
   Input,
   Popover,
   Progress,
+  RadioGroup,
   ScrollArea,
   Switch,
   Toggle,
@@ -179,6 +180,24 @@ export function ComponentGrid({ lang }: { lang: HomeLocale }) {
           size="sm"
           label={items.progress.label}
           value={64}
+        />
+      ),
+    },
+    {
+      id: "radio-group",
+      name: items.radioGroup.name,
+      description: items.radioGroup.description,
+      preview: (
+        <RadioGroup
+          className="w-full max-w-[16rem]"
+          size="sm"
+          label={items.radioGroup.label}
+          defaultValue="pro"
+          items={[
+            { value: "free", label: items.radioGroup.free },
+            { value: "pro", label: items.radioGroup.pro },
+            { value: "team", label: items.radioGroup.team },
+          ]}
         />
       ),
     },

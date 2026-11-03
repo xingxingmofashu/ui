@@ -31,7 +31,7 @@ const zh = {
   },
   components: {
     eyebrow: "组件",
-    title: "十六个组件，一套语言",
+    title: "十七个组件，一套语言",
     description:
       "每个组件共享同一套玻璃 token，因此可以自然组合。下面的内容直接渲染 UI 包里的组件。",
     activity: [
@@ -116,6 +116,14 @@ const zh = {
         name: "Progress",
         description: "支持确定与不确定状态的线性玻璃进度条。",
         label: "正在导入工作区",
+      },
+      radioGroup: {
+        name: "Radio Group",
+        description: "圆形玻璃单选控件，支持标签、描述与键盘导航。",
+        label: "方案",
+        free: "免费",
+        pro: "专业版",
+        team: "团队版",
       },
       scrollArea: {
         name: "Scroll Area",
@@ -226,7 +234,7 @@ const en: typeof zh = {
   },
   components: {
     eyebrow: "Components",
-    title: "Sixteen components, one language",
+    title: "Seventeen components, one language",
     description:
       "Every component shares the same glass tokens, so they compose naturally. Everything below renders directly from the UI package.",
     activity: [
@@ -314,6 +322,14 @@ const en: typeof zh = {
         name: "Progress",
         description: "A linear glass progress bar with determinate and indeterminate states.",
         label: "Importing workspace",
+      },
+      radioGroup: {
+        name: "Radio Group",
+        description: "Circular glass radio controls with labels, descriptions, and keyboard navigation.",
+        label: "Plan",
+        free: "Free",
+        pro: "Pro",
+        team: "Team",
       },
       scrollArea: {
         name: "Scroll Area",

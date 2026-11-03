@@ -12,6 +12,7 @@
     "---Form---",
     "checkbox",
     "input",
+    "radio-group",
     "slider",
     "switch",
     "---Overlay---",

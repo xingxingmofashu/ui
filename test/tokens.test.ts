@@ -18,6 +18,7 @@ import dialogTheme from "../src/theme/dialog";
 import drawerTheme from "../src/theme/drawer";
 import inputTheme from "../src/theme/input";
 import progressTheme from "../src/theme/progress";
+import radioGroupTheme from "../src/theme/radio-group";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
   "\\",
@@ -224,6 +225,28 @@ function themeCandidates() {
 
     return progressSlots.map((slot) => progressStyles[slot]());
   });
+  const radioGroupSlots = [
+    "root",
+    "header",
+    "label",
+    "description",
+    "items",
+    "item",
+    "box",
+    "glass",
+    "overlay",
+    "indicator",
+    "dot",
+    "wrapper",
+    "itemLabel",
+    "itemDescription",
+  ] as const;
+  const radioGroupSizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const radioGroupCandidates = radioGroupSizes.flatMap((size) => {
+    const radioGroupStyles = radioGroupTheme({ size });
+
+    return radioGroupSlots.map((slot) => radioGroupStyles[slot]());
+  });
 
   return [
     buttonStyles.root(),
@@ -245,6 +268,7 @@ function themeCandidates() {
     ...toggleCandidates,
     ...sliderCandidates,
     ...progressCandidates,
+    ...radioGroupCandidates,
   ]
     .join(" ")
     .split(/\s+/)
@@ -536,6 +560,30 @@ describe("design tokens", () => {
     expect(css).toContain("translate: -120% 0;");
     expect(css).toContain("translate: 320% 0;");
     expect(css).toContain("width: 38%;");
+    expect(css).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("compiles the radio group glass controls from the theme recipe", async () => {
+    const css = await buildStyles(themeCandidates());
+
+    expect(css).toContain(
+      "--ui-glass-surface: color-mix(in srgb,var(--ui-ink) 5%,transparent);",
+    );
+    expect(css).toContain("--ui-radio-size: 16px;");
+    expect(css).toContain("--ui-radio-size: 20px;");
+    expect(css).toContain("--ui-radio-size: 28px;");
+    expect(css).toContain("--ui-radio-dot-size: 10px;");
+    expect(css).toContain("--ui-radio-gap: 8px;");
+    expect(css).toContain("--ui-radio-group-gap: 12px;");
+    expect(css).toContain("--ui-radio-group-item-gap: 12px;");
+    expect(css).toContain("--ui-radio-group-label-size: 0.875rem;");
+    expect(css).toContain("height: var(--ui-radio-size);");
+    expect(css).toContain("width: var(--ui-radio-size);");
+    expect(css).toContain("width: var(--ui-radio-dot-size);");
+    expect(css).toContain("height: var(--ui-radio-dot-size);");
+    expect(css).toContain("background-color: var(--ui-ink);");
+    expect(css).toContain("[data-checked]");
+    expect(css).toContain("opacity: 100%;");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
   });
 

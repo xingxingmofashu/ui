@@ -1,0 +1,92 @@
+---
+title: "Radio Group"
+description: "可访问的 React 单选组，采用圆形 Liquid Glass 控件，支持标签、描述与键盘导航。"
+---
+
+`RadioGroup` 渲染一组带标签的圆形玻璃单选控件。每个选项都可以包含标签与说明文字，整行都可以点击。
+
+选项通过 `items` 数组传入，每个条目的 `value` 对应 group 的选中值。方向键会在选项之间移动选择，选中的值通过隐藏的原生单选输入框随表单提交。
+
+## 基础示例
+
+`label` 与 `description` 用于命名分组并说明用途。设置 `defaultValue` 可以指定初始选中项；也可以用 `value` 与 `onValueChange` 完全控制选中值。
+
+<Example name="radio-group/basic" />
+
+## 尺寸
+
+支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。控件、指示器、标签、描述与间距会一起缩放。
+
+<Example name="radio-group/sizes" />
+
+## 受控用法
+
+`value` 与 `onValueChange` 让选中值完全由外部状态控制。`onValueChange` 也会收到事件详情。
+
+<Example name="radio-group/controlled" />
+
+## 禁用与只读
+
+在 group 上设置 `disabled` 会禁用所有选项；在单个 item 上设置 `disabled` 只会禁用该选项。`readOnly` 保留焦点，但不允许修改选中值。
+
+<Example name="radio-group/disabled" />
+
+## API reference
+
+**RadioGroup**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | 分组的可见标签。 |
+| `description` | `ReactNode` | — | 分组标签下方的说明文字，通过 `aria-describedby` 关联。 |
+| `items` | `readonly RadioGroupItemProps[]` | — | 分组渲染的选项。 |
+| `value` | `string` | — | 受控的选中值。 |
+| `defaultValue` | `string` | — | 非受控时的初始选中值。 |
+| `onValueChange` | `(value: string, details) => void` | — | 选中值变化时调用。 |
+| `disabled` | `boolean` | `false` | 禁用所有选项。 |
+| `readOnly` | `boolean` | `false` | 只读，不可修改，但仍可聚焦。 |
+| `required` | `boolean` | `false` | 表单提交前必须选择一项。 |
+| `name` | `string` | — | 表单字段名。 |
+| `form` | `string` | — | 拥有隐藏输入框的表单 ID。 |
+| `inputRef` | `Ref<HTMLInputElement>` | — | 指向隐藏原生输入框的 ref。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控件、指示器与文字尺寸。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组元素。 |
+| `ref` | `Ref<HTMLDivElement>` | — | 转发到分组元素的 ref。 |
+| `className` | `string` | — | 合并到分组根元素的 Tailwind 类名。 |
+| `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
+
+**RadioGroupItem**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | 用于标识选项的分组值。 |
+| `label` | `ReactNode` | — | 控件旁的可见标签；未提供 `aria-label` 或 `aria-labelledby` 时会成为可访问名称。 |
+| `description` | `ReactNode` | — | 标签下方的说明文字；选项有名称时会通过 `aria-describedby` 关联。 |
+| `disabled` | `boolean` | `false` | 禁用该选项。 |
+| `readOnly` | `boolean` | `false` | 该选项只读，不可修改，但仍可聚焦。 |
+| `required` | `boolean` | `false` | 表单提交前必须选择该选项。 |
+| `inputRef` | `Ref<HTMLInputElement>` | — | 指向隐藏原生输入框的 ref。 |
+| `aria-label` | `string` | — | 没有可见标签时使用的可访问名称。 |
+| `aria-labelledby` | `string` | — | 外部标签的 ID。 |
+| `aria-describedby` | `string` | — | 外部说明文字的 ID。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换选项元素。 |
+| `ref` | `Ref<HTMLSpanElement>` | — | 转发到选项元素的 ref。 |
+| `className` | `string` | — | 合并到选项根元素的 Tailwind 类名。 |
+| `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的该选项内部槽位类名。 |
+
+| Attribute | Description |
+| --- | --- |
+| `data-checked` | 选项选中时存在。 |
+| `data-unchecked` | 选项未选中时存在。 |
+| `data-disabled` | 选项或分组禁用时存在。 |
+| `data-readonly` | 选项只读时存在。 |
+| `data-required` | 选项必填时存在。 |
+| `data-valid` | 选项有效时存在。 |
+| `data-invalid` | 选项无效时存在。 |
+| `data-touched` | 选项被触碰后存在。 |
+| `data-dirty` | 选项值变化后存在。 |
+| `data-filled` | 选项选中时存在。 |
+| `data-focused` | 选项聚焦时存在。 |
+| `data-starting-style` | 指示器开始进入动画时存在。 |
+| `data-ending-style` | 指示器退出动画时存在。 |
+| `data-slot` | 标记内部部件（`root`、`header`、`label`、`description`、`items`、`item`、`box`、`glass`、`overlay`、`indicator`、`dot`、`wrapper`、`item-label`、`item-description`）供样式使用。 |
