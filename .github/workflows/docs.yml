@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "docs/**"
+      - "playground/**"
       - "src/**"
       - "package.json"
       - "pnpm-lock.yaml"
@@ -50,6 +51,16 @@ jobs:
         run: pnpm docs:build
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      - name: Build playground
+        run: pnpm playground:build
+        env:
+          VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}/playground/
+
+      - name: Merge playground into the Pages artifact
+        run: |
+          mkdir -p docs/out/playground
+          cp -R playground/dist/. docs/out/playground/
 
       - name: Disable Jekyll
         run: touch docs/out/.nojekyll

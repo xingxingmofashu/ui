@@ -28,13 +28,16 @@ type SurfacePreset = {
   style: CSSProperties;
 };
 
+const baseUrl = import.meta.env.BASE_URL;
+const publicAsset = (file: string) => `${baseUrl}${file.replace(/^\//, "")}`;
+
 const presets: SurfacePreset[] = [
   {
     id: "image",
     label: "Image",
     style: {
       backgroundColor: "#0a0a0a",
-      backgroundImage: 'url("/w53k9q.jpg")',
+      backgroundImage: `url("${publicAsset("w53k9q.jpg")}")`,
       backgroundPosition: "center",
       backgroundSize: "cover",
     },
@@ -109,7 +112,7 @@ const presets: SurfacePreset[] = [
     label: "Artwork",
     style: {
       backgroundColor: "#12052e",
-      backgroundImage: 'url("/glass-background.svg")',
+      backgroundImage: `url("${publicAsset("glass-background.svg")}")`,
       backgroundPosition: "center",
       backgroundSize: "cover",
     },
