@@ -7,7 +7,12 @@ import { Toast as UIToast } from "@base-ui/react/toast";
  */
 const useToast = UIToast.useToastManager;
 
-export { useToast };
+/**
+ * Creates a toast manager for adding notifications outside the React tree.
+ */
+const createToastManager = UIToast.createToastManager;
+
+export { createToastManager, useToast };
 export type {
   ToastManager,
   ToastManagerAddOptions,

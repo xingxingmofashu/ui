@@ -26,8 +26,8 @@ export {
   type ToastProps,
   type ToastProviderProps,
 } from "./components/toast";
-export { createToastManager } from "./composables/create-toast-manager";
 export {
+  createToastManager,
   useToast,
   type ToastManager,
   type ToastManagerAddOptions,

@@ -4,8 +4,7 @@ import { type ComponentProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Toast, ToastProvider } from "../../src/components/toast";
-import { createToastManager } from "../../src/composables/create-toast-manager";
-import { useToast } from "../../src/composables/use-toast";
+import { createToastManager, useToast } from "../../src/composables/use-toast";
 import theme from "../../src/theme/toast";
 
 type AddOptions = Parameters<ReturnType<typeof useToast>["add"]>[0];
