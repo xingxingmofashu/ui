@@ -1,5 +1,5 @@
 {
-  "name": "starter",
+  "name": "lumen-starter",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@xingxingmofashu/ui": "0.1.2",
+    "@xingxingmofashu/ui": "0.1.5",
+    "lucide-react": "^1.66.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

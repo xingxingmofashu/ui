@@ -1,32 +1,53 @@
-# React + TypeScript + Vite
+# Lumen
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A minimal Liquid Glass landing-page starter for
+[`@xingxingmofashu/ui`](https://www.npmjs.com/package/@xingxingmofashu/ui), built
+with Vite, React 19, TypeScript, Tailwind CSS 4, and Lucide icons.
 
-Currently, two official plugins are available:
+The starter includes:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- The package stylesheet and theme tokens.
+- A light/dark toggle that follows the system preference on first load.
+- A hero, six feature cards, and two call-to-action sections.
+- Buttons rendered as anchors, plus the `Card` and `Toggle` components.
 
-## React Compiler
+## Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+pnpm install
+pnpm dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open the URL printed by Vite. Edit `src/App.tsx` and save to test HMR.
+
+```bash
+pnpm build
+pnpm preview
+```
+
+## Files
+
+- `src/App.tsx` — the whole page: theme toggle, features, CTAs, and footer.
+- `src/index.css` — Tailwind, the package stylesheet, and the page background.
+- `src/main.tsx` — React entry point.
+- `index.html` — title and the no-flash theme script.
+
+## Customize
+
+- Change the copy and `features` array in `src/App.tsx`.
+- Import more components from `@xingxingmofashu/ui`; all 18 are installed.
+- Override the shared `--ui-*` tokens in `src/index.css` to match your brand.
+
+## Requirements
+
+- Node.js 22 or newer.
+- React and React DOM 19.
+- Tailwind CSS 4.
+
+## Docs
+
+- [Documentation](https://xingxingmofashu.github.io/docs/en)
+- [Components](https://xingxingmofashu.github.io/docs/en/components)
+- [Theming](https://xingxingmofashu.github.io/docs/en/guides/theming)
+
+MIT licensed.

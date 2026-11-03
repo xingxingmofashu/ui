@@ -1,10 +1,33 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>starter</title>
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="A minimal Vite + React 19 + Tailwind CSS 4 starter for @xingxingmofashu/ui."
+    />
+    <title>Lumen — Liquid Glass React starter</title>
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem("lumen-theme");
+          const dark =
+            stored === "dark" ||
+            (!stored &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          const root = document.documentElement;
+
+          root.classList.toggle("dark", dark);
+          root.classList.toggle("light", !dark);
+          root.style.colorScheme = dark ? "dark" : "light";
+        } catch {
+          document.documentElement.classList.add("light");
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
