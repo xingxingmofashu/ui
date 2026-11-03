@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { BrandMark } from "./components/brand-mark";
 import { GlassPresetToggle } from "./components/glass-preset-toggle";
 import { ThemeToggle } from "./components/theme-toggle";
 import { AccordionPreview } from "./previews/accordion";
@@ -159,12 +160,7 @@ function Header() {
           href="#top"
           className="flex min-w-0 items-center gap-3 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-glass-focus"
         >
-          <span
-            aria-hidden="true"
-            className="relative flex size-8 shrink-0 items-center justify-center rounded-full border border-ui-glass-border bg-ui-glass-surface shadow-[inset_1px_1px_0_rgb(255_255_255/0.35),0_2px_6px_rgb(0_0_0/0.12)]"
-          >
-            <span className="size-2.5 rounded-full bg-ui-ink/75 shadow-[0_0_0_2px_rgb(255_255_255/0.14)]" />
-          </span>
+          <BrandMark className="size-8 shrink-0 rounded-xl" />
           <span className="min-w-0">
             <span className="block truncate text-sm font-semibold tracking-tight text-pg-ink">
               Liquid Glass
