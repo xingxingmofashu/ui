@@ -1,7 +1,7 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset=".github/assets/banner-light.png">
-  <img alt="@xingxingmofashu/ui: Between black and white, glass finds its light." width="1247" src=".github/assets/banner-light.png">
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/surface-lab-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset=".github/assets/surface-lab-light.png">
+  <img alt="The Liquid Glass Surface Lab panel showing glass components over the default image background in light mode." width="1024" src=".github/assets/surface-lab-light.png">
 </picture>
 
 <div align="center">
@@ -28,18 +28,6 @@ Toast, Toggle, and Toggle Group.
 > Requires React 19, React DOM 19, Tailwind CSS 4, Node.js 22+, and an
 > ESM-capable bundler. `Card` is server-safe; the interactive components are
 > client components.
-
-## Preview
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/playground-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset=".github/assets/playground-light.png">
-  <img alt="The Liquid Glass playground showing live component previews in light mode." width="1440" src=".github/assets/playground-light.png">
-</picture>
-
-Every component is rendered live in the local playground. Run
-`pnpm playground:dev`, open <http://localhost:3002>, and switch between light and
-dark to compare the same previews in both themes.
 
 ## Documentation
 
