@@ -228,7 +228,10 @@ function SurfaceLab() {
         </span>
       </div>
 
-      <div className="mb-4 rounded-2xl border border-pg-line bg-pg-panel/70 p-3 backdrop-blur-sm sm:p-4">
+      <div
+        data-testid="surface-lab-controls"
+        className="mb-4 rounded-2xl border border-pg-line bg-pg-panel/70 p-3 backdrop-blur-sm sm:p-4"
+      >
         <div className="flex flex-wrap items-center gap-2">
           <Caption className="me-1">Background</Caption>
           {presets.map((preset) => {
@@ -238,6 +241,7 @@ function SurfaceLab() {
               <button
                 key={preset.id}
                 type="button"
+                data-preset={preset.id}
                 aria-pressed={active}
                 onClick={() => selectPreset(preset.id)}
                 className={cx(
@@ -319,9 +323,13 @@ function SurfaceLab() {
         </p>
       </div>
 
-      <div className="relative overflow-hidden rounded-[2rem] border border-pg-line shadow-[var(--pg-shadow)]">
+      <div
+        data-testid="surface-lab-panel"
+        className="relative overflow-hidden rounded-[2rem] border border-pg-line shadow-[var(--pg-shadow)]"
+      >
         <div
           aria-hidden="true"
+          data-testid="surface-lab-background"
           className="absolute inset-0"
           style={backgroundStyle}
         />

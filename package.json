@@ -73,6 +73,8 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "test": "vitest run",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots",
     "typecheck": "tsc --noEmit",
     "docs:dev": "pnpm --filter @xingxingmofashu/docs dev",
     "docs:build": "pnpm --filter @xingxingmofashu/docs build",
@@ -89,6 +91,7 @@
     "tailwind-variants": "catalog:"
   },
   "devDependencies": {
+    "@playwright/test": "catalog:",
     "@tailwindcss/node": "catalog:",
     "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",
