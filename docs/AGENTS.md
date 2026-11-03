@@ -64,7 +64,9 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
   Manual choices are stored in `localStorage` under `ui-locale` and respected by
   both `LocaleDetect` and `LocaleLink`. Crawlers and WebDriver sessions skip the
   redirect.
-- The header has no Docs/Components links; the docs sidebar uses the page tree, with Get Started (起步) and Components (组件) as top-level folders.
+- The header has no Docs/Components links; the docs sidebar uses the page tree,
+  with Get Started (起步), Guides (指南), Plugins (插件), and Components (组件)
+  as top-level folders.
 - Locale changes perform a full navigation in `components/docs-root-provider.tsx`, so next-themes' theme script is not re-rendered on the client (React 19 warns about script tags).
 
 <!-- BEGIN:nextjs-agent-rules -->

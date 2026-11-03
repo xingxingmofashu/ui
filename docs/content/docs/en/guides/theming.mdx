@@ -3,9 +3,9 @@ title: "Theming"
 description: "Customize the Liquid Glass material, light and dark tokens, and Tailwind aliases."
 ---
 
-The package ships one stylesheet that contains the design tokens, the shared
-glass material, and the Tailwind source scan. Import it once in your global CSS
-and style the rest of the application around it.
+The core package ships one stylesheet that contains the design tokens, the
+shared glass material, and the Tailwind source scan. Import it once in your
+global CSS and style the rest of the application around it.
 
 ```css [app.css]
 @import "tailwindcss";
@@ -46,113 +46,12 @@ use a theme library such as `next-themes` with `suppressHydrationWarning` on the
 
 ## Glass presets
 
-The optional preset stylesheet ships three shared-material presets. Import it
-after the main stylesheet:
+Glass presets are an optional plugin, not part of the core stylesheet. The
+plugin's stylesheet ships the `thin`, `regular`, and `thick` materials, and its
+React entry manages `data-glass` state and persistence.
 
-```css [app.css]
-@import "@xingxingmofashu/ui";
-@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
-```
-
-Without the plugin stylesheet, the main stylesheet still uses the default
-`regular` material; the `data-glass` attribute only has an effect when the
-preset file is imported. Set it on the root or on any container:
-
-```html [index.html]
-<html data-glass="thin">
-```
-
-```html
-<section data-glass="thick">
-  <Card>...</Card>
-</section>
-```
-
-| Preset | Light veil | Dark veil | Blur | Saturate | Use it for |
-| --- | --- | --- | --- | --- | --- |
-| `thin` | `20%` | `62%` | `4px` | `150%` | Decorative surfaces over calm backgrounds |
-| `regular` | `35%` | `68%` | `16px` | `140%` | The default material for most pages |
-| `thick` | `45%` | `72%` | `16px` | `140%` | Dense text and busy photography |
-
-`regular` is also the default when no attribute is present. The presets only
-change the shared `--ui-glass-*` variables; component internals, layout, and
-text styles stay the same. They inherit into descendants, and the `light-dark()`
-values follow the active `color-scheme`, so a preset inside a dark page resolves
-its dark values automatically. A nested `.light` or `.dark` subtree starts from
-the default `regular` material; add `data-glass` there too if the preset should
-continue across that theme boundary.
-
-To switch at runtime, change the attribute. No component code changes are
-needed:
-
-```tsx
-document.documentElement.dataset.glass = "thick";
-```
-
-### Preset plugin
-
-The optional React entry manages the attribute, controlled state, and
-persistence. It does not import CSS, so keep the preset stylesheet import above.
-
-```tsx [app/layout.tsx]
-import type { ReactNode } from "react";
-
-import {
-  GlassPresetProvider,
-  GlassPresetScript,
-} from "@xingxingmofashu/ui/plugins/glass-preset";
-
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <GlassPresetScript storageKey="app-glass" defaultPreset="regular" />
-      </head>
-      <body>
-        <GlassPresetProvider
-          defaultPreset="regular"
-          storageKey="app-glass"
-        >
-          {children}
-        </GlassPresetProvider>
-      </body>
-    </html>
-  );
-}
-```
-
-`GlassPresetScript` runs before React hydrates and restores the stored preset,
-which avoids a flash of the default material. The provider reads the same key,
-writes `data-glass` to `<html>`, and exposes the current value through
-`useGlassPreset`:
-
-```tsx
-const { preset, setPreset } = useGlassPreset();
-```
-
-For controlled state, pass `preset` and `onPresetChange`. The `storageKey` prop
-is optional; omit it when the application manages persistence itself.
-
-Use `GlassPresetScope` to apply a preset to one container without changing the
-global value. It renders a `div` with `data-glass` and accepts normal `div`
-props:
-
-```tsx
-<GlassPresetScope preset="thick">
-  <Card>...</Card>
-</GlassPresetScope>
-```
-
-If the inline script cannot be rendered as part of the document head, use
-`getGlassPresetScript` to generate the same script for your framework's script
-injection API.
-
-See [Glass presets](/docs/en/plugins/glass-preset) for the full plugin API,
-controlled state, and SSR behavior.
+See [Glass presets](/docs/en/plugins/glass-preset) for setup, preset values,
+controlled state, scoped overrides, and SSR behavior.
 
 ## Token layers
 
@@ -305,7 +204,8 @@ Provide a sensible fallback background for browsers that do not support
 
 - Import the package stylesheet exactly once, before your own overrides.
 - Set `.dark` or `data-theme="dark"` before first paint.
-- Use `data-glass="thin | regular | thick"` for the shared material.
+- Use the optional [glass preset plugin](/docs/en/plugins/glass-preset) for
+  `data-glass` materials.
 - Override tokens in an unlayered `:root` and `.dark` block for custom material.
 - Test glass contrast over the busiest background in the app.
 - Prefer `ui` for internal slots, `className` for layout, and tokens for material changes.

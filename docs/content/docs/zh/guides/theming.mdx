@@ -3,8 +3,8 @@ title: "主题定制"
 description: "定制 Liquid Glass 材质、明暗 token 与 Tailwind 别名。"
 ---
 
-组件包提供一个样式表，其中包含设计 token、共享玻璃材质与 Tailwind 源码扫描配置。
-在全局 CSS 中导入一次，其余布局围绕它来组织。
+核心组件包提供一个样式表，其中包含设计 token、共享玻璃材质与 Tailwind 源码扫描
+配置。在全局 CSS 中导入一次，其余布局围绕它来组织。
 
 ```css [app.css]
 @import "tailwindcss";
@@ -42,104 +42,11 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 
 ## 玻璃预设
 
-可选的预设样式表内置三组共享材质。在主样式表之后导入：
+玻璃预设是可选的插件，不属于核心样式表。插件的样式表提供 `thin`、`regular`、
+`thick` 三组材质，React 入口负责 `data-glass` 状态与持久化。
 
-```css [app.css]
-@import "@xingxingmofashu/ui";
-@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
-```
-
-不导入插件样式表时，主样式表仍然使用默认的 `regular` 材质；只有导入后
-`data-glass` 属性才会生效。在根元素或任意容器上设置 `data-glass`：
-
-```html [index.html]
-<html data-glass="thin">
-```
-
-```html
-<section data-glass="thick">
-  <Card>...</Card>
-</section>
-```
-
-| 预设 | 浅色遮罩 | 深色遮罩 | 模糊 | 饱和度 | 适用场景 |
-| --- | --- | --- | --- | --- | --- |
-| `thin` | `20%` | `62%` | `4px` | `150%` | 安静背景上的装饰性表面 |
-| `regular` | `35%` | `68%` | `16px` | `140%` | 大多数页面的默认材质 |
-| `thick` | `45%` | `72%` | `16px` | `140%` | 文字密集、照片背景复杂 |
-
-没有 `data-glass` 属性时同样使用 `regular`。预设只修改共享的
-`--ui-glass-*` 变量；组件内部、布局与文字样式保持不变。预设会继承到后代，
-`light-dark()` 数值跟随当前的 `color-scheme`，因此深色页面中的预设会自动
-使用深色值。嵌套的 `.light` 或 `.dark` 子树会回到默认的 `regular` 材质；
-如果预设需要跨过该主题边界，请在子树上也加上 `data-glass`。
-
-运行时切换只需要修改属性，不需要改组件代码：
-
-```tsx
-document.documentElement.dataset.glass = "thick";
-```
-
-### 预设插件
-
-可选的 React 入口负责属性同步、受控状态与持久化。它不会自动导入 CSS，请
-保留上面的预设样式表导入。
-
-```tsx [app/layout.tsx]
-import type { ReactNode } from "react";
-
-import {
-  GlassPresetProvider,
-  GlassPresetScript,
-} from "@xingxingmofashu/ui/plugins/glass-preset";
-
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  return (
-    <html lang="zh-CN" suppressHydrationWarning>
-      <head>
-        <GlassPresetScript storageKey="app-glass" defaultPreset="regular" />
-      </head>
-      <body>
-        <GlassPresetProvider
-          defaultPreset="regular"
-          storageKey="app-glass"
-        >
-          {children}
-        </GlassPresetProvider>
-      </body>
-    </html>
-  );
-}
-```
-
-`GlassPresetScript` 在 React 水合之前执行并恢复已保存的预设，避免先显示默认
-材质再切换。Provider 读取同一个 key，把 `data-glass` 写到 `<html>`，并通过
-`useGlassPreset` 暴露当前值：
-
-```tsx
-const { preset, setPreset } = useGlassPreset();
-```
-
-需要受控状态时传入 `preset` 与 `onPresetChange`。`storageKey` 是可选的；
-如果应用自己管理持久化，可以不传。
-
-使用 `GlassPresetScope` 可以只改变某个容器的预设，不影响全局值。它渲染一个
-带 `data-glass` 的 `div`，并接受普通 `div` 属性：
-
-```tsx
-<GlassPresetScope preset="thick">
-  <Card>...</Card>
-</GlassPresetScope>
-```
-
-如果内联脚本无法放在文档 head 中，可以用 `getGlassPresetScript` 生成相同的
-脚本，再交给框架的脚本注入 API。
-
-完整插件 API、受控状态与水合行为见[玻璃预设](/docs/zh/plugins/glass-preset)。
+配置方式、预设参数、受控状态、容器级覆盖与水合行为见
+[玻璃预设](/docs/zh/plugins/glass-preset)。
 
 ## Token 分层
 
@@ -282,7 +189,8 @@ Tailwind 类。
 
 - 只导入一次组件样式表，并放在自定义覆盖之前。
 - 在首次绘制前设置 `.dark` 或 `data-theme="dark"`。
-- 共享材质用 `data-glass="thin | regular | thick"` 切换。
+- 共享材质切换使用可选的[玻璃预设插件](/docs/zh/plugins/glass-preset)
+  的 `data-glass`。
 - 自定义材质在未分层的 `:root` 与 `.dark` 块中覆盖 token。
 - 在应用中最复杂的背景上测试玻璃对比度。
 - 内部槽位优先用 `ui`，布局优先用 `className`，材质变化优先用 token。

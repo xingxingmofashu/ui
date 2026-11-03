@@ -3,7 +3,8 @@ title: "玻璃预设"
 description: "在 thin、regular、thick 之间切换共享 Liquid Glass 材质，支持 Provider、容器级覆盖、持久化与无闪烁脚本。"
 ---
 
-玻璃预设插件可以在不改动组件代码的情况下切换共享玻璃材质。它包含两部分：
+玻璃预设插件可以在不改动组件代码的情况下切换共享玻璃材质。插件随
+`@xingxingmofashu/ui` 一起发布，无需单独安装。它包含两部分：
 
 - 插件 `index.css` 定义 `thin`、`regular` 与 `thick` 三组材质。
 - `@xingxingmofashu/ui/plugins/glass-preset` 负责 `data-glass`、React 状态与
@@ -88,6 +89,9 @@ export default function RootLayout({
 - `GlassPresetProvider` 把 `data-glass` 写到 `<html>`，并向 `useGlassPreset`
   提供当前值。
 - `storageKey` 是可选的；如果应用自己管理持久化，可以不传。
+- `GlassPresetScript` 与 `GlassPresetProvider` 应使用相同的 `storageKey` 与
+  `defaultPreset`。两者不一致时，水合前的属性与 Provider 状态可能不同，导致
+  材质闪烁。
 - `storageKey` 应在应用根节点保持稳定。
 
 ## 运行时切换预设
@@ -121,6 +125,12 @@ export function PresetPicker() {
 }
 ```
 
+不使用 Provider 时，可以直接设置属性：
+
+```tsx
+document.documentElement.dataset.glass = "thick";
+```
+
 ## 受控状态
 
 传入 `preset` 与 `onPresetChange` 即可接管状态。在受控模式下，`setPreset` 只会
@@ -152,12 +162,19 @@ Provider 仍会把当前值写到 `data-glass`，但受控模式下的 `storageK
 `defaultPreset` + `storageKey` 组合。若确实要同时使用受控状态与存储，请自行从
 存储初始化受控状态。
 
+`GlassPresetScript` 是独立的：即使 Provider 处于受控模式，脚本仍会读取
+`storageKey` 并在水合前设置属性。如果脚本解析出的值与受控 `preset` 不同，首屏
+会先显示脚本值，水合后再由 Provider 写成受控值。无法接受这次闪烁时，应让脚本
+解析出与受控 `preset` 相同的值，或在服务端渲染对应的 `data-glass`。脚本只修改
+DOM 属性，不会改变水合前 `useGlassPreset` 返回的值。
+
 ## 将预设限定在容器内
 
 `GlassPresetScope` 可以只改变某个容器的预设，不影响全局值。它渲染一个带
 `data-glass` 的 `div`，并接受普通 `div` 属性：
 
 ```tsx
+import { Card } from "@xingxingmofashu/ui";
 import { GlassPresetScope } from "@xingxingmofashu/ui/plugins/glass-preset";
 
 <GlassPresetScope preset="thick" className="rounded-3xl">
@@ -276,6 +293,6 @@ HTML 与首次客户端渲染也保持一致。如果不使用 `GlassPresetScrip
 - 在核心样式表之后导入插件 `index.css`。
 - 把 `GlassPresetScript` 放在文档 head 中，把 `GlassPresetProvider` 放在应用
   根节点。
-- 保持 `storageKey` 稳定。
+- 让脚本与 Provider 使用相同的 `storageKey` 与 `defaultPreset`，并保持稳定。
 - 局部覆盖使用 `GlassPresetScope`，不要修改全局值。
 - 在应用中最复杂的背景上测试所选预设。

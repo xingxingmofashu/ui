@@ -4,7 +4,8 @@ description: "Switch the shared Liquid Glass material between thin, regular, and
 ---
 
 The glass preset plugin changes the shared glass material without touching
-component code. It contains two parts:
+component code. It ships inside `@xingxingmofashu/ui`; no separate install is
+needed. It contains two parts:
 
 - The plugin `index.css` defines the `thin`, `regular`, and `thick` materials.
 - `@xingxingmofashu/ui/plugins/glass-preset` manages `data-glass`, React state,
@@ -94,6 +95,9 @@ export default function RootLayout({
   value to `useGlassPreset`.
 - `storageKey` is optional. Omit it when the application manages persistence
   itself.
+- Use the same `storageKey` and `defaultPreset` for `GlassPresetScript` and
+  `GlassPresetProvider`. If they differ, the pre-hydration attribute and the
+  provider state can diverge and cause a flash.
 - Keep `storageKey` stable at the application root.
 
 ## Change the preset at runtime
@@ -125,6 +129,12 @@ export function PresetPicker() {
     </div>
   );
 }
+```
+
+Without the provider, set the attribute directly:
+
+```tsx
+document.documentElement.dataset.glass = "thick";
 ```
 
 ## Controlled state
@@ -160,12 +170,22 @@ mode `storageKey` only persists the value. It does not restore the value into th
 storage should restore the preset automatically. If you need both, initialize
 the controlled state from storage yourself.
 
+`GlassPresetScript` is independent: it can still read `storageKey` and set the
+attribute before hydration even when the provider is controlled. If the script
+resolves a different value than the controlled `preset`, the first paint uses
+the script value until the provider writes the controlled value after hydration.
+To avoid that flash, make the script resolve the same value as the controlled
+`preset`, or render the matching `data-glass` value on the server. The script
+only changes the DOM attribute; it does not change the value returned by
+`useGlassPreset` before hydration.
+
 ## Scope a preset to a container
 
 `GlassPresetScope` applies a preset to one container without changing the global
 value. It renders a `div` with `data-glass` and accepts normal `div` props:
 
 ```tsx
+import { Card } from "@xingxingmofashu/ui";
 import { GlassPresetScope } from "@xingxingmofashu/ui/plugins/glass-preset";
 
 <GlassPresetScope preset="thick" className="rounded-3xl">
@@ -291,7 +311,8 @@ does not replace that value with persisted state.
 - Import the plugin `index.css` after the core stylesheet.
 - Put `GlassPresetScript` in the document head and `GlassPresetProvider` at the
   application root.
-- Keep the `storageKey` stable.
+- Use the same `storageKey` and `defaultPreset` for the script and provider, and
+  keep both stable.
 - Use `GlassPresetScope` for local overrides instead of changing the global
   value.
 - Test the selected preset over the busiest background in the application.
