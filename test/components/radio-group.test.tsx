@@ -452,6 +452,35 @@ describe("RadioGroup", () => {
       );
     });
 
+    it("scales item text with the group size", () => {
+      render(
+        <>
+          <RadioGroup
+            aria-label="Small"
+            size="xs"
+            items={[{ value: "one", label: "One" }]}
+          />
+          <RadioGroup
+            aria-label="Large"
+            size="xl"
+            items={[{ value: "one", label: "One" }]}
+          />
+        </>,
+      );
+
+      const small = within(getGroup("Small")).getByRole("radio", {
+        name: "One",
+      });
+      const large = within(getGroup("Large")).getByRole("radio", {
+        name: "One",
+      });
+
+      expect(getSlot(small, "wrapper")).toHaveClass("text-xs");
+      expect(getSlot(small, "wrapper")).not.toHaveClass("text-sm");
+      expect(getSlot(large, "wrapper")).toHaveClass("text-base");
+      expect(getSlot(large, "wrapper")).not.toHaveClass("text-sm");
+    });
+
     it("renders every size variant", () => {
       const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
 

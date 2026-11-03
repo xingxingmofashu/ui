@@ -126,7 +126,11 @@ function RadioGroup<Value extends string = string>({
               overlay: cn(ui?.overlay, item.ui?.overlay),
               indicator: cn(ui?.indicator, item.ui?.indicator),
               dot: cn(ui?.dot, item.ui?.dot),
-              wrapper: cn(ui?.wrapper, item.ui?.wrapper),
+              wrapper: cn(
+                styles.wrapper(),
+                ui?.wrapper,
+                item.ui?.wrapper,
+              ),
               itemLabel: cn(ui?.itemLabel, item.ui?.itemLabel),
               itemDescription: cn(
                 ui?.itemDescription,
