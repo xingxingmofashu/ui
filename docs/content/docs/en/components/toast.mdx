@@ -65,7 +65,7 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | — | App content that can call `useToast()`. |
 | `timeout` | `number` | `5000` | Default auto-dismiss delay in milliseconds; `0` keeps toasts open. |
-| `limit` | `number` | `3` | Maximum number of rendered toasts. Older toasts receive `data-limited`. |
+| `limit` | `number` | `3` | Maximum number of visible toasts. Older toasts stay mounted with `data-limited`. |
 | `toastManager` | `ToastManager` | — | Global manager created with `createToastManager`. |
 
 **Toast**
@@ -91,11 +91,11 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 
 **Toast options**
 
-`add` accepts these fields. `update` takes a partial version, and `promise` reuses the same fields for its `loading`, `success`, and `error` states. `ToastOptions` in the next table refers to this object.
+`add` accepts these fields. `update` accepts `ToastUpdateOptions`, a partial version without `id`, and `promise` uses the same update options for its `loading`, `success`, and `error` states. Below, `ToastOptions` means the add options and `ToastUpdateOptions` means `Partial<Omit<ToastOptions, "id">>`.
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | generated | Stable identifier. Adding an existing ID updates that toast in place. |
+| `id` | `string` | generated | Stable identifier for `add`. Adding an existing ID updates that toast in place; `update` and `promise` do not accept `id`. |
 | `title` | `ReactNode` | — | Toast heading. |
 | `description` | `ReactNode` | — | Supporting copy under the title. |
 | `type` | `string` | — | Status icon: `info`, `success`, `warning`, `error`, or `loading`. |
@@ -110,13 +110,13 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `loading` | `string \| ToastOptions` | — | Toast shown while the promise is pending. |
-| `success` | `string \| ToastOptions \| ((value) => string \| ToastOptions)` | — | Toast shown when the promise resolves. |
-| `error` | `string \| ToastOptions \| ((error) => string \| ToastOptions)` | — | Toast shown when the promise rejects. |
+| `loading` | `string \| ToastUpdateOptions` | — | Toast shown while the promise is pending. |
+| `success` | `string \| ToastUpdateOptions \| ((value) => string \| ToastUpdateOptions)` | — | Toast shown when the promise resolves. |
+| `error` | `string \| ToastUpdateOptions \| ((error) => string \| ToastUpdateOptions)` | — | Toast shown when the promise rejects. |
 
 **createToastManager**
 
-`createToastManager()` returns a manager with the same `add`, `update`, `close`, `promise`, and `toasts` API as `useToast()`. Use it when code outside React needs to create toasts, and pass the instance to `ToastProvider` through `toastManager`.
+`createToastManager()` returns a manager with the same `add`, `update`, `close`, and `promise` methods as `useToast()`. It does not expose the current `toasts` list; read that with `useToast()` inside React. Use the manager when code outside React needs to create toasts, and pass the instance to `ToastProvider` through `toastManager`.
 
 **Toast attributes**
 

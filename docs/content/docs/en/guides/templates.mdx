@@ -112,7 +112,9 @@ export function SettingsPanel() {
 ## Recipe: destructive confirmation
 
 `AlertDialog` is built for irreversible actions. The confirm and cancel buttons
-close the dialog automatically; use the callbacks for the side effect.
+close the dialog automatically; use the callbacks for the side effect. Escape
+also closes it without invoking either callback, so guard the destructive action
+in `onOpenChange` when that matters.
 
 ```tsx [app/delete-project.tsx]
 "use client";

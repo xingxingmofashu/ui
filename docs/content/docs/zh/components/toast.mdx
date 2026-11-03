@@ -65,7 +65,7 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | — | 可以调用 `useToast()` 的应用内容。 |
 | `timeout` | `number` | `5000` | 默认自动关闭延时（毫秒）；`0` 表示不自动关闭。 |
-| `limit` | `number` | `3` | 最多同时渲染的 Toast 数量；超出的旧 Toast 会带上 `data-limited`。 |
+| `limit` | `number` | `3` | 最多同时显示的 Toast 数量；超出的旧 Toast 仍保留在 DOM 中，并带上 `data-limited`。 |
 | `toastManager` | `ToastManager` | — | 由 `createToastManager` 创建的全局管理器。 |
 
 **Toast**
@@ -91,11 +91,11 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 
 **Toast 选项**
 
-`add` 支持以下字段；`update` 接收这些字段的部分版本，`promise` 则用同样的字段描述 `loading`、`success` 与 `error` 状态。下表中的 `ToastOptions` 即指这个对象。
+`add` 支持以下字段；`update` 接收 `ToastUpdateOptions`，即不带 `id` 的部分版本；`promise` 的 `loading`、`success` 与 `error` 也使用同一组 update 字段。下表中，`ToastOptions` 指 add 选项，`ToastUpdateOptions` 等价于 `Partial<Omit<ToastOptions, "id">>`。
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | 自动生成 | 稳定标识。使用已存在的 ID 会原地更新该 Toast。 |
+| `id` | `string` | 自动生成 | `add` 的稳定标识。使用已存在的 ID 会原地更新该 Toast；`update` 与 `promise` 不接受 `id`。 |
 | `title` | `ReactNode` | — | Toast 标题。 |
 | `description` | `ReactNode` | — | 标题下方的说明文字。 |
 | `type` | `string` | — | 状态图标：`info`、`success`、`warning`、`error` 或 `loading`。 |
@@ -110,13 +110,13 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `loading` | `string \| ToastOptions` | — | Promise 进行中显示的内容。 |
-| `success` | `string \| ToastOptions \| ((value) => string \| ToastOptions)` | — | Promise 成功时显示的内容。 |
-| `error` | `string \| ToastOptions \| ((error) => string \| ToastOptions)` | — | Promise 失败时显示的内容。 |
+| `loading` | `string \| ToastUpdateOptions` | — | Promise 进行中显示的内容。 |
+| `success` | `string \| ToastUpdateOptions \| ((value) => string \| ToastUpdateOptions)` | — | Promise 成功时显示的内容。 |
+| `error` | `string \| ToastUpdateOptions \| ((error) => string \| ToastUpdateOptions)` | — | Promise 失败时显示的内容。 |
 
 **createToastManager**
 
-`createToastManager()` 返回的管理器提供与 `useToast()` 相同的 `add`、`update`、`close`、`promise` 与 `toasts` API。需要在 React 之外创建通知时使用它，并通过 `toastManager` 把实例传给 `ToastProvider`。
+`createToastManager()` 返回的管理器提供与 `useToast()` 相同的 `add`、`update`、`close` 与 `promise` 方法，但不暴露当前 `toasts` 列表；需要在 React 内读取该列表时使用 `useToast()`。需要在 React 之外创建通知时使用管理器，并通过 `toastManager` 把实例传给 `ToastProvider`。
 
 **Toast 属性**
 

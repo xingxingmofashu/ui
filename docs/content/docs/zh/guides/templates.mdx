@@ -111,7 +111,7 @@ export function SettingsPanel() {
 
 ## 配方：破坏性确认
 
-`AlertDialog` 专为不可逆操作设计。确认与取消按钮会自动关闭对话框；用回调执行副作用。
+`AlertDialog` 专为不可逆操作设计。确认与取消按钮会自动关闭对话框；用回调执行副作用。按 Escape 也会关闭对话框且不会调用任一回调，因此需要时请在 `onOpenChange` 中保护破坏性操作。
 
 ```tsx [app/delete-project.tsx]
 "use client";

@@ -41,7 +41,7 @@ The root owns the glass surface. Use `className` for its width, height, radius, 
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | — | Scrollable content rendered inside the viewport. |
 | `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | Scrollbar axes to render. |
-| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | Distance in pixels before an edge is marked as overflowing. |
+| `overflowEdgeThreshold` | `number \| Partial<{ xStart: number; xEnd: number; yStart: number; yEnd: number }>` | `0` | Distance in pixels before an edge is marked as overflowing. |
 | `aria-label` | `string` | — | Accessible name forwarded to the scrollable viewport. |
 | `aria-labelledby` | `string` | — | ID of an element that labels the viewport. |
 | `aria-describedby` | `string` | — | ID of an element that describes the viewport. |

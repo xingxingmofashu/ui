@@ -38,9 +38,9 @@ export default function AccordionPersistentDemo() {
           items={[
             {
               value: "warranty",
-              title: "Warranty terms",
+              title: "Coverage details",
               content:
-                "Search this page for “warranty” to reveal this closed panel without opening it first.",
+                "Search this page for “warranty” to reveal this closed panel without opening it first. Every device includes a two-year warranty.",
             },
             {
               value: "shipping",

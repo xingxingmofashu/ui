@@ -41,7 +41,7 @@ description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | — | 渲染在视口内的可滚动内容。 |
 | `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | 要渲染的滚动条方向。 |
-| `overflowEdgeThreshold` | `number \| Partial<{ xStart; xEnd; yStart; yEnd }>` | `0` | 将一个边缘标记为溢出前需要越过的像素距离。 |
+| `overflowEdgeThreshold` | `number \| Partial<{ xStart: number; xEnd: number; yStart: number; yEnd: number }>` | `0` | 将一个边缘标记为溢出前需要越过的像素距离。 |
 | `aria-label` | `string` | — | 转发到可滚动视口的无障碍名称。 |
 | `aria-labelledby` | `string` | — | 为视口提供名称的元素 ID。 |
 | `aria-describedby` | `string` | — | 为视口提供说明的元素 ID。 |

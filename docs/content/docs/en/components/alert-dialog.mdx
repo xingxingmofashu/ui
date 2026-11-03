@@ -1,13 +1,13 @@
 ---
 title: "Alert Dialog"
-description: "A React alert dialog for required confirmations, with a Liquid Glass surface and clear cancel and confirm actions."
+description: "A React alert dialog for destructive confirmations, with a Liquid Glass surface and clear cancel and confirm actions."
 ---
 
 `AlertDialog` is an accessible modal confirmation component. It renders the portal, backdrop, centered popup, title, description, optional body, and fixed cancel and confirm actions internally.
 
 ## Basic example
 
-The component is fully controlled: `open` controls visibility and the page renders its own trigger button. It is modal and pressing the backdrop does not dismiss it; the user has to choose an action.
+The basic example uses controlled mode: `open` controls visibility and the page renders its own trigger button. It is modal and the backdrop cannot dismiss it, but Escape still closes it without calling `onCancel` or `onConfirm`. Guard destructive flows in `onOpenChange` when Escape must not cancel them.
 
 <Example name="alert-dialog/basic" />
 

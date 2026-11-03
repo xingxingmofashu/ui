@@ -2,7 +2,7 @@
   "title": "组件",
   "pages": [
     "index",
-    "---Element---",
+    "---基础元素---",
     "accordion",
     "button",
     "card",
@@ -10,19 +10,19 @@
     "tabs",
     "toggle",
     "toggle-group",
-    "---Form---",
+    "---表单---",
     "checkbox",
     "input",
     "radio-group",
     "slider",
     "switch",
-    "---Overlay---",
+    "---浮层---",
     "alert-dialog",
     "dialog",
     "drawer",
     "popover",
     "toast",
-    "---Feedback---",
+    "---反馈---",
     "progress"
   ]
 }
