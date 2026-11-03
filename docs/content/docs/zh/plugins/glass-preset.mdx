@@ -1,0 +1,281 @@
+---
+title: "玻璃预设"
+description: "在 thin、regular、thick 之间切换共享 Liquid Glass 材质，支持 Provider、容器级覆盖、持久化与无闪烁脚本。"
+---
+
+玻璃预设插件可以在不改动组件代码的情况下切换共享玻璃材质。它包含两部分：
+
+- `preset.css` 定义 `thin`、`regular` 与 `thick` 三组材质。
+- `@xingxingmofashu/ui/plugins/glass-preset` 负责 `data-glass`、React 状态与
+  持久化。
+
+在主样式表之后导入预设样式表：
+
+```css [app.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+```
+
+<Callout type="info">
+不导入 `preset.css` 时，核心样式表仍然渲染默认的 `regular` 材质。只有导入预设
+样式表后，`data-glass` 属性才会生效。
+</Callout>
+
+## 应用预设
+
+在根元素或任意容器上设置 `data-glass`：
+
+```html [index.html]
+<html data-glass="thin">
+```
+
+```html
+<section data-glass="thick">
+  <Card>...</Card>
+</section>
+```
+
+| 预设 | 浅色遮罩 | 深色遮罩 | 模糊 | 饱和度 | 适用场景 |
+| --- | --- | --- | --- | --- | --- |
+| `thin` | `20%` | `62%` | `4px` | `150%` | 安静背景上的装饰性表面 |
+| `regular` | `35%` | `68%` | `16px` | `140%` | 大多数页面的默认材质 |
+| `thick` | `45%` | `72%` | `16px` | `140%` | 文字密集、照片背景复杂 |
+
+没有 `data-glass` 属性时同样使用 `regular`。预设只修改共享的
+`--ui-glass-*` 变量；组件内部、布局与文字样式保持不变。预设会继承到后代，
+`light-dark()` 数值跟随当前的 `color-scheme`，因此深色页面中的预设会自动
+使用深色值。嵌套的 `.light` 或 `.dark` 子树会回到默认的 `regular` 材质；
+如果预设需要跨过该主题边界，请在子树上也加上 `data-glass`。
+
+## React 配置
+
+在文档 head 中渲染 `GlassPresetScript`，并用 `GlassPresetProvider` 包裹应用：
+
+```tsx [app/layout.tsx]
+import type { ReactNode } from "react";
+
+import {
+  GlassPresetProvider,
+  GlassPresetScript,
+} from "@xingxingmofashu/ui/plugins/glass-preset";
+
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <html lang="zh-CN" suppressHydrationWarning>
+      <head>
+        <GlassPresetScript storageKey="app-glass" defaultPreset="regular" />
+      </head>
+      <body>
+        <GlassPresetProvider
+          defaultPreset="regular"
+          storageKey="app-glass"
+        >
+          {children}
+        </GlassPresetProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+- `GlassPresetScript` 在 React 水合之前执行并恢复已保存的预设，避免先显示默认
+  材质再切换。
+- `GlassPresetProvider` 把 `data-glass` 写到 `<html>`，并向 `useGlassPreset`
+  提供当前值。
+- `storageKey` 是可选的；如果应用自己管理持久化，可以不传。
+- `storageKey` 应在应用根节点保持稳定。
+
+## 运行时切换预设
+
+通过 `useGlassPreset` 调用 `setPreset`，不需要改动任何组件代码：
+
+```tsx
+"use client";
+
+import { useGlassPreset } from "@xingxingmofashu/ui/plugins/glass-preset";
+
+const PRESETS = ["thin", "regular", "thick"] as const;
+
+export function PresetPicker() {
+  const { preset, setPreset } = useGlassPreset();
+
+  return (
+    <div role="group" aria-label="Glass material">
+      {PRESETS.map((value) => (
+        <button
+          key={value}
+          type="button"
+          aria-pressed={preset === value}
+          onClick={() => setPreset(value)}
+        >
+          {value}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+## 受控状态
+
+传入 `preset` 与 `onPresetChange` 即可接管状态。在受控模式下，`setPreset` 只会
+调用 `onPresetChange`；必须在该回调中更新 `preset`，否则材质不会变化：
+
+```tsx
+"use client";
+
+import { useState, type ReactNode } from "react";
+
+import {
+  GlassPresetProvider,
+  type GlassPreset,
+} from "@xingxingmofashu/ui/plugins/glass-preset";
+
+export function AppShell({ children }: { children: ReactNode }) {
+  const [preset, setPreset] = useState<GlassPreset>("regular");
+
+  return (
+    <GlassPresetProvider preset={preset} onPresetChange={setPreset}>
+      {children}
+    </GlassPresetProvider>
+  );
+}
+```
+
+Provider 仍会把当前值写到 `data-glass`，但受控模式下的 `storageKey` 只会持久化
+该值，不会把它恢复为 `preset`。如果希望自动恢复已保存的预设，请使用非受控的
+`defaultPreset` + `storageKey` 组合。若确实要同时使用受控状态与存储，请自行从
+存储初始化受控状态。
+
+## 将预设限定在容器内
+
+`GlassPresetScope` 可以只改变某个容器的预设，不影响全局值。它渲染一个带
+`data-glass` 的 `div`，并接受普通 `div` 属性：
+
+```tsx
+import { GlassPresetScope } from "@xingxingmofashu/ui/plugins/glass-preset";
+
+<GlassPresetScope preset="thick" className="rounded-3xl">
+  <Card title="Deployment" description="Production" />
+</GlassPresetScope>
+```
+
+预设会继承到后代，直到遇到另一个 `data-glass` 值或嵌套的 `.light` / `.dark`
+边界。作用域不会读取或写入 Provider 状态或 `localStorage`。
+
+## 仅使用脚本
+
+如果不需要 React Provider，可以单独使用 `GlassPresetScript`，或用
+`getGlassPresetScript` 生成脚本：
+
+```tsx
+import {
+  GlassPresetScript,
+  getGlassPresetScript,
+} from "@xingxingmofashu/ui/plugins/glass-preset";
+
+<GlassPresetScript
+  storageKey="app-glass"
+  defaultPreset="regular"
+  nonce={nonce}
+/>;
+
+const script = getGlassPresetScript({
+  storageKey: "app-glass",
+  defaultPreset: "regular",
+});
+```
+
+`getGlassPresetScript` 返回普通字符串，适合交给框架自己的脚本注入 API。
+`GlassPresetScript` 支持 CSP `nonce` 属性。生成的内联脚本会转义字符串字面量中的
+`<`、U+2028 与 U+2029，因此运行时传入的 `storageKey` 无法提前闭合脚本标签。
+
+脚本与 Provider 使用相同的优先级解析预设：有效的存储值，然后是 `<html>` 上
+已有的有效 `data-glass` 属性，最后是 `defaultPreset`。
+
+## API 参考
+
+### `GlassPresetProvider`
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `preset` | `GlassPreset` | — | 受控预设。传入后 Provider 不会更新内部值；请在 `onPresetChange` 中更新该属性。 |
+| `defaultPreset` | `GlassPreset` | `"regular"` | 非受控模式的初始值，也用于服务端渲染和读取持久化状态前的首次客户端渲染。传入 `preset` 时会被忽略。 |
+| `storageKey` | `string` | — | 用于持久化预设的 `localStorage` key。非受控模式下也会在水合后恢复该值。省略时由应用自行管理持久化。 |
+| `onPresetChange` | `(preset: GlassPreset) => void` | — | 当 `setPreset` 请求变更时调用，受控与非受控模式都会触发。 |
+| `children` | `ReactNode` | — | 可以通过 `useGlassPreset` 读取预设的子树。 |
+
+| 属性 | 说明 |
+| --- | --- |
+| `data-glass` | 水合后写入 `<html>` 的当前预设。`GlassPresetScript` 可能更早设置它。 |
+
+### `useGlassPreset`
+
+返回 Provider 状态。在 `GlassPresetProvider` 之外调用会抛出错误。
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `preset` | `GlassPreset` | 当前预设。 |
+| `setPreset` | `(preset: GlassPreset) => void` | 请求变更。受控模式下需要在 `onPresetChange` 中更新 `preset` 属性。 |
+
+### `GlassPresetScope`
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `preset` | `GlassPreset` | — | 作为 `data-glass` 应用到容器的预设，必填。 |
+| `...props` | `React.ComponentProps<"div">` | — | 传递给渲染的 `div`。类型中已移除 `data-glass`。 |
+
+| 属性 | 说明 |
+| --- | --- |
+| `data-glass` | 应用到容器并由后代继承的预设。 |
+
+### `GlassPresetScript`
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `storageKey` | `string` | — | React 水合前读取的 `localStorage` key。 |
+| `defaultPreset` | `GlassPreset` | `"regular"` | 当存储值与已有属性都为空或无效时使用的预设。 |
+| `nonce` | `string` | — | 内联脚本的 CSP nonce。 |
+
+### `getGlassPresetScript`
+
+以字符串形式返回内联脚本。它接受与 `GlassPresetScript` 相同的 `storageKey` 和
+`defaultPreset` 选项，但不包含 `nonce`。
+
+### `GlassPreset`
+
+```ts
+type GlassPreset = "thin" | "regular" | "thick";
+```
+
+## 行为
+
+### 水合
+
+Provider 处于非受控模式时，`GlassPresetProvider` 在服务端和首次客户端渲染时
+使用 `defaultPreset` 渲染子树。水合完成后，它才读取 `localStorage` 或已有的
+`data-glass` 属性并更新 context。这样即使组件调用 `useGlassPreset`，服务端
+HTML 与首次客户端渲染也保持一致。如果不使用 `GlassPresetScript`，持久化值会在
+水合后应用，因此首次绘制可能短暂显示默认材质。受控模式在服务端和客户端都使用
+`preset` 属性，不会用持久化值替换它。
+
+### 持久化
+
+- 值以 `storageKey` 为 key 存放在 `localStorage` 中。
+- 无效的存储值会被忽略。
+- 存储访问包在 `try` / `catch` 中；隐私模式或沙箱 iframe 会退化为内存状态。
+- Provider 在水合后写入当前值；受控模式下只要传入 `storageKey` 也会写入。
+
+## 检查清单
+
+- 在核心样式表之后导入 `preset.css`。
+- 把 `GlassPresetScript` 放在文档 head 中，把 `GlassPresetProvider` 放在应用
+  根节点。
+- 保持 `storageKey` 稳定。
+- 局部覆盖使用 `GlassPresetScope`，不要修改全局值。
+- 在应用中最复杂的背景上测试所选预设。

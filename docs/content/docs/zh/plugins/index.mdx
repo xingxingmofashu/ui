@@ -1,0 +1,60 @@
+---
+title: "插件"
+description: "可选的包入口，用于共享玻璃预设和其他按需启用的功能。"
+---
+
+插件是可选的包入口，用来扩展核心组件库，而不改变根入口。它们不会从
+`@xingxingmofashu/ui` 重新导出，因此没有导入某个插件的应用不会打包它的代码
+或样式。
+
+<Cards>
+  <Card
+    title="玻璃预设"
+    description="在 thin、regular、thick 之间切换共享玻璃材质，支持受控状态、容器级覆盖与持久化。"
+    href="/docs/zh/plugins/glass-preset"
+  />
+</Cards>
+
+## 导入路径
+
+插件入口遵循包结构：
+
+| 入口 | 导入路径 |
+| --- | --- |
+| React 或 TypeScript 模块 | `@xingxingmofashu/ui/plugins/<name>` |
+| 样式表 | `@xingxingmofashu/ui/plugins/<name>/<file>.css` |
+
+例如，玻璃预设插件提供：
+
+```tsx
+import {
+  GlassPresetProvider,
+  GlassPresetScope,
+} from "@xingxingmofashu/ui/plugins/glass-preset";
+```
+
+```css
+@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+```
+
+通配导出会把模块解析到 `plugins/<name>/index`，CSS 文件名与模块入口相互独立。
+
+## 样式
+
+插件不会从核心样式表中自动导入自己的样式。带有 CSS 的插件需要你在核心样式表
+之后显式导入：
+
+```css [app.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+```
+
+插件样式保持按需启用，意味着 `index.css` 可以独立工作，未使用的插件样式也不会
+进入构建产物。
+
+## 客户端边界
+
+插件遵循与核心组件相同的 React 边界。使用 hooks 或浏览器 API 的模块会带有
+`"use client"` 指令。服务端安全的辅助函数（例如玻璃预设脚本生成器）可以在服务端
+组件中渲染或调用。具体入口请查看各插件页面。

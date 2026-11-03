@@ -1,0 +1,63 @@
+---
+title: "Plugins"
+description: "Optional package entries for shared glass presets and other opt-in features."
+---
+
+Plugins are optional package entries that extend the core library without
+changing its root import. They are not re-exported from
+`@xingxingmofashu/ui`, so an application that does not import a plugin does not
+bundle its code or styles.
+
+<Cards>
+  <Card
+    title="Glass presets"
+    description="Switch the shared glass material between thin, regular, and thick, with controlled state, scoped overrides, and persistence."
+    href="/docs/en/plugins/glass-preset"
+  />
+</Cards>
+
+## Import paths
+
+Plugin entries follow the package structure:
+
+| Entry | Import path |
+| --- | --- |
+| React or TypeScript module | `@xingxingmofashu/ui/plugins/<name>` |
+| Stylesheet | `@xingxingmofashu/ui/plugins/<name>/<file>.css` |
+
+For example, the glass preset plugin exposes:
+
+```tsx
+import {
+  GlassPresetProvider,
+  GlassPresetScope,
+} from "@xingxingmofashu/ui/plugins/glass-preset";
+```
+
+```css
+@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+```
+
+The wildcard export resolves the module at `plugins/<name>/index` and keeps CSS
+filenames independent from the module entry.
+
+## Styling
+
+Plugins never import their own stylesheet from the core stylesheet. A plugin
+that ships CSS expects an explicit import after the core stylesheet:
+
+```css [app.css]
+@import "tailwindcss";
+@import "@xingxingmofashu/ui";
+@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+```
+
+Keeping plugin CSS opt-in means `index.css` works on its own and unused plugin
+styles stay out of the build.
+
+## Client boundaries
+
+Plugins follow the same React boundaries as the core components. Modules that
+use hooks or browser APIs carry the `"use client"` directive. Server-safe
+helpers, such as the glass preset script generator, can be rendered or called
+from a server component. Check each plugin page for the exact entry points.
