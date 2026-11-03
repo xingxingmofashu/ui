@@ -634,13 +634,13 @@ describe("design tokens", () => {
   it("ships the shared glass material presets", async () => {
     const [source, index] = await Promise.all([
       readFile(
-        new URL("../src/plugins/glass-preset/preset.css", import.meta.url),
+        new URL("../src/plugins/glass-preset/index.css", import.meta.url),
         "utf8",
       ),
       readFile(new URL("../src/index.css", import.meta.url), "utf8"),
     ]);
 
-    expect(index).not.toContain("plugins/glass-preset/preset.css");
+    expect(index).not.toContain("@xingxingmofashu/ui/plugins/glass-preset");
     expect(source).toContain('[data-glass="thin"]');
     expect(source).toContain('[data-glass="regular"]');
     expect(source).toContain('[data-glass="thick"]');

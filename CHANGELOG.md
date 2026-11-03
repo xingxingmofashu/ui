@@ -5,7 +5,7 @@
 ### Added
 
 - Add the `data-glass="thin | regular | thick"` shared-material presets in
-  `plugins/glass-preset/preset.css`. Set the attribute on the root or any
+  `plugins/glass-preset/index.css`. Set the attribute on the root or any
   container; presets inherit into descendants, follow the active
   `color-scheme`, and only override `--ui-glass-*` variables, so switching
   material does not require component or theme changes.

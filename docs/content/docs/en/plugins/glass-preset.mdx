@@ -6,7 +6,7 @@ description: "Switch the shared Liquid Glass material between thin, regular, and
 The glass preset plugin changes the shared glass material without touching
 component code. It contains two parts:
 
-- `preset.css` defines the `thin`, `regular`, and `thick` materials.
+- The plugin `index.css` defines the `thin`, `regular`, and `thick` materials.
 - `@xingxingmofashu/ui/plugins/glass-preset` manages `data-glass`, React state,
   and persistence.
 
@@ -15,13 +15,13 @@ Import the stylesheet after the core stylesheet:
 ```css [app.css]
 @import "tailwindcss";
 @import "@xingxingmofashu/ui";
-@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
 ```
 
 <Callout type="info">
-Without `preset.css`, the core stylesheet still renders the default `regular`
-material. The `data-glass` attribute only has an effect after the preset
-stylesheet is imported.
+Without the plugin stylesheet, the core stylesheet still renders the default
+`regular` material. The `data-glass` attribute only has an effect after the
+preset stylesheet is imported.
 </Callout>
 
 ## Apply a preset
@@ -288,7 +288,7 @@ does not replace that value with persisted state.
 
 ## Checklist
 
-- Import `preset.css` after the core stylesheet.
+- Import the plugin `index.css` after the core stylesheet.
 - Put `GlassPresetScript` in the document head and `GlassPresetProvider` at the
   application root.
 - Keep the `storageKey` stable.

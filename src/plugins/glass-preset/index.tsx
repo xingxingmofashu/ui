@@ -3,11 +3,11 @@ export {
   useGlassPreset,
   type GlassPreset,
   type GlassPresetProviderProps,
-} from "./provider";
-export { GlassPresetScope, type GlassPresetScopeProps } from "./scope";
+} from "./src/provider";
+export { GlassPresetScope, type GlassPresetScopeProps } from "./src/scope";
 export {
   GlassPresetScript,
   getGlassPresetScript,
   type GlassPresetScriptOptions,
   type GlassPresetScriptProps,
-} from "./script";
+} from "./src/script";

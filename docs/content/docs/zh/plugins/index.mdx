@@ -22,7 +22,7 @@ description: "可选的包入口，用于共享玻璃预设和其他按需启用
 | 入口 | 导入路径 |
 | --- | --- |
 | React 或 TypeScript 模块 | `@xingxingmofashu/ui/plugins/<name>` |
-| 样式表 | `@xingxingmofashu/ui/plugins/<name>/<file>.css` |
+| 样式表 | `@xingxingmofashu/ui/plugins/<name>/index.css` |
 
 例如，玻璃预设插件提供：
 
@@ -34,10 +34,11 @@ import {
 ```
 
 ```css
-@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
 ```
 
-通配导出会把模块解析到 `plugins/<name>/index`，CSS 文件名与模块入口相互独立。
+通配导出会把模块解析到 `plugins/<name>/index`，可选样式表解析到
+`plugins/<name>/index.css`。
 
 ## 样式
 
@@ -47,10 +48,10 @@ import {
 ```css [app.css]
 @import "tailwindcss";
 @import "@xingxingmofashu/ui";
-@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
 ```
 
-插件样式保持按需启用，意味着 `index.css` 可以独立工作，未使用的插件样式也不会
+插件样式保持按需启用，意味着核心样式表可以独立工作，未使用的插件样式也不会
 进入构建产物。
 
 ## 客户端边界

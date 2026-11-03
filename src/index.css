@@ -12,9 +12,10 @@
  * - `--ui-surface` is the opaque theme surface used by overlays and as a base
  *   for component themes. `--ui-glass-surface` is the translucent theme veil;
  *   its strength balances transparency against text contrast.
- * - `preset.css` offers opt-in `data-glass="thin | regular | thick"` overrides
- *   for the shared material. Components compose the `.ui-glass*` primitives and
- *   keep radius, layout, and overflow in their own recipes.
+ * - The optional plugin stylesheet offers opt-in
+ *   `data-glass="thin | regular | thick"` overrides for the shared material.
+ *   Components compose the `.ui-glass*` primitives and keep radius, layout, and
+ *   overflow in their own recipes.
  * - `.light`/`[data-theme="light"]` re-applies light inside a dark ancestor.
  *   The `ui-light`/`ui-dark` variants mirror those selectors for utilities.
  */

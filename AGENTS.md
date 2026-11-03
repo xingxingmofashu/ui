@@ -76,7 +76,7 @@ same pnpm workspace.
   tone; `.ui-glass-inner` adds the inset outline; `.ui-glass-highlight` adds the
   diagonal glare; `.ui-glass-rim` is the decorative child rim; and
   `.ui-glass-chip` is the compact surface.
-- `src/plugins/glass-preset/preset.css` owns the
+- `src/plugins/glass-preset/index.css` owns the
   `data-glass="thin | regular | thick"` presets. They only override shared
   `--ui-glass-*` variables; do not add component styles there.
 - Light is the default at `:root`. `.dark` / `data-theme="dark"` switches to
@@ -92,9 +92,12 @@ same pnpm workspace.
 - Optional plugins live under `src/plugins/<name>/` and are not re-exported
   from `src/index.ts`.
 - Package exports are wildcarded. `src/plugins/<name>/index.tsx` is published
-  as `@xingxingmofashu/ui/plugins/<name>`. CSS files keep their path through
-  `./plugins/*.css`, so `src/plugins/<name>/<file>.css` is published as
-  `@xingxingmofashu/ui/plugins/<name>/<file>.css`.
+  as `@xingxingmofashu/ui/plugins/<name>`. The optional stylesheet is
+  `src/plugins/<name>/index.css` and is published as
+  `@xingxingmofashu/ui/plugins/<name>/index.css` through
+  `./plugins/*/index.css`.
+- The public plugin entries are `index.tsx` and optional `index.css`; keep other
+  implementation files internal to the plugin directory.
 - A plugin owns its state, UI, and optional stylesheet. Do not import plugin
   CSS from `src/index.css`; plugin styles stay explicit and opt-in.
 - Add `"use client"` only to modules that use hooks or browser APIs. Pure
@@ -154,7 +157,7 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 - Plugins: `src/plugins/<name>/`
 - Glass preset plugin: `src/plugins/glass-preset/`
 - Design tokens and glass material: `src/index.css`
-- Shared glass presets: `src/plugins/glass-preset/preset.css`
+- Shared glass presets: `src/plugins/glass-preset/index.css`
 - Shared token and glass tests: `test/tokens.test.ts`
 - Plugin tests: `test/plugins/<name>.test.tsx`
 - Test setup: `test/setup.ts`

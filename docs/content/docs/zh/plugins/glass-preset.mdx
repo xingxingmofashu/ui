@@ -5,7 +5,7 @@ description: "在 thin、regular、thick 之间切换共享 Liquid Glass 材质�
 
 玻璃预设插件可以在不改动组件代码的情况下切换共享玻璃材质。它包含两部分：
 
-- `preset.css` 定义 `thin`、`regular` 与 `thick` 三组材质。
+- 插件 `index.css` 定义 `thin`、`regular` 与 `thick` 三组材质。
 - `@xingxingmofashu/ui/plugins/glass-preset` 负责 `data-glass`、React 状态与
   持久化。
 
@@ -14,11 +14,11 @@ description: "在 thin、regular、thick 之间切换共享 Liquid Glass 材质�
 ```css [app.css]
 @import "tailwindcss";
 @import "@xingxingmofashu/ui";
-@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
 ```
 
 <Callout type="info">
-不导入 `preset.css` 时，核心样式表仍然渲染默认的 `regular` 材质。只有导入预设
+不导入插件样式表时，核心样式表仍然渲染默认的 `regular` 材质。只有导入预设
 样式表后，`data-glass` 属性才会生效。
 </Callout>
 
@@ -273,7 +273,7 @@ HTML 与首次客户端渲染也保持一致。如果不使用 `GlassPresetScrip
 
 ## 检查清单
 
-- 在核心样式表之后导入 `preset.css`。
+- 在核心样式表之后导入插件 `index.css`。
 - 把 `GlassPresetScript` 放在文档 head 中，把 `GlassPresetProvider` 放在应用
   根节点。
 - 保持 `storageKey` 稳定。

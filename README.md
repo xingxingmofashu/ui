@@ -72,7 +72,7 @@ generated without an extra `@source` directive.
 Import the optional preset stylesheet:
 
 ```css [app.css]
-@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
 ```
 
 Then switch the shared glass material with `data-glass` on the root or any
@@ -85,7 +85,7 @@ container:
 
 `thin` is the clearest, `regular` is the default, and `thick` is the most
 readable over busy imagery. Presets only override shared CSS variables. Without
-`preset.css`, the main stylesheet still uses the `regular` material.
+the plugin stylesheet, the main stylesheet still uses the `regular` material.
 
 The optional React plugin manages the attribute and persistence:
 

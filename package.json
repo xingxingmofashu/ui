@@ -35,7 +35,7 @@
       "default": "./dist/theme/*.mjs"
     },
     "./index.css": "./dist/index.css",
-    "./plugins/*.css": "./dist/plugins/*.css",
+    "./plugins/*/index.css": "./dist/plugins/*/index.css",
     "./plugins/*": {
       "types": "./dist/plugins/*/index.d.ts",
       "import": "./dist/plugins/*/index.mjs",

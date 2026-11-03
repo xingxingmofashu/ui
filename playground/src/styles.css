@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "../../src/index.css";
-@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
 
 @source "../index.html";
 @source "./**/*.{ts,tsx}";

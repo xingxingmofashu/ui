@@ -51,12 +51,12 @@ after the main stylesheet:
 
 ```css [app.css]
 @import "@xingxingmofashu/ui";
-@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
 ```
 
-Without `preset.css`, the main stylesheet still uses the default `regular`
-material; the `data-glass` attribute only has an effect when the preset file is
-imported. Set it on the root or on any container:
+Without the plugin stylesheet, the main stylesheet still uses the default
+`regular` material; the `data-glass` attribute only has an effect when the
+preset file is imported. Set it on the root or on any container:
 
 ```html [index.html]
 <html data-glass="thin">

@@ -46,10 +46,10 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 
 ```css [app.css]
 @import "@xingxingmofashu/ui";
-@import "@xingxingmofashu/ui/plugins/glass-preset/preset.css";
+@import "@xingxingmofashu/ui/plugins/glass-preset/index.css";
 ```
 
-不导入 `preset.css` 时，主样式表仍然使用默认的 `regular` 材质；只有导入后
+不导入插件样式表时，主样式表仍然使用默认的 `regular` 材质；只有导入后
 `data-glass` 属性才会生效。在根元素或任意容器上设置 `data-glass`：
 
 ```html [index.html]
