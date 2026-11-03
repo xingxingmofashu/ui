@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.6 - 2026-11-03
 
 ### Added
 
@@ -23,6 +23,8 @@
 
 ### Documentation
 
+- Add bilingual Plugins documentation and move glass preset setup out of the
+  Theming guide.
 - Document the glass presets, their variable values, and the `data-glass`
   attribute, and refresh the Surface Lab screenshots.
 
