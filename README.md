@@ -94,57 +94,6 @@ import buttonTheme from "@xingxingmofashu/ui/theme/button";
 
 Toast hooks live under `@xingxingmofashu/ui/composables`.
 
-## Components
-
-### Element
-
-- Accordion
-- Button
-- Card
-- Scroll Area
-- Toggle
-- Toggle Group
-
-### Form
-
-- Checkbox
-- Input
-- Slider
-- Switch
-
-### Overlay
-
-- Alert Dialog
-- Dialog
-- Drawer
-- Popover
-- Toast
-
-## Theming
-
-Light and dark tokens are selected by `.light` / `.dark`, or by
-`data-theme="light"` / `data-theme="dark"`:
-
-```html
-<html class="dark">
-```
-
-or:
-
-```html
-<html data-theme="dark">
-```
-
-A nested `.light` / `[data-theme="light"]` subtree can switch back to light
-tokens. Shared colors and glass parameters live in the `--ui-*` tokens; override
-them in your own theme layer. Tailwind aliases use the `ui-` prefix
-(`text-ui-ink`, `outline-ui-glass-focus`, and so on) to avoid colliding with
-host tokens.
-
-The components inherit the host font. The visual material relies on modern CSS:
-`backdrop-filter`, `color-mix`, container units, individual `translate` /
-`scale` properties, and `:has`. Use a current evergreen browser.
-
 ## Development
 
 ```bash
