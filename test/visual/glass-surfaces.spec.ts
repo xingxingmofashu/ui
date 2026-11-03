@@ -20,6 +20,11 @@ for (const theme of themes) {
       const panel = page.getByTestId("surface-lab-panel");
       await expect(panel).toBeVisible();
 
+      await page.addStyleTag({
+        content:
+          "html, body, #root, .pg-app { background: transparent !important; }",
+      });
+
       if (preset.id !== "image") {
         await page.locator(`[data-preset="${preset.id}"]`).click();
         await expect(
@@ -47,6 +52,7 @@ for (const theme of themes) {
 
       await expect(panel).toHaveScreenshot(
         `surface-lab-${preset.id}-${theme}.png`,
+        { omitBackground: true },
       );
     });
   }
