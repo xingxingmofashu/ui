@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.1.5 - 2026-11-03
+
+### Added
+
+- Add the Tabs component with controlled and uncontrolled state, horizontal and
+  vertical orientation, `keepMounted` panels, `activateOnFocus`, disabled tabs,
+  and icon-only tabs.
+
+### Fixed
+
+- Accept `ReactNode` content in Accordion items. The inherited RDFa `content`
+  attribute previously narrowed the prop to strings.
+
+### Documentation
+
+- Add 12 examples covering Accordion persistence, Button form actions, Popover
+  offsets, Progress ranges, Scroll Area edge thresholds, Slider constraints,
+  Tabs panels and activation, and Toast update, queue, and manager flows.
+- Document Toast provider limits, update options, promise options, and
+  `createToastManager` without exposing unsupported APIs.
+- Clarify AlertDialog Escape behavior, Dialog backdrop dismissal, and Scroll
+  Area threshold typing, and localize the Chinese component navigation.
+
 ## 0.1.4 - 2026-11-03
 
 ### Fixed
