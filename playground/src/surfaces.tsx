@@ -29,6 +29,16 @@ type SurfacePreset = {
 
 const presets: SurfacePreset[] = [
   {
+    id: "image",
+    label: "Image",
+    style: {
+      backgroundColor: "#0a0a0a",
+      backgroundImage: 'url("/w53k9q.jpg")',
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+    },
+  },
+  {
     id: "aurora",
     label: "Aurora",
     style: {
@@ -125,7 +135,7 @@ function resolveImageUrl(value: string) {
 
 function SurfaceLab() {
   const { theme } = useTheme();
-  const [presetId, setPresetId] = useState("aurora");
+  const [presetId, setPresetId] = useState("image");
   const [customImage, setCustomImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [applyError, setApplyError] = useState("");
@@ -160,7 +170,7 @@ function SurfaceLab() {
 
   function resetBackground() {
     setImageUrl("");
-    selectPreset("aurora");
+    selectPreset("image");
   }
 
   function applyImageUrl(event: FormEvent<HTMLFormElement>) {
@@ -208,9 +218,9 @@ function SurfaceLab() {
             Glass on color
           </h2>
           <p className="mt-2 text-sm leading-6 text-pg-muted">
-            The same components over saturated gradients, dense patterns, and
-            artwork. Load your own image to test the material against a real
-            photo instead of a flat black or white canvas.
+            The same components over saturated gradients, dense patterns,
+            artwork, and photography. Switch presets or load your own image to
+            test the material against a real scene.
           </p>
         </div>
         <span className="hidden rounded-full border border-pg-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-pg-muted sm:inline-block">
