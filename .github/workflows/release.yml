@@ -63,8 +63,18 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "dist_tag=$dist_tag" >> "$GITHUB_OUTPUT"
 
+      - name: Verify package
+        run: pnpm lint && pnpm typecheck && pnpm test && pnpm build
+
       - name: Publish to npm
-        run: pnpm publish --tag "${{ steps.release.outputs.dist_tag }}" --no-git-checks --provenance
+        run: |
+          version="${{ steps.release.outputs.version }}"
+
+          if npm view "@xingxingmofashu/ui@$version" version >/dev/null 2>&1; then
+            echo "@xingxingmofashu/ui@$version is already published; skipping."
+          else
+            pnpm publish --tag "${{ steps.release.outputs.dist_tag }}" --no-git-checks --provenance --ignore-scripts
+          fi
 
       - name: Pack release assets
         run: |
@@ -79,12 +89,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.tag || github.ref_name }}
         run: |
-          cd "$RUNNER_TEMP/release"
+          assets=("$RUNNER_TEMP"/release/*.tgz "$RUNNER_TEMP"/release/*.tgz.sha256)
 
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" ./*.tgz ./*.tgz.sha256 --clobber
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${assets[@]}" --repo "$GITHUB_REPOSITORY" --clobber
           else
-            gh release create "$TAG" ./*.tgz ./*.tgz.sha256 \
+            gh release create "$TAG" "${assets[@]}" \
+              --repo "$GITHUB_REPOSITORY" \
               --verify-tag \
               --title "$TAG" \
               --generate-notes
