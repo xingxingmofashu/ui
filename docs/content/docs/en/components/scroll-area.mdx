@@ -29,6 +29,12 @@ Use `orientation="both"` for two-dimensional content. The corner is rendered so 
 
 The root owns the glass surface. Use `className` for its width, height, radius, and outer layout. Padding belongs inside the content, as the examples do, so list rows can also run edge to edge when needed.
 
+## Edge threshold
+
+`overflowEdgeThreshold` controls how close the viewport must be to an edge before the `data-overflow-*` attributes change. The example reacts after 16px of scrolling.
+
+<Example name="scroll-area/edge-threshold" />
+
 ## API reference
 
 | Prop | Type | Default | Description |

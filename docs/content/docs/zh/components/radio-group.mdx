@@ -39,6 +39,9 @@ description: "可访问的 React 单选组，采用圆形 Liquid Glass 控件，
 | --- | --- | --- | --- |
 | `label` | `ReactNode` | — | 分组的可见标签。 |
 | `description` | `ReactNode` | — | 分组标签下方的说明文字，通过 `aria-describedby` 关联。 |
+| `aria-label` | `string` | — | 没有可见标签时使用的无障碍名称。 |
+| `aria-labelledby` | `string` | — | 用外部元素命名分组。 |
+| `aria-describedby` | `string` | — | 外部说明文字的 ID；会与可见的 `description` 合并。 |
 | `items` | `readonly RadioGroupItemProps[]` | — | 分组渲染的选项。 |
 | `value` | `string` | — | 受控的选中值。 |
 | `defaultValue` | `string` | — | 非受控时的初始选中值。 |

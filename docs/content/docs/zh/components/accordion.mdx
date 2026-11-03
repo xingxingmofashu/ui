@@ -33,6 +33,12 @@ description: "一组可折叠的 React 手风琴面板，采用 Liquid Glass 风
 
 <Example name="accordion/disabled" />
 
+## 保留面板
+
+默认情况下，关闭的面板会从 DOM 中移除。设置 `keepMounted` 可以保留面板，让表单状态在关闭后依然存在；设置 `hiddenUntilFound` 则使用 `hidden="until-found"` 保留面板，让浏览器页内查找可以展开匹配内容。
+
+<Example name="accordion/persistent" />
+
 ## API reference
 
 **Accordion**

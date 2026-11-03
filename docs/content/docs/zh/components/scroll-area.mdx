@@ -29,6 +29,12 @@ description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动
 
 根节点负责玻璃表面。使用 `className` 控制其宽高、圆角与外部布局。内边距应放在内容内部（如示例所示），这样列表行在需要时也可以贴边排列。
 
+## 边缘阈值
+
+`overflowEdgeThreshold` 控制视口距离边缘多近时 `data-overflow-*` 属性才会变化。下面的示例在滚动 16px 后给出反馈。
+
+<Example name="scroll-area/edge-threshold" />
+
 ## API reference
 
 | Prop | Type | Default | Description |

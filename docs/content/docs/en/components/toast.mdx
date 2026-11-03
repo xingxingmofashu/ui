@@ -39,6 +39,24 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 
 <Example name="toast/positions" />
 
+## Updating and closing
+
+`update` replaces fields on an existing toast, and `close` removes one toast or every toast when no ID is passed. The example keeps the ID returned by `add` so it can advance a loading toast to success.
+
+<Example name="toast/update" />
+
+## Queue limits
+
+`ToastProvider` accepts `limit` and `timeout`. A timeout of `0` keeps toasts open until your code or the user closes them. The example keeps a two-toast stack that never auto-dismisses.
+
+<Example name="toast/queue" />
+
+## Outside React
+
+`createToastManager` creates a manager that any module can call. Pass the instance to `ToastProvider` through `toastManager` so the viewport renders the toasts it creates.
+
+<Example name="toast/manager" />
+
 ## API reference
 
 **ToastProvider**
@@ -70,6 +88,37 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 | `close(id?)` | Closes one toast, or every toast when `id` is omitted. |
 | `promise(promise, options)` | Tracks a promise with `loading`, `success`, and `error` options. |
 | `toasts` | The current toast objects. |
+
+**Toast options**
+
+`add` accepts these fields. `update` takes a partial version, and `promise` reuses the same fields for its `loading`, `success`, and `error` states. `ToastOptions` in the next table refers to this object.
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Stable identifier. Adding an existing ID updates that toast in place. |
+| `title` | `ReactNode` | — | Toast heading. |
+| `description` | `ReactNode` | — | Supporting copy under the title. |
+| `type` | `string` | — | Status icon: `info`, `success`, `warning`, `error`, or `loading`. |
+| `timeout` | `number` | `5000` | Auto-dismiss delay in milliseconds; `0` keeps the toast open. |
+| `priority` | `"low" \| "high"` | `"low"` | Polite or assertive announcement. |
+| `actionProps` | `ComponentPropsWithoutRef<"button">` | — | Action button props, including `children` and `onClick`. |
+| `onClose` | `() => void` | — | Called when the toast closes. |
+| `onRemove` | `() => void` | — | Called after the toast is removed from the list. |
+| `data` | `object` | — | Custom payload attached to the toast object. |
+
+**Promise options**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `loading` | `string \| ToastOptions` | — | Toast shown while the promise is pending. |
+| `success` | `string \| ToastOptions \| ((value) => string \| ToastOptions)` | — | Toast shown when the promise resolves. |
+| `error` | `string \| ToastOptions \| ((error) => string \| ToastOptions)` | — | Toast shown when the promise rejects. |
+
+**createToastManager**
+
+`createToastManager()` returns a manager with the same `add`, `update`, `close`, `promise`, and `toasts` API as `useToast()`. Use it when code outside React needs to create toasts, and pass the instance to `ToastProvider` through `toastManager`.
+
+**Toast attributes**
 
 | Attribute | Description |
 | --- | --- |

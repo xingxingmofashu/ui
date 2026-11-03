@@ -39,6 +39,24 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 
 <Example name="toast/positions" />
 
+## 更新与关闭
+
+`update` 会替换已有 Toast 的字段；`close` 关闭指定 Toast，省略 ID 时关闭全部。示例会保留 `add` 返回的 ID，把 loading Toast 逐步更新为成功状态。
+
+<Example name="toast/update" />
+
+## 队列限制
+
+`ToastProvider` 支持 `limit` 与 `timeout`。`timeout` 为 `0` 时 Toast 不会自动关闭，需要代码或用户主动关闭。下面的示例会保持两条常驻通知。
+
+<Example name="toast/queue" />
+
+## 在 React 外创建
+
+`createToastManager` 会创建一个可被任意模块调用的管理器。把该实例通过 `toastManager` 传给 `ToastProvider`，Viewport 就会渲染它创建的通知。
+
+<Example name="toast/manager" />
+
 ## API reference
 
 **ToastProvider**
@@ -70,6 +88,37 @@ description: "临时 React 通知，采用 Liquid Glass 风格，支持堆叠、
 | `close(id?)` | 关闭指定 Toast；省略 `id` 时关闭全部。 |
 | `promise(promise, options)` | 跟踪 Promise，并在 loading、success、error 之间更新。 |
 | `toasts` | 当前 Toast 对象列表。 |
+
+**Toast 选项**
+
+`add` 支持以下字段；`update` 接收这些字段的部分版本，`promise` 则用同样的字段描述 `loading`、`success` 与 `error` 状态。下表中的 `ToastOptions` 即指这个对象。
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | 自动生成 | 稳定标识。使用已存在的 ID 会原地更新该 Toast。 |
+| `title` | `ReactNode` | — | Toast 标题。 |
+| `description` | `ReactNode` | — | 标题下方的说明文字。 |
+| `type` | `string` | — | 状态图标：`info`、`success`、`warning`、`error` 或 `loading`。 |
+| `timeout` | `number` | `5000` | 自动关闭延时（毫秒）；`0` 表示保持打开。 |
+| `priority` | `"low" \| "high"` | `"low"` | 普通播报或更紧急的播报。 |
+| `actionProps` | `ComponentPropsWithoutRef<"button">` | — | 操作按钮属性，包括 `children` 与 `onClick`。 |
+| `onClose` | `() => void` | — | Toast 关闭时调用。 |
+| `onRemove` | `() => void` | — | Toast 从列表中移除后调用。 |
+| `data` | `object` | — | 附加到 Toast 对象上的自定义数据。 |
+
+**Promise 选项**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `loading` | `string \| ToastOptions` | — | Promise 进行中显示的内容。 |
+| `success` | `string \| ToastOptions \| ((value) => string \| ToastOptions)` | — | Promise 成功时显示的内容。 |
+| `error` | `string \| ToastOptions \| ((error) => string \| ToastOptions)` | — | Promise 失败时显示的内容。 |
+
+**createToastManager**
+
+`createToastManager()` 返回的管理器提供与 `useToast()` 相同的 `add`、`update`、`close`、`promise` 与 `toasts` API。需要在 React 之外创建通知时使用它，并通过 `toastManager` 把实例传给 `ToastProvider`。
+
+**Toast 属性**
 
 | Attribute | Description |
 | --- | --- |

@@ -18,7 +18,12 @@ need to make in your application.
 | `Input` | `label`, or `aria-label` / `aria-labelledby` |
 | `Checkbox` | `label`, or `aria-label` / `aria-labelledby` |
 | `Switch` | `label`, or `aria-label` / `aria-labelledby` |
+| `RadioGroup` | `label`, or `aria-label` / `aria-labelledby` |
 | `Slider` | `aria-label` / `aria-labelledby`, or `getAriaLabel` per thumb |
+| `Progress` | `label`, or `aria-label` / `aria-labelledby` |
+| `Tabs` | `aria-label` / `aria-labelledby` on the tab list |
+| `Toggle` | `label`, or `aria-label` / `aria-labelledby` |
+| `ToggleGroup` | `aria-label` / `aria-labelledby` |
 | `ScrollArea` | `aria-label` / `aria-labelledby` on the viewport |
 | `Dialog`, `AlertDialog`, `Drawer` | Required `title` prop |
 | `Popover` | Required `title` prop |
@@ -56,18 +61,21 @@ The components follow these native interaction patterns:
 | Interaction | Expected behavior |
 | --- | --- |
 | `Tab` / `Shift+Tab` | Move focus between controls |
-| `Enter` / `Space` | Activate buttons, toggles, checkboxes, and switches |
-| Arrow keys | Move the slider thumb; navigate toggle groups |
+| `Enter` / `Space` | Activate buttons, toggles, checkboxes, switches, and tabs |
+| Arrow keys | Move the slider thumb, navigate toggle groups, and move between tabs |
 | `Escape` | Close dialog, alert dialog, drawer, and popover |
-| `Home` / `End` | Move a slider to its minimum or maximum |
+| `Home` / `End` | Move a slider to its bounds, or jump to the first or last tab |
 | `Page Up` / `Page Down` | Move a slider by `largeStep` |
 
 Accordion triggers use real buttons and expose `aria-expanded`; they follow the
 document tab order. `loopFocus` and `orientation` are deprecated and no longer
 change keyboard focus. Toggle groups support single and multiple selection with
-the expected arrow-key roving focus. Scroll areas keep native wheel, trackpad,
-and keyboard scrolling; the custom scrollbars are decorative and hidden from
-assistive technology.
+the expected arrow-key roving focus. Tabs use roving focus inside the tab list:
+arrow keys follow the orientation, `Home` and `End` jump to the ends, and
+`Enter` or `Space` activates the focused tab. Set `activateOnFocus` to switch
+panels as focus moves. Scroll areas keep native wheel, trackpad, and keyboard
+scrolling; the custom scrollbars are decorative and hidden from assistive
+technology.
 
 ## Overlays and focus
 
@@ -140,6 +148,11 @@ structure, and content still belong to your application.
 - [Input](/docs/en/components/input)
 - [Slider](/docs/en/components/slider)
 - [Switch](/docs/en/components/switch)
+- [Radio Group](/docs/en/components/radio-group)
+- [Tabs](/docs/en/components/tabs)
+- [Toggle](/docs/en/components/toggle)
+- [Toggle Group](/docs/en/components/toggle-group)
+- [Progress](/docs/en/components/progress)
 - [Dialog](/docs/en/components/dialog)
 - [Alert Dialog](/docs/en/components/alert-dialog)
 - [Drawer](/docs/en/components/drawer)

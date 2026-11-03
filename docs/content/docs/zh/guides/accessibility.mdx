@@ -15,7 +15,12 @@ description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实�
 | `Input` | `label`，或 `aria-label` / `aria-labelledby` |
 | `Checkbox` | `label`，或 `aria-label` / `aria-labelledby` |
 | `Switch` | `label`，或 `aria-label` / `aria-labelledby` |
+| `RadioGroup` | `label`，或 `aria-label` / `aria-labelledby` |
 | `Slider` | `aria-label` / `aria-labelledby`，或每个 thumb 的 `getAriaLabel` |
+| `Progress` | `label`，或 `aria-label` / `aria-labelledby` |
+| `Tabs` | 标签栏上的 `aria-label` / `aria-labelledby` |
+| `Toggle` | `label`，或 `aria-label` / `aria-labelledby` |
+| `ToggleGroup` | `aria-label` / `aria-labelledby` |
 | `ScrollArea` | viewport 上的 `aria-label` / `aria-labelledby` |
 | `Dialog`、`AlertDialog`、`Drawer` | 必填的 `title` 属性 |
 | `Popover` | 必填的 `title` 属性 |
@@ -52,16 +57,18 @@ description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实�
 | 交互 | 预期行为 |
 | --- | --- |
 | `Tab` / `Shift+Tab` | 在控件之间移动焦点 |
-| `Enter` / `Space` | 激活按钮、Toggle、Checkbox 与 Switch |
-| 方向键 | 移动 Slider thumb；在 Toggle Group 中导航 |
+| `Enter` / `Space` | 激活按钮、Toggle、Checkbox、Switch 与标签页 |
+| 方向键 | 移动 Slider thumb、在 Toggle Group 中导航，以及在标签页之间移动 |
 | `Escape` | 关闭 Dialog、Alert Dialog、Drawer 与 Popover |
-| `Home` / `End` | 将 Slider 移到最小值或最大值 |
+| `Home` / `End` | 将 Slider 移到边界值，或跳到第一个或最后一个标签页 |
 | `Page Up` / `Page Down` | 按 `largeStep` 移动 Slider |
 
 Accordion 触发器使用真实按钮并暴露 `aria-expanded`，遵循文档的 Tab 顺序。
 `loopFocus` 与 `orientation` 已废弃，不再影响键盘焦点。Toggle Group 支持单选与
-多选，并具备预期的方向键 roving focus。Scroll Area 保留原生滚轮、触控板与键盘
-滚动；自定义滚动条是装饰性的，对辅助技术隐藏。
+多选，并具备预期的方向键 roving focus。Tabs 在标签栏内使用 roving focus：方向键
+跟随布局方向，`Home` 与 `End` 跳到首尾，`Enter` 或 `Space` 激活当前焦点标签。
+设置 `activateOnFocus` 后，焦点移动时会直接切换面板。Scroll Area 保留原生滚轮、
+触控板与键盘滚动；自定义滚动条是装饰性的，对辅助技术隐藏。
 
 ## 浮层与焦点
 
@@ -128,6 +135,11 @@ Accordion 触发器使用真实按钮并暴露 `aria-expanded`，遵循文档的
 - [Input](/docs/zh/components/input)
 - [Slider](/docs/zh/components/slider)
 - [Switch](/docs/zh/components/switch)
+- [Radio Group](/docs/zh/components/radio-group)
+- [Tabs](/docs/zh/components/tabs)
+- [Toggle](/docs/zh/components/toggle)
+- [Toggle Group](/docs/zh/components/toggle-group)
+- [Progress](/docs/zh/components/progress)
 - [Dialog](/docs/zh/components/dialog)
 - [Alert Dialog](/docs/zh/components/alert-dialog)
 - [Drawer](/docs/zh/components/drawer)

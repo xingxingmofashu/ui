@@ -4,8 +4,8 @@ description: "提交值、校验字段，并用 Liquid Glass 控件组合可访�
 ---
 
 表单控件优先遵循原生 `<form>` 行为。`Input` 渲染原生 `<input>`；`Checkbox`、
-`Switch` 与 `Slider` 则渲染内部原生输入用于提交。因此 `FormData`、Server
-Actions 与渐进增强模式都能继续使用，不需要自定义状态容器。
+`Switch`、`Slider` 与 `RadioGroup` 则渲染内部原生输入用于提交。因此 `FormData`、
+Server Actions 与渐进增强模式都能继续使用，不需要自定义状态容器。
 
 <Example name="guides/form" />
 
@@ -17,6 +17,9 @@ Actions 与渐进增强模式都能继续使用，不需要自定义状态容器
 | `Checkbox` | 带 `name` 与 `value` 的隐藏 checkbox | 未选中时为 `null` |
 | `Switch` | 带 `name` 与 `value` 的隐藏 checkbox | 关闭时为 `null` |
 | `Slider` | 由 `name` 命名的隐藏 `input[type="range"]` | 当前值 |
+| `RadioGroup` | 由 `name` 命名、携带选中项 `value` 的隐藏 radio | 未选择时为 `null` |
+
+`RadioGroup` 会提交选中条目的 `value`；必选时设置 `required`。
 
 `Button` 会把 `type` 转发给根 button 元素。需要提交表单时设置
 `type="submit"`。
@@ -47,6 +50,7 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
 - `Input` 渲染与输入框关联的真实 `<label>`。
 - `Checkbox` 与 `Switch` 使用可见标签作为可访问名称。
+- `RadioGroup` 使用 `label` 属性为分组命名。
 - `Slider` 不渲染可见标签，因此请用 `aria-labelledby` 指向外部标签。
 
 描述会通过 `aria-describedby` 自动关联。如果传入自己的
@@ -172,4 +176,5 @@ export async function savePreferences(formData: FormData) {
 - [Checkbox](/docs/zh/components/checkbox)
 - [Switch](/docs/zh/components/switch)
 - [Slider](/docs/zh/components/slider)
+- [Radio Group](/docs/zh/components/radio-group)
 - [Button](/docs/zh/components/button)

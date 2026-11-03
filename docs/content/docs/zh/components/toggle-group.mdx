@@ -9,6 +9,8 @@ description: "可访问的 React 切换组，采用 Liquid Glass 选中状态，
 
 选项通过 `items` 数组传入，每个条目的 `value` 对应 group 的选中值。
 
+请通过 `aria-label` 或 `aria-labelledby` 为分组提供可访问名称。只渲染图标的条目需要自己的 `aria-label`。
+
 <Example name="toggle-group/basic" />
 
 ## 尺寸
@@ -56,6 +58,8 @@ description: "可访问的 React 切换组，采用 Liquid Glass 选中状态，
 | `disabled` | `boolean` | `false` | 禁用所有 item。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制 item 高度、内边距、文字和图标尺寸。 |
 | `items` | `readonly ToggleGroupItemProps[]` | — | 渲染在 group 内部的选项。 |
+| `aria-label` | `string` | — | 分组的无障碍名称。 |
+| `aria-labelledby` | `string` | — | 用外部元素命名分组。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 group 元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到 group 元素的 ref。 |
 | `className` | `string` | — | Tailwind 类名，合并到 group root。 |

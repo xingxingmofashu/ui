@@ -9,6 +9,8 @@ The view switcher below uses the real Toggle Group. The pressed item receives th
 
 Options are passed through the `items` array; each item's `value` maps to the group value.
 
+Give the group an accessible name with `aria-label` or `aria-labelledby`. Items that render only an icon need their own `aria-label`.
+
 <Example name="toggle-group/basic" />
 
 ## Sizes
@@ -56,6 +58,8 @@ Set `disabled` on the group to disable every item, or on a single item to disabl
 | `disabled` | `boolean` | `false` | Disables every item. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, and icons. |
 | `items` | `readonly ToggleGroupItemProps[]` | — | Options rendered by the group. |
+| `aria-label` | `string` | — | Accessible name for the group. |
+| `aria-labelledby` | `string` | — | Names the group from another element. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
 | `className` | `string` | — | Tailwind classes merged into the group root. |

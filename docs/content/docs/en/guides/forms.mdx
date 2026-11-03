@@ -4,10 +4,10 @@ description: "Submit values, validate fields, and compose accessible React forms
 ---
 
 The form controls are designed to work with native `<form>` behavior first.
-`Input` renders a native `<input>`, while `Checkbox`, `Switch`, and `Slider`
-render an internal native input for submission. That means `FormData`, server
-actions, and progressive-enhancement patterns keep working without a custom
-state container.
+`Input` renders a native `<input>`, while `Checkbox`, `Switch`, `Slider`, and
+`RadioGroup` render an internal native input for submission. That means
+`FormData`, server actions, and progressive-enhancement patterns keep working
+without a custom state container.
 
 <Example name="guides/form" />
 
@@ -19,6 +19,10 @@ state container.
 | `Checkbox` | Hidden checkbox with `name` and `value` | `null` when unchecked |
 | `Switch` | Hidden checkbox with `name` and `value` | `null` when off |
 | `Slider` | Hidden `input[type="range"]` named by `name` | Defaults to the current value |
+| `RadioGroup` | Hidden radio named by `name` with the selected item value | `null` when nothing is selected |
+
+`RadioGroup` submits the selected item's `value`; set `required` when a choice
+is mandatory.
 
 `Button` forwards `type` to its root button element. Set `type="submit"` when it should
 submit the surrounding form.
@@ -49,6 +53,7 @@ Use the built-in label props instead of rendering separate text:
 
 - `Input` renders a real `<label>` associated with the input.
 - `Checkbox` and `Switch` use their visible label as the accessible name.
+- `RadioGroup` uses its `label` prop to name the group.
 - `Slider` does not render a visible label, so point `aria-labelledby` at one.
 
 Descriptions are linked automatically through `aria-describedby`. If you pass
@@ -179,4 +184,5 @@ supply the fields.
 - [Checkbox](/docs/en/components/checkbox)
 - [Switch](/docs/en/components/switch)
 - [Slider](/docs/en/components/slider)
+- [Radio Group](/docs/en/components/radio-group)
 - [Button](/docs/en/components/button)

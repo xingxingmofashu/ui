@@ -39,6 +39,9 @@ Set `disabled` on the group to disable every option, or on a single item to disa
 | --- | --- | --- | --- |
 | `label` | `ReactNode` | — | Visible label for the group. |
 | `description` | `ReactNode` | — | Supporting text under the group label, linked with `aria-describedby`. |
+| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
+| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
+| `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `items` | `readonly RadioGroupItemProps[]` | — | Options rendered by the group. |
 | `value` | `string` | — | Controlled selected value. |
 | `defaultValue` | `string` | — | Initial selected value when uncontrolled. |

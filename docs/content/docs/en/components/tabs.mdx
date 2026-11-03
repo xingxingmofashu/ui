@@ -37,6 +37,24 @@ Set `disabled` on the component to disable every tab, or on a single item to dis
 
 <Example name="tabs/disabled" />
 
+## Persistent panels
+
+Panels unmount when another tab becomes active. Set `keepMounted` on an item to keep its panel in the DOM so local state survives tab switches.
+
+<Example name="tabs/keep-mounted" />
+
+## Activation on focus
+
+By default, arrow keys move focus and `Enter` or `Space` activates the tab. Set `activateOnFocus` to switch panels as focus moves.
+
+<Example name="tabs/activation" />
+
+## Icon-only tabs
+
+Tabs are named by their `label`. When a tab renders only an icon, give it an `aria-label` or `aria-labelledby`.
+
+<Example name="tabs/icon-only" />
+
 ## API reference
 
 **Tabs**
@@ -78,7 +96,7 @@ Set `disabled` on the component to disable every tab, or on a single item to dis
 | `className` | `string` | — | Tailwind classes merged into the tab button. Use `ui.panel` for the panel. |
 | `ui` | `{ tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this tab's internal slots, keyed by `data-slot`. |
 
-Root `ui` is merged into every tab and panel first, then the item's `ui`, then the item's `className`.
+Root `ui` is merged into every tab and panel first, then the item's `ui`. The item's `className` applies only to the tab button; style the panel through `ui.panel`.
 
 | Attribute | Description |
 | --- | --- |
