@@ -90,7 +90,7 @@ describe("Toast theme compilation", () => {
     expect(css).toContain("border: 1px double var(--ui-glass-border);");
     expect(css).toContain("box-shadow: var(--ui-shadow-glass);");
     expect(css).toContain(
-      "backdrop-filter: blur(var(--ui-glass-blur, 2px)) saturate(var(--ui-glass-saturate, 150%));",
+      "backdrop-filter: blur(var(--ui-glass-blur, 4px)) saturate(var(--ui-glass-saturate, 150%));",
     );
   });
 });

@@ -10,7 +10,8 @@
  * - `@layer theme` holds theme-wide runtime values only: ink, surface, glass
  *   optics, and shared shadows. Component-specific values live in theme/.
  * - `--ui-surface` is the opaque theme surface used by overlays and as a base
- *   for component themes. `--ui-glass-surface` is the translucent glass fill.
+ *   for component themes. `--ui-glass-surface` is the translucent theme veil;
+ *   its strength balances transparency against text contrast.
  * - Components compose the `.ui-glass*` primitives and keep radius, layout,
  *   and overflow in their own recipes.
  * - `.light`/`[data-theme="light"]` re-applies light inside a dark ancestor.
@@ -27,15 +28,15 @@
     --ui-ink: #1f1f1f;
     --ui-ink-active: #000;
     --ui-surface: #fff;
-    --ui-glass-surface: rgb(0 0 0 / 0.02);
-    --ui-glass-border: rgb(51 51 51 / 0.08);
+    --ui-glass-surface: rgb(255 255 255 / 0.2);
+    --ui-glass-border: rgb(31 31 31 / 0.16);
     --ui-glass-focus: rgb(0 0 0 / 0.6);
     --ui-glass-inner-border: rgb(0 0 0 / 0.9);
     --ui-glass-rim: rgb(255 255 255 / 0.2);
     --ui-glass-highlight: rgb(255 255 255 / 0.8);
     --ui-glass-glare-stop: 15%;
-    --ui-glass-tone: brightness(0.9);
-    --ui-glass-contrast: 3;
+    --ui-glass-tone: brightness(0.98);
+    --ui-glass-contrast: 1.05;
     --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));
     --ui-shadow-glass:
       inset 2px -2px 1px -1px rgb(255 255 255 / 0.9),
@@ -51,13 +52,13 @@
     --ui-ink: #f5f5f5;
     --ui-ink-active: #fff;
     --ui-surface: #141414;
-    --ui-glass-surface: rgb(255 255 255 / 0.06);
-    --ui-glass-border: rgb(255 255 255 / 0.14);
+    --ui-glass-surface: rgb(20 20 20 / 0.62);
+    --ui-glass-border: rgb(255 255 255 / 0.2);
     --ui-glass-focus: rgb(255 255 255 / 0.7);
     --ui-glass-inner-border: rgb(255 255 255 / 0.4);
     --ui-glass-rim: rgb(255 255 255 / 0.25);
     --ui-glass-highlight: rgb(255 255 255 / 0.45);
-    --ui-glass-tone: brightness(0.9);
+    --ui-glass-tone: brightness(0.95);
     --ui-glass-contrast: 1;
     --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(0 0 0 / 0.45));
     --ui-shadow-glass:
@@ -75,15 +76,15 @@
     --ui-ink: #1f1f1f;
     --ui-ink-active: #000;
     --ui-surface: #fff;
-    --ui-glass-surface: rgb(0 0 0 / 0.02);
-    --ui-glass-border: rgb(51 51 51 / 0.08);
+    --ui-glass-surface: rgb(255 255 255 / 0.2);
+    --ui-glass-border: rgb(31 31 31 / 0.16);
     --ui-glass-focus: rgb(0 0 0 / 0.6);
     --ui-glass-inner-border: rgb(0 0 0 / 0.9);
     --ui-glass-rim: rgb(255 255 255 / 0.2);
     --ui-glass-highlight: rgb(255 255 255 / 0.8);
     --ui-glass-glare-stop: 15%;
-    --ui-glass-tone: brightness(0.9);
-    --ui-glass-contrast: 3;
+    --ui-glass-tone: brightness(0.98);
+    --ui-glass-contrast: 1.05;
     --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));
     --ui-shadow-glass:
       inset 2px -2px 1px -1px rgb(255 255 255 / 0.9),
@@ -97,7 +98,7 @@
   /* Shared glass parameters: geometry and optical primitives. */
   :root,
   :host {
-    --ui-glass-blur: 2px;
+    --ui-glass-blur: 4px;
     --ui-glass-saturate: 150%;
     --ui-glass-chip-blur: 8px;
     --ui-glass-inner-inset: 8px;
@@ -137,12 +138,12 @@
     border: 1px double var(--ui-glass-border);
     background-color: var(--ui-glass-surface);
     box-shadow: var(--ui-shadow-glass);
-    -webkit-backdrop-filter: blur(var(--ui-glass-blur, 2px))
+    -webkit-backdrop-filter: blur(var(--ui-glass-blur, 4px))
       saturate(var(--ui-glass-saturate, 150%));
-    backdrop-filter: blur(var(--ui-glass-blur, 2px))
+    backdrop-filter: blur(var(--ui-glass-blur, 4px))
       saturate(var(--ui-glass-saturate, 150%));
-    filter: var(--ui-glass-tone, brightness(0.9))
-      contrast(var(--ui-glass-contrast, 3));
+    filter: var(--ui-glass-tone, brightness(0.98))
+      contrast(var(--ui-glass-contrast, 1.05));
   }
 
   /* Inner rim: a soft second outline inset from the surface edge. */
