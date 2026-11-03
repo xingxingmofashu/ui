@@ -42,6 +42,7 @@ same pnpm workspace.
 | Drawer | `src/components/drawer.tsx` | `src/theme/drawer.ts` | `test/components/drawer.test.tsx` |
 | Input | `src/components/input.tsx` | `src/theme/input.ts` | `test/components/input.test.tsx` |
 | Popover | `src/components/popover.tsx` | `src/theme/popover.ts` | `test/components/popover.test.tsx` |
+| Progress | `src/components/progress.tsx` | `src/theme/progress.ts` | `test/components/progress.test.tsx` |
 | Scroll Area | `src/components/scroll-area.tsx` | `src/theme/scroll-area.ts` | `test/components/scroll-area.test.tsx` |
 | Slider | `src/components/slider.tsx` | `src/theme/slider.ts` | `test/components/slider.test.tsx` |
 | Switch | `src/components/switch.tsx` | `src/theme/switch.ts` | `test/components/switch.test.tsx` |

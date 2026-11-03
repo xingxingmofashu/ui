@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.4 - 2026-11-03
+
+### Fixed
+
+- Tune the shared glass material for colorful and image backgrounds: raise the
+  light veil, deepen the dark fill, and soften blur, tone, and contrast so
+  component text stays legible.
+
+### Documentation
+
+- Replace the README banners with the Surface Lab panel screenshots in light
+  and dark mode.
+
 ## 0.1.3 - 2026-11-02
 
 ### Added
