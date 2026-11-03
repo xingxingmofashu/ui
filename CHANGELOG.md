@@ -1,12 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.1.7 - 2026-11-03
 
 ### Changed
 
 - Make `thin` the default glass material in the core stylesheet, the
   glass-preset plugin, and the playground. The default now uses a 20% light
   veil, a 62% dark veil, a 4px backdrop blur, and 150% saturation.
+
+### Documentation
+
+- Rebuild the marketing homepage as an English-only page and redirect the old
+  `/zh` URL to `/`. Docs pages remain bilingual.
+- Deploy the playground with the docs site and align its header and favicon
+  with the shared brand mark.
 
 ## 0.1.6 - 2026-11-03
 
