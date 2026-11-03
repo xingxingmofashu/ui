@@ -17,6 +17,7 @@ import { SwitchPreview } from "./previews/switch";
 import { ToastPreview } from "./previews/toast";
 import { TogglePreview } from "./previews/toggle";
 import { ToggleGroupPreview } from "./previews/toggle-group";
+import { SurfaceLab } from "./surfaces";
 
 const sections = [
   {
@@ -168,12 +169,18 @@ function Sidebar() {
     <aside className="lg:w-44 lg:shrink-0">
       <div className="lg:sticky lg:top-24">
         <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted lg:block">
-          Components
+          Sections
         </p>
         <nav
-          aria-label="Components"
+          aria-label="Sections"
           className="-mx-1 flex flex-wrap gap-1 pb-2 lg:mx-0 lg:mt-3 lg:flex-col lg:pb-0"
         >
+          <a
+            href="#surfaces"
+            className="shrink-0 rounded-full px-3 py-1.5 text-sm text-pg-muted transition-colors hover:bg-pg-line/50 hover:text-pg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus lg:rounded-lg"
+          >
+            Glass on color
+          </a>
           {sections.map(({ id, title }) => (
             <a
               key={id}
@@ -205,7 +212,8 @@ function Intro() {
           @xingxingmofashu/ui
         </code>
         . Use the toggle in the header to compare the same components across
-        both themes; your choice is remembered on the next visit.
+        both themes; your choice is remembered on the next visit. The surface
+        lab puts the material over saturated backgrounds and custom images.
       </p>
     </div>
   );
@@ -254,8 +262,9 @@ function App() {
 
         <main className="min-w-0 flex-1">
           <Intro />
+          <SurfaceLab />
 
-          <div className="mt-14 flex flex-col gap-16">
+          <div className="mt-16 flex flex-col gap-16">
             {sections.map(({ id, title, description, Preview }, index) => (
               <Section
                 key={id}
