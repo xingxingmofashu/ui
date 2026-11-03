@@ -46,8 +46,8 @@ pnpm preview
 
 ## Docs
 
-- [Documentation](https://xingxingmofashu.github.io/docs/en)
-- [Components](https://xingxingmofashu.github.io/docs/en/components)
-- [Theming](https://xingxingmofashu.github.io/docs/en/guides/theming)
+- [Documentation](https://xingxingmofashu.github.io/ui/docs/en)
+- [Components](https://xingxingmofashu.github.io/ui/docs/en/components)
+- [Theming](https://xingxingmofashu.github.io/ui/docs/en/guides/theming)
 
 MIT licensed.

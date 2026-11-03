@@ -22,7 +22,7 @@ type Feature = {
 };
 
 const themeKey = "lumen-theme";
-const docsUrl = "https://xingxingmofashu.github.io/docs/en";
+const docsUrl = "https://xingxingmofashu.github.io/ui/docs/en";
 const installUrl = `${docsUrl}/get-started/installation`;
 const templatesUrl = `${docsUrl}/guides/templates`;
 const githubUrl = "https://github.com/xingxingmofashu/ui";
