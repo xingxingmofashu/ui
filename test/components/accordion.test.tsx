@@ -108,6 +108,25 @@ describe("Accordion", () => {
       expect(screen.queryByText(copy.returns)).not.toBeInTheDocument();
     });
 
+    it("accepts ReactNode panel content", () => {
+      render(
+        <Accordion
+          defaultValue={["account"]}
+          items={[
+            {
+              value: "account",
+              title: "Account",
+              content: (
+                <span data-testid="panel-node">Custom panel content</span>
+              ),
+            },
+          ]}
+        />,
+      );
+
+      expect(screen.getByTestId("panel-node")).toBeInTheDocument();
+    });
+
     it("keeps the material in a private aria-hidden layer", () => {
       render(<BasicAccordion />);
 
