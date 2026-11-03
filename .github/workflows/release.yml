@@ -4,29 +4,17 @@ on:
   push:
     tags:
       - "v*.*.*"
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "Tag to publish (for example v0.1.0)"
-        required: true
-        type: string
 
 permissions:
   contents: write
   id-token: write
 
-concurrency:
-  group: release-${{ inputs.tag || github.ref_name }}
-  cancel-in-progress: false
-
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.tag || github.ref }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -42,16 +30,18 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Resolve release metadata
-        id: release
+      - name: Check tag matches package version
         run: |
           version="$(node -p "require('./package.json').version")"
-          tag="${{ inputs.tag || github.ref_name }}"
 
-          if [ "v$version" != "$tag" ]; then
-            echo "::error::Tag $tag does not match package.json version $version."
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $version."
             exit 1
           fi
+
+      - name: Publish to npm
+        run: |
+          version="$(node -p "require('./package.json').version")"
 
           if [[ "$version" == *-* ]]; then
             dist_tag="${version#*-}"
@@ -60,43 +50,12 @@ jobs:
             dist_tag="latest"
           fi
 
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "dist_tag=$dist_tag" >> "$GITHUB_OUTPUT"
+          pnpm publish --tag "$dist_tag" --no-git-checks --provenance
 
-      - name: Verify package
-        run: pnpm lint && pnpm typecheck && pnpm test && pnpm build
-
-      - name: Publish to npm
-        run: |
-          version="${{ steps.release.outputs.version }}"
-
-          if npm view "@xingxingmofashu/ui@$version" version >/dev/null 2>&1; then
-            echo "@xingxingmofashu/ui@$version is already published; skipping."
-          else
-            pnpm publish --tag "${{ steps.release.outputs.dist_tag }}" --no-git-checks --provenance --ignore-scripts
-          fi
-
-      - name: Pack release assets
-        run: |
-          mkdir -p "$RUNNER_TEMP/release"
-          pnpm pack --pack-destination "$RUNNER_TEMP/release"
-          cd "$RUNNER_TEMP/release"
-          tgz="$(ls *.tgz)"
-          sha256sum "$tgz" > "$tgz.sha256"
+      - name: Pack
+        run: pnpm pack
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ inputs.tag || github.ref_name }}
-        run: |
-          assets=("$RUNNER_TEMP"/release/*.tgz "$RUNNER_TEMP"/release/*.tgz.sha256)
-
-          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$TAG" "${assets[@]}" --repo "$GITHUB_REPOSITORY" --clobber
-          else
-            gh release create "$TAG" "${assets[@]}" \
-              --repo "$GITHUB_REPOSITORY" \
-              --verify-tag \
-              --title "$TAG" \
-              --generate-notes
-          fi
+        run: gh release create "$GITHUB_REF_NAME" ./*.tgz --generate-notes
