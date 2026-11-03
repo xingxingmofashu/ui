@@ -1,36 +1,54 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 import { githubUrl } from "@/lib/site";
 
-import { homeCopy, type HomeLocale } from "./copy";
+import { homeCopy } from "./copy";
 
-export function Cta({ lang }: { lang: HomeLocale }) {
-  const copy = homeCopy[lang].cta;
+export function Cta() {
+  const copy = homeCopy.cta;
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-6 pb-24 pt-8">
-      <div className="rounded-3xl border border-fd-border bg-fd-muted/60 px-6 py-12 text-center text-fd-foreground shadow-sm sm:px-12">
-        <h2 className="text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">
-          {copy.title}
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-7 opacity-70">
-          {copy.description}
-        </p>
-        <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <Link
-            href={`/docs/${lang}/get-started/introduction`}
-            className="inline-flex h-9 items-center gap-2 rounded-full bg-fd-foreground px-4 text-sm font-medium text-fd-background transition-opacity hover:opacity-85"
-          >
-            {copy.readDocs}
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
-          <a
-            href={githubUrl}
-            className="inline-flex h-9 items-center rounded-full border border-fd-border px-4 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
-          >
-            {copy.github}
-          </a>
+    <section className="mx-auto w-full max-w-7xl px-6 pb-24 pt-8">
+      <div className="relative overflow-hidden rounded-3xl border border-fd-border bg-fd-muted/50 px-6 py-14 text-center shadow-sm sm:px-12">
+        <div
+          aria-hidden="true"
+          className="docs-grid pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_at_center,black,transparent_72%)]"
+        />
+
+        <div className="relative">
+          <span className="text-[0.68rem] font-medium uppercase tracking-[0.18em] text-fd-muted-foreground">
+            {copy.eyebrow}
+          </span>
+          <h2 className="mt-3 text-balance text-3xl font-semibold tracking-[-0.04em] text-fd-foreground sm:text-4xl">
+            {copy.title}
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-fd-muted-foreground">
+            {copy.description}
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/docs/en/get-started/introduction"
+              className="inline-flex h-10 items-center gap-2 rounded-full bg-fd-foreground px-5 text-sm font-medium text-fd-background transition-opacity hover:opacity-85"
+            >
+              {copy.readDocs}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+            <Link
+              href="/playground/"
+              className="inline-flex h-10 items-center gap-2 rounded-full border border-fd-border bg-fd-background/70 px-5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
+            >
+              {copy.playground}
+              <ArrowUpRight className="size-4" aria-hidden="true" />
+            </Link>
+            <a
+              href={githubUrl}
+              className="inline-flex h-10 items-center rounded-full border border-fd-border px-5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
+            >
+              {copy.github}
+            </a>
+          </div>
         </div>
       </div>
     </section>

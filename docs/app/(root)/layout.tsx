@@ -6,12 +6,8 @@ import { marketingMetadata } from "@/lib/seo";
 
 import "../globals.css";
 
-export const metadata: Metadata = marketingMetadata("en");
+export const metadata: Metadata = marketingMetadata();
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <MarketingShell lang="en" detectLocale>
-      {children}
-    </MarketingShell>
-  );
+  return <MarketingShell>{children}</MarketingShell>;
 }

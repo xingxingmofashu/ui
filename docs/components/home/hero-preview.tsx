@@ -1,104 +1,103 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-import { useId, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
+import { Card, Slider, Switch, ToggleGroup } from "@xingxingmofashu/ui";
 import {
-  Button,
-  Card,
-  Dialog,
-  Slider,
-  Switch,
-} from "@xingxingmofashu/ui";
+  GlassPresetScope,
+  type GlassPreset,
+} from "@xingxingmofashu/ui/plugins/glass-preset";
 
-import { homeCopy, type HomeLocale } from "./copy";
+import { homeCopy } from "./copy";
 
-export function HeroPreview({ lang }: { lang: HomeLocale }) {
-  const copy = homeCopy[lang].hero.preview;
-  const [open, setOpen] = useState(false);
-  const [intensity, setIntensity] = useState(64);
-  const sliderId = useId();
+const presetItems = [
+  { value: "thin", label: homeCopy.hero.preview.presets.thin },
+  { value: "regular", label: homeCopy.hero.preview.presets.regular },
+  { value: "thick", label: homeCopy.hero.preview.presets.thick },
+] as const;
+
+export function HeroPreview() {
+  const copy = homeCopy.hero.preview;
+  const [preset, setPreset] = useState<GlassPreset>("regular");
+  const [glare, setGlare] = useState(64);
 
   return (
     <div className="relative mx-auto w-full max-w-md">
       <div
         aria-hidden="true"
-        className="docs-grid absolute -inset-8 rounded-[3rem] opacity-70 [mask-image:radial-gradient(circle_at_center,black,transparent_72%)]"
+        className="absolute -right-8 -top-8 size-44 rounded-full border border-fd-border bg-fd-muted/30 blur-sm"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-10 -left-10 size-52 rounded-[2.5rem] border border-fd-border bg-fd-muted/20"
       />
 
-      <span className="absolute -top-3 right-6 z-10 rounded-full border border-fd-border bg-fd-background/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-fd-muted-foreground backdrop-blur">
-        {copy.live}
+      <span className="relative z-10 inline-flex items-center gap-2 rounded-full border border-fd-border bg-fd-background/80 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-fd-muted-foreground backdrop-blur">
+        <span className="size-1.5 rounded-full bg-fd-foreground" />
+        {copy.label}
       </span>
 
-      <Card
-        className="relative w-full"
-        title={copy.cardTitle}
-        description={copy.cardDescription}
-        footer={
-          <div className="flex items-center justify-between gap-4">
-            <span className="text-xs text-ui-ink/60">{copy.footerLabel}</span>
-            <Button
-              size="sm"
-              label={copy.openSettings}
-              trailingIcon={<ArrowRight />}
-              onClick={() => setOpen(true)}
-            />
-          </div>
-        }
-      >
-        <div className="space-y-5">
-          <Switch
-            label={copy.switchLabel}
-            description={copy.switchDescription}
-            defaultChecked
-          />
-
-          <div className="h-px bg-ui-glass-border" />
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span id={sliderId} className="text-ui-ink/70">
-                {copy.sliderLabel}
-              </span>
-              <span className="font-mono tabular-nums text-ui-ink/50">
-                {intensity}
+      <GlassPresetScope preset={preset} className="relative z-10 mt-4">
+        <Card title={copy.title} description={copy.description}>
+          <div className="space-y-5">
+            <div className="flex items-center justify-between gap-4 text-xs">
+              <span className="text-ui-ink/65">{copy.presetLabel}</span>
+              <span className="font-mono uppercase tracking-[0.14em] text-ui-ink/45">
+                {copy.presets[preset]}
               </span>
             </div>
-            <Slider
-              aria-labelledby={sliderId}
-              value={intensity}
-              onValueChange={setIntensity}
-            />
-          </div>
-        </div>
 
-        <Dialog
-          open={open}
-          onOpenChange={setOpen}
-          title={copy.dialogTitle}
-          description={copy.dialogDescription}
-          footer={
-            <>
-              <Button
-                size="sm"
-                label={copy.cancel}
-                onClick={() => setOpen(false)}
+            <ToggleGroup
+              aria-label={copy.presetLabel}
+              size="sm"
+              value={[preset]}
+              onValueChange={(value) => {
+                const next = value[0];
+
+                if (
+                  next === "thin" ||
+                  next === "regular" ||
+                  next === "thick"
+                ) {
+                  setPreset(next);
+                }
+              }}
+              items={presetItems}
+            />
+
+            <div className="h-px bg-ui-glass-border" />
+
+            <Switch label={copy.switchLabel} defaultChecked />
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-4 text-xs">
+                <span className="text-ui-ink/65">{copy.glareLabel}</span>
+                <span className="font-mono tabular-nums text-ui-ink/45">
+                  {glare}
+                </span>
+              </div>
+              <Slider
+                aria-label={copy.glareLabel}
+                value={glare}
+                onValueChange={setGlare}
               />
-              <Button
-                size="sm"
-                label={copy.save}
-                onClick={() => setOpen(false)}
-              />
-            </>
-          }
+            </div>
+          </div>
+        </Card>
+      </GlassPresetScope>
+
+      <div className="relative z-10 mt-4 flex items-center justify-between gap-4 text-xs text-fd-muted-foreground">
+        <span>{copy.footerLabel}</span>
+        <Link
+          href="/docs/en/components/card"
+          className="inline-flex items-center gap-1.5 font-medium text-fd-foreground underline decoration-fd-border underline-offset-4 transition-colors hover:decoration-fd-foreground"
         >
-          <Switch
-            label={copy.dialogSwitchLabel}
-            description={copy.dialogSwitchDescription}
-            defaultChecked
-          />
-        </Dialog>
-      </Card>
+          {copy.footerLink}
+          <ArrowUpRight className="size-3.5" aria-hidden="true" />
+        </Link>
+      </div>
     </div>
   );
 }

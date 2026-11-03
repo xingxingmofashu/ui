@@ -5,8 +5,8 @@ import { homeJsonLd } from "@/lib/seo";
 export default function RootPage() {
   return (
     <>
-      <HomePageContent lang="en" />
-      <JsonLd data={homeJsonLd("en")} />
+      <HomePageContent />
+      <JsonLd data={homeJsonLd()} />
     </>
   );
 }

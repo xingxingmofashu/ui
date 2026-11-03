@@ -16,42 +16,47 @@ export function DocsRootProvider({
   children,
 }: {
   lang: string;
-  i18n: I18nProviderProps;
+  i18n?: I18nProviderProps;
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const i18nProps = i18n
+    ? {
+        i18n: {
+          ...i18n,
+          onLocaleChange(nextLocale: string) {
+            const path =
+              basePath && pathname.startsWith(basePath)
+                ? pathname.slice(basePath.length) || "/"
+                : pathname;
+            const docsLocalePrefix = `${docsPrefix}/${lang}`;
+            const rest =
+              path === docsLocalePrefix ||
+              path.startsWith(`${docsLocalePrefix}/`)
+                ? path.slice(docsLocalePrefix.length)
+                : "";
+            const nextPath = `${docsPrefix}/${nextLocale}${rest}`;
+
+            try {
+              window.localStorage.setItem("ui-locale", nextLocale);
+            } catch {
+              // Storage can be unavailable in private or restricted contexts.
+            }
+
+            // Reload the document instead of remounting the localized layout.
+            // next-themes renders its theme script again when the [lang] root
+            // layout is re-rendered on a client-side locale change, which React
+            // 19 reports as "Encountered a script tag while rendering React
+            // component". A full navigation keeps the script in the SSR HTML.
+            window.location.assign(`${basePath}${nextPath}`);
+          },
+        },
+      }
+    : {};
 
   return (
     <RootProvider
-      i18n={{
-        ...i18n,
-        onLocaleChange(nextLocale) {
-          const path =
-            basePath && pathname.startsWith(basePath)
-              ? pathname.slice(basePath.length) || "/"
-              : pathname;
-          const docsLocalePrefix = `${docsPrefix}/${lang}`;
-          const rest =
-            path === docsLocalePrefix ||
-            path.startsWith(`${docsLocalePrefix}/`)
-              ? path.slice(docsLocalePrefix.length)
-              : "";
-          const nextPath = `${docsPrefix}/${nextLocale}${rest}`;
-
-          try {
-            window.localStorage.setItem("ui-locale", nextLocale);
-          } catch {
-            // Storage can be unavailable in private or restricted contexts.
-          }
-
-          // Reload the document instead of remounting the localized layout.
-          // next-themes renders its theme script again when the [lang] root
-          // layout is re-rendered on a client-side locale change, which React
-          // 19 reports as "Encountered a script tag while rendering React
-          // component". A full navigation keeps the script in the SSR HTML.
-          window.location.assign(`${basePath}${nextPath}`);
-        },
-      }}
+      {...i18nProps}
       search={{ SearchDialog: StaticSearchDialog }}
     >
       {children}

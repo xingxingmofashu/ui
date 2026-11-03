@@ -1,47 +1,38 @@
-import { Moon, Palette, ShieldCheck, Sparkles } from "lucide-react";
+import { homeCopy } from "./copy";
 
-import { homeCopy, type HomeLocale } from "./copy";
-
-const icons = [Sparkles, Moon, Palette, ShieldCheck] as const;
-
-export function Features({ lang }: { lang: HomeLocale }) {
-  const copy = homeCopy[lang].features;
+export function Features() {
+  const copy = homeCopy.features;
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-6 py-16">
-      <div className="max-w-2xl">
-        <span className="text-[0.68rem] font-medium uppercase tracking-[0.18em] text-fd-muted-foreground">
-          {copy.eyebrow}
-        </span>
-        <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-fd-foreground sm:text-4xl">
-          {copy.title}
-        </h2>
-        <p className="mt-3 text-sm leading-7 text-fd-muted-foreground">
-          {copy.description}
-        </p>
-      </div>
+    <section className="mx-auto w-full max-w-7xl px-6 py-20">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:items-start">
+        <div className="lg:sticky lg:top-28">
+          <span className="text-[0.68rem] font-medium uppercase tracking-[0.18em] text-fd-muted-foreground">
+            {copy.eyebrow}
+          </span>
+          <h2 className="mt-3 max-w-sm text-3xl font-semibold tracking-[-0.04em] text-fd-foreground sm:text-4xl">
+            {copy.title}
+          </h2>
+          <p className="mt-4 max-w-md text-sm leading-7 text-fd-muted-foreground">
+            {copy.description}
+          </p>
+        </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {copy.items.map((feature, index) => {
-          const Icon = icons[index] ?? Sparkles;
-
-          return (
-            <div
-              key={feature.title}
-              className="rounded-2xl border border-fd-border bg-fd-card/40 p-5"
-            >
-              <div className="grid size-9 place-items-center rounded-xl border border-fd-border bg-fd-background text-fd-foreground">
-                <Icon className="size-4" aria-hidden="true" />
-              </div>
-              <h3 className="mt-4 text-sm font-semibold text-fd-foreground">
-                {feature.title}
+        <div className="grid overflow-hidden rounded-2xl border border-fd-border bg-fd-border sm:grid-cols-2">
+          {copy.items.map((item) => (
+            <div key={item.number} className="bg-fd-background p-6 sm:p-8">
+              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-fd-muted-foreground">
+                {item.number}
+              </span>
+              <h3 className="mt-5 text-base font-semibold tracking-[-0.02em] text-fd-foreground">
+                {item.title}
               </h3>
               <p className="mt-2 text-sm leading-6 text-fd-muted-foreground">
-                {feature.description}
+                {item.description}
               </p>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </section>
   );

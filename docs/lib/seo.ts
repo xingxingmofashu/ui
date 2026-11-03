@@ -7,7 +7,6 @@ import {
   npmUrl,
   ogImage,
   siteDescription,
-  siteDescriptionZh,
   siteName,
   siteUrl,
 } from "@/lib/site";
@@ -124,13 +123,9 @@ export function docsArticleJsonLd({
   };
 }
 
-export function marketingMetadata(lang: Locale): Metadata {
-  const isZh = lang === "zh";
-  const canonical = absoluteUrl(isZh ? "/zh" : "/");
-  const description = isZh ? siteDescriptionZh : siteDescription;
-  const marketingTitle = `${siteName} — ${
-    isZh ? "Liquid Glass React 组件库" : "Liquid Glass React components"
-  }`;
+export function marketingMetadata(): Metadata {
+  const canonical = absoluteUrl("/");
+  const marketingTitle = `${siteName} — Liquid Glass React components`;
 
   return {
     metadataBase: new URL(siteUrl),
@@ -138,7 +133,7 @@ export function marketingMetadata(lang: Locale): Metadata {
       default: marketingTitle,
       template: `%s · ${siteName}`,
     },
-    description,
+    description: siteDescription,
     applicationName: siteName,
     authors: [{ name: "xingxingmofashu", url: githubUrl }],
     creator: "xingxingmofashu",
@@ -148,31 +143,25 @@ export function marketingMetadata(lang: Locale): Metadata {
       "React",
       "Tailwind CSS",
       "Liquid Glass",
-      isZh ? "React 组件库" : "React component library",
+      "React component library",
       siteName,
     ],
     alternates: {
       canonical,
-      languages: {
-        "zh-CN": absoluteUrl("/zh"),
-        en: absoluteUrl("/"),
-        "x-default": absoluteUrl("/"),
-      },
     },
     openGraph: {
       type: "website",
       url: canonical,
       title: marketingTitle,
-      description,
+      description: siteDescription,
       siteName,
-      locale: isZh ? "zh_CN" : "en_US",
-      alternateLocale: [isZh ? "en_US" : "zh_CN"],
+      locale: "en_US",
       images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: marketingTitle,
-      description,
+      description: siteDescription,
       images: [ogImage.url],
     },
     robots: {
@@ -189,9 +178,9 @@ export function marketingMetadata(lang: Locale): Metadata {
   };
 }
 
-export function homeJsonLd(lang: Locale) {
-  const description = lang === "zh" ? siteDescriptionZh : siteDescription;
-  const canonical = absoluteUrl(lang === "zh" ? "/zh" : "/");
+export function homeJsonLd() {
+  const description = siteDescription;
+  const canonical = absoluteUrl("/");
 
   return {
     "@context": "https://schema.org",
@@ -202,7 +191,7 @@ export function homeJsonLd(lang: Locale) {
         url: siteUrl,
         name: siteName,
         description,
-        inLanguage: ["zh-CN", "en"],
+        inLanguage: "en",
       },
       {
         "@type": "SoftwareApplication",
