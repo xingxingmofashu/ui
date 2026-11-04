@@ -642,13 +642,16 @@ describe("design tokens", () => {
 
     expect(index).not.toContain("@xingxingmofashu/ui/plugins/glass-preset");
     expect(source).toContain('[data-glass="thin"]');
+    expect(source).toContain('[data-glass="soft"]');
     expect(source).toContain('[data-glass="regular"]');
     expect(source).toContain('[data-glass="thick"]');
     expect(source).toContain("light-dark(");
     expect(source).toContain("rgb(255 255 255 / 0.2)");
     expect(source).toContain("rgb(20 20 20 / 0.62)");
-    expect(source).toContain("rgb(255 255 255 / 0.35)");
-    expect(source).toContain("rgb(20 20 20 / 0.68)");
+    expect(source).toContain("rgb(255 255 255 / 0.283)");
+    expect(source).toContain("rgb(20 20 20 / 0.653)");
+    expect(source).toContain("rgb(255 255 255 / 0.367)");
+    expect(source).toContain("rgb(20 20 20 / 0.687)");
     expect(source).toContain("rgb(255 255 255 / 0.45)");
     expect(source).toContain("rgb(20 20 20 / 0.72)");
   });

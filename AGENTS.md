@@ -77,7 +77,8 @@ same pnpm workspace.
   diagonal glare; `.ui-glass-rim` is the decorative child rim; and
   `.ui-glass-chip` is the compact surface.
 - `src/plugins/glass-preset/index.css` owns the
-  `data-glass="thin | regular | thick"` presets. They only override shared
+  `data-glass="thin | soft | regular | thick"` presets. They only override
+  shared
   `--ui-glass-*` variables; do not add component styles there.
 - Light is the default at `:root`. `.dark` / `data-theme="dark"` switches to
   dark, while `.light` / `data-theme="light"` re-applies light and wins inside a

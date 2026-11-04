@@ -19,6 +19,7 @@
       "presetLabel": "Preset",
       "presets": {
         "thin": "Thin",
+        "soft": "Soft",
         "regular": "Regular",
         "thick": "Thick"
       },
@@ -30,7 +31,7 @@
   },
   "material": {
     "eyebrow": "01 / Material",
-    "title": "One surface. Three densities.",
+    "title": "One surface. Four densities.",
     "description": "The same glass material moves from quiet decoration to dense, text-heavy interfaces. A preset only changes the shared --ui-glass-* variables; layout and behavior stay exactly the same.",
     "link": "Read the preset docs",
     "swatches": [
@@ -47,11 +48,18 @@
         "blur": "4px blur"
       },
       {
+        "value": "soft",
+        "name": "Soft",
+        "description": "A softer diffusion for secondary text and layered panels.",
+        "metric": "28.3% / 65.3% veil",
+        "blur": "8px blur"
+      },
+      {
         "value": "regular",
         "name": "Regular",
-        "description": "A balanced alternative when text needs more separation.",
-        "metric": "35% / 68% veil",
-        "blur": "16px blur"
+        "description": "A balanced choice for most interfaces.",
+        "metric": "36.7% / 68.7% veil",
+        "blur": "12px blur"
       },
       {
         "value": "thick",

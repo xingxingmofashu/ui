@@ -2,19 +2,11 @@
 
 import * as React from "react";
 
-/** Shared glass material presets exposed by `data-glass`. */
-const GLASS_PRESETS = ["thin", "regular", "thick"] as const;
-
-type GlassPreset = (typeof GLASS_PRESETS)[number];
-
-const DEFAULT_GLASS_PRESET: GlassPreset = "thin";
-
-function isGlassPreset(value: unknown): value is GlassPreset {
-  return (
-    typeof value === "string" &&
-    (GLASS_PRESETS as readonly string[]).includes(value)
-  );
-}
+import {
+  DEFAULT_GLASS_PRESET,
+  isGlassPreset,
+  type GlassPreset,
+} from "./presets";
 
 type GlassPresetProviderProps = {
   /** Controlled preset. Omit to let the provider manage its own state. */
@@ -191,4 +183,5 @@ function useGlassPreset() {
 }
 
 export { GlassPresetProvider, useGlassPreset };
-export type { GlassPreset, GlassPresetProviderProps };
+export type { GlassPreset } from "./presets";
+export type { GlassPresetProviderProps };

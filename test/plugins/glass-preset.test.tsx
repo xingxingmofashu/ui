@@ -93,6 +93,27 @@ describe("glass preset plugin", () => {
     expect(document.documentElement.dataset.glass).toBe("thick");
   });
 
+  it("supports the soft preset", () => {
+    render(
+      <GlassPresetProvider defaultPreset="soft">
+        <GlassPresetProbe />
+      </GlassPresetProvider>,
+    );
+
+    expect(screen.getByTestId("active-preset")).toHaveTextContent("soft");
+    expect(document.documentElement.dataset.glass).toBe("soft");
+  });
+
+  it("recognizes every preset in the no-flash script", () => {
+    for (const preset of ["thin", "soft", "regular", "thick"] as const) {
+      document.documentElement.dataset.glass = preset;
+
+      new Function(getGlassPresetScript({ defaultPreset: "thin" }))();
+
+      expect(document.documentElement.dataset.glass).toBe(preset);
+    }
+  });
+
   it("avoids hydration mismatches when storage has a preset", async () => {
     window.localStorage.setItem("app-glass", "thick");
     const container = document.createElement("div");

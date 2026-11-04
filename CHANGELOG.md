@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Add the `soft` glass preset between `thin` and `regular`, making the shared
+  material a four-step, evenly spaced scale.
+
+### Changed
+
+- Rebalance `regular` to a 36.7% light / 68.7% dark veil, a 12px blur, and
+  143.3% saturation. `thin` and `thick` are unchanged.
+
+### Documentation
+
+- Document the four-step preset scale across the README, homepage, and
+  bilingual plugin guides.
+
 ## 0.1.7 - 2026-11-03
 
 ### Changed

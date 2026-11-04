@@ -14,6 +14,7 @@ import content from "./content.json";
 
 const presetItems = [
   { value: "thin", label: content.hero.preview.presets.thin },
+  { value: "soft", label: content.hero.preview.presets.soft },
   { value: "regular", label: content.hero.preview.presets.regular },
   { value: "thick", label: content.hero.preview.presets.thick },
 ] as const;
@@ -58,6 +59,7 @@ export function HeroPreview() {
 
                 if (
                   next === "thin" ||
+                  next === "soft" ||
                   next === "regular" ||
                   next === "thick"
                 ) {

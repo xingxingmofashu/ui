@@ -25,18 +25,32 @@
     --ui-glass-saturate: 150%;
   }
 
+  [data-glass="soft"],
+  [data-glass="soft"]:is(.light, .dark, [data-theme="light"], [data-theme="dark"]) {
+    --ui-glass-surface: light-dark(
+      rgb(255 255 255 / 0.283),
+      rgb(20 20 20 / 0.653)
+    );
+    --ui-glass-border: light-dark(
+      rgb(31 31 31 / 0.187),
+      rgb(255 255 255 / 0.227)
+    );
+    --ui-glass-blur: 8px;
+    --ui-glass-saturate: 146.7%;
+  }
+
   [data-glass="regular"],
   [data-glass="regular"]:is(.light, .dark, [data-theme="light"], [data-theme="dark"]) {
     --ui-glass-surface: light-dark(
-      rgb(255 255 255 / 0.35),
-      rgb(20 20 20 / 0.68)
+      rgb(255 255 255 / 0.367),
+      rgb(20 20 20 / 0.687)
     );
     --ui-glass-border: light-dark(
-      rgb(31 31 31 / 0.2),
-      rgb(255 255 255 / 0.24)
+      rgb(31 31 31 / 0.213),
+      rgb(255 255 255 / 0.253)
     );
-    --ui-glass-blur: 16px;
-    --ui-glass-saturate: 140%;
+    --ui-glass-blur: 12px;
+    --ui-glass-saturate: 143.3%;
   }
 
   [data-glass="thick"],

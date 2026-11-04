@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { GlassPreset } from "./provider";
+import type { GlassPreset } from "./presets";
 
 type GlassPresetScopeProps = Omit<
   React.ComponentProps<"div">,

@@ -1,13 +1,14 @@
 ---
 title: "Glass presets"
-description: "Switch the shared Liquid Glass material between thin, regular, and thick, with a provider, scoped overrides, persistence, and a no-flash script."
+description: "Switch the shared Liquid Glass material between thin, soft, regular, and thick, with a provider, scoped overrides, persistence, and a no-flash script."
 ---
 
 The glass preset plugin changes the shared glass material without touching
 component code. It ships inside `@xingxingmofashu/ui`; no separate install is
 needed. It contains two parts:
 
-- The plugin `index.css` defines the `thin`, `regular`, and `thick` materials.
+- The plugin `index.css` defines the `thin`, `soft`, `regular`, and `thick`
+  materials.
 - `@xingxingmofashu/ui/plugins/glass-preset` manages `data-glass`, React state,
   and persistence.
 
@@ -42,7 +43,8 @@ Set `data-glass` on the root or on any container:
 | Preset | Light veil | Dark veil | Blur | Saturate | Use it for |
 | --- | --- | --- | --- | --- | --- |
 | `thin` | `20%` | `62%` | `4px` | `150%` | Decorative surfaces over calm backgrounds |
-| `regular` | `35%` | `68%` | `16px` | `140%` | A balanced alternative for most pages |
+| `soft` | `28.3%` | `65.3%` | `8px` | `146.7%` | Secondary text and layered panels |
+| `regular` | `36.7%` | `68.7%` | `12px` | `143.3%` | A balanced choice for most interfaces |
 | `thick` | `45%` | `72%` | `16px` | `140%` | Dense text and busy photography |
 
 `thin` is also the default when no attribute is present. The presets only
@@ -109,7 +111,7 @@ Call `setPreset` from `useGlassPreset`. No component code changes are needed:
 
 import { useGlassPreset } from "@xingxingmofashu/ui/plugins/glass-preset";
 
-const PRESETS = ["thin", "regular", "thick"] as const;
+const PRESETS = ["thin", "soft", "regular", "thick"] as const;
 
 export function PresetPicker() {
   const { preset, setPreset } = useGlassPreset();
@@ -281,7 +283,7 @@ Returns the inline script as a string. It accepts the same `storageKey` and
 ### `GlassPreset`
 
 ```ts
-type GlassPreset = "thin" | "regular" | "thick";
+type GlassPreset = "thin" | "soft" | "regular" | "thick";
 ```
 
 ## Behavior

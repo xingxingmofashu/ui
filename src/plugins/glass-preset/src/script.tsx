@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { GlassPreset } from "./provider";
+import { GLASS_PRESETS, type GlassPreset } from "./presets";
 
 type GlassPresetScriptOptions = {
   /** `localStorage` key read before React hydrates. */
@@ -31,9 +31,10 @@ function getGlassPresetScript({
   defaultPreset = "thin",
 }: GlassPresetScriptOptions = {}) {
   const key = storageKey === undefined ? "null" : toScriptLiteral(storageKey);
+  const presets = JSON.stringify(GLASS_PRESETS);
   const fallback = toScriptLiteral(defaultPreset);
 
-  return `(()=>{const presets=["thin","regular","thick"],root=document.documentElement;let stored=null;try{const key=${key};stored=key===null?null:localStorage.getItem(key)}catch{}const current=root.dataset.glass,preset=presets.includes(stored)?stored:presets.includes(current)?current:${fallback};root.dataset.glass=preset})()`;
+  return `(()=>{const presets=${presets},root=document.documentElement;let stored=null;try{const key=${key};stored=key===null?null:localStorage.getItem(key)}catch{}const current=root.dataset.glass,preset=presets.includes(stored)?stored:presets.includes(current)?current:${fallback};root.dataset.glass=preset})()`;
 }
 
 function GlassPresetScript({

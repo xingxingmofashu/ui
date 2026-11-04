@@ -35,7 +35,7 @@ export function MaterialStudy() {
             </Link>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2">
             {material.presets.map((preset, index) => (
               <GlassPresetScope
                 key={preset.value}

@@ -1,12 +1,12 @@
 ---
 title: "玻璃预设"
-description: "在 thin、regular、thick 之间切换共享 Liquid Glass 材质，支持 Provider、容器级覆盖、持久化与无闪烁脚本。"
+description: "在 thin、soft、regular、thick 之间切换共享 Liquid Glass 材质，支持 Provider、容器级覆盖、持久化与无闪烁脚本。"
 ---
 
 玻璃预设插件可以在不改动组件代码的情况下切换共享玻璃材质。插件随
 `@xingxingmofashu/ui` 一起发布，无需单独安装。它包含两部分：
 
-- 插件 `index.css` 定义 `thin`、`regular` 与 `thick` 三组材质。
+- 插件 `index.css` 定义 `thin`、`soft`、`regular` 与 `thick` 四组材质。
 - `@xingxingmofashu/ui/plugins/glass-preset` 负责 `data-glass`、React 状态与
   持久化。
 
@@ -40,7 +40,8 @@ description: "在 thin、regular、thick 之间切换共享 Liquid Glass 材质�
 | 预设 | 浅色遮罩 | 深色遮罩 | 模糊 | 饱和度 | 适用场景 |
 | --- | --- | --- | --- | --- | --- |
 | `thin` | `20%` | `62%` | `4px` | `150%` | 安静背景上的装饰性表面 |
-| `regular` | `35%` | `68%` | `16px` | `140%` | 需要更强文字分隔时的平衡选择 |
+| `soft` | `28.3%` | `65.3%` | `8px` | `146.7%` | 次级文字与层叠面板 |
+| `regular` | `36.7%` | `68.7%` | `12px` | `143.3%` | 大多数界面的平衡选择 |
 | `thick` | `45%` | `72%` | `16px` | `140%` | 文字密集、照片背景复杂 |
 
 没有 `data-glass` 属性时同样使用 `thin`。预设只修改共享的
@@ -103,7 +104,7 @@ export default function RootLayout({
 
 import { useGlassPreset } from "@xingxingmofashu/ui/plugins/glass-preset";
 
-const PRESETS = ["thin", "regular", "thick"] as const;
+const PRESETS = ["thin", "soft", "regular", "thick"] as const;
 
 export function PresetPicker() {
   const { preset, setPreset } = useGlassPreset();
@@ -267,7 +268,7 @@ const script = getGlassPresetScript({
 ### `GlassPreset`
 
 ```ts
-type GlassPreset = "thin" | "regular" | "thick";
+type GlassPreset = "thin" | "soft" | "regular" | "thick";
 ```
 
 ## 行为

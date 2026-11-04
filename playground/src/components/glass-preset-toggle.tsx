@@ -12,12 +12,18 @@ function GlassPresetToggle() {
       onValueChange={(value) => {
         const next = value[0];
 
-        if (next === "thin" || next === "regular" || next === "thick") {
+        if (
+          next === "thin" ||
+          next === "soft" ||
+          next === "regular" ||
+          next === "thick"
+        ) {
           setPreset(next);
         }
       }}
       items={[
         { value: "thin", label: "Thin" },
+        { value: "soft", label: "Soft" },
         { value: "regular", label: "Regular" },
         { value: "thick", label: "Thick" },
       ]}
