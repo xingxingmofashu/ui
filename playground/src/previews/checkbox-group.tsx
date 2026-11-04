@@ -1,10 +1,15 @@
 import { useState } from "react";
 
-import { CheckboxGroup } from "@xingxingmofashu/ui";
+import { Checkbox, CheckboxGroup } from "@xingxingmofashu/ui";
 
 import { DemoGroup, Status } from "../demo";
 
 const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+
+const mainPermissions = [
+  { value: "view-dashboard", label: "View dashboard" },
+  { value: "access-reports", label: "Access reports" },
+];
 
 const managementPermissions = [
   { value: "create-user", label: "Create user" },
@@ -31,61 +36,92 @@ const channels = [
   },
 ];
 
+const channelValues = channels.map((channel) => channel.value);
+
+function ParentChannels() {
+  const [value, setValue] = useState<string[]>(["comments"]);
+
+  const allSelected = value.length === channelValues.length;
+  const someSelected = value.length > 0 && !allSelected;
+
+  return (
+    <div className="flex flex-col gap-3">
+      <Checkbox
+        label="Notifications"
+        checked={allSelected}
+        indeterminate={someSelected}
+        onCheckedChange={(checked) => {
+          setValue(checked ? [...channelValues] : []);
+        }}
+      />
+      <CheckboxGroup
+        aria-label="Notification channels"
+        value={value}
+        onValueChange={setValue}
+        items={channels}
+        className="ms-[calc(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap))]"
+      />
+    </div>
+  );
+}
+
 function NestedPermissions() {
   const [main, setMain] = useState<string[]>([]);
   const [management, setManagement] = useState<string[]>([]);
-  const selectedCount =
-    main.filter((value) => value !== "manage-users").length +
-    management.length;
+  const mainValues = mainPermissions.map((permission) => permission.value);
+  const managementValues = managementPermissions.map(
+    (permission) => permission.value,
+  );
+  const allSelected =
+    main.length === mainValues.length &&
+    management.length === managementValues.length;
+  const someSelected =
+    (main.length > 0 || management.length > 0) && !allSelected;
+  const allManagementSelected = management.length === managementValues.length;
+  const someManagementSelected =
+    management.length > 0 && !allManagementSelected;
 
   return (
     <div className="flex flex-col gap-4">
-      <CheckboxGroup
-        value={main}
-        onValueChange={(next) => {
-          if (next.includes("manage-users")) {
-            setManagement(
-              managementPermissions.map((permission) => permission.value),
-            );
-          } else if (management.length === managementPermissions.length) {
-            setManagement([]);
-          }
-
-          setMain(next);
-        }}
-        items={[
-          {
-            parent: true,
-            label: "User permissions",
-            indeterminate:
-              management.length > 0 &&
-              management.length !== managementPermissions.length,
-          },
-          { value: "view-dashboard", label: "View dashboard" },
-          { value: "access-reports", label: "Access reports" },
-          {
-            value: "manage-users",
-            label: "Manage users",
-            selected: management,
-            onValueChange: (next) => {
-              if (next.length === managementPermissions.length) {
-                setMain((current) =>
-                  Array.from(new Set([...current, "manage-users"])),
-                );
-              } else {
-                setMain((current) =>
-                  current.filter((value) => value !== "manage-users"),
-                );
-              }
-
-              setManagement(next);
-            },
-            items: managementPermissions,
-          },
-        ]}
-      />
+      <div className="flex flex-col gap-3">
+        <Checkbox
+          label="User permissions"
+          checked={allSelected}
+          indeterminate={someSelected}
+          onCheckedChange={(checked) => {
+            setMain(checked ? [...mainValues] : []);
+            setManagement(checked ? [...managementValues] : []);
+          }}
+        />
+        <CheckboxGroup
+          aria-label="Main permissions"
+          value={main}
+          onValueChange={setMain}
+          items={mainPermissions}
+          className="ms-[calc(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap))]"
+        />
+        <div className="flex flex-col gap-3">
+          <Checkbox
+            label="Manage users"
+            className="ms-[calc(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap))]"
+            checked={allManagementSelected}
+            indeterminate={someManagementSelected}
+            onCheckedChange={(checked) => {
+              setManagement(checked ? [...managementValues] : []);
+            }}
+          />
+          <CheckboxGroup
+            aria-label="User management permissions"
+            value={management}
+            onValueChange={setManagement}
+            items={managementPermissions}
+            className="ms-[calc(2*(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap)))]"
+          />
+        </div>
+      </div>
       <Status>
-        {selectedCount} permissions selected across both levels.
+        {main.length + management.length} permissions selected across both
+        levels.
       </Status>
     </div>
   );
@@ -114,17 +150,7 @@ function CheckboxGroupPreview() {
       </DemoGroup>
 
       <DemoGroup label="Parent">
-        <CheckboxGroup
-          items={[
-            {
-              parent: true,
-              label: "Notifications",
-              description: "Select or clear every channel.",
-            },
-            ...channels,
-          ]}
-          defaultValue={["comments"]}
-        />
+        <ParentChannels />
       </DemoGroup>
 
       <DemoGroup label="Nested">

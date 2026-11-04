@@ -16,18 +16,13 @@ export default tv({
       "text-ui-ink opacity-60 leading-relaxed",
       "text-[length:var(--ui-checkbox-group-description-size)]",
     ],
-    items: [
-      "flex min-w-0 flex-col gap-[var(--ui-checkbox-group-item-gap)]",
-      "data-[has-parent]:ms-[calc(var(--ui-checkbox-size)+var(--ui-checkbox-gap))]",
-    ],
-    section: "min-w-0",
+    items: "flex min-w-0 flex-col gap-[var(--ui-checkbox-group-item-gap)]",
     item: [
       "group relative inline-flex min-w-0 cursor-pointer select-none items-start align-top text-ui-ink",
       "touch-none [-webkit-tap-highlight-color:transparent]",
       "focus:outline-none",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60",
       "data-[readonly]:cursor-default",
-      "data-[parent]:-ms-[calc(var(--ui-checkbox-size)+var(--ui-checkbox-gap))]",
     ],
     box: [
       "relative inline-flex shrink-0 items-center justify-center overflow-hidden",

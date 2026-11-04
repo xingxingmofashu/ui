@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { CheckboxGroup } from "@xingxingmofashu/ui";
+import { Checkbox, CheckboxGroup } from "@xingxingmofashu/ui";
 
 const mainPermissions = [
   { value: "view-dashboard", label: "View Dashboard" },
@@ -16,6 +16,7 @@ const userManagementPermissions = [
   { value: "assign-roles", label: "Assign Roles" },
 ] as const;
 
+const mainValues = mainPermissions.map((permission) => permission.value);
 const managementValues = userManagementPermissions.map(
   (permission) => permission.value,
 );
@@ -24,48 +25,52 @@ export default function CheckboxGroupNestedParentDemo() {
   const [mainValue, setMainValue] = useState<string[]>([]);
   const [managementValue, setManagementValue] = useState<string[]>([]);
 
+  const allSelected =
+    mainValue.length === mainValues.length &&
+    managementValue.length === managementValues.length;
+  const someSelected =
+    (mainValue.length > 0 || managementValue.length > 0) && !allSelected;
+  const allManagementSelected =
+    managementValue.length === managementValues.length;
+  const someManagementSelected =
+    managementValue.length > 0 && !allManagementSelected;
+
   return (
-    <CheckboxGroup
-      value={mainValue}
-      onValueChange={(value) => {
-        if (value.includes("manage-users")) {
-          setManagementValue([...managementValues]);
-        } else if (managementValue.length === managementValues.length) {
-          setManagementValue([]);
-        }
-
-        setMainValue(value);
-      }}
-      items={[
-        {
-          parent: true,
-          label: "User Permissions",
-          indeterminate:
-            managementValue.length > 0 &&
-            managementValue.length !== managementValues.length,
-        },
-        ...mainPermissions,
-        {
-          value: "manage-users",
-          label: "Manage Users",
-          selected: managementValue,
-          onValueChange: (value) => {
-            if (value.length === managementValues.length) {
-              setMainValue((current) =>
-                Array.from(new Set([...current, "manage-users"])),
-              );
-            } else {
-              setMainValue((current) =>
-                current.filter((item) => item !== "manage-users"),
-              );
-            }
-
-            setManagementValue(value);
-          },
-          items: userManagementPermissions,
-        },
-      ]}
-      className="w-full max-w-md"
-    />
+    <div className="flex w-full max-w-md flex-col gap-3">
+      <Checkbox
+        label="User Permissions"
+        checked={allSelected}
+        indeterminate={someSelected}
+        onCheckedChange={(checked) => {
+          setMainValue(checked ? [...mainValues] : []);
+          setManagementValue(checked ? [...managementValues] : []);
+        }}
+      />
+      <CheckboxGroup
+        aria-label="Main permissions"
+        value={mainValue}
+        onValueChange={setMainValue}
+        items={mainPermissions}
+        className="ms-[calc(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap))]"
+      />
+      <div className="flex flex-col gap-3">
+        <Checkbox
+          label="Manage Users"
+          className="ms-[calc(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap))]"
+          checked={allManagementSelected}
+          indeterminate={someManagementSelected}
+          onCheckedChange={(checked) => {
+            setManagementValue(checked ? [...managementValues] : []);
+          }}
+        />
+        <CheckboxGroup
+          aria-label="User management permissions"
+          value={managementValue}
+          onValueChange={setManagementValue}
+          items={userManagementPermissions}
+          className="ms-[calc(2*(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap)))]"
+        />
+      </div>
+    </div>
   );
 }

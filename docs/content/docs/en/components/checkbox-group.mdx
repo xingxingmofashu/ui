@@ -1,6 +1,6 @@
 ---
 title: "Checkbox Group"
-description: "An accessible React checkbox group with Liquid Glass controls, labels, and descriptions."
+description: "A React checkbox group with Liquid Glass controls, labels, and descriptions."
 ---
 
 `CheckboxGroup` renders a labelled set of independent checkbox choices on one shared state. Each option is a real checkbox with its own label and description, and the group value is an array of the checked `value`s.
@@ -15,13 +15,13 @@ Options are passed through the `items` array. The group owns the checked values,
 
 ## Parent checkbox
 
-Set `parent: true` on an entry to render a parent checkbox that toggles every direct option in the group. It reports a mixed state when only some options are checked. The direct options indent one level under the parent, and a string parent label also names the group when no `label` or ARIA name is supplied.
+A parent checkbox is composed from `Checkbox` and `CheckboxGroup` rather than built into the group. Keep the checked values in state, derive the parent's `checked` and `indeterminate` props from that state, and select or clear every option in `onCheckedChange`. The parent sits above the indented group. Pass the same `size` to both controls so their rows stay aligned.
 
 <Example name="checkbox-group/parent" />
 
 ## Nested parent checkbox
 
-Give an entry an `items` array to render a nested group with its own parent checkbox and options. The entry `value` joins the parent group value, while `selected` and `onValueChange` control the nested group. `label` names the nested parent, and a string label also names the nested group. The nested parent aligns with the group's direct options, and its children indent one level. Sync both levels in the callbacks; the nested parent also reports a mixed state. Because the outer group only tracks its direct values, set `indeterminate` on its parent when a nested group is partially selected.
+Nest a second `Checkbox` and `CheckboxGroup` one level deeper. Derive each parent from its own array and the outer parent from both arrays. Selecting the outer parent updates both arrays, so repeated clicks always alternate between every option and none.
 
 <Example name="checkbox-group/nested-parent" />
 
@@ -51,11 +51,11 @@ Set `name` to submit every checked value through hidden native checkboxes with t
 
 ## Accessibility
 
-`CheckboxGroup` exposes a `group` named by `label`, by a string parent label, or by `aria-label` / `aria-labelledby`. Each option is a checkbox with its visible `label` and `description` linked automatically. `Space` toggles the focused checkbox, and `Tab` moves between options because a checkbox group is not a composite widget.
+`CheckboxGroup` exposes a `group` named by `label` or by `aria-label` / `aria-labelledby`. Each option is a checkbox with its visible `label` and `description` linked automatically. `Space` toggles the focused checkbox, and `Tab` moves between options because a checkbox group is not a composite widget.
 
-Parent checkboxes expose `aria-checked="mixed"` when only some options are checked and link the options they toggle with `aria-controls`. A nested group is a second `group` named by its own parent label. Parent checkboxes are controls only; they do not submit a value.
+A parent checkbox is a separate `Checkbox`: give the group its own accessible name, derive the parent's `checked` and `indeterminate` state from the shared arrays, and keep both levels in sync. Parent checkboxes are controls only, so they do not submit a value unless you give them a `name` and `value`.
 
-Disabled options remain announced but cannot change. Each checked leaf option submits its own hidden native checkbox; there is no native `required` for a group, so validate that at least one value is selected in your form handler. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
+Disabled options remain announced but cannot change. Each checked option submits its own hidden native checkbox; there is no native `required` for a group, so validate that at least one value is selected in your form handler. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
 
 ## API reference
 
@@ -63,7 +63,7 @@ Disabled options remain announced but cannot change. Each checked leaf option su
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `readonly CheckboxGroupItemProps[]` | — | Options, parent checkboxes, and nested groups rendered by the group. Required. |
+| `items` | `readonly CheckboxGroupItemProps[]` | — | Options rendered by the group. Required. |
 | `label` | `ReactNode` | — | Visible label for the group. |
 | `description` | `ReactNode` | — | Supporting text under the group label, linked with `aria-describedby`. |
 | `value` | `readonly string[]` | — | Controlled checked values. |
@@ -78,49 +78,42 @@ Disabled options remain announced but cannot change. Each checked leaf option su
 | `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
 | `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `className` | `string` | — | Tailwind classes merged into the group root. |
-| `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; section?: ClassValue; item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+| `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 **CheckboxGroupItemProps**
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | Required for options and nested groups. Identifies the option, or the value a nested group contributes to its parent. Omit it on parent checkboxes. |
-| `parent` | `boolean` | `false` | Renders this entry as a parent checkbox that toggles every direct option in the group. |
-| `indeterminate` | `boolean` | `false` | Forces the mixed state. Use it on a parent when a nested group is partially selected. |
-| `label` | `ReactNode` | — | Visible label next to the control. It becomes the accessible name unless `aria-label` or `aria-labelledby` is provided. On a nested group it also names the group when it is a string. |
+| `value` | `string` | — | Identifies the option in the group value. Required. |
+| `indeterminate` | `boolean` | `false` | Forces the mixed state. |
+| `label` | `ReactNode` | — | Visible label next to the control. It becomes the accessible name unless `aria-label` or `aria-labelledby` is provided. |
 | `description` | `ReactNode` | — | Supporting copy under the label, linked with `aria-describedby` when the control has a name. |
-| `items` | `readonly CheckboxGroupItemProps[]` | — | Entries inside a nested group. |
-| `selected` | `readonly string[]` | — | Controlled values for a nested group. |
-| `defaultSelected` | `readonly string[]` | `[]` | Initial values for a nested group when uncontrolled. |
-| `onValueChange` | `(value: string[], details) => void` | — | Called when a checkbox in a nested group changes. |
-| `disabled` | `boolean` | `false` | Disables this option or every option in a nested group. |
+| `disabled` | `boolean` | `false` | Disables this option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Marks this checkbox as required for form submission. |
-| `aria-label` | `string` | — | Accessible name when no visible label is rendered. On a nested group it names the group. |
+| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | ID of an external label. |
 | `aria-describedby` | `string` | — | ID of external supporting text. |
 | `className` | `string` | — | Tailwind classes merged into the entry root. |
-| `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; section?: ClassValue; item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots. Options and parents use the control slots; nested groups use the group slots. |
+| `ui` | `{ item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for control slots, keyed by `data-slot`. |
 
-When any entry sets `parent`, the group derives its `allValues` from the direct option values and nested group values. Sync the nested group `value` with its `selected` array in `onValueChange` so both parent levels stay accurate.
+Parent checkboxes are not part of the component API. Compose them with `Checkbox` and keep the arrays in sync, as shown above.
 
-`ui` keys map to the `data-slot` values listed below. Additional Base UI `CheckboxGroup` props, including `id` and `render`, are forwarded. Each item also forwards additional Base UI `Checkbox` props, including `inputRef` and `render`. On a nested entry, those props apply to its parent checkbox.
+`ui` keys map to the `data-slot` values listed below. Additional Base UI `CheckboxGroup` props, including `id` and `render`, are forwarded. Each item also forwards additional Base UI `Checkbox` props, including `inputRef` and `render`.
 
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | Present when the group or an option is disabled. |
-| `data-has-parent` | Present on the items container when the group has a parent checkbox. |
-| `data-parent` | Present on a parent checkbox. |
 | `data-readonly` | Present when an option is read-only. |
 | `data-required` | Present when an option is required. |
 | `data-checked` | Present on a checked option. |
 | `data-unchecked` | Present on an unchecked option. |
-| `data-indeterminate` | Present when a parent checkbox is mixed. |
-| `data-slot` | Marks internal group parts (`root`, `header`, `label`, `description`, `items`, `section`) and each control (`item`, `parent`, `box`, `fill`, `glass`, `overlay`, `indicator`, `indicator-icon`, `wrapper`, `item-label`, `item-description`). |
+| `data-indeterminate` | Present when an option is mixed. |
+| `data-slot` | Marks internal group parts (`root`, `header`, `label`, `description`, `items`) and each control (`item`, `box`, `fill`, `glass`, `overlay`, `indicator`, `indicator-icon`, `wrapper`, `item-label`, `item-description`). |
 
 ## Theming
 
-The component reuses the shared glass material and the `Checkbox` item styling. Tune shared `--ui-glass-*` tokens on an ancestor, adjust group spacing with `--ui-checkbox-group-gap` and `--ui-checkbox-group-item-gap`, and use `ui` for internal slots keyed by `data-slot`. `ui.item` styles every direct option root; per-entry `ui` targets the same control slots. A nested group accepts group slots through its entry's `ui`, and nested sections are exposed through `ui.section`. Component-specific values live in `src/theme/checkbox-group.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+The component reuses the shared glass material and the `Checkbox` item styling. Tune shared `--ui-glass-*` tokens on an ancestor, adjust group spacing with `--ui-checkbox-group-gap` and `--ui-checkbox-group-item-gap`, and use `ui` for internal slots keyed by `data-slot`. `ui.item` styles every option root; per-entry `ui` targets the same control slots. Component-specific values live in `src/theme/checkbox-group.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
 
 ## Related components
 
