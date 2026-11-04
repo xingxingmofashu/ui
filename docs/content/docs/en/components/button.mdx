@@ -19,7 +19,7 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Text and icons sc
 
 ## Icons
 
-The leading icon sits before the label. The trailing icon sits after the label. Both use the same plain icon container.
+The leading icon sits before the label. The trailing icon sits after the label. Both use the same plain icon container. For icon-only buttons, provide an `aria-label`; the empty label slot is omitted so the icon stays centered.
 
 <Example name="button/icons" />
 
@@ -49,7 +49,7 @@ When the button should navigate instead of trigger an action, set `nativeButton=
 
 ## Accessibility
 
-`Button` renders a native `<button>` by default, so it gets focus, `Enter` and `Space` activation, and disabled behavior from the platform. The label provides the accessible name; icon slots are decorative and hidden from assistive technology.
+`Button` renders a native `<button>` by default, so it gets focus, `Enter` and `Space` activation, and disabled behavior from the platform. `label` or `children` provides the accessible name. Icon-only buttons must use `aria-label` or `aria-labelledby`; icon slots are decorative and hidden from assistive technology.
 
 When `nativeButton={false}` renders a link or another element, keep the visible label meaningful and use the element that matches the action. `focusableWhenDisabled` keeps a disabled action in the Tab order with `aria-disabled` while blocking activation.
 
@@ -78,7 +78,7 @@ When `nativeButton={false}` renders a link or another element, keep the visible 
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | Present when the button is disabled. |
-| `data-slot` | Marks internal parts (`root`, `base`, `glass`, `overlay`, `leading-icon`, `label`, `trailing-icon`) for styling. |
+| `data-slot` | Marks internal parts (`root`, `base`, `glass`, `overlay`, `leading-icon`, `label`, `trailing-icon`) for styling. `label` is omitted for icon-only buttons. |
 
 ## Related components
 
