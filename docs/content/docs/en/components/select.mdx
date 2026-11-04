@@ -1,0 +1,80 @@
+---
+title: "Select"
+description: "An accessible Liquid Glass select with labels, descriptions, disabled options, and five sizes."
+---
+
+`Select` renders the label, trigger, glass surface, selected value, chevron, portal, glass popup, and options internally. Options are passed through the `items` array, so the same data drives both the trigger value and the popup list.
+
+Use `label` and `description` for visible field text. Give the trigger an accessible name through `label`, `aria-label`, or `aria-labelledby` when no visible label is rendered.
+
+## Basic example
+
+<Example name="select/basic" />
+
+## Sizes
+
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
+
+<Example name="select/sizes" />
+
+## Controlled usage
+
+`value` and `onValueChange` control the selection. The callback receives `null` when the value is cleared.
+
+<Example name="select/controlled" />
+
+## API reference
+
+**Select**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `readonly SelectItemProps[]` | — | Options rendered by the select. Required. |
+| `label` | `ReactNode` | — | Visible label associated with the trigger. |
+| `description` | `ReactNode` | — | Supporting text under the trigger. |
+| `placeholder` | `ReactNode` | — | Text shown when no value is selected. |
+| `value` | `string \| null` | — | Controlled value. |
+| `defaultValue` | `string \| null` | — | Initial value when uncontrolled. |
+| `onValueChange` | `(value: string \| null, details) => void` | — | Called when the selected value changes. |
+| `aria-label` | `string` | — | Accessible name for the trigger when no visible label is rendered. |
+| `aria-labelledby` | `string` | — | Names the trigger from another element. |
+| `aria-describedby` | `string` | — | Additional description IDs applied to the trigger. |
+| `name` | `string` | — | Form field name for the hidden input. |
+| `form` | `string` | — | Form that owns the hidden input. |
+| `required` | `boolean` | `false` | Requires a value before form submission. |
+| `readOnly` | `boolean` | `false` | Prevents changing the selected value. |
+| `disabled` | `boolean` | `false` | Disables the trigger and options. |
+| `modal` | `boolean` | `true` | Locks outside interaction while the popup is open. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and icon size. |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Preferred side of the trigger. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment relative to the trigger. |
+| `sideOffset` | `number \| OffsetFunction` | `6` | Distance between the trigger and popup in pixels. |
+| `alignOffset` | `number \| OffsetFunction` | `0` | Offset along the alignment axis in pixels. |
+| `collisionPadding` | `Padding` | `5px per side` | Space kept between the popup and the collision boundary. |
+| `alignItemWithTrigger` | `boolean` | `false` | Overlaps the popup so the selected item aligns with the trigger. |
+| `open` | `boolean` | — | Controlled popup open state. |
+| `defaultOpen` | `boolean` | `false` | Initial popup open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the popup opens or closes. |
+| `className` | `string` | — | Tailwind classes merged into the field root. |
+| `ui` | `{ root?: ClassValue; label?: ClassValue; trigger?: ClassValue; glass?: ClassValue; overlay?: ClassValue; value?: ClassValue; icon?: ClassValue; description?: ClassValue; positioner?: ClassValue; popup?: ClassValue; popupGlass?: ClassValue; popupOverlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIndicator?: ClassValue; itemText?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+**SelectItemProps**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Value submitted and passed to `onValueChange`. Required. |
+| `label` | `ReactNode` | — | Visible content inside the option and trigger. Required. |
+| `textValue` | `string` | — | Plain-text label used for keyboard navigation. Defaults to a string label. |
+| `disabled` | `boolean` | `false` | Disables the option. |
+
+| Attribute | Description |
+| --- | --- |
+| `data-placeholder` | Present on the value when no option is selected. |
+| `data-selected` | Present on the selected option and its indicator. |
+| `data-highlighted` | Present on the keyboard- or pointer-highlighted option. |
+| `data-disabled` | Present when the select or an option is disabled. |
+| `data-popup-open` | Present on the trigger while the popup is open. |
+| `data-side` | Indicates the resolved side of the popup. |
+| `data-starting-style` | Present when the popup begins animating in. |
+| `data-ending-style` | Present when the popup is animating out. |
+| `data-slot` | Marks internal parts (`root`, `label`, `trigger`, `glass`, `overlay`, `value`, `icon`, `description`, `positioner`, `popup`, `popup-glass`, `popup-overlay`, `list`, `item`, `item-indicator`, `item-text`). |

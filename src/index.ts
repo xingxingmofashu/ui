@@ -10,6 +10,14 @@ export { Checkbox, type CheckboxProps } from "./components/checkbox";
 export { Dialog, type DialogProps } from "./components/dialog";
 export { Drawer, type DrawerProps } from "./components/drawer";
 export { Input, type InputProps } from "./components/input";
+export {
+  Menu,
+  type MenuEntry,
+  type MenuGroupProps,
+  type MenuItemProps,
+  type MenuProps,
+  type MenuSeparatorProps,
+} from "./components/menu";
 export { Popover, type PopoverProps } from "./components/popover";
 export { Progress, type ProgressProps } from "./components/progress";
 export {
@@ -22,6 +30,11 @@ export {
   type ScrollAreaOrientation,
   type ScrollAreaProps,
 } from "./components/scroll-area";
+export {
+  Select,
+  type SelectItemProps,
+  type SelectProps,
+} from "./components/select";
 export { Slider, type SliderProps } from "./components/slider";
 export { Switch, type SwitchProps } from "./components/switch";
 export { Tabs, type TabsItemProps, type TabsProps } from "./components/tabs";
@@ -47,3 +60,4 @@ export {
   type ToggleGroupItemProps,
   type ToggleGroupProps,
 } from "./components/toggle-group";
+export { Tooltip, type TooltipProps } from "./components/tooltip";

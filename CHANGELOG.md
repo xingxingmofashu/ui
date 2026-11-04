@@ -4,6 +4,12 @@
 
 ### Added
 
+- Add the Tooltip component with configurable delay, placement, arrow, and
+  controlled visibility.
+- Add the Menu component with action items, groups, separators, icons,
+  shortcuts, disabled items, and controlled open state.
+- Add the Select component with labels, descriptions, disabled options, five
+  sizes, controlled values, and form integration.
 - Add the `soft` glass preset between `thin` and `regular`, making the shared
   material a four-step, evenly spaced scale.
 
@@ -16,6 +22,10 @@
 
 - Document the four-step preset scale across the README, homepage, and
   bilingual plugin guides.
+- Add bilingual Tooltip, Menu, and Select pages with live examples and API
+  references.
+- Add the new components to the playground and update the homepage and
+  component overview counts.
 - Point the component overview at the single English homepage instead of the
   retired `/zh` page.
 

@@ -1,0 +1,65 @@
+---
+title: "Tooltip"
+description: "当触发器被悬停或聚焦时显示的紧凑液态玻璃提示。"
+---
+
+`Tooltip` 内部负责触发器、Portal、定位器、玻璃浮层、方向箭头和内容。它面向鼠标与键盘用户，是补充性的视觉提示，不能替代可见标签或无障碍描述。
+
+触发器本身的可访问名称应与提示内容一致。纯图标触发器需要 `aria-label`，Tooltip 只提供额外提示。
+
+## 基础示例
+
+通过 `trigger` 传入一个元素，它必须像 `Button` 一样转发 props 与 ref。
+
+<Example name="tooltip/basic" />
+
+## 方位
+
+`side`、`align`、`sideOffset` 与 `alignOffset` 控制首选位置。空间不足时，提示会自动翻转或偏移。
+
+<Example name="tooltip/placement" />
+
+## 受控状态与箭头
+
+使用 `open` 与 `onOpenChange` 控制显示状态；设置 `arrow={false}` 可隐藏箭头。
+
+<Example name="tooltip/controlled" />
+
+## 延迟
+
+`delay` 控制鼠标停留多久后打开，`closeDelay` 控制关闭延迟，两者都会传给 Base UI 触发器。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `trigger` | `ReactElement` | — | 打开提示的触发器。必填，必须转发 props 与 ref。 |
+| `content` | `ReactNode` | — | 浮层中的简短提示。必填。 |
+| `arrow` | `boolean` | `true` | 是否渲染方向箭头。 |
+| `delay` | `number` | `600` | 悬停后打开前的延迟，单位毫秒。 |
+| `closeDelay` | `number` | `0` | 关闭前的延迟，单位毫秒。 |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"top"` | 首选方位。 |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | 相对触发器的对齐方式。 |
+| `sideOffset` | `number \| OffsetFunction` | `8` | 触发器与浮层的像素距离。 |
+| `alignOffset` | `number \| OffsetFunction` | `0` | 沿对齐轴的像素偏移。 |
+| `collisionPadding` | `Padding` | `每边 5px` | 浮层与碰撞边界之间的留白。 |
+| `open` | `boolean` | — | 受控显示状态。 |
+| `defaultOpen` | `boolean` | `false` | 非受控时的初始显示状态。 |
+| `onOpenChange` | `(open: boolean, details) => void` | — | 打开或关闭时调用。 |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
+| `disabled` | `boolean` | `false` | 禁止打开提示。 |
+| `trackCursorAxis` | `"none" \| "x" \| "y" \| "both"` | `"none"` | 提示跟随指针移动的轴。 |
+| `className` | `string` | — | 合并到浮层的 Tailwind 类名。 |
+| `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
+
+| 属性 | 说明 |
+| --- | --- |
+| `data-open` | 浮层打开时存在。 |
+| `data-closed` | 浮层关闭时存在。 |
+| `data-side` | 实际方位（`top`、`bottom`、`left`、`right`、`inline-start` 或 `inline-end`）。 |
+| `data-align` | 实际对齐方式（`start`、`center` 或 `end`）。 |
+| `data-starting-style` | 浮层开始进入动画时存在。 |
+| `data-ending-style` | 浮层正在退出动画时存在。 |
+| `data-instant` | 需要跳过动画时存在。 |
+| `data-popup-open` | 提示打开时存在于触发器上。 |
+| `data-slot` | 标记内部结构（`positioner`、`popup`、`glass`、`overlay`、`arrow`、`content`）。 |

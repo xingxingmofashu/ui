@@ -17,8 +17,11 @@ import alertDialogTheme from "../src/theme/alert-dialog";
 import dialogTheme from "../src/theme/dialog";
 import drawerTheme from "../src/theme/drawer";
 import inputTheme from "../src/theme/input";
+import menuTheme from "../src/theme/menu";
 import progressTheme from "../src/theme/progress";
 import radioGroupTheme from "../src/theme/radio-group";
+import selectTheme from "../src/theme/select";
+import tooltipTheme from "../src/theme/tooltip";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url)).replaceAll(
   "\\",
@@ -247,6 +250,58 @@ function themeCandidates() {
 
     return radioGroupSlots.map((slot) => radioGroupStyles[slot]());
   });
+  const menuSlots = [
+    "positioner",
+    "popup",
+    "glass",
+    "overlay",
+    "list",
+    "item",
+    "itemIcon",
+    "itemLabel",
+    "shortcut",
+    "group",
+    "groupLabel",
+    "separator",
+  ] as const;
+  const menuStyles = menuTheme();
+  const menuCandidates = menuSlots.map((slot) => menuStyles[slot]());
+  const selectSlots = [
+    "root",
+    "label",
+    "trigger",
+    "glass",
+    "overlay",
+    "value",
+    "icon",
+    "description",
+    "positioner",
+    "popup",
+    "popupGlass",
+    "popupOverlay",
+    "list",
+    "item",
+    "itemIndicator",
+    "itemText",
+  ] as const;
+  const selectSizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const selectCandidates = selectSizes.flatMap((size) => {
+    const selectStyles = selectTheme({ size });
+
+    return selectSlots.map((slot) => selectStyles[slot]());
+  });
+  const tooltipSlots = [
+    "positioner",
+    "popup",
+    "glass",
+    "overlay",
+    "arrow",
+    "content",
+  ] as const;
+  const tooltipStyles = tooltipTheme();
+  const tooltipCandidates = tooltipSlots.map((slot) =>
+    tooltipStyles[slot](),
+  );
 
   return [
     buttonStyles.root(),
@@ -269,6 +324,9 @@ function themeCandidates() {
     ...sliderCandidates,
     ...progressCandidates,
     ...radioGroupCandidates,
+    ...menuCandidates,
+    ...selectCandidates,
+    ...tooltipCandidates,
   ]
     .join(" ")
     .split(/\s+/)

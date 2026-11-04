@@ -1,0 +1,253 @@
+"use client";
+
+import { Select as UISelect } from "@base-ui/react/select";
+import { cn } from "cn";
+import * as React from "react";
+import { type VariantProps } from "tailwind-variants";
+
+import { mergeIds } from "../internal/aria";
+import { type ComponentConfig } from "../internal/tv";
+import theme from "../theme/select";
+
+import { CheckIcon } from "./icons/check";
+import { ChevronDownIcon } from "./icons/chevron-down";
+
+type Select = ComponentConfig<typeof theme>;
+
+type PositionerProps = UISelect.Positioner.Props;
+
+/** One option rendered by the select. */
+type SelectItemProps<Value extends string = string> = {
+  /** Value submitted and passed to `onValueChange`. */
+  value: Value;
+  /** Visible content inside the option and the trigger. */
+  label: React.ReactNode;
+  /** Plain-text label used for keyboard navigation. Defaults to a string label. */
+  textValue?: string;
+  /** Whether the option is disabled. */
+  disabled?: boolean;
+};
+
+type SelectProps<Value extends string = string> = Omit<
+  UISelect.Root.Props<Value>,
+  | "children"
+  | "className"
+  | "style"
+  | "items"
+  | "multiple"
+  | "value"
+  | "defaultValue"
+  | "onValueChange"
+> &
+  VariantProps<typeof theme> & {
+    /** Options rendered by the select. */
+    items: readonly SelectItemProps<Value>[];
+    /** Visible label associated with the trigger. */
+    label?: React.ReactNode;
+    /** Supporting text under the trigger. */
+    description?: React.ReactNode;
+    /** Text shown when no value is selected. */
+    placeholder?: React.ReactNode;
+    /** Controlled value. */
+    value?: Value | null;
+    /** Initial value when uncontrolled. */
+    defaultValue?: Value | null;
+    /** Called when the selected value changes. */
+    onValueChange?: (
+      value: Value | null,
+      details: UISelect.Root.ChangeEventDetails,
+    ) => void;
+    /** Side of the trigger the popup is placed on. */
+    side?: PositionerProps["side"];
+    /** Alignment of the popup relative to the trigger. */
+    align?: PositionerProps["align"];
+    /** Distance between the trigger and the popup in pixels. */
+    sideOffset?: PositionerProps["sideOffset"];
+    /** Offset along the alignment axis in pixels. */
+    alignOffset?: PositionerProps["alignOffset"];
+    /** Padding between the popup and the edge of the collision boundary. */
+    collisionPadding?: PositionerProps["collisionPadding"];
+    /** Whether the popup overlaps the trigger to align the selected item. */
+    alignItemWithTrigger?: PositionerProps["alignItemWithTrigger"];
+    /** Accessible name for the trigger when no visible label is rendered. */
+    "aria-label"?: string;
+    /** Names the trigger from another element. */
+    "aria-labelledby"?: string;
+    /** Additional description IDs applied to the trigger. */
+    "aria-describedby"?: string;
+    /** Tailwind classes merged into the root element. */
+    className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: Select["slots"];
+  };
+
+function Select<Value extends string = string>({
+  className,
+  ui,
+  size,
+  items,
+  label,
+  description,
+  placeholder,
+  value,
+  defaultValue,
+  onValueChange,
+  side,
+  align,
+  sideOffset = 6,
+  alignOffset,
+  collisionPadding,
+  alignItemWithTrigger = false,
+  disabled,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  ...props
+}: SelectProps<Value>) {
+  const styles = theme({ size });
+  const descriptionId = React.useId();
+  const describedBy = mergeIds(
+    ariaDescribedBy,
+    description ? descriptionId : undefined,
+  );
+
+  return (
+    <UISelect.Root
+      {...props}
+      items={items}
+      value={value}
+      defaultValue={defaultValue}
+      onValueChange={onValueChange}
+      disabled={disabled}
+    >
+      <div
+        data-slot="root"
+        data-disabled={disabled || undefined}
+        className={cn(styles.root(), ui?.root, className)}
+      >
+        {label ? (
+          <UISelect.Label
+            data-slot="label"
+            className={cn(styles.label(), ui?.label)}
+          >
+            {label}
+          </UISelect.Label>
+        ) : null}
+
+        <UISelect.Trigger
+          data-slot="trigger"
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={describedBy}
+          disabled={disabled}
+          className={cn(styles.trigger(), ui?.trigger)}
+        >
+          <span
+            aria-hidden="true"
+            data-slot="glass"
+            className={cn(styles.glass(), ui?.glass)}
+          >
+            <span
+              aria-hidden="true"
+              data-slot="overlay"
+              className={cn(styles.overlay(), ui?.overlay)}
+            />
+          </span>
+
+          <UISelect.Value
+            data-slot="value"
+            placeholder={placeholder}
+            className={cn(styles.value(), ui?.value)}
+          />
+
+          <UISelect.Icon
+            data-slot="icon"
+            className={cn(styles.icon(), ui?.icon)}
+          >
+            <ChevronDownIcon />
+          </UISelect.Icon>
+        </UISelect.Trigger>
+
+        {description ? (
+          <span
+            id={descriptionId}
+            data-slot="description"
+            className={cn(styles.description(), ui?.description)}
+          >
+            {description}
+          </span>
+        ) : null}
+      </div>
+
+      <UISelect.Portal>
+        <UISelect.Positioner
+          data-slot="positioner"
+          side={side}
+          align={align}
+          sideOffset={sideOffset}
+          alignOffset={alignOffset}
+          collisionPadding={collisionPadding}
+          alignItemWithTrigger={alignItemWithTrigger}
+          className={cn(styles.positioner(), ui?.positioner)}
+        >
+          <UISelect.Popup
+            data-slot="popup"
+            className={cn(styles.popup(), ui?.popup)}
+          >
+            <span
+              aria-hidden="true"
+              data-slot="popup-glass"
+              className={cn(styles.popupGlass(), ui?.popupGlass)}
+            >
+              <span
+                aria-hidden="true"
+                data-slot="popup-overlay"
+                className={cn(styles.popupOverlay(), ui?.popupOverlay)}
+              />
+            </span>
+
+            <UISelect.List
+              data-slot="list"
+              className={cn(styles.list(), ui?.list)}
+            >
+              {items.map((item) => (
+                <UISelect.Item
+                  key={item.value}
+                  value={item.value}
+                  disabled={item.disabled}
+                  label={
+                    item.textValue ??
+                    (typeof item.label === "string" ? item.label : undefined)
+                  }
+                  data-slot="item"
+                  className={cn(styles.item(), ui?.item)}
+                >
+                  <UISelect.ItemIndicator
+                    keepMounted
+                    data-slot="item-indicator"
+                    className={cn(
+                      styles.itemIndicator(),
+                      ui?.itemIndicator,
+                    )}
+                  >
+                    <CheckIcon />
+                  </UISelect.ItemIndicator>
+
+                  <UISelect.ItemText
+                    data-slot="item-text"
+                    className={cn(styles.itemText(), ui?.itemText)}
+                  >
+                    {item.label}
+                  </UISelect.ItemText>
+                </UISelect.Item>
+              ))}
+            </UISelect.List>
+          </UISelect.Popup>
+        </UISelect.Positioner>
+      </UISelect.Portal>
+    </UISelect.Root>
+  );
+}
+
+export { Select };
+export type { SelectItemProps, SelectProps };
