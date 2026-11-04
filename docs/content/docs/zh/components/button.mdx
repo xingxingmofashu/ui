@@ -80,6 +80,10 @@ description: "可访问的 React 按钮，采用 Liquid Glass 风格，支持五
 | `data-disabled` | 按钮禁用时存在。 |
 | `data-slot` | 标记内部部件（`root`、`base`、`glass`、`overlay`、`leading-icon`、`label`、`trailing-icon`），用于样式选择。纯图标按钮不会渲染 `label`。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/button.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Toggle](/docs/zh/components/toggle) — 需要保持按下状态的操作。

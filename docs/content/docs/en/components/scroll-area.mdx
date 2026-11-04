@@ -69,6 +69,10 @@ Pointer and keyboard scrolling stay native, while the custom scrollbars remain d
 | `data-hovering` | Present on a scrollbar while the pointer is over the area. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `viewport`, `content`, `scrollbar`, `thumb`, `corner`) for styling. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/scroll-area.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Card](/docs/en/components/card) — A static panel for content that fits.

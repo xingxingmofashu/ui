@@ -69,6 +69,10 @@ viewport 只在可滚动时可聚焦，与原生滚动容器行为一致。通�
 | `data-hovering` | 指针位于区域上方时存在于滚动条上。 |
 | `data-slot` | 标记内部部件（`root`、`glass`、`overlay`、`viewport`、`content`、`scrollbar`、`thumb`、`corner`），用于样式选择。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/scroll-area.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Card](/docs/zh/components/card) — 内容可完整容纳时的静态面板。

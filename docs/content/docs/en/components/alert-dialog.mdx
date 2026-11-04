@@ -61,6 +61,10 @@ Escape closes the dialog without calling `onCancel` or `onConfirm`; guard the fl
 | `data-nested-dialog-open` | Present when another dialog is open inside this one. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/alert-dialog.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Dialog](/docs/en/components/dialog) — For general-purpose modal content that can be dismissed more freely.

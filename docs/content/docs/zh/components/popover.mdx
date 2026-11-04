@@ -79,6 +79,10 @@ description: "可访问的非模态 React 浮层，锚定在触发元素旁，�
 | `data-pressed` | 触发元素被按下时存在。 |
 | `data-slot` | 标记内部部件（`positioner`、`popup`、`glass`、`overlay`、`arrow`、`content`、`title`、`description`、`body`、`footer`），用于样式选择。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/popover.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Tooltip](/docs/zh/components/tooltip) — 简短、非交互的提示。

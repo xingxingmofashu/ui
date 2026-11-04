@@ -97,6 +97,10 @@ Root `ui` is merged into every item first, then the item's `ui`, then the item's
 | `data-ending-style` | Present when a panel is animating out. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `content`, `item`, `header`, `trigger`, `title`, `indicator`, `indicator-icon`, `panel`, `panel-content`). |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/accordion.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Tabs](/docs/en/components/tabs) — For switching between sibling views instead of stacking disclosures.

@@ -85,6 +85,10 @@ On touch screens, drag the drawer in the direction set by `direction` to dismiss
 | `data-swiping` | Present while the drawer is being swiped. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/drawer.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Dialog](/docs/en/components/dialog) — For centered modal content.

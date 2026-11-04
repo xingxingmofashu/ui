@@ -88,6 +88,10 @@ Switch 会把 `name` 与 `value` 用于表单，并在提交时通过隐藏的 c
 | `data-animating` | thumb 过渡动画运行时存在。 |
 | `data-slot` | 标记内部部件（`root`、`container`、`base`、`thumb`、`wrapper`、`label`、`description`），用于样式选择。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/switch.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Checkbox](/docs/zh/components/checkbox) — 随表单一起确认的选择。

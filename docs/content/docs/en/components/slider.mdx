@@ -99,6 +99,10 @@ Arrow keys change the value by `step`, `Page Up` and `Page Down` use `largeStep`
 | `data-slot` | Marks internal parts (`root`, `control`, `track`, `indicator`, `thumb`) for styling. |
 | `data-focused` | Present when the slider is focused. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/slider.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Input](/docs/en/components/input) — For an exact numeric value typed by the user.

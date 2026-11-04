@@ -97,6 +97,10 @@ description: "可访问的 React 手风琴，采用可折叠的 Liquid Glass 面
 | `data-ending-style` | 面板正在退出动画时存在。 |
 | `data-slot` | 标记内部部件（`root`、`glass`、`overlay`、`content`、`item`、`header`、`trigger`、`title`、`indicator`、`indicator-icon`、`panel`、`panel-content`）。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/accordion.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Tabs](/docs/zh/components/tabs) — 在并列视图之间切换，而不是堆叠折叠面板。

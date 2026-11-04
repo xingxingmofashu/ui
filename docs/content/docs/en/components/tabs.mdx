@@ -115,6 +115,10 @@ Root `ui` is merged into every tab and panel first, then the item's `ui`. The it
 | `data-ending-style` | Present when a panel is animating out. |
 | `data-slot` | Marks internal parts (`root`, `list`, `glass`, `overlay`, `indicator`, `tab`, `icon`, `label`, `panels`, `panel`, `panel-content`). |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/tabs.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Accordion](/docs/en/components/accordion) — For stacked disclosures without a tab list.

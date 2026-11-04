@@ -42,6 +42,10 @@ When the whole card should be clickable, put one link or button in the title ins
 | --- | --- |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `layout`, `header`, `title`, `description`, `body`, `footer`) for styling. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/card.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Accordion](/docs/en/components/accordion) — For collapsible groups of content.

@@ -75,6 +75,10 @@ Use `aria-label` or `aria-labelledby` only when no visible label is rendered; pl
 | `data-focused` | Present when the input is focused. |
 | `data-slot` | Marks internal parts (`root`, `label`, `control`, `glass`, `overlay`, `leading-icon`, `input`, `trailing-icon`, `description`) for styling. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/input.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Select](/docs/en/components/select) — For choosing from a fixed set of values.

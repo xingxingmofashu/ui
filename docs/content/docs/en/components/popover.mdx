@@ -79,6 +79,10 @@ It is non-modal by default: focus is not trapped, the page stays scrollable, and
 | `data-pressed` | Present while the trigger is pressed. |
 | `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`, `title`, `description`, `body`, `footer`) for styling. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/popover.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Tooltip](/docs/en/components/tooltip) — For a short, non-interactive hint.

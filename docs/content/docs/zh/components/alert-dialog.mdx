@@ -61,6 +61,10 @@ description: "可访问的 React 警告对话框，用于破坏性操作确认�
 | `data-nested-dialog-open` | 对话框内部还有另一个对话框打开时存在。 |
 | `data-slot` | 标记内部部件（`backdrop`、`viewport`、`popup`、`glass`、`overlay`、`content`、`title`、`description`、`body`、`footer`），用于样式选择。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/alert-dialog.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Dialog](/docs/zh/components/dialog) — 可更自由关闭的通用模态内容。

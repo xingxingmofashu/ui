@@ -100,6 +100,10 @@ description: "可访问的 React 单选组，采用圆形 Liquid Glass 控件，
 | `data-ending-style` | 指示器退出动画时存在。 |
 | `data-slot` | 标记内部部件（`root`、`header`、`label`、`description`、`items`、`item`、`box`、`glass`、`overlay`、`indicator`、`dot`、`wrapper`、`item-label`、`item-description`）供样式使用。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/radio-group.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Checkbox](/docs/zh/components/checkbox) — 相互独立的布尔选择。

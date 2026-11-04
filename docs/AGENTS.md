@@ -33,7 +33,7 @@ Every component page uses the same skeleton in both locales:
    explanation.
 5. `Accessibility`.
 6. `API reference`.
-7. Optional `Theming` or `Styling`.
+7. `Theming`.
 8. `Related components`.
 
 Headings use these exact translations:
@@ -48,8 +48,10 @@ Headings use these exact translations:
 | Accessibility | 无障碍 |
 | API reference | API 参考 |
 | Theming | 主题 |
-| Styling | 样式 |
 | Related components | 相关组件 |
+
+Use `Theming` for token and material overrides; do not add a separate
+`Styling` section with a different anchor.
 
 Keep component names, prop names, ARIA terms, and `Liquid Glass` in English in
 both locales. Do not translate `Liquid Glass` as 液态玻璃.
@@ -89,6 +91,11 @@ API reference rules:
 - Explain that additional Base UI root props are forwarded when the wrapper
   accepts them.
 - Keep `ui` as the derived slot object; do not hand-write a second slot type.
+
+The `Theming` section is required. It explains the shared `--ui-glass-*`
+tokens, `className` for layout, and `ui` for internal slots. Include
+component-specific token names when the component theme exposes them, and link
+to the theming guide.
 
 ## Components And Theme
 

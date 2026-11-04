@@ -81,7 +81,7 @@ switch.
 ## Conventions
 
 - Keep both Chinese and English pages in sync. Every page must exist under both locale folders.
-- Component pages use the shared skeleton: lead paragraph, basic example, feature sections, Accessibility, API reference, optional Theming or Styling, and Related components. See `AGENTS.md` for the heading dictionary and table rules.
+- Component pages use the shared skeleton: lead paragraph, basic example, feature sections, Accessibility, API reference, Theming, and Related components. See `AGENTS.md` for the heading dictionary and table rules.
 - Internal links in MDX must include the docs and locale prefixes, for example `/docs/zh/components/button` or `/docs/en/components/switch`.
 - Use `<Example name="component/demo" />` instead of duplicating example code in MDX. Pass `showCode={false}` for a preview without the source toggle.
 - Add a demo by creating `components/examples/<component>/<demo>.tsx` with a default export; the registry discovers it automatically. Every `.tsx` in that folder is treated as a demo, so keep helpers elsewhere.

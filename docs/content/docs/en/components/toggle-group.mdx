@@ -100,6 +100,10 @@ Items do not accept `pressed` or `defaultPressed`; the group `value` / `defaultV
 | `data-pressed` | Present on a pressed item. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `rim`, `item`, `content`, `icon`, `label`). |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/toggle-group.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Toggle](/docs/en/components/toggle) — For a single pressed button.

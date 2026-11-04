@@ -67,6 +67,10 @@ When `label` is present it contributes to the accessible name; icon-only toggles
 | `data-disabled` | Present when the toggle is disabled. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `rim`, `thumb`, `content`, `icon`, `label`) for styling. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/toggle.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Toggle Group](/docs/en/components/toggle-group) — For several related toggles.

@@ -80,6 +80,10 @@ When `nativeButton={false}` renders a link or another element, keep the visible 
 | `data-disabled` | Present when the button is disabled. |
 | `data-slot` | Marks internal parts (`root`, `base`, `glass`, `overlay`, `leading-icon`, `label`, `trailing-icon`) for styling. `label` is omitted for icon-only buttons. |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/button.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Toggle](/docs/en/components/toggle) — For an action that stays pressed.

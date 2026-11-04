@@ -85,6 +85,10 @@ description: "可访问的 React 抽屉，可从任意边缘滑入，采用 Liqu
 | `data-swiping` | 抽屉正在滑动时存在。 |
 | `data-slot` | 标记内部部件（`backdrop`、`viewport`、`popup`、`glass`、`overlay`、`content`、`title`、`description`、`body`、`footer`），用于样式选择。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/drawer.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Dialog](/docs/zh/components/dialog) — 居中的模态内容。

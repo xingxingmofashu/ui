@@ -99,6 +99,10 @@ Slider 会把 `name` 用于表单，并通过隐藏的 `input[type="range"]` 提
 | `data-slot` | 标记内部部件（`root`、`control`、`track`、`indicator`、`thumb`），用于样式选择。 |
 | `data-focused` | 滑块聚焦时存在。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/slider.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Input](/docs/zh/components/input) — 由用户输入精确数值。

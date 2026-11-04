@@ -80,6 +80,10 @@ Tooltip 常与图标按钮搭配使用。请为触发器提供独立的 `aria-la
 | `data-popup-open` | 提示打开时存在于触发器上。 |
 | `data-slot` | 标记内部结构（`positioner`、`popup`、`glass`、`overlay`、`arrow`、`content`）。 |
 
+## 主题
+
+组件使用共享玻璃材质。可以在父级调整 `--ui-glass-*` token，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。组件级数值位于 `src/theme/tooltip.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
 ## 相关组件
 
 - [Popover](/docs/zh/components/popover) — 需要更丰富的内容、操作与非模态焦点时使用。

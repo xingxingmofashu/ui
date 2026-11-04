@@ -80,6 +80,10 @@ Tooltip content must be short and supplementary. Do not put interactive controls
 | `data-popup-open` | Present on the trigger while the tooltip is open. |
 | `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`). |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/tooltip.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Popover](/docs/en/components/popover) — For richer content, actions, and non-modal focus.

@@ -103,6 +103,10 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `data-ending-style` | Present when the popup is animating out. |
 | `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `list`, `item`, `item-icon`, `item-label`, `shortcut`, `group`, `group-label`, `separator`). |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/menu.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Button](/docs/en/components/button) — The usual menu trigger and the action style used inside items.

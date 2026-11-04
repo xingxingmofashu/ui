@@ -102,6 +102,10 @@ The visible `label` names the trigger and `description` is linked with `aria-des
 | `data-ending-style` | Present when the popup is animating out. |
 | `data-slot` | Marks internal parts (`root`, `label`, `trigger`, `glass`, `overlay`, `value`, `icon`, `description`, `positioner`, `popup`, `popup-glass`, `popup-overlay`, `list`, `item`, `item-indicator`, `item-text`). |
 
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/select.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
 ## Related components
 
 - [Input](/docs/en/components/input) — For free-form text fields next to a select.
