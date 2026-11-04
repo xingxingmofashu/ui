@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import { Tooltip } from "../../src/components/tooltip";
 
 function renderTooltip({
-  content = "Bold text",
+  children = "Bold text",
   trigger = (
     <button type="button" aria-label="Bold">
       B
@@ -15,13 +15,9 @@ function renderTooltip({
   ...props
 }: Partial<ComponentProps<typeof Tooltip>> = {}) {
   return render(
-    <Tooltip
-      defaultOpen
-      delay={0}
-      content={content}
-      trigger={trigger}
-      {...props}
-    />,
+    <Tooltip defaultOpen delay={0} trigger={trigger} {...props}>
+      {children}
+    </Tooltip>,
   );
 }
 
@@ -106,7 +102,7 @@ describe("Tooltip", () => {
     });
 
     it("renders logical-side arrow styles", async () => {
-      renderTooltip({ content: "Logical hint", side: "inline-start" });
+      renderTooltip({ children: "Logical hint", side: "inline-start" });
 
       const tooltip = await findPopup("Logical hint");
       const arrow = tooltip.querySelector<HTMLElement>('[data-slot="arrow"]');
@@ -160,11 +156,9 @@ describe("Tooltip", () => {
       const user = userEvent.setup();
 
       render(
-        <Tooltip
-          delay={0}
-          content="Bold text"
-          trigger={<button type="button">Bold</button>}
-        />,
+        <Tooltip delay={0} trigger={<button type="button">Bold</button>}>
+          Bold text
+        </Tooltip>,
       );
 
       const trigger = screen.getByRole("button", { name: "Bold" });
@@ -184,11 +178,9 @@ describe("Tooltip", () => {
 
     it("opens when the trigger receives focus", async () => {
       render(
-        <Tooltip
-          delay={0}
-          content="Keyboard hint"
-          trigger={<button type="button">Focus target</button>}
-        />,
+        <Tooltip delay={0} trigger={<button type="button">Focus target</button>}>
+          Keyboard hint
+        </Tooltip>,
       );
 
       const trigger = screen.getByRole("button", {
@@ -210,9 +202,10 @@ describe("Tooltip", () => {
         <Tooltip
           open
           onOpenChange={onOpenChange}
-          content="Controlled hint"
           trigger={<button type="button">Controlled</button>}
-        />,
+        >
+          Controlled hint
+        </Tooltip>,
       );
 
       const tooltip = await findPopup("Controlled hint");

@@ -15,15 +15,16 @@ export default function TooltipControlledDemo() {
           open={open}
           onOpenChange={setOpen}
           arrow={false}
-          content="Controlled by external state"
           trigger={<Button label="Hover or focus" leadingIcon={<Info />} />}
-        />
+        >
+          Controlled by external state
+        </Tooltip>
         <Button
           label={open ? "Hide tooltip" : "Show tooltip"}
           onClick={() => setOpen((value) => !value)}
         />
       </div>
-      <p className="text-sm text-ui-ink/60">
+      <p className="text-sm text-ui-ink/60" aria-live="polite">
         The tooltip is {open ? "open" : "closed"}.
       </p>
     </div>

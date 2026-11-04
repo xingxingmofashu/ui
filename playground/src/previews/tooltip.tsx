@@ -14,16 +14,14 @@ function TooltipPreview() {
     <>
       <DemoGroup label="Basic">
         <div className="flex flex-wrap items-center gap-3">
+          <Tooltip trigger={<Button label="Save" leadingIcon={<Save />} />}>
+            Save changes
+          </Tooltip>
           <Tooltip
-            content="Save changes"
-            trigger={<Button label="Save" leadingIcon={<Save />} />}
-          />
-          <Tooltip
-            content="This action cannot be undone"
-            trigger={
-              <Button aria-label="Delete" leadingIcon={<Trash2 />} />
-            }
-          />
+            trigger={<Button aria-label="Delete" leadingIcon={<Trash2 />} />}
+          >
+            This action cannot be undone
+          </Tooltip>
         </div>
       </DemoGroup>
 
@@ -33,9 +31,10 @@ function TooltipPreview() {
             <Tooltip
               key={side}
               side={side}
-              content={`Placed on the ${side}`}
               trigger={<Button size="sm" label={side} />}
-            />
+            >
+              {`Placed on the ${side}`}
+            </Tooltip>
           ))}
         </div>
       </DemoGroup>
@@ -47,9 +46,10 @@ function TooltipPreview() {
               open={open}
               onOpenChange={setOpen}
               arrow={false}
-              content="Controlled by external state"
               trigger={<Button label="Hover or focus" leadingIcon={<Info />} />}
-            />
+            >
+              Controlled by external state
+            </Tooltip>
             <Button
               size="sm"
               label={open ? "Hide tooltip" : "Show tooltip"}

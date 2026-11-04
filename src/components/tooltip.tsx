@@ -9,38 +9,27 @@ import theme from "../theme/tooltip";
 
 type Tooltip = ComponentConfig<typeof theme>;
 
-type PositionerProps = UITooltip.Positioner.Props;
-
-type TooltipProps = Omit<UITooltip.Root.Props, "children"> & {
-  /** Element that opens the tooltip. It must forward props and refs. */
-  trigger: React.ReactElement;
-  /** Short hint displayed while the trigger is hovered or focused. */
-  content: React.ReactNode;
-  /** Whether to render the directional arrow. */
-  arrow?: boolean;
-  /** Delay before the tooltip opens on hover, in milliseconds. */
-  delay?: number;
-  /** Delay before the tooltip closes, in milliseconds. */
-  closeDelay?: number;
-  /** Side of the trigger the tooltip is placed on. */
-  side?: PositionerProps["side"];
-  /** Alignment of the tooltip relative to the trigger. */
-  align?: PositionerProps["align"];
-  /** Distance between the trigger and the tooltip in pixels. */
-  sideOffset?: PositionerProps["sideOffset"];
-  /** Offset along the alignment axis in pixels. */
-  alignOffset?: PositionerProps["alignOffset"];
-  /** Padding between the tooltip and the edge of the collision boundary. */
-  collisionPadding?: PositionerProps["collisionPadding"];
-  /** Tailwind classes merged into the tooltip popup. */
-  className?: string;
-  /** Tailwind classes for internal slots, keyed by `data-slot`. */
-  ui?: Tooltip["slots"];
-};
+type TooltipProps = Omit<UITooltip.Root.Props, "children"> &
+  Pick<UITooltip.Trigger.Props, "delay" | "closeDelay"> &
+  Pick<
+    UITooltip.Positioner.Props,
+    "side" | "align" | "sideOffset" | "alignOffset" | "collisionPadding"
+  > & {
+    /** Element that opens the tooltip. It must forward props and refs. */
+    trigger: React.ReactElement;
+    /** Short hint displayed while the trigger is hovered or focused. */
+    children: React.ReactNode;
+    /** Whether to render the directional arrow. */
+    arrow?: boolean;
+    /** Tailwind classes merged into the tooltip popup. */
+    className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: Tooltip["slots"];
+  };
 
 function Tooltip({
   trigger,
-  content,
+  children,
   arrow = true,
   delay,
   closeDelay,
@@ -100,7 +89,7 @@ function Tooltip({
               data-slot="content"
               className={cn(styles.content(), ui?.content)}
             >
-              {content}
+              {children}
             </span>
           </UITooltip.Popup>
         </UITooltip.Positioner>
