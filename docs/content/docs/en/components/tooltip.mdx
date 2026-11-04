@@ -1,0 +1,65 @@
+---
+title: "Tooltip"
+description: "A compact Liquid Glass hint shown when a trigger is hovered or focused."
+---
+
+`Tooltip` renders the trigger, portal, positioner, glass popup, directional arrow, and content internally. It is a visual hint for sighted pointer and keyboard users, not a replacement for visible labels or accessible descriptions.
+
+Keep the trigger's accessible name aligned with the tooltip content. Icon-only triggers need an `aria-label`; the tooltip itself is supplementary.
+
+## Basic example
+
+Pass one element as `trigger`. It must forward props and refs to its root element, as `Button` does.
+
+<Example name="tooltip/basic" />
+
+## Placement
+
+`side`, `align`, `sideOffset`, and `alignOffset` control the preferred position. The tooltip flips or shifts when it would overflow the viewport.
+
+<Example name="tooltip/placement" />
+
+## Controlled usage and arrow
+
+Use `open` and `onOpenChange` to control visibility, and set `arrow={false}` for a flat tooltip.
+
+<Example name="tooltip/controlled" />
+
+## Delay
+
+`delay` controls how long the pointer must rest before the tooltip opens; `closeDelay` controls the closing delay. Both are passed to the Base UI trigger.
+
+## API reference
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `trigger` | `ReactElement` | — | Element that opens the tooltip. Required. It must forward props and refs. |
+| `content` | `ReactNode` | — | Short hint displayed in the popup. Required. |
+| `arrow` | `boolean` | `true` | Whether to render the directional arrow. |
+| `delay` | `number` | `600` | Delay before opening on hover, in milliseconds. |
+| `closeDelay` | `number` | `0` | Delay before closing, in milliseconds. |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"top"` | Preferred side of the trigger. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment relative to the trigger. |
+| `sideOffset` | `number \| OffsetFunction` | `8` | Distance between the trigger and popup in pixels. |
+| `alignOffset` | `number \| OffsetFunction` | `0` | Offset along the alignment axis in pixels. |
+| `collisionPadding` | `Padding` | `5px per side` | Space kept between the popup and the collision boundary. |
+| `open` | `boolean` | — | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the tooltip opens or closes. |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
+| `disabled` | `boolean` | `false` | Prevents the tooltip from opening. |
+| `trackCursorAxis` | `"none" \| "x" \| "y" \| "both"` | `"none"` | Axis the tooltip follows while the pointer moves. |
+| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+| Attribute | Description |
+| --- | --- |
+| `data-open` | Present when the popup is open. |
+| `data-closed` | Present when the popup is closed. |
+| `data-side` | Indicates the resolved side (`top`, `bottom`, `left`, `right`, `inline-start`, or `inline-end`). |
+| `data-align` | Indicates the resolved alignment (`start`, `center`, or `end`). |
+| `data-starting-style` | Present when the popup begins animating in. |
+| `data-ending-style` | Present when the popup is animating out. |
+| `data-instant` | Present when animations should be skipped. |
+| `data-popup-open` | Present on the trigger while the tooltip is open. |
+| `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`) for styling. |

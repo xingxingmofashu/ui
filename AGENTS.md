@@ -41,16 +41,19 @@ same pnpm workspace.
 | Dialog | `src/components/dialog.tsx` | `src/theme/dialog.ts` | `test/components/dialog.test.tsx` |
 | Drawer | `src/components/drawer.tsx` | `src/theme/drawer.ts` | `test/components/drawer.test.tsx` |
 | Input | `src/components/input.tsx` | `src/theme/input.ts` | `test/components/input.test.tsx` |
+| Menu | `src/components/menu.tsx` | `src/theme/menu.ts` | `test/components/menu.test.tsx` |
 | Popover | `src/components/popover.tsx` | `src/theme/popover.ts` | `test/components/popover.test.tsx` |
 | Progress | `src/components/progress.tsx` | `src/theme/progress.ts` | `test/components/progress.test.tsx` |
 | Radio Group | `src/components/radio-group.tsx` | `src/theme/radio-group.ts` | `test/components/radio-group.test.tsx` |
 | Scroll Area | `src/components/scroll-area.tsx` | `src/theme/scroll-area.ts` | `test/components/scroll-area.test.tsx` |
+| Select | `src/components/select.tsx` | `src/theme/select.ts` | `test/components/select.test.tsx` |
 | Slider | `src/components/slider.tsx` | `src/theme/slider.ts` | `test/components/slider.test.tsx` |
 | Switch | `src/components/switch.tsx` | `src/theme/switch.ts` | `test/components/switch.test.tsx` |
 | Tabs | `src/components/tabs.tsx` | `src/theme/tabs.ts` | `test/components/tabs.test.tsx` |
 | Toast | `src/components/toast.tsx` | `src/theme/toast.ts` | `test/components/toast.test.tsx` |
 | Toggle | `src/components/toggle.tsx` | `src/theme/toggle.ts` | `test/components/toggle.test.tsx` |
 | Toggle Group | `src/components/toggle-group.tsx` | `src/theme/toggle-group.ts` | `test/components/toggle-group.test.tsx` |
+| Tooltip | `src/components/tooltip.tsx` | `src/theme/tooltip.ts` | `test/components/tooltip.test.tsx` |
 
 ## Glass
 

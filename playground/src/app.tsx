@@ -11,16 +11,19 @@ import { CheckboxPreview } from "./previews/checkbox";
 import { DialogPreview } from "./previews/dialog";
 import { DrawerPreview } from "./previews/drawer";
 import { InputPreview } from "./previews/input";
+import { MenuPreview } from "./previews/menu";
 import { PopoverPreview } from "./previews/popover";
 import { ProgressPreview } from "./previews/progress";
 import { RadioGroupPreview } from "./previews/radio-group";
 import { ScrollAreaPreview } from "./previews/scroll-area";
+import { SelectPreview } from "./previews/select";
 import { SliderPreview } from "./previews/slider";
 import { SwitchPreview } from "./previews/switch";
 import { TabsPreview } from "./previews/tabs";
 import { ToastPreview } from "./previews/toast";
 import { TogglePreview } from "./previews/toggle";
 import { ToggleGroupPreview } from "./previews/toggle-group";
+import { TooltipPreview } from "./previews/tooltip";
 import { SurfaceLab } from "./surfaces";
 
 const sections = [
@@ -81,6 +84,13 @@ const sections = [
     Preview: InputPreview,
   },
   {
+    id: "menu",
+    title: "Menu",
+    description:
+      "A glass action menu with groups, separators, shortcuts, and controlled open state.",
+    Preview: MenuPreview,
+  },
+  {
     id: "popover",
     title: "Popover",
     description:
@@ -107,6 +117,13 @@ const sections = [
     description:
       "A glass panel with custom scrollbars for vertical, horizontal, and two-dimensional content.",
     Preview: ScrollAreaPreview,
+  },
+  {
+    id: "select",
+    title: "Select",
+    description:
+      "A glass select with labels, descriptions, disabled options, and five sizes.",
+    Preview: SelectPreview,
   },
   {
     id: "slider",
@@ -149,6 +166,13 @@ const sections = [
     description:
       "Single and multiple selection with a liquid glass selected state.",
     Preview: ToggleGroupPreview,
+  },
+  {
+    id: "tooltip",
+    title: "Tooltip",
+    description:
+      "Compact glass hints for hover and keyboard focus, with controlled visibility.",
+    Preview: TooltipPreview,
   },
 ] as const;
 
@@ -217,7 +241,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Eighteen components · two themes
+        Twenty-one components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.

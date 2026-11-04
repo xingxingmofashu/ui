@@ -9,7 +9,7 @@ import theme from "../theme/popover";
 
 type Popover = ComponentConfig<typeof theme>;
 
-type PositionerProps = React.ComponentProps<typeof UIPopover.Positioner>;
+type PositionerProps = UIPopover.Positioner.Props;
 
 type PopoverProps = Omit<UIPopover.Root.Props, "children"> & {
   /** Element that opens the popover. It must forward props and refs. */

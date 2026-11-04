@@ -25,6 +25,7 @@ const groups = [
       ["Checkbox", "checkbox"],
       ["Input", "input"],
       ["Radio Group", "radio-group"],
+      ["Select", "select"],
       ["Slider", "slider"],
       ["Switch", "switch"],
     ],
@@ -35,8 +36,10 @@ const groups = [
       ["Alert Dialog", "alert-dialog"],
       ["Dialog", "dialog"],
       ["Drawer", "drawer"],
+      ["Menu", "menu"],
       ["Popover", "popover"],
       ["Toast", "toast"],
+      ["Tooltip", "tooltip"],
     ],
   },
   {
