@@ -16,6 +16,8 @@
 
 - Document the four-step preset scale across the README, homepage, and
   bilingual plugin guides.
+- Point the component overview at the single English homepage instead of the
+  retired `/zh` page.
 
 ## 0.1.7 - 2026-11-03
 
