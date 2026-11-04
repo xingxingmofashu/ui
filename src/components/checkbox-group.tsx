@@ -128,7 +128,7 @@ function CheckboxGroup<Value extends string = string>({
       {...props}
       aria-describedby={describedBy}
       aria-label={ariaLabel}
-      aria-labelledby={labelledBy}
+      {...(labelledBy ? { "aria-labelledby": labelledBy } : {})}
       disabled={disabled}
       value={value as unknown as string[] | undefined}
       defaultValue={defaultValue as unknown as string[] | undefined}

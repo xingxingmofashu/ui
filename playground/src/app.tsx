@@ -11,6 +11,7 @@ import { CheckboxPreview } from "./previews/checkbox";
 import { CheckboxGroupPreview } from "./previews/checkbox-group";
 import { DialogPreview } from "./previews/dialog";
 import { DrawerPreview } from "./previews/drawer";
+import { FieldPreview } from "./previews/field";
 import { InputPreview } from "./previews/input";
 import { MenuPreview } from "./previews/menu";
 import { PopoverPreview } from "./previews/popover";
@@ -83,6 +84,13 @@ const sections = [
     description:
       "An edge-aligned glass panel with swipe dismissal and four sides.",
     Preview: DrawerPreview,
+  },
+  {
+    id: "field",
+    title: "Field",
+    description:
+      "A label, description, and validation message around a form control.",
+    Preview: FieldPreview,
   },
   {
     id: "input",
@@ -249,7 +257,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Twenty-two components · two themes
+        Twenty-three components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.

@@ -4,6 +4,8 @@
 
 ### Added
 
+- Add the Field component with shared labels, descriptions, custom and native
+  validation, external error state, five sizes, and grouped-control support.
 - Add the Checkbox Group component with shared array state, group labels and
   descriptions, five sizes, read-only state, and native form submission.
 

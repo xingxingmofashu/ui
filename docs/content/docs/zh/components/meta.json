@@ -13,6 +13,7 @@
     "---表单---",
     "checkbox",
     "checkbox-group",
+    "field",
     "input",
     "radio-group",
     "select",

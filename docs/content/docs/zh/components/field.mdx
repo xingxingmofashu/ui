@@ -1,0 +1,97 @@
+---
+title: "Field"
+description: "一个 React 表单字段容器，采用 Liquid Glass 标签、说明与校验信息，用于包裹表单控件。"
+---
+
+`Field` 为一个表单控件提供可见标签、辅助说明与校验信息。它负责标签和有效性的关联，子控件则保留自己的玻璃表面与交互。
+
+当控件需要超出内置 `label` 与 `description` 的能力，或多个控件需要共享一个标签和一条错误信息时，可以使用 `Field`。它适用于包内的 Base UI 表单控件，例如 `Input`、`Select`、`Checkbox`、`CheckboxGroup` 与 `RadioGroup`。
+
+## 基础示例
+
+通过 `children` 传入控件。`Field` 会渲染真实的 `<label>` 并与控件关联，因此输入框不需要再单独设置 `label`。
+
+<Example name="field/basic" />
+
+## 校验
+
+`validate` 接收当前值；值有效时返回空，值无效时返回一个字符串或字符串数组。`validationMode` 决定校验时机：默认 `onSubmit`，也可使用 `onBlur` 或 `onChange` 提前反馈。`validationDebounceTime` 可以延迟输入过程中的 `onChange` 校验。
+
+<Example name="field/validation" />
+
+由于子控件是真实的表单元素，`required`、`minLength`、`pattern`、`type` 等原生约束会自动参与校验。
+
+## 错误信息
+
+设置 `error` 可以显示由外部状态控制的错误信息。字符串会使用默认图标与文本布局。`error` 为真值时会标记字段无效，并在清除前优先于内置校验。错误信息通过 `aria-describedby` 关联到控件，控件同时会收到 `aria-invalid`。
+
+<Example name="field/error" />
+
+将 React 元素传给 `error` 可以完全接管错误内容，此时不会再添加默认图标。外层消息元素仍持有 id 与 `aria-describedby` 关联，因此自定义内容依然具备可访问性。
+
+<Example name="field/custom-error" />
+
+## 尺寸
+
+支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。请为控件传入相同的 `size`，让标签、信息与控件行保持对齐。
+
+<Example name="field/sizes" />
+
+## 分组控件
+
+`Field` 也可以为分组控件提供标签。分组通过 `aria-labelledby` 引用字段标签，而不是使用 `for` 关联，因此点击字段标签不会选中第一个选项。字段信息由组内每个选项共享。
+
+<Example name="field/group" />
+
+## 无障碍
+
+`Field` 渲染真实的 `<label>` 并与控件关联。`CheckboxGroup`、`RadioGroup` 这类分组控件会通过 `aria-labelledby` 建立关联，而不是使用原生 `for` 关联，避免标签指向组内某一个选项。`description` 与 `error` 会把各自的 id 注册到控件的 `aria-describedby`；出现错误时，控件还会带有 `aria-invalid`。
+
+键盘行为由被包裹的控件负责。请使用 `label` 而不是占位符作为可访问名称，确保在缩放、翻译与语音控制下仍然有效。字段禁用时，标签与信息会淡出，控件也会通过共享的字段状态被禁用。表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+**Field**
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | 由字段提供标签与校验的控件。必填。 |
+| `label` | `ReactNode` | — | 与控件关联的可见标签。 |
+| `description` | `ReactNode` | — | 控件下方的辅助说明，通过 `aria-describedby` 关联。 |
+| `error` | `ReactNode` | — | 错误信息。字符串使用默认图标与布局；React 元素会替换整个错误内容。为真值时将字段标记为无效。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 标签、信息与间距尺寸。 |
+| `validate` | `(value, formValues) => string \| string[] \| null \| void \| Promise<...>` | — | 自定义校验。值无效时返回一条或多条信息。 |
+| `validationMode` | `"onSubmit" \| "onBlur" \| "onChange"` | `"onSubmit"` | 字段执行校验的时机。 |
+| `validationDebounceTime` | `number` | `0` | `onChange` 模式下两次 `validate` 调用之间的延迟，单位为毫秒。 |
+| `invalid` | `boolean` | — | 由外部状态标记字段无效。 |
+| `disabled` | `boolean` | `false` | 通过字段禁用控件，并淡化标签与信息。 |
+| `name` | `string` | — | 字段注册的表单字段名。 |
+| `dirty` | `boolean` | — | 由外部状态标记字段已修改。 |
+| `touched` | `boolean` | — | 由外部状态标记字段已触碰。 |
+| `actionsRef` | `RefObject<Field.Root.Actions \| null>` | — | 命令式操作。调用 `validate` 可立即校验字段。 |
+| `className` | `string` | — | 合并到字段根元素的 Tailwind 类名。 |
+| `ui` | `{ root?: ClassValue; label?: ClassValue; error?: ClassValue; errorIcon?: ClassValue; errorText?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换字段根元素。 |
+
+其余 Base UI `Field.Root` 属性会透传，包括 `id`。子控件仍可接收自己的属性；`required`、`disabled` 与原生约束应在属于该元素时设置到控件上。
+
+| 属性 | 说明 |
+| --- | --- |
+| `data-disabled` | 字段禁用时存在。 |
+| `data-valid` | 字段有效时存在。 |
+| `data-invalid` | 字段无效时存在。 |
+| `data-dirty` | 字段值发生变化时存在。 |
+| `data-touched` | 字段被触碰后存在。 |
+| `data-filled` | 控件有值时存在。 |
+| `data-focused` | 控件聚焦时存在。 |
+| `data-slot` | 标记内部结构（`root`、`label`、`error`、`error-icon`、`error-text`、`description`）以便样式覆盖。 |
+
+## 主题
+
+`Field` 本身没有玻璃表面，而是继承子控件的材质。可以通过共享的 `--ui-drop-shadow-label` token 调整标签投影，通过 `--ui-field-gap`、`--ui-field-label-size`、`--ui-field-message-size` 与 `--ui-field-icon-size` 调整间距和字号，并使用 `ui` 按 `data-slot` 覆盖内部槽位。`ui.errorIcon` 与 `ui.errorText` 作用于默认字符串错误；自定义 `error` 节点会直接渲染在 `ui.error` 内。组件级数值位于 `src/theme/field.ts`。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
+## 相关组件
+
+- [Input](/docs/zh/components/input) — 放入 `Field` 的标准文本输入框。
+- [Checkbox Group](/docs/zh/components/checkbox-group) — 共享同一字段标签与错误信息的分组控件。
+- [Radio Group](/docs/zh/components/radio-group) — 使用相同字段关联方式的单选分组。

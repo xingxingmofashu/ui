@@ -5,6 +5,8 @@ export default tv({
     root: [
       "group flex w-full min-w-0 flex-col gap-1.5 text-ui-ink",
       "data-[disabled]:cursor-not-allowed",
+      "has-[:disabled]:cursor-not-allowed",
+      "has-[:disabled]:[&:not([data-disabled])]:opacity-60",
     ],
     label: "w-fit font-medium text-ui-ink group-data-[disabled]:opacity-60",
     control: [

@@ -37,7 +37,7 @@ const features: Feature[] = [
   },
   {
     icon: Sparkles,
-    title: "22 components",
+    title: "23 components",
     description:
       "Elements, forms, overlays, and feedback behind one consistent API.",
   },

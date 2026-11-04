@@ -14,6 +14,7 @@ export {
 } from "./components/checkbox-group";
 export { Dialog, type DialogProps } from "./components/dialog";
 export { Drawer, type DrawerProps } from "./components/drawer";
+export { Field, type FieldProps } from "./components/field";
 export { Input, type InputProps } from "./components/input";
 export {
   Menu,

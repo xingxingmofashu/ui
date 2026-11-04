@@ -1,5 +1,6 @@
 "use client";
 
+import { useLabelableId } from "@base-ui/react/internals/labelable-provider";
 import { Radio as UIRadio } from "@base-ui/react/radio";
 import { RadioGroup as UIRadioGroup } from "@base-ui/react/radio-group";
 import { cn } from "cn";
@@ -81,12 +82,17 @@ function RadioGroup<Value extends string = string>({
     description && hasName ? descriptionId : undefined,
   );
 
+  // Match Base UI's CheckboxGroup: the group is the field's control and takes
+  // its name from `aria-labelledby`, so `Field.Label` must not point `htmlFor`
+  // at one arbitrary radio inside the group.
+  useLabelableId({ id: null });
+
   return (
     <UIRadioGroup
       {...props}
       aria-describedby={describedBy}
       aria-label={ariaLabel}
-      aria-labelledby={labelledBy}
+      {...(labelledBy ? { "aria-labelledby": labelledBy } : {})}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
     >
