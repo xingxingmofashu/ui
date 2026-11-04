@@ -41,6 +41,7 @@ function Button({
   ...props
 }: ButtonProps) {
   const styles = theme({ size });
+  const content = label || children;
 
   return (
     <UIButton
@@ -71,9 +72,11 @@ function Button({
           </span>
         ) : null}
 
-        <span data-slot="label" className={cn(styles.label(), ui?.label)}>
-          {label || children}
-        </span>
+        {content ? (
+          <span data-slot="label" className={cn(styles.label(), ui?.label)}>
+            {content}
+          </span>
+        ) : null}
 
         {trailingIcon ? (
           <span

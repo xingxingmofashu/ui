@@ -337,6 +337,26 @@ describe("Button", () => {
       expect(base).toHaveClass("flex-row", "flex-nowrap", "items-center");
     });
 
+    it("omits the label slot for icon-only buttons", () => {
+      render(
+        <>
+          <Button aria-label="Leading action" leadingIcon={<svg />} />
+          <Button aria-label="Trailing action" trailingIcon={<svg />} />
+        </>,
+      );
+
+      expect(
+        screen
+          .getByRole("button", { name: "Leading action" })
+          .querySelector('[data-slot="label"]'),
+      ).toBeNull();
+      expect(
+        screen
+          .getByRole("button", { name: "Trailing action" })
+          .querySelector('[data-slot="label"]'),
+      ).toBeNull();
+    });
+
     it("keeps content outside the filtered glass layer", () => {
       render(
         <Button
