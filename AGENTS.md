@@ -57,68 +57,62 @@ same pnpm workspace.
 
 ## Glass
 
-- `src/index.css` owns only the global runtime tokens and the shared glass
-  material. Component-specific values (the checkbox rim, slider lens, switch
-  shadows, and similar) stay in `src/theme/<component>.ts`; do not add
+- `src/index.css` owns global runtime tokens and shared glass material.
+  Component-specific values stay in `src/theme/<component>.ts`; do not add
   `--ui-<component>-*` tokens to `index.css`.
-- Global runtime tokens: `--ui-ink`, `--ui-ink-active`, `--ui-surface`,
-  `--ui-shadow-glass`, and `--ui-drop-shadow-label`.
+- Global tokens are `--ui-ink`, `--ui-ink-active`, `--ui-surface`,
+  `--ui-shadow-glass`, and `--ui-drop-shadow-label`. Shared glass tokens cover
+  color, geometry, and optics under `--ui-glass-*`.
 - `--ui-surface` is the opaque theme surface (`#fff` in light, `#141414` in
-  dark) used by overlays and as a base for component themes.
-  `--ui-glass-surface` is the translucent glass fill. Use `bg-ui-surface` for
-  solid surfaces and `bg-ui-glass-surface` only for the glass fill.
-- Shared glass tokens: `--ui-glass-surface`, `--ui-glass-border`,
-  `--ui-glass-focus`, `--ui-glass-inner-border`, `--ui-glass-rim`,
-  `--ui-glass-highlight`, `--ui-glass-glare-stop`, `--ui-glass-tone`, and
-  `--ui-glass-contrast`.
-- Shared geometry and optics: `--ui-glass-blur`, `--ui-glass-saturate`,
-  `--ui-glass-chip-blur`, `--ui-glass-inner-inset`, `--ui-glass-inner-offset`,
-  `--ui-glass-inner-blur`, `--ui-glass-highlight-blur`, `--ui-glass-rim-inset`,
-  and `--ui-glass-rim-blur`.
-- Material classes: `.ui-glass` owns the fill, double border, shadow, blur, and
+  dark); `--ui-glass-surface` is the translucent fill. Use `bg-ui-surface` for
+  solids and `bg-ui-glass-surface` only for glass.
+- Material classes: `.ui-glass` owns fill, double border, shadow, blur, and
   tone; `.ui-glass-inner` adds the inset outline; `.ui-glass-highlight` adds the
-  diagonal glare; `.ui-glass-rim` is the decorative child rim; and
-  `.ui-glass-chip` is the compact surface.
+  diagonal glare; `.ui-glass-rim` is the child rim; `.ui-glass-chip` is the
+  compact surface.
 - `src/plugins/glass-preset/index.css` owns the
   `data-glass="thin | soft | regular | thick"` presets. They only override
-  shared
-  `--ui-glass-*` variables; do not add component styles there.
+  shared `--ui-glass-*` variables; do not add component styles there.
 - Light is the default at `:root`. `.dark` / `data-theme="dark"` switches to
-  dark, while `.light` / `data-theme="light"` re-applies light and wins inside a
-  dark ancestor. The `ui-light` / `ui-dark` Tailwind variants mirror these
-  selectors.
+  dark; `.light` / `data-theme="light"` re-applies light and wins inside a dark
+  ancestor. The `ui-light` / `ui-dark` Tailwind variants mirror these selectors.
 - Tokens live in `@layer theme`, so an unlayered `:root` override in a consumer
-  app wins without `!important`. Keep component-specific values in the
-  component theme and shared material values in `index.css`.
+  app wins without `!important`.
 
 ## Plugins
 
-- Optional plugins live under `src/plugins/<name>/` and are not re-exported
-  from `src/index.ts`.
-- Package exports are wildcarded. `src/plugins/<name>/index.tsx` is published
-  as `@xingxingmofashu/ui/plugins/<name>`. The optional stylesheet is
-  `src/plugins/<name>/index.css` and is published as
-  `@xingxingmofashu/ui/plugins/<name>/index.css` through
-  `./plugins/*/index.css`.
-- The public plugin entries are `index.tsx` and optional `index.css`; keep other
-  implementation files internal to the plugin directory.
-- A plugin owns its state, UI, and optional stylesheet. Do not import plugin
-  CSS from `src/index.css`; plugin styles stay explicit and opt-in.
+- Optional plugins live in `src/plugins/<name>/` and are not re-exported from
+  `src/index.ts`. Wildcard exports publish `index.tsx` and optional
+  `index.css` as `@xingxingmofashu/ui/plugins/<name>` and
+  `@xingxingmofashu/ui/plugins/<name>/index.css`; keep other files internal.
+- A plugin owns its state, UI, and optional stylesheet. Plugin CSS stays
+  opt-in; do not import it from `src/index.css`.
 - Add `"use client"` only to modules that use hooks or browser APIs. Pure
-  components and generated inline scripts may stay server-safe.
-- Plugin tests live in `test/plugins/<name>.test.tsx`.
-- `src/plugins/glass-preset/` is the reference plugin.
+  components may stay server-safe.
+- Plugin tests live in `test/plugins/<name>.test.tsx`;
+  `src/plugins/glass-preset/` is the reference plugin.
 
 ## Component API
 
-- Components are single-structure wrappers: they own the Base UI anatomy. Do
-  not export Base UI parts or add a second composition API.
-- `className` targets the component's primary element. Internal slots are
-  styled with `ui`, keyed by `data-slot`.
-- Derive `ui` types from the tailwind-variants theme. Never hand-write a slot
-  map or add aliases such as `AccordionUi` or `AccordionItemUi`.
-- `src/internal/tv.ts` owns the minimal `ComponentConfig` helper used to map
-  theme slots to prop types, mirroring Nuxt UI.
+- Components are single-structure wrappers: they own the Base UI anatomy and
+  expose no Base UI parts or second composition API.
+- Inherit Base UI props from the part that receives them: use
+  `Omit<UIComponent.Root.Props, ...>` for root props and
+  `Pick<UIComponent.Part.Props, ...>` for forwarded part props. Do not
+  re-declare them with indexed access or use `Omit` to expose props the wrapper
+  does not forward.
+- Declare wrapper-owned props locally (`trigger`, `arrow`, `className`, `ui`,
+  item fields). Pass-through props keep Base UI names; a single content slot
+  uses `children`, while array item fields keep their own names.
+- `className` targets the primary element; internal slots use `ui`, keyed by
+  `data-slot`. Derive `ui` from the theme via `ComponentConfig`
+  (`src/internal/tv.ts`); never hand-write slot maps or aliases. `ui` values
+  are `ClassValue`.
+- Merge order: theme -> root `ui` -> item `ui` -> `className`. Merge at the
+  call site instead of adding `sharedUi`.
+- `data-slot` is public; `data-layer` stays private. `style` is unsupported;
+  use `className` and the shared `--ui-*` tokens.
+- Docs list the derived `ui` slots and `data-slot` in the Attribute table.
 
 ```ts
 type Accordion = ComponentConfig<typeof theme>;
@@ -129,31 +123,10 @@ type AccordionProps<Value extends string = string> = /* ... */ & {
 
 type AccordionItemProps<Value extends string = string> = /* ... */ & {
   ui?: Partial<
-    Pick<
-      Accordion["slots"],
-      | "item"
-      | "header"
-      | "trigger"
-      | "title"
-      | "indicator"
-      | "indicatorIcon"
-      | "panel"
-      | "panelContent"
-    >
+    Pick<Accordion["slots"], "item" | "header" | "trigger" | "panel">
   >;
 };
 ```
-
-- `ui` values are `ClassValue`, not only `string`, so arrays and class maps
-  work.
-- Merge order: theme -> root `ui` -> item `ui` -> `className`. Do not introduce
-  an internal prop such as `sharedUi`; merge root and item `ui` at the call
-  site.
-- `data-slot` is the public styling contract. `data-layer` stays private.
-- `style` is not supported. Use `className` for layout and the shared `--ui-*`
-  tokens for material.
-- Component docs list the derived slot object for `ui` and include `data-slot`
-  in the Attribute table.
 
 ## Package files
 
