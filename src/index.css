@@ -42,11 +42,17 @@
     --ui-glass-tone: brightness(0.98);
     --ui-glass-contrast: 1.05;
     --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));
+    /*
+     * Keep the specular ring concentric with the shape: use vertical offsets
+     * only, plus an unoffset 1px ring. Diagonal offsets drift away from the
+     * semicircular caps of pills and cut the highlight mid-arc.
+     */
     --ui-shadow-glass:
-      inset 2px -2px 1px -1px rgb(255 255 255 / 0.9),
-      inset -2px 2px 1px -1px rgb(255 255 255 / 0.9),
-      inset 6px -6px 1px -6px rgb(255 255 255 / 0.55),
-      inset -6px 6px 1px -6px rgb(255 255 255 / 0.55),
+      inset 0 2px 1px -1px rgb(255 255 255 / 0.9),
+      inset 0 -2px 1px -1px rgb(255 255 255 / 0.9),
+      inset 0 6px 1px -6px rgb(255 255 255 / 0.55),
+      inset 0 -6px 1px -6px rgb(255 255 255 / 0.55),
+      inset 0 0 0 1px rgb(255 255 255 / 0.45),
       inset 0 0 2px rgb(0 0 0 / 0.8),
       0 4px 8px rgb(0 0 0 / 0.2);
   }
@@ -67,10 +73,11 @@
     --ui-glass-contrast: 1;
     --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(0 0 0 / 0.45));
     --ui-shadow-glass:
-      inset 2px -2px 1px -1px rgb(255 255 255 / 0.35),
-      inset -2px 2px 1px -1px rgb(255 255 255 / 0.35),
-      inset 6px -6px 1px -6px rgb(255 255 255 / 0.2),
-      inset -6px 6px 1px -6px rgb(255 255 255 / 0.2),
+      inset 0 2px 1px -1px rgb(255 255 255 / 0.35),
+      inset 0 -2px 1px -1px rgb(255 255 255 / 0.35),
+      inset 0 6px 1px -6px rgb(255 255 255 / 0.2),
+      inset 0 -6px 1px -6px rgb(255 255 255 / 0.2),
+      inset 0 0 0 1px rgb(255 255 255 / 0.14),
       inset 0 0 2px rgb(0 0 0 / 0.9),
       0 4px 8px rgb(0 0 0 / 0.35);
   }
@@ -93,10 +100,11 @@
     --ui-glass-contrast: 1.05;
     --ui-drop-shadow-label: drop-shadow(0 25px 3px rgb(102 102 102 / 0.15));
     --ui-shadow-glass:
-      inset 2px -2px 1px -1px rgb(255 255 255 / 0.9),
-      inset -2px 2px 1px -1px rgb(255 255 255 / 0.9),
-      inset 6px -6px 1px -6px rgb(255 255 255 / 0.55),
-      inset -6px 6px 1px -6px rgb(255 255 255 / 0.55),
+      inset 0 2px 1px -1px rgb(255 255 255 / 0.9),
+      inset 0 -2px 1px -1px rgb(255 255 255 / 0.9),
+      inset 0 6px 1px -6px rgb(255 255 255 / 0.55),
+      inset 0 -6px 1px -6px rgb(255 255 255 / 0.55),
+      inset 0 0 0 1px rgb(255 255 255 / 0.45),
       inset 0 0 2px rgb(0 0 0 / 0.8),
       0 4px 8px rgb(0 0 0 / 0.2);
   }
