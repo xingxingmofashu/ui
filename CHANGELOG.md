@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.8 - 2026-11-04
 
 ### Added
 
@@ -17,6 +17,11 @@
 
 - Rebalance `regular` to a 36.7% light / 68.7% dark veil, a 12px blur, and
   143.3% saturation. `thin` and `thick` are unchanged.
+
+### Fixed
+
+- Keep the specular glass rim concentric on pill-shaped surfaces by drawing
+  vertical-only highlights and an unoffset 1px ring.
 
 ### Documentation
 
