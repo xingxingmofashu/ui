@@ -4,8 +4,8 @@ description: "提交值、校验字段，并用 Liquid Glass 控件组合可访�
 ---
 
 表单控件优先遵循原生 `<form>` 行为。`Input` 渲染原生 `<input>`；`Checkbox`、
-`Switch`、`Slider` 与 `RadioGroup` 则渲染内部原生输入用于提交。因此 `FormData`、
-Server Actions 与渐进增强模式都能继续使用，不需要自定义状态容器。
+`Switch`、`Select`、`Slider` 与 `RadioGroup` 则渲染内部原生输入用于提交。因此
+`FormData`、Server Actions 与渐进增强模式都能继续使用，不需要自定义状态容器。
 
 <Example name="guides/form" />
 
@@ -16,10 +16,13 @@ Server Actions 与渐进增强模式都能继续使用，不需要自定义状�
 | `Input` | 由 `name` 命名的原生输入 | 空字符串 |
 | `Checkbox` | 带 `name` 与 `value` 的隐藏 checkbox | 未选中时为 `null` |
 | `Switch` | 带 `name` 与 `value` 的隐藏 checkbox | 关闭时为 `null` |
+| `Select` | 由 `name` 命名、携带选中值的隐藏原生输入 | 未选择时为 `null` |
 | `Slider` | 由 `name` 命名的隐藏 `input[type="range"]` | 当前值 |
 | `RadioGroup` | 由 `name` 命名、携带选中项 `value` 的隐藏 radio | 未选择时为 `null` |
 
-`RadioGroup` 会提交选中条目的 `value`；必选时设置 `required`。
+`RadioGroup` 会提交选中条目的 `value`；必选时设置 `required`。`Select` 的行为
+相同：`name` 启用提交，`required` 参与原生校验，`form` 可把隐藏输入关联到文档
+其他位置的表单，清空选择时 `onValueChange` 会收到 `null`。
 
 `Button` 会把 `type` 转发给根 button 元素。需要提交表单时设置
 `type="submit"`。
@@ -27,6 +30,15 @@ Server Actions 与渐进增强模式都能继续使用，不需要自定义状�
 ```tsx
 <form action={savePreferences}>
   <Input label="邮箱" name="email" type="email" required />
+  <Select
+    label="套餐"
+    name="plan"
+    required
+    items={[
+      { value: "starter", label: "Starter" },
+      { value: "team", label: "Team" },
+    ]}
+  />
   <Switch label="通知" name="notifications" value="enabled" />
   <Button type="submit" label="保存" />
 </form>
@@ -50,6 +62,8 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
 - `Input` 渲染与输入框关联的真实 `<label>`。
 - `Checkbox` 与 `Switch` 使用可见标签作为可访问名称。
+- `Select` 使用 `label` 为触发器命名；没有可见标签时，请使用 `aria-label` 或
+  `aria-labelledby`。
 - `RadioGroup` 使用 `label` 属性为分组命名。
 - `Slider` 不渲染可见标签，因此请用 `aria-labelledby` 指向外部标签。
 
@@ -95,7 +109,8 @@ const [email, setEmail] = useState("");
 ```
 
 不要只传 `value` 而不提供变更处理函数。对于 `Slider`，`onValueChange` 会收到
-当前数字或数组；只关心稳定值时使用 `onValueCommitted`。
+当前数字或数组；只关心稳定值时使用 `onValueCommitted`。`Select` 使用 `value` 与
+`onValueChange`，清空选择时回调会收到 `null`。
 
 ## 校验
 
@@ -167,6 +182,7 @@ export async function savePreferences(formData: FormData) {
 - 只传 `value` 而不传 `onValueChange` 会让受控字段冻结。
 - 在 submit 事件之前读取 `FormData` 会得到旧值或空值。
 - 关闭的 `Switch` 提交 `null`，而不是 `"false"`，请显式归一化。
+- 清空 `Select` 时，`onValueChange` 会收到 `null`；在把它当作字符串使用前先处理。
 - `Slider` 需要可访问名称；标签渲染在组件外部时，`aria-labelledby` 通常最清晰。
 - 不要自己用 `<label>` 包裹控件；组件已经渲染正确的标签关系。
 
@@ -175,6 +191,7 @@ export async function savePreferences(formData: FormData) {
 - [Input](/docs/zh/components/input)
 - [Checkbox](/docs/zh/components/checkbox)
 - [Switch](/docs/zh/components/switch)
+- [Select](/docs/zh/components/select)
 - [Slider](/docs/zh/components/slider)
 - [Radio Group](/docs/zh/components/radio-group)
 - [Button](/docs/zh/components/button)

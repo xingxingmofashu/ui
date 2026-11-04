@@ -1,6 +1,6 @@
 ---
 title: "Progress"
-description: "带线性 Liquid Glass 轨道、确定与不确定状态以及五种尺寸的可访问 React 进度条。"
+description: "可访问的 React 进度条，采用线性 Liquid Glass 轨道，支持确定与不确定状态以及五种尺寸。"
 ---
 
 `Progress` 渲染一条线性玻璃轨道。它支持确定值、不确定状态、可选标签与描述，以及格式化后的数值文本。
@@ -37,9 +37,17 @@ description: "带线性 Liquid Glass 轨道、确定与不确定状态以及五�
 
 <Example name="progress/range" />
 
-## API reference
+## 无障碍
 
-| Prop | Type | Default | Description |
+可见的 `label` 会为进度条提供可访问名称。没有可见标签时，请自行提供 `aria-label` 或 `aria-labelledby`。
+
+默认的 `aria-valuetext` 是格式化后的百分比。当数值需要更有意义的描述时，使用 `getAriaValueText`，例如“已上传 7 / 10 个文件”。
+
+不确定进度条没有 `aria-valuenow`；它会被播报为不确定进度。播报模式见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `value` | `number \| null` | `null` | 当前值。使用 `null` 表示不确定进度。 |
 | `label` | `ReactNode` | — | 进度条的可见标签。 |
@@ -59,20 +67,12 @@ description: "带线性 Liquid Glass 轨道、确定与不确定状态以及五�
 | `className` | `string` | — | 合并到根元素的 Tailwind 类名。 |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; value?: ClassValue; track?: ClassValue; indicator?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-complete` | 进度完成时存在。 |
 | `data-indeterminate` | 进度不确定时存在。 |
 | `data-progressing` | 进度推进时存在。 |
 | `data-slot` | 标记内部部件（`root`、`header`、`label`、`value`、`track`、`indicator`、`description`），用于样式选择。 |
-
-## 无障碍
-
-可见的 `label` 会为进度条提供可访问名称。没有可见标签时，请自行提供 `aria-label` 或 `aria-labelledby`。
-
-默认的 `aria-valuetext` 是格式化后的百分比。当数值需要更有意义的描述时，使用 `getAriaValueText`，例如“已上传 7 / 10 个文件”。
-
-不确定进度条没有 `aria-valuenow`；它会被播报为不确定进度。
 
 ## 主题
 
@@ -89,3 +89,9 @@ description: "带线性 Liquid Glass 轨道、确定与不确定状态以及五�
 ```
 
 `style` 有意不支持：玻璃主题负责轨道表面。使用 `className` 控制布局，并通过 `--ui-progress-*` token 调整主题。
+
+## 相关组件
+
+- [Toast](/docs/zh/components/toast) — 短暂的状态消息。
+- [Slider](/docs/zh/components/slider) — 可交互的数值。
+- [Scroll Area](/docs/zh/components/scroll-area) — 滚动位置，而不是任务完成度。

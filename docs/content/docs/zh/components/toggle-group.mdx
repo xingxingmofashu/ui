@@ -3,6 +3,8 @@ title: "Toggle Group"
 description: "可访问的 React 切换组，采用 Liquid Glass 选中状态，支持单选、多选以及水平或垂直布局。"
 ---
 
+`ToggleGroup` 在一整块玻璃表面上组合一组相关的开关按钮。它适合视图切换与格式控制，支持单选与多选。
+
 ## 基础示例
 
 下面的视图切换使用真实 Toggle Group。选中项会显示 Liquid Glass 选中态，并把当前值同步到下方文字。
@@ -43,11 +45,17 @@ description: "可访问的 React 切换组，采用 Liquid Glass 选中状态，
 
 <Example name="toggle-group/disabled" />
 
-## API reference
+## 无障碍
+
+`ToggleGroup` 渲染 `group`，其中的条目是带 `aria-pressed` 的开关按钮。请用 `aria-label` 或 `aria-labelledby` 为分组命名；纯图标条目需要自己的名称。
+
+方向键在分组内移动焦点，`Home` 与 `End` 跳到首尾，`Space` 或 `Enter` 切换当前条目。单选模式下，分组值就是唯一数据源；选择不能被清空时，请使用受控用法。键盘细节见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
 
 **ToggleGroup**
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `value` | `readonly string[]` | — | 受控的选中值。 |
 | `defaultValue` | `readonly string[]` | `[]` | 非受控时的初始选中值。 |
@@ -67,7 +75,7 @@ description: "可访问的 React 切换组，采用 Liquid Glass 选中状态，
 
 **ToggleGroupItemProps**
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `value` | `string` | — | 必填，group value 使用的标识。 |
 | `label` | `ReactNode` | — | item 内的可见文字。 |
@@ -84,10 +92,16 @@ description: "可访问的 React 切换组，采用 Liquid Glass 选中状态，
 
 item 不接收 `pressed` 或 `defaultPressed`；选中状态以 group 的 `value` / `defaultValue` 为唯一数据源。根 `ui` 会先合并到每个 item，再合并该 item 的 `ui`，最后合并 item 的 `className`。
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-disabled` | group 或 item 禁用时存在。 |
 | `data-orientation` | 表示方向（`horizontal` 或 `vertical`）。 |
 | `data-multiple` | group 允许多选时存在。 |
 | `data-pressed` | item 处于按下状态时存在。 |
 | `data-slot` | 标记内部部件（`root`、`glass`、`rim`、`item`、`content`、`icon`、`label`）。 |
+
+## 相关组件
+
+- [Toggle](/docs/zh/components/toggle) — 单个按下按钮。
+- [Tabs](/docs/zh/components/tabs) — 在内容面板之间切换。
+- [Radio Group](/docs/zh/components/radio-group) — 表单中的互斥选项。

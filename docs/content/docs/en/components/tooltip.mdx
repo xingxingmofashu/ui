@@ -1,6 +1,6 @@
 ---
 title: "Tooltip"
-description: "A compact Liquid Glass hint shown when a trigger is hovered or focused."
+description: "An accessible React tooltip with a Liquid Glass popup, configurable delay, placement, and an optional arrow."
 ---
 
 `Tooltip` renders the trigger, portal, positioner, glass popup, directional arrow, and content internally. It is a visual hint for sighted pointer and keyboard users, not a replacement for visible labels or accessible descriptions.
@@ -27,14 +27,28 @@ Use `open` and `onOpenChange` to control visibility, and set `arrow={false}` for
 
 ## Delay
 
-`delay` controls how long the pointer must rest before the tooltip opens; `closeDelay` controls the closing delay. Both are passed to the Base UI trigger.
+`delay` controls how long the pointer must rest before the tooltip opens; `closeDelay` controls the closing delay. Both are passed to the Base UI trigger. Set `delay={0}` for immediate feedback during onboarding, or a longer delay when tooltips appear frequently.
+
+<Example name="tooltip/delay" />
+
+## Icon-only trigger
+
+Tooltips are often paired with icon buttons. Give the trigger its own `aria-label`; the tooltip text is not a substitute for the button's accessible name.
+
+<Example name="tooltip/icon-only" />
+
+## Accessibility
+
+`Tooltip` opens when the trigger is hovered or receives keyboard focus and closes on blur, `Escape`, or an outside press. The popup is visual-only: it is not exposed as a description, and tooltips are not available to touch or screen reader users. The trigger must carry its full accessible name from visible text, `aria-label`, or `aria-labelledby`.
+
+Tooltip content must be short and supplementary. Do not put interactive controls or unique information inside a tooltip, because some users may never open it. See the [accessibility guide](/docs/en/guides/accessibility) for label and focus guidance.
 
 ## API reference
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `trigger` | `ReactElement` | — | Element that opens the tooltip. Required. It must forward props and refs. |
-| `content` | `ReactNode` | — | Short hint displayed in the popup. Required. |
+| `children` | `ReactNode` | — | Short hint displayed in the popup. Required. |
 | `arrow` | `boolean` | `true` | Whether to render the directional arrow. |
 | `delay` | `number` | `600` | Delay before opening on hover, in milliseconds. |
 | `closeDelay` | `number` | `0` | Delay before closing, in milliseconds. |
@@ -52,6 +66,8 @@ Use `open` and `onOpenChange` to control visibility, and set `arrow={false}` for
 | `className` | `string` | — | Tailwind classes merged into the popup. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
+`ui` keys map to the `data-slot` values listed below. Additional Base UI `Tooltip.Root` props are forwarded.
+
 | Attribute | Description |
 | --- | --- |
 | `data-open` | Present when the popup is open. |
@@ -62,4 +78,10 @@ Use `open` and `onOpenChange` to control visibility, and set `arrow={false}` for
 | `data-ending-style` | Present when the popup is animating out. |
 | `data-instant` | Present when animations should be skipped. |
 | `data-popup-open` | Present on the trigger while the tooltip is open. |
-| `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`) for styling. |
+| `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`). |
+
+## Related components
+
+- [Popover](/docs/en/components/popover) — For richer content, actions, and non-modal focus.
+- [Button](/docs/en/components/button) — The usual tooltip trigger.
+- [Menu](/docs/en/components/menu) — For a list of actions anchored to a trigger.

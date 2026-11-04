@@ -1,6 +1,6 @@
 ---
 title: "Alert Dialog"
-description: "用于破坏性操作确认的 React 警告对话框，采用 Liquid Glass 表面与固定取消/确认按钮。"
+description: "可访问的 React 警告对话框，用于破坏性操作确认，采用 Liquid Glass 表面与固定取消/确认按钮。"
 ---
 
 `AlertDialog` 是可访问的模态确认组件。它内部渲染 Portal、遮罩、居中弹窗、标题、描述、可选正文以及固定的取消/确认操作。
@@ -23,9 +23,15 @@ description: "用于破坏性操作确认的 React 警告对话框，采用 Liqu
 
 <Example name="alert-dialog/content" />
 
-## API reference
+## 无障碍
 
-| Prop | Type | Default | Description |
+`AlertDialog` 渲染模态 `alertdialog`，由 `title` 命名，并由 `description` 描述。打开时焦点移动到浮层内，打开期间被限制在浮层中，关闭后返回触发器。
+
+按 `Escape` 会关闭对话框，但不会调用 `onCancel` 或 `onConfirm`；如果按 Escape 不应关闭，请在 `onOpenChange` 中拦截。点击背景始终不会关闭警告对话框，因此请保留可见的取消操作。浮层焦点规则见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `title` | `ReactNode` | — | 对话框标题，必填。 |
 | `description` | `ReactNode` | — | 标题下方的说明文字。 |
@@ -45,7 +51,7 @@ description: "用于破坏性操作确认的 React 警告对话框，采用 Liqu
 | `className` | `string` | — | 合并到弹窗的 Tailwind 类名。 |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-open` | 对话框打开时存在。 |
 | `data-closed` | 对话框关闭时存在。 |
@@ -54,3 +60,9 @@ description: "用于破坏性操作确认的 React 警告对话框，采用 Liqu
 | `data-nested` | 对话框嵌套在另一个对话框内时存在。 |
 | `data-nested-dialog-open` | 对话框内部还有另一个对话框打开时存在。 |
 | `data-slot` | 标记内部部件（`backdrop`、`viewport`、`popup`、`glass`、`overlay`、`content`、`title`、`description`、`body`、`footer`），用于样式选择。 |
+
+## 相关组件
+
+- [Dialog](/docs/zh/components/dialog) — 可更自由关闭的通用模态内容。
+- [Drawer](/docs/zh/components/drawer) — 小屏幕上的贴边面板。
+- [Button](/docs/zh/components/button) — 操作区使用的按钮样式。

@@ -47,9 +47,15 @@ Slider 会把 `name` 用于表单，并通过隐藏的 `input[type="range"]` 提
 
 <Example name="slider/constraints" />
 
-## API reference
+## 无障碍
 
-| Prop | Type | Default | Description |
+每个 thumb 都是 `slider`，带 `aria-valuemin`、`aria-valuemax`、`aria-valuenow`，并通过 `aria-label`、`aria-labelledby` 或 `getAriaLabel` 获得名称。
+
+方向键按 `step` 改变数值，`Page Up` 与 `Page Down` 使用 `largeStep`，`Home` 与 `End` 跳到边界。区间滑块的每个 thumb 都需要不同名称。`aria-invalid` 与 `aria-errormessage` 会到达内部的 range 输入。命名示例见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `value` | `number \| readonly number[]` | — | 受控值；数组会为每个值渲染一个 thumb。 |
 | `defaultValue` | `number \| readonly number[]` | — | 非受控初始值。 |
@@ -80,7 +86,7 @@ Slider 会把 `name` 用于表单，并通过隐藏的 `input[type="range"]` 提
 | `className` | `string` | — | Tailwind 类名，合并到最外层 `root`。 |
 | `ui` | `{ root?: ClassValue; control?: ClassValue; track?: ClassValue; indicator?: ClassValue; thumb?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-dragging` | 用户正在拖动 thumb 时存在。 |
 | `data-orientation` | 表示方向（`horizontal` 或 `vertical`）。 |
@@ -92,3 +98,9 @@ Slider 会把 `name` 用于表单，并通过隐藏的 `input[type="range"]` 提
 | `data-dirty` | 滑块值变化后存在。 |
 | `data-slot` | 标记内部部件（`root`、`control`、`track`、`indicator`、`thumb`），用于样式选择。 |
 | `data-focused` | 滑块聚焦时存在。 |
+
+## 相关组件
+
+- [Input](/docs/zh/components/input) — 由用户输入精确数值。
+- [Progress](/docs/zh/components/progress) — 只读的任务完成度。
+- [Switch](/docs/zh/components/switch) — 立即生效的二元设置。

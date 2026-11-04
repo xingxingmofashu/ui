@@ -1,27 +1,41 @@
 ---
 title: "Select"
-description: "支持标签、描述、禁用选项与五种尺寸的液态玻璃选择器。"
+description: "可访问的 React 选择器，采用 Liquid Glass 触发器，支持标签、描述、禁用选项与五种尺寸。"
 ---
 
 `Select` 内部负责标签、触发器、玻璃表面、当前值、箭头、Portal、玻璃浮层与选项。选项通过 `items` 数组传入，同一份数据同时驱动触发器文字和浮层列表。
 
-使用 `label` 与 `description` 提供可见字段文本。没有可见标签时，请通过 `aria-label` 或 `aria-labelledby` 为触发器提供可访问名称。
+使用 `label` 与 `description` 提供可见字段文本。没有可见标签时，请通过 `aria-label` 或 `aria-labelledby` 为触发器提供可访问名称。设置 `name` 后，选中值会通过隐藏的原生输入提交。
 
 ## 基础示例
+
+示例展示带标签、描述、占位文本与禁用选项的字段，并通过 `defaultValue` 选中第一个选项。
 
 <Example name="select/basic" />
 
 ## 尺寸
 
-支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。
+支持 `xs` / `sm` / `md` / `lg` / `xl`，默认 `md`。触发器高度、内边距、文字与箭头会一起缩放。
 
 <Example name="select/sizes" />
 
-## 受控状态
+## 受控用法
 
-`value` 与 `onValueChange` 控制选中值。清空选择时，回调会收到 `null`。
+`value` 与 `onValueChange` 控制选中值。清空选择时，回调会收到 `null`，因此示例在字段旁提供了清除操作。
 
 <Example name="select/controlled" />
+
+## 表单用法
+
+设置 `name` 后，选中值会通过隐藏的原生输入提交。`required` 会参与原生表单校验，`form` 可将字段关联到文档其他位置的表单。
+
+<Example name="select/form" />
+
+## 无障碍
+
+`Select` 遵循 Base UI 选择器模式：触发器是 `combobox`，暴露 `aria-haspopup="listbox"`、`aria-expanded` 与 `aria-controls`；浮层是 `listbox`；每个选项都是 `option`。`ArrowDown` 与 `ArrowUp` 在选项之间移动，typeahead 会匹配标签，`Enter` 选中高亮项。`Escape` 关闭浮层并把焦点返回触发器。
+
+可见的 `label` 为触发器命名，`description` 通过 `aria-describedby` 关联。没有可见标签时，请使用 `aria-label` 或 `aria-labelledby`。禁用的选项仍会被播报，但无法选中。必须选择值时请设置 `required`；共享表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
@@ -31,7 +45,7 @@ description: "支持标签、描述、禁用选项与五种尺寸的液态玻璃
 | --- | --- | --- | --- |
 | `items` | `readonly SelectItemProps[]` | — | 选择器中的选项。必填。 |
 | `label` | `ReactNode` | — | 与触发器关联的可见标签。 |
-| `description` | `ReactNode` | — | 触发器下方的辅助说明。 |
+| `description` | `ReactNode` | — | 触发器下方的辅助说明，通过 `aria-describedby` 关联。 |
 | `placeholder` | `ReactNode` | — | 未选择时显示的文字。 |
 | `value` | `string \| null` | — | 受控选中值。 |
 | `defaultValue` | `string \| null` | — | 非受控时的初始值。 |
@@ -55,6 +69,7 @@ description: "支持标签、描述、禁用选项与五种尺寸的液态玻璃
 | `open` | `boolean` | — | 受控的浮层显示状态。 |
 | `defaultOpen` | `boolean` | `false` | 非受控时的初始浮层状态。 |
 | `onOpenChange` | `(open: boolean, details) => void` | — | 浮层打开或关闭时调用。 |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
 | `className` | `string` | — | 合并到字段根元素的 Tailwind 类名。 |
 | `ui` | `{ root?: ClassValue; label?: ClassValue; trigger?: ClassValue; glass?: ClassValue; overlay?: ClassValue; value?: ClassValue; icon?: ClassValue; description?: ClassValue; positioner?: ClassValue; popup?: ClassValue; popupGlass?: ClassValue; popupOverlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIndicator?: ClassValue; itemText?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
@@ -64,17 +79,31 @@ description: "支持标签、描述、禁用选项与五种尺寸的液态玻璃
 | --- | --- | --- | --- |
 | `value` | `string` | — | 提交并传给 `onValueChange` 的值。必填。 |
 | `label` | `ReactNode` | — | 选项与触发器中的可见内容。必填。 |
-| `textValue` | `string` | — | 键盘导航使用的纯文本标签；字符串标签会自动使用。 |
+| `textValue` | `string` | — | 键盘 typeahead 使用的纯文本标签；字符串标签会自动使用。 |
 | `disabled` | `boolean` | `false` | 禁用该选项。 |
+
+`ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `Select.Root` 属性，包括 `actionsRef`、`inputRef` 与 `highlightItemOnHover`，都会透传。
 
 | 属性 | 说明 |
 | --- | --- |
+| `data-open` | 选择器打开时存在于浮层上。 |
+| `data-closed` | 浮层关闭或正在关闭时存在。 |
 | `data-placeholder` | 未选择任何选项时存在于当前值上。 |
 | `data-selected` | 选中项及其指示器上存在。 |
 | `data-highlighted` | 键盘或指针高亮该选项时存在。 |
 | `data-disabled` | 选择器或选项禁用时存在。 |
+| `data-readonly` | 选择器只读时存在。 |
+| `data-required` | 选择器必填时存在。 |
 | `data-popup-open` | 浮层打开时存在于触发器上。 |
 | `data-side` | 浮层的实际方位。 |
+| `data-align` | 实际对齐方式（`start`、`center` 或 `end`）。 |
+| `data-instant` | 需要跳过动画时存在。 |
 | `data-starting-style` | 浮层开始进入动画时存在。 |
 | `data-ending-style` | 浮层正在退出动画时存在。 |
 | `data-slot` | 标记内部结构（`root`、`label`、`trigger`、`glass`、`overlay`、`value`、`icon`、`description`、`positioner`、`popup`、`popup-glass`、`popup-overlay`、`list`、`item`、`item-indicator`、`item-text`）。 |
+
+## 相关组件
+
+- [Input](/docs/zh/components/input) — 与选择器并排使用的自由文本字段。
+- [Menu](/docs/zh/components/menu) — 执行操作，而不是维护一个持续选中的值。
+- [Radio Group](/docs/zh/components/radio-group) — 需要始终显示全部选项时。

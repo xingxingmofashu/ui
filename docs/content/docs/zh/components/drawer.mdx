@@ -1,6 +1,6 @@
 ---
 title: "Drawer"
-description: "从任意边缘滑入的 React 抽屉，采用 Liquid Glass 表面并支持手势关闭。"
+description: "可访问的 React 抽屉，可从任意边缘滑入，采用 Liquid Glass 表面并支持手势关闭。"
 ---
 
 `Drawer` 是贴边滑入的面板。它内部渲染 Portal、遮罩、弹窗、标题、描述、可选正文以及自定义操作区，并支持滑动关闭与可选吸附点。
@@ -37,9 +37,15 @@ description: "从任意边缘滑入的 React 抽屉，采用 Liquid Glass 表面
 
 <Example name="drawer/locked" />
 
-## API reference
+## 无障碍
 
-| Prop | Type | Default | Description |
+`Drawer` 使用与 `Dialog` 相同的对话框语义：焦点移动到面板内，打开期间被限制在面板中，关闭后返回触发器。`title` 为面板命名，`description` 提供描述。
+
+`Escape`、点击背景与滑动手势都会关闭抽屉；关闭可能丢失工作时，请设置 `disablePointerDismissal` 并提供可见的取消操作。避免让滑动手势与横向滚动内容冲突。浮层焦点规则见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `title` | `ReactNode` | — | 抽屉标题，必填。 |
 | `description` | `ReactNode` | — | 标题下方的说明文字。 |
@@ -64,7 +70,7 @@ description: "从任意边缘滑入的 React 抽屉，采用 Liquid Glass 表面
 | `className` | `string` | — | 合并到弹窗的 Tailwind 类名。 |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-open` | 抽屉打开时存在。 |
 | `data-closed` | 抽屉关闭时存在。 |
@@ -78,3 +84,9 @@ description: "从任意边缘滑入的 React 抽屉，采用 Liquid Glass 表面
 | `data-swipe-direction` | 表示滑动方向（`up`、`down`、`left` 或 `right`）。 |
 | `data-swiping` | 抽屉正在滑动时存在。 |
 | `data-slot` | 标记内部部件（`backdrop`、`viewport`、`popup`、`glass`、`overlay`、`content`、`title`、`description`、`body`、`footer`），用于样式选择。 |
+
+## 相关组件
+
+- [Dialog](/docs/zh/components/dialog) — 居中的模态内容。
+- [Alert Dialog](/docs/zh/components/alert-dialog) — 明确的破坏性决定。
+- [Popover](/docs/zh/components/popover) — 非模态的上下文面板。

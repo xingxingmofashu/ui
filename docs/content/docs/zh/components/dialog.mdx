@@ -1,6 +1,6 @@
 ---
 title: "Dialog"
-description: "通用 React 对话框，采用 Liquid Glass 表面与自定义操作区。"
+description: "可访问的 React 对话框，采用 Liquid Glass 表面与自定义操作区。"
 ---
 
 `Dialog` 是通用模态框。它内部渲染 Portal、遮罩、居中弹窗、标题、描述、可选正文以及自定义操作区。
@@ -25,9 +25,15 @@ description: "通用 React 对话框，采用 Liquid Glass 表面与自定义操
 
 <Example name="dialog/dismissal" />
 
-## API reference
+## 无障碍
 
-| Prop | Type | Default | Description |
+`Dialog` 渲染模态 `dialog`，由 `title` 命名，并由 `description` 描述。打开时焦点移动到浮层内，打开期间被限制在浮层中，关闭后返回触发器。
+
+除非设置 `disablePointerDismissal`，否则 `Escape` 与点击背景都会关闭对话框；请在 `footer` 中提供可见的关闭操作。`modal={false}` 会放宽焦点限制与滚动锁定。浮层焦点规则见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `title` | `ReactNode` | — | 对话框标题，必填。 |
 | `description` | `ReactNode` | — | 标题下方的说明文字。 |
@@ -46,7 +52,7 @@ description: "通用 React 对话框，采用 Liquid Glass 表面与自定义操
 | `className` | `string` | — | 合并到弹窗的 Tailwind 类名。 |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-open` | 对话框打开时存在。 |
 | `data-closed` | 对话框关闭时存在。 |
@@ -55,3 +61,9 @@ description: "通用 React 对话框，采用 Liquid Glass 表面与自定义操
 | `data-nested` | 对话框嵌套在另一个对话框内时存在。 |
 | `data-nested-dialog-open` | 对话框内部还有另一个对话框打开时存在。 |
 | `data-slot` | 标记内部部件（`backdrop`、`viewport`、`popup`、`glass`、`overlay`、`content`、`title`、`description`、`body`、`footer`），用于样式选择。 |
+
+## 相关组件
+
+- [Alert Dialog](/docs/zh/components/alert-dialog) — 不应通过点击背景关闭的破坏性确认。
+- [Drawer](/docs/zh/components/drawer) — 贴边面板与移动端布局。
+- [Popover](/docs/zh/components/popover) — 紧凑的非模态内容。

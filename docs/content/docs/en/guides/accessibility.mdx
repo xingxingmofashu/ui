@@ -19,12 +19,15 @@ need to make in your application.
 | `Checkbox` | `label`, or `aria-label` / `aria-labelledby` |
 | `Switch` | `label`, or `aria-label` / `aria-labelledby` |
 | `RadioGroup` | `label`, or `aria-label` / `aria-labelledby` |
+| `Select` | `label`, or `aria-label` / `aria-labelledby` |
 | `Slider` | `aria-label` / `aria-labelledby`, or `getAriaLabel` per thumb |
 | `Progress` | `label`, or `aria-label` / `aria-labelledby` |
 | `Tabs` | `aria-label` / `aria-labelledby` on the tab list |
 | `Toggle` | `label`, or `aria-label` / `aria-labelledby` |
 | `ToggleGroup` | `aria-label` / `aria-labelledby` |
 | `ScrollArea` | `aria-label` / `aria-labelledby` on the viewport |
+| `Menu` | Trigger label, or `aria-label` / `aria-labelledby` for icon-only triggers |
+| `Tooltip` | Trigger label; the tooltip content is supplementary |
 | `Dialog`, `AlertDialog`, `Drawer` | Required `title` prop |
 | `Popover` | Required `title` prop |
 
@@ -61,11 +64,12 @@ The components follow these native interaction patterns:
 | Interaction | Expected behavior |
 | --- | --- |
 | `Tab` / `Shift+Tab` | Move focus between controls |
-| `Enter` / `Space` | Activate buttons, toggles, checkboxes, switches, and tabs |
-| Arrow keys | Move the slider thumb, navigate toggle groups, and move between tabs |
-| `Escape` | Close dialog, alert dialog, drawer, and popover |
+| `Enter` / `Space` | Activate buttons, toggles, checkboxes, switches, tabs, menu items, and select options |
+| Arrow keys | Move slider thumbs, navigate toggle groups and tabs, and move through menu items or select options |
+| `Escape` | Close a dialog, alert dialog, drawer, popover, menu, select, or tooltip |
 | `Home` / `End` | Move a slider to its bounds, or jump to the first or last tab |
 | `Page Up` / `Page Down` | Move a slider by `largeStep` |
+| Typeahead | Match labels in a menu or select |
 
 Accordion triggers use real buttons and expose `aria-expanded`; they follow the
 document tab order. `loopFocus` and `orientation` are deprecated and no longer
@@ -76,6 +80,13 @@ arrow keys follow the orientation, `Home` and `End` jump to the ends, and
 panels as focus moves. Scroll areas keep native wheel, trackpad, and keyboard
 scrolling; the custom scrollbars are decorative and hidden from assistive
 technology.
+
+`Menu` and `Select` use roving focus inside their popups: arrow keys move
+through enabled items, typeahead matches labels, and `Escape` returns focus to
+the trigger. Disabled items stay announced
+but cannot be activated. `Tooltip` opens on hover or keyboard focus and closes
+on blur or `Escape`; it is visual-only and not announced as a description, so
+icon-only triggers still need their own accessible name.
 
 ## Overlays and focus
 
@@ -91,6 +102,11 @@ technology.
 scrollable, and outside press or `Escape` closes it. Use it for compact
 settings, filters, and contextual actions, not for multi-step flows that need
 the user's full attention.
+
+`Menu` and `Select` are modal by default: outside interaction is locked while
+their popup is open, and `Escape` closes the popup and returns focus to the
+trigger. Set `modal={false}` only when the surrounding page must stay
+interactive.
 
 `AlertDialog` is for destructive or irreversible decisions. Use it instead of a
 plain `Dialog` when the user must choose between explicit actions.
@@ -136,6 +152,9 @@ themes.
   announced once, in context.
 - Check that a `Switch` and `Checkbox` announce their checked state.
 - Verify a range slider announces both thumb values and their names.
+- Open a `Menu` and a `Select` with the keyboard and confirm arrow keys,
+  typeahead, and `Escape` behave as expected.
+- Focus an icon-only `Tooltip` trigger and confirm its accessible name.
 - Trigger a toast and confirm the message is announced without stealing focus.
 - Run the page with reduced motion enabled and with a high-contrast theme.
 - Test with your real content; placeholder text often hides labeling problems.
@@ -160,4 +179,7 @@ structure, and content still belong to your application.
 - [Alert Dialog](/docs/en/components/alert-dialog)
 - [Drawer](/docs/en/components/drawer)
 - [Popover](/docs/en/components/popover)
+- [Menu](/docs/en/components/menu)
+- [Select](/docs/en/components/select)
+- [Tooltip](/docs/en/components/tooltip)
 - [Toast](/docs/en/components/toast)

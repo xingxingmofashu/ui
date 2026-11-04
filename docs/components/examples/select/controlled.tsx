@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Select } from "@xingxingmofashu/ui";
+import { Button, Select } from "@xingxingmofashu/ui";
 
 const items = [
   { value: "starter", label: "Starter" },
@@ -25,9 +25,12 @@ export default function SelectControlledDemo() {
         value={plan}
         onValueChange={(value) => setPlan(value)}
       />
-      <p className="text-sm text-ui-ink/60">
-        Selected plan: {plan ?? "none"}
-      </p>
+      <div className="flex flex-wrap items-center gap-3">
+        <Button label="Clear selection" onClick={() => setPlan(null)} />
+        <p className="text-sm text-ui-ink/60" aria-live="polite">
+          Selected plan: {plan ?? "none"}
+        </p>
+      </div>
     </div>
   );
 }

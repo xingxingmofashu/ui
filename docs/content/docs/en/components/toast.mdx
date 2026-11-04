@@ -1,6 +1,6 @@
 ---
 title: "Toast"
-description: "Transient React toast notifications with a Liquid Glass style, stacking, actions, promise states, and four corner positions."
+description: "An accessible React toast stack with a Liquid Glass style, actions, promise states, and four corner positions."
 ---
 
 `ToastProvider` supplies the toast manager. Render `Toast` inside it to draw the portal, viewport, and Liquid Glass stack; call `useToast()` anywhere inside the provider to add, update, close, or track notifications.
@@ -56,6 +56,12 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 `createToastManager` creates a manager that any module can call. Pass the instance to `ToastProvider` through `toastManager` so the viewport renders the toasts it creates.
 
 <Example name="toast/manager" />
+
+## Accessibility
+
+The viewport is a live region. High-priority toasts use an `alertdialog` role and the rest use a `dialog` role; titles and descriptions are connected with `aria-labelledby` and `aria-describedby`.
+
+The stack supports F6 focus entry plus swipe dismissal, and timers pause while the viewport is hovered or focused. When you replace the default close button, give your `close` control an accessible name. See the [accessibility guide](/docs/en/guides/accessibility) for announcement guidance.
 
 ## API reference
 
@@ -134,12 +140,12 @@ Render one `ToastProvider` near the app root and place `Toast` after your app co
 | `data-icon` | Indicates the status icon type on the icon slot. |
 | `data-slot` | Marks internal parts (`viewport`, `root`, `glass`, `overlay`, `content`, `icon`, `text`, `title`, `description`, `actions`, `action`, `close`) for styling. |
 
-## Accessibility
-
-The viewport is a live region, high-priority toasts use an `alertdialog` role and the rest use a `dialog` role, titles and descriptions are connected with `aria-labelledby` and `aria-describedby`, and the stack supports F6 focus entry plus swipe dismissal. Timers pause while the viewport is hovered or focused.
-
-When you replace the default close button, give your `close` control an accessible name.
-
 ## Styling
 
 The glass surface, stack geometry, and motion are shared across slots. Use `ui.root`, `ui.glass`, `ui.overlay`, and `ui.content` for per-slot styling; `ui.viewport` positions the stack, while `className` merges into each toast root. `style` is not supported; tune the shared `--ui-glass-*` tokens for material changes.
+
+## Related components
+
+- [Progress](/docs/en/components/progress) — For visible task completion instead of a transient message.
+- [Alert Dialog](/docs/en/components/alert-dialog) — When the user must stop and decide.
+- [Tooltip](/docs/en/components/tooltip) — For passive hints attached to a control.

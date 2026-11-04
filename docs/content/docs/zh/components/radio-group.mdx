@@ -31,11 +31,17 @@ description: "可访问的 React 单选组，采用圆形 Liquid Glass 控件，
 
 <Example name="radio-group/disabled" />
 
-## API reference
+## 无障碍
+
+`RadioGroup` 暴露 `radiogroup`，由 `label` 或 `aria-label` / `aria-labelledby` 命名。每个选项都是 radio，可见的 `label` 与 `description` 会自动关联。
+
+方向键在选项之间移动并更新选择，`Space` 选中当前选项。选中值通过隐藏的原生 radio 提交；必须选择时请设置 `required`。表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
 
 **RadioGroup**
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `label` | `ReactNode` | — | 分组的可见标签。 |
 | `description` | `ReactNode` | — | 分组标签下方的说明文字，通过 `aria-describedby` 关联。 |
@@ -60,7 +66,7 @@ description: "可访问的 React 单选组，采用圆形 Liquid Glass 控件，
 
 **RadioGroupItem**
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `value` | `string` | — | 用于标识选项的分组值。 |
 | `label` | `ReactNode` | — | 控件旁的可见标签；未提供 `aria-label` 或 `aria-labelledby` 时会成为可访问名称。 |
@@ -77,7 +83,7 @@ description: "可访问的 React 单选组，采用圆形 Liquid Glass 控件，
 | `className` | `string` | — | 合并到选项根元素的 Tailwind 类名。 |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的该选项内部槽位类名。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-checked` | 选项选中时存在。 |
 | `data-unchecked` | 选项未选中时存在。 |
@@ -93,3 +99,9 @@ description: "可访问的 React 单选组，采用圆形 Liquid Glass 控件，
 | `data-starting-style` | 指示器开始进入动画时存在。 |
 | `data-ending-style` | 指示器退出动画时存在。 |
 | `data-slot` | 标记内部部件（`root`、`header`、`label`、`description`、`items`、`item`、`box`、`glass`、`overlay`、`indicator`、`dot`、`wrapper`、`item-label`、`item-description`）供样式使用。 |
+
+## 相关组件
+
+- [Checkbox](/docs/zh/components/checkbox) — 相互独立的布尔选择。
+- [Select](/docs/zh/components/select) — 选项列表较长时使用。
+- [Switch](/docs/zh/components/switch) — 立即生效的开关设置。

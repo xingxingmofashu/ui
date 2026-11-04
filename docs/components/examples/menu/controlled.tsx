@@ -24,7 +24,7 @@ export default function MenuControlledDemo() {
           onClick={() => setOpen((value) => !value)}
         />
       </div>
-      <p className="text-sm text-ui-ink/60">
+      <p className="text-sm text-ui-ink/60" aria-live="polite">
         The menu is {open ? "open" : "closed"}.
       </p>
     </div>

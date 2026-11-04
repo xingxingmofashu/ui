@@ -17,9 +17,15 @@ description: "可从服务端渲染的 React 卡片，采用 Liquid Glass 表面
 
 <Example name="card/content-only" />
 
-## API reference
+## 无障碍
 
-| Prop | Type | Default | Description |
+`Card` 是非交互容器，没有自己的角色或状态。请为 `title` 使用真实标题，或在正文中添加自己的标题，让卡片出现在文档大纲中。
+
+整张卡片需要可点击时，应在标题中放置一个链接或按钮，而不是给根元素添加点击处理函数。标签规范见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `title` | `ReactNode` | — | 卡片标题，渲染为 `div`。 |
 | `description` | `ReactNode` | — | 标题下方的说明文字。 |
@@ -29,6 +35,12 @@ description: "可从服务端渲染的 React 卡片，采用 Liquid Glass 表面
 | `className` | `string` | — | 合并到 `root`，用于布局。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; layout?: ClassValue; header?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-slot` | 标记内部部件（`root`、`glass`、`overlay`、`layout`、`header`、`title`、`description`、`body`、`footer`），用于样式选择。 |
+
+## 相关组件
+
+- [Accordion](/docs/zh/components/accordion) — 可折叠的内容分组。
+- [Tabs](/docs/zh/components/tabs) — 在卡片大小的视图之间切换。
+- [Scroll Area](/docs/zh/components/scroll-area) — 卡片内容需要独立滚动时使用。

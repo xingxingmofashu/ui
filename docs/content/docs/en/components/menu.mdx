@@ -1,6 +1,6 @@
 ---
 title: "Menu"
-description: "An accessible Liquid Glass action menu with groups, separators, icons, shortcuts, and controlled open state."
+description: "An accessible React menu with a Liquid Glass popup, groups, separators, icons, shortcuts, and controlled open state."
 ---
 
 `Menu` renders the trigger, portal, positioner, glass popup, list, action items, groups, and separators internally. Selecting an item closes the menu by default and calls its `onSelect` callback.
@@ -8,6 +8,8 @@ description: "An accessible Liquid Glass action menu with groups, separators, ic
 Items are passed through the `items` array. Use `type: "group"` for a labelled section and `type: "separator"` for a divider. Action items need a unique `value` for React keys. When the visible label is not plain text, pass `textValue` so keyboard typeahead can match it.
 
 ## Basic example
+
+The example combines grouped actions, a separator, icons, shortcuts, and a disabled item. The status text below the trigger uses `aria-live="polite"` so screen readers hear the selected action.
 
 <Example name="menu/basic" />
 
@@ -22,6 +24,12 @@ Items are passed through the `items` array. Use `type: "group"` for a labelled s
 Pass `open` and `onOpenChange` to own visibility. The trigger still toggles the menu unless you also control it externally.
 
 <Example name="menu/controlled" />
+
+## Accessibility
+
+`Menu` follows the menu-button pattern: the trigger exposes `aria-haspopup="menu"`, `aria-expanded`, and `aria-controls`, the popup is a menu, and each action is a `menuitem`. `ArrowDown` and `ArrowUp` move through enabled items, and typeahead matches item labels. `Enter` or `Space` activates the highlighted item, and `Escape` closes the menu and returns focus to the trigger.
+
+Disabled items stay announced but cannot be activated. `value` is only the React key; when `label` is not plain text, pass `textValue` so typeahead and screen readers get a readable name. See the [accessibility guide](/docs/en/guides/accessibility) for the shared interaction patterns.
 
 ## API reference
 
@@ -50,11 +58,11 @@ Pass `open` and `onOpenChange` to own visibility. The trigger still toggles the 
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | Unique value used for React keys and navigation. Required. |
+| `value` | `string` | — | Unique value used as the React key for this item. Required. |
 | `label` | `ReactNode` | — | Visible content inside the item. Required. |
-| `textValue` | `string` | — | Plain-text label used for keyboard navigation. Defaults to a string label. |
+| `textValue` | `string` | — | Plain-text label used for keyboard typeahead. Defaults to a string label. |
 | `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
-| `shortcut` | `ReactNode` | — | Shortcut hint rendered after the label. |
+| `shortcut` | `ReactNode` | — | Shortcut hint rendered after the label. It is visual only. |
 | `onSelect` | `(event) => void` | — | Called when the item is selected. |
 | `disabled` | `boolean` | `false` | Disables the item. |
 | `closeOnClick` | `boolean` | `true` | Whether selecting the item closes the menu. |
@@ -79,12 +87,24 @@ Pass `open` and `onOpenChange` to own visibility. The trigger still toggles the 
 | `className` | `string` | — | Tailwind classes merged into the separator. |
 | `ui` | `{ separator?: ClassValue }` | — | Tailwind classes for the separator slot. |
 
+`ui` keys map to the `data-slot` values listed below. Additional Base UI `Menu.Root` props, including `actionsRef`, `handle`, `triggerId`, and `defaultTriggerId`, are forwarded.
+
 | Attribute | Description |
 | --- | --- |
+| `data-open` | Present on the popup when the menu is open. |
+| `data-closed` | Present on the popup while it is closed or closing. |
 | `data-highlighted` | Present on the keyboard- or pointer-highlighted item. |
 | `data-disabled` | Present when the menu or an item is disabled. |
 | `data-popup-open` | Present on the trigger while the menu is open. |
 | `data-side` | Indicates the resolved side of the popup. |
+| `data-align` | Indicates the resolved alignment (`start`, `center`, or `end`). |
+| `data-instant` | Present when animations should be skipped. |
 | `data-starting-style` | Present when the popup begins animating in. |
 | `data-ending-style` | Present when the popup is animating out. |
 | `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `list`, `item`, `item-icon`, `item-label`, `shortcut`, `group`, `group-label`, `separator`). |
+
+## Related components
+
+- [Button](/docs/en/components/button) — The usual menu trigger and the action style used inside items.
+- [Popover](/docs/en/components/popover) — For richer content that needs a title, body, and actions.
+- [Select](/docs/en/components/select) — For choosing one option from a list instead of running an action.

@@ -3,6 +3,8 @@ title: "Toggle Group"
 description: "An accessible React toggle group with Liquid Glass selected states, single or multiple selection, and two orientations."
 ---
 
+`ToggleGroup` groups related toggle buttons on one glass surface. Use it for view switchers and formatting controls with single or multiple selection.
+
 ## Basic example
 
 The view switcher below uses the real Toggle Group. The pressed item receives the glass selected state and updates the text underneath.
@@ -42,6 +44,12 @@ Use `orientation="vertical"` for a vertical group:
 Set `disabled` on the group to disable every item, or on a single item to disable only that option.
 
 <Example name="toggle-group/disabled" />
+
+## Accessibility
+
+`ToggleGroup` renders a `group` whose items are toggle buttons with `aria-pressed`. Name the group with `aria-label` or `aria-labelledby`; icon-only items need their own name.
+
+Arrow keys move focus within the group, `Home` and `End` jump to the ends, and `Space` or `Enter` toggles the focused item. In single-selection mode, the group value is the single source of truth; control it when the selection must not be cleared. See the [accessibility guide](/docs/en/guides/accessibility) for keyboard details.
 
 ## API reference
 
@@ -91,3 +99,9 @@ Items do not accept `pressed` or `defaultPressed`; the group `value` / `defaultV
 | `data-multiple` | Present when the group allows multiple pressed items. |
 | `data-pressed` | Present on a pressed item. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `rim`, `item`, `content`, `icon`, `label`). |
+
+## Related components
+
+- [Toggle](/docs/en/components/toggle) — For a single pressed button.
+- [Tabs](/docs/en/components/tabs) — For switching between content panels.
+- [Radio Group](/docs/en/components/radio-group) — For a form choice among exclusive options.

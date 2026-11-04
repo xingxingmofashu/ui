@@ -16,12 +16,15 @@ description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实�
 | `Checkbox` | `label`，或 `aria-label` / `aria-labelledby` |
 | `Switch` | `label`，或 `aria-label` / `aria-labelledby` |
 | `RadioGroup` | `label`，或 `aria-label` / `aria-labelledby` |
+| `Select` | `label`，或 `aria-label` / `aria-labelledby` |
 | `Slider` | `aria-label` / `aria-labelledby`，或每个 thumb 的 `getAriaLabel` |
 | `Progress` | `label`，或 `aria-label` / `aria-labelledby` |
 | `Tabs` | 标签栏上的 `aria-label` / `aria-labelledby` |
 | `Toggle` | `label`，或 `aria-label` / `aria-labelledby` |
 | `ToggleGroup` | `aria-label` / `aria-labelledby` |
 | `ScrollArea` | viewport 上的 `aria-label` / `aria-labelledby` |
+| `Menu` | 触发器标签；纯图标触发器使用 `aria-label` / `aria-labelledby` |
+| `Tooltip` | 触发器标签；提示内容仅作补充 |
 | `Dialog`、`AlertDialog`、`Drawer` | 必填的 `title` 属性 |
 | `Popover` | 必填的 `title` 属性 |
 
@@ -57,11 +60,12 @@ description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实�
 | 交互 | 预期行为 |
 | --- | --- |
 | `Tab` / `Shift+Tab` | 在控件之间移动焦点 |
-| `Enter` / `Space` | 激活按钮、Toggle、Checkbox、Switch 与标签页 |
-| 方向键 | 移动 Slider thumb、在 Toggle Group 中导航，以及在标签页之间移动 |
-| `Escape` | 关闭 Dialog、Alert Dialog、Drawer 与 Popover |
+| `Enter` / `Space` | 激活按钮、Toggle、Checkbox、Switch、标签页、菜单项与选择器选项 |
+| 方向键 | 移动 Slider thumb、在 Toggle Group 与标签页中导航，以及在菜单项或选择器选项之间移动 |
+| `Escape` | 关闭 Dialog、Alert Dialog、Drawer、Popover、Menu、Select 或 Tooltip |
 | `Home` / `End` | 将 Slider 移到边界值，或跳到第一个或最后一个标签页 |
 | `Page Up` / `Page Down` | 按 `largeStep` 移动 Slider |
+| Typeahead | 在 Menu 或 Select 中匹配标签 |
 
 Accordion 触发器使用真实按钮并暴露 `aria-expanded`，遵循文档的 Tab 顺序。
 `loopFocus` 与 `orientation` 已废弃，不再影响键盘焦点。Toggle Group 支持单选与
@@ -69,6 +73,12 @@ Accordion 触发器使用真实按钮并暴露 `aria-expanded`，遵循文档的
 跟随布局方向，`Home` 与 `End` 跳到首尾，`Enter` 或 `Space` 激活当前焦点标签。
 设置 `activateOnFocus` 后，焦点移动时会直接切换面板。Scroll Area 保留原生滚轮、
 触控板与键盘滚动；自定义滚动条是装饰性的，对辅助技术隐藏。
+
+`Menu` 与 `Select` 在浮层内使用 roving focus：方向键在启用的条目之间移动，
+typeahead 匹配标签，`Escape` 把焦点返回触发器。
+禁用的条目仍会被播报，但无法激活。`Tooltip` 在悬停或键盘聚焦时打开，在失焦或
+`Escape` 时关闭；它仅作视觉提示，不会被播报为描述，因此纯图标触发器仍需自己的
+可访问名称。
 
 ## 浮层与焦点
 
@@ -83,6 +93,9 @@ Accordion 触发器使用真实按钮并暴露 `aria-expanded`，遵循文档的
 `Popover` 有意保持非模态：焦点不会被限制，页面仍可滚动，点击外部或按
 `Escape` 会关闭。它适合紧凑设置、筛选器与上下文操作，不适合需要用户全神贯注的
 多步流程。
+
+`Menu` 与 `Select` 默认是模态的：浮层打开时外部交互被锁定，`Escape` 会关闭浮层
+并把焦点返回触发器。只有周围页面必须保持可交互时才设置 `modal={false}`。
 
 `AlertDialog` 用于破坏性或不可逆决定。当用户必须在明确操作之间选择时，应使用
 它而不是普通 `Dialog`。
@@ -123,6 +136,8 @@ Accordion 触发器使用真实按钮并暴露 `aria-expanded`，遵循文档的
 - 用屏幕阅读器阅读表单：名称、描述与错误应只播报一次，并且上下文正确。
 - 确认 `Switch` 与 `Checkbox` 会播报选中状态。
 - 确认区间滑块会播报两个 thumb 的值与名称。
+- 用键盘打开 `Menu` 与 `Select`，确认方向键、typeahead 与 `Escape` 行为正确。
+- 聚焦纯图标 `Tooltip` 触发器，确认其可访问名称。
 - 触发 Toast，确认消息被播报且不会抢走焦点。
 - 开启减少动效与高对比度主题分别测试页面。
 - 用真实内容测试；占位文本经常会掩盖标签问题。
@@ -146,4 +161,7 @@ Accordion 触发器使用真实按钮并暴露 `aria-expanded`，遵循文档的
 - [Alert Dialog](/docs/zh/components/alert-dialog)
 - [Drawer](/docs/zh/components/drawer)
 - [Popover](/docs/zh/components/popover)
+- [Menu](/docs/zh/components/menu)
+- [Select](/docs/zh/components/select)
+- [Tooltip](/docs/zh/components/tooltip)
 - [Toast](/docs/zh/components/toast)

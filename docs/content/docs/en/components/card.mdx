@@ -20,6 +20,12 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 
 <Example name="card/content-only" />
 
+## Accessibility
+
+`Card` is a non-interactive container with no role or state of its own. Use a real heading for `title`, or add your own heading inside the body, so the card appears in the document outline.
+
+When the whole card should be clickable, put one link or button in the title instead of adding a click handler to the root. See the [accessibility guide](/docs/en/guides/accessibility) for label guidance.
+
 ## API reference
 
 | Prop | Type | Default | Description |
@@ -35,3 +41,9 @@ When `title`, `description`, or `footer` are omitted, the corresponding region i
 | Attribute | Description |
 | --- | --- |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `layout`, `header`, `title`, `description`, `body`, `footer`) for styling. |
+
+## Related components
+
+- [Accordion](/docs/en/components/accordion) — For collapsible groups of content.
+- [Tabs](/docs/en/components/tabs) — For switching between card-sized views.
+- [Scroll Area](/docs/en/components/scroll-area) — When card content should scroll independently.

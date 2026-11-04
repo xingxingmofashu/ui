@@ -47,6 +47,12 @@ Slider forwards `name` and submits the current value through a hidden `input[typ
 
 <Example name="slider/constraints" />
 
+## Accessibility
+
+Each thumb is a `slider` with `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, and a name from `aria-label`, `aria-labelledby`, or `getAriaLabel`.
+
+Arrow keys change the value by `step`, `Page Up` and `Page Down` use `largeStep`, and `Home` and `End` jump to the bounds. Range sliders need a distinct name for every thumb. `aria-invalid` and `aria-errormessage` reach the underlying range input. See the [accessibility guide](/docs/en/guides/accessibility) for naming examples.
+
 ## API reference
 
 | Prop | Type | Default | Description |
@@ -92,3 +98,9 @@ Slider forwards `name` and submits the current value through a hidden `input[typ
 | `data-dirty` | Present after the slider value changes. |
 | `data-slot` | Marks internal parts (`root`, `control`, `track`, `indicator`, `thumb`) for styling. |
 | `data-focused` | Present when the slider is focused. |
+
+## Related components
+
+- [Input](/docs/en/components/input) — For an exact numeric value typed by the user.
+- [Progress](/docs/en/components/progress) — For read-only task completion.
+- [Switch](/docs/en/components/switch) — For an immediate binary setting.

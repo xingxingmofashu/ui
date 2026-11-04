@@ -1,6 +1,6 @@
 ---
 title: "Alert Dialog"
-description: "A React alert dialog for destructive confirmations, with a Liquid Glass surface and clear cancel and confirm actions."
+description: "An accessible React alert dialog for destructive confirmations, with a Liquid Glass surface and clear cancel and confirm actions."
 ---
 
 `AlertDialog` is an accessible modal confirmation component. It renders the portal, backdrop, centered popup, title, description, optional body, and fixed cancel and confirm actions internally.
@@ -22,6 +22,12 @@ The basic example uses controlled mode: `open` controls visibility and the page 
 `children` adds content between the description and the action buttons.
 
 <Example name="alert-dialog/content" />
+
+## Accessibility
+
+`AlertDialog` renders a modal `alertdialog` named by `title` and described by `description`. Focus moves into the popup, stays trapped while it is open, and returns to the trigger when it closes.
+
+Escape closes the dialog without calling `onCancel` or `onConfirm`; guard the flow in `onOpenChange` when Escape must not dismiss it. The backdrop never closes an alert dialog, so keep the cancel action visible. See the [accessibility guide](/docs/en/guides/accessibility) for overlay focus rules.
 
 ## API reference
 
@@ -54,3 +60,9 @@ The basic example uses controlled mode: `open` controls visibility and the page 
 | `data-nested` | Present when the dialog is nested within another dialog. |
 | `data-nested-dialog-open` | Present when another dialog is open inside this one. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
+
+## Related components
+
+- [Dialog](/docs/en/components/dialog) — For general-purpose modal content that can be dismissed more freely.
+- [Drawer](/docs/en/components/drawer) — For edge-aligned panels on small screens.
+- [Button](/docs/en/components/button) — The action style rendered in the footer.

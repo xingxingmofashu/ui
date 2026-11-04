@@ -21,6 +21,75 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
 - Add every page to both locales; the loader uses directory-based i18n.
 - Prefix internal links with the docs path and locale: `/docs/zh/...` or `/docs/en/...`.
 
+## Component Pages
+
+Every component page uses the same skeleton in both locales:
+
+1. Frontmatter with a one-sentence description.
+2. A lead paragraph of two or three sentences: what the component renders,
+   when to use it, and the one behavior a reader must know.
+3. `Basic example` with a live, interactive example.
+4. Feature sections in a useful order, each followed by an example or a short
+   explanation.
+5. `Accessibility`.
+6. `API reference`.
+7. Optional `Theming` or `Styling`.
+8. `Related components`.
+
+Headings use these exact translations:
+
+| English | Chinese |
+| --- | --- |
+| Basic example | 基础示例 |
+| Sizes | 尺寸 |
+| Controlled usage | 受控用法 |
+| Placement | 定位 |
+| Disabled | 禁用 |
+| Accessibility | 无障碍 |
+| API reference | API 参考 |
+| Theming | 主题 |
+| Styling | 样式 |
+| Related components | 相关组件 |
+
+Keep component names, prop names, ARIA terms, and `Liquid Glass` in English in
+both locales. Do not translate `Liquid Glass` as 液态玻璃.
+
+Frontmatter descriptions follow one sentence and mention React and Liquid
+Glass:
+
+- English: `An accessible React <component> with a Liquid Glass ...` for
+  interactive components, or `A React <component> with a Liquid Glass ...` for
+  display-only components.
+- Chinese: `可访问的 React <组件>，采用 Liquid Glass ...` for interactive
+  components, or `一个 React <组件>，采用 Liquid Glass ...` for display-only
+  components.
+
+The `Accessibility` section is required. It must cover, as applicable:
+
+- Where the accessible name comes from, and what to do without a visible label.
+- Roles, states, and relationships the component supplies.
+- Keyboard behavior, including activation and navigation keys.
+- Focus management and dismissal for overlays.
+- Icon-only controls, live regions, and form submission.
+- A link to the accessibility guide with `<Example>`-free prose.
+
+The `Related components` section is required and contains two to four
+locale-prefixed links with short reasons. Do not repeat the whole catalog.
+
+API reference rules:
+
+- Start with a bold component name (`**Menu**`), then one `Props` table per
+  public type. Order props by purpose: content and state, behavior, form and
+  ARIA pass-through, rendering, styling.
+- Use `| Prop | Type | Default | Description |` and
+  `| 属性 | 类型 | 默认值 | 说明 |`.
+- Follow with one `| Attribute | Description |` table (Chinese:
+  `| 属性 | 说明 |`) when the component exposes data attributes, and list the
+  `data-slot` values.
+- Explain that additional Base UI root props are forwarded when the wrapper
+  accepts them.
+- Keep `ui` as the derived slot object; do not hand-write a second slot type.
+
 ## Components And Theme
 
 - Live examples live in `components/examples/<component>/<demo>.tsx`, one demo
@@ -41,8 +110,9 @@ From `docs/`, the equivalent commands are `pnpm dev`, `pnpm build`, and
 - Do not replace live components with screenshots.
 - Prefer Fumadocs MDX components registered in `components/mdx.tsx` — `Callout`,
   `Cards`, `Steps`, `Tabs`, and `Accordions` — over custom markup.
-- Document component APIs with an `## API reference` section that contains
-  Markdown `Props` and `Attribute` tables. Do not use `TypeTable`.
+- Document component APIs with an `## API reference` section (Chinese:
+  `## API 参考`) that contains Markdown `Props` and `Attribute` tables. Do not
+  use `TypeTable`.
 
 ## SEO
 

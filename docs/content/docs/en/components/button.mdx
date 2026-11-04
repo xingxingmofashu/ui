@@ -3,6 +3,8 @@ title: "Button"
 description: "An accessible React button with a Liquid Glass style, five sizes, icon slots, and link rendering."
 ---
 
+`Button` renders a native button with a Liquid Glass surface, optional leading and trailing icons, and five sizes. Use it for actions; when it should navigate, render it as a link.
+
 ## Basic example
 
 The counter below renders the real `Button`. Clicking updates React state, and the reset button disables itself at zero.
@@ -45,6 +47,12 @@ When the button should navigate instead of trigger an action, set `nativeButton=
 
 <Example name="button/form-actions" />
 
+## Accessibility
+
+`Button` renders a native `<button>` by default, so it gets focus, `Enter` and `Space` activation, and disabled behavior from the platform. The label provides the accessible name; icon slots are decorative and hidden from assistive technology.
+
+When `nativeButton={false}` renders a link or another element, keep the visible label meaningful and use the element that matches the action. `focusableWhenDisabled` keeps a disabled action in the Tab order with `aria-disabled` while blocking activation.
+
 ## API reference
 
 | Prop | Type | Default | Description |
@@ -71,3 +79,9 @@ When the button should navigate instead of trigger an action, set `nativeButton=
 | --- | --- |
 | `data-disabled` | Present when the button is disabled. |
 | `data-slot` | Marks internal parts (`root`, `base`, `glass`, `overlay`, `leading-icon`, `label`, `trailing-icon`) for styling. |
+
+## Related components
+
+- [Toggle](/docs/en/components/toggle) — For an action that stays pressed.
+- [Toggle Group](/docs/en/components/toggle-group) — For a set of related pressed states.
+- [Input](/docs/en/components/input) — For text entry next to an action.

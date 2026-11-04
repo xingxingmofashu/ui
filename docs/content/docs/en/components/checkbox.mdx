@@ -37,6 +37,12 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 
 <Example name="checkbox/states" />
 
+## Accessibility
+
+`Checkbox` renders a button with `role="checkbox"`, `aria-checked`, and a hidden native checkbox for form submission. The visible `label` names it and `description` is linked with `aria-describedby`; explicit ARIA names take precedence.
+
+`Space` toggles the focused control. `indeterminate` sets `aria-checked="mixed"`. Use `required` when a checked state is mandatory, and see the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
+
 ## API reference
 
 | Prop | Type | Default | Description |
@@ -80,3 +86,9 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 | `data-starting-style` | Present when the indicator begins animating in. |
 | `data-ending-style` | Present when the indicator is animating out. |
 | `data-slot` | Marks internal parts (`root`, `box`, `fill`, `glass`, `overlay`, `indicator`, `indicator-icon`, `wrapper`, `label`, `description`) for styling. |
+
+## Related components
+
+- [Switch](/docs/en/components/switch) — For settings that take effect immediately.
+- [Radio Group](/docs/en/components/radio-group) — For choosing one option from a small set.
+- [Toggle](/docs/en/components/toggle) — For a one-off pressed action.

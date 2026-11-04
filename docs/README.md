@@ -41,24 +41,24 @@ and does not trigger React's script-tag warning.
 
 ## Routes
 
-- `/` — English marketing home page.
-- `/zh` — Chinese marketing home page.
+- `/` — English-only marketing home page.
+- `/zh` — redirects the legacy Chinese home URL back to `/`.
 - `/docs/en` — English documentation.
 - `/docs/zh` — Chinese documentation.
 - `/llms.txt` — English-only machine-readable documentation index.
 - `/llms-full.txt` — every English documentation page in one text file.
 - `/api/search` — statically generated search index.
 
-`components/locale-detect.tsx` sends first-time Chinese browsers to `/zh`.
-Manual choices are stored in `localStorage` under `ui-locale` and respected by
-the marketing links and the docs language switch.
+Docs locale choices are stored in `localStorage` under `ui-locale` and read by
+the docs language switch. The marketing home page does not expose a language
+switch.
 
 ## Structure
 
 - `content/docs/zh` and `content/docs/en` — MDX content and per-locale `meta.json` files.
 - `content/docs/{en,zh}/guides` — theming, forms, accessibility, SSR, and template guides.
-- `app/(root)` — the English marketing home page at `/`.
-- `app/zh` — the Chinese marketing home page at `/zh`.
+- `app/(root)` — the English-only marketing home page at `/`.
+- `app/(root)/zh` — the legacy `/zh` redirect back to `/`.
 - `app/docs/[lang]` — the single localized page tree for `/docs/zh` and `/docs/en`.
 - `app/docs/[lang]/(home)` — localized docs home pages.
 - `app/docs/[lang]/(docs)` — the Fumadocs layout and catch-all documentation routes.
@@ -68,8 +68,6 @@ the marketing links and the docs language switch.
 - `lib/layout.shared.tsx` — navigation, links, and UI translations.
 - `lib/seo.ts` — marketing metadata, hreflang, and JSON-LD.
 - `components/marketing-shell.tsx` — shared marketing layout.
-- `components/locale-detect.tsx` — browser-language redirect.
-- `components/locale-link.tsx` — marketing links that persist the locale choice.
 - `components/site-analytics.tsx` — optional Plausible analytics loader.
 - `components/docs-root-provider.tsx` — Fumadocs provider and locale-change handling.
 - `components/examples/<component>/<demo>.tsx` — one live example per file.
@@ -83,6 +81,7 @@ the marketing links and the docs language switch.
 ## Conventions
 
 - Keep both Chinese and English pages in sync. Every page must exist under both locale folders.
+- Component pages use the shared skeleton: lead paragraph, basic example, feature sections, Accessibility, API reference, optional Theming or Styling, and Related components. See `AGENTS.md` for the heading dictionary and table rules.
 - Internal links in MDX must include the docs and locale prefixes, for example `/docs/zh/components/button` or `/docs/en/components/switch`.
 - Use `<Example name="component/demo" />` instead of duplicating example code in MDX. Pass `showCode={false}` for a preview without the source toggle.
 - Add a demo by creating `components/examples/<component>/<demo>.tsx` with a default export; the registry discovers it automatically. Every `.tsx` in that folder is treated as a demo, so keep helpers elsewhere.

@@ -1,6 +1,6 @@
 ---
 title: "Scroll Area"
-description: "A React scroll area with native scrolling, Liquid Glass scrollbars, and a glass panel."
+description: "An accessible React scroll area with native scrolling, Liquid Glass scrollbars, and a glass panel."
 ---
 
 `ScrollArea` renders the glass panel, native scroll viewport, content container, and custom scrollbars internally.
@@ -35,6 +35,12 @@ The root owns the glass surface. Use `className` for its width, height, radius, 
 
 <Example name="scroll-area/edge-threshold" />
 
+## Accessibility
+
+The viewport is focusable only while it can scroll, matching native scroll-container behavior. Pass `aria-label` or `aria-labelledby` to name the region, and `aria-describedby` for extra instructions.
+
+Pointer and keyboard scrolling stay native, while the custom scrollbars remain decorative and hidden from assistive technology. See the [accessibility guide](/docs/en/guides/accessibility) for region naming.
+
 ## API reference
 
 | Prop | Type | Default | Description |
@@ -63,6 +69,8 @@ The root owns the glass surface. Use `className` for its width, height, radius, 
 | `data-hovering` | Present on a scrollbar while the pointer is over the area. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `viewport`, `content`, `scrollbar`, `thumb`, `corner`) for styling. |
 
-## Accessibility
+## Related components
 
-The viewport is focusable only while it can scroll, matching the native scroll container behavior. Pass `aria-label` or `aria-labelledby` to name the region, and `aria-describedby` for extra instructions. Pointer and keyboard scrolling stay native, while the custom scrollbars remain decorative and hidden from assistive technology.
+- [Card](/docs/en/components/card) — A static panel for content that fits.
+- [Tabs](/docs/en/components/tabs) — For switching between views.
+- [Drawer](/docs/en/components/drawer) — For an edge panel with its own scrolling.

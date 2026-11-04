@@ -1,27 +1,41 @@
 ---
 title: "Select"
-description: "An accessible Liquid Glass select with labels, descriptions, disabled options, and five sizes."
+description: "An accessible React select with a Liquid Glass trigger, labels, descriptions, disabled options, and five sizes."
 ---
 
 `Select` renders the label, trigger, glass surface, selected value, chevron, portal, glass popup, and options internally. Options are passed through the `items` array, so the same data drives both the trigger value and the popup list.
 
-Use `label` and `description` for visible field text. Give the trigger an accessible name through `label`, `aria-label`, or `aria-labelledby` when no visible label is rendered.
+Use `label` and `description` for visible field text. When no visible label is rendered, give the trigger an accessible name with `aria-label` or `aria-labelledby`. The selected value is submitted through a hidden native input when `name` is set.
 
 ## Basic example
+
+The example shows a labelled field with a description, a placeholder, and a disabled option. The first option is selected through `defaultValue`.
 
 <Example name="select/basic" />
 
 ## Sizes
 
-Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
+Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Trigger height, padding, text, and the chevron scale together.
 
 <Example name="select/sizes" />
 
 ## Controlled usage
 
-`value` and `onValueChange` control the selection. The callback receives `null` when the value is cleared.
+`value` and `onValueChange` control the selection. The callback receives `null` when the value is cleared, so the example keeps a clear action next to the field.
 
 <Example name="select/controlled" />
+
+## Form usage
+
+Set `name` to submit the selected value through a hidden native input. `required` participates in native form validation, and `form` links the field to a form elsewhere in the document.
+
+<Example name="select/form" />
+
+## Accessibility
+
+`Select` follows the Base UI select pattern: the trigger is a `combobox` with `aria-haspopup="listbox"`, `aria-expanded`, and `aria-controls`; the popup is a `listbox`; and each option is an `option`. `ArrowDown` and `ArrowUp` move through options, typeahead matches labels, and `Enter` selects the highlighted option. `Escape` closes the popup and returns focus to the trigger.
+
+The visible `label` names the trigger and `description` is linked with `aria-describedby`. Without a visible label, use `aria-label` or `aria-labelledby`. Disabled options remain announced but cannot be selected. Set `required` when a value must be chosen, and see the [accessibility guide](/docs/en/guides/accessibility) for shared form patterns.
 
 ## API reference
 
@@ -31,7 +45,7 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
 | --- | --- | --- | --- |
 | `items` | `readonly SelectItemProps[]` | — | Options rendered by the select. Required. |
 | `label` | `ReactNode` | — | Visible label associated with the trigger. |
-| `description` | `ReactNode` | — | Supporting text under the trigger. |
+| `description` | `ReactNode` | — | Supporting text under the trigger, linked with `aria-describedby`. |
 | `placeholder` | `ReactNode` | — | Text shown when no value is selected. |
 | `value` | `string \| null` | — | Controlled value. |
 | `defaultValue` | `string \| null` | — | Initial value when uncontrolled. |
@@ -55,6 +69,7 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
 | `open` | `boolean` | — | Controlled popup open state. |
 | `defaultOpen` | `boolean` | `false` | Initial popup open state when uncontrolled. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when the popup opens or closes. |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
 | `className` | `string` | — | Tailwind classes merged into the field root. |
 | `ui` | `{ root?: ClassValue; label?: ClassValue; trigger?: ClassValue; glass?: ClassValue; overlay?: ClassValue; value?: ClassValue; icon?: ClassValue; description?: ClassValue; positioner?: ClassValue; popup?: ClassValue; popupGlass?: ClassValue; popupOverlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIndicator?: ClassValue; itemText?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -64,17 +79,31 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`.
 | --- | --- | --- | --- |
 | `value` | `string` | — | Value submitted and passed to `onValueChange`. Required. |
 | `label` | `ReactNode` | — | Visible content inside the option and trigger. Required. |
-| `textValue` | `string` | — | Plain-text label used for keyboard navigation. Defaults to a string label. |
+| `textValue` | `string` | — | Plain-text label used for keyboard typeahead. Defaults to a string label. |
 | `disabled` | `boolean` | `false` | Disables the option. |
+
+`ui` keys map to the `data-slot` values listed below. Additional Base UI `Select.Root` props, including `actionsRef`, `inputRef`, and `highlightItemOnHover`, are forwarded.
 
 | Attribute | Description |
 | --- | --- |
+| `data-open` | Present on the popup when the select is open. |
+| `data-closed` | Present on the popup while it is closed or closing. |
 | `data-placeholder` | Present on the value when no option is selected. |
 | `data-selected` | Present on the selected option and its indicator. |
 | `data-highlighted` | Present on the keyboard- or pointer-highlighted option. |
 | `data-disabled` | Present when the select or an option is disabled. |
+| `data-readonly` | Present when the select is read-only. |
+| `data-required` | Present when the select is required. |
 | `data-popup-open` | Present on the trigger while the popup is open. |
 | `data-side` | Indicates the resolved side of the popup. |
+| `data-align` | Indicates the resolved alignment (`start`, `center`, or `end`). |
+| `data-instant` | Present when animations should be skipped. |
 | `data-starting-style` | Present when the popup begins animating in. |
 | `data-ending-style` | Present when the popup is animating out. |
 | `data-slot` | Marks internal parts (`root`, `label`, `trigger`, `glass`, `overlay`, `value`, `icon`, `description`, `positioner`, `popup`, `popup-glass`, `popup-overlay`, `list`, `item`, `item-indicator`, `item-text`). |
+
+## Related components
+
+- [Input](/docs/en/components/input) — For free-form text fields next to a select.
+- [Menu](/docs/en/components/menu) — For actions rather than a persistent selected value.
+- [Radio Group](/docs/en/components/radio-group) — When every option should stay visible.

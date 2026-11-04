@@ -1,6 +1,6 @@
 ---
 title: "Popover"
-description: "A non-modal React popover with a Liquid Glass panel anchored to a trigger."
+description: "An accessible non-modal React popover with a Liquid Glass panel anchored to a trigger."
 ---
 
 `Popover` renders the trigger, portal, positioner, glass popup, directional arrow, title, description, optional body, and optional action area internally. The arrow follows the resolved side of the popup automatically; set `arrow={false}` to hide it.
@@ -30,6 +30,12 @@ Pass one element as `trigger`. It must forward props and refs to its root elemen
 `align`, `alignOffset`, and `collisionPadding` fine-tune the position after the preferred side is chosen. Set `arrow={false}` when the popup should sit flat against its trigger.
 
 <Example name="popover/offsets" />
+
+## Accessibility
+
+`Popover` adds `aria-haspopup="dialog"` and `aria-expanded` to the trigger and renders a popup named by `title` and described by `description`.
+
+It is non-modal by default: focus is not trapped, the page stays scrollable, and `Escape` or an outside press closes it. Provide a visible close or done action when the popup changes settings, and set `modal` when the content must behave like a dialog. See the [accessibility guide](/docs/en/guides/accessibility) for focus rules.
 
 ## API reference
 
@@ -72,3 +78,9 @@ Pass one element as `trigger`. It must forward props and refs to its root elemen
 | `data-popup-open` | Present on the trigger while the popup is open. |
 | `data-pressed` | Present while the trigger is pressed. |
 | `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`, `title`, `description`, `body`, `footer`) for styling. |
+
+## Related components
+
+- [Tooltip](/docs/en/components/tooltip) — For a short, non-interactive hint.
+- [Menu](/docs/en/components/menu) — For a list of actions.
+- [Dialog](/docs/en/components/dialog) — For modal content that needs focus trapping.

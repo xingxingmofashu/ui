@@ -1,6 +1,6 @@
 ---
 title: "Menu"
-description: "支持分组、分隔线、图标、快捷键与受控状态的液态玻璃操作菜单。"
+description: "可访问的 React 菜单，采用 Liquid Glass 浮层，支持分组、分隔线、图标、快捷键与受控用法。"
 ---
 
 `Menu` 内部负责触发器、Portal、定位器、玻璃浮层、列表、操作项、分组与分隔线。默认情况下，选中操作项后会关闭菜单并调用对应的 `onSelect`。
@@ -9,19 +9,27 @@ description: "支持分组、分隔线、图标、快捷键与受控状态的液
 
 ## 基础示例
 
+示例组合了分组操作、分隔线、图标、快捷键与禁用项。触发器下方的状态文本使用 `aria-live="polite"`，屏幕阅读器会播报选中的操作。
+
 <Example name="menu/basic" />
 
-## 方位
+## 定位
 
 `side`、`align`、`sideOffset` 与 `alignOffset` 控制浮层位置。空间不足时，菜单会自动翻转或偏移。
 
 <Example name="menu/placement" />
 
-## 受控状态
+## 受控用法
 
 传入 `open` 与 `onOpenChange` 接管显示状态。除非同时从外部控制，触发器仍会切换菜单。
 
 <Example name="menu/controlled" />
+
+## 无障碍
+
+`Menu` 遵循菜单按钮模式：触发器暴露 `aria-haspopup="menu"`、`aria-expanded` 与 `aria-controls`，浮层是菜单，每个操作项都是 `menuitem`。`ArrowDown` 与 `ArrowUp` 在启用的操作项之间移动，typeahead 会匹配操作项标签。`Enter` 或 `Space` 激活高亮项，`Escape` 关闭菜单并把焦点返回触发器。
+
+禁用的操作项仍会被播报，但无法激活。`value` 只作为 React key；当 `label` 不是纯文本时，请传入 `textValue`，让 typeahead 与屏幕阅读器获得可读名称。共享交互模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
@@ -50,11 +58,11 @@ description: "支持分组、分隔线、图标、快捷键与受控状态的液
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `value` | `string` | — | 唯一值，用于 React key 与导航。必填。 |
+| `value` | `string` | — | 该操作项唯一的 React key。必填。 |
 | `label` | `ReactNode` | — | 操作项中的可见内容。必填。 |
-| `textValue` | `string` | — | 键盘导航使用的纯文本标签；字符串标签会自动使用。 |
+| `textValue` | `string` | — | 键盘 typeahead 使用的纯文本标签；字符串标签会自动使用。 |
 | `icon` | `ReactNode` | — | 标签前的装饰性图标。 |
-| `shortcut` | `ReactNode` | — | 标签后的快捷键提示。 |
+| `shortcut` | `ReactNode` | — | 标签后的快捷键提示，仅作视觉展示。 |
 | `onSelect` | `(event) => void` | — | 选中操作项时调用。 |
 | `disabled` | `boolean` | `false` | 禁用该操作项。 |
 | `closeOnClick` | `boolean` | `true` | 选中后是否关闭菜单。 |
@@ -79,12 +87,24 @@ description: "支持分组、分隔线、图标、快捷键与受控状态的液
 | `className` | `string` | — | 合并到分隔线的 Tailwind 类名。 |
 | `ui` | `{ separator?: ClassValue }` | — | 分隔线槽位的类名。 |
 
+`ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `Menu.Root` 属性，包括 `actionsRef`、`handle`、`triggerId` 与 `defaultTriggerId`，都会透传。
+
 | 属性 | 说明 |
 | --- | --- |
+| `data-open` | 菜单打开时存在于浮层上。 |
+| `data-closed` | 浮层关闭或正在关闭时存在。 |
 | `data-highlighted` | 键盘或指针高亮该操作项时存在。 |
 | `data-disabled` | 菜单或操作项禁用时存在。 |
 | `data-popup-open` | 菜单打开时存在于触发器上。 |
 | `data-side` | 浮层的实际方位。 |
+| `data-align` | 实际对齐方式（`start`、`center` 或 `end`）。 |
+| `data-instant` | 需要跳过动画时存在。 |
 | `data-starting-style` | 浮层开始进入动画时存在。 |
 | `data-ending-style` | 浮层正在退出动画时存在。 |
 | `data-slot` | 标记内部结构（`positioner`、`popup`、`glass`、`overlay`、`list`、`item`、`item-icon`、`item-label`、`shortcut`、`group`、`group-label`、`separator`）。 |
+
+## 相关组件
+
+- [Button](/docs/zh/components/button) — 常用的菜单触发器，也是操作项的按钮样式来源。
+- [Popover](/docs/zh/components/popover) — 需要标题、正文与操作区的更丰富浮层。
+- [Select](/docs/zh/components/select) — 从列表中选择一个值，而不是执行操作。

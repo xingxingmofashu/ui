@@ -1,6 +1,6 @@
 ---
 title: "Tooltip"
-description: "当触发器被悬停或聚焦时显示的紧凑液态玻璃提示。"
+description: "可访问的 React 提示，采用 Liquid Glass 浮层，支持可配置延迟、定位与可选箭头。"
 ---
 
 `Tooltip` 内部负责触发器、Portal、定位器、玻璃浮层、方向箭头和内容。它面向鼠标与键盘用户，是补充性的视觉提示，不能替代可见标签或无障碍描述。
@@ -13,13 +13,13 @@ description: "当触发器被悬停或聚焦时显示的紧凑液态玻璃提示
 
 <Example name="tooltip/basic" />
 
-## 方位
+## 定位
 
 `side`、`align`、`sideOffset` 与 `alignOffset` 控制首选位置。空间不足时，提示会自动翻转或偏移。
 
 <Example name="tooltip/placement" />
 
-## 受控状态与箭头
+## 受控用法与箭头
 
 使用 `open` 与 `onOpenChange` 控制显示状态；设置 `arrow={false}` 可隐藏箭头。
 
@@ -27,14 +27,28 @@ description: "当触发器被悬停或聚焦时显示的紧凑液态玻璃提示
 
 ## 延迟
 
-`delay` 控制鼠标停留多久后打开，`closeDelay` 控制关闭延迟，两者都会传给 Base UI 触发器。
+`delay` 控制鼠标停留多久后打开，`closeDelay` 控制关闭延迟，两者都会传给 Base UI 触发器。新手引导需要即时反馈时可设 `delay={0}`；提示出现频繁时则使用更长的延迟。
+
+<Example name="tooltip/delay" />
+
+## 纯图标触发器
+
+Tooltip 常与图标按钮搭配使用。请为触发器提供独立的 `aria-label`；提示文字不能替代按钮的可访问名称。
+
+<Example name="tooltip/icon-only" />
+
+## 无障碍
+
+`Tooltip` 在触发器被悬停或获得键盘焦点时打开，在失焦、按 `Escape` 或点击外部时关闭。浮层仅作视觉提示：它不会被暴露为描述，触屏与屏幕阅读器用户也无法使用 Tooltip。触发器必须通过可见文字、`aria-label` 或 `aria-labelledby` 自己提供完整的可访问名称。
+
+提示内容应简短且仅作补充。不要在 Tooltip 中放置交互控件或独有信息，因为部分用户可能永远不会打开它。标签与焦点规范见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `trigger` | `ReactElement` | — | 打开提示的触发器。必填，必须转发 props 与 ref。 |
-| `content` | `ReactNode` | — | 浮层中的简短提示。必填。 |
+| `children` | `ReactNode` | — | 浮层中的简短提示。必填。 |
 | `arrow` | `boolean` | `true` | 是否渲染方向箭头。 |
 | `delay` | `number` | `600` | 悬停后打开前的延迟，单位毫秒。 |
 | `closeDelay` | `number` | `0` | 关闭前的延迟，单位毫秒。 |
@@ -52,6 +66,8 @@ description: "当触发器被悬停或聚焦时显示的紧凑液态玻璃提示
 | `className` | `string` | — | 合并到浮层的 Tailwind 类名。 |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
+`ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `Tooltip.Root` 属性都会透传。
+
 | 属性 | 说明 |
 | --- | --- |
 | `data-open` | 浮层打开时存在。 |
@@ -63,3 +79,9 @@ description: "当触发器被悬停或聚焦时显示的紧凑液态玻璃提示
 | `data-instant` | 需要跳过动画时存在。 |
 | `data-popup-open` | 提示打开时存在于触发器上。 |
 | `data-slot` | 标记内部结构（`positioner`、`popup`、`glass`、`overlay`、`arrow`、`content`）。 |
+
+## 相关组件
+
+- [Popover](/docs/zh/components/popover) — 需要更丰富的内容、操作与非模态焦点时使用。
+- [Button](/docs/zh/components/button) — 最常见的 Tooltip 触发器。
+- [Menu](/docs/zh/components/menu) — 锚定在触发器旁的操作列表。

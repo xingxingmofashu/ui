@@ -3,6 +3,8 @@ title: "Switch"
 description: "An accessible React switch with a Liquid Glass thumb, label, description, and monochrome theme."
 ---
 
+`Switch` renders a two-state control with a Liquid Glass track and thumb. Use it for settings that take effect immediately; for a single action that stays pressed, use `Toggle`.
+
 ## Basic example
 
 The switch below is the real component and can be clicked directly.
@@ -45,6 +47,12 @@ Switch forwards `name` and `value` and submits the current value through a hidde
 
 <Example name="switch/states" />
 
+## Accessibility
+
+`Switch` renders a button with `role="switch"` and `aria-checked`. The visible `label` names it and `description` is linked with `aria-describedby`; explicit ARIA names take precedence.
+
+`Space` toggles the focused control. The hidden checkbox carries `name` and `value` for form submission, and `readOnly` prevents changes while keeping focus. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
+
 ## API reference
 
 | Prop | Type | Default | Description |
@@ -85,3 +93,9 @@ Switch forwards `name` and `value` and submits the current value through a hidde
 | `data-focused` | Present when the switch is focused. |
 | `data-animating` | Present while the thumb transition is running. |
 | `data-slot` | Marks internal parts (`root`, `container`, `base`, `thumb`, `wrapper`, `label`, `description`) for styling. |
+
+## Related components
+
+- [Checkbox](/docs/en/components/checkbox) — For choices that are confirmed with a form.
+- [Radio Group](/docs/en/components/radio-group) — For one choice among several.
+- [Toggle](/docs/en/components/toggle) — For a button that stays pressed.

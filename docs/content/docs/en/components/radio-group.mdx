@@ -31,6 +31,12 @@ Set `disabled` on the group to disable every option, or on a single item to disa
 
 <Example name="radio-group/disabled" />
 
+## Accessibility
+
+`RadioGroup` exposes a `radiogroup` named by `label` or by `aria-label` / `aria-labelledby`. Each option is a radio with its visible `label` and `description` linked automatically.
+
+Arrow keys move between options and update the selection, and `Space` selects the focused option. The selected value is submitted through a hidden native radio; set `required` when a choice is mandatory. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
+
 ## API reference
 
 **RadioGroup**
@@ -93,3 +99,9 @@ Set `disabled` on the group to disable every option, or on a single item to disa
 | `data-starting-style` | Present when the indicator begins animating in. |
 | `data-ending-style` | Present when the indicator is animating out. |
 | `data-slot` | Marks internal parts (`root`, `header`, `label`, `description`, `items`, `item`, `box`, `glass`, `overlay`, `indicator`, `dot`, `wrapper`, `item-label`, `item-description`) for styling. |
+
+## Related components
+
+- [Checkbox](/docs/en/components/checkbox) — For independent boolean choices.
+- [Select](/docs/en/components/select) — When the option list is long.
+- [Switch](/docs/en/components/switch) — For an immediate on/off setting.

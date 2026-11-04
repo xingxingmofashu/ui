@@ -1,7 +1,9 @@
 ---
 title: "Accordion"
-description: "Accessible, collapsible React accordion panels with a Liquid Glass style and keyboard support."
+description: "An accessible React accordion with collapsible Liquid Glass panels and keyboard support."
 ---
+
+`Accordion` renders a stack of disclosure panels on one glass surface. Each entry is a real heading and button, and the panel height animates when it opens.
 
 ## Basic example
 
@@ -38,6 +40,12 @@ Set `disabled` on the root to disable every trigger, or on a single item to disa
 Closed panels are removed from the DOM by default. Set `keepMounted` to keep them mounted so form state survives, or `hiddenUntilFound` to keep them searchable with the browser's find-in-page.
 
 <Example name="accordion/persistent" />
+
+## Accessibility
+
+Each entry renders a native button inside a real heading (an `<h3>` by default). The trigger exposes `aria-expanded` and `aria-controls`, and the panel is labelled by its trigger. `Enter` or `Space` toggles the focused panel. Disabled triggers stay in the document but are skipped by the Tab key.
+
+Keep the heading text meaningful; the visual style is not a substitute for a real document outline. See the [accessibility guide](/docs/en/guides/accessibility) for shared interaction patterns.
 
 ## API reference
 
@@ -88,3 +96,9 @@ Root `ui` is merged into every item first, then the item's `ui`, then the item's
 | `data-starting-style` | Present when a panel begins animating in. |
 | `data-ending-style` | Present when a panel is animating out. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `content`, `item`, `header`, `trigger`, `title`, `indicator`, `indicator-icon`, `panel`, `panel-content`). |
+
+## Related components
+
+- [Tabs](/docs/en/components/tabs) — For switching between sibling views instead of stacking disclosures.
+- [Toggle](/docs/en/components/toggle) — For a single on/off action without a panel.
+- [Scroll Area](/docs/en/components/scroll-area) — When an expanded panel needs its own scroll container.

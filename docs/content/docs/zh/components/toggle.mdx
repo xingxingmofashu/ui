@@ -37,9 +37,15 @@ description: "可访问的 React 切换按钮，采用 Liquid Glass 选中滑块
 
 <Example name="toggle/disabled" />
 
-## API reference
+## 无障碍
 
-| Prop | Type | Default | Description |
+组件提供 button 角色、`aria-pressed`、键盘激活与禁用行为。`Space` 或 `Enter` 切换当前控件。
+
+存在 `label` 时，它会参与可访问名称；纯图标 Toggle 需要 `aria-label` 或 `aria-labelledby`。命名模式见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `pressed` | `boolean` | — | 受控的按下状态。 |
 | `defaultPressed` | `boolean` | `false` | 非受控时的初始按下状态。 |
@@ -55,12 +61,14 @@ description: "可访问的 React 切换按钮，采用 Liquid Glass 选中滑块
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; thumb?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 | `ref` | `Ref<HTMLButtonElement>` | — | 透传到渲染按钮的 ref。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-pressed` | Toggle 按下时存在。 |
 | `data-disabled` | Toggle 禁用时存在。 |
 | `data-slot` | 标记内部部件（`root`、`glass`、`rim`、`thumb`、`content`、`icon`、`label`），用于样式选择。 |
 
-## 无障碍
+## 相关组件
 
-组件负责 button 角色、`aria-pressed`、键盘激活和禁用行为。传入 `label` 时它会参与可访问名称；纯图标 Toggle 需要 `aria-label` 或 `aria-labelledby`。
+- [Toggle Group](/docs/zh/components/toggle-group) — 多个相关的 Toggle。
+- [Button](/docs/zh/components/button) — 不需要保持按下状态的操作。
+- [Switch](/docs/zh/components/switch) — 立即生效的开关设置。

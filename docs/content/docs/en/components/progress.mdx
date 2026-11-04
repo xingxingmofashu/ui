@@ -37,6 +37,14 @@ Use `format` for `Intl.NumberFormat` options. The formatted value is also used f
 
 <Example name="progress/range" />
 
+## Accessibility
+
+A visible `label` gives the progress bar its accessible name. When no visible label is rendered, provide `aria-label` or `aria-labelledby` yourself.
+
+The default `aria-valuetext` is the formatted percentage. Use `getAriaValueText` when the value needs a more meaningful description, such as “7 of 10 files uploaded”.
+
+An indeterminate bar has no `aria-valuenow`; it is announced as indeterminate progress. See the [accessibility guide](/docs/en/guides/accessibility) for announcement patterns.
+
 ## API reference
 
 | Prop | Type | Default | Description |
@@ -66,14 +74,6 @@ Use `format` for `Intl.NumberFormat` options. The formatted value is also used f
 | `data-progressing` | Present while the progress is progressing. |
 | `data-slot` | Marks internal parts (`root`, `header`, `label`, `value`, `track`, `indicator`, `description`) for styling. |
 
-## Accessibility
-
-A visible `label` gives the progress bar its accessible name. When no visible label is rendered, provide `aria-label` or `aria-labelledby` yourself.
-
-The default `aria-valuetext` is the formatted percentage. Use `getAriaValueText` when the value needs a more meaningful description, such as “7 of 10 files uploaded”.
-
-An indeterminate bar has no `aria-valuenow`; it is announced as indeterminate progress.
-
 ## Theming
 
 The bar stays neutral by design. Override the component-scoped tokens from `src/theme/progress.ts` to change the material:
@@ -89,3 +89,9 @@ The bar stays neutral by design. Override the component-scoped tokens from `src/
 ```
 
 `style` is intentionally not supported: the glass theme owns the track surface. Use `className` for layout and tune the `--ui-progress-*` tokens for theme changes.
+
+## Related components
+
+- [Toast](/docs/en/components/toast) — For transient status messages.
+- [Slider](/docs/en/components/slider) — For an interactive numeric value.
+- [Scroll Area](/docs/en/components/scroll-area) — For scroll position rather than task completion.

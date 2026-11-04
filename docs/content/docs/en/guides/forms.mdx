@@ -4,10 +4,10 @@ description: "Submit values, validate fields, and compose accessible React forms
 ---
 
 The form controls are designed to work with native `<form>` behavior first.
-`Input` renders a native `<input>`, while `Checkbox`, `Switch`, `Slider`, and
-`RadioGroup` render an internal native input for submission. That means
-`FormData`, server actions, and progressive-enhancement patterns keep working
-without a custom state container.
+`Input` renders a native `<input>`, while `Checkbox`, `Switch`, `Select`,
+`Slider`, and `RadioGroup` render an internal native input for submission. That
+means `FormData`, server actions, and progressive-enhancement patterns keep
+working without a custom state container.
 
 <Example name="guides/form" />
 
@@ -18,11 +18,15 @@ without a custom state container.
 | `Input` | Native input named by `name` | Empty string |
 | `Checkbox` | Hidden checkbox with `name` and `value` | `null` when unchecked |
 | `Switch` | Hidden checkbox with `name` and `value` | `null` when off |
+| `Select` | Hidden native input named by `name` with the selected value | `null` when nothing is selected |
 | `Slider` | Hidden `input[type="range"]` named by `name` | Defaults to the current value |
 | `RadioGroup` | Hidden radio named by `name` with the selected item value | `null` when nothing is selected |
 
 `RadioGroup` submits the selected item's `value`; set `required` when a choice
-is mandatory.
+is mandatory. `Select` behaves the same way: `name` enables submission,
+`required` participates in native validation, `form` links the hidden input to
+a form elsewhere, and `onValueChange` receives `null` when the selection is
+cleared.
 
 `Button` forwards `type` to its root button element. Set `type="submit"` when it should
 submit the surrounding form.
@@ -30,6 +34,15 @@ submit the surrounding form.
 ```tsx
 <form action={savePreferences}>
   <Input label="Email" name="email" type="email" required />
+  <Select
+    label="Plan"
+    name="plan"
+    required
+    items={[
+      { value: "starter", label: "Starter" },
+      { value: "team", label: "Team" },
+    ]}
+  />
   <Switch label="Notifications" name="notifications" value="enabled" />
   <Button type="submit" label="Save" />
 </form>
@@ -53,6 +66,8 @@ Use the built-in label props instead of rendering separate text:
 
 - `Input` renders a real `<label>` associated with the input.
 - `Checkbox` and `Switch` use their visible label as the accessible name.
+- `Select` uses `label` to name its trigger; without a visible label, use
+  `aria-label` or `aria-labelledby`.
 - `RadioGroup` uses its `label` prop to name the group.
 - `Slider` does not render a visible label, so point `aria-labelledby` at one.
 
@@ -99,7 +114,9 @@ const [email, setEmail] = useState("");
 
 Do not pass `value` without a corresponding change handler. For `Slider`,
 `onValueChange` receives the current number or array; use `onValueCommitted`
-when you only need the settled value.
+when you only need the settled value. `Select` uses `value` with
+`onValueChange`, and the callback receives `null` when the selection is
+cleared.
 
 ## Validation
 
@@ -173,6 +190,8 @@ supply the fields.
 - Using `value` without `onValueChange` freezes a controlled field.
 - Reading `FormData` before the submit event sees stale or empty values.
 - A `Switch` that is off submits `null`, not `"false"`. Normalize it explicitly.
+- A cleared `Select` calls `onValueChange` with `null`; handle it before
+  treating the value as a string.
 - A `Slider` needs an accessible name; `aria-labelledby` is usually the
   cleanest option when the label is rendered outside the component.
 - Do not wrap controls in a `<label>` yourself; the components already render
@@ -183,6 +202,7 @@ supply the fields.
 - [Input](/docs/en/components/input)
 - [Checkbox](/docs/en/components/checkbox)
 - [Switch](/docs/en/components/switch)
+- [Select](/docs/en/components/select)
 - [Slider](/docs/en/components/slider)
 - [Radio Group](/docs/en/components/radio-group)
 - [Button](/docs/en/components/button)

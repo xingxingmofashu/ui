@@ -1,6 +1,6 @@
 ---
 title: "Drawer"
-description: "A React drawer that slides in from any edge with a Liquid Glass surface and swipe dismissal."
+description: "An accessible React drawer that slides in from any edge with a Liquid Glass surface and swipe dismissal."
 ---
 
 `Drawer` is an edge-aligned panel with swipe dismissal. It renders the portal, backdrop, popup, title, description, optional body, and a custom action area internally, with optional snap points.
@@ -36,6 +36,12 @@ On touch screens, drag the drawer in the direction set by `direction` to dismiss
 `disablePointerDismissal` prevents the backdrop from closing the drawer while Escape and the action buttons still work. Use it for flows that may contain unsaved work.
 
 <Example name="drawer/locked" />
+
+## Accessibility
+
+`Drawer` uses the same dialog semantics as `Dialog`: focus moves into the panel, stays trapped while it is open, and returns to the trigger when it closes. `title` names the panel and `description` describes it.
+
+`Escape`, the backdrop, and the swipe gesture close it; use `disablePointerDismissal` and a visible cancel action when dismissal could lose work. Keep swipe gestures away from horizontally scrollable content. See the [accessibility guide](/docs/en/guides/accessibility) for overlay focus rules.
 
 ## API reference
 
@@ -78,3 +84,9 @@ On touch screens, drag the drawer in the direction set by `direction` to dismiss
 | `data-swipe-direction` | Indicates the swipe direction (`up`, `down`, `left`, or `right`). |
 | `data-swiping` | Present while the drawer is being swiped. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
+
+## Related components
+
+- [Dialog](/docs/en/components/dialog) — For centered modal content.
+- [Alert Dialog](/docs/en/components/alert-dialog) — For explicit destructive decisions.
+- [Popover](/docs/en/components/popover) — For non-modal contextual panels.

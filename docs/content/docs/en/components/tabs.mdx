@@ -55,6 +55,12 @@ Tabs are named by their `label`. When a tab renders only an icon, give it an `ar
 
 <Example name="tabs/icon-only" />
 
+## Accessibility
+
+`Tabs` renders a `tablist` of `tab` buttons and linked `tabpanel`s. The active tab exposes `aria-selected`, and each panel is connected with `aria-controls` and `aria-labelledby`.
+
+Arrow keys move focus along the orientation, `Home` and `End` jump to the ends, and `Enter` or `Space` activates the focused tab when `activateOnFocus` is false. Name the tab list with `aria-label` or `aria-labelledby`; icon-only tabs need their own name. See the [accessibility guide](/docs/en/guides/accessibility) for keyboard details.
+
 ## API reference
 
 **Tabs**
@@ -108,3 +114,9 @@ Root `ui` is merged into every tab and panel first, then the item's `ui`. The it
 | `data-starting-style` | Present when a panel begins animating in. |
 | `data-ending-style` | Present when a panel is animating out. |
 | `data-slot` | Marks internal parts (`root`, `list`, `glass`, `overlay`, `indicator`, `tab`, `icon`, `label`, `panels`, `panel`, `panel-content`). |
+
+## Related components
+
+- [Accordion](/docs/en/components/accordion) — For stacked disclosures without a tab list.
+- [Toggle Group](/docs/en/components/toggle-group) — For a compact view switch that is not content navigation.
+- [Scroll Area](/docs/en/components/scroll-area) — When a panel needs its own scroll container.

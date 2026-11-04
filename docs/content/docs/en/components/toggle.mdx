@@ -37,6 +37,12 @@ Omit `label` to render a square icon button. Provide an accessible name with `ar
 
 <Example name="toggle/disabled" />
 
+## Accessibility
+
+The component supplies the button role, `aria-pressed`, keyboard activation, and disabled behavior. `Space` or `Enter` toggles the focused control.
+
+When `label` is present it contributes to the accessible name; icon-only toggles need `aria-label` or `aria-labelledby`. See the [accessibility guide](/docs/en/guides/accessibility) for naming patterns.
+
 ## API reference
 
 | Prop | Type | Default | Description |
@@ -61,6 +67,8 @@ Omit `label` to render a square icon button. Provide an accessible name with `ar
 | `data-disabled` | Present when the toggle is disabled. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `rim`, `thumb`, `content`, `icon`, `label`) for styling. |
 
-## Accessibility
+## Related components
 
-The component supplies the button role, `aria-pressed`, keyboard activation, and disabled behavior. When `label` is present it contributes to the accessible name; icon-only toggles need `aria-label` or `aria-labelledby`.
+- [Toggle Group](/docs/en/components/toggle-group) — For several related toggles.
+- [Button](/docs/en/components/button) — For an action that does not stay pressed.
+- [Switch](/docs/en/components/switch) — For an immediate on/off setting.

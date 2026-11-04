@@ -1,6 +1,6 @@
 ---
 title: "Dialog"
-description: "A general-purpose React dialog with a Liquid Glass surface and a custom action area."
+description: "An accessible React dialog with a Liquid Glass surface and a custom action area."
 ---
 
 `Dialog` is a general-purpose modal. It renders the portal, backdrop, centered popup, title, description, optional body, and a custom action area internally.
@@ -24,6 +24,12 @@ The component is typically used in controlled mode: `open` controls visibility a
 `disablePointerDismissal` prevents the backdrop from closing the dialog while Escape still works. Use it for flows that may contain unsaved work.
 
 <Example name="dialog/dismissal" />
+
+## Accessibility
+
+`Dialog` renders a modal `dialog` named by `title` and described by `description`. Focus moves into the popup, stays trapped while it is open, and returns to the trigger when it closes.
+
+`Escape` and backdrop clicks close it unless `disablePointerDismissal` is set; provide a visible close action in `footer`. `modal={false}` relaxes focus trapping and scroll locking. See the [accessibility guide](/docs/en/guides/accessibility) for overlay focus rules.
 
 ## API reference
 
@@ -55,3 +61,9 @@ The component is typically used in controlled mode: `open` controls visibility a
 | `data-nested` | Present when the dialog is nested within another dialog. |
 | `data-nested-dialog-open` | Present when another dialog is open inside this one. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
+
+## Related components
+
+- [Alert Dialog](/docs/en/components/alert-dialog) — For destructive confirmations that must not dismiss on backdrop press.
+- [Drawer](/docs/en/components/drawer) — For edge-aligned panels and mobile layouts.
+- [Popover](/docs/en/components/popover) — For compact, non-modal content.

@@ -1,6 +1,6 @@
 ---
 title: "Scroll Area"
-description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动条与玻璃面板。"
+description: "可访问的 React 滚动区域，使用原生滚动，带 Liquid Glass 滚动条与玻璃面板。"
 ---
 
 `ScrollArea` 在内部渲染玻璃面板、原生滚动视口、内容容器与自定义滚动条。
@@ -35,9 +35,15 @@ description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动
 
 <Example name="scroll-area/edge-threshold" />
 
-## API reference
+## 无障碍
 
-| Prop | Type | Default | Description |
+viewport 只在可滚动时可聚焦，与原生滚动容器行为一致。通过 `aria-label` 或 `aria-labelledby` 为区域命名，并用 `aria-describedby` 提供额外说明。
+
+指针与键盘滚动保持原生行为，自定义滚动条仅是装饰，对辅助技术隐藏。区域命名见[可访问性指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | — | 渲染在视口内的可滚动内容。 |
 | `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | 要渲染的滚动条方向。 |
@@ -50,7 +56,7 @@ description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动
 | `className` | `string` | — | 合并到根节点的 Tailwind 类；在这里设置高度。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; viewport?: ClassValue; content?: ClassValue; scrollbar?: ClassValue; thumb?: ClassValue; corner?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
 | `data-orientation` | 表示启用的滚动条方向（`horizontal`、`vertical` 或 `both`）。 |
 | `data-scrolling` | 用户正在区域内滚动时存在。 |
@@ -63,6 +69,8 @@ description: "使用原生滚动的 React 滚动区域，带 Liquid Glass 滚动
 | `data-hovering` | 指针位于区域上方时存在于滚动条上。 |
 | `data-slot` | 标记内部部件（`root`、`glass`、`overlay`、`viewport`、`content`、`scrollbar`、`thumb`、`corner`），用于样式选择。 |
 
-## 无障碍
+## 相关组件
 
-只有视口可以滚动时它才会进入焦点顺序，这与原生滚动容器一致。使用 `aria-label` 或 `aria-labelledby` 为区域命名，使用 `aria-describedby` 补充说明。指针与键盘滚动保持原生行为，自定义滚动条仅作装饰，不暴露给辅助技术。
+- [Card](/docs/zh/components/card) — 内容可完整容纳时的静态面板。
+- [Tabs](/docs/zh/components/tabs) — 在不同视图之间切换。
+- [Drawer](/docs/zh/components/drawer) — 自带滚动的贴边面板。
