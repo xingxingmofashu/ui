@@ -37,9 +37,9 @@ const features: Feature[] = [
   },
   {
     icon: Sparkles,
-    title: "18 accessible components",
+    title: "22 components",
     description:
-      "Elements, forms, overlays, and feedback with roles, keyboard support, and focus management.",
+      "Elements, forms, overlays, and feedback behind one consistent API.",
   },
   {
     icon: Palette,
@@ -186,7 +186,7 @@ export default function App() {
               >
                 @xingxingmofashu/ui
               </a>
-              . Build beautiful, accessible, and performant React applications
+              . Build polished, performant React applications
               in minutes, not hours.
             </p>
 

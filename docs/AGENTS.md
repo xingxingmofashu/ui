@@ -59,12 +59,8 @@ both locales. Do not translate `Liquid Glass` as 液态玻璃.
 Frontmatter descriptions follow one sentence and mention React and Liquid
 Glass:
 
-- English: `An accessible React <component> with a Liquid Glass ...` for
-  interactive components, or `A React <component> with a Liquid Glass ...` for
-  display-only components.
-- Chinese: `可访问的 React <组件>，采用 Liquid Glass ...` for interactive
-  components, or `一个 React <组件>，采用 Liquid Glass ...` for display-only
-  components.
+- English: `A React <component> with a Liquid Glass ...`.
+- Chinese: `一个 React <组件>，采用 Liquid Glass ...`.
 
 The `Accessibility` section is required. It must cover, as applicable:
 

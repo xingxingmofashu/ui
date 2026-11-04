@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-description: "@xingxingmofashu/ui is a collection of accessible, typed React components with a Liquid Glass visual style for React 19 and Tailwind CSS 4."
+description: "@xingxingmofashu/ui is a collection of typed React components with a Liquid Glass visual style for React 19 and Tailwind CSS 4."
 ---
 
 <Callout type="info">
@@ -11,7 +11,7 @@ description: "@xingxingmofashu/ui is a collection of accessible, typed React com
 
 `@xingxingmofashu/ui` is a React component library for building interfaces with a CSS-only Liquid Glass visual style. It ships twenty-two components across elements, forms, overlays, and feedback, and works in any React 19 application with Tailwind CSS 4.
 
-Glass surfaces, rim highlights, inner shadows, and pressed states are drawn entirely with CSS. Interactive behavior and accessibility are built into the components, while Tailwind Variants keeps the styling typed and composable.
+Glass surfaces, rim highlights, inner shadows, and pressed states are drawn entirely with CSS. Interactive behavior is built into the components, while Tailwind Variants keeps the styling typed and composable.
 
 If you are building a React project with Tailwind CSS and want a distinctive monochrome Liquid Glass aesthetic, `@xingxingmofashu/ui` is a good default choice. It provides high-level components such as Button, Card, Dialog, Drawer, and Toast while still allowing customization through `className`, `ui` slots keyed by `data-slot`, and the shared `--ui-*` tokens.
 
@@ -25,8 +25,8 @@ If you are building a React project with Tailwind CSS and want a distinctive mon
     description="A monochrome Liquid Glass material that stays consistent across light and dark themes."
   />
   <Card
-    title="Accessible by default"
-    description="The components ship with WAI-ARIA semantics, keyboard navigation, focus management, and screen reader support."
+    title="Typed slots"
+    description="Slot names and sizes derive from the Tailwind Variants recipe, so overrides stay checked."
   />
   <Card
     title="Focused surface area"
@@ -36,7 +36,7 @@ If you are building a React project with Tailwind CSS and want a distinctive mon
 
 ## Core technologies
 
-`@xingxingmofashu/ui` is built on two foundations: Tailwind CSS for styling and Tailwind Variants for typed variants. Accessible interaction is built into each component.
+`@xingxingmofashu/ui` is built on two foundations: Tailwind CSS for styling and Tailwind Variants for typed variants. Interactive behavior is built into each component.
 
 <Tabs items={["Tailwind CSS", "Tailwind Variants"]}>
   <Tab value="Tailwind CSS">
@@ -59,9 +59,6 @@ If you are building a React project with Tailwind CSS and want a distinctive mon
   </Accordion>
   <Accordion title="Light and dark themes">
     Tokens switch through `.light` / `.dark` or `data-theme="light"` / `data-theme="dark"`. A nested light subtree can switch back even inside a dark application.
-  </Accordion>
-  <Accordion title="Accessible interactions">
-    Interactive components include keyboard support, focus management, and ARIA state. Components expose `aria-pressed`, `data-checked`, and other state attributes for styling and testing.
   </Accordion>
   <Accordion title="Typed APIs">
     Component props, size variants, controlled state, and event details are typed. Deep imports are available for each component, composable, and theme recipe.

@@ -1,6 +1,6 @@
 ---
 title: "介绍"
-description: "@xingxingmofashu/ui 是一套具有 Liquid Glass 视觉风格的可访问、类型化 React 组件库，面向 React 19 与 Tailwind CSS 4。"
+description: "@xingxingmofashu/ui 是一套采用 Liquid Glass 视觉风格的类型化 React 组件库，面向 React 19 与 Tailwind CSS 4。"
 ---
 
 <Callout type="info">
@@ -11,7 +11,7 @@ description: "@xingxingmofashu/ui 是一套具有 Liquid Glass 视觉风格的�
 
 `@xingxingmofashu/ui` 是一套采用纯 CSS 实现 Liquid Glass 视觉风格的 React 组件库。它提供二十二个组件，覆盖基础元素、表单控件、浮层与反馈，可运行在任何使用 Tailwind CSS 4 的 React 19 应用中。
 
-玻璃表面、边缘高光、内阴影与按下滑块全部由 CSS 绘制。交互行为与无障碍能力内置于组件，样式则由 Tailwind Variants 保持类型化与可组合。
+玻璃表面、边缘高光、内阴影与按下滑块全部由 CSS 绘制。交互行为内置于组件，样式则由 Tailwind Variants 保持类型化与可组合。
 
 如果你正在使用 Tailwind CSS 构建 React 项目，并且想要一套有辨识度的黑白 Liquid Glass 视觉，`@xingxingmofashu/ui` 是一个合适的选择。它提供 Button、Card、Dialog、Drawer、Toast 等高层组件，同时允许通过 `className`、按 `data-slot` 组织的 `ui` 槽位与共享的 `--ui-*` token 定制。
 
@@ -25,8 +25,8 @@ description: "@xingxingmofashu/ui 是一套具有 Liquid Glass 视觉风格的�
     description="黑白 Liquid Glass 材质在明暗主题下保持一致。"
   />
   <Card
-    title="默认可访问"
-    description="组件内置 WAI-ARIA 语义、键盘导航、焦点管理与屏幕阅读器支持。"
+    title="类型化槽位"
+    description="槽位名称与尺寸从 Tailwind Variants 配方推导，覆盖项保持类型检查。"
   />
   <Card
     title="聚焦的组件范围"
@@ -36,7 +36,7 @@ description: "@xingxingmofashu/ui 是一套具有 Liquid Glass 视觉风格的�
 
 ## 核心技术
 
-`@xingxingmofashu/ui` 建立在两块基础之上：Tailwind CSS 负责样式，Tailwind Variants 负责类型化变体。可访问的交互能力内置于每个组件。
+`@xingxingmofashu/ui` 建立在两块基础之上：Tailwind CSS 负责样式，Tailwind Variants 负责类型化变体。交互行为内置于每个组件。
 
 <Tabs items={["Tailwind CSS", "Tailwind Variants"]}>
   <Tab value="Tailwind CSS">
@@ -59,9 +59,6 @@ description: "@xingxingmofashu/ui 是一套具有 Liquid Glass 视觉风格的�
   </Accordion>
   <Accordion title="明暗主题">
     Token 通过 `.light` / `.dark` 或 `data-theme="light"` / `data-theme="dark"` 切换。嵌套的 light 子树可以在深色应用中切回浅色。
-  </Accordion>
-  <Accordion title="可访问的交互">
-    交互组件具备键盘支持、焦点管理与 ARIA 状态。组件会暴露 `aria-pressed`、`data-checked` 等状态属性，便于样式与测试。
   </Accordion>
   <Accordion title="类型化 API">
     组件属性、尺寸变体、受控状态与事件详情都有类型。每个组件、composable 与主题配方都支持深层导入。

@@ -4,7 +4,7 @@
     "badge": "React 19 / Tailwind CSS 4",
     "titleLine1": "Glass is a material.",
     "titleLine2": "Build with it.",
-    "description": "Twenty-two accessible React components built from one CSS-only Liquid Glass surface. No textures, no canvas, no extra runtime.",
+    "description": "Twenty-two React components built from one CSS-only Liquid Glass surface. No textures, no canvas, no extra runtime.",
     "readDocs": "Read the docs",
     "openPlayground": "Open the playground",
     "meta": [
@@ -131,8 +131,8 @@
       },
       {
         "number": "03",
-        "title": "Accessible by default.",
-        "description": "WAI-ARIA semantics, keyboard navigation, and focus management ship with every interactive component."
+        "title": "Typed slots.",
+        "description": "Slot names and sizes derive from the Tailwind Variants recipe, so overrides stay checked."
       },
       {
         "number": "04",

@@ -14,7 +14,7 @@
 
 </div>
 
-`@xingxingmofashu/ui` is a collection of accessible, typed [React](https://react.dev)
+`@xingxingmofashu/ui` is a collection of typed [React](https://react.dev)
 components with a Liquid Glass visual style, built with
 [Tailwind CSS](https://tailwindcss.com) and
 [Tailwind Variants](https://www.tailwind-variants.org). Glass surfaces, rim

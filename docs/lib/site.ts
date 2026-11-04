@@ -8,9 +8,9 @@ const pathPrefix =
 export const siteUrl = `${siteOrigin}${pathPrefix}`;
 export const siteName = "@xingxingmofashu/ui";
 export const siteDescription =
-  "Accessible React components with a Liquid Glass visual style, built with Tailwind CSS 4 and Tailwind Variants.";
+  "React components with a CSS-only Liquid Glass visual style, built with Tailwind CSS 4 and Tailwind Variants.";
 export const siteDescriptionZh =
-  "@xingxingmofashu/ui 是一套具有 Liquid Glass 视觉风格的可访问 React 组件库，使用 Tailwind CSS 4 与 Tailwind Variants 构建。";
+  "@xingxingmofashu/ui 是一套采用纯 CSS Liquid Glass 视觉风格的 React 组件库，使用 Tailwind CSS 4 与 Tailwind Variants 构建。";
 export const githubUrl = "https://github.com/xingxingmofashu/ui";
 export const npmUrl = "https://www.npmjs.com/package/@xingxingmofashu/ui";
 
