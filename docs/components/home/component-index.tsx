@@ -23,6 +23,7 @@ const groups = [
     label: "Form",
     items: [
       ["Checkbox", "checkbox"],
+      ["Checkbox Group", "checkbox-group"],
       ["Input", "input"],
       ["Radio Group", "radio-group"],
       ["Select", "select"],

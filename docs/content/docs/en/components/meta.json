@@ -12,6 +12,7 @@
     "toggle-group",
     "---Form---",
     "checkbox",
+    "checkbox-group",
     "input",
     "radio-group",
     "select",

@@ -17,6 +17,7 @@ need to make in your application.
 | --- | --- |
 | `Input` | `label`, or `aria-label` / `aria-labelledby` |
 | `Checkbox` | `label`, or `aria-label` / `aria-labelledby` |
+| `CheckboxGroup` | `label`, or `aria-label` / `aria-labelledby`; each item has its own `label` |
 | `Switch` | `label`, or `aria-label` / `aria-labelledby` |
 | `RadioGroup` | `label`, or `aria-label` / `aria-labelledby` |
 | `Select` | `label`, or `aria-label` / `aria-labelledby` |
@@ -54,7 +55,8 @@ For a range slider, pass `getAriaLabel` so each thumb gets a distinct name:
 <Example name="switch/basic" showCode={false} />
 
 `Switch` and `Checkbox` use the visible label as the accessible name and link
-the description through `aria-describedby`. Decorative icons inside `Button`,
+the description through `aria-describedby`. `CheckboxGroup` names the group and
+each option separately, and `Tab` moves between its checkboxes. Decorative icons inside `Button`,
 `Input`, and other components are marked `aria-hidden="true"`.
 
 ## Keyboard behavior
@@ -151,6 +153,7 @@ themes.
 - Read the form with a screen reader: names, descriptions, and errors should be
   announced once, in context.
 - Check that a `Switch` and `Checkbox` announce their checked state.
+- Confirm a `CheckboxGroup` announces its name and each option once.
 - Verify a range slider announces both thumb values and their names.
 - Open a `Menu` and a `Select` with the keyboard and confirm arrow keys,
   typeahead, and `Escape` behave as expected.
@@ -167,6 +170,7 @@ structure, and content still belong to your application.
 
 - [Button](/docs/en/components/button)
 - [Checkbox](/docs/en/components/checkbox)
+- [Checkbox Group](/docs/en/components/checkbox-group)
 - [Input](/docs/en/components/input)
 - [Slider](/docs/en/components/slider)
 - [Switch](/docs/en/components/switch)

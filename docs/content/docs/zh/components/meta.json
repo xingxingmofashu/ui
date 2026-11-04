@@ -12,6 +12,7 @@
     "toggle-group",
     "---表单---",
     "checkbox",
+    "checkbox-group",
     "input",
     "radio-group",
     "select",

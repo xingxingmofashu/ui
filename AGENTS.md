@@ -38,6 +38,7 @@ same pnpm workspace.
 | Button | `src/components/button.tsx` | `src/theme/button.ts` | `test/components/button.test.tsx` |
 | Card | `src/components/card.tsx` | `src/theme/card.ts` | `test/components/card.test.tsx` |
 | Checkbox | `src/components/checkbox.tsx` | `src/theme/checkbox.ts` | `test/components/checkbox.test.tsx` |
+| Checkbox Group | `src/components/checkbox-group.tsx` | `src/theme/checkbox-group.ts` | `test/components/checkbox-group.test.tsx` |
 | Dialog | `src/components/dialog.tsx` | `src/theme/dialog.ts` | `test/components/dialog.test.tsx` |
 | Drawer | `src/components/drawer.tsx` | `src/theme/drawer.ts` | `test/components/drawer.test.tsx` |
 | Input | `src/components/input.tsx` | `src/theme/input.ts` | `test/components/input.test.tsx` |

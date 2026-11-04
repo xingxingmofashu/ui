@@ -6,6 +6,7 @@ import { useState, type FormEvent } from "react";
 import {
   Button,
   Checkbox,
+  CheckboxGroup,
   Input,
   Slider,
   Switch,
@@ -20,10 +21,11 @@ export default function GuideFormDemo() {
     const email = String(data.get("email") ?? "unknown");
     const volume = String(data.get("volume") ?? "0");
     const digest = data.get("digest") === null ? "off" : "on";
+    const channels = data.getAll("channels").map(String);
     const notifications = data.get("notifications") === null ? "off" : "on";
 
     setStatus(
-      `Saved ${email}: volume ${volume}%, digest ${digest}, notifications ${notifications}.`,
+      `Saved ${email}: volume ${volume}%, channels ${channels.join(", ") || "none"}, digest ${digest}, notifications ${notifications}.`,
     );
   }
 
@@ -46,6 +48,17 @@ export default function GuideFormDemo() {
         value="weekly"
         label="Weekly digest"
         description="Product notes and release highlights, once a week."
+      />
+
+      <CheckboxGroup
+        label="Channels"
+        description="Choose where release notes are sent."
+        name="channels"
+        defaultValue={["comments"]}
+        items={[
+          { value: "comments", label: "Comments" },
+          { value: "releases", label: "Releases" },
+        ]}
       />
 
       <Switch

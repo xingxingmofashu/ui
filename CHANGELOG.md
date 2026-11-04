@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Add the Checkbox Group component with shared array state, group labels and
+  descriptions, parent and nested parent checkboxes, five sizes, read-only
+  state, and native form submission.
+
 ## 0.1.8 - 2026-11-04
 
 ### Added

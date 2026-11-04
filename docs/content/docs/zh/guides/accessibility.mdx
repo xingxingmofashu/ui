@@ -14,6 +14,7 @@ description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实�
 | --- | --- |
 | `Input` | `label`，或 `aria-label` / `aria-labelledby` |
 | `Checkbox` | `label`，或 `aria-label` / `aria-labelledby` |
+| `CheckboxGroup` | `label`，或 `aria-label` / `aria-labelledby`；每个选项使用自己的 `label` |
 | `Switch` | `label`，或 `aria-label` / `aria-labelledby` |
 | `RadioGroup` | `label`，或 `aria-label` / `aria-labelledby` |
 | `Select` | `label`，或 `aria-label` / `aria-labelledby` |
@@ -50,7 +51,8 @@ description: "Liquid Glass 组件的标签、键盘行为、焦点管理与实�
 <Example name="switch/basic" showCode={false} />
 
 `Switch` 与 `Checkbox` 使用可见标签作为可访问名称，并通过
-`aria-describedby` 关联描述。`Button`、`Input` 等组件内部的装饰性图标都标记了
+`aria-describedby` 关联描述。`CheckboxGroup` 分别为分组与每个选项命名；
+`Tab` 在其复选框之间移动。`Button`、`Input` 等组件内部的装饰性图标都标记了
 `aria-hidden="true"`。
 
 ## 键盘行为
@@ -135,6 +137,7 @@ typeahead 匹配标签，`Escape` 把焦点返回触发器。
 - 关闭 Dialog 或 Drawer 后，确认焦点返回触发器。
 - 用屏幕阅读器阅读表单：名称、描述与错误应只播报一次，并且上下文正确。
 - 确认 `Switch` 与 `Checkbox` 会播报选中状态。
+- 确认 `CheckboxGroup` 会分别播报分组名称与每个选项。
 - 确认区间滑块会播报两个 thumb 的值与名称。
 - 用键盘打开 `Menu` 与 `Select`，确认方向键、typeahead 与 `Escape` 行为正确。
 - 聚焦纯图标 `Tooltip` 触发器，确认其可访问名称。
@@ -149,6 +152,7 @@ typeahead 匹配标签，`Escape` 把焦点返回触发器。
 
 - [Button](/docs/zh/components/button)
 - [Checkbox](/docs/zh/components/checkbox)
+- [Checkbox Group](/docs/zh/components/checkbox-group)
 - [Input](/docs/zh/components/input)
 - [Slider](/docs/zh/components/slider)
 - [Switch](/docs/zh/components/switch)

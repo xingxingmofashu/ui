@@ -7,6 +7,11 @@ export { AlertDialog, type AlertDialogProps } from "./components/alert-dialog";
 export { Button, type ButtonProps } from "./components/button";
 export { Card, type CardProps } from "./components/card";
 export { Checkbox, type CheckboxProps } from "./components/checkbox";
+export {
+  CheckboxGroup,
+  type CheckboxGroupItemProps,
+  type CheckboxGroupProps,
+} from "./components/checkbox-group";
 export { Dialog, type DialogProps } from "./components/dialog";
 export { Drawer, type DrawerProps } from "./components/drawer";
 export { Input, type InputProps } from "./components/input";

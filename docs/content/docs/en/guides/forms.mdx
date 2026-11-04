@@ -4,10 +4,10 @@ description: "Submit values, validate fields, and compose accessible React forms
 ---
 
 The form controls are designed to work with native `<form>` behavior first.
-`Input` renders a native `<input>`, while `Checkbox`, `Switch`, `Select`,
-`Slider`, and `RadioGroup` render an internal native input for submission. That
-means `FormData`, server actions, and progressive-enhancement patterns keep
-working without a custom state container.
+`Input` renders a native `<input>`, while `Checkbox`, `CheckboxGroup`, `Switch`,
+`Select`, `Slider`, and `RadioGroup` render an internal native input for
+submission. That means `FormData`, server actions, and progressive-enhancement
+patterns keep working without a custom state container.
 
 <Example name="guides/form" />
 
@@ -17,6 +17,7 @@ working without a custom state container.
 | --- | --- | --- |
 | `Input` | Native input named by `name` | Empty string |
 | `Checkbox` | Hidden checkbox with `name` and `value` | `null` when unchecked |
+| `CheckboxGroup` | One hidden checkbox per checked value, all sharing `name` | No entries when nothing is checked |
 | `Switch` | Hidden checkbox with `name` and `value` | `null` when off |
 | `Select` | Hidden native input named by `name` with the selected value | `null` when nothing is selected |
 | `Slider` | Hidden `input[type="range"]` named by `name` | Defaults to the current value |
@@ -27,6 +28,10 @@ is mandatory. `Select` behaves the same way: `name` enables submission,
 `required` participates in native validation, `form` links the hidden input to
 a form elsewhere, and `onValueChange` receives `null` when the selection is
 cleared.
+
+`CheckboxGroup` submits one entry per checked value under the same `name`, so
+read the field with `FormData.getAll(name)`. Groups have no native `required`;
+validate that at least one value is present in your submit handler.
 
 `Button` forwards `type` to its root button element. Set `type="submit"` when it should
 submit the surrounding form.
@@ -43,6 +48,14 @@ submit the surrounding form.
       { value: "team", label: "Team" },
     ]}
   />
+  <CheckboxGroup
+    label="Channels"
+    name="channels"
+    items={[
+      { value: "comments", label: "Comments" },
+      { value: "releases", label: "Releases" },
+    ]}
+  />
   <Switch label="Notifications" name="notifications" value="enabled" />
   <Button type="submit" label="Save" />
 </form>
@@ -55,6 +68,7 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const email = String(data.get("email") ?? "");
+  const channels = data.getAll("channels").map(String);
   const notifications = data.get("notifications") !== null;
   // Send the values to your API or update local state.
 }
@@ -66,6 +80,8 @@ Use the built-in label props instead of rendering separate text:
 
 - `Input` renders a real `<label>` associated with the input.
 - `Checkbox` and `Switch` use their visible label as the accessible name.
+- `CheckboxGroup` names the group with `label` and each option with its own
+  `label`.
 - `Select` uses `label` to name its trigger; without a visible label, use
   `aria-label` or `aria-labelledby`.
 - `RadioGroup` uses its `label` prop to name the group.
@@ -116,7 +132,8 @@ Do not pass `value` without a corresponding change handler. For `Slider`,
 `onValueChange` receives the current number or array; use `onValueCommitted`
 when you only need the settled value. `Select` uses `value` with
 `onValueChange`, and the callback receives `null` when the selection is
-cleared.
+cleared. `CheckboxGroup` uses `value` with `onValueChange`, and the callback
+receives the next array of checked values.
 
 ## Validation
 
@@ -192,6 +209,8 @@ supply the fields.
 - A `Switch` that is off submits `null`, not `"false"`. Normalize it explicitly.
 - A cleared `Select` calls `onValueChange` with `null`; handle it before
   treating the value as a string.
+- A `CheckboxGroup` submits repeated fields, so use `getAll` instead of `get`.
+- A `CheckboxGroup` has no native `required`; validate the array length.
 - A `Slider` needs an accessible name; `aria-labelledby` is usually the
   cleanest option when the label is rendered outside the component.
 - Do not wrap controls in a `<label>` yourself; the components already render
@@ -201,6 +220,7 @@ supply the fields.
 
 - [Input](/docs/en/components/input)
 - [Checkbox](/docs/en/components/checkbox)
+- [Checkbox Group](/docs/en/components/checkbox-group)
 - [Switch](/docs/en/components/switch)
 - [Select](/docs/en/components/select)
 - [Slider](/docs/en/components/slider)
