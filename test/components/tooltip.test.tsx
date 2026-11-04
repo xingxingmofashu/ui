@@ -105,6 +105,21 @@ describe("Tooltip", () => {
       expect(trigger).toHaveAttribute("data-popup-open");
     });
 
+    it("renders logical-side arrow styles", async () => {
+      renderTooltip({ content: "Logical hint", side: "inline-start" });
+
+      const tooltip = await findPopup("Logical hint");
+      const arrow = tooltip.querySelector<HTMLElement>('[data-slot="arrow"]');
+
+      expect(arrow).toHaveAttribute("data-side", "inline-start");
+      expect(arrow).toHaveClass(
+        "data-[side=inline-start]:-end-[4px]",
+        "ltr:data-[side=inline-start]:border-t",
+        "rtl:data-[side=inline-start]:border-b",
+        "rtl:data-[side=inline-start]:border-e",
+      );
+    });
+
     it("merges className and ui slots", async () => {
       renderTooltip({
         className: "custom-popup",

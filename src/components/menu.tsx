@@ -211,6 +211,8 @@ function MenuActionItem<Value extends string = string>({
   shortcut,
   textValue,
   onSelect,
+  value: _value,
+  type: _type,
   ...props
 }: MenuItemProps<Value>) {
   const styles = theme();

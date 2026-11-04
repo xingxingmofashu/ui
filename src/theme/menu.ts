@@ -11,6 +11,8 @@ export default tv({
       "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
       "data-[side=top]:origin-bottom data-[side=bottom]:origin-top",
       "data-[side=left]:origin-right data-[side=right]:origin-left",
+      "ltr:data-[side=inline-start]:origin-right ltr:data-[side=inline-end]:origin-left",
+      "rtl:data-[side=inline-start]:origin-left rtl:data-[side=inline-end]:origin-right",
       "motion-reduce:transition-none",
     ],
     glass: [

@@ -122,6 +122,17 @@ describe("Menu", () => {
       );
     });
 
+    it("does not forward wrapper-only value and type to the item element", async () => {
+      renderMenu({
+        items: [{ type: "item", value: "rename", label: "Rename" }],
+      });
+
+      const rename = await screen.findByRole("menuitem", { name: "Rename" });
+
+      expect(rename).not.toHaveAttribute("value");
+      expect(rename).not.toHaveAttribute("type");
+    });
+
     it("merges className and ui slots", async () => {
       renderMenu({
         className: "custom-popup",
@@ -227,7 +238,7 @@ describe("Menu", () => {
 
       await findMenu();
 
-      await user.click(screen.getByRole("button", { name: "Actions" }));
+      await user.keyboard("{Escape}");
 
       expect(onOpenChange).toHaveBeenCalled();
       expect(screen.getByRole("menu")).toBeInTheDocument();

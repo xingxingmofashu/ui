@@ -110,6 +110,12 @@ function Select<Value extends string = string>({
     ariaDescribedBy,
     description ? descriptionId : undefined,
   );
+  // Leave aria-labelledby absent so Base UI can associate Select.Label.
+  const triggerAriaProps = {
+    ...(ariaLabel ? { "aria-label": ariaLabel } : {}),
+    ...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {}),
+    ...(describedBy ? { "aria-describedby": describedBy } : {}),
+  };
 
   return (
     <UISelect.Root
@@ -136,9 +142,7 @@ function Select<Value extends string = string>({
 
         <UISelect.Trigger
           data-slot="trigger"
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledBy}
-          aria-describedby={describedBy}
+          {...triggerAriaProps}
           disabled={disabled}
           className={cn(styles.trigger(), ui?.trigger)}
         >

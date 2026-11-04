@@ -57,7 +57,9 @@ describe("Select", () => {
       expect(trigger).toHaveAttribute("data-slot", "trigger");
       expect(trigger).toHaveAttribute("aria-haspopup", "listbox");
       expect(trigger).toHaveTextContent("Pick a fruit");
+      expect(label).not.toBeNull();
       expect(label).toHaveTextContent("Fruit");
+      expect(trigger.getAttribute("aria-labelledby")).toBe(label?.id);
       expect(description).toHaveTextContent("Choose a fruit.");
       expect(trigger).toHaveAttribute("aria-describedby", description?.id);
       expect(glass).toHaveClass(

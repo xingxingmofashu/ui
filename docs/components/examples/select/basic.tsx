@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Select } from "@xingxingmofashu/ui";
+import { Select } from "@xingxingmofashu/ui";
 
 const fruits = [
   { value: "apple", label: "Apple" },

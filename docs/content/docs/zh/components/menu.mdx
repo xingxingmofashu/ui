@@ -5,7 +5,7 @@ description: "支持分组、分隔线、图标、快捷键与受控状态的液
 
 `Menu` 内部负责触发器、Portal、定位器、玻璃浮层、列表、操作项、分组与分隔线。默认情况下，选中操作项后会关闭菜单并调用对应的 `onSelect`。
 
-操作项通过 `items` 数组传入。使用 `type: "group"` 创建带标题的分组，使用 `type: "separator"` 创建分隔线。每个操作项都需要唯一的 `value`，用于键盘导航与 React key。
+操作项通过 `items` 数组传入。使用 `type: "group"` 创建带标题的分组，使用 `type: "separator"` 创建分隔线。每个操作项都需要唯一的 `value` 作为 React key；当可见标签不是纯文本时，请通过 `textValue` 提供键盘导航文本。
 
 ## 基础示例
 
@@ -69,7 +69,7 @@ description: "支持分组、分隔线、图标、快捷键与受控状态的液
 | `label` | `ReactNode` | — | 分组标题。必填。 |
 | `items` | `readonly MenuItemProps[]` | — | 分组内的操作项。必填。 |
 | `className` | `string` | — | 合并到分组的 Tailwind 类名。 |
-| `ui` | `{ group?: ClassValue; groupLabel?: ClassValue }` | — | 分组槽位的类名。 |
+| `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | 分组及其操作项内部槽位的类名。 |
 
 **MenuSeparatorProps**
 

@@ -5,7 +5,7 @@ description: "An accessible Liquid Glass action menu with groups, separators, ic
 
 `Menu` renders the trigger, portal, positioner, glass popup, list, action items, groups, and separators internally. Selecting an item closes the menu by default and calls its `onSelect` callback.
 
-Items are passed through the `items` array. Use `type: "group"` for a labelled section and `type: "separator"` for a divider. Action items need a unique `value` for keyboard navigation and React keys.
+Items are passed through the `items` array. Use `type: "group"` for a labelled section and `type: "separator"` for a divider. Action items need a unique `value` for React keys. When the visible label is not plain text, pass `textValue` so keyboard typeahead can match it.
 
 ## Basic example
 
@@ -69,7 +69,7 @@ Pass `open` and `onOpenChange` to own visibility. The trigger still toggles the 
 | `label` | `ReactNode` | — | Group heading. Required. |
 | `items` | `readonly MenuItemProps[]` | — | Items rendered inside the group. Required. |
 | `className` | `string` | — | Tailwind classes merged into the group. |
-| `ui` | `{ group?: ClassValue; groupLabel?: ClassValue }` | — | Tailwind classes for the group slots. |
+| `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for the group and its item slots. |
 
 **MenuSeparatorProps**
 
