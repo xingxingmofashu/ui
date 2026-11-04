@@ -42,6 +42,7 @@ type TabsProps<Value extends string = string> = Omit<
   UITabs.Root.Props,
   "children" | "className" | "style" | "value" | "defaultValue" | "onValueChange"
 > &
+  Pick<UITabs.List.Props, "activateOnFocus" | "loopFocus"> &
   VariantProps<typeof theme> & {
     /** Tabs and panels rendered by the component. */
     items: readonly TabsItemProps<Value>[];
@@ -54,10 +55,6 @@ type TabsProps<Value extends string = string> = Omit<
       value: Value,
       details: UITabs.Root.ChangeEventDetails,
     ) => void;
-    /** Whether arrow keys activate a tab as focus moves. */
-    activateOnFocus?: boolean;
-    /** Whether keyboard focus loops back to the first tab. */
-    loopFocus?: boolean;
     /** Disables every tab. */
     disabled?: boolean;
     /** Tailwind classes merged into the root. */

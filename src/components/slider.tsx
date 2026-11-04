@@ -12,16 +12,13 @@ type Slider = ComponentConfig<typeof theme>;
 type SliderProps<Value extends number | readonly number[] = number> = Omit<
   UISlider.Root.Props<Value>,
   "children" | "style" | "className"
-> & {
-  /** Tailwind classes merged into the root. */
-  className?: string;
-  /** Tailwind classes for internal slots, keyed by `data-slot`. */
-  ui?: Slider["slots"];
-  /** Accessible name for the thumb at `index`. Useful for range sliders. */
-  getAriaLabel?: UISlider.Thumb.Props["getAriaLabel"];
-  /** Accessible value text for the thumb at `index`. */
-  getAriaValueText?: UISlider.Thumb.Props["getAriaValueText"];
-};
+> &
+  Pick<UISlider.Thumb.Props, "getAriaLabel" | "getAriaValueText"> & {
+    /** Tailwind classes merged into the root. */
+    className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: Slider["slots"];
+  };
 
 function setAriaAttribute(
   input: HTMLInputElement,

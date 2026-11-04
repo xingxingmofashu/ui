@@ -9,8 +9,6 @@ import theme from "../theme/menu";
 
 type Menu = ComponentConfig<typeof theme>;
 
-type PositionerProps = UIMenu.Positioner.Props;
-
 type MenuItemUi = Partial<
   Pick<Menu["slots"], "item" | "itemIcon" | "itemLabel" | "shortcut">
 >;
@@ -83,26 +81,20 @@ type MenuEntry<Value extends string = string> =
 type MenuProps<Value extends string = string> = Omit<
   UIMenu.Root.Props,
   "children" | "className" | "style"
-> & {
-  /** Element that opens the menu. It must forward props and refs. */
-  trigger: React.ReactElement;
-  /** Items, groups, and separators rendered by the menu. */
-  items: readonly MenuEntry<Value>[];
-  /** Side of the trigger the menu is placed on. */
-  side?: PositionerProps["side"];
-  /** Alignment of the menu relative to the trigger. */
-  align?: PositionerProps["align"];
-  /** Distance between the trigger and the menu in pixels. */
-  sideOffset?: PositionerProps["sideOffset"];
-  /** Offset along the alignment axis in pixels. */
-  alignOffset?: PositionerProps["alignOffset"];
-  /** Padding between the menu and the edge of the collision boundary. */
-  collisionPadding?: PositionerProps["collisionPadding"];
-  /** Tailwind classes merged into the popup. */
-  className?: string;
-  /** Tailwind classes for internal slots, keyed by `data-slot`. */
-  ui?: Menu["slots"];
-};
+> &
+  Pick<
+    UIMenu.Positioner.Props,
+    "side" | "align" | "sideOffset" | "alignOffset" | "collisionPadding"
+  > & {
+    /** Element that opens the menu. It must forward props and refs. */
+    trigger: React.ReactElement;
+    /** Items, groups, and separators rendered by the menu. */
+    items: readonly MenuEntry<Value>[];
+    /** Tailwind classes merged into the popup. */
+    className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: Menu["slots"];
+  };
 
 function Menu<Value extends string = string>({
   trigger,

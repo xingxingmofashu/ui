@@ -9,36 +9,28 @@ import theme from "../theme/popover";
 
 type Popover = ComponentConfig<typeof theme>;
 
-type PositionerProps = UIPopover.Positioner.Props;
-
-type PopoverProps = Omit<UIPopover.Root.Props, "children"> & {
-  /** Element that opens the popover. It must forward props and refs. */
-  trigger: React.ReactElement;
-  /** Popover heading. */
-  title: React.ReactNode;
-  /** Supporting copy under the title. */
-  description?: React.ReactNode;
-  /** Content between the description and the footer. */
-  children?: React.ReactNode;
-  /** Action area rendered at the bottom of the popover. */
-  footer?: React.ReactNode;
-  /** Whether to render the directional arrow. */
-  arrow?: boolean;
-  /** Side of the trigger the popover is placed on. */
-  side?: PositionerProps["side"];
-  /** Alignment of the popover relative to the trigger. */
-  align?: PositionerProps["align"];
-  /** Distance between the trigger and the popup in pixels. */
-  sideOffset?: PositionerProps["sideOffset"];
-  /** Offset along the alignment axis in pixels. */
-  alignOffset?: PositionerProps["alignOffset"];
-  /** Padding between the popup and the edge of the collision boundary. */
-  collisionPadding?: PositionerProps["collisionPadding"];
-  /** Tailwind classes merged into the popup. */
-  className?: string;
-  /** Tailwind classes for internal slots, keyed by `data-slot`. */
-  ui?: Popover["slots"];
-};
+type PopoverProps = Omit<UIPopover.Root.Props, "children"> &
+  Pick<
+    UIPopover.Positioner.Props,
+    "side" | "align" | "sideOffset" | "alignOffset" | "collisionPadding"
+  > & {
+    /** Element that opens the popover. It must forward props and refs. */
+    trigger: React.ReactElement;
+    /** Popover heading. */
+    title: React.ReactNode;
+    /** Supporting copy under the title. */
+    description?: React.ReactNode;
+    /** Content between the description and the footer. */
+    children?: React.ReactNode;
+    /** Action area rendered at the bottom of the popover. */
+    footer?: React.ReactNode;
+    /** Whether to render the directional arrow. */
+    arrow?: boolean;
+    /** Tailwind classes merged into the popup. */
+    className?: string;
+    /** Tailwind classes for internal slots, keyed by `data-slot`. */
+    ui?: Popover["slots"];
+  };
 
 function Popover({
   trigger,

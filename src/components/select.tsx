@@ -14,8 +14,6 @@ import { ChevronDownIcon } from "./icons/chevron-down";
 
 type Select = ComponentConfig<typeof theme>;
 
-type PositionerProps = UISelect.Positioner.Props;
-
 /** One option rendered by the select. */
 type SelectItemProps<Value extends string = string> = {
   /** Value submitted and passed to `onValueChange`. */
@@ -39,7 +37,16 @@ type SelectProps<Value extends string = string> = Omit<
   | "defaultValue"
   | "onValueChange"
 > &
-  VariantProps<typeof theme> & {
+  VariantProps<typeof theme> &
+  Pick<
+    UISelect.Positioner.Props,
+    | "side"
+    | "align"
+    | "sideOffset"
+    | "alignOffset"
+    | "collisionPadding"
+    | "alignItemWithTrigger"
+  > & {
     /** Options rendered by the select. */
     items: readonly SelectItemProps<Value>[];
     /** Visible label associated with the trigger. */
@@ -57,18 +64,6 @@ type SelectProps<Value extends string = string> = Omit<
       value: Value | null,
       details: UISelect.Root.ChangeEventDetails,
     ) => void;
-    /** Side of the trigger the popup is placed on. */
-    side?: PositionerProps["side"];
-    /** Alignment of the popup relative to the trigger. */
-    align?: PositionerProps["align"];
-    /** Distance between the trigger and the popup in pixels. */
-    sideOffset?: PositionerProps["sideOffset"];
-    /** Offset along the alignment axis in pixels. */
-    alignOffset?: PositionerProps["alignOffset"];
-    /** Padding between the popup and the edge of the collision boundary. */
-    collisionPadding?: PositionerProps["collisionPadding"];
-    /** Whether the popup overlaps the trigger to align the selected item. */
-    alignItemWithTrigger?: PositionerProps["alignItemWithTrigger"];
     /** Accessible name for the trigger when no visible label is rendered. */
     "aria-label"?: string;
     /** Names the trigger from another element. */
