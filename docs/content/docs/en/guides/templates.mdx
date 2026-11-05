@@ -5,9 +5,9 @@ description: "Start from the Vite starter or copy a Next.js settings panel and d
 
 ## Vite starter
 
-The repository ships a minimal Vite + React 19 + TypeScript starter that already
-imports the package stylesheet and renders a small landing page with a hero,
-feature cards, a light/dark toggle, and call-to-action buttons.
+The repository ships a compact Vite + React 19 + TypeScript starter that already
+imports the package stylesheet and renders a landing page with a live workspace
+preview, three feature cards, a light/dark toggle, and a call to action.
 
 ```bash
 pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
@@ -21,9 +21,17 @@ The starter pins a released package version. After cloning, bump
 
 Useful files:
 
-- `src/index.css` imports Tailwind CSS and `@xingxingmofashu/ui`.
-- `src/App.tsx` contains the hero, feature cards, theme toggle, and footer.
+- `src/index.css` imports Tailwind CSS, the package stylesheet, and the glass
+  preset stylesheet, then draws the page canvas.
+- `src/App.tsx` contains the hero copy, feature cards, CTA, and footer.
+- `src/hero-preview.tsx` contains the interactive preview card. Its material
+  switch uses `GlassPresetScope`, so it only affects that card. Wrap the app in
+  `GlassPresetProvider` when you want a global, persisted preset.
+- `src/use-theme.ts` persists the light/dark preference.
 - `vite.config.ts` contains the Tailwind and React plugins.
+
+The preview uses `Tabs`, `Switch`, `Progress`, `ToggleGroup`, `Button`, and
+`Toast`. Replace its content with the components your product needs.
 
 ## Next.js App Router
 

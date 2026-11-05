@@ -1,19 +1,16 @@
 import {
-  BookOpen,
-  Code,
+  Accessibility,
   Layers,
   Moon,
   Palette,
-  Sparkles,
   Sun,
-  Zap,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
 
 import { Button, Card, Toggle } from "@xingxingmofashu/ui";
 
-type Theme = "light" | "dark";
+import { HeroPreview } from "./hero-preview";
+import { useTheme } from "./use-theme";
 
 type Feature = {
   icon: LucideIcon;
@@ -21,9 +18,9 @@ type Feature = {
   description: string;
 };
 
-const themeKey = "lumen-theme";
 const docsUrl = "https://xingxingmofashu.github.io/ui/docs/en";
 const installUrl = `${docsUrl}/get-started/installation`;
+const componentsUrl = `${docsUrl}/components`;
 const templatesUrl = `${docsUrl}/guides/templates`;
 const githubUrl = "https://github.com/xingxingmofashu/ui";
 const packageUrl = "https://www.npmjs.com/package/@xingxingmofashu/ui";
@@ -31,39 +28,21 @@ const packageUrl = "https://www.npmjs.com/package/@xingxingmofashu/ui";
 const features: Feature[] = [
   {
     icon: Layers,
-    title: "Liquid Glass by default",
+    title: "CSS-only material",
     description:
-      "The glass surface, rim highlights, and inner shadows are drawn entirely with CSS.",
-  },
-  {
-    icon: Sparkles,
-    title: "25 components",
-    description:
-      "Elements, forms, overlays, and feedback behind one consistent API.",
+      "Surfaces, rims, inner shadows, and highlights are drawn with regular CSS. No canvas, WebGL, or image assets.",
   },
   {
     icon: Palette,
-    title: "Light and dark",
+    title: "Theme and material",
     description:
-      "Shared tokens switch between dark and light, and the starter remembers the user's choice.",
+      "Light, dark, and four glass presets share one token layer, so the whole page follows a single source of truth.",
   },
   {
-    icon: Code,
-    title: "Typed styling",
+    icon: Accessibility,
+    title: "Accessible primitives",
     description:
-      "Tailwind Variants recipes expose typed ui slots keyed by data-slot, with className for layout.",
-  },
-  {
-    icon: Zap,
-    title: "Fast by default",
-    description:
-      "Vite, React 19, and Tailwind CSS 4 with HMR, an ESM-only package, and no runtime CSS-in-JS.",
-  },
-  {
-    icon: BookOpen,
-    title: "Bilingual docs",
-    description:
-      "Every component ships with live examples, API tables, and guidance in English and Chinese.",
+      "Base UI supplies labels, focus management, keyboard behavior, and ARIA state under every component.",
   },
 ];
 
@@ -80,52 +59,19 @@ function GitHubIcon() {
   );
 }
 
-function readTheme(): Theme {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-
-  try {
-    const stored = window.localStorage.getItem(themeKey);
-
-    if (stored === "light" || stored === "dark") {
-      return stored;
-    }
-  } catch {
-    // Fall back to the system preference when storage is blocked.
-  }
-
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
-function useTheme() {
-  const [theme, setTheme] = useState<Theme>(readTheme);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const dark = theme === "dark";
-
-    root.classList.toggle("dark", dark);
-    root.classList.toggle("light", !dark);
-    root.style.colorScheme = theme;
-
-    try {
-      window.localStorage.setItem(themeKey, theme);
-    } catch {
-      // The theme still applies for this session.
-    }
-  }, [theme]);
-
-  return { theme, setTheme };
-}
-
 export default function App() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div id="top" className="relative min-h-svh overflow-x-clip">
+    <div id="top" className="relative isolate min-h-svh overflow-x-clip">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 -z-10"
+      >
+        <div className="starter-canvas absolute inset-0" />
+        <div className="starter-grid absolute inset-0" />
+      </div>
+
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-6">
         <a
           href="#top"
@@ -144,53 +90,84 @@ export default function App() {
           </span>
         </a>
 
-        <div className="flex shrink-0 items-center gap-2">
-          <Toggle
-            aria-label={
-              theme === "dark"
-                ? "Switch to light theme"
-                : "Switch to dark theme"
-            }
-            size="sm"
-            pressed={theme === "dark"}
-            onPressedChange={(pressed) =>
-              setTheme(pressed ? "dark" : "light")
-            }
-            icon={theme === "dark" ? <Moon /> : <Sun />}
-          />
-          <Button
-            size="sm"
-            aria-label="View the source on GitHub"
-            leadingIcon={<GitHubIcon />}
-            nativeButton={false}
-            render={
-              <a href={githubUrl} target="_blank" rel="noreferrer" />
-            }
-          />
+        <div className="flex shrink-0 items-center gap-4">
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-4 text-xs font-medium text-ui-ink/55 sm:flex"
+          >
+            <a
+              className="transition-colors hover:text-ui-ink"
+              href={componentsUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Components
+            </a>
+            <a
+              className="transition-colors hover:text-ui-ink"
+              href={docsUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Docs
+            </a>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <Toggle
+              aria-label={
+                theme === "dark"
+                  ? "Switch to light theme"
+                  : "Switch to dark theme"
+              }
+              size="sm"
+              pressed={theme === "dark"}
+              onPressedChange={(pressed) =>
+                setTheme(pressed ? "dark" : "light")
+              }
+              icon={theme === "dark" ? <Moon /> : <Sun />}
+            />
+            <Button
+              size="sm"
+              aria-label="View the source on GitHub"
+              leadingIcon={<GitHubIcon />}
+              nativeButton={false}
+              render={
+                <a href={githubUrl} target="_blank" rel="noreferrer" />
+              }
+            />
+          </div>
         </div>
       </header>
 
       <main>
-        <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-16 text-center sm:pb-24 sm:pt-24">
-          <div className="mx-auto max-w-4xl">
-            <h1 className="text-4xl font-semibold leading-[1.05] tracking-[-0.045em] text-ui-ink sm:text-6xl">
-              Liquid Glass Starter Template
+        <section className="mx-auto grid w-full max-w-6xl gap-12 px-6 pb-16 pt-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:pb-24 lg:pt-16">
+          <div>
+            <span className="ui-glass-chip inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-ui-ink/55">
+              <span className="size-1.5 rounded-full bg-ui-ink" />
+              Liquid Glass starter
+            </span>
+
+            <h1 className="mt-5 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-ui-ink sm:text-5xl xl:text-6xl">
+              A calmer workspace for shipping software.
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-ui-ink/60 sm:text-base">
-              A production-ready starter template powered by{" "}
+
+            <p className="mt-5 max-w-xl text-sm leading-7 text-ui-ink/60 sm:text-base">
+              Lumen is a compact landing-page starter built with{" "}
               <a
-                className="text-ui-ink underline underline-offset-4 hover:text-ui-ink/70"
+                className="text-ui-ink underline decoration-ui-glass-border underline-offset-4 transition-colors hover:decoration-ui-ink"
                 href={packageUrl}
                 target="_blank"
                 rel="noreferrer"
               >
                 @xingxingmofashu/ui
               </a>
-              . Build polished, performant React applications
-              in minutes, not hours.
+              . It brings the Liquid Glass material, light and dark tokens, and
+              accessible React components into one small page you can make your
+              own.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <Button
                 size="lg"
                 label="Get started"
@@ -201,29 +178,38 @@ export default function App() {
               />
               <Button
                 size="lg"
-                label="Use this template"
+                label="View components"
                 nativeButton={false}
                 render={
-                  <a href={templatesUrl} target="_blank" rel="noreferrer" />
+                  <a href={componentsUrl} target="_blank" rel="noreferrer" />
                 }
               />
             </div>
-          </div>
-        </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 pb-16 sm:pb-24">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-[-0.035em] text-ui-ink sm:text-4xl">
-              Everything you need to build modern React apps
-            </h2>
-            <p className="mt-3 text-sm leading-7 text-ui-ink/60">
-              Start with a solid foundation. This template includes the
-              essentials for building production-ready applications with the
-              Liquid Glass component system.
+            <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-ui-ink/40">
+              React 19 · Tailwind CSS 4 · Base UI
             </p>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <HeroPreview />
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-6 pb-16 lg:pb-24">
+          <div className="max-w-2xl">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ui-ink/40">
+              What is inside
+            </p>
+            <h2 className="mt-3 text-balance text-3xl font-semibold tracking-[-0.04em] text-ui-ink sm:text-4xl">
+              A small surface area, with the details in place.
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-ui-ink/60">
+              Keep the patterns that fit your product and replace the rest. The
+              starter uses the same components, tokens, and material as the
+              documentation.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
             {features.map(({ icon: Icon, title, description }) => (
               <Card key={title} className="h-full">
                 <span className="flex size-10 items-center justify-center rounded-2xl border border-ui-glass-border bg-ui-glass-surface text-ui-ink">
@@ -240,39 +226,42 @@ export default function App() {
           </div>
         </section>
 
-        <section className="border-t border-ui-glass-border/70">
-          <div className="mx-auto max-w-3xl px-6 py-16 text-center sm:py-24">
-            <h2 className="text-3xl font-semibold tracking-[-0.035em] text-ui-ink sm:text-4xl">
-              Ready to build your next React app?
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ui-ink/60">
-              Start from the starter, keep the components you need, and make the
-              glass your own.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button
-                size="lg"
-                label="Start building"
-                nativeButton={false}
-                render={
-                  <a href={installUrl} target="_blank" rel="noreferrer" />
-                }
-              />
-              <Button
-                size="lg"
-                label="View on GitHub"
-                nativeButton={false}
-                render={
-                  <a href={githubUrl} target="_blank" rel="noreferrer" />
-                }
-              />
+        <section className="mx-auto w-full max-w-6xl px-6 pb-16 lg:pb-24">
+          <div className="ui-glass ui-glass-inner ui-glass-highlight relative overflow-hidden rounded-[2rem] px-6 py-10 text-center sm:px-10 sm:py-14">
+            <span aria-hidden="true" className="ui-glass-rim" />
+            <div className="relative z-10 mx-auto max-w-2xl">
+              <h2 className="text-balance text-3xl font-semibold tracking-[-0.04em] text-ui-ink sm:text-4xl">
+                Make it yours.
+              </h2>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ui-ink/60">
+                Replace the copy, keep the glass, and add the components you
+                need. The starter is a single page with no routing or data
+                layer.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <Button
+                  size="lg"
+                  label="Use this template"
+                  nativeButton={false}
+                  render={
+                    <a href={templatesUrl} target="_blank" rel="noreferrer" />
+                  }
+                />
+                <Button
+                  size="lg"
+                  label="View on GitHub"
+                  nativeButton={false}
+                  render={
+                    <a href={githubUrl} target="_blank" rel="noreferrer" />
+                  }
+                />
+              </div>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-ui-glass-border/70">
+      <footer className="border-t border-ui-glass-border/60">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 text-[11px] text-ui-ink/50 sm:flex-row">
           <p>
             Built with{" "}

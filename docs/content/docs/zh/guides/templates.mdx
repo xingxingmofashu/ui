@@ -5,8 +5,8 @@ description: "从 Vite starter 开始，或复制 Next.js 设置面板与破坏�
 
 ## Vite starter
 
-仓库提供一个最小的 Vite + React 19 + TypeScript starter，已经导入组件样式并渲染
-一个包含 Hero、特性卡片、明暗主题切换与行动按钮的简洁落地页。
+仓库提供一个紧凑的 Vite + React 19 + TypeScript starter，已经导入组件样式，并渲染
+一个包含实时工作区预览、三张特性卡片、明暗主题切换与行动按钮的落地页。
 
 ```bash
 pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
@@ -20,9 +20,16 @@ Starter 固定了一个已发布的组件包版本。克隆后需要新版本时
 
 关键文件：
 
-- `src/index.css` 导入 Tailwind CSS 与 `@xingxingmofashu/ui`。
-- `src/App.tsx` 包含 Hero、特性卡片、主题切换与页脚。
+- `src/index.css` 导入 Tailwind CSS、组件样式与玻璃预设样式，并绘制页面背景。
+- `src/App.tsx` 包含 Hero 文案、特性卡片、行动按钮与页脚。
+- `src/hero-preview.tsx` 包含可交互的预览卡片。它的材质切换使用
+  `GlassPresetScope`，因此只影响该卡片；如果需要全局且持久化的预设，请用
+  `GlassPresetProvider` 包裹应用。
+- `src/use-theme.ts` 负责持久化明暗主题。
 - `vite.config.ts` 包含 Tailwind 与 React 插件。
+
+预览卡片使用了 `Tabs`、`Switch`、`Progress`、`ToggleGroup`、`Button` 与 `Toast`。
+可以按产品需要替换其中的内容。
 
 ## Next.js App Router
 

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Documentation
+
+- Rebuild the Vite starter as a landing page with a live glass preview, three
+  feature cards, and a compact call to action.
+
 ## 0.1.9 - 2026-11-05
 
 ### Added
