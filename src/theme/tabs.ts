@@ -51,7 +51,7 @@ export default tv({
       "text-[length:var(--ui-tabs-panel-font-size)]",
       "transition-[opacity,translate] duration-200 ease-out",
       "data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0",
-      "data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0",
+      "data-[ending-style]:pointer-events-none data-[ending-style]:absolute data-[ending-style]:inset-x-0 data-[ending-style]:top-0 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0",
       "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus",
     ],
     panelContent: "leading-relaxed text-ui-ink/70",

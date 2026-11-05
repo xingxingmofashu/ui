@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Fixed
+
+- Keep the exiting Tabs panel out of flow during its cross-fade so switching
+  tabs no longer shifts the surrounding layout.
+
 ### Documentation
 
 - Rebuild the Vite starter as a landing page with a live glass preview, three
