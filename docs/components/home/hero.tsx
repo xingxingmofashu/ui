@@ -40,6 +40,8 @@ export function Hero() {
             </Link>
             <Link
               href="/playground/"
+              target="_blank"
+              rel="noreferrer noopener"
               className="inline-flex h-10 items-center gap-2 rounded-full border border-fd-border bg-fd-background/70 px-5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
             >
               {hero.openPlayground}
