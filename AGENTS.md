@@ -24,15 +24,11 @@ same pnpm workspace.
 - `pnpm playground:build` — build the playground.
 - `pnpm playground:typecheck` — typecheck the playground package.
 - `pnpm release` — run the interactive release-it flow from `main`.
-- `pnpm release:dry` — preview the next version and generated release notes.
-- `pnpm release:ci` — run release-it without prompts.
 
 ## Git
 
 - Rebase feature branches onto `main` and merge with `git merge --squash` so
   `main` stays linear. Do not create merge commits.
-- Commit messages must follow Conventional Commits; the `commit-msg` hook runs
-  commitlint.
 
 ## Releases
 
