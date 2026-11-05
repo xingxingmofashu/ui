@@ -265,7 +265,11 @@ describe("AlertDialog", () => {
       );
       expect(styles.backdrop()).toContain("data-[ending-style]:opacity-0");
       expect(styles.viewport()).toContain("fixed inset-0");
+      expect(styles.viewport()).toContain("overflow-y-auto");
+      expect(styles.viewport()).toContain("overscroll-contain");
+      expect(styles.viewport()).not.toContain("items-center");
       expect(styles.popup()).toContain("max-w-md");
+      expect(styles.popup()).toContain("m-auto");
       expect(styles.popup()).toContain("bg-ui-surface");
       expect(styles.popup()).toContain(
         "data-[starting-style]:scale-95",

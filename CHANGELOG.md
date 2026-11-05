@@ -6,6 +6,15 @@
 
 - Keep the exiting Tabs panel out of flow during its cross-fade so switching
   tabs no longer shifts the surrounding layout.
+- Keep long Dialog and AlertDialog content reachable by scrolling the viewport
+  from the top instead of centering and clipping an overflowing popup.
+- Align Card's glass layer radius with its root so `className` radius overrides
+  stay consistent.
+
+### Changed
+
+- Remove inline `style` from Card's public props so its glass layers stay
+  theme-controlled like the rest of the components.
 
 ### Documentation
 

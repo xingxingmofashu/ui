@@ -8,7 +8,7 @@ export default tv({
     ],
     glass: [
       "ui-glass ui-glass-inner ui-glass-highlight",
-      "pointer-events-none relative col-start-1 row-start-1 h-full w-full overflow-hidden rounded-[2rem]",
+      "pointer-events-none relative col-start-1 row-start-1 h-full w-full overflow-hidden rounded-[inherit]",
     ],
     overlay: "ui-glass-rim",
     layout: [

@@ -87,7 +87,9 @@ function RadioGroup<Value extends string = string>({
 
   // Match Base UI's CheckboxGroup: the group is the field's control and takes
   // its name from `aria-labelledby`, so `Field.Label` must not point `htmlFor`
-  // at one arbitrary radio inside the group.
+  // at one arbitrary radio inside the group. Base UI does not expose this hook
+  // publicly, so keep `@base-ui/react` pinned and re-check this workaround when
+  // upgrading it.
   useLabelableId({ id: null });
 
   return (

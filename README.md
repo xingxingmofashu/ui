@@ -1,7 +1,7 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/surface-lab-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset=".github/assets/surface-lab-light.png">
-  <img alt="The Liquid Glass Surface Lab panel showing glass components over the default image background in light mode." width="1024" src=".github/assets/surface-lab-light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/xingxingmofashu/ui/main/.github/assets/surface-lab-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/xingxingmofashu/ui/main/.github/assets/surface-lab-light.png">
+  <img alt="The Liquid Glass Surface Lab panel showing glass components over the default image background in light mode." width="1024" src="https://raw.githubusercontent.com/xingxingmofashu/ui/main/.github/assets/surface-lab-light.png">
 </picture>
 
 <div align="center">

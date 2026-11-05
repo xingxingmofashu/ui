@@ -29,6 +29,9 @@ dist/
 *.pem
 *.tgz
 
+# opencode project config (local only)
+.opencode/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

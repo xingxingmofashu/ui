@@ -4,9 +4,9 @@ description: "A server-safe React card with a Liquid Glass surface, header, body
 ---
 
 `Card` is a native layout primitive: it has no interactive state and forwards
-its remaining native props to the root `div`. It is server-safe and does not
-support the `render` prop. Use `ui` to style
-the glass layers or any internal section.
+its remaining native props to the root `div`. `style` is excluded so the glass
+layers stay theme-controlled. It is server-safe and does not support the
+`render` prop. Use `ui` to style the glass layers or any internal section.
 
 ## Basic example
 

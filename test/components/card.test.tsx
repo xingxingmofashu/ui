@@ -217,6 +217,15 @@ describe("Card", () => {
 
       expect(element).toBeTruthy();
     });
+
+    it("does not accept inline styles", () => {
+      const element = (
+        // @ts-expect-error The glass theme owns inline styles.
+        <Card style={{ width: 200 }}>Body</Card>
+      );
+
+      expect(element).toBeTruthy();
+    });
   });
 
   describe("styling", () => {
@@ -254,6 +263,8 @@ describe("Card", () => {
       expect(styles.glass()).toContain("ui-glass-inner");
       expect(styles.glass()).toContain("ui-glass-highlight");
       expect(styles.glass()).toContain("pointer-events-none");
+      expect(styles.glass()).toContain("rounded-[inherit]");
+      expect(styles.glass()).not.toContain("rounded-[2rem]");
       expect(styles.glass()).not.toContain("bg-glass-surface");
       expect(styles.glass()).not.toContain("border-double");
       expect(styles.glass()).not.toContain("shadow-glass");

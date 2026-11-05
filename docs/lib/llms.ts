@@ -225,20 +225,7 @@ function replaceComponentWithChildren(
 }
 
 function transformMdxComponents(chunk: string) {
-  const codeBlocks: string[] = [];
-  const stash = (code: string) => {
-    const token = `\u0000LLMS_CODE_${codeBlocks.length}\u0000`;
-    codeBlocks.push(code);
-    return token;
-  };
-
   let text = chunk;
-
-  // Type tables hold API contracts that plain tag stripping would erase.
-  // Preserve the authored JSX as a code block so agents can still read it.
-  text = replaceSelfClosingComponent(text, "TypeTable", (attributes) =>
-    stash(`\`\`\`tsx\n<TypeTable${attributes}/>\n\`\`\``),
-  );
 
   text = replaceComponentWithChildren(text, "Card", (attributes, children) => {
     const title = readAttribute(attributes, "title");
@@ -291,10 +278,7 @@ function transformMdxComponents(chunk: string) {
     },
   );
 
-  return stripMarkdownTags(text).replace(
-    /\u0000LLMS_CODE_(\d+)\u0000/g,
-    (_, index: string) => codeBlocks[Number(index)] ?? "",
-  );
+  return stripMarkdownTags(text);
 }
 
 function stripMdx(body: string) {
