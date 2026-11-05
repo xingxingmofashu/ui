@@ -8,7 +8,7 @@
   description, custom and native validation, external error state, and five
   sizes.
 - Add the Fieldset component with a native fieldset, a shared legend, and
-  disabled propagation.
+  disabled propagation to nested fields and form controls.
 - Add the Checkbox Group component with shared array state, group labels and
   descriptions, five sizes, read-only state, and native form submission.
 

@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/input";
 
@@ -36,11 +37,12 @@ function Input({
   ...props
 }: InputProps) {
   const styles = theme({ size });
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
 
   return (
     <div
       data-slot="root"
-      data-disabled={disabled || undefined}
+      data-disabled={fieldsetDisabled || undefined}
       className={cn(styles.root(), ui?.root, className)}
     >
       <span
@@ -71,7 +73,7 @@ function Input({
 
         <UIInput
           {...props}
-          disabled={disabled}
+          disabled={fieldsetDisabled}
           data-slot="input"
           className={cn(styles.input(), ui?.input)}
         />

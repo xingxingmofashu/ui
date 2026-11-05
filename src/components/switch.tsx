@@ -6,6 +6,7 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/switch";
 
@@ -90,6 +91,7 @@ function Switch({
   ...props
 }: SwitchProps) {
   const styles = theme({ size });
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
   const filterId = React.useId();
   const labelId = React.useId();
   const descriptionId = React.useId();
@@ -135,7 +137,7 @@ function Switch({
       aria-describedby={describedBy}
       aria-label={ariaLabel}
       aria-labelledby={labelledBy}
-      disabled={disabled}
+      disabled={fieldsetDisabled}
       readOnly={readOnly}
       data-slot="root"
       data-animating={animating || undefined}

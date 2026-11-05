@@ -5,6 +5,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toggle";
 
@@ -33,13 +34,16 @@ function Toggle<Value extends string = string>({
   icon,
   label,
   size,
+  disabled,
   ...props
 }: ToggleProps<Value>) {
   const styles = theme({ size, iconOnly: !label });
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
 
   return (
     <UIToggle
       {...props}
+      disabled={fieldsetDisabled}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
     >

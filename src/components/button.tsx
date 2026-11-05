@@ -8,6 +8,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/button";
 
@@ -38,9 +39,11 @@ function Button({
   leadingIcon,
   trailingIcon,
   size,
+  disabled,
   ...props
 }: ButtonProps) {
   const styles = theme({ size });
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
   const content = label || children;
 
   return (
@@ -48,6 +51,7 @@ function Button({
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
       {...props}
+      disabled={fieldsetDisabled}
     >
       <span data-slot="base" className={cn(styles.base(), ui?.base)}>
         <span

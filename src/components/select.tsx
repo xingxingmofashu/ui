@@ -6,6 +6,7 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/select";
 
@@ -100,6 +101,7 @@ function Select<Value extends string = string>({
   ...props
 }: SelectProps<Value>) {
   const styles = theme({ size });
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
   const descriptionId = React.useId();
   const describedBy = mergeIds(
     ariaDescribedBy,
@@ -119,11 +121,11 @@ function Select<Value extends string = string>({
       value={value}
       defaultValue={defaultValue}
       onValueChange={onValueChange}
-      disabled={disabled}
+      disabled={fieldsetDisabled}
     >
       <div
         data-slot="root"
-        data-disabled={disabled || undefined}
+        data-disabled={fieldsetDisabled || undefined}
         className={cn(styles.root(), ui?.root, className)}
       >
         {label ? (
@@ -138,7 +140,7 @@ function Select<Value extends string = string>({
         <UISelect.Trigger
           data-slot="trigger"
           {...triggerAriaProps}
-          disabled={disabled}
+          disabled={fieldsetDisabled}
           className={cn(styles.trigger(), ui?.trigger)}
         >
           <span

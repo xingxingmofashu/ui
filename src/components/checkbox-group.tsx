@@ -7,6 +7,7 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/checkbox-group";
 
@@ -106,6 +107,7 @@ function CheckboxGroup<Value extends string = string>({
   ...props
 }: CheckboxGroupProps<Value>) {
   const styles = theme({ size });
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
   const labelId = React.useId();
   const descriptionId = React.useId();
   const labelledBy =
@@ -129,7 +131,7 @@ function CheckboxGroup<Value extends string = string>({
       aria-describedby={describedBy}
       aria-label={ariaLabel}
       {...(labelledBy ? { "aria-labelledby": labelledBy } : {})}
-      disabled={disabled}
+      disabled={fieldsetDisabled}
       value={value as unknown as string[] | undefined}
       defaultValue={defaultValue as unknown as string[] | undefined}
       onValueChange={handleValueChange}

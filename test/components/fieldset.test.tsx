@@ -1,9 +1,19 @@
 import { render, screen } from "@testing-library/react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
+import { Button } from "../../src/components/button";
+import { Checkbox } from "../../src/components/checkbox";
+import { CheckboxGroup } from "../../src/components/checkbox-group";
 import { Field } from "../../src/components/field";
 import { Fieldset } from "../../src/components/fieldset";
 import { Input } from "../../src/components/input";
+import { RadioGroup } from "../../src/components/radio-group";
+import { Select } from "../../src/components/select";
+import { Slider } from "../../src/components/slider";
+import { Switch } from "../../src/components/switch";
+import { Toggle } from "../../src/components/toggle";
+import { ToggleGroup } from "../../src/components/toggle-group";
 import theme from "../../src/theme/fieldset";
 
 function getSlot(element: Element, slot: string) {
@@ -42,6 +52,31 @@ describe("Fieldset", () => {
       expect(root).toHaveAttribute("aria-labelledby", legend.id);
       expect(legend.tagName).toBe("DIV");
       expect(legend).toHaveTextContent("Billing details");
+    });
+
+    it("associates the legend before hydration", () => {
+      const markup = renderToStaticMarkup(
+        <Fieldset legend="Billing details">
+          <Field label="Company">
+            <Input />
+          </Field>
+        </Fieldset>,
+      );
+      const container = document.createElement("div");
+
+      container.innerHTML = markup;
+
+      const root = container.querySelector("fieldset");
+      const legend = container.querySelector('[data-slot="legend"]');
+
+      expect(root).not.toBeNull();
+      expect(legend).not.toBeNull();
+
+      if (!root || !legend) {
+        throw new Error("Fieldset markup was not rendered.");
+      }
+
+      expect(root).toHaveAttribute("aria-labelledby", legend.id);
     });
 
     it("supports aria-label when no legend is rendered", () => {
@@ -157,6 +192,85 @@ describe("Fieldset", () => {
       expect(root).toHaveAttribute("data-disabled");
       expect(input).toBeDisabled();
       expect(getSlot(root, "legend")).toHaveAttribute("data-disabled");
+    });
+
+    it("disables direct package controls through the fieldset", () => {
+      render(
+        <Fieldset legend="Preferences" disabled>
+          <Checkbox label="Weekly digest" />
+          <CheckboxGroup
+            label="Channels"
+            items={[{ value: "comments", label: "Comments" }]}
+          />
+          <Input aria-label="Search" />
+          <RadioGroup
+            label="Plan"
+            items={[{ value: "free", label: "Free" }]}
+          />
+          <Select
+            label="Region"
+            items={[{ value: "eu", label: "Europe" }]}
+          />
+          <Slider aria-label="Volume" />
+          <Switch label="Notifications" />
+          <Button label="Save" />
+          <Toggle label="Bold" />
+          <ToggleGroup
+            aria-label="Density"
+            items={[{ value: "compact", label: "Compact" }]}
+          />
+        </Fieldset>,
+      );
+
+      expect(
+        screen.getByRole("checkbox", { name: "Weekly digest" }),
+      ).toHaveAttribute("data-disabled");
+
+      expect(screen.getByRole("group", { name: "Channels" })).toHaveAttribute(
+        "data-disabled",
+      );
+      expect(
+        screen.getByRole("checkbox", { name: "Comments" }),
+      ).toHaveAttribute("aria-disabled", "true");
+
+      const search = screen.getByRole("textbox", { name: "Search" });
+
+      expect(search).toBeDisabled();
+      expect(search.closest('[data-slot="root"]')).toHaveAttribute(
+        "data-disabled",
+      );
+
+      expect(
+        screen.getByRole("radiogroup", { name: "Plan" }),
+      ).toHaveAttribute("data-disabled");
+
+      const trigger = screen.getByRole("combobox", { name: "Region" });
+
+      expect(trigger).toBeDisabled();
+      expect(trigger.closest('[data-slot="root"]')).toHaveAttribute(
+        "data-disabled",
+      );
+
+      const slider = screen.getByRole("slider", { name: "Volume" });
+
+      expect(slider).toBeDisabled();
+      expect(slider.closest('[data-slot="root"]')).toHaveAttribute(
+        "data-disabled",
+      );
+
+      expect(
+        screen.getByRole("switch", { name: "Notifications" }),
+      ).toHaveAttribute("data-disabled");
+
+      expect(
+        screen.getByRole("button", { name: "Save" }),
+      ).toHaveAttribute("data-disabled");
+      expect(
+        screen.getByRole("button", { name: "Bold" }),
+      ).toHaveAttribute("data-disabled");
+      expect(
+        screen.getByRole("button", { name: "Compact" }),
+      ).toHaveAttribute("data-disabled");
     });
 
     it("forwards native fieldset attributes", () => {

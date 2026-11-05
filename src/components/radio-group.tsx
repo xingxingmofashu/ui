@@ -8,6 +8,7 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/radio-group";
 
@@ -67,12 +68,14 @@ function RadioGroup<Value extends string = string>({
   items,
   label,
   description,
+  disabled,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   ...props
 }: RadioGroupProps<Value>) {
   const styles = theme({ size });
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
   const labelId = React.useId();
   const descriptionId = React.useId();
   const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
@@ -93,6 +96,7 @@ function RadioGroup<Value extends string = string>({
       aria-describedby={describedBy}
       aria-label={ariaLabel}
       {...(labelledBy ? { "aria-labelledby": labelledBy } : {})}
+      disabled={fieldsetDisabled}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
     >

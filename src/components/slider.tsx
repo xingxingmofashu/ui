@@ -4,6 +4,7 @@ import { Slider as UISlider } from "@base-ui/react/slider";
 import { cn } from "cn";
 import * as React from "react";
 
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/slider";
 
@@ -44,6 +45,7 @@ function Slider<Value extends number | readonly number[] = number>({
   ui,
   value,
   defaultValue,
+  disabled,
   "aria-describedby": ariaDescribedBy,
   "aria-errormessage": ariaErrorMessage,
   "aria-invalid": ariaInvalid,
@@ -54,6 +56,7 @@ function Slider<Value extends number | readonly number[] = number>({
   ...props
 }: SliderProps<Value>) {
   const styles = theme();
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
   const syncThumbAria = React.useCallback(
     (input: HTMLInputElement | null) => {
       if (!input) {
@@ -78,6 +81,7 @@ function Slider<Value extends number | readonly number[] = number>({
       aria-labelledby={ariaLabelledBy}
       value={value}
       defaultValue={defaultValue}
+      disabled={fieldsetDisabled}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
     >

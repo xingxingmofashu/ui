@@ -6,6 +6,7 @@ import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
 import { mergeIds } from "../internal/aria";
+import { useFieldsetDisabled } from "../internal/fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/checkbox";
 
@@ -38,6 +39,7 @@ function Checkbox({
   label,
   description,
   size,
+  disabled,
   indeterminate = false,
   "aria-describedby": ariaDescribedBy,
   "aria-label": ariaLabel,
@@ -45,6 +47,7 @@ function Checkbox({
   ...props
 }: CheckboxProps) {
   const styles = theme({ size });
+  const fieldsetDisabled = useFieldsetDisabled(disabled);
   const labelId = React.useId();
   const descriptionId = React.useId();
   const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
@@ -61,6 +64,7 @@ function Checkbox({
       aria-describedby={describedBy}
       aria-label={ariaLabel}
       aria-labelledby={labelledBy}
+      disabled={fieldsetDisabled}
       indeterminate={indeterminate}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
