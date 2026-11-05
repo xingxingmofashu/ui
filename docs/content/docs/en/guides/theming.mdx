@@ -60,11 +60,13 @@ The material is split into two layers:
 - **Runtime tokens** change with the theme: `--ui-ink`, `--ui-ink-active`,
   `--ui-surface`, `--ui-glass-surface`, `--ui-glass-overlay-surface`,
   `--ui-glass-border`, `--ui-glass-highlight`, `--ui-glass-rim`,
-  `--ui-glass-focus`, `--ui-shadow-glass`, and `--ui-drop-shadow-label`.
-- **Shared geometry** stays stable across themes: `--ui-glass-blur`,
-  `--ui-glass-saturate`, `--ui-glass-inner-inset`, `--ui-glass-rim-inset`, and
-  the other shared `--ui-glass-*` parameters. Component-specific values such as
-  the checkbox rim or slider lens stay in that component's theme recipe.
+  `--ui-glass-focus`, `--ui-glass-inner-border`, `--ui-glass-tone`,
+  `--ui-glass-contrast`, `--ui-shadow-glass`, and `--ui-drop-shadow-label`.
+- **Shared geometry and optics** stay stable across light and dark themes:
+  `--ui-glass-blur`, `--ui-glass-saturate`, `--ui-glass-inner-inset`,
+  `--ui-glass-rim-inset`, and the other shared `--ui-glass-*` parameters.
+  Presets may change blur and saturation. Component-specific values such as the
+  checkbox rim or slider lens stay in that component's theme recipe.
 
 The package defines them inside `@layer theme`. An unlayered `:root` block in
 your application therefore wins without an `!important`:
@@ -101,8 +103,9 @@ stays visible through the panel while body copy gets a stronger base. The fill
 still varies with the page behind it, so verify secondary text contrast over
 your busiest imagery. The glass preset plugin adjusts both surface tokens.
 
-Overlays no longer inherit `--ui-surface`: if you override the opaque surface,
-set `--ui-glass-overlay-surface` as well.
+Overlays no longer use `--ui-surface`: if you relied on that override for
+overlay backgrounds, set `--ui-glass-overlay-surface` instead. Set both tokens
+when opaque surfaces and overlays should move together.
 
 ## Tailwind aliases
 
@@ -154,8 +157,9 @@ surfaces the package does not provide.
 ## Component-level styling
 
 Every component accepts `className`. It merges into the component's primary
-element: the root for most components, the popup for overlay components, and
-each toast for `Toast`. Use it for layout, not for replacing the material:
+element: the root for most components, the popup for Dialog, Alert Dialog,
+Drawer, Popover, Menu, and Tooltip, the field root for `Select`, and each toast
+for `Toast`. Use it for layout, not for replacing the material:
 
 ```tsx
 <Button className="w-full" label="Continue" />

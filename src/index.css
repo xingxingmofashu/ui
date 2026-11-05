@@ -172,9 +172,9 @@
 
   /*
    * Overlay glass: stronger veil for surfaces that carry text over the page.
-   * Text-bearing overlays (dialogs, drawers, menus, popovers, selects, toasts,
-   * and tooltips) use this so the backdrop stays visible without leaving body
-   * copy entirely dependent on the page behind it.
+   * Text-bearing overlays (dialogs and alert dialogs, drawers, menus, popovers,
+   * selects, toasts, and tooltips) use this so the backdrop stays visible
+   * without leaving body copy entirely dependent on the page behind it.
    */
   .ui-glass-overlay {
     background-color: var(--ui-glass-overlay-surface);

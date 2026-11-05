@@ -55,11 +55,12 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 - **运行时 token** 随主题变化：`--ui-ink`、`--ui-ink-active`、`--ui-surface`、
   `--ui-glass-surface`、`--ui-glass-overlay-surface`、`--ui-glass-border`、
   `--ui-glass-highlight`、`--ui-glass-rim`、`--ui-glass-focus`、
+  `--ui-glass-inner-border`、`--ui-glass-tone`、`--ui-glass-contrast`、
   `--ui-shadow-glass` 和 `--ui-drop-shadow-label`。
-- **共享几何参数** 在明暗主题中保持一致：`--ui-glass-blur`、
+- **共享几何与光学参数** 在明暗主题中保持一致：`--ui-glass-blur`、
   `--ui-glass-saturate`、`--ui-glass-inner-inset`、`--ui-glass-rim-inset`
-  等共享的 `--ui-glass-*` 参数。checkbox 的 rim、slider 的 lens 等组件专属
-  数值保留在该组件的主题配置中。
+  等共享的 `--ui-glass-*` 参数。预设可以替换 blur 与 saturation。checkbox
+  的 rim、slider 的 lens 等组件专属数值保留在该组件的主题配置中。
 
 组件包在 `@layer theme` 中定义这些值。因此应用里未分层的 `:root` 无需
 `!important` 就能覆盖：
@@ -94,8 +95,9 @@ Toast 与 Tooltip——使用 `.ui-glass-overlay` 与更强的
 但正文会获得更强的底板；由于底色仍随页面变化，请在最复杂的图片上验证次级
 文字对比度。玻璃预设插件会同时调整这两档 surface token。
 
-浮层不再继承 `--ui-surface`：如果覆盖了不透明 surface，请同时设置
-`--ui-glass-overlay-surface`。
+浮层不再使用 `--ui-surface`：如果之前通过覆盖它来调整浮层背景，请改用
+`--ui-glass-overlay-surface`。如果希望不透明表面与浮层同步变化，请同时设置
+两者。
 
 ## Tailwind 别名
 
@@ -142,7 +144,8 @@ Toast 与 Tooltip——使用 `.ui-glass-overlay` 与更强的
 ## 组件级样式
 
 每个组件都接受 `className`。它会合并到组件的主要元素：大多数组件是根元素，
-浮层组件是弹窗，`Toast` 则是每条通知。用它处理布局，而不是替换材质：
+Dialog、Alert Dialog、Drawer、Popover、Menu、Tooltip 是弹窗，`Select` 是字段
+根元素，`Toast` 则是每条通知。用它处理布局，而不是替换材质：
 
 ```tsx
 <Button className="w-full" label="继续" />

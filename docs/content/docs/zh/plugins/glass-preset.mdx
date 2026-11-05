@@ -51,8 +51,9 @@ description: "在 thin、soft、regular、thick 之间切换共享 Liquid Glass 
 没有 `data-glass` 属性时同样使用 `thin`。预设只修改共享的
 `--ui-glass-*` 变量；组件内部、布局与文字样式保持不变。预设会继承到后代，
 `light-dark()` 数值跟随当前的 `color-scheme`，因此深色页面中的预设会自动
-使用深色值。嵌套的 `.light` 或 `.dark` 子树会回到默认的 `thin` 材质；
-如果预设需要跨过该主题边界，请在子树上也加上 `data-glass`。
+使用深色值。嵌套的 `.light` 或 `.dark` 子树会把颜色遮罩恢复为默认的 `thin`
+值，但 `--ui-glass-blur` 与 `--ui-glass-saturate` 仍会从预设祖先继承；如果
+完整预设需要跨过该主题边界，请在子树上也加上 `data-glass`。
 
 ## React 配置
 
@@ -187,8 +188,10 @@ import { GlassPresetScope } from "@xingxingmofashu/ui/plugins/glass-preset";
 </GlassPresetScope>
 ```
 
-预设会继承到后代，直到遇到另一个 `data-glass` 值或嵌套的 `.light` / `.dark`
-边界。作用域不会读取或写入 Provider 状态或 `localStorage`。
+预设的颜色遮罩会继承到后代，直到遇到另一个 `data-glass` 值或嵌套的
+`.light` / `.dark` 边界；`--ui-glass-blur` 与 `--ui-glass-saturate` 会跨过该
+边界继续继承。如果边界处需要完整预设，请在那里加上 `data-glass`。作用域
+不会读取或写入 Provider 状态或 `localStorage`。
 
 ## 仅使用脚本
 

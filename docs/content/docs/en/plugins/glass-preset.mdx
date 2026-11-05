@@ -55,9 +55,10 @@ text-bearing overlays: `thin` 64% / 76%, `soft` 69% / 79%, `regular`
 change the shared `--ui-glass-*` variables; component internals, layout, and
 text styles stay the same. They inherit into descendants, and the `light-dark()`
 values follow the active `color-scheme`, so a preset inside a dark page resolves
-its dark values automatically. A nested `.light` or `.dark` subtree starts from
-the default `thin` material; add `data-glass` there too if the preset should
-continue across that theme boundary.
+its dark values automatically. A nested `.light` or `.dark` subtree resets the
+color veils to the default `thin` values, but `--ui-glass-blur` and
+`--ui-glass-saturate` still inherit from the preset ancestor; add `data-glass`
+there too if the full preset should continue across that theme boundary.
 
 ## React setup
 
@@ -199,9 +200,11 @@ import { GlassPresetScope } from "@xingxingmofashu/ui/plugins/glass-preset";
 </GlassPresetScope>
 ```
 
-The preset inherits into descendants until another `data-glass` value or a
-nested `.light` / `.dark` boundary. The scope does not read or write the
-provider state or `localStorage`.
+The preset's color veils inherit into descendants until another `data-glass`
+value or a nested `.light` / `.dark` boundary; `--ui-glass-blur` and
+`--ui-glass-saturate` continue to inherit across that boundary. Add `data-glass`
+at the boundary if you need the full preset there. The scope does not read or
+write the provider state or `localStorage`.
 
 ## Script-only setup
 
