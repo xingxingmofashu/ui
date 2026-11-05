@@ -89,7 +89,8 @@
     "playground:build": "pnpm --filter @xingxingmofashu/playground build",
     "playground:typecheck": "pnpm --filter @xingxingmofashu/playground typecheck",
     "prepare": "husky",
-    "prepublishOnly": "pnpm lint && pnpm build && pnpm typecheck && pnpm test"
+    "prepublishOnly": "pnpm lint && pnpm build && pnpm typecheck && pnpm test",
+    "release": "release-it"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
@@ -98,6 +99,7 @@
   },
   "devDependencies": {
     "@playwright/test": "catalog:",
+    "@release-it/conventional-changelog": "catalog:",
     "@tailwindcss/node": "catalog:",
     "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",
@@ -109,6 +111,7 @@
     "husky": "catalog:",
     "jsdom": "catalog:",
     "oxlint": "catalog:",
+    "release-it": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "unbuild": "catalog:",

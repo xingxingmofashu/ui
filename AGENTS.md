@@ -23,11 +23,22 @@ same pnpm workspace.
 - `pnpm playground:dev` — start the component playground on port 3002.
 - `pnpm playground:build` — build the playground.
 - `pnpm playground:typecheck` — typecheck the playground package.
+- `pnpm release` — run the interactive release-it flow from `main`.
 
 ## Git
 
 - Rebase feature branches onto `main` and merge with `git merge --squash` so
   `main` stays linear. Do not create merge commits.
+
+## Releases
+
+- `pnpm release` bumps the version, generates GitHub release notes from
+  Conventional Commits, commits, tags, pushes, and creates the GitHub Release.
+- npm publishing stays in `.github/workflows/release.yml` so OIDC provenance is
+  preserved.
+- There is no `CHANGELOG.md`; GitHub Releases are the changelog. The workflow
+  uploads the packed tarball to the release created by release-it.
+- Set `GITHUB_TOKEN` before running `pnpm release`.
 
 ## Components
 
