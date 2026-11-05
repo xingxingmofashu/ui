@@ -4,11 +4,11 @@
     "badge": "React 19 / Tailwind CSS 4",
     "titleLine1": "Glass is a material.",
     "titleLine2": "Build with it.",
-    "description": "Twenty-four React components built from one CSS-only Liquid Glass surface. No textures, no canvas, no extra runtime.",
+    "description": "Twenty-five React components built from one CSS-only Liquid Glass surface. No textures, no canvas, no extra runtime.",
     "readDocs": "Read the docs",
     "openPlayground": "Open the playground",
     "meta": [
-      "24 components",
+      "25 components",
       "1 stylesheet",
       "0 image assets"
     ],
@@ -72,7 +72,7 @@
   },
   "components": {
     "eyebrow": "02 / Components",
-    "title": "Twenty-four ways to compose.",
+    "title": "Twenty-five ways to compose.",
     "description": "Every component shares one material, one focus ring, and one data-slot contract. Start with an action, a form, or a complete overlay.",
     "link": "Browse all components",
     "featured": {
@@ -85,7 +85,7 @@
       "syncLabel": "Workspace sync",
       "metrics": [
         {
-          "value": "24",
+          "value": "25",
           "label": "components"
         },
         {

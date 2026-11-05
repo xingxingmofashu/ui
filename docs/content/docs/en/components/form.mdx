@@ -1,0 +1,95 @@
+---
+title: "Form"
+description: "A React form with a Liquid Glass layout, consolidated server errors, and form-level validation."
+---
+
+`Form` renders a native `<form>` and coordinates validation and external errors across its fields. It provides the form context that lets each [Field](/docs/en/components/field) display an error without extra state per input.
+
+Use `Form` when several fields share one submit action and error state. For a single control, use `Field`; to group related fields under one heading, use [Fieldset](/docs/en/components/fieldset).
+
+## Basic example
+
+Pass fields and actions as children. `Form` applies a vertical layout with the shared gap, so `className` is usually enough to set the width. The native `<form>` element keeps browser submission, `FormData`, and server actions working.
+
+<Example name="form/basic" />
+
+## Consolidated errors
+
+Set `errors` to an object keyed by the `name` of each `Field`. A string renders one message; an array renders a list. `Field` connects the message to its control with `aria-describedby` and marks it invalid, and Base UI clears the entry when the user edits that field.
+
+<Example name="form/errors" />
+
+A `Field`'s own `error` prop takes precedence over the matching entry in `Form.errors`. Only fields rendered through `Field` read the error map; controls that render their own label, such as `Checkbox`, `Select`, and `CheckboxGroup`, do not display form errors. Validate those controls with native constraints or render a message next to the control.
+
+## Validation
+
+`validationMode` sets the default timing for every field inside the form:
+
+- `onSubmit` (default) validates on submission, then re-validates on change.
+- `onBlur` validates when a field loses focus.
+- `onChange` validates on every change.
+
+The `validationMode` prop on `Field` takes precedence. The form focuses the first invalid control after a failed submission and blocks the submit event.
+
+<Example name="form/validation" />
+
+Use `actionsRef` to validate on demand. Calling `actionsRef.current?.validate()` checks every field; pass a name to validate one field.
+
+```tsx
+const actionsRef = React.useRef<{
+  validate: (fieldName?: string) => void;
+} | null>(null);
+
+<Form actionsRef={actionsRef}>{/* fields */}</Form>;
+
+actionsRef.current?.validate();
+actionsRef.current?.validate("email");
+```
+
+## Submit values
+
+Use `onFormSubmit` to receive a JavaScript object instead of a `FormData` instance. Values are collected from fields registered through `Field`, keyed by their `name`. The native submit event is prevented automatically.
+
+<Example name="form/submit-values" />
+
+Because the object comes from `Field` registration, controls that submit through their own hidden inputs, such as `Checkbox`, `Select`, `Slider`, `Switch`, `RadioGroup`, and `CheckboxGroup`, are not included. Read those values from `FormData` in a native `onSubmit` handler when a submission mixes both kinds of controls.
+
+## Accessibility
+
+`Form` renders a native `<form>` element. It does not add an accessible name; use `aria-label` or `aria-labelledby` when a page contains more than one form. Labels for individual controls come from `Field`, and submit buttons keep their own accessible names.
+
+Native form behavior is preserved: `Enter` submits from a text field when a submit button exists, and autofill and `FormData` keep working. Base UI suppresses the browser's validation bubble and validates through `Field` instead. On a failed submission, focus moves to the first invalid control so keyboard and screen reader users land on the problem. Form-level errors are announced through the control's `aria-describedby` relationship. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
+
+## API reference
+
+**Form**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Fields and actions rendered inside the form. |
+| `errors` | `Record<string, string \| string[]>` | — | External errors keyed by the `name` of a `Field`. Strings render one message; arrays render a list. |
+| `onFormSubmit` | `(formValues: Record<string, any>, eventDetails: { reason: "none"; event: Event }) => void` | — | Receives values from `Field`-registered controls and prevents the native submit event. |
+| `validationMode` | `"onSubmit" \| "onBlur" \| "onChange"` | `"onSubmit"` | Default validation timing for fields in the form. A `Field` prop takes precedence. |
+| `actionsRef` | `RefObject<{ validate: (fieldName?: string) => void } \| null>` | — | Imperative validation for all fields or one field by name. |
+| `className` | `string` | — | Tailwind classes merged into the form element. |
+| `ui` | `{ root?: ClassValue }` | — | Tailwind classes for the `root` slot, keyed by `data-slot`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the form root element. |
+
+Additional Base UI `Form` props and native `<form>` attributes are forwarded, including `action`, `method`, `onSubmit`, `id`, and `aria-*`.
+
+| Attribute | Description |
+| --- | --- |
+| `data-slot` | Marks the form root (`root`) for styling. |
+
+`Form` has no `data-*` state attributes of its own.
+
+## Theming
+
+`Form` has no glass surface; it inherits the page material. Its root stacks children in a column with a `gap-4` rhythm and uses the shared `--ui-ink` color token. Override the layout with `className`, and use `ui.root` for the form root keyed by `data-slot`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
+## Related components
+
+- [Field](/docs/en/components/field) — Displays a label, description, and the consolidated error for one control.
+- [Fieldset](/docs/en/components/fieldset) — Groups related fields under a shared legend.
+- [Button](/docs/en/components/button) — Submit actions with `type="submit"`.
+- [Input](/docs/en/components/input) — The standard text control to wrap in `Field`.

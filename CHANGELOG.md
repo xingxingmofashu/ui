@@ -4,6 +4,9 @@
 
 ### Added
 
+- Add the Form component with a native form root, consolidated external errors
+  for named fields, form-level validation, imperative validation actions, and
+  `onFormSubmit` values for Field-registered controls.
 - Add the Field component for a single Base UI control, with a shared label,
   description, custom and native validation, external error state, and five
   sizes.

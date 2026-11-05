@@ -3,12 +3,29 @@ title: "表单"
 description: "提交值、校验字段，并用 Liquid Glass 控件组合可访问的 React 表单。"
 ---
 
-表单控件优先遵循原生 `<form>` 行为。`Input` 渲染原生 `<input>`；`Checkbox`、
+表单控件优先遵循原生 `<form>` 行为。`Form` 渲染原生 `<form>`，并在其上提供统一错误与表单级校验。`Input` 渲染原生 `<input>`；`Checkbox`、
 `CheckboxGroup`、`Switch`、`Select`、`Slider` 与 `RadioGroup` 则渲染内部原生
 输入用于提交。因此 `FormData`、Server Actions 与渐进增强模式都能继续使用，
 不需要自定义状态容器。
 
 <Example name="guides/form" />
+
+## 表单容器
+
+`Form` 渲染原生 `<form>`，并使用组件库的纵向布局。通过 `errors` 把服务端错误发送给按名称匹配的 `Field`，通过 `validationMode` 设置内部字段的默认校验时机。`Form` 不会取代 `FormData`：原生 `onSubmit` 仍然接收浏览器提交的值，而 `onFormSubmit` 提供通过 `Field` 注册的控件对象。
+
+```tsx
+<Form
+  action={savePreferences}
+  errors={serverErrors}
+  validationMode="onBlur"
+>
+  <Field label="邮箱" name="email">
+    <Input type="email" required />
+  </Field>
+  <Button type="submit" label="保存" />
+</Form>
+```
 
 ## 提交的值
 
@@ -192,7 +209,7 @@ export async function savePreferences(formData: FormData) {
 }
 ```
 
-`action` 属性属于外层 `<form>`；组件只负责提供字段。
+`action` 属性属于 `Form` 或外层原生 `<form>`；组件只负责提供字段。
 
 ## 常见问题
 
@@ -207,6 +224,7 @@ export async function savePreferences(formData: FormData) {
 
 ## 相关组件
 
+- [Form](/docs/zh/components/form)
 - [Input](/docs/zh/components/input)
 - [Checkbox](/docs/zh/components/checkbox)
 - [Checkbox Group](/docs/zh/components/checkbox-group)

@@ -20,9 +20,9 @@ components with a Liquid Glass visual style, built with
 [Tailwind Variants](https://www.tailwind-variants.org). Glass surfaces, rim
 highlights, and inner shadows are drawn entirely with CSS.
 
-The package ships twenty-four components: Accordion, Alert Dialog, Button,
-Card, Checkbox, Checkbox Group, Dialog, Drawer, Field, Fieldset, Input, Menu,
-Popover, Progress, Radio Group, Scroll Area, Select, Slider, Switch, Tabs,
+The package ships twenty-five components: Accordion, Alert Dialog, Button,
+Card, Checkbox, Checkbox Group, Dialog, Drawer, Field, Fieldset, Form, Input,
+Menu, Popover, Progress, Radio Group, Scroll Area, Select, Slider, Switch, Tabs,
 Toast, Toggle, Toggle Group, and Tooltip.
 
 > [!NOTE]

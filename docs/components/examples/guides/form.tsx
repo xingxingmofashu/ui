@@ -9,6 +9,7 @@ import {
   CheckboxGroup,
   Field,
   Fieldset,
+  Form,
   Input,
   Slider,
   Switch,
@@ -32,7 +33,7 @@ export default function GuideFormDemo() {
   }
 
   return (
-    <form
+    <Form
       onSubmit={handleSubmit}
       className="flex w-full max-w-md flex-col gap-5"
     >
@@ -101,6 +102,6 @@ export default function GuideFormDemo() {
           {status}
         </p>
       </div>
-    </form>
+    </Form>
   );
 }

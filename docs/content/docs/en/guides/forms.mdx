@@ -4,12 +4,35 @@ description: "Submit values, validate fields, and compose accessible React forms
 ---
 
 The form controls are designed to work with native `<form>` behavior first.
-`Input` renders a native `<input>`, while `Checkbox`, `CheckboxGroup`, `Switch`,
+`Form` renders a native `<form>` and adds consolidated errors and form-level
+validation. `Input` renders a native `<input>`, while `Checkbox`, `CheckboxGroup`, `Switch`,
 `Select`, `Slider`, and `RadioGroup` render an internal native input for
 submission. That means `FormData`, server actions, and progressive-enhancement
 patterns keep working without a custom state container.
 
 <Example name="guides/form" />
+
+## Form container
+
+`Form` renders a native `<form>` with the library's vertical layout. Use
+`errors` to send server errors back to named `Field` controls, and
+`validationMode` to set the default validation timing for the fields inside it.
+`Form` does not replace `FormData`: native `onSubmit` still receives the
+browser's values, while `onFormSubmit` gives you an object for controls
+registered through `Field`.
+
+```tsx
+<Form
+  action={savePreferences}
+  errors={serverErrors}
+  validationMode="onBlur"
+>
+  <Field label="Email" name="email">
+    <Input type="email" required />
+  </Field>
+  <Button type="submit" label="Save" />
+</Form>
+```
 
 ## Submitted values
 
@@ -202,7 +225,7 @@ export async function savePreferences(formData: FormData) {
 }
 ```
 
-The `action` prop belongs to the surrounding `<form>`; the components only
+The `action` prop belongs to `Form` or the surrounding native `<form>`; the components only
 supply the fields.
 
 ## Common pitfalls
@@ -222,6 +245,7 @@ supply the fields.
 
 ## Related components
 
+- [Form](/docs/en/components/form)
 - [Input](/docs/en/components/input)
 - [Checkbox](/docs/en/components/checkbox)
 - [Checkbox Group](/docs/en/components/checkbox-group)

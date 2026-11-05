@@ -13,6 +13,7 @@ import { DialogPreview } from "./previews/dialog";
 import { DrawerPreview } from "./previews/drawer";
 import { FieldPreview } from "./previews/field";
 import { FieldsetPreview } from "./previews/fieldset";
+import { FormPreview } from "./previews/form";
 import { InputPreview } from "./previews/input";
 import { MenuPreview } from "./previews/menu";
 import { PopoverPreview } from "./previews/popover";
@@ -99,6 +100,13 @@ const sections = [
     description:
       "A native fieldset with a glass legend for grouping related fields.",
     Preview: FieldsetPreview,
+  },
+  {
+    id: "form",
+    title: "Form",
+    description:
+      "A native form with consolidated server errors, form-level validation, and submitted values.",
+    Preview: FormPreview,
   },
   {
     id: "input",
@@ -265,7 +273,7 @@ function Intro() {
     <div className="max-w-3xl">
       <p className="inline-flex items-center gap-2 rounded-full border border-pg-line bg-pg-panel px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-pg-muted backdrop-blur-sm">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-ui-ink/60" />
-        Twenty-four components · two themes
+        Twenty-five components · two themes
       </p>
       <h1 className="mt-5 text-balance text-4xl font-semibold tracking-[-0.04em] text-pg-ink sm:text-5xl">
         Liquid glass, in light and dark.
