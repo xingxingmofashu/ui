@@ -11,7 +11,7 @@ export default tv({
     viewport:
       "fixed inset-0 z-50 flex overflow-y-auto overscroll-contain p-4",
     popup: [
-      "relative isolate m-auto w-full max-w-md bg-ui-surface",
+      "relative isolate m-auto w-full max-w-md",
       "rounded-[1.75rem] text-ui-ink outline-none",
       "transition-[opacity,scale,translate] duration-200 ease-out",
       "data-[starting-style]:translate-y-2 data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
@@ -19,7 +19,7 @@ export default tv({
       "motion-reduce:transition-none",
     ],
     glass: [
-      "ui-glass ui-glass-inner ui-glass-highlight",
+      "ui-glass ui-glass-overlay ui-glass-inner ui-glass-highlight",
       "pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit]",
     ],
     overlay: "ui-glass-rim",

@@ -335,11 +335,12 @@ describe("Toast theme", () => {
   it("uses the shared glass material", () => {
     const styles = theme();
 
-    expect(styles.root()).toContain("bg-ui-surface");
+    expect(styles.root()).not.toContain("bg-ui-surface");
     expect(styles.root()).toContain(
       "data-[expanded]:h-[var(--toast-height)]",
     );
     expect(styles.glass()).toContain("ui-glass");
+    expect(styles.glass()).toContain("ui-glass-overlay");
     expect(styles.glass()).toContain("ui-glass-inner");
     expect(styles.glass()).toContain("ui-glass-highlight");
     expect(styles.overlay()).toContain("ui-glass-rim");

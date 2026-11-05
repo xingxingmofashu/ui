@@ -296,7 +296,7 @@ describe("Drawer", () => {
       expect(styles.viewport()).toContain("items-end");
       expect(styles.popup()).toContain("max-h-[85dvh]");
       expect(styles.popup()).toContain("rounded-t-[1.75rem]");
-      expect(styles.popup()).toContain("bg-ui-surface");
+      expect(styles.popup()).not.toContain("bg-ui-surface");
       expect(styles.popup()).toContain(
         "translateY(calc(var(--drawer-snap-point-offset)_+_var(--drawer-swipe-movement-y)))",
       );
@@ -306,6 +306,7 @@ describe("Drawer", () => {
       expect(styles.content()).toContain("overflow-y-auto");
       expect(styles.content()).toContain("pt-4");
       expect(styles.glass()).toContain("ui-glass");
+      expect(styles.glass()).toContain("ui-glass-overlay");
       expect(styles.glass()).toContain("ui-glass-inner");
       expect(styles.glass()).toContain("ui-glass-highlight");
       expect(styles.glass()).toContain("rounded-[inherit]");

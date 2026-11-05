@@ -9,9 +9,11 @@
  *
  * - `@layer theme` holds theme-wide runtime values only: ink, surface, glass
  *   optics, and shared shadows. Component-specific values live in theme/.
- * - `--ui-surface` is the opaque theme surface used by overlays and as a base
- *   for component themes. `--ui-glass-surface` is the translucent theme veil;
- *   its strength balances transparency against text contrast.
+ * - `--ui-surface` is the opaque theme surface used as a base for component
+ *   themes. `--ui-glass-surface` is the translucent theme veil; its strength
+ *   balances transparency against text contrast. `--ui-glass-overlay-surface`
+ *   is the stronger veil for text-bearing overlays; `.ui-glass-overlay`
+ *   selects it.
  * - The optional plugin stylesheet offers opt-in
  *   `data-glass="thin | soft | regular | thick"` overrides for the shared
  *   material.
@@ -33,6 +35,7 @@
     --ui-ink-active: #000;
     --ui-surface: #fff;
     --ui-glass-surface: rgb(255 255 255 / 0.2);
+    --ui-glass-overlay-surface: rgb(255 255 255 / 0.64);
     --ui-glass-border: rgb(31 31 31 / 0.16);
     --ui-glass-focus: rgb(0 0 0 / 0.6);
     --ui-glass-inner-border: rgb(0 0 0 / 0.9);
@@ -64,6 +67,7 @@
     --ui-ink-active: #fff;
     --ui-surface: #141414;
     --ui-glass-surface: rgb(20 20 20 / 0.62);
+    --ui-glass-overlay-surface: rgb(20 20 20 / 0.76);
     --ui-glass-border: rgb(255 255 255 / 0.2);
     --ui-glass-focus: rgb(255 255 255 / 0.7);
     --ui-glass-inner-border: rgb(255 255 255 / 0.4);
@@ -90,6 +94,7 @@
     --ui-ink-active: #000;
     --ui-surface: #fff;
     --ui-glass-surface: rgb(255 255 255 / 0.2);
+    --ui-glass-overlay-surface: rgb(255 255 255 / 0.64);
     --ui-glass-border: rgb(31 31 31 / 0.16);
     --ui-glass-focus: rgb(0 0 0 / 0.6);
     --ui-glass-inner-border: rgb(0 0 0 / 0.9);
@@ -134,6 +139,7 @@
   --color-ui-ink-active: var(--ui-ink-active);
   --color-ui-surface: var(--ui-surface);
   --color-ui-glass-surface: var(--ui-glass-surface);
+  --color-ui-glass-overlay-surface: var(--ui-glass-overlay-surface);
   --color-ui-glass-border: var(--ui-glass-border);
   --color-ui-glass-focus: var(--ui-glass-focus);
   --color-ui-glass-inner-border: var(--ui-glass-inner-border);
@@ -162,6 +168,15 @@
       saturate(var(--ui-glass-saturate, 150%));
     filter: var(--ui-glass-tone, brightness(0.98))
       contrast(var(--ui-glass-contrast, 1.05));
+  }
+
+  /*
+   * Overlay glass: stronger veil for surfaces that carry text over the page.
+   * Dialogs, popovers, menus, toasts, and tooltips use this so the backdrop
+   * stays visible without depending on the page behind for contrast.
+   */
+  .ui-glass-overlay {
+    background-color: var(--ui-glass-overlay-surface);
   }
 
   /* Inner rim: a soft second outline inset from the surface edge. */

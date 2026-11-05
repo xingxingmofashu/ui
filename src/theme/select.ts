@@ -42,7 +42,7 @@ export default tv({
     positioner: "z-50 outline-none",
     popup: [
       "relative isolate min-w-[var(--anchor-width)] max-w-[min(24rem,var(--available-width))]",
-      "rounded-2xl bg-ui-surface p-1.5 text-ui-ink outline-none",
+      "rounded-2xl p-1.5 text-ui-ink outline-none",
       "transition-[opacity,scale] duration-150 ease-out",
       "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
       "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
@@ -53,7 +53,7 @@ export default tv({
       "motion-reduce:transition-none",
     ],
     popupGlass: [
-      "ui-glass ui-glass-inner ui-glass-highlight",
+      "ui-glass ui-glass-overlay ui-glass-inner ui-glass-highlight",
       "pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit]",
     ],
     popupOverlay: "ui-glass-rim",

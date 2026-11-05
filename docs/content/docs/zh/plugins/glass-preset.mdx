@@ -44,6 +44,10 @@ description: "在 thin、soft、regular、thick 之间切换共享 Liquid Glass 
 | `regular` | `36.7%` | `68.7%` | `12px` | `143.3%` | 大多数界面的平衡选择 |
 | `thick` | `45%` | `72%` | `16px` | `140%` | 文字密集、照片背景复杂 |
 
+预设同时设置承载文字的浮层所使用的更强遮罩
+`--ui-glass-overlay-surface`：`thin` 64% / 76%，`soft` 69% / 79%，`regular`
+74% / 82%，`thick` 80% / 86%（浅色 / 深色）。
+
 没有 `data-glass` 属性时同样使用 `thin`。预设只修改共享的
 `--ui-glass-*` 变量；组件内部、布局与文字样式保持不变。预设会继承到后代，
 `light-dark()` 数值跟随当前的 `color-scheme`，因此深色页面中的预设会自动

@@ -58,9 +58,9 @@ controlled state, scoped overrides, and SSR behavior.
 The material is split into two layers:
 
 - **Runtime tokens** change with the theme: `--ui-ink`, `--ui-ink-active`,
-  `--ui-surface`, `--ui-glass-surface`, `--ui-glass-border`,
-  `--ui-glass-highlight`, `--ui-glass-rim`, `--ui-glass-focus`,
-  `--ui-shadow-glass`, and `--ui-drop-shadow-label`.
+  `--ui-surface`, `--ui-glass-surface`, `--ui-glass-overlay-surface`,
+  `--ui-glass-border`, `--ui-glass-highlight`, `--ui-glass-rim`,
+  `--ui-glass-focus`, `--ui-shadow-glass`, and `--ui-drop-shadow-label`.
 - **Shared geometry** stays stable across themes: `--ui-glass-blur`,
   `--ui-glass-saturate`, `--ui-glass-inner-inset`, `--ui-glass-rim-inset`, and
   the other shared `--ui-glass-*` parameters. Component-specific values such as
@@ -75,6 +75,7 @@ your application therefore wins without an `!important`:
 
 :root {
   --ui-glass-surface: rgb(255 255 255 / 0.5);
+  --ui-glass-overlay-surface: rgb(255 255 255 / 0.8);
   --ui-glass-border: rgb(15 23 42 / 0.16);
   --ui-glass-blur: 20px;
   --ui-glass-saturate: 160%;
@@ -83,6 +84,7 @@ your application therefore wins without an `!important`:
 .dark,
 [data-theme="dark"] {
   --ui-glass-surface: rgb(20 20 20 / 0.75);
+  --ui-glass-overlay-surface: rgb(20 20 20 / 0.86);
   --ui-glass-border: rgb(255 255 255 / 0.24);
 }
 ```
@@ -92,6 +94,12 @@ The default `thin` material pairs a 20% light veil or 62% dark veil with a
 against text contrast, so tune it for the imagery in your application: test over
 the busiest and darkest background, not only over a plain page.
 
+Text-bearing overlays—Dialog, Alert Dialog, Drawer, Popover, Menu, Select,
+Toast, and Tooltip—use `.ui-glass-overlay` and the stronger
+`--ui-glass-overlay-surface` veil (64% light / 76% dark by default). The page
+stays faintly visible through the panel while body copy keeps a stable
+background. The glass preset plugin adjusts both surface tokens.
+
 ## Tailwind aliases
 
 The stylesheet exposes Tailwind color aliases for the most common tokens:
@@ -100,6 +108,7 @@ The stylesheet exposes Tailwind color aliases for the most common tokens:
 | --- | --- |
 | `text-ui-ink`, `bg-ui-ink` | `--ui-ink` |
 | `bg-ui-glass-surface` | `--ui-glass-surface` |
+| `bg-ui-glass-overlay-surface` | `--ui-glass-overlay-surface` |
 | `border-ui-glass-border` | `--ui-glass-border` |
 | `outline-ui-glass-focus` | `--ui-glass-focus` |
 | `bg-ui-surface` | `--ui-surface` |
@@ -127,6 +136,8 @@ a glass panel that is not one of the shipped components:
 
 - `.ui-glass` draws the translucent fill, double border, specular shadow, and
   backdrop blur.
+- `.ui-glass-overlay` swaps the fill for the stronger overlay veil; use it for
+  text-bearing panels that float above page content.
 - `.ui-glass-inner` adds the soft inner outline through `::before`.
 - `.ui-glass-highlight` adds the diagonal glare through `::after`.
 - `.ui-glass-rim` is a decorative child element; render it with

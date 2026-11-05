@@ -107,6 +107,12 @@ test.describe("overlay surfaces", () => {
       expect(material.backdropFilter).toContain("blur");
       expect(material.boxShadow).not.toBe("none");
 
+      const popupBackground = await popup.evaluate(
+        (element) => getComputedStyle(element).backgroundColor,
+      );
+
+      expect(popupBackground).toBe("rgba(0, 0, 0, 0)");
+
       const viewport = page.viewportSize();
       const box = await popup.boundingBox();
 

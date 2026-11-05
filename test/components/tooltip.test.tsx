@@ -58,6 +58,7 @@ describe("Tooltip", () => {
       expect(glass).toHaveAttribute("aria-hidden", "true");
       expect(glass).toHaveClass(
         "ui-glass",
+        "ui-glass-overlay",
         "ui-glass-inner",
         "ui-glass-highlight",
         "overflow-hidden",
@@ -67,7 +68,7 @@ describe("Tooltip", () => {
       expect(arrow).toHaveAttribute("aria-hidden", "true");
       expect(arrow).toHaveClass(
         "rotate-45",
-        "bg-ui-surface",
+        "bg-ui-glass-overlay-surface",
         "border-ui-glass-border",
         "data-[side=bottom]:border-t",
         "data-[side=bottom]:border-l",

@@ -53,9 +53,9 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 材质分为两层：
 
 - **运行时 token** 随主题变化：`--ui-ink`、`--ui-ink-active`、`--ui-surface`、
-  `--ui-glass-surface`、`--ui-glass-border`、`--ui-glass-highlight`、
-  `--ui-glass-rim`、`--ui-glass-focus`、`--ui-shadow-glass` 和
-  `--ui-drop-shadow-label`。
+  `--ui-glass-surface`、`--ui-glass-overlay-surface`、`--ui-glass-border`、
+  `--ui-glass-highlight`、`--ui-glass-rim`、`--ui-glass-focus`、
+  `--ui-shadow-glass` 和 `--ui-drop-shadow-label`。
 - **共享几何参数** 在明暗主题中保持一致：`--ui-glass-blur`、
   `--ui-glass-saturate`、`--ui-glass-inner-inset`、`--ui-glass-rim-inset`
   等共享的 `--ui-glass-*` 参数。checkbox 的 rim、slider 的 lens 等组件专属
@@ -70,6 +70,7 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 
 :root {
   --ui-glass-surface: rgb(255 255 255 / 0.5);
+  --ui-glass-overlay-surface: rgb(255 255 255 / 0.8);
   --ui-glass-border: rgb(15 23 42 / 0.16);
   --ui-glass-blur: 20px;
   --ui-glass-saturate: 160%;
@@ -78,6 +79,7 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 .dark,
 [data-theme="dark"] {
   --ui-glass-surface: rgb(20 20 20 / 0.75);
+  --ui-glass-overlay-surface: rgb(20 20 20 / 0.86);
   --ui-glass-border: rgb(255 255 255 / 0.24);
 }
 ```
@@ -85,6 +87,11 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 默认的 `thin` 材质使用 20% 浅色遮罩或 62% 深色遮罩，搭配 4px 模糊与
 150% 饱和度。遮罩强度需要在通透感和文字对比度之间取舍，请按应用中的图片来
 调整：在最复杂、最暗的背景上测试，而不只是纯色页面。
+
+承载文字的浮层——Dialog、Alert Dialog、Drawer、Popover、Menu、Select、
+Toast 与 Tooltip——使用 `.ui-glass-overlay` 与更强的
+`--ui-glass-overlay-surface` 遮罩（默认浅色 64% / 深色 76%）。页面仍然隐约
+可见，正文又有一层稳定的底板。玻璃预设插件会同时调整这两档 surface token。
 
 ## Tailwind 别名
 
@@ -94,6 +101,7 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 | --- | --- |
 | `text-ui-ink`、`bg-ui-ink` | `--ui-ink` |
 | `bg-ui-glass-surface` | `--ui-glass-surface` |
+| `bg-ui-glass-overlay-surface` | `--ui-glass-overlay-surface` |
 | `border-ui-glass-border` | `--ui-glass-border` |
 | `outline-ui-glass-focus` | `--ui-glass-focus` |
 | `bg-ui-surface` | `--ui-surface` |
@@ -119,6 +127,7 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 ```
 
 - `.ui-glass` 绘制半透明填充、双层边框、镜面阴影与背景模糊。
+- `.ui-glass-overlay` 换用更强的浮层遮罩；用于悬浮在页面内容之上的文字面板。
 - `.ui-glass-inner` 通过 `::before` 添加柔和内轮廓。
 - `.ui-glass-highlight` 通过 `::after` 添加对角高光。
 - `.ui-glass-rim` 是装饰性子元素，请加上 `aria-hidden="true"`。

@@ -40,6 +40,11 @@ describe("compiled CSS", () => {
     expect(css).not.toContain("--color-ink");
   });
 
+  it("compiles the overlay glass layer", () => {
+    expect(css).toContain(".ui-glass-overlay");
+    expect(css).toContain("background-color: var(--ui-glass-overlay-surface);");
+  });
+
   it("compiles every card layer from the theme recipe", () => {
     expect(css).toContain("background-color: var(--ui-glass-surface);");
     expect(css).toContain("box-shadow: var(--ui-shadow-glass);");

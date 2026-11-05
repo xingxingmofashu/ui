@@ -21,6 +21,12 @@ describe("runtime tokens", () => {
     expect(css).toContain("--ui-surface: #141414;");
     expect(css).toContain("--ui-glass-surface: rgb(255 255 255 / 0.2);");
     expect(css).toContain("--ui-glass-surface: rgb(20 20 20 / 0.62);");
+    expect(css).toContain(
+      "--ui-glass-overlay-surface: rgb(255 255 255 / 0.64);",
+    );
+    expect(css).toContain(
+      "--ui-glass-overlay-surface: rgb(20 20 20 / 0.76);",
+    );
     expect(css).toContain("--ui-glass-blur: 4px;");
     expect(css).toContain("--ui-glass-saturate: 150%;");
     expect(css).toContain("--ui-glass-inner-border: rgb(0 0 0 / 0.9);");
@@ -73,6 +79,11 @@ describe("runtime tokens", () => {
     expect(source).toContain("rgb(20 20 20 / 0.687)");
     expect(source).toContain("rgb(255 255 255 / 0.45)");
     expect(source).toContain("rgb(20 20 20 / 0.72)");
+    expect(source).toContain("--ui-glass-overlay-surface");
+    expect(source).toContain("rgb(255 255 255 / 0.64)");
+    expect(source).toContain("rgb(20 20 20 / 0.76)");
+    expect(source).toContain("rgb(255 255 255 / 0.8)");
+    expect(source).toContain("rgb(20 20 20 / 0.86)");
   });
 
   it("ships its Tailwind source scan", async () => {

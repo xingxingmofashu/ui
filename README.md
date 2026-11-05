@@ -86,9 +86,9 @@ container:
 
 `thin` is the default and the clearest, `soft` adds diffusion for secondary
 text, `regular` balances transparency with text separation, and `thick` is the
-most readable over busy imagery. Presets only override shared CSS variables.
-Without the plugin stylesheet, the main stylesheet still uses the `thin`
-material.
+most readable over busy imagery. Presets only override shared CSS variables and
+adjust both the in-page and overlay veils. Without the plugin stylesheet, the
+main stylesheet still uses the `thin` material.
 
 The optional React plugin manages the attribute and persistence:
 

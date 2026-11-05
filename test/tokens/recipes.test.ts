@@ -15,25 +15,26 @@ const fullGlass = [
   "ui-glass-rim",
 ];
 
+const overlayGlass = [...fullGlass, "ui-glass-overlay"];
 const inputGlass = ["ui-glass", "ui-glass-highlight", "ui-glass-rim"];
 const controlGlass = ["ui-glass", "ui-glass-rim"];
 
 const glassContracts: Array<[string, string[]]> = [
   ["accordion", fullGlass],
-  ["alert-dialog", fullGlass],
+  ["alert-dialog", overlayGlass],
   ["button", fullGlass],
   ["card", fullGlass],
-  ["dialog", fullGlass],
-  ["drawer", fullGlass],
-  ["menu", fullGlass],
-  ["popover", fullGlass],
+  ["dialog", overlayGlass],
+  ["drawer", overlayGlass],
+  ["menu", overlayGlass],
+  ["popover", overlayGlass],
   ["scroll-area", fullGlass],
-  ["select", fullGlass],
+  ["select", overlayGlass],
   ["tabs", fullGlass],
-  ["toast", fullGlass],
+  ["toast", overlayGlass],
   ["toggle", fullGlass],
   ["toggle-group", fullGlass],
-  ["tooltip", fullGlass],
+  ["tooltip", overlayGlass],
   ["input", inputGlass],
   ["checkbox", controlGlass],
   ["checkbox-group", controlGlass],
@@ -83,7 +84,7 @@ const tokenContracts: TokenContract[] = [
   {
     name: "dialog",
     includes: [
-      "bg-ui-surface",
+      "ui-glass-overlay",
       "data-[starting-style]:opacity-0",
       "data-[ending-style]:opacity-0",
     ],
@@ -91,7 +92,7 @@ const tokenContracts: TokenContract[] = [
   {
     name: "drawer",
     includes: [
-      "bg-ui-surface",
+      "ui-glass-overlay",
       "--drawer-swipe-progress",
       "--drawer-swipe-movement-y",
       "--drawer-swipe-movement-x",
@@ -111,6 +112,14 @@ const tokenContracts: TokenContract[] = [
       "ui-toggle-group-select",
       "overflow-hidden",
     ],
+  },
+  {
+    name: "popover",
+    includes: ["bg-ui-glass-overlay-surface"],
+  },
+  {
+    name: "tooltip",
+    includes: ["bg-ui-glass-overlay-surface"],
   },
   {
     name: "slider",

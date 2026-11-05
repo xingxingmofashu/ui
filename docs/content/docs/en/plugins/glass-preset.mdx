@@ -47,6 +47,10 @@ Set `data-glass` on the root or on any container:
 | `regular` | `36.7%` | `68.7%` | `12px` | `143.3%` | A balanced choice for most interfaces |
 | `thick` | `45%` | `72%` | `16px` | `140%` | Dense text and busy photography |
 
+Presets also set `--ui-glass-overlay-surface`, the stronger veil used by
+text-bearing overlays: `thin` 64% / 76%, `soft` 69% / 79%, `regular`
+74% / 82%, and `thick` 80% / 86% (light / dark).
+
 `thin` is also the default when no attribute is present. The presets only
 change the shared `--ui-glass-*` variables; component internals, layout, and
 text styles stay the same. They inherit into descendants, and the `light-dark()`

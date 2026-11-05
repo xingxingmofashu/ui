@@ -17,6 +17,10 @@
       rgb(255 255 255 / 0.2),
       rgb(20 20 20 / 0.62)
     );
+    --ui-glass-overlay-surface: light-dark(
+      rgb(255 255 255 / 0.64),
+      rgb(20 20 20 / 0.76)
+    );
     --ui-glass-border: light-dark(
       rgb(31 31 31 / 0.16),
       rgb(255 255 255 / 0.2)
@@ -30,6 +34,10 @@
     --ui-glass-surface: light-dark(
       rgb(255 255 255 / 0.283),
       rgb(20 20 20 / 0.653)
+    );
+    --ui-glass-overlay-surface: light-dark(
+      rgb(255 255 255 / 0.69),
+      rgb(20 20 20 / 0.79)
     );
     --ui-glass-border: light-dark(
       rgb(31 31 31 / 0.187),
@@ -45,6 +53,10 @@
       rgb(255 255 255 / 0.367),
       rgb(20 20 20 / 0.687)
     );
+    --ui-glass-overlay-surface: light-dark(
+      rgb(255 255 255 / 0.74),
+      rgb(20 20 20 / 0.82)
+    );
     --ui-glass-border: light-dark(
       rgb(31 31 31 / 0.213),
       rgb(255 255 255 / 0.253)
@@ -58,6 +70,10 @@
     --ui-glass-surface: light-dark(
       rgb(255 255 255 / 0.45),
       rgb(20 20 20 / 0.72)
+    );
+    --ui-glass-overlay-surface: light-dark(
+      rgb(255 255 255 / 0.8),
+      rgb(20 20 20 / 0.86)
     );
     --ui-glass-border: light-dark(
       rgb(31 31 31 / 0.24),

@@ -270,12 +270,13 @@ describe("AlertDialog", () => {
       expect(styles.viewport()).not.toContain("items-center");
       expect(styles.popup()).toContain("max-w-md");
       expect(styles.popup()).toContain("m-auto");
-      expect(styles.popup()).toContain("bg-ui-surface");
+      expect(styles.popup()).not.toContain("bg-ui-surface");
       expect(styles.popup()).toContain(
         "data-[starting-style]:scale-95",
       );
       expect(styles.popup()).toContain("data-[ending-style]:opacity-0");
       expect(styles.glass()).toContain("ui-glass");
+      expect(styles.glass()).toContain("ui-glass-overlay");
       expect(styles.glass()).toContain("ui-glass-inner");
       expect(styles.glass()).toContain("ui-glass-highlight");
       expect(styles.glass()).toContain("rounded-[inherit]");
