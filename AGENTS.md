@@ -77,12 +77,16 @@ same pnpm workspace.
   `--ui-<component>-*` tokens to `index.css`.
 - Global tokens are `--ui-ink`, `--ui-ink-active`, `--ui-surface`,
   `--ui-shadow-glass`, and `--ui-drop-shadow-label`. Shared glass tokens cover
-  color, geometry, and optics under `--ui-glass-*`.
+  color, geometry, and optics under `--ui-glass-*`, including
+  `--ui-glass-overlay-surface` for text-bearing overlays.
 - `--ui-surface` is the opaque theme surface (`#fff` in light, `#141414` in
-  dark); `--ui-glass-surface` is the translucent fill. Use `bg-ui-surface` for
-  solids and `bg-ui-glass-surface` only for glass.
+  dark); `--ui-glass-surface` is the translucent fill and
+  `--ui-glass-overlay-surface` is the stronger overlay fill. Use `bg-ui-surface`
+  for solids, `bg-ui-glass-surface` for in-page glass, and
+  `bg-ui-glass-overlay-surface` for overlay glass such as arrows.
 - Material classes: `.ui-glass` owns fill, double border, shadow, blur, and
-  tone; `.ui-glass-inner` adds the inset outline; `.ui-glass-highlight` adds the
+  tone; `.ui-glass-overlay` swaps the fill to the overlay veil;
+  `.ui-glass-inner` adds the inset outline; `.ui-glass-highlight` adds the
   diagonal glare; `.ui-glass-rim` is the child rim; `.ui-glass-chip` is the
   compact surface.
 - `src/plugins/glass-preset/index.css` owns the

@@ -33,8 +33,8 @@ export default tv({
       "[filter:var(--ui-drop-shadow-label)]",
     ],
     description:
-      "mt-2 min-w-0 text-sm leading-relaxed text-ui-ink opacity-60",
-    body: "mt-4 min-w-0 text-sm leading-relaxed text-ui-ink opacity-75",
+      "mt-2 min-w-0 text-sm leading-relaxed text-ui-ink opacity-85",
+    body: "mt-4 min-w-0 text-sm leading-relaxed text-ui-ink opacity-90",
     footer: "mt-6 flex flex-wrap items-center justify-end gap-2",
   },
   variants: {

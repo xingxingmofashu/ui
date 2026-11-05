@@ -4,6 +4,7 @@ import { type ComponentProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Menu } from "../../src/components/menu";
+import theme from "../../src/theme/menu";
 
 function renderMenu({
   trigger = <button type="button">Actions</button>,
@@ -294,6 +295,15 @@ describe("Menu", () => {
 
       expect(onSelect).not.toHaveBeenCalled();
       expect(screen.getByRole("menu")).toBeInTheDocument();
+    });
+  });
+
+  describe("theme", () => {
+    it("keeps secondary labels readable over the glass overlay", () => {
+      const styles = theme();
+
+      expect(styles.groupLabel()).toContain("text-ui-ink/85");
+      expect(styles.shortcut()).toContain("text-ui-ink/85");
     });
   });
 });

@@ -276,8 +276,8 @@ describe("Dialog", () => {
       expect(styles.glass()).toContain("rounded-[inherit]");
       expect(styles.overlay()).toContain("ui-glass-rim");
       expect(styles.title()).toContain("font-semibold");
-      expect(styles.description()).toContain("opacity-60");
-      expect(styles.body()).toContain("opacity-75");
+      expect(styles.description()).toContain("opacity-85");
+      expect(styles.body()).toContain("opacity-90");
       expect(styles.footer()).toContain("justify-end");
     });
 

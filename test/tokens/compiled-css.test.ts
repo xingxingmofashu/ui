@@ -42,6 +42,7 @@ describe("compiled CSS", () => {
 
   it("compiles the overlay glass layer", () => {
     expect(css).toContain(".ui-glass-overlay");
+    expect(css).toContain(".bg-ui-glass-overlay-surface");
     expect(css).toContain("background-color: var(--ui-glass-overlay-surface);");
   });
 

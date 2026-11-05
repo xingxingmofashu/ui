@@ -42,7 +42,7 @@ export default tv({
       "[filter:var(--ui-drop-shadow-label)]",
     ],
     description:
-      "min-w-0 text-sm leading-relaxed text-ui-ink opacity-60",
+      "min-w-0 text-sm leading-relaxed text-ui-ink opacity-85",
     actions: "flex shrink-0 items-center gap-1",
     action: [
       "ui-glass-chip inline-flex h-7 shrink-0 items-center rounded-full px-2.5",

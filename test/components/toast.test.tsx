@@ -344,6 +344,7 @@ describe("Toast theme", () => {
     expect(styles.glass()).toContain("ui-glass-inner");
     expect(styles.glass()).toContain("ui-glass-highlight");
     expect(styles.overlay()).toContain("ui-glass-rim");
+    expect(styles.description()).toContain("opacity-85");
   });
 
   it("stacks away from the anchored edge", () => {

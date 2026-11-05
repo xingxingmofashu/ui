@@ -90,8 +90,12 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 
 承载文字的浮层——Dialog、Alert Dialog、Drawer、Popover、Menu、Select、
 Toast 与 Tooltip——使用 `.ui-glass-overlay` 与更强的
-`--ui-glass-overlay-surface` 遮罩（默认浅色 64% / 深色 76%）。页面仍然隐约
-可见，正文又有一层稳定的底板。玻璃预设插件会同时调整这两档 surface token。
+`--ui-glass-overlay-surface` 遮罩（默认浅色 64% / 深色 76%）。页面仍会透出，
+但正文会获得更强的底板；由于底色仍随页面变化，请在最复杂的图片上验证次级
+文字对比度。玻璃预设插件会同时调整这两档 surface token。
+
+浮层不再继承 `--ui-surface`：如果覆盖了不透明 surface，请同时设置
+`--ui-glass-overlay-surface`。
 
 ## Tailwind 别名
 

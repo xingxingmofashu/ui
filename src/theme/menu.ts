@@ -37,12 +37,12 @@ export default tv({
     itemLabel: "min-w-0 flex-1 truncate",
     shortcut: [
       "ml-auto shrink-0 font-mono text-[0.65rem] uppercase tracking-[0.12em]",
-      "text-ui-ink/45",
+      "text-ui-ink/85",
     ],
     group: "flex min-w-0 flex-col gap-0.5",
     groupLabel: [
       "px-2.5 pb-1 pt-2 text-[0.65rem] font-medium uppercase tracking-[0.14em]",
-      "text-ui-ink/45",
+      "text-ui-ink/85",
     ],
     separator: "mx-1 my-1 h-px bg-ui-glass-border",
   },

@@ -82,6 +82,10 @@ describe("runtime tokens", () => {
     expect(source).toContain("--ui-glass-overlay-surface");
     expect(source).toContain("rgb(255 255 255 / 0.64)");
     expect(source).toContain("rgb(20 20 20 / 0.76)");
+    expect(source).toContain("rgb(255 255 255 / 0.69)");
+    expect(source).toContain("rgb(20 20 20 / 0.79)");
+    expect(source).toContain("rgb(255 255 255 / 0.74)");
+    expect(source).toContain("rgb(20 20 20 / 0.82)");
     expect(source).toContain("rgb(255 255 255 / 0.8)");
     expect(source).toContain("rgb(20 20 20 / 0.86)");
   });

@@ -72,6 +72,7 @@ describe("Tooltip", () => {
         "border-ui-glass-border",
         "data-[side=bottom]:border-t",
         "data-[side=bottom]:border-l",
+        "data-[side=bottom]:[clip-path:polygon(0_0,100%_0,0_100%)]",
       );
       expect(content).toHaveTextContent("Bold text");
     });
@@ -114,6 +115,8 @@ describe("Tooltip", () => {
         "ltr:data-[side=inline-start]:border-t",
         "rtl:data-[side=inline-start]:border-b",
         "rtl:data-[side=inline-start]:border-e",
+        "ltr:data-[side=inline-start]:[clip-path:polygon(0_0,100%_0,100%_100%)]",
+        "rtl:data-[side=inline-start]:[clip-path:polygon(0_0,0_100%,100%_100%)]",
       );
     });
 

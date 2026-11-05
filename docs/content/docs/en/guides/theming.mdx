@@ -97,8 +97,12 @@ the busiest and darkest background, not only over a plain page.
 Text-bearing overlays—Dialog, Alert Dialog, Drawer, Popover, Menu, Select,
 Toast, and Tooltip—use `.ui-glass-overlay` and the stronger
 `--ui-glass-overlay-surface` veil (64% light / 76% dark by default). The page
-stays faintly visible through the panel while body copy keeps a stable
-background. The glass preset plugin adjusts both surface tokens.
+stays visible through the panel while body copy gets a stronger base. The fill
+still varies with the page behind it, so verify secondary text contrast over
+your busiest imagery. The glass preset plugin adjusts both surface tokens.
+
+Overlays no longer inherit `--ui-surface`: if you override the opaque surface,
+set `--ui-glass-overlay-surface` as well.
 
 ## Tailwind aliases
 

@@ -30,6 +30,10 @@ export default tv({
       "data-[side=top]:-bottom-[6px] data-[side=top]:border-r data-[side=top]:border-b",
       "data-[side=left]:-right-[6px] data-[side=left]:border-t data-[side=left]:border-r",
       "data-[side=right]:-left-[6px] data-[side=right]:border-b data-[side=right]:border-l",
+      "data-[side=bottom]:[clip-path:polygon(0_0,100%_0,0_100%)]",
+      "data-[side=top]:[clip-path:polygon(100%_0,100%_100%,0_100%)]",
+      "data-[side=left]:[clip-path:polygon(0_0,100%_0,100%_100%)]",
+      "data-[side=right]:[clip-path:polygon(0_0,0_100%,100%_100%)]",
     ],
     content: "relative z-10 flex min-w-0 flex-col p-4",
     title: [
@@ -37,8 +41,8 @@ export default tv({
       "[filter:var(--ui-drop-shadow-label)]",
     ],
     description:
-      "mt-1 min-w-0 text-xs leading-relaxed text-ui-ink opacity-60",
-    body: "mt-3 min-w-0 text-sm leading-relaxed text-ui-ink opacity-75",
+      "mt-1 min-w-0 text-xs leading-relaxed text-ui-ink opacity-85",
+    body: "mt-3 min-w-0 text-sm leading-relaxed text-ui-ink opacity-90",
     footer: "mt-4 flex flex-wrap items-center justify-end gap-2",
   },
 });

@@ -113,6 +113,23 @@ test.describe("overlay surfaces", () => {
 
       expect(popupBackground).toBe("rgba(0, 0, 0, 0)");
 
+      if (overlay.id === "popover") {
+        const arrow = popup.locator('[data-slot="arrow"]');
+        await expect(arrow).toBeVisible();
+
+        const arrowStyle = await arrow.evaluate((element) => {
+          const style = getComputedStyle(element);
+
+          return {
+            backgroundColor: style.backgroundColor,
+            clipPath: style.clipPath,
+          };
+        });
+
+        expect(arrowStyle.backgroundColor).not.toBe("rgba(0, 0, 0, 0)");
+        expect(arrowStyle.clipPath).toContain("polygon");
+      }
+
       const viewport = page.viewportSize();
       const box = await popup.boundingBox();
 
@@ -127,6 +144,31 @@ test.describe("overlay surfaces", () => {
       }
     });
   }
+});
+
+test("tooltip arrow uses the overlay fill and clips to the exposed half", async ({
+  page,
+}) => {
+  await page.goto("/#tooltip");
+
+  const section = page.locator("#tooltip");
+  await section.getByRole("button", { name: "Save" }).hover();
+
+  const popup = page.locator('[data-slot="popup"]:visible');
+  const arrow = popup.locator('[data-slot="arrow"]');
+  await expect(arrow).toBeVisible();
+
+  const arrowStyle = await arrow.evaluate((element) => {
+    const style = getComputedStyle(element);
+
+    return {
+      backgroundColor: style.backgroundColor,
+      clipPath: style.clipPath,
+    };
+  });
+
+  expect(arrowStyle.backgroundColor).not.toBe("rgba(0, 0, 0, 0)");
+  expect(arrowStyle.clipPath).toContain("polygon");
 });
 
 test.describe("tall overlay content", () => {

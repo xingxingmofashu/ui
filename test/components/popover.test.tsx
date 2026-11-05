@@ -345,9 +345,15 @@ describe("Popover", () => {
       expect(styles.arrow()).toContain("data-[side=top]:-bottom-[6px]");
       expect(styles.arrow()).toContain("data-[side=left]:border-r");
       expect(styles.arrow()).toContain("data-[side=right]:border-b");
+      expect(styles.arrow()).toContain(
+        "data-[side=bottom]:[clip-path:polygon(0_0,100%_0,0_100%)]",
+      );
+      expect(styles.arrow()).toContain(
+        "data-[side=top]:[clip-path:polygon(100%_0,100%_100%,0_100%)]",
+      );
       expect(styles.title()).toContain("font-semibold");
-      expect(styles.description()).toContain("opacity-60");
-      expect(styles.body()).toContain("opacity-75");
+      expect(styles.description()).toContain("opacity-85");
+      expect(styles.body()).toContain("opacity-90");
       expect(styles.footer()).toContain("justify-end");
     });
 
