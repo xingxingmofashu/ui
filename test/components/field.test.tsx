@@ -115,15 +115,11 @@ describe("Field", () => {
 
       const input = screen.getByRole("textbox", { name: "Email" });
       const root = getRoot();
+      const error = getSlot(root, "error");
 
       expect(screen.getByText("That address is already in use.")).toBeVisible();
-      expect(getSlot(root, "error-icon")).toHaveAttribute(
-        "aria-hidden",
-        "true",
-      );
-      expect(getSlot(root, "error-text")).toHaveTextContent(
-        "That address is already in use.",
-      );
+      expect(error).toHaveTextContent("That address is already in use.");
+      expect(error.querySelector("svg")).toBeNull();
       expect(input).toHaveAttribute("aria-invalid", "true");
       expect(root).toHaveAttribute("data-invalid");
     });
@@ -149,10 +145,10 @@ describe("Field", () => {
 
       await user.type(screen.getByLabelText("Password"), "short");
 
-      const errorText = getSlot(getRoot("Password"), "error-text");
-
       expect(await screen.findByText("Use at least 8 characters.")).toBeVisible();
-      expect(errorText.querySelector("ul")).not.toBeNull();
+      expect(
+        getSlot(getRoot("Password"), "error").querySelector("ul"),
+      ).not.toBeNull();
     });
 
     it("does not render an error when the field is valid", () => {
@@ -224,8 +220,9 @@ describe("Field", () => {
         "Enter a valid email address.",
       );
       expect(screen.getByTestId("custom-error-icon")).toBeInTheDocument();
-      expect(querySlot(root, "error-icon")).toBeNull();
-      expect(querySlot(root, "error-text")).toBeNull();
+      expect(getSlot(root, "error")).toContainElement(
+        screen.getByTestId("custom-error"),
+      );
       expect(input).toHaveAccessibleDescription("Enter a valid email address.");
     });
 
@@ -266,8 +263,6 @@ describe("Field", () => {
             root: "ui-root",
             label: "ui-label",
             error: "ui-error",
-            errorIcon: "ui-error-icon",
-            errorText: "ui-error-text",
             description: "ui-description",
           }}
         >
@@ -280,8 +275,6 @@ describe("Field", () => {
       expect(root).toHaveClass("ui-root");
       expect(getSlot(root, "label")).toHaveClass("ui-label");
       expect(getSlot(root, "error")).toHaveClass("ui-error");
-      expect(getSlot(root, "error-icon")).toHaveClass("ui-error-icon");
-      expect(getSlot(root, "error-text")).toHaveClass("ui-error-text");
       expect(getSlot(root, "description")).toHaveClass("ui-description");
     });
 
@@ -368,11 +361,16 @@ describe("Field", () => {
         "base",
         "description",
         "error",
-        "errorIcon",
-        "errorText",
         "label",
         "root",
       ]);
+    });
+
+    it("colors error messages red", () => {
+      const styles = theme();
+
+      expect(styles.error()).toContain("text-red-700");
+      expect(styles.error()).toContain("ui-dark:text-red-400");
     });
 
     it("fades the label, error, and description when the field is disabled", () => {

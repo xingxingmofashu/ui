@@ -8,8 +8,6 @@ import { type VariantProps } from "tailwind-variants";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/field";
 
-import { ErrorIcon } from "./icons/error";
-
 type Field = ComponentConfig<typeof theme>;
 
 interface FieldProps
@@ -34,40 +32,12 @@ function FieldError({
   ui,
 }: Pick<FieldProps, "error" | "ui">) {
   const styles = theme();
-  const customError = React.isValidElement(error) || Array.isArray(error);
 
   return (
     <UIField.Error
       {...(error ? { match: true, children: error } : {})}
       data-slot="error"
-      className={cn(
-        styles.error(),
-        customError ? null : "flex items-center gap-1.5",
-        ui?.error,
-      )}
-      render={(elementProps) => (
-        <div {...elementProps} data-slot="error">
-          {customError ? (
-            elementProps.children
-          ) : (
-            <>
-              <span
-                aria-hidden="true"
-                data-slot="error-icon"
-                className={cn(styles.errorIcon(), ui?.errorIcon)}
-              >
-                <ErrorIcon />
-              </span>
-              <div
-                data-slot="error-text"
-                className={cn(styles.errorText(), ui?.errorText)}
-              >
-                {elementProps.children}
-              </div>
-            </>
-          )}
-        </div>
-      )}
+      className={cn(styles.error(), ui?.error)}
     />
   );
 }

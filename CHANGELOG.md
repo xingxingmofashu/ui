@@ -17,6 +17,8 @@
 
 ### Changed
 
+- Color Field error messages red and remove the default error icon along with
+  the `errorIcon` and `errorText` slots.
 - Remove the `label` and `description` props from `Input`. Wrap it in `Field`
   to provide a label, description, and validation message.
 

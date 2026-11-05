@@ -97,7 +97,7 @@ describe("Form", () => {
       const root = getRoot();
 
       expect(screen.getByText("That address is taken.")).toBeVisible();
-      expect(getSlot(root, "error-text")).toHaveTextContent(
+      expect(getSlot(root, "error")).toHaveTextContent(
         "That address is taken.",
       );
       expect(input).toHaveAttribute("aria-invalid", "true");
@@ -118,9 +118,9 @@ describe("Form", () => {
         </Form>,
       );
 
-      const errorText = getSlot(getRoot(), "error-text");
+      const error = getSlot(getRoot(), "error");
 
-      expect(errorText.querySelector("ul")).not.toBeNull();
+      expect(error.querySelector("ul")).not.toBeNull();
       expect(screen.getByText("Use a work address.")).toBeVisible();
       expect(
         screen.getByText("Personal domains are not allowed."),
