@@ -140,14 +140,12 @@ function themeCandidates() {
   });
   const inputSlots = [
     "root",
-    "label",
     "control",
     "glass",
     "overlay",
     "leadingIcon",
     "input",
     "trailingIcon",
-    "description",
   ] as const;
   const inputSizes = ["xs", "sm", "md", "lg", "xl"] as const;
   const inputCandidates = inputSizes.flatMap((size) => {

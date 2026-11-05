@@ -38,7 +38,9 @@ submit the surrounding form.
 
 ```tsx
 <form action={savePreferences}>
-  <Input label="Email" name="email" type="email" required />
+  <Field label="Email">
+    <Input name="email" type="email" required />
+  </Field>
   <Select
     label="Plan"
     name="plan"
@@ -76,9 +78,10 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
 ## Labels and descriptions
 
-Use the built-in label props instead of rendering separate text:
+Use `Field` for text inputs and the built-in label props for the other controls:
 
-- `Input` renders a real `<label>` associated with the input.
+- `Field` renders a real `<label>`, description, and validation message around
+  `Input`.
 - `Checkbox` and `Switch` use their visible label as the accessible name.
 - `CheckboxGroup` names the group with `label` and each option with its own
   `label`.
@@ -115,17 +118,20 @@ Every stateful control supports both modes:
 
 ```tsx
 // Uncontrolled: the component owns the state.
-<Input label="Name" name="name" defaultValue="Ada" />
+<Field label="Name">
+  <Input name="name" defaultValue="Ada" />
+</Field>
 <Switch label="Public profile" name="public" defaultChecked />
 
 // Controlled: you own the state.
 const [email, setEmail] = useState("");
-<Input
-  label="Email"
-  name="email"
-  value={email}
-  onValueChange={setEmail}
-/>
+<Field label="Email">
+  <Input
+    name="email"
+    value={email}
+    onValueChange={setEmail}
+  />
+</Field>
 ```
 
 Do not pass `value` without a corresponding change handler. For `Slider`,
@@ -143,29 +149,24 @@ field and connect it with `aria-describedby` or `aria-errormessage`:
 
 ```tsx
 import { useState } from "react";
-import { Input } from "@xingxingmofashu/ui";
+import { Field, Input } from "@xingxingmofashu/ui";
 
 function EmailField() {
   const [email, setEmail] = useState("");
   const invalid = email.length > 0 && !email.includes("@");
 
   return (
-    <div className="flex flex-col gap-2">
+    <Field
+      label="Email"
+      error={invalid ? "Enter a valid email address." : undefined}
+    >
       <Input
-        label="Email"
         name="email"
         type="email"
         value={email}
         onValueChange={setEmail}
-        aria-invalid={invalid || undefined}
-        aria-describedby={invalid ? "email-error" : undefined}
       />
-      {invalid ? (
-        <p id="email-error" className="text-sm text-ui-ink/70">
-          Enter a valid email address.
-        </p>
-      ) : null}
-    </div>
+    </Field>
   );
 }
 ```
@@ -213,8 +214,8 @@ supply the fields.
 - A `CheckboxGroup` has no native `required`; validate the array length.
 - A `Slider` needs an accessible name; `aria-labelledby` is usually the
   cleanest option when the label is rendered outside the component.
-- Do not wrap controls in a `<label>` yourself; the components already render
-  the correct label relationship.
+- Do not wrap controls in a `<label>` yourself. Use `Field` for `Input`, and the
+  built-in label props for the other controls.
 
 ## Related components
 

@@ -7,6 +7,7 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
+  Field,
   Input,
   Slider,
   Switch,
@@ -34,14 +35,17 @@ export default function GuideFormDemo() {
       onSubmit={handleSubmit}
       className="flex w-full max-w-md flex-col gap-5"
     >
-      <Input
+      <Field
         label="Work email"
         description="Used for account notices and receipts."
-        name="email"
-        type="email"
-        placeholder="you@example.com"
-        required
-      />
+      >
+        <Input
+          name="email"
+          type="email"
+          placeholder="you@example.com"
+          required
+        />
+      </Field>
 
       <Checkbox
         name="digest"

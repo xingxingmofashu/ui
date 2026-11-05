@@ -1,11 +1,9 @@
 ---
 title: "Input"
-description: "一个 React 输入框，采用 Liquid Glass 字段、标签、说明文字与图标插槽。"
+description: "一个 React 输入框，采用 Liquid Glass 字段与图标插槽。"
 ---
 
-`Input` 渲染玻璃质感的输入区域、原生 `<input>`、可选标签与说明文字，以及可选的前后图标。
-
-可见标签是真实的 `<label>`，会自动与输入框关联。传入 `description` 时，说明文字会获得 id，输入框通过 `aria-describedby` 指向它；你传入的 `aria-describedby` 会与它合并。
+`Input` 渲染包裹原生 `<input>` 的玻璃控件，并提供可选的前后图标。输入框负责玻璃表面与原生表单行为；若要显示可见标签、说明与校验信息，请使用 `Field` 包裹。
 
 ## 基础示例
 
@@ -15,34 +13,30 @@ description: "一个 React 输入框，采用 Liquid Glass 字段、标签、说
 
 ## 尺寸
 
-提供 `xs`、`sm`、`md`、`lg`、`xl` 五种尺寸；高度、内边距、圆角、文字与图标尺寸会同步缩放。
+提供 `xs`、`sm`、`md`、`lg`、`xl` 五种尺寸；高度、内边距、圆角、文字与图标尺寸会同步缩放。若希望标签与信息尺寸一致，请为 `Field` 传入相同的 `size`。
 
 <Example name="input/sizes" />
 
 ## 图标
 
-`leadingIcon` 渲染在输入框前方，`trailingIcon` 渲染在后方。两个插槽都是装饰性的，会带有 `aria-hidden="true"`；可访问名称请使用 `label` 或 `aria-label`。
+`leadingIcon` 渲染在输入框前方，`trailingIcon` 渲染在后方。两个插槽都是装饰性的，会带有 `aria-hidden="true"`；可访问名称请使用 `Field` 提供的可见标签，没有可见标签时使用 `aria-label`。
 
 <Example name="input/icons" />
 
 ## 状态
 
-`disabled` 会透传给原生输入框，并淡化整个字段。`readOnly` 保留焦点与文本选择能力，但阻止修改。
+`disabled` 会透传给原生输入框并淡化控件。输入框位于 `Field` 内时，请把 `disabled` 设在 `Field` 上，让标签与信息一起淡出。`readOnly` 保留焦点与文本选择能力，但阻止修改。
 
 <Example name="input/states" />
 
 ## 无障碍
 
-设置 `label` 时，`Input` 会渲染原生 `<input>` 与真实 `<label>`。`description` 通过 `aria-describedby` 关联，传入的 `aria-describedby` 会与自动生成的值合并。
-
-只有在没有可见标签时才使用 `aria-label` 或 `aria-labelledby`；占位文本不是标签。图标插槽是装饰性的。`required`、`name` 与 `type` 等原生属性会保留原生表单行为。标签模式见[可访问性指南](/docs/zh/guides/accessibility)。
+`Input` 渲染原生 `<input>`。用 `Field` 包裹即可获得可见标签、说明与校验信息；`Field` 会自动关联 `aria-describedby` 与 `aria-invalid`。只有在没有可见标签时才使用 `aria-label` 或 `aria-labelledby`；占位文本不是标签。图标插槽是装饰性的。`required`、`name` 与 `type` 等原生属性会保留原生表单行为。标签模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | 可见标签，与输入框关联。 |
-| `description` | `ReactNode` | — | 输入框下方的说明文字，会自动通过 `aria-describedby` 关联。 |
 | `leadingIcon` | `ReactNode` | — | 输入框前的装饰图标。 |
 | `trailingIcon` | `ReactNode` | — | 输入框后的装饰图标。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距、圆角、文字与图标尺寸。 |
@@ -53,16 +47,16 @@ description: "一个 React 输入框，采用 Liquid Glass 字段、标签、说
 | `placeholder` | `string` | — | 占位文字。 |
 | `name` | `string` | — | 表单字段名。 |
 | `id` | `string` | 自动生成 | 输入框 ID；省略时会自动生成。 |
-| `disabled` | `boolean` | `false` | 禁用输入框并淡化整个字段。 |
+| `disabled` | `boolean` | `false` | 禁用输入框并淡化整个控件。 |
 | `readOnly` | `boolean` | `false` | 阻止修改，但保留焦点与文本选择能力。 |
 | `required` | `boolean` | `false` | 表单提交前必须有值。 |
 | `aria-label` | `string` | — | 没有可见标签时使用的可访问名称。 |
 | `aria-labelledby` | `string` | — | 指向外部可访问名称的 ID 引用。 |
-| `aria-describedby` | `string` | — | 指向额外辅助说明的 ID 引用。可见 `description` 会与它合并。 |
+| `aria-describedby` | `string` | — | 指向额外辅助说明的 ID 引用。`Field` 的说明与错误信息会与它合并。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换输入元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到输入元素的 ref。 |
 | `className` | `string` | — | Tailwind 类名，合并到外层 `root`。 |
-| `ui` | `{ root?: ClassValue; label?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
+| `ui` | `{ root?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | 属性 | 说明 |
 | --- | --- |
@@ -73,7 +67,7 @@ description: "一个 React 输入框，采用 Liquid Glass 字段、标签、说
 | `data-dirty` | 输入框值变化后存在。 |
 | `data-filled` | 输入框有值时存在。 |
 | `data-focused` | 输入框聚焦时存在。 |
-| `data-slot` | 标记内部部件（`root`、`label`、`control`、`glass`、`overlay`、`leading-icon`、`input`、`trailing-icon`、`description`），用于样式选择。 |
+| `data-slot` | 标记内部部件（`root`、`control`、`glass`、`overlay`、`leading-icon`、`input`、`trailing-icon`），用于样式选择。 |
 
 ## 主题
 
@@ -81,6 +75,7 @@ description: "一个 React 输入框，采用 Liquid Glass 字段、标签、说
 
 ## 相关组件
 
+- [Field](/docs/zh/components/field) — 为输入框添加标签、说明与校验信息。
 - [Select](/docs/zh/components/select) — 从固定值集合中选择。
 - [Checkbox](/docs/zh/components/checkbox) — 布尔字段。
 - [Slider](/docs/zh/components/slider) — 数值范围。

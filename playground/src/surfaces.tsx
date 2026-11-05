@@ -12,6 +12,7 @@ import {
 import {
   Button,
   Card,
+  Field,
   Input,
   Slider,
   Switch,
@@ -366,7 +367,9 @@ function SurfaceLab() {
               }
             >
               <div className="flex flex-col gap-5">
-                <Input label="Workspace name" defaultValue="Liquid Glass" />
+                <Field label="Workspace name">
+                  <Input defaultValue="Liquid Glass" />
+                </Field>
 
                 <div className="flex items-center justify-between gap-4">
                   <div className="min-w-0">

@@ -2,21 +2,24 @@
 
 import { useState } from "react";
 
-import { Input } from "@xingxingmofashu/ui";
+import { Field, Input } from "@xingxingmofashu/ui";
 
 export default function InputBasicDemo() {
   const [email, setEmail] = useState("");
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-4">
-      <Input
+      <Field
         label="Email"
         description="We only use this address for account notices."
-        type="email"
-        placeholder="you@example.com"
-        value={email}
-        onValueChange={setEmail}
-      />
+      >
+        <Input
+          type="email"
+          placeholder="you@example.com"
+          value={email}
+          onValueChange={setEmail}
+        />
+      </Field>
 
       <p aria-live="polite" className="text-sm text-ui-ink/60">
         {email ? `Ready to send to ${email}.` : "Enter an email address."}

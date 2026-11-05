@@ -32,14 +32,6 @@ function getRoot(inputElement: HTMLElement) {
 
 describe("Input", () => {
   describe("accessible names", () => {
-    it("associates a visible label with the input", () => {
-      render(<Input label="Email" />);
-
-      expect(
-        screen.getByRole("textbox", { name: "Email" }),
-      ).toBeInTheDocument();
-    });
-
     it("supports aria-label", () => {
       render(<Input aria-label="Search" />);
 
@@ -61,72 +53,26 @@ describe("Input", () => {
       ).toBeInTheDocument();
     });
 
-    it("links the visible description with aria-describedby", () => {
-      render(
-        <Input
-          label="Email"
-          description="We only use this for account notices."
-        />,
-      );
-
-      const input = screen.getByRole("textbox", { name: "Email" });
-      const description = getSlot(getRoot(input), "description");
-
-      expect(description).toHaveAttribute("id");
-      expect(input).toHaveAttribute("aria-describedby", description.id);
-      expect(input).toHaveAccessibleDescription(
-        "We only use this for account notices.",
-      );
-    });
-
-    it("merges aria-describedby with the visible description", () => {
+    it("forwards aria-describedby", () => {
       render(
         <>
-          <span id="hint">Enter your work email.</span>
-          <Input
-            label="Email"
-            description="We only use this for account notices."
-            aria-describedby="hint"
-          />
+          <span id="email-hint">Enter your work email.</span>
+          <Input aria-label="Email" aria-describedby="email-hint" />
         </>,
       );
 
       const input = screen.getByRole("textbox", { name: "Email" });
-      const description = getSlot(getRoot(input), "description");
 
-      expect(input).toHaveAttribute(
-        "aria-describedby",
-        `hint ${description.id}`,
-      );
-      expect(input).toHaveAccessibleDescription(
-        "Enter your work email. We only use this for account notices.",
-      );
-    });
-
-    it("gives each description a unique id", () => {
-      render(
-        <>
-          <Input label="Email" description="Work email." />
-          <Input label="Phone" description="Mobile number." />
-        </>,
-      );
-
-      const [email, phone] = screen.getAllByRole("textbox");
-      const emailDescription = getSlot(getRoot(email!), "description");
-      const phoneDescription = getSlot(getRoot(phone!), "description");
-
-      expect(emailDescription.id).not.toBe(phoneDescription.id);
-      expect(email).toHaveAttribute("aria-describedby", emailDescription.id);
-      expect(phone).toHaveAttribute("aria-describedby", phoneDescription.id);
+      expect(input).toHaveAttribute("aria-describedby", "email-hint");
+      expect(input).toHaveAccessibleDescription("Enter your work email.");
     });
   });
 
   describe("structure", () => {
-    it("renders the input, label, icons, and description slots", () => {
+    it("renders the input, control, glass, and icon slots", () => {
       render(
         <Input
-          label="Search"
-          description="Search the documentation."
+          aria-label="Search"
           leadingIcon={<svg data-testid="leading-icon" />}
           trailingIcon={<svg data-testid="trailing-icon" />}
         />,
@@ -137,7 +83,6 @@ describe("Input", () => {
 
       expect(input.tagName).toBe("INPUT");
       expect(input).toHaveAttribute("data-slot", "input");
-      expect(getSlot(root, "label").tagName).toBe("LABEL");
       expect(getSlot(root, "control").tagName).toBe("SPAN");
       expect(getSlot(root, "glass")).toHaveAttribute("aria-hidden", "true");
       expect(getSlot(root, "overlay")).toHaveAttribute("aria-hidden", "true");
@@ -149,24 +94,21 @@ describe("Input", () => {
         "aria-hidden",
         "true",
       );
-      expect(getSlot(root, "description").tagName).toBe("SPAN");
     });
 
-    it("does not render empty optional slots", () => {
+    it("does not render optional icons", () => {
       render(<Input aria-label="Search" />);
 
       const input = screen.getByRole("textbox", { name: "Search" });
       const root = getRoot(input);
 
-      expect(querySlot(root, "label")).toBeNull();
-      expect(querySlot(root, "description")).toBeNull();
       expect(querySlot(root, "leading-icon")).toBeNull();
       expect(querySlot(root, "trailing-icon")).toBeNull();
       expect(input).not.toHaveAttribute("aria-describedby");
     });
 
     it("merges className into the root only", () => {
-      render(<Input label="Search" className="custom-root" />);
+      render(<Input aria-label="Search" className="custom-root" />);
 
       const input = screen.getByRole("textbox", { name: "Search" });
       const root = getRoot(input);
@@ -174,27 +116,23 @@ describe("Input", () => {
       expect(root).toHaveClass("custom-root");
       expect(getSlot(root, "control")).not.toHaveClass("custom-root");
       expect(input).not.toHaveClass("custom-root");
-      expect(getSlot(root, "label")).not.toHaveClass("custom-root");
     });
 
     it("applies ui classes to internal slots", () => {
       render(
         <Input
-          label="Search"
-          description="Help"
+          aria-label="Search"
           leadingIcon={<svg />}
           trailingIcon={<svg />}
           className="custom-root"
           ui={{
             root: "ui-root",
-            label: "ui-label",
             control: "ui-control",
             glass: "ui-glass",
             overlay: "ui-overlay",
             leadingIcon: "ui-leading",
             input: "ui-input",
             trailingIcon: "ui-trailing",
-            description: "ui-description",
           }}
         />,
       );
@@ -203,14 +141,12 @@ describe("Input", () => {
       const root = getRoot(input);
 
       expect(root).toHaveClass("ui-root", "custom-root");
-      expect(getSlot(root, "label")).toHaveClass("ui-label");
       expect(getSlot(root, "control")).toHaveClass("ui-control");
       expect(getSlot(root, "glass")).toHaveClass("ui-glass");
       expect(getSlot(root, "overlay")).toHaveClass("ui-overlay");
       expect(getSlot(root, "leading-icon")).toHaveClass("ui-leading");
       expect(input).toHaveClass("ui-input");
       expect(getSlot(root, "trailing-icon")).toHaveClass("ui-trailing");
-      expect(getSlot(root, "description")).toHaveClass("ui-description");
     });
 
     it("does not accept inline styles", () => {
@@ -221,7 +157,6 @@ describe("Input", () => {
 
       expect(element).toBeTruthy();
     });
-
   });
 
   describe("native behavior", () => {
@@ -250,7 +185,7 @@ describe("Input", () => {
 
     it("supports disabled and read-only states", () => {
       const { rerender } = render(
-        <Input label="Email" disabled defaultValue="you@example.com" />,
+        <Input aria-label="Email" disabled defaultValue="you@example.com" />,
       );
 
       const disabledInput = screen.getByRole("textbox", { name: "Email" });
@@ -258,7 +193,9 @@ describe("Input", () => {
       expect(disabledInput).toBeDisabled();
       expect(getRoot(disabledInput)).toHaveAttribute("data-disabled");
 
-      rerender(<Input label="Email" readOnly defaultValue="you@example.com" />);
+      rerender(
+        <Input aria-label="Email" readOnly defaultValue="you@example.com" />,
+      );
 
       const readOnlyInput = screen.getByRole("textbox", { name: "Email" });
 
@@ -273,7 +210,7 @@ describe("Input", () => {
 
       render(
         <Input
-          label="Email"
+          aria-label="Email"
           defaultValue=""
           onValueChange={onValueChange}
         />,
@@ -292,7 +229,7 @@ describe("Input", () => {
 
       render(
         <Input
-          label="Email"
+          aria-label="Email"
           value="hello"
           onValueChange={onChange}
         />,
@@ -346,10 +283,8 @@ describe("Input", () => {
       expect(Object.keys(styles).sort()).toEqual([
         "base",
         "control",
-        "description",
         "glass",
         "input",
-        "label",
         "leadingIcon",
         "overlay",
         "root",

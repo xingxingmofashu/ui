@@ -1,11 +1,9 @@
 ---
 title: "Input"
-description: "A React input with a Liquid Glass field, label, description, and icon slots."
+description: "A React input with a Liquid Glass field and icon slots."
 ---
 
-`Input` renders a glass control with a native `<input>`, an optional label and description, and optional leading and trailing icons.
-
-The visible label is a real `<label>` associated with the input. When `description` is set, it receives an id and the input points at it with `aria-describedby`; any `aria-describedby` you pass is merged with that id.
+`Input` renders a glass control around a native `<input>`, with optional leading and trailing icons. The input owns its glass surface and native form behavior; wrap it in `Field` to provide a visible label, description, and validation message.
 
 ## Basic example
 
@@ -15,34 +13,30 @@ Use `value` with `onValueChange` for a controlled field, or `defaultValue` for a
 
 ## Sizes
 
-Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, radius, text, and icon sizes scale together.
+Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, radius, text, and icon sizes scale together. Pass the same `size` to `Field` when the label and message should match.
 
 <Example name="input/sizes" />
 
 ## Icons
 
-`leadingIcon` renders before the input and `trailingIcon` after it. Both slots are decorative and receive `aria-hidden="true"`; use the label or `aria-label` for the accessible name.
+`leadingIcon` renders before the input and `trailingIcon` after it. Both slots are decorative and receive `aria-hidden="true"`; use the visible label from `Field`, or `aria-label` when there is no visible label.
 
 <Example name="input/icons" />
 
 ## States
 
-`disabled` is forwarded to the native input and fades the whole field. `readOnly` keeps the value focusable and selectable while preventing edits.
+`disabled` is forwarded to the native input and fades the control. Set `disabled` on `Field` when the input is wrapped so the label and message fade with it. `readOnly` keeps the value focusable and selectable while preventing edits.
 
 <Example name="input/states" />
 
 ## Accessibility
 
-`Input` renders a native `<input>` with a real `<label>` when `label` is set. `description` is connected with `aria-describedby`, and any `aria-describedby` you pass is merged.
-
-Use `aria-label` or `aria-labelledby` only when no visible label is rendered; placeholder text is not a label. Icon slots are decorative. Native attributes such as `required`, `name`, and `type` keep native form behavior. See the [accessibility guide](/docs/en/guides/accessibility) for labeling patterns.
+`Input` renders a native `<input>`. Wrap it in `Field` to give it a visible label, description, and validation message; `Field` wires `aria-describedby` and `aria-invalid` for you. Use `aria-label` or `aria-labelledby` only when no visible label is rendered; placeholder text is not a label. Icon slots are decorative. Native attributes such as `required`, `name`, and `type` keep native form behavior. See the [accessibility guide](/docs/en/guides/accessibility) for labeling patterns.
 
 ## API reference
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Visible label associated with the input. |
-| `description` | `ReactNode` | — | Supporting text under the control, linked through `aria-describedby`. |
 | `leadingIcon` | `ReactNode` | — | Decorative icon before the input. |
 | `trailingIcon` | `ReactNode` | — | Decorative icon after the input. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, radius, text, and icon size. |
@@ -53,16 +47,16 @@ Use `aria-label` or `aria-labelledby` only when no visible label is rendered; pl
 | `placeholder` | `string` | — | Placeholder text. |
 | `name` | `string` | — | Form field name. |
 | `id` | `string` | generated | ID of the input. A generated ID is used when omitted. |
-| `disabled` | `boolean` | `false` | Disables the input and fades the whole field. |
+| `disabled` | `boolean` | `false` | Disables the input and fades the whole control. |
 | `readOnly` | `boolean` | `false` | Prevents edits while keeping the value focusable and selectable. |
 | `required` | `boolean` | `false` | Requires a value for form submission. |
 | `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
-| `aria-describedby` | `string` | — | ID reference for extra supporting text. A visible `description` is merged with this value. |
+| `aria-describedby` | `string` | — | ID reference for extra supporting text. `Field` descriptions and errors are merged with this value. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the input element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the input element. |
 | `className` | `string` | — | Tailwind classes merged into the outer root. |
-| `ui` | `{ root?: ClassValue; label?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+| `ui` | `{ root?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
@@ -73,7 +67,7 @@ Use `aria-label` or `aria-labelledby` only when no visible label is rendered; pl
 | `data-dirty` | Present after the input value changes. |
 | `data-filled` | Present when the input has a value. |
 | `data-focused` | Present when the input is focused. |
-| `data-slot` | Marks internal parts (`root`, `label`, `control`, `glass`, `overlay`, `leading-icon`, `input`, `trailing-icon`, `description`) for styling. |
+| `data-slot` | Marks internal parts (`root`, `control`, `glass`, `overlay`, `leading-icon`, `input`, `trailing-icon`) for styling. |
 
 ## Theming
 
@@ -81,6 +75,7 @@ The component uses the shared glass material. Tune shared `--ui-glass-*` tokens 
 
 ## Related components
 
+- [Field](/docs/en/components/field) — Adds a label, description, and validation message around the input.
 - [Select](/docs/en/components/select) — For choosing from a fixed set of values.
 - [Checkbox](/docs/en/components/checkbox) — For boolean fields.
 - [Slider](/docs/en/components/slider) — For numeric ranges.

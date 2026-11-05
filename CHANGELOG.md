@@ -9,6 +9,11 @@
 - Add the Checkbox Group component with shared array state, group labels and
   descriptions, five sizes, read-only state, and native form submission.
 
+### Changed
+
+- Remove the `label` and `description` props from `Input`. Wrap it in `Field`
+  to provide a label, description, and validation message.
+
 ## 0.1.8 - 2026-11-04
 
 ### Added

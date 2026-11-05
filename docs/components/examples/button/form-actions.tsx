@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 
-import { Button, Input } from "@xingxingmofashu/ui";
+import { Button, Field, Input } from "@xingxingmofashu/ui";
 
 export default function ButtonFormActionsDemo() {
   const [status, setStatus] = useState("No action submitted yet.");
@@ -25,7 +25,9 @@ export default function ButtonFormActionsDemo() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-3"
       >
-        <Input label="Project name" name="project" defaultValue="Liquid Glass" />
+        <Field label="Project name">
+          <Input name="project" defaultValue="Liquid Glass" />
+        </Field>
       </form>
 
       <div className="flex flex-wrap gap-2">

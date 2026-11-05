@@ -1,22 +1,24 @@
 "use client";
 
-import { Input } from "@xingxingmofashu/ui";
+import { Field, Input } from "@xingxingmofashu/ui";
 
 export default function InputStatesDemo() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-4">
-      <Input
+      <Field
         label="Disabled field"
         description="The value cannot be changed."
-        defaultValue="Locked value"
         disabled
-      />
-      <Input
+      >
+        <Input defaultValue="Locked value" />
+      </Field>
+
+      <Field
         label="Read-only field"
         description="The value can be selected and copied."
-        defaultValue="Read-only value"
-        readOnly
-      />
+      >
+        <Input defaultValue="Read-only value" readOnly />
+      </Field>
     </div>
   );
 }

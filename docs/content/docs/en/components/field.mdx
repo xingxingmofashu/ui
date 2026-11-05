@@ -5,11 +5,11 @@ description: "A React field with a Liquid Glass label, description, and validati
 
 `Field` wraps one form control with a visible label, supporting text, and a validation message. It owns the labeling and validity wiring, while the child control owns its own glass surface and interaction.
 
-Use it when a control needs more than its built-in `label` and `description`, or when several controls share one label and one error message. `Field` works with the package's Base UI form controls, such as `Input`, `Select`, `Checkbox`, `CheckboxGroup`, and `RadioGroup`.
+Use `Field` to give `Input` a visible label, description, and validation message, or when several controls share one label and one error message. `Field` works with the package's Base UI form controls, such as `Input`, `Select`, `Checkbox`, `CheckboxGroup`, and `RadioGroup`.
 
 ## Basic example
 
-Pass the control as `children`. `Field` renders a real `<label>` and connects it to the control, so the input needs no separate `label` prop.
+Pass the control as `children`. `Field` renders a real `<label>` and connects it to the control, so the input needs no separate label.
 
 <Example name="field/basic" />
 

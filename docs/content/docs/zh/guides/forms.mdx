@@ -35,7 +35,9 @@ description: "提交值、校验字段，并用 Liquid Glass 控件组合可访�
 
 ```tsx
 <form action={savePreferences}>
-  <Input label="邮箱" name="email" type="email" required />
+  <Field label="邮箱">
+    <Input name="email" type="email" required />
+  </Field>
   <Select
     label="套餐"
     name="plan"
@@ -73,9 +75,9 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
 ## 标签与描述
 
-使用内置的标签属性，而不是另外渲染文本：
+文本输入使用 `Field`，其他控件使用内置的标签属性：
 
-- `Input` 渲染与输入框关联的真实 `<label>`。
+- `Field` 会为 `Input` 渲染真实的 `<label>`、说明与校验信息。
 - `Checkbox` 与 `Switch` 使用可见标签作为可访问名称。
 - `CheckboxGroup` 使用 `label` 为分组命名，每个选项使用自己的 `label`。
 - `Select` 使用 `label` 为触发器命名；没有可见标签时，请使用 `aria-label` 或
@@ -111,17 +113,20 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
 ```tsx
 // 非受控：组件自己持有状态。
-<Input label="姓名" name="name" defaultValue="Ada" />
+<Field label="姓名">
+  <Input name="name" defaultValue="Ada" />
+</Field>
 <Switch label="公开资料" name="public" defaultChecked />
 
 // 受控：由你持有状态。
 const [email, setEmail] = useState("");
-<Input
-  label="邮箱"
-  name="email"
-  value={email}
-  onValueChange={setEmail}
-/>
+<Field label="邮箱">
+  <Input
+    name="email"
+    value={email}
+    onValueChange={setEmail}
+  />
+</Field>
 ```
 
 不要只传 `value` 而不提供变更处理函数。对于 `Slider`，`onValueChange` 会收到
@@ -137,29 +142,24 @@ const [email, setEmail] = useState("");
 
 ```tsx
 import { useState } from "react";
-import { Input } from "@xingxingmofashu/ui";
+import { Field, Input } from "@xingxingmofashu/ui";
 
 function EmailField() {
   const [email, setEmail] = useState("");
   const invalid = email.length > 0 && !email.includes("@");
 
   return (
-    <div className="flex flex-col gap-2">
+    <Field
+      label="邮箱"
+      error={invalid ? "请输入有效的邮箱地址。" : undefined}
+    >
       <Input
-        label="邮箱"
         name="email"
         type="email"
         value={email}
         onValueChange={setEmail}
-        aria-invalid={invalid || undefined}
-        aria-describedby={invalid ? "email-error" : undefined}
       />
-      {invalid ? (
-        <p id="email-error" className="text-sm text-ui-ink/70">
-          请输入有效的邮箱地址。
-        </p>
-      ) : null}
-    </div>
+    </Field>
   );
 }
 ```
@@ -203,7 +203,7 @@ export async function savePreferences(formData: FormData) {
 - `CheckboxGroup` 会提交重复字段，请使用 `getAll` 而不是 `get`。
 - `CheckboxGroup` 没有原生 `required`，请自行校验数组长度。
 - `Slider` 需要可访问名称；标签渲染在组件外部时，`aria-labelledby` 通常最清晰。
-- 不要自己用 `<label>` 包裹控件；组件已经渲染正确的标签关系。
+- 不要自己用 `<label>` 包裹控件。`Input` 使用 `Field`，其他控件使用内置的标签属性。
 
 ## 相关组件
 

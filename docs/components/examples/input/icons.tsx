@@ -2,7 +2,7 @@
 
 import { ArrowRight, Mail, Search } from "lucide-react";
 
-import { Input } from "@xingxingmofashu/ui";
+import { Field, Input } from "@xingxingmofashu/ui";
 
 export default function InputIconsDemo() {
   return (
@@ -12,17 +12,21 @@ export default function InputIconsDemo() {
         leadingIcon={<Search />}
         placeholder="Search components"
       />
-      <Input
-        label="Email"
-        type="email"
-        leadingIcon={<Mail />}
-        placeholder="you@example.com"
-      />
-      <Input
-        label="Invite link"
-        defaultValue="https://xingxingmofashu.github.io/ui/"
-        trailingIcon={<ArrowRight />}
-      />
+
+      <Field label="Email">
+        <Input
+          type="email"
+          leadingIcon={<Mail />}
+          placeholder="you@example.com"
+        />
+      </Field>
+
+      <Field label="Invite link">
+        <Input
+          defaultValue="https://xingxingmofashu.github.io/ui/"
+          trailingIcon={<ArrowRight />}
+        />
+      </Field>
     </div>
   );
 }

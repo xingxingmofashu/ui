@@ -5,11 +5,11 @@ description: "一个 React 表单字段容器，采用 Liquid Glass 标签、说
 
 `Field` 为一个表单控件提供可见标签、辅助说明与校验信息。它负责标签和有效性的关联，子控件则保留自己的玻璃表面与交互。
 
-当控件需要超出内置 `label` 与 `description` 的能力，或多个控件需要共享一个标签和一条错误信息时，可以使用 `Field`。它适用于包内的 Base UI 表单控件，例如 `Input`、`Select`、`Checkbox`、`CheckboxGroup` 与 `RadioGroup`。
+使用 `Field` 为 `Input` 提供可见标签、说明与校验信息，或在多个控件共享一个标签和一条错误信息时使用。它适用于包内的 Base UI 表单控件，例如 `Input`、`Select`、`Checkbox`、`CheckboxGroup` 与 `RadioGroup`。
 
 ## 基础示例
 
-通过 `children` 传入控件。`Field` 会渲染真实的 `<label>` 并与控件关联，因此输入框不需要再单独设置 `label`。
+通过 `children` 传入控件。`Field` 会渲染真实的 `<label>` 并与控件关联，因此输入框不需要再单独添加标签。
 
 <Example name="field/basic" />
 

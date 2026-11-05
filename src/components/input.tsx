@@ -5,7 +5,6 @@ import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../internal/aria";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/input";
 
@@ -21,10 +20,6 @@ interface InputProps
   className?: string;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Input["slots"];
-  /** Visible label associated with the input. */
-  label?: React.ReactNode;
-  /** Optional supporting text under the field. */
-  description?: React.ReactNode;
   /** Icon rendered before the input. */
   leadingIcon?: React.ReactNode;
   /** Icon rendered after the input. */
@@ -34,24 +29,13 @@ interface InputProps
 function Input({
   className,
   ui,
-  label,
-  description,
   leadingIcon,
   trailingIcon,
   size,
-  id,
   disabled,
-  "aria-describedby": ariaDescribedBy,
   ...props
 }: InputProps) {
   const styles = theme({ size });
-  const generatedId = React.useId();
-  const descriptionId = React.useId();
-  const inputId = id ?? generatedId;
-  const describedBy = mergeIds(
-    ariaDescribedBy,
-    description ? descriptionId : undefined,
-  );
 
   return (
     <div
@@ -59,16 +43,6 @@ function Input({
       data-disabled={disabled || undefined}
       className={cn(styles.root(), ui?.root, className)}
     >
-      {label ? (
-        <label
-          htmlFor={inputId}
-          data-slot="label"
-          className={cn(styles.label(), ui?.label)}
-        >
-          {label}
-        </label>
-      ) : null}
-
       <span
         data-slot="control"
         className={cn(styles.control(), ui?.control)}
@@ -97,9 +71,7 @@ function Input({
 
         <UIInput
           {...props}
-          id={inputId}
           disabled={disabled}
-          aria-describedby={describedBy}
           data-slot="input"
           className={cn(styles.input(), ui?.input)}
         />
@@ -114,16 +86,6 @@ function Input({
           </span>
         ) : null}
       </span>
-
-      {description ? (
-        <span
-          id={descriptionId}
-          data-slot="description"
-          className={cn(styles.description(), ui?.description)}
-        >
-          {description}
-        </span>
-      ) : null}
     </div>
   );
 }
