@@ -15,6 +15,7 @@ export {
 export { Dialog, type DialogProps } from "./components/dialog";
 export { Drawer, type DrawerProps } from "./components/drawer";
 export { Field, type FieldProps } from "./components/field";
+export { Fieldset, type FieldsetProps } from "./components/fieldset";
 export { Input, type InputProps } from "./components/input";
 export {
   Menu,

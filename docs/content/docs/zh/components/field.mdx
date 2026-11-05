@@ -1,15 +1,15 @@
 ---
 title: "Field"
-description: "一个 React 表单字段容器，采用 Liquid Glass 标签、说明与校验信息，用于包裹表单控件。"
+description: "一个 React 表单字段容器，采用 Liquid Glass 标签、说明与校验信息，用于包裹单个表单控件。"
 ---
 
-`Field` 为一个表单控件提供可见标签、辅助说明与校验信息。它负责标签和有效性的关联，子控件则保留自己的玻璃表面与交互。
+`Field` 为一个 Base UI 表单控件提供可见标签、辅助说明与校验信息。它负责标签和有效性的关联，子控件则保留自己的玻璃表面与交互。
 
-使用 `Field` 为 `Input` 提供可见标签、说明与校验信息，或在多个控件共享一个标签和一条错误信息时使用。它适用于包内的 Base UI 表单控件，例如 `Input`、`Select`、`Checkbox`、`CheckboxGroup` 与 `RadioGroup`。
+使用 `Field` 为 `Input` 提供可见标签、说明与校验信息。已经内置标签的控件，例如 `Checkbox`、`Select`、`CheckboxGroup`、`RadioGroup` 与 `Switch`，继续使用自己的 `label` 属性。多个字段需要共享标题时，请使用 [Fieldset](/docs/zh/components/fieldset)。
 
 ## 基础示例
 
-通过 `children` 传入控件。`Field` 会渲染真实的 `<label>` 并与控件关联，因此输入框不需要再单独添加标签。
+通过 `children` 传入控件。`Field` 会渲染真实的 `<label>` 并与控件关联，因此输入框不需要再单独添加标签。`children` 必须是单个 Base UI 控件；原生 `<input>` 不会自动接入字段上下文。
 
 <Example name="field/basic" />
 
@@ -37,17 +37,11 @@ description: "一个 React 表单字段容器，采用 Liquid Glass 标签、说
 
 <Example name="field/sizes" />
 
-## 分组控件
-
-`Field` 也可以为分组控件提供标签。分组通过 `aria-labelledby` 引用字段标签，而不是使用 `for` 关联，因此点击字段标签不会选中第一个选项。字段信息由组内每个选项共享。
-
-<Example name="field/group" />
-
 ## 无障碍
 
-`Field` 渲染真实的 `<label>` 并与控件关联。`CheckboxGroup`、`RadioGroup` 这类分组控件会通过 `aria-labelledby` 建立关联，而不是使用原生 `for` 关联，避免标签指向组内某一个选项。`description` 与 `error` 会把各自的 id 注册到控件的 `aria-describedby`；出现错误时，控件还会带有 `aria-invalid`。
+`Field` 渲染真实的 `<label>` 并与控件关联。`description` 与 `error` 会把各自的 id 注册到控件的 `aria-describedby`；出现错误时，控件还会带有 `aria-invalid`。
 
-键盘行为由被包裹的控件负责。请使用 `label` 而不是占位符作为可访问名称，确保在缩放、翻译与语音控制下仍然有效。字段禁用时，标签与信息会淡出，控件也会通过共享的字段状态被禁用。表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
+键盘行为由被包裹的控件负责。请使用 `label` 而不是占位符作为可访问名称，确保在缩放、翻译与语音控制下仍然有效。分组控件继续使用自己的 `label`；共享标题请使用 `Fieldset`。字段禁用时，标签与信息会淡出，控件也会通过共享的字段状态被禁用。表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
@@ -55,7 +49,7 @@ description: "一个 React 表单字段容器，采用 Liquid Glass 标签、说
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `children` | `ReactNode` | — | 由字段提供标签与校验的控件。必填。 |
+| `children` | `ReactElement` | — | 由字段提供标签与校验的单个 Base UI 控件。必填。 |
 | `label` | `ReactNode` | — | 与控件关联的可见标签。 |
 | `description` | `ReactNode` | — | 控件下方的辅助说明，通过 `aria-describedby` 关联。 |
 | `error` | `ReactNode` | — | 错误信息。字符串使用默认图标与布局；React 元素会替换整个错误内容。为真值时将字段标记为无效。 |
@@ -93,5 +87,5 @@ description: "一个 React 表单字段容器，采用 Liquid Glass 标签、说
 ## 相关组件
 
 - [Input](/docs/zh/components/input) — 放入 `Field` 的标准文本输入框。
-- [Checkbox Group](/docs/zh/components/checkbox-group) — 共享同一字段标签与错误信息的分组控件。
-- [Radio Group](/docs/zh/components/radio-group) — 使用相同字段关联方式的单选分组。
+- [Fieldset](/docs/zh/components/fieldset) — 为一个相关字段组提供共享图例。
+- [Checkbox Group](/docs/zh/components/checkbox-group) — 使用自身标签与说明的分组控件。

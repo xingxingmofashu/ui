@@ -1,0 +1,56 @@
+---
+title: "Fieldset"
+description: "A React fieldset with a Liquid Glass legend for grouping related form fields."
+---
+
+`Fieldset` renders a native `<fieldset>` with an accessible legend and groups related fields under one heading. Each field keeps its own label, description, and validation message; `Fieldset` only provides the shared group semantics and spacing.
+
+Use `Fieldset` when several fields belong together, such as billing details or notification preferences. For a single control, use a [Field](/docs/en/components/field). Controls that already render their own label, such as `CheckboxGroup` and `RadioGroup`, keep that label instead of taking one from the fieldset.
+
+## Basic example
+
+Pass the grouped fields as `children`. The `legend` names the whole group and is linked to the native `<fieldset>` with `aria-labelledby`.
+
+<Example name="fieldset/basic" />
+
+## Disabled
+
+`disabled` is forwarded to the native `<fieldset>` and to Base UI's fieldset context. Nested `Field` controls become disabled together, and the legend fades.
+
+<Example name="fieldset/disabled" />
+
+## Accessibility
+
+`Fieldset` renders a native `<fieldset>` and links its `legend` with `aria-labelledby`. Each nested `Field` still provides the control's own label and description, and keyboard behavior belongs to the controls inside the group.
+
+Always render a visible `legend` when the group needs a heading. If the design intentionally omits it, pass `aria-label` to the fieldset so the group still has an accessible name. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
+
+## API reference
+
+**Fieldset**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Fields and controls grouped by the fieldset. Required. |
+| `legend` | `ReactNode` | — | Visible legend naming the group. |
+| `disabled` | `boolean` | `false` | Disables the native fieldset and nested Base UI field controls. |
+| `className` | `string` | — | Tailwind classes merged into the fieldset root. |
+| `ui` | `{ root?: ClassValue; legend?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the fieldset root element. |
+
+Additional Base UI `Fieldset.Root` props are forwarded, including `id` and native fieldset attributes.
+
+| Attribute | Description |
+| --- | --- |
+| `data-disabled` | Present when the fieldset is disabled. |
+| `data-slot` | Marks internal parts (`root`, `legend`) for styling. |
+
+## Theming
+
+`Fieldset` has no glass surface of its own; it resets the native fieldset border, margin, and padding, then inherits the page material. Tune the shared `--ui-drop-shadow-label` token for the legend, use `className` for layout, and use `ui` for the `root` and `legend` slots keyed by `data-slot`. Component-specific values live in `src/theme/fieldset.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
+## Related components
+
+- [Field](/docs/en/components/field) — Adds a label, description, and validation message to one control.
+- [Input](/docs/en/components/input) — The standard text field to place inside a field.
+- [Checkbox Group](/docs/en/components/checkbox-group) — A grouped control that keeps its own label.

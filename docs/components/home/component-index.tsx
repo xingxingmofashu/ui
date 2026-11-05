@@ -25,6 +25,7 @@ const groups = [
       ["Checkbox", "checkbox"],
       ["Checkbox Group", "checkbox-group"],
       ["Field", "field"],
+      ["Fieldset", "fieldset"],
       ["Input", "input"],
       ["Radio Group", "radio-group"],
       ["Select", "select"],

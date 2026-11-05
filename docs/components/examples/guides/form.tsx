@@ -8,6 +8,7 @@ import {
   Checkbox,
   CheckboxGroup,
   Field,
+  Fieldset,
   Input,
   Slider,
   Switch,
@@ -47,31 +48,33 @@ export default function GuideFormDemo() {
         />
       </Field>
 
-      <Checkbox
-        name="digest"
-        value="weekly"
-        label="Weekly digest"
-        description="Product notes and release highlights, once a week."
-      />
+      <Fieldset legend="Preferences" className="gap-5">
+        <Checkbox
+          name="digest"
+          value="weekly"
+          label="Weekly digest"
+          description="Product notes and release highlights, once a week."
+        />
 
-      <CheckboxGroup
-        label="Channels"
-        description="Choose where release notes are sent."
-        name="channels"
-        defaultValue={["comments"]}
-        items={[
-          { value: "comments", label: "Comments" },
-          { value: "releases", label: "Releases" },
-        ]}
-      />
+        <CheckboxGroup
+          label="Channels"
+          description="Choose where release notes are sent."
+          name="channels"
+          defaultValue={["comments"]}
+          items={[
+            { value: "comments", label: "Comments" },
+            { value: "releases", label: "Releases" },
+          ]}
+        />
 
-      <Switch
-        name="notifications"
-        value="enabled"
-        label="Notifications"
-        description="Send a summary when a teammate publishes changes."
-        defaultChecked
-      />
+        <Switch
+          name="notifications"
+          value="enabled"
+          label="Notifications"
+          description="Send a summary when a teammate publishes changes."
+          defaultChecked
+        />
+      </Fieldset>
 
       <div className="flex flex-col gap-2">
         <span id="guide-form-volume" className="text-sm text-ui-ink">

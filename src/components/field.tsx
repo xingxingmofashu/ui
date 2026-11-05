@@ -15,8 +15,8 @@ type Field = ComponentConfig<typeof theme>;
 interface FieldProps
   extends Omit<UIField.Root.Props, "children" | "className" | "style">,
     VariantProps<typeof theme> {
-  /** Control labelled and validated by the field. */
-  children: React.ReactNode;
+  /** Single Base UI control labelled and validated by the field. */
+  children: React.ReactElement;
   /** Visible label associated with the control. */
   label?: React.ReactNode;
   /** Supporting text rendered under the control. */

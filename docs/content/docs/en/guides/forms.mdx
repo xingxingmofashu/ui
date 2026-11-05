@@ -78,10 +78,13 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
 ## Labels and descriptions
 
-Use `Field` for text inputs and the built-in label props for the other controls:
+Use `Field` for text inputs, `Fieldset` for related groups, and the built-in
+label props for the other controls:
 
 - `Field` renders a real `<label>`, description, and validation message around
   `Input`.
+- `Fieldset` groups related fields under a shared `legend`; each `Field` keeps
+  its own label.
 - `Checkbox` and `Switch` use their visible label as the accessible name.
 - `CheckboxGroup` names the group with `label` and each option with its own
   `label`.
@@ -102,14 +105,13 @@ your own `aria-describedby`, it is merged with the generated one.
 </div>
 ```
 
-For a group of related controls, use a native `<fieldset>` and `<legend>`:
+For a group of related controls, use `Fieldset` with a `legend`:
 
 ```tsx
-<fieldset className="flex flex-col gap-3">
-  <legend className="text-sm font-medium text-ui-ink">Notifications</legend>
+<Fieldset legend="Notifications">
   <Switch label="Email" name="email-notifications" value="on" />
   <Switch label="Mentions" name="mention-notifications" value="on" />
-</fieldset>
+</Fieldset>
 ```
 
 ## Controlled and uncontrolled
@@ -214,8 +216,9 @@ supply the fields.
 - A `CheckboxGroup` has no native `required`; validate the array length.
 - A `Slider` needs an accessible name; `aria-labelledby` is usually the
   cleanest option when the label is rendered outside the component.
-- Do not wrap controls in a `<label>` yourself. Use `Field` for `Input`, and the
-  built-in label props for the other controls.
+- Do not wrap controls in a `<label>` yourself. Use `Field` for `Input`,
+  `Fieldset` for related groups, and the built-in label props for the other
+  controls.
 
 ## Related components
 

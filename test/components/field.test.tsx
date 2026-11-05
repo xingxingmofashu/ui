@@ -2,10 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { CheckboxGroup } from "../../src/components/checkbox-group";
 import { Field } from "../../src/components/field";
 import { Input } from "../../src/components/input";
-import { RadioGroup } from "../../src/components/radio-group";
 import theme from "../../src/theme/field";
 
 function getSlot(element: Element, slot: string) {
@@ -32,17 +30,6 @@ function getRoot(label = "Email") {
   }
 
   return root;
-}
-
-function WrappedRadioGroup() {
-  return (
-    <RadioGroup
-      items={[
-        { value: "free", label: "Free" },
-        { value: "pro", label: "Pro" },
-      ]}
-    />
-  );
 }
 
 describe("Field", () => {
@@ -86,87 +73,6 @@ describe("Field", () => {
       expect(input).toHaveAttribute("aria-invalid", "true");
     });
 
-    it("names grouped controls through the field label", () => {
-      render(
-        <Field label="Notifications">
-          <CheckboxGroup
-            items={[
-              { value: "comments", label: "Comments" },
-              { value: "releases", label: "Releases" },
-            ]}
-          />
-        </Field>,
-      );
-
-      expect(
-        screen.getByRole("group", { name: "Notifications" }),
-      ).toBeInTheDocument();
-    });
-
-    it("labels grouped controls without targeting one option", () => {
-      render(
-        <Field label="Plan">
-          <RadioGroup
-            items={[
-              { value: "free", label: "Free" },
-              { value: "pro", label: "Pro" },
-            ]}
-          />
-        </Field>,
-      );
-
-      const label = getSlot(getRoot("Plan"), "label");
-
-      expect(label.tagName).toBe("LABEL");
-      expect(label).not.toHaveAttribute("for");
-      expect(
-        screen.getByRole("radiogroup", { name: "Plan" }),
-      ).toBeInTheDocument();
-    });
-
-    it("does not select the first radio when the field label is clicked", async () => {
-      const user = userEvent.setup();
-
-      render(
-        <Field label="Plan">
-          <RadioGroup
-            items={[
-              { value: "free", label: "Free" },
-              { value: "pro", label: "Pro" },
-            ]}
-          />
-        </Field>,
-      );
-
-      const [first] = screen.getAllByRole("radio");
-
-      expect(first).toHaveAttribute("aria-checked", "false");
-
-      await user.click(getSlot(getRoot("Plan"), "label"));
-
-      expect(first).toHaveAttribute("aria-checked", "false");
-    });
-
-    it("does not select the first radio through a wrapped group", async () => {
-      const user = userEvent.setup();
-
-      render(
-        <Field label="Plan">
-          <WrappedRadioGroup />
-        </Field>,
-      );
-
-      const [first] = screen.getAllByRole("radio");
-
-      expect(
-        screen.getByRole("radiogroup", { name: "Plan" }),
-      ).toBeInTheDocument();
-      expect(first).toHaveAttribute("aria-checked", "false");
-
-      await user.click(getSlot(getRoot("Plan"), "label"));
-
-      expect(first).toHaveAttribute("aria-checked", "false");
-    });
   });
 
   describe("validation", () => {
@@ -385,6 +291,15 @@ describe("Field", () => {
         <Field label="Email" style={{ width: 200 }}>
           <Input />
         </Field>
+      );
+
+      expect(element).toBeTruthy();
+    });
+
+    it("requires a single React element as children", () => {
+      const element = (
+        // @ts-expect-error Field wraps a single Base UI control.
+        <Field label="Email">plain text</Field>
       );
 
       expect(element).toBeTruthy();

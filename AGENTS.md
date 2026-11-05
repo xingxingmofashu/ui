@@ -41,6 +41,8 @@ same pnpm workspace.
 | Checkbox Group | `src/components/checkbox-group.tsx` | `src/theme/checkbox-group.ts` | `test/components/checkbox-group.test.tsx` |
 | Dialog | `src/components/dialog.tsx` | `src/theme/dialog.ts` | `test/components/dialog.test.tsx` |
 | Drawer | `src/components/drawer.tsx` | `src/theme/drawer.ts` | `test/components/drawer.test.tsx` |
+| Field | `src/components/field.tsx` | `src/theme/field.ts` | `test/components/field.test.tsx` |
+| Fieldset | `src/components/fieldset.tsx` | `src/theme/fieldset.ts` | `test/components/fieldset.test.tsx` |
 | Input | `src/components/input.tsx` | `src/theme/input.ts` | `test/components/input.test.tsx` |
 | Menu | `src/components/menu.tsx` | `src/theme/menu.ts` | `test/components/menu.test.tsx` |
 | Popover | `src/components/popover.tsx` | `src/theme/popover.ts` | `test/components/popover.test.tsx` |

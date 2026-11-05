@@ -1,15 +1,15 @@
 ---
 title: "Field"
-description: "A React field with a Liquid Glass label, description, and validation message for form controls."
+description: "A React field with a Liquid Glass label, description, and validation message for one form control."
 ---
 
-`Field` wraps one form control with a visible label, supporting text, and a validation message. It owns the labeling and validity wiring, while the child control owns its own glass surface and interaction.
+`Field` wraps one Base UI form control with a visible label, supporting text, and a validation message. It owns the labeling and validity wiring, while the child control owns its own glass surface and interaction.
 
-Use `Field` to give `Input` a visible label, description, and validation message, or when several controls share one label and one error message. `Field` works with the package's Base UI form controls, such as `Input`, `Select`, `Checkbox`, `CheckboxGroup`, and `RadioGroup`.
+Use `Field` to give `Input` a visible label, description, and validation message. Controls that already render their own label, such as `Checkbox`, `Select`, `CheckboxGroup`, `RadioGroup`, and `Switch`, keep their built-in `label` prop. Use [Fieldset](/docs/en/components/fieldset) when several fields need one shared legend.
 
 ## Basic example
 
-Pass the control as `children`. `Field` renders a real `<label>` and connects it to the control, so the input needs no separate label.
+Pass the control as `children`. `Field` renders a real `<label>` and connects it to the control, so the input needs no separate label. `children` must be a single Base UI control; a native `<input>` is not wired into the field context.
 
 <Example name="field/basic" />
 
@@ -37,17 +37,11 @@ Supports `xs` / `sm` / `md` / `lg` / `xl`, defaulting to `md`. Pass the same `si
 
 <Example name="field/sizes" />
 
-## Grouped controls
-
-`Field` also labels grouped controls. The group receives `aria-labelledby` from the field label instead of a `for` association, so clicking the field label does not activate the first option. The field message is shared by every option inside the group.
-
-<Example name="field/group" />
-
 ## Accessibility
 
-`Field` renders a real `<label>` linked to the control. Grouped controls such as `CheckboxGroup` and `RadioGroup` receive `aria-labelledby` instead of a native `for` association, because a `for` association could target one arbitrary option in the group. `description` and `error` register their ids with the control's `aria-describedby`; an error also sets `aria-invalid` on the control.
+`Field` renders a real `<label>` linked to the control. `description` and `error` register their ids with the control's `aria-describedby`; an error also sets `aria-invalid` on the control.
 
-Keyboard behavior belongs to the wrapped control. Use `label` rather than a placeholder so the accessible name survives zoom, translation, and voice control. When the field is disabled, the label and message fade and the control is disabled through the shared field state. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
+Keyboard behavior belongs to the wrapped control. Use `label` rather than a placeholder so the accessible name survives zoom, translation, and voice control. Group controls keep their own `label`; use `Fieldset` for a shared legend. When the field is disabled, the label and message fade and the control is disabled through the shared field state. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
 
 ## API reference
 
@@ -55,7 +49,7 @@ Keyboard behavior belongs to the wrapped control. Use `label` rather than a plac
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `children` | `ReactNode` | — | Control labelled and validated by the field. Required. |
+| `children` | `ReactElement` | — | Single Base UI control labelled and validated by the field. Required. |
 | `label` | `ReactNode` | — | Visible label associated with the control. |
 | `description` | `ReactNode` | — | Supporting text rendered under the control and linked with `aria-describedby`. |
 | `error` | `ReactNode` | — | Error message. A string uses the default icon and layout; a React element replaces the body. A truthy value marks the field invalid. |
@@ -93,5 +87,5 @@ Additional Base UI `Field.Root` props are forwarded, including `id`. The child c
 ## Related components
 
 - [Input](/docs/en/components/input) — The standard text field to place inside `Field`.
-- [Checkbox Group](/docs/en/components/checkbox-group) — A grouped control that shares one field label and error.
-- [Radio Group](/docs/en/components/radio-group) — A single-choice group with the same field wiring.
+- [Fieldset](/docs/en/components/fieldset) — Groups related fields under one shared legend.
+- [Checkbox Group](/docs/en/components/checkbox-group) — A grouped control that keeps its own label and description.

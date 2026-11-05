@@ -75,9 +75,10 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
 ## 标签与描述
 
-文本输入使用 `Field`，其他控件使用内置的标签属性：
+文本输入使用 `Field`，相关字段组使用 `Fieldset`，其他控件使用内置的标签属性：
 
 - `Field` 会为 `Input` 渲染真实的 `<label>`、说明与校验信息。
+- `Fieldset` 使用共享的 `legend` 组织相关字段；每个 `Field` 保留自己的标签。
 - `Checkbox` 与 `Switch` 使用可见标签作为可访问名称。
 - `CheckboxGroup` 使用 `label` 为分组命名，每个选项使用自己的 `label`。
 - `Select` 使用 `label` 为触发器命名；没有可见标签时，请使用 `aria-label` 或
@@ -97,14 +98,13 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 </div>
 ```
 
-对于一组相关控件，使用原生 `<fieldset>` 与 `<legend>`：
+对于一组相关控件，使用 `Fieldset` 与 `legend`：
 
 ```tsx
-<fieldset className="flex flex-col gap-3">
-  <legend className="text-sm font-medium text-ui-ink">通知</legend>
+<Fieldset legend="通知">
   <Switch label="邮件" name="email-notifications" value="on" />
   <Switch label="@ 提及" name="mention-notifications" value="on" />
-</fieldset>
+</Fieldset>
 ```
 
 ## 受控与非受控
@@ -203,7 +203,7 @@ export async function savePreferences(formData: FormData) {
 - `CheckboxGroup` 会提交重复字段，请使用 `getAll` 而不是 `get`。
 - `CheckboxGroup` 没有原生 `required`，请自行校验数组长度。
 - `Slider` 需要可访问名称；标签渲染在组件外部时，`aria-labelledby` 通常最清晰。
-- 不要自己用 `<label>` 包裹控件。`Input` 使用 `Field`，其他控件使用内置的标签属性。
+- 不要自己用 `<label>` 包裹控件。`Input` 使用 `Field`，相关字段组使用 `Fieldset`，其他控件使用内置的标签属性。
 
 ## 相关组件
 

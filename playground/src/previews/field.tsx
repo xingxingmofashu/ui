@@ -1,20 +1,13 @@
 import { useState } from "react";
 
-import { CheckboxGroup, Field, Input } from "@xingxingmofashu/ui";
+import { Field, Input } from "@xingxingmofashu/ui";
 
 import { DemoGroup, Status } from "../demo";
 
 const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
 
-const channels = [
-  { value: "comments", label: "Comments" },
-  { value: "releases", label: "Releases" },
-  { value: "billing", label: "Billing" },
-];
-
 function FieldPreview() {
   const [email, setEmail] = useState("");
-  const [selected, setSelected] = useState<string[]>([]);
   const invalid = email.length > 0 && !email.includes("@");
 
   return (
@@ -67,16 +60,11 @@ function FieldPreview() {
       <DemoGroup label="External error">
         <Field
           label="Account email"
-          error={
-            selected.length === 0 ? "Select at least one channel." : undefined
-          }
+          description="This address is already linked to another account."
+          error="That address is already in use."
           className="w-full max-w-sm"
         >
-          <CheckboxGroup
-            items={channels}
-            value={selected}
-            onValueChange={setSelected}
-          />
+          <Input type="email" defaultValue="you@example.com" />
         </Field>
       </DemoGroup>
 
