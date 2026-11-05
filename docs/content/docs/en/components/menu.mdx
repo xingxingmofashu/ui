@@ -38,7 +38,7 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `trigger` | `ReactElement` | — | Element that opens the menu. Required. It must forward props and refs. |
-| `items` | `readonly MenuEntry[]` | — | Action items, groups, and separators rendered by the menu. |
+| `items` | `readonly (MenuItemProps \| MenuGroupProps \| MenuSeparatorProps)[]` | — | Action items, groups, and separators rendered by the menu. |
 | `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Preferred side of the trigger. |
 | `align` | `"start" \| "center" \| "end"` | `"start"` | Alignment relative to the trigger. |
 | `sideOffset` | `number \| OffsetFunction` | `8` | Distance between the trigger and menu in pixels. |
@@ -79,6 +79,8 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `className` | `string` | — | Tailwind classes merged into the group. |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for the group and its item slots. |
 
+`MenuGroupProps` also forwards the remaining `Menu.Group` props.
+
 **MenuSeparatorProps**
 
 | Prop | Type | Default | Description |
@@ -86,6 +88,8 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `type` | `"separator"` | — | Marks the entry as a separator. Required. |
 | `className` | `string` | — | Tailwind classes merged into the separator. |
 | `ui` | `{ separator?: ClassValue }` | — | Tailwind classes for the separator slot. |
+
+`MenuSeparatorProps` also forwards `Menu.Separator` props such as `render` and `id`.
 
 `ui` keys map to the `data-slot` values listed below. Additional Base UI `Menu.Root` props, including `actionsRef`, `handle`, `triggerId`, and `defaultTriggerId`, are forwarded.
 

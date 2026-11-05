@@ -20,7 +20,6 @@ export { Form, type FormProps } from "./components/form";
 export { Input, type InputProps } from "./components/input";
 export {
   Menu,
-  type MenuEntry,
   type MenuGroupProps,
   type MenuItemProps,
   type MenuProps,

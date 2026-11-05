@@ -38,7 +38,7 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `trigger` | `ReactElement` | — | 打开菜单的触发器。必填，必须转发 props 与 ref。 |
-| `items` | `readonly MenuEntry[]` | — | 菜单中的操作项、分组与分隔线。 |
+| `items` | `readonly (MenuItemProps \| MenuGroupProps \| MenuSeparatorProps)[]` | — | 菜单中的操作项、分组与分隔线。 |
 | `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | 首选方位。 |
 | `align` | `"start" \| "center" \| "end"` | `"start"` | 相对触发器的对齐方式。 |
 | `sideOffset` | `number \| OffsetFunction` | `8` | 触发器与菜单的像素距离。 |
@@ -79,6 +79,8 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `className` | `string` | — | 合并到分组的 Tailwind 类名。 |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | 分组及其操作项内部槽位的类名。 |
 
+`MenuGroupProps` 还会透传其余 `Menu.Group` 属性。
+
 **MenuSeparatorProps**
 
 | 属性 | 类型 | 默认值 | 说明 |
@@ -86,6 +88,8 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `type` | `"separator"` | — | 标记为分隔线。必填。 |
 | `className` | `string` | — | 合并到分隔线的 Tailwind 类名。 |
 | `ui` | `{ separator?: ClassValue }` | — | 分隔线槽位的类名。 |
+
+`MenuSeparatorProps` 还会透传 `Menu.Separator` 的 `render`、`id` 等属性。
 
 `ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `Menu.Root` 属性，包括 `actionsRef`、`handle`、`triggerId` 与 `defaultTriggerId`，都会透传。
 

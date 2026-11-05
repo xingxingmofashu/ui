@@ -133,6 +133,30 @@ describe("Menu", () => {
       expect(rename).not.toHaveAttribute("type");
     });
 
+    it("forwards Base UI group and separator props", async () => {
+      renderMenu({
+        items: [
+          {
+            type: "group",
+            id: "edit-group",
+            label: "Edit",
+            items: [{ value: "rename", label: "Rename" }],
+          },
+          { type: "separator", id: "edit-separator" },
+        ],
+      });
+
+      const menu = await findMenu();
+      const group = menu.querySelector<HTMLElement>('[data-slot="group"]');
+      const separator = menu.querySelector<HTMLElement>(
+        '[data-slot="separator"]',
+      );
+
+      expect(group).toHaveAttribute("id", "edit-group");
+      expect(separator).toHaveAttribute("id", "edit-separator");
+      expect(separator).toHaveAttribute("aria-orientation", "horizontal");
+    });
+
     it("merges className and ui slots", async () => {
       renderMenu({
         className: "custom-popup",

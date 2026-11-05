@@ -13,6 +13,8 @@
 
 ### Changed
 
+- Reuse Base UI prop types for Menu group and separator entries, and remove the
+  `MenuEntry` export in favor of the individual entry types.
 - Remove inline `style` from Card's public props so its glass layers stay
   theme-controlled like the rest of the components.
 

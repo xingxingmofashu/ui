@@ -9,24 +9,6 @@ import theme from "../theme/menu";
 
 type Menu = ComponentConfig<typeof theme>;
 
-type MenuItemUi = Partial<
-  Pick<Menu["slots"], "item" | "itemIcon" | "itemLabel" | "shortcut">
->;
-
-type MenuGroupUi = Partial<
-  Pick<
-    Menu["slots"],
-    | "group"
-    | "groupLabel"
-    | "item"
-    | "itemIcon"
-    | "itemLabel"
-    | "shortcut"
-  >
->;
-
-type MenuSeparatorUi = Partial<Pick<Menu["slots"], "separator">>;
-
 /** One action item in the menu. */
 type MenuItemProps<Value extends string = string> = Omit<
   UIMenu.Item.Props,
@@ -48,11 +30,16 @@ type MenuItemProps<Value extends string = string> = Omit<
   /** Tailwind classes merged into the item. */
   className?: string;
   /** Tailwind classes for this item's internal slots. */
-  ui?: MenuItemUi;
+  ui?: Partial<
+    Pick<Menu["slots"], "item" | "itemIcon" | "itemLabel" | "shortcut">
+  >;
 };
 
 /** A labelled group of menu items. */
-type MenuGroupProps<Value extends string = string> = {
+type MenuGroupProps<Value extends string = string> = Omit<
+  UIMenu.Group.Props,
+  "children" | "className" | "style"
+> & {
   type: "group";
   /** Group heading. */
   label: React.ReactNode;
@@ -61,22 +48,30 @@ type MenuGroupProps<Value extends string = string> = {
   /** Tailwind classes merged into the group. */
   className?: string;
   /** Tailwind classes for the group slots. */
-  ui?: MenuGroupUi;
+  ui?: Partial<
+    Pick<
+      Menu["slots"],
+      | "group"
+      | "groupLabel"
+      | "item"
+      | "itemIcon"
+      | "itemLabel"
+      | "shortcut"
+    >
+  >;
 };
 
 /** A separator between menu items. */
-type MenuSeparatorProps = {
+type MenuSeparatorProps = Omit<
+  UIMenu.Separator.Props,
+  "children" | "className" | "orientation" | "style"
+> & {
   type: "separator";
   /** Tailwind classes merged into the separator. */
   className?: string;
   /** Tailwind classes for the separator slot. */
-  ui?: MenuSeparatorUi;
+  ui?: Partial<Pick<Menu["slots"], "separator">>;
 };
-
-type MenuEntry<Value extends string = string> =
-  | MenuItemProps<Value>
-  | MenuGroupProps<Value>
-  | MenuSeparatorProps;
 
 type MenuProps<Value extends string = string> = Omit<
   UIMenu.Root.Props,
@@ -89,7 +84,11 @@ type MenuProps<Value extends string = string> = Omit<
     /** Element that opens the menu. It must forward props and refs. */
     trigger: React.ReactElement;
     /** Items, groups, and separators rendered by the menu. */
-    items: readonly MenuEntry<Value>[];
+    items: readonly (
+      | MenuItemProps<Value>
+      | MenuGroupProps<Value>
+      | MenuSeparatorProps
+    )[];
     /** Tailwind classes merged into the popup. */
     className?: string;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
@@ -251,11 +250,14 @@ function MenuGroup<Value extends string = string>({
   ui,
   label,
   items,
+  type: _type,
+  ...props
 }: MenuGroupProps<Value>) {
   const styles = theme();
 
   return (
     <UIMenu.Group
+      {...props}
       data-slot="group"
       className={cn(styles.group(), ui?.group, className)}
     >
@@ -282,11 +284,17 @@ function MenuGroup<Value extends string = string>({
   );
 }
 
-function MenuSeparator({ className, ui }: MenuSeparatorProps) {
+function MenuSeparator({
+  className,
+  ui,
+  type: _type,
+  ...props
+}: MenuSeparatorProps) {
   const styles = theme();
 
   return (
     <UIMenu.Separator
+      {...props}
       data-slot="separator"
       className={cn(styles.separator(), ui?.separator, className)}
     />
@@ -295,7 +303,6 @@ function MenuSeparator({ className, ui }: MenuSeparatorProps) {
 
 export { Menu };
 export type {
-  MenuEntry,
   MenuGroupProps,
   MenuItemProps,
   MenuProps,
