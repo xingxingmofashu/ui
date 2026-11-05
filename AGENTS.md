@@ -139,7 +139,7 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 - Glass preset plugin: `src/plugins/glass-preset/`
 - Design tokens and glass material: `src/index.css`
 - Shared glass presets: `src/plugins/glass-preset/index.css`
-- Shared token and glass tests: `test/tokens.test.ts`
+- Shared token and theme contract tests: `test/tokens/`
 - Plugin tests: `test/plugins/<name>.test.tsx`
 - Test setup: `test/setup.ts`
 - Vitest config: `vitest.config.ts`
