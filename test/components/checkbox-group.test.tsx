@@ -413,6 +413,28 @@ describe("CheckboxGroup", () => {
       expect(getSlot(checkbox, "box")).not.toHaveClass("custom-item");
     });
 
+    it("forwards inline styles to the group and item roots", () => {
+      render(
+        <CheckboxGroup
+          aria-label="Notifications"
+          style={{ opacity: 0.5 }}
+          items={[
+            {
+              value: "comments",
+              label: "Comments",
+              style: { opacity: 0.25 },
+            },
+          ]}
+        />,
+      );
+
+      const group = getGroup();
+      const checkbox = screen.getByRole("checkbox", { name: "Comments" });
+
+      expect(group).toHaveStyle({ opacity: "0.5" });
+      expect(checkbox).toHaveStyle({ opacity: "0.25" });
+    });
+
     it("applies ui classes to group and item slots", () => {
       render(
         <CheckboxGroup

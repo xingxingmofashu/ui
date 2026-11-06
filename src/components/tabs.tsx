@@ -13,7 +13,7 @@ type Tabs = ComponentConfig<typeof theme>;
 /** One tab and its related panel. */
 type TabsItemProps<Value extends string = string> = Omit<
   UITabs.Tab.Props,
-  "children" | "className" | "content" | "style" | "value"
+  "children" | "className" | "content" | "value"
 > & {
   /** Value that identifies the tab and its panel. */
   value: Value;
@@ -40,7 +40,7 @@ type TabsTabProps<Value extends string = string> = Omit<
 
 type TabsProps<Value extends string = string> = Omit<
   UITabs.Root.Props,
-  "children" | "className" | "style" | "value" | "defaultValue" | "onValueChange"
+  "children" | "className" | "value" | "defaultValue" | "onValueChange"
 > &
   Pick<UITabs.List.Props, "activateOnFocus" | "loopFocus"> &
   VariantProps<typeof theme> & {

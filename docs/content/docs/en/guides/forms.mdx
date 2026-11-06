@@ -48,9 +48,8 @@ registered through `Field`.
 
 `RadioGroup` submits the selected item's `value`; set `required` when a choice
 is mandatory. `Select` behaves the same way: `name` enables submission,
-`required` participates in native validation, `form` links the hidden input to
-a form elsewhere, and `onValueChange` receives `null` when the selection is
-cleared.
+`required` participates in native validation, and `form` links the hidden input
+to a form elsewhere. A controlled `value` of `null` represents no selection.
 
 `CheckboxGroup` submits one entry per checked value under the same `name`, so
 read the field with `FormData.getAll(name)`. Groups have no native `required`;
@@ -162,9 +161,9 @@ const [email, setEmail] = useState("");
 Do not pass `value` without a corresponding change handler. For `Slider`,
 `onValueChange` receives the current number or array; use `onValueCommitted`
 when you only need the settled value. `Select` uses `value` with
-`onValueChange`, and the callback receives `null` when the selection is
-cleared. `CheckboxGroup` uses `value` with `onValueChange`, and the callback
-receives the next array of checked values.
+`onValueChange`; set `value` to `null` to clear the selection.
+`CheckboxGroup` uses `value` with `onValueChange`, and the callback receives the
+next array of checked values.
 
 ## Validation
 
@@ -233,8 +232,8 @@ supply the fields.
 - Using `value` without `onValueChange` freezes a controlled field.
 - Reading `FormData` before the submit event sees stale or empty values.
 - A `Switch` that is off submits `null`, not `"false"`. Normalize it explicitly.
-- A cleared `Select` calls `onValueChange` with `null`; handle it before
-  treating the value as a string.
+- A `Select` with no selection submits no value; treat a missing `FormData`
+  entry as `null` before using it as a string.
 - A `CheckboxGroup` submits repeated fields, so use `getAll` instead of `get`.
 - A `CheckboxGroup` has no native `required`; validate the array length.
 - A `Slider` needs an accessible name; `aria-labelledby` is usually the

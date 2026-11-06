@@ -320,11 +320,15 @@ describe("Switch", () => {
       expect(getSlot(root, "description")).toHaveClass("ui-description");
     });
 
-    it("does not accept inline styles on the wrapper or Base UI root", () => {
+    it("forwards inline styles to the root and rejects theme internals", () => {
+      render(<Switch aria-label="Styled" style={{ width: 120 }} />);
+
+      expect(
+        getRoot(screen.getByRole("switch", { name: "Styled" })),
+      ).toHaveStyle({ width: "120px" });
+
       const invalidElement = (
         <>
-          {/* @ts-expect-error The glass theme owns inline styles. */}
-          <Switch aria-label="Styled" style={{ width: 120 }} />
           {/* @ts-expect-error Base UI internals are theme-controlled. */}
           <Switch aria-label="Styled" baseStyle={{ width: 120 }} />
           {/* @ts-expect-error Base UI internals are theme-controlled. */}

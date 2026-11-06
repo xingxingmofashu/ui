@@ -41,7 +41,7 @@ description: "提交值、校验字段，并用 Liquid Glass 控件组合可访�
 
 `RadioGroup` 会提交选中条目的 `value`；必选时设置 `required`。`Select` 的行为
 相同：`name` 启用提交，`required` 参与原生校验，`form` 可把隐藏输入关联到文档
-其他位置的表单，清空选择时 `onValueChange` 会收到 `null`。
+其他位置的表单。受控 `value` 为 `null` 表示未选择任何值。
 
 `CheckboxGroup` 会在同一个 `name` 下，为每个选中值提交一个条目，因此请用
 `FormData.getAll(name)` 读取。复选框组没有原生 `required`，请在提交处理函数中
@@ -148,8 +148,8 @@ const [email, setEmail] = useState("");
 
 不要只传 `value` 而不提供变更处理函数。对于 `Slider`，`onValueChange` 会收到
 当前数字或数组；只关心稳定值时使用 `onValueCommitted`。`Select` 使用 `value` 与
-`onValueChange`，清空选择时回调会收到 `null`。`CheckboxGroup` 使用 `value` 与
-`onValueChange`，回调会收到下一次的选中值数组。
+`onValueChange`；把 `value` 设为 `null` 可以清空选择。`CheckboxGroup` 使用 `value`
+与 `onValueChange`，回调会收到下一次的选中值数组。
 
 ## 校验
 
@@ -216,7 +216,7 @@ export async function savePreferences(formData: FormData) {
 - 只传 `value` 而不传 `onValueChange` 会让受控字段冻结。
 - 在 submit 事件之前读取 `FormData` 会得到旧值或空值。
 - 关闭的 `Switch` 提交 `null`，而不是 `"false"`，请显式归一化。
-- 清空 `Select` 时，`onValueChange` 会收到 `null`；在把它当作字符串使用前先处理。
+- 未选择的 `Select` 不会提交值；在把 `FormData` 中的缺失条目当作字符串使用前，先按 `null` 处理。
 - `CheckboxGroup` 会提交重复字段，请使用 `getAll` 而不是 `get`。
 - `CheckboxGroup` 没有原生 `required`，请自行校验数组长度。
 - `Slider` 需要可访问名称；标签渲染在组件外部时，`aria-labelledby` 通常最清晰。

@@ -7,8 +7,8 @@ Visual style: Liquid Glass.
 Source files and tests are the source of truth.
 
 The repository root is the UI package. The Fumadocs site lives in `docs/` and
-the Vite component playground lives in `playground/`; both are included in the
-same pnpm workspace.
+the Vite React REPL lives in `playground/`; both are included in the same pnpm
+workspace.
 
 ## Commands
 
@@ -20,7 +20,7 @@ same pnpm workspace.
 - `pnpm docs:dev` — start the docs site on port 3001.
 - `pnpm docs:build` — export the docs site to `docs/out`.
 - `pnpm docs:typecheck` — typecheck the docs package.
-- `pnpm playground:dev` — start the component playground on port 3002.
+- `pnpm playground:dev` — start the React REPL on port 3002.
 - `pnpm playground:build` — build the playground.
 - `pnpm playground:typecheck` — typecheck the playground package.
 - `pnpm release` — run the interactive release-it flow from `main`.
@@ -129,8 +129,8 @@ same pnpm workspace.
   are `ClassValue`.
 - Merge order: theme -> root `ui` -> item `ui` -> `className`. Merge at the
   call site instead of adding `sharedUi`.
-- `data-slot` is public; `data-layer` stays private. `style` is unsupported;
-  use `className` and the shared `--ui-*` tokens.
+- `data-slot` is public; `data-layer` stays private. `className` and `style`
+  both target the primary element; use the shared `--ui-*` tokens for material.
 - Docs list the derived `ui` slots and `data-slot` in the Attribute table.
 
 ```ts
@@ -146,6 +146,27 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
   >;
 };
 ```
+
+## Playground REPL
+
+- `playground/` is a single-file React REPL, not a component gallery.
+- Monaco is the editor. Its TypeScript worker compiles TSX with
+  `module: CommonJS` and `jsx: ReactJSX`; the REPL evaluates that output with
+  `new Function` and a small `require` whitelist. Do not add a second
+  in-browser compiler.
+- Supported imports: `react`, `react/jsx-runtime`, `@xingxingmofashu/ui`, the
+  glass preset plugin, and the curated lucide icon map in
+  `playground/src/repl/icons.ts`.
+- Preview priority is `render(...)`, then `export default`, then the last
+  expression. Primitive results go to the console.
+- Examples are loaded from `docs/components/examples/*/*.tsx` through a raw
+  Vite glob. Add a docs example and the REPL picker picks it up automatically.
+- Tailwind utilities in user code are compiled at runtime by
+  `@tailwindcss/browser`; the playground stylesheet also scans the docs
+  examples so the initial render works before that runtime loads.
+- Browser tests: `test/repl/runtime.test.ts` (Vitest) and `test/e2e/*.spec.ts`
+  (Playwright). The Playwright suite covers the REPL, representative component
+  interactions, and shared glass preset values; it does not use screenshots.
 
 ## Package files
 

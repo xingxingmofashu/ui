@@ -13,7 +13,7 @@ type Toggle = ComponentConfig<typeof theme>;
 
 type ToggleProps<Value extends string = string> = Omit<
   UIToggle.Props<Value>,
-  "className" | "children" | "style" | "ref"
+  "className" | "children" | "ref"
 > &
   Omit<VariantProps<typeof theme>, "iconOnly"> & {
     /** Ref to the rendered root element. */

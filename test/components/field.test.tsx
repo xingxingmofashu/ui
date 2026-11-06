@@ -278,15 +278,14 @@ describe("Field", () => {
       expect(getSlot(root, "description")).toHaveClass("ui-description");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The field theme owns inline styles.
+    it("forwards inline styles to the field root", () => {
+      render(
         <Field label="Email" style={{ width: 200 }}>
           <Input />
-        </Field>
+        </Field>,
       );
 
-      expect(element).toBeTruthy();
+      expect(getRoot()).toHaveStyle({ width: "200px" });
     });
 
     it("requires a single React element as children", () => {

@@ -39,7 +39,7 @@ description: "一个 React 复选框，采用 Liquid Glass 方块、勾选动画
 
 ## 无障碍
 
-`Checkbox` 渲染带 `role="checkbox"`、`aria-checked` 的按钮，并包含用于表单提交的隐藏原生复选框。可见的 `label` 为其命名，`description` 通过 `aria-describedby` 关联；显式 ARIA 名称优先。
+`Checkbox` 渲染带 `role="checkbox"` 与 `aria-checked` 的可聚焦元素（默认是 `<span>`），并包含用于表单提交的隐藏原生复选框。可见的 `label` 为其命名，`description` 通过 `aria-describedby` 关联；显式 ARIA 名称优先。
 
 `Space` 切换当前控件。`indeterminate` 会设置 `aria-checked="mixed"`。必须勾选时请设置 `required`；表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
@@ -61,12 +61,13 @@ description: "一个 React 复选框，采用 Liquid Glass 方块、勾选动画
 | `form` | `string` | — | 拥有隐藏输入框的表单 ID。 |
 | `value` | `string` | — | 选中时随表单提交的值。 |
 | `uncheckedValue` | `string` | — | 未选中时随表单提交的值。 |
-| `id` | `string` | — | 隐藏输入框的 ID。 |
+| `id` | `string` | — | 隐藏输入框的 ID；当 `nativeButton` 为 true 时改为根元素的 ID。 |
 | `inputRef` | `Ref<HTMLInputElement>` | — | 指向隐藏原生输入框的 ref。 |
 | `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | 合并到复选框根元素的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | 属性 | 说明 |
@@ -77,12 +78,12 @@ description: "一个 React 复选框，采用 Liquid Glass 方块、勾选动画
 | `data-disabled` | 复选框禁用时存在。 |
 | `data-readonly` | 复选框只读时存在。 |
 | `data-required` | 复选框必填时存在。 |
-| `data-valid` | 复选框有效时存在。 |
-| `data-invalid` | 复选框无效时存在。 |
-| `data-touched` | 复选框被触碰后存在。 |
-| `data-dirty` | 复选框值变化后存在。 |
-| `data-filled` | 复选框选中时存在。 |
-| `data-focused` | 复选框聚焦时存在。 |
+| `data-valid` | 复选框包裹在 `Field` 中且有效时存在。 |
+| `data-invalid` | 复选框包裹在 `Field` 中且无效时存在。 |
+| `data-touched` | 复选框包裹在 `Field` 中并被触碰后存在。 |
+| `data-dirty` | 复选框包裹在 `Field` 中且值变化后存在。 |
+| `data-filled` | 复选框包裹在 `Field` 中且选中时存在。 |
+| `data-focused` | 复选框包裹在 `Field` 中且聚焦时存在。 |
 | `data-starting-style` | 指示器开始进入动画时存在。 |
 | `data-ending-style` | 指示器正在退出动画时存在。 |
 | `data-slot` | 标记内部部件（`root`、`box`、`fill`、`glass`、`overlay`、`indicator`、`indicator-icon`、`wrapper`、`label`、`description`），用于样式选择。 |

@@ -73,13 +73,10 @@ describe("Form", () => {
       expect(inputRoot).not.toHaveClass("custom-root");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The form theme owns inline styles.
-        <Form aria-label="Account" style={{ width: 200 }} />
-      );
+    it("forwards inline styles to the form element", () => {
+      render(<Form aria-label="Account" style={{ width: 200 }} />);
 
-      expect(element).toBeTruthy();
+      expect(getRoot()).toHaveStyle({ width: "200px" });
     });
   });
 

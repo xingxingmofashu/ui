@@ -246,26 +246,25 @@ describe("ToggleGroup", () => {
       expect(ref.current).toBe(screen.getByRole("button", { name: "One" }));
     });
 
-    it("does not accept inline styles on the group or item", () => {
-      const element = (
-        <>
-          {/* @ts-expect-error The glass theme owns inline styles. */}
-          <ToggleGroup aria-label="Styled" style={{ opacity: 0.5 }} items={[{ value: "one", label: "One" }]} />
-          <ToggleGroup
-            aria-label="Styled"
-            items={[
-              {
-                value: "one",
-                label: "One",
-                // @ts-expect-error The glass theme owns inline styles.
-                style: { opacity: 0.5 },
-              },
-            ]}
-          />
-        </>
+    it("forwards inline styles to the group and item roots", () => {
+      render(
+        <ToggleGroup
+          aria-label="Styled"
+          style={{ opacity: 0.5 }}
+          items={[
+            {
+              value: "one",
+              label: "One",
+              style: { opacity: 0.25 },
+            },
+          ]}
+        />,
       );
 
-      expect(element).toBeTruthy();
+      expect(getGroup("Styled")).toHaveStyle({ opacity: "0.5" });
+      expect(screen.getByRole("button", { name: "One" })).toHaveStyle({
+        opacity: "0.25",
+      });
     });
 
     it("forwards refs to the Base UI group root", () => {

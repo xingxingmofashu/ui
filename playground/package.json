@@ -10,8 +10,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tailwindcss/browser": "catalog:",
     "@xingxingmofashu/ui": "workspace:*",
     "lucide-react": "catalog:",
+    "monaco-editor": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },

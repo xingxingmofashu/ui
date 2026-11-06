@@ -176,6 +176,18 @@ describe("Toast", () => {
       expect(toast).toHaveClass("top-0", "origin-top");
       expect(toast).not.toHaveClass("bottom-0");
     });
+
+    it("forwards inline styles to each toast root", async () => {
+      const user = userEvent.setup();
+
+      renderToast({ title: "Styled" }, { style: { opacity: 0.5 } });
+
+      await user.click(screen.getByRole("button", { name: "Notify" }));
+
+      const toast = await findToast();
+
+      expect(toast).toHaveStyle({ opacity: "0.5" });
+    });
   });
 
   describe("destructive actions", () => {

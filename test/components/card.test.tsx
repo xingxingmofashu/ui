@@ -218,13 +218,10 @@ describe("Card", () => {
       expect(element).toBeTruthy();
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Card style={{ width: 200 }}>Body</Card>
-      );
+    it("forwards inline styles to the root", () => {
+      render(<Card style={{ width: 200 }}>Body</Card>);
 
-      expect(element).toBeTruthy();
+      expect(getCard("Body")).toHaveStyle({ width: "200px" });
     });
   });
 

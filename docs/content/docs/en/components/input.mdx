@@ -7,7 +7,7 @@ description: "A React input with a Liquid Glass field and icon slots."
 
 ## Basic example
 
-Use `value` with `onValueChange` for a controlled field, or `defaultValue` for an uncontrolled one. All native input attributes such as `type`, `name`, `placeholder`, `required`, and `readOnly` are forwarded.
+Use `value` with `onValueChange` for a controlled field, or `defaultValue` for an uncontrolled one. Native input attributes such as `type`, `name`, `placeholder`, `required`, and `readOnly` are forwarded. `size` is reserved for the component's visual scale, and `style` merges into the outer root alongside `className`.
 
 <Example name="input/basic" />
 
@@ -56,22 +56,23 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the input element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the input element. |
 | `className` | `string` | — | Tailwind classes merged into the outer root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | Present when the input is disabled. |
-| `data-valid` | Present when the input is valid. |
-| `data-invalid` | Present when the input is invalid. |
-| `data-touched` | Present after the input is touched. |
-| `data-dirty` | Present after the input value changes. |
-| `data-filled` | Present when the input has a value. |
-| `data-focused` | Present when the input is focused. |
+| `data-valid` | Present when the input is valid and wrapped in `Field`. |
+| `data-invalid` | Present when the input is invalid and wrapped in `Field`. |
+| `data-touched` | Present after the input is touched while wrapped in `Field`. |
+| `data-dirty` | Present after the input value changes while wrapped in `Field`. |
+| `data-filled` | Present when the input has a value while wrapped in `Field`. |
+| `data-focused` | Present when the input is focused while wrapped in `Field`. |
 | `data-slot` | Marks internal parts (`root`, `control`, `glass`, `overlay`, `leading-icon`, `input`, `trailing-icon`) for styling. |
 
 ## Theming
 
-The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/input.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` and `style` for layout, and use `ui` for internal slots keyed by `data-slot`. `style` applies to the outer root; use `ui.input` for the native input. Component-specific values live in `src/theme/input.ts`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
 
 ## Related components
 

@@ -14,7 +14,7 @@ type ScrollArea = ComponentConfig<typeof theme>;
 
 type ScrollAreaProps = Omit<
   UIScrollArea.Root.Props,
-  "children" | "className" | "style"
+  "children" | "className"
 > & {
   /** Scrollable content. */
   children?: React.ReactNode;

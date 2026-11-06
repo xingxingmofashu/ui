@@ -12,7 +12,7 @@ type Menu = ComponentConfig<typeof theme>;
 /** One action item in the menu. */
 type MenuItemProps<Value extends string = string> = Omit<
   UIMenu.Item.Props,
-  "children" | "className" | "style" | "label" | "onClick"
+  "children" | "className" | "label" | "onClick"
 > & {
   type?: "item";
   /** Value that identifies the item in the menu. */
@@ -38,7 +38,7 @@ type MenuItemProps<Value extends string = string> = Omit<
 /** A labelled group of menu items. */
 type MenuGroupProps<Value extends string = string> = Omit<
   UIMenu.Group.Props,
-  "children" | "className" | "style"
+  "children" | "className"
 > & {
   type: "group";
   /** Group heading. */
@@ -64,7 +64,7 @@ type MenuGroupProps<Value extends string = string> = Omit<
 /** A separator between menu items. */
 type MenuSeparatorProps = Omit<
   UIMenu.Separator.Props,
-  "children" | "className" | "orientation" | "style"
+  "children" | "className" | "orientation"
 > & {
   type: "separator";
   /** Tailwind classes merged into the separator. */
@@ -75,7 +75,7 @@ type MenuSeparatorProps = Omit<
 
 type MenuProps<Value extends string = string> = Omit<
   UIMenu.Root.Props,
-  "children" | "className" | "style"
+  "children" | "className"
 > &
   Pick<
     UIMenu.Positioner.Props,
@@ -91,6 +91,8 @@ type MenuProps<Value extends string = string> = Omit<
     )[];
     /** Tailwind classes merged into the popup. */
     className?: string;
+    /** Inline styles merged into the popup. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Menu["slots"];
   };
@@ -104,6 +106,7 @@ function Menu<Value extends string = string>({
   alignOffset,
   collisionPadding,
   className,
+  style,
   ui,
   ...props
 }: MenuProps<Value>) {
@@ -126,6 +129,7 @@ function Menu<Value extends string = string>({
           <UIMenu.Popup
             data-slot="popup"
             className={cn(styles.popup(), ui?.popup, className)}
+            style={style}
           >
             <span
               aria-hidden="true"

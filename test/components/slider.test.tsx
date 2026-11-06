@@ -283,13 +283,10 @@ describe("Slider", () => {
       expect(root).not.toHaveClass("w-full");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Slider aria-label="Styled" style={{ opacity: 0.5 }} />
-      );
+    it("forwards inline styles to the root", () => {
+      render(<Slider aria-label="Styled" style={{ opacity: 0.5 }} />);
 
-      expect(element).toBeTruthy();
+      expect(getRoot(getSlider())).toHaveStyle({ opacity: "0.5" });
     });
 
     it("forwards render and ref to the Base UI root", () => {

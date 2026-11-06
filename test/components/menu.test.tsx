@@ -298,6 +298,50 @@ describe("Menu", () => {
     });
   });
 
+  describe("styling", () => {
+    it("forwards inline styles to the popup, items, group, and separator", async () => {
+      renderMenu({
+        style: { opacity: 0.5 },
+        items: [
+          {
+            value: "rename",
+            label: "Rename",
+            style: { opacity: 0.25 },
+          },
+          {
+            type: "group",
+            label: "Danger zone",
+            style: { opacity: 0.4 },
+            items: [
+              {
+                value: "delete",
+                label: "Delete",
+                style: { opacity: 0.3 },
+              },
+            ],
+          },
+          { type: "separator", style: { opacity: 0.2 } },
+        ],
+      });
+
+      const menu = await findMenu();
+      const group = menu.querySelector<HTMLElement>('[data-slot="group"]');
+      const separator = menu.querySelector<HTMLElement>(
+        '[data-slot="separator"]',
+      );
+
+      expect(menu).toHaveStyle({ opacity: "0.5" });
+      expect(
+        screen.getByRole("menuitem", { name: "Rename" }),
+      ).toHaveStyle({ opacity: "0.25" });
+      expect(group).toHaveStyle({ opacity: "0.4" });
+      expect(
+        screen.getByRole("menuitem", { name: "Delete" }),
+      ).toHaveStyle({ opacity: "0.3" });
+      expect(separator).toHaveStyle({ opacity: "0.2" });
+    });
+  });
+
   describe("theme", () => {
     it("keeps secondary labels readable over the glass overlay", () => {
       const styles = theme();

@@ -12,7 +12,7 @@ type Slider = ComponentConfig<typeof theme>;
 
 type SliderProps<Value extends number | readonly number[] = number> = Omit<
   UISlider.Root.Props<Value>,
-  "children" | "style" | "className"
+  "children" | "className"
 > &
   Pick<UISlider.Thumb.Props, "getAriaLabel" | "getAriaValueText"> & {
     /** Tailwind classes merged into the root. */

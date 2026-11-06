@@ -17,7 +17,7 @@ type RadioGroup = ComponentConfig<typeof theme>;
 /** One option managed by the radio group. */
 type RadioGroupItemProps<Value extends string = string> = Omit<
   UIRadio.Root.Props<Value>,
-  "className" | "children" | "style" | "value"
+  "className" | "children" | "value"
 > & {
   /** Value that identifies the option in the group value. */
   value: Value;
@@ -46,7 +46,7 @@ type RadioGroupItemProps<Value extends string = string> = Omit<
 
 type RadioGroupProps<Value extends string = string> = Omit<
   UIRadioGroup.Props<Value>,
-  "className" | "style" | "children"
+  "className" | "children"
 > &
   VariantProps<typeof theme> & {
     /** Options rendered by the radio group. */

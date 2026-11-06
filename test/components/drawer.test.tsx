@@ -244,13 +244,12 @@ describe("Drawer", () => {
       expect(getSlot(drawer, "footer")).toHaveClass("ui-footer");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Drawer title="One" style={{ opacity: 0.5 }} />
-      );
+    it("forwards inline styles to the popup", async () => {
+      renderDrawer({ style: { opacity: 0.5 } });
 
-      expect(element).toBeTruthy();
+      const drawer = await findDrawer();
+
+      expect(drawer).toHaveStyle({ opacity: "0.5" });
     });
 
     it("uses direction instead of swipeDirection", () => {

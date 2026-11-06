@@ -27,9 +27,9 @@ Pass `open` and `onOpenChange` to own visibility. The trigger still toggles the 
 
 ## Accessibility
 
-`Menu` follows the menu-button pattern: the trigger exposes `aria-haspopup="menu"`, `aria-expanded`, and `aria-controls`, the popup is a menu, and each action is a `menuitem`. `ArrowDown` and `ArrowUp` move through enabled items, and typeahead matches item labels. `Enter` or `Space` activates the highlighted item, and `Escape` closes the menu and returns focus to the trigger.
+`Menu` follows the menu-button pattern: the trigger exposes `aria-haspopup="menu"`, `aria-expanded`, and `aria-controls`; the inner list carries `role="menu"`, and each action is a `menuitem`. `ArrowDown` and `ArrowUp` move through enabled items, and typeahead matches item labels. `Enter` or `Space` activates the highlighted item, and `Escape` closes the menu and returns focus to the trigger.
 
-Disabled items stay announced but cannot be activated. `value` is only the React key; when `label` is not plain text, pass `textValue` so typeahead and screen readers get a readable name. See the [accessibility guide](/docs/en/guides/accessibility) for the shared interaction patterns.
+Disabled items stay announced but cannot be activated. `value` is only the React key. When `label` is not plain text, pass `textValue` so typeahead has a readable label, and pass `aria-label` or `aria-labelledby` when the item also needs an accessible name. See the [accessibility guide](/docs/en/guides/accessibility) for the shared interaction patterns.
 
 ## API reference
 
@@ -52,12 +52,14 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `loopFocus` | `boolean` | `true` | Loops keyboard focus through the items. |
 | `disabled` | `boolean` | `false` | Prevents the menu from opening. |
 | `className` | `string` | — | Tailwind classes merged into the popup. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue; group?: ClassValue; groupLabel?: ClassValue; separator?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 **MenuItemProps**
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `type` | `"item"` | — | Marks the entry as an action item. Optional when the entry has no group or separator type. |
 | `value` | `string` | — | Unique value used as the React key for this item. Required. |
 | `label` | `ReactNode` | — | Visible content inside the item. Required. |
 | `textValue` | `string` | — | Plain-text label used for keyboard typeahead. Defaults to a string label. |
@@ -67,6 +69,7 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `disabled` | `boolean` | `false` | Disables the item. |
 | `closeOnClick` | `boolean` | `true` | Whether selecting the item closes the menu. |
 | `className` | `string` | — | Tailwind classes merged into the item. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for this item's slots. |
 
 **MenuGroupProps**
@@ -77,6 +80,7 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `label` | `ReactNode` | — | Group heading. Required. |
 | `items` | `readonly MenuItemProps[]` | — | Items rendered inside the group. Required. |
 | `className` | `string` | — | Tailwind classes merged into the group. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for the group and its item slots. |
 
 `MenuGroupProps` also forwards the remaining `Menu.Group` props.
@@ -87,6 +91,7 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | --- | --- | --- | --- |
 | `type` | `"separator"` | — | Marks the entry as a separator. Required. |
 | `className` | `string` | — | Tailwind classes merged into the separator. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ separator?: ClassValue }` | — | Tailwind classes for the separator slot. |
 
 `MenuSeparatorProps` also forwards `Menu.Separator` props such as `render` and `id`.

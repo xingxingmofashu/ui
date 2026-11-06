@@ -290,13 +290,12 @@ describe("Popover", () => {
       expect(getSlot(popover, "footer")).toHaveClass("ui-footer");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Popover title="One" trigger={<button type="button">Open</button>} style={{ opacity: 0.5 }} />
-      );
+    it("forwards inline styles to the popup", async () => {
+      renderPopover({ style: { opacity: 0.5 } });
 
-      expect(element).toBeTruthy();
+      const popover = await findPopover();
+
+      expect(popover).toHaveStyle({ opacity: "0.5" });
     });
   });
 

@@ -11,7 +11,7 @@ type Form = ComponentConfig<typeof theme>;
 
 type FormProps<
   FormValues extends Record<string, any> = Record<string, any>,
-> = Omit<UIForm.Props<FormValues>, "className" | "style"> & {
+> = Omit<UIForm.Props<FormValues>, "className"> & {
   /** Tailwind classes merged into the form element. */
   className?: string;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */

@@ -151,15 +151,16 @@ pnpm install
 pnpm build           # build dist with unbuild
 pnpm lint            # lint with oxlint
 pnpm test            # run the Vitest suite
-pnpm test:visual     # run the Playwright visual regression suite
-pnpm test:visual:update  # refresh the Surface Lab screenshots
+pnpm test:e2e        # run the Playwright browser suite
 pnpm typecheck       # typecheck the package
 pnpm docs:dev        # docs site on http://localhost:3001
-pnpm playground:dev  # component playground on http://localhost:3002
+pnpm playground:dev  # React REPL on http://localhost:3002
 ```
 
-The documentation site lives in `docs/` and the playground lives in
-`playground/`; both import the package from the workspace.
+The documentation site lives in `docs/` and the React REPL lives in
+`playground/`; both import the package from the workspace. The REPL compiles
+TSX in the browser with Monaco's TypeScript worker and runs the result against
+a small import whitelist.
 
 ## Contribution
 

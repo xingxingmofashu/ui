@@ -19,6 +19,8 @@ interface InputProps
     VariantProps<typeof theme> {
   /** Tailwind classes merged into the root element. */
   className?: string;
+  /** Inline styles merged into the outer root. Use `ui.input` for the native input. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Input["slots"];
   /** Icon rendered before the input. */
@@ -34,6 +36,7 @@ function Input({
   trailingIcon,
   size,
   disabled,
+  style,
   ...props
 }: InputProps) {
   const styles = theme({ size });
@@ -44,6 +47,7 @@ function Input({
       data-slot="root"
       data-disabled={fieldsetDisabled || undefined}
       className={cn(styles.root(), ui?.root, className)}
+      style={style}
     >
       <span
         data-slot="control"

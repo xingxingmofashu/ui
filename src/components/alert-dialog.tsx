@@ -28,6 +28,8 @@ type AlertDialogProps = Omit<UIAlertDialog.Root.Props, "children"> & {
   onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
   /** Tailwind classes merged into the popup. */
   className?: string;
+  /** Inline styles merged into the popup. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: AlertDialog["slots"];
 };
@@ -41,6 +43,7 @@ function AlertDialog({
   onCancel,
   onConfirm,
   className,
+  style,
   ui,
   ...props
 }: AlertDialogProps) {
@@ -61,6 +64,7 @@ function AlertDialog({
           <UIAlertDialog.Popup
             data-slot="popup"
             className={cn(styles.popup(), ui?.popup, className)}
+            style={style}
           >
             <span
               aria-hidden="true"

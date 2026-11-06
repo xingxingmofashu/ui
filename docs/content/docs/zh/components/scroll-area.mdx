@@ -54,6 +54,7 @@ viewport 只在可滚动时可聚焦，与原生滚动容器行为一致。通�
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | 合并到根节点的 Tailwind 类；在这里设置高度。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; viewport?: ClassValue; content?: ClassValue; scrollbar?: ClassValue; thumb?: ClassValue; corner?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | 属性 | 说明 |

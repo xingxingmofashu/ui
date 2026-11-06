@@ -1,9 +1,8 @@
-import * as React from "react";
 import { createRoot } from "react-dom/client";
 
 import { GlassPresetProvider } from "@xingxingmofashu/ui/plugins/glass-preset";
 
-import { App } from "./app";
+import { Repl } from "./repl/repl";
 import { ThemeProvider } from "./theme";
 import "./styles.css";
 
@@ -14,14 +13,9 @@ if (!container) {
 }
 
 createRoot(container).render(
-  <React.StrictMode>
-    <ThemeProvider>
-      <GlassPresetProvider
-        defaultPreset="thin"
-        storageKey="ui-playground-glass"
-      >
-        <App />
-      </GlassPresetProvider>
-    </ThemeProvider>
-  </React.StrictMode>,
+  <ThemeProvider>
+    <GlassPresetProvider defaultPreset="thin" storageKey="ui-playground-glass">
+      <Repl />
+    </GlassPresetProvider>
+  </ThemeProvider>,
 );

@@ -6,7 +6,7 @@ import theme from "../theme/card";
 
 type Card = ComponentConfig<typeof theme>;
 
-type CardProps = Omit<React.ComponentProps<"div">, "style" | "title"> & {
+type CardProps = Omit<React.ComponentProps<"div">, "title"> & {
   /** Classes merged into the root element. */
   className?: string;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */

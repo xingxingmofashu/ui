@@ -39,7 +39,7 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 
 ## Accessibility
 
-`Checkbox` renders a button with `role="checkbox"`, `aria-checked`, and a hidden native checkbox for form submission. The visible `label` names it and `description` is linked with `aria-describedby`; explicit ARIA names take precedence.
+`Checkbox` renders a focusable element with `role="checkbox"` and `aria-checked` (a `<span>` by default), plus a hidden native checkbox for form submission. The visible `label` names it and `description` is linked with `aria-describedby`; explicit ARIA names take precedence.
 
 `Space` toggles the focused control. `indeterminate` sets `aria-checked="mixed"`. Use `required` when a checked state is mandatory, and see the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
 
@@ -61,12 +61,13 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 | `form` | `string` | — | ID of the form that owns the hidden input. |
 | `value` | `string` | — | Value submitted with the form when checked. |
 | `uncheckedValue` | `string` | — | Value submitted with the form when unchecked. |
-| `id` | `string` | — | ID of the hidden input element. |
+| `id` | `string` | — | ID of the hidden input, or of the root element when `nativeButton` is true. |
 | `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Tailwind classes merged into the checkbox root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
@@ -77,12 +78,12 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 | `data-disabled` | Present when the checkbox is disabled. |
 | `data-readonly` | Present when the checkbox is read-only. |
 | `data-required` | Present when the checkbox is required. |
-| `data-valid` | Present when the checkbox is valid. |
-| `data-invalid` | Present when the checkbox is invalid. |
-| `data-touched` | Present after the checkbox is touched. |
-| `data-dirty` | Present after the checkbox value changes. |
-| `data-filled` | Present when the checkbox is checked. |
-| `data-focused` | Present when the checkbox is focused. |
+| `data-valid` | Present when the checkbox is valid and wrapped in `Field`. |
+| `data-invalid` | Present when the checkbox is invalid and wrapped in `Field`. |
+| `data-touched` | Present after the checkbox is touched while wrapped in `Field`. |
+| `data-dirty` | Present after the checkbox value changes while wrapped in `Field`. |
+| `data-filled` | Present when the checkbox is checked while wrapped in `Field`. |
+| `data-focused` | Present when the checkbox is focused while wrapped in `Field`. |
 | `data-starting-style` | Present when the indicator begins animating in. |
 | `data-ending-style` | Present when the indicator is animating out. |
 | `data-slot` | Marks internal parts (`root`, `box`, `fill`, `glass`, `overlay`, `indicator`, `indicator-icon`, `wrapper`, `label`, `description`) for styling. |

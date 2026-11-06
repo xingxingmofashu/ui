@@ -221,13 +221,12 @@ describe("Dialog", () => {
       expect(getSlot(dialog, "footer")).toHaveClass("ui-footer");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Dialog title="One" style={{ opacity: 0.5 }} />
-      );
+    it("forwards inline styles to the popup", async () => {
+      renderDialog({ style: { opacity: 0.5 } });
 
-      expect(element).toBeTruthy();
+      const dialog = await findDialog();
+
+      expect(dialog).toHaveStyle({ opacity: "0.5" });
     });
   });
 

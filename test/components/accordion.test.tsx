@@ -448,25 +448,31 @@ describe("Accordion", () => {
       expect(ref.current).toBe(getSlot(getRoot("One"), "item"));
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
+    it("forwards inline styles to the root and item roots", () => {
+      const { container } = render(
         <>
-          {/* @ts-expect-error The glass theme owns inline styles. */}
           <Accordion items={items} style={{ opacity: 0.5 }} />
           <Accordion
             items={[
               {
                 value: "one",
                 title: "One",
-                // @ts-expect-error Item entries do not accept inline styles.
-                style: { opacity: 0.5 },
+                style: { opacity: 0.25 },
               },
             ]}
           />
-        </>
+        </>,
       );
 
-      expect(element).toBeTruthy();
+      const roots = container.querySelectorAll<HTMLElement>(
+        '[data-slot="root"]',
+      );
+      const item = screen
+        .getByText("One")
+        .closest<HTMLElement>('[data-slot="item"]');
+
+      expect(roots[0]).toHaveStyle({ opacity: "0.5" });
+      expect(item).toHaveStyle({ opacity: "0.25" });
     });
 
     it("forwards render and ref to the Base UI root", () => {

@@ -23,6 +23,8 @@ type TooltipProps = Omit<UITooltip.Root.Props, "children"> &
     arrow?: boolean;
     /** Tailwind classes merged into the tooltip popup. */
     className?: string;
+    /** Inline styles merged into the tooltip popup. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Tooltip["slots"];
   };
@@ -39,6 +41,7 @@ function Tooltip({
   alignOffset,
   collisionPadding,
   className,
+  style,
   ui,
   ...props
 }: TooltipProps) {
@@ -65,6 +68,7 @@ function Tooltip({
           <UITooltip.Popup
             data-slot="popup"
             className={cn(styles.popup(), ui?.popup, className)}
+            style={style}
           >
             <span
               aria-hidden="true"

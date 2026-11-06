@@ -15,7 +15,7 @@ type Accordion = ComponentConfig<typeof theme>;
 /** One panel managed by the accordion. */
 type AccordionItemProps<Value extends string = string> = Omit<
   UIAccordion.Item.Props,
-  "children" | "className" | "content" | "style" | "title" | "value"
+  "children" | "className" | "content" | "title" | "value"
 > & {
   /** Value that identifies the item in the accordion value. */
   value: Value;
@@ -45,7 +45,7 @@ type AccordionItemProps<Value extends string = string> = Omit<
 
 type AccordionProps<Value extends string = string> = Omit<
   UIAccordion.Root.Props<Value>,
-  "className" | "style" | "children"
+  "className" | "children"
 > &
   VariantProps<typeof theme> & {
     /** Panels rendered by the accordion. */

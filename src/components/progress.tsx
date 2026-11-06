@@ -13,7 +13,7 @@ type Progress = ComponentConfig<typeof theme>;
 
 type ProgressProps = Omit<
   UIProgress.Root.Props,
-  "children" | "className" | "style" | "value"
+  "children" | "className" | "value"
 > &
   VariantProps<typeof theme> & {
     /** Current value. Use `null` for an indeterminate progress bar. */

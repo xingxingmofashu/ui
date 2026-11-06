@@ -25,7 +25,6 @@ type CheckboxGroupItemProps<Value extends string = string> = Omit<
   | "className"
   | "onCheckedChange"
   | "parent"
-  | "style"
   | "value"
 > & {
   /** Value that identifies the option in the group value. */
@@ -61,7 +60,6 @@ type CheckboxGroupProps<Value extends string = string> = Omit<
   | "className"
   | "defaultValue"
   | "onValueChange"
-  | "style"
   | "value"
 > &
   VariantProps<typeof theme> &

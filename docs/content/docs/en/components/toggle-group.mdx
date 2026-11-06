@@ -71,6 +71,7 @@ Arrow keys move focus within the group, `Home` and `End` jump to the ends, and `
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
 | `className` | `string` | — | Tailwind classes merged into the group root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 **ToggleGroupItemProps**
@@ -88,6 +89,7 @@ Arrow keys move focus within the group, `Home` and `End` jump to the ends, and `
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
 | `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the item element. |
 | `className` | `string` | — | Tailwind classes merged into the item root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for this item's internal slots, keyed by `data-slot`. |
 
 Items do not accept `pressed` or `defaultPressed`; the group `value` / `defaultValue` is the single source of truth for selection. Root `ui` is merged into every item first, then the item's `ui`, then the item's `className`.

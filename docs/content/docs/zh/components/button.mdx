@@ -57,15 +57,15 @@ description: "一个 React 按钮，采用 Liquid Glass 风格，支持五种尺
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | 按钮文字；与 `children` 同时提供时优先使用 `label`。 |
-| `children` | `ReactNode` | — | `label` 未提供时使用的可见内容。 |
+| `label` | `ReactNode` | — | 按钮文字；`label` 为真值时优先于 `children`。 |
+| `children` | `ReactNode` | — | `label` 为假值或未提供时使用的可见内容。 |
 | `leadingIcon` | `ReactNode` | — | 标签前的装饰性图标。 |
 | `trailingIcon` | `ReactNode` | — | 标签后的装饰性图标。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距、文字与图标尺寸。 |
 | `disabled` | `boolean` | `false` | 禁用按钮。 |
 | `focusableWhenDisabled` | `boolean` | `false` | 禁用时仍保留在 Tab 顺序中，并通过 `aria-disabled` 表达状态。 |
 | `nativeButton` | `boolean` | `true` | 是否渲染原生 `<button>`；渲染链接或其他元素时设为 `false`。 |
-| `type` | `"button" \| "submit" \| "reset"` | — | 原生按钮类型。 |
+| `type` | `"button" \| "submit" \| "reset"` | `"button"` | 原生按钮类型。需要在表单中提交时设为 `"submit"`。 |
 | `form` | `string` | — | 拥有该按钮的表单 ID。 |
 | `name` | `string` | — | 随表单提交的字段名。 |
 | `value` | `string` | — | 随表单提交的值。 |
@@ -73,6 +73,7 @@ description: "一个 React 按钮，采用 Liquid Glass 风格，支持五种尺
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换渲染的元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到渲染元素的 ref。 |
 | `className` | `string` | — | Tailwind 类名，合并到外层 `root`。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; base?: ClassValue; glass?: ClassValue; overlay?: ClassValue; label?: ClassValue; leadingIcon?: ClassValue; trailingIcon?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | 属性 | 说明 |

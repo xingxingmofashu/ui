@@ -388,6 +388,28 @@ describe("RadioGroup", () => {
       expect(getSlot(radio, "box")).not.toHaveClass("custom-item");
     });
 
+    it("forwards inline styles to the group and item roots", () => {
+      render(
+        <RadioGroup
+          aria-label="Plan"
+          style={{ opacity: 0.5 }}
+          items={[
+            {
+              value: "free",
+              label: "Free",
+              style: { opacity: 0.25 },
+            },
+          ]}
+        />,
+      );
+
+      const group = getGroup();
+      const radio = screen.getByRole("radio", { name: "Free" });
+
+      expect(group).toHaveStyle({ opacity: "0.5" });
+      expect(radio).toHaveStyle({ opacity: "0.25" });
+    });
+
     it("applies ui classes to group and item slots", () => {
       render(
         <RadioGroup

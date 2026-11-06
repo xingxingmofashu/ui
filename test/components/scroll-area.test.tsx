@@ -305,13 +305,12 @@ describe("ScrollArea", () => {
       expect(getSlot(root, "corner")).toHaveClass("ui-corner");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <ScrollArea style={{ opacity: 0.5 }}>Body</ScrollArea>
+    it("forwards inline styles to the root", () => {
+      const { container } = render(
+        <ScrollArea style={{ opacity: 0.5 }}>Body</ScrollArea>,
       );
 
-      expect(element).toBeTruthy();
+      expect(getSlot(container, "root")).toHaveStyle({ opacity: "0.5" });
     });
 
     it("forwards render and ref to the Base UI root", () => {

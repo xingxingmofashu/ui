@@ -15,7 +15,7 @@ type ToggleGroup = ComponentConfig<typeof theme>;
 /** One option managed by the toggle group. */
 type ToggleGroupItemProps<Value extends string = string> = Omit<
   UIToggle.Props<Value>,
-  "className" | "children" | "style" | "value" | "pressed" | "defaultPressed"
+  "className" | "children" | "value" | "pressed" | "defaultPressed"
 > & {
   /** Value that identifies the option in the group value. */
   value: Value;
@@ -33,7 +33,7 @@ type ToggleGroupItemProps<Value extends string = string> = Omit<
 
 type ToggleGroupProps<Value extends string = string> = Omit<
   UIToggleGroup.Props<Value>,
-  "className" | "style" | "children"
+  "className" | "children"
 > &
   VariantProps<typeof theme> & {
     /** Options rendered by the toggle group. */

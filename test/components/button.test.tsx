@@ -391,13 +391,12 @@ describe("Button", () => {
       expect(buttonElement).not.toHaveClass("rounded-full", "p-0");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Button label="Styled" style={{ opacity: 0.5 }} />
-      );
+    it("forwards inline styles to the root", () => {
+      render(<Button label="Styled" style={{ opacity: 0.5 }} />);
 
-      expect(element).toBeTruthy();
+      expect(
+        screen.getByRole("button", { name: "Styled" }),
+      ).toHaveStyle({ opacity: "0.5" });
     });
 
     it("renders a custom element through render and nativeButton", () => {
