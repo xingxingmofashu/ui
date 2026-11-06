@@ -49,7 +49,7 @@ Switch forwards `name` and `value` and submits the current value through a hidde
 
 ## Accessibility
 
-`Switch` renders a button with `role="switch"` and `aria-checked`. The visible `label` names it and `description` is linked with `aria-describedby`; explicit ARIA names take precedence.
+`Switch` renders a focusable element with `role="switch"` and `aria-checked` (a `<span>` by default). The visible `label` names it and `description` is linked with `aria-describedby`; explicit ARIA names take precedence.
 
 `Space` toggles the focused control. The hidden checkbox carries `name` and `value` for form submission, and `readOnly` prevents changes while keeping focus. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
 
@@ -70,12 +70,13 @@ Switch forwards `name` and `value` and submits the current value through a hidde
 | `form` | `string` | — | ID of the form that owns the hidden input. |
 | `value` | `string` | — | Value submitted with the form when the switch is on. |
 | `uncheckedValue` | `string` | — | Value submitted with the form when the switch is off. |
-| `id` | `string` | — | ID of the hidden input element. |
+| `id` | `string` | — | ID of the hidden input, or of the root element when `nativeButton` is true. |
 | `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Tailwind classes merged into the switch root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; container?: ClassValue; base?: ClassValue; thumb?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
@@ -85,12 +86,12 @@ Switch forwards `name` and `value` and submits the current value through a hidde
 | `data-disabled` | Present when the switch is disabled. |
 | `data-readonly` | Present when the switch is read-only. |
 | `data-required` | Present when the switch is required. |
-| `data-valid` | Present when the switch is valid. |
-| `data-invalid` | Present when the switch is invalid. |
-| `data-touched` | Present after the switch is touched. |
-| `data-dirty` | Present after the switch value changes. |
-| `data-filled` | Present when the switch is on. |
-| `data-focused` | Present when the switch is focused. |
+| `data-valid` | Present when the switch is valid and wrapped in `Field`. |
+| `data-invalid` | Present when the switch is invalid and wrapped in `Field`. |
+| `data-touched` | Present after the switch is touched while wrapped in `Field`. |
+| `data-dirty` | Present after the switch value changes while wrapped in `Field`. |
+| `data-filled` | Present when the switch is on while wrapped in `Field`. |
+| `data-focused` | Present when the switch is focused while wrapped in `Field`. |
 | `data-animating` | Present while the thumb transition is running. |
 | `data-slot` | Marks internal parts (`root`, `container`, `base`, `thumb`, `wrapper`, `label`, `description`) for styling. |
 

@@ -351,6 +351,30 @@ describe("Tabs", () => {
       expect(getSlot(tab, "label")).not.toHaveClass("custom-tab");
     });
 
+    it("forwards inline styles to the root and tab button", () => {
+      render(
+        <Tabs
+          aria-label="Settings"
+          style={{ opacity: 0.5 }}
+          items={[
+            {
+              value: "account",
+              label: "Account",
+              content: "Account",
+              style: { opacity: 0.25 },
+            },
+          ]}
+        />,
+      );
+
+      const list = getList();
+      const root = list.closest<HTMLElement>('[data-slot="root"]');
+      const tab = getTab("Account");
+
+      expect(root).toHaveStyle({ opacity: "0.5" });
+      expect(tab).toHaveStyle({ opacity: "0.25" });
+    });
+
     it("applies ui classes to root, list, and item slots", () => {
       render(
         <Tabs

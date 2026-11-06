@@ -18,7 +18,7 @@ type Checkbox = ComponentConfig<typeof theme>;
 interface CheckboxProps
   extends Omit<
       UICheckbox.Root.Props,
-      "className" | "children" | "style" | "ref"
+      "className" | "children" | "ref"
     >,
     VariantProps<typeof theme> {
   /** Ref to the rendered root element. */

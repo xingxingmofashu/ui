@@ -43,7 +43,7 @@ Switch 会把 `name` 与 `value` 用于表单，并在提交时通过隐藏的 c
 
 ## 无障碍
 
-`Switch` 渲染带 `role="switch"` 与 `aria-checked` 的按钮。可见的 `label` 为其命名，`description` 通过 `aria-describedby` 关联；显式 ARIA 名称优先。
+`Switch` 渲染带 `role="switch"` 与 `aria-checked` 的可聚焦元素（默认是 `<span>`）。可见的 `label` 为其命名，`description` 通过 `aria-describedby` 关联；显式 ARIA 名称优先。
 
 `Space` 切换当前控件。隐藏复选框携带 `name` 与 `value` 用于表单提交，`readOnly` 会阻止修改但保留焦点。表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
@@ -64,12 +64,13 @@ Switch 会把 `name` 与 `value` 用于表单，并在提交时通过隐藏的 c
 | `form` | `string` | — | 拥有隐藏输入框的表单 ID。 |
 | `value` | `string` | — | 开启时随表单提交的值。 |
 | `uncheckedValue` | `string` | — | 关闭时随表单提交的值。 |
-| `id` | `string` | — | 隐藏输入框的 ID。 |
+| `id` | `string` | — | 隐藏输入框的 ID；当 `nativeButton` 为 true 时改为根元素的 ID。 |
 | `inputRef` | `Ref<HTMLInputElement>` | — | 指向隐藏原生输入框的 ref。 |
 | `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | Tailwind 类名，合并到 switch root。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; container?: ClassValue; base?: ClassValue; thumb?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | 属性 | 说明 |
@@ -79,12 +80,12 @@ Switch 会把 `name` 与 `value` 用于表单，并在提交时通过隐藏的 c
 | `data-disabled` | 开关禁用时存在。 |
 | `data-readonly` | 开关只读时存在。 |
 | `data-required` | 开关必填时存在。 |
-| `data-valid` | 开关有效时存在。 |
-| `data-invalid` | 开关无效时存在。 |
-| `data-touched` | 开关被触碰后存在。 |
-| `data-dirty` | 开关值变化后存在。 |
-| `data-filled` | 开关开启时存在。 |
-| `data-focused` | 开关聚焦时存在。 |
+| `data-valid` | 开关包裹在 `Field` 中且有效时存在。 |
+| `data-invalid` | 开关包裹在 `Field` 中且无效时存在。 |
+| `data-touched` | 开关包裹在 `Field` 中并被触碰后存在。 |
+| `data-dirty` | 开关包裹在 `Field` 中且值变化后存在。 |
+| `data-filled` | 开关包裹在 `Field` 中且开启时存在。 |
+| `data-focused` | 开关包裹在 `Field` 中且聚焦时存在。 |
 | `data-animating` | thumb 过渡动画运行时存在。 |
 | `data-slot` | 标记内部部件（`root`、`container`、`base`、`thumb`、`wrapper`、`label`、`description`），用于样式选择。 |
 

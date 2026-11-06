@@ -15,7 +15,7 @@ type Switch = ComponentConfig<typeof theme>;
 interface SwitchProps
   extends Omit<
       UISwitch.Root.Props,
-      "className" | "children" | "style" | "ref"
+      "className" | "children" | "ref"
     >,
     VariantProps<typeof theme> {
   /** Ref to the rendered root element. */

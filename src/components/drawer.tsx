@@ -12,7 +12,7 @@ type Drawer = ComponentConfig<typeof theme>;
 interface DrawerProps
   extends Omit<
     UIDrawer.Root.Props,
-    "children" | "className" | "style" | "swipeDirection"
+    "children" | "className" | "swipeDirection"
   > {
   /** Drawer heading. */
   title: React.ReactNode;
@@ -26,6 +26,8 @@ interface DrawerProps
   direction?: NonNullable<UIDrawer.Root.Props["swipeDirection"]>;
   /** Tailwind classes merged into the popup. */
   className?: string;
+  /** Inline styles merged into the popup. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Drawer["slots"];
 }
@@ -37,6 +39,7 @@ function Drawer({
   footer,
   direction = "down",
   className,
+  style,
   ui,
   ...props
 }: DrawerProps) {
@@ -57,6 +60,7 @@ function Drawer({
           <UIDrawer.Popup
             data-slot="popup"
             className={cn(styles.popup(), ui?.popup, className)}
+            style={style}
           >
             <span
               aria-hidden="true"

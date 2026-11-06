@@ -129,8 +129,8 @@ workspace.
   are `ClassValue`.
 - Merge order: theme -> root `ui` -> item `ui` -> `className`. Merge at the
   call site instead of adding `sharedUi`.
-- `data-slot` is public; `data-layer` stays private. `style` is unsupported;
-  use `className` and the shared `--ui-*` tokens.
+- `data-slot` is public; `data-layer` stays private. `className` and `style`
+  both target the primary element; use the shared `--ui-*` tokens for material.
 - Docs list the derived `ui` slots and `data-slot` in the Attribute table.
 
 ```ts

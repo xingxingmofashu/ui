@@ -11,7 +11,7 @@ import theme from "../theme/field";
 type Field = ComponentConfig<typeof theme>;
 
 interface FieldProps
-  extends Omit<UIField.Root.Props, "children" | "className" | "style">,
+  extends Omit<UIField.Root.Props, "children" | "className">,
     VariantProps<typeof theme> {
   /** Single Base UI control labelled and validated by the field. */
   children: React.ReactElement;

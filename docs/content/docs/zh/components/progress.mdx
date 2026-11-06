@@ -65,6 +65,7 @@ description: "一个 React 进度条，采用线性 Liquid Glass 轨道，支持
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素的渲染结果。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | 合并到根元素的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; value?: ClassValue; track?: ClassValue; indicator?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | 属性 | 说明 |
@@ -88,7 +89,7 @@ description: "一个 React 进度条，采用线性 Liquid Glass 轨道，支持
 }
 ```
 
-`style` 有意不支持：玻璃主题负责轨道表面。使用 `className` 控制布局，并通过 `--ui-progress-*` token 调整主题。
+使用 `className` 与 `style` 控制布局，并通过 `--ui-progress-*` token 调整主题。两者都合并到根元素，而不是轨道表面。
 
 ## 相关组件
 

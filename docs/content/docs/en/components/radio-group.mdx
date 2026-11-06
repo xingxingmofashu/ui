@@ -62,6 +62,7 @@ Arrow keys move between options and update the selection, and `Space` selects th
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
 | `className` | `string` | — | Tailwind classes merged into the group root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 **RadioGroupItem**
@@ -81,6 +82,7 @@ Arrow keys move between options and update the selection, and `Space` selects th
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the option element. |
 | `ref` | `Ref<HTMLSpanElement>` | — | Ref forwarded to the option element. |
 | `className` | `string` | — | Tailwind classes merged into the option root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for this option's internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |
@@ -90,12 +92,12 @@ Arrow keys move between options and update the selection, and `Space` selects th
 | `data-disabled` | Present when the option or group is disabled. |
 | `data-readonly` | Present when the option is read-only. |
 | `data-required` | Present when the option is required. |
-| `data-valid` | Present when the option is valid. |
-| `data-invalid` | Present when the option is invalid. |
-| `data-touched` | Present after the option is touched. |
-| `data-dirty` | Present after the option value changes. |
-| `data-filled` | Present when the option is selected. |
-| `data-focused` | Present when the option is focused. |
+| `data-valid` | Present on every option when the group is valid and wrapped in `Field`. |
+| `data-invalid` | Present on every option when the group is invalid and wrapped in `Field`. |
+| `data-touched` | Present on every option after the group is touched while wrapped in `Field`. |
+| `data-dirty` | Present on every option after the group value changes while wrapped in `Field`. |
+| `data-filled` | Present on every option when the group has a selection while wrapped in `Field`. |
+| `data-focused` | Present on every option when any option is focused while wrapped in `Field`. |
 | `data-starting-style` | Present when the indicator begins animating in. |
 | `data-ending-style` | Present when the indicator is animating out. |
 | `data-slot` | Marks internal parts (`root`, `header`, `label`, `description`, `items`, `item`, `box`, `glass`, `overlay`, `indicator`, `dot`, `wrapper`, `item-label`, `item-description`) for styling. |

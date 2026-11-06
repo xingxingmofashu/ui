@@ -82,6 +82,7 @@ description: "一个 React 标签页组件，采用 Liquid Glass 标签栏、滑
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | 合并到根元素的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; list?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panels?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 **TabsItem**
@@ -100,6 +101,7 @@ description: "一个 React 标签页组件，采用 Liquid Glass 标签栏、滑
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换标签元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到标签元素的 ref。 |
 | `className` | `string` | — | 合并到标签按钮的 Tailwind 类名；面板请使用 `ui.panel`。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的该标签内部槽位类名。 |
 
 根 `ui` 会先合并到每个标签与面板，再合并该 item 的 `ui`。item 的 `className` 只作用于标签按钮；面板请通过 `ui.panel` 设置。

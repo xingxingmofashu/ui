@@ -57,15 +57,15 @@ When `nativeButton={false}` renders a link or another element, keep the visible 
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Button text. Takes precedence over `children` when both are provided. |
-| `children` | `ReactNode` | — | Visible content used when `label` is not provided. |
+| `label` | `ReactNode` | — | Button text. A truthy `label` takes precedence over `children`. |
+| `children` | `ReactNode` | — | Visible content used when `label` is falsy or omitted. |
 | `leadingIcon` | `ReactNode` | — | Decorative icon before the label. |
 | `trailingIcon` | `ReactNode` | — | Decorative icon after the label. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, text, and icon size. |
 | `disabled` | `boolean` | `false` | Disables the button. |
 | `focusableWhenDisabled` | `boolean` | `false` | Keeps a disabled button in the Tab order and exposes it with `aria-disabled`. |
 | `nativeButton` | `boolean` | `true` | Whether the rendered element is a native `<button>`. Set it to `false` when rendering a link or another element. |
-| `type` | `"button" \| "submit" \| "reset"` | — | Native button type. |
+| `type` | `"button" \| "submit" \| "reset"` | `"button"` | Native button type. Set `"submit"` when the button should submit a form. |
 | `form` | `string` | — | ID of the form that owns the button. |
 | `name` | `string` | — | Name submitted with the form. |
 | `value` | `string` | — | Value submitted with the form. |
@@ -73,6 +73,7 @@ When `nativeButton={false}` renders a link or another element, keep the visible 
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the rendered element. |
 | `className` | `string` | — | Tailwind classes merged into the outer `root`. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; base?: ClassValue; glass?: ClassValue; overlay?: ClassValue; label?: ClassValue; leadingIcon?: ClassValue; trailingIcon?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |

@@ -81,6 +81,7 @@ viewport 是实时区域。高优先级通知使用 `alertdialog` 角色，其�
 | `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | 通知栈固定的角落。 |
 | `close` | `ReactNode` | 内置关闭按钮 | 替换默认关闭按钮的自定义内容。 |
 | `className` | `string` | — | 合并到每条 Toast 的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ viewport?: ClassValue; root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; icon?: ClassValue; text?: ClassValue; title?: ClassValue; description?: ClassValue; actions?: ClassValue; action?: ClassValue; close?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换每条 Toast 的根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到每条 Toast 根元素的 ref。 |
@@ -142,7 +143,7 @@ viewport 是实时区域。高优先级通知使用 `alertdialog` 角色，其�
 
 ## 主题
 
-玻璃表面、堆叠几何和动效由各槽位共享。使用 `ui.root`、`ui.glass`、`ui.overlay` 与 `ui.content` 调整单个槽位；`ui.viewport` 控制堆叠定位，`className` 则合并到每条 Toast 的根元素。`style` 不被支持；请通过共享的 `--ui-glass-*` token 调整材质。
+玻璃表面、堆叠几何和动效由各槽位共享。使用 `ui.root`、`ui.glass`、`ui.overlay` 与 `ui.content` 调整单个槽位；`ui.viewport` 控制堆叠定位，`className` 与 `style` 都会合并到每条 Toast 的根元素。请优先通过共享的 `--ui-glass-*` token 调整材质。
 
 ## 相关组件
 

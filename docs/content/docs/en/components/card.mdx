@@ -4,9 +4,9 @@ description: "A server-safe React card with a Liquid Glass surface, header, body
 ---
 
 `Card` is a native layout primitive: it has no interactive state and forwards
-its remaining native props to the root `div`. `style` is excluded so the glass
-layers stay theme-controlled. It is server-safe and does not support the
-`render` prop. Use `ui` to style the glass layers or any internal section.
+its remaining native props, including `style`, to the root `div`. It is
+server-safe and does not support the `render` prop. Use `ui` to style the glass
+layers or any internal section.
 
 ## Basic example
 
@@ -36,6 +36,7 @@ When the whole card should be clickable, put one link or button in the title ins
 | `children` | `ReactNode` | — | Card body content. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Merged into `root`; use it for layout. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; layout?: ClassValue; header?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |

@@ -29,7 +29,7 @@ The component is typically used in controlled mode: `open` controls visibility a
 
 `Dialog` renders a modal `dialog` named by `title` and described by `description`. Focus moves into the popup, stays trapped while it is open, and returns to the trigger when it closes.
 
-`Escape` and backdrop clicks close it unless `disablePointerDismissal` is set; provide a visible close action in `footer`. `modal={false}` relaxes focus trapping and scroll locking. See the [accessibility guide](/docs/en/guides/accessibility) for overlay focus rules.
+`Escape` and backdrop clicks close it by default. `disablePointerDismissal` stops backdrop clicks only; Escape still closes the dialog. Provide a visible close action in `footer`. `modal={false}` relaxes focus trapping and scroll locking. See the [accessibility guide](/docs/en/guides/accessibility) for overlay focus rules.
 
 ## API reference
 
@@ -50,6 +50,7 @@ The component is typically used in controlled mode: `open` controls visibility a
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the dialog. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open dialog. |
 | `className` | `string` | — | Tailwind classes merged into the popup. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 | Attribute | Description |

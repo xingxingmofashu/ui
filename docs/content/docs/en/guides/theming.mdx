@@ -156,13 +156,14 @@ surfaces the package does not provide.
 
 ## Component-level styling
 
-Every component accepts `className`. It merges into the component's primary
-element: the root for most components, the popup for Dialog, Alert Dialog,
-Drawer, Popover, Menu, and Tooltip, the field root for `Select`, and each toast
-for `Toast`. Use it for layout, not for replacing the material:
+Every component accepts `className` and `style`. They merge into the
+component's primary element: the root for most components, the popup for
+Dialog, Alert Dialog, Drawer, Popover, Menu, and Tooltip, the outer root for
+`Input`, the field root for `Select`, and each toast for `Toast`. Use them for
+layout, not for replacing the material:
 
 ```tsx
-<Button className="w-full" label="Continue" />
+<Button className="w-full" style={{ maxWidth: 320 }} label="Continue" />
 ```
 
 Every component also accepts `ui`, an object keyed by the component's
@@ -189,9 +190,9 @@ Accordion and Toggle Group, root `ui` is applied first, then each item's `ui`,
 then the item's `className`. Inspect the DOM `data-slot` attribute or the
 component API table for the available keys.
 
-`style` is intentionally unsupported on most components because the glass theme
-owns the surface. Use `ui` and `className` for spacing, width, and positioning,
-and tune the shared tokens for color, blur, and shadow changes.
+Use `style` for values that must be computed at runtime, including per-instance
+CSS variables. Inline styles override matching properties from the theme and
+`className`; keep color, blur, and shadow changes on the shared tokens.
 
 For full control, import a compiled theme recipe:
 
@@ -227,4 +228,4 @@ Provide a sensible fallback background for browsers that do not support
   `data-glass` materials.
 - Override tokens in an unlayered `:root` and `.dark` block for custom material.
 - Test glass contrast over the busiest background in the app.
-- Prefer `ui` for internal slots, `className` for layout, and tokens for material changes.
+- Prefer `ui` for internal slots, `className` and `style` for layout, and tokens for material changes.

@@ -20,6 +20,8 @@ type DialogProps = Omit<UIDialog.Root.Props, "children"> & {
   footer?: React.ReactNode;
   /** Tailwind classes merged into the popup. */
   className?: string;
+  /** Inline styles merged into the popup. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Dialog["slots"];
 };
@@ -30,6 +32,7 @@ function Dialog({
   children,
   footer,
   className,
+  style,
   ui,
   ...props
 }: DialogProps) {
@@ -50,6 +53,7 @@ function Dialog({
           <UIDialog.Popup
             data-slot="popup"
             className={cn(styles.popup(), ui?.popup, className)}
+            style={style}
           >
             <span
               aria-hidden="true"

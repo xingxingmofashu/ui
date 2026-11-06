@@ -15,7 +15,7 @@ import theme from "../theme/button";
 type Button = ComponentConfig<typeof theme>;
 
 interface ButtonProps
-  extends Omit<UIButtonProps, "ref" | "style" | "className">,
+  extends Omit<UIButtonProps, "ref" | "className">,
     VariantProps<typeof theme> {
   /** Ref to the rendered root element. */
   ref?: React.Ref<HTMLElement>;

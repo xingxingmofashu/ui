@@ -77,7 +77,9 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `aria-label` | `string` | — | 没有可见标签时的可访问名称。 |
 | `aria-labelledby` | `string` | — | 从其他元素为分组命名。 |
 | `aria-describedby` | `string` | — | 外部辅助说明的 ID。可见的 `description` 会与此值合并。 |
+| `ref` | `Ref<HTMLDivElement>` | — | 转发到分组根元素的 ref。 |
 | `className` | `string` | — | 合并到分组根元素的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 **CheckboxGroupItemProps**
@@ -94,7 +96,9 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `aria-label` | `string` | — | 没有可见标签时的可访问名称。 |
 | `aria-labelledby` | `string` | — | 外部标签的 ID。 |
 | `aria-describedby` | `string` | — | 外部辅助说明的 ID。 |
+| `ref` | `Ref<HTMLElement>` | — | 转发到条目根元素的 ref。 |
 | `className` | `string` | — | 合并到条目根元素的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的控件槽位类名。 |
 
 父复选框不属于组件 API。请使用 `Checkbox` 组合实现，并如上文所示同步数组状态。

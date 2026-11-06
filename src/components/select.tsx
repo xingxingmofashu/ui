@@ -31,7 +31,6 @@ type SelectProps<Value extends string = string> = Omit<
   UISelect.Root.Props<Value>,
   | "children"
   | "className"
-  | "style"
   | "items"
   | "multiple"
   | "value"
@@ -73,6 +72,8 @@ type SelectProps<Value extends string = string> = Omit<
     "aria-describedby"?: string;
     /** Tailwind classes merged into the root element. */
     className?: string;
+    /** Inline styles merged into the root element. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Select["slots"];
   };
@@ -98,6 +99,7 @@ function Select<Value extends string = string>({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  style,
   ...props
 }: SelectProps<Value>) {
   const styles = theme({ size });
@@ -127,6 +129,7 @@ function Select<Value extends string = string>({
         data-slot="root"
         data-disabled={fieldsetDisabled || undefined}
         className={cn(styles.root(), ui?.root, className)}
+        style={style}
       >
         {label ? (
           <UISelect.Label

@@ -247,4 +247,17 @@ describe("Select", () => {
       expect(screen.getByRole("listbox")).toBeInTheDocument();
     });
   });
+
+  describe("styling", () => {
+    it("forwards inline styles to the field root", async () => {
+      renderSelect({ style: { opacity: 0.5 } });
+
+      await findListbox();
+
+      const trigger = screen.getByRole("combobox");
+      const root = trigger.closest<HTMLElement>('[data-slot="root"]');
+
+      expect(root).toHaveStyle({ opacity: "0.5" });
+    });
+  });
 });

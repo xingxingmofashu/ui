@@ -28,6 +28,8 @@ type PopoverProps = Omit<UIPopover.Root.Props, "children"> &
     arrow?: boolean;
     /** Tailwind classes merged into the popup. */
     className?: string;
+    /** Inline styles merged into the popup. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Popover["slots"];
   };
@@ -45,6 +47,7 @@ function Popover({
   alignOffset,
   collisionPadding,
   className,
+  style,
   ui,
   ...props
 }: PopoverProps) {
@@ -67,6 +70,7 @@ function Popover({
           <UIPopover.Popup
             data-slot="popup"
             className={cn(styles.popup(), ui?.popup, className)}
+            style={style}
           >
             <span
               aria-hidden="true"

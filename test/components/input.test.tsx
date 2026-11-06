@@ -149,13 +149,14 @@ describe("Input", () => {
       expect(getSlot(root, "trailing-icon")).toHaveClass("ui-trailing");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Input aria-label="Search" style={{ width: 200 }} />
-      );
+    it("forwards inline styles to the outer root", () => {
+      render(<Input aria-label="Search" style={{ width: 200 }} />);
 
-      expect(element).toBeTruthy();
+      const input = screen.getByRole("textbox", { name: "Search" });
+      const root = getRoot(input);
+
+      expect(root).toHaveStyle({ width: "200px" });
+      expect(input).not.toHaveStyle({ width: "200px" });
     });
   });
 

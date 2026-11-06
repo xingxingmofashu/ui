@@ -161,17 +161,16 @@ describe("Fieldset", () => {
       expect(getSlot(root, "legend")).toHaveClass("ui-legend");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The fieldset theme owns inline styles.
+    it("forwards inline styles to the fieldset root", () => {
+      render(
         <Fieldset legend="Billing details" style={{ width: 200 }}>
           <Field label="Company">
             <Input />
           </Field>
-        </Fieldset>
+        </Fieldset>,
       );
 
-      expect(element).toBeTruthy();
+      expect(getRoot()).toHaveStyle({ width: "200px" });
     });
   });
 

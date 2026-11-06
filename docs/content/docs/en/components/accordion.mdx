@@ -43,7 +43,7 @@ Closed panels are removed from the DOM by default. Set `keepMounted` to keep the
 
 ## Accessibility
 
-Each entry renders a native button inside a real heading (an `<h3>` by default). The trigger exposes `aria-expanded` and `aria-controls`, and the panel is labelled by its trigger. `Enter` or `Space` toggles the focused panel. Disabled triggers stay in the document but are skipped by the Tab key.
+Each entry renders a native button inside a real heading (an `<h3>` by default). The trigger exposes `aria-expanded`; while its panel is open, it also exposes `aria-controls`. The panel is labelled by its trigger. `Enter` or `Space` toggles the focused panel. Disabled triggers stay in the document but are skipped by the Tab key.
 
 Keep the heading text meaningful; the visual style is not a substitute for a real document outline. See the [accessibility guide](/docs/en/guides/accessibility) for shared interaction patterns.
 
@@ -67,6 +67,7 @@ Keep the heading text meaningful; the visual style is not a substitute for a rea
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `string` | — | Tailwind classes merged into the root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 **AccordionItemProps**
@@ -82,6 +83,7 @@ Keep the heading text meaningful; the visual style is not a substitute for a rea
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the item root. |
 | `className` | `string` | — | Tailwind classes merged into the item root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this item's internal slots, keyed by `data-slot`. |
 
 Root `ui` is merged into every item first, then the item's `ui`, then the item's `className`.

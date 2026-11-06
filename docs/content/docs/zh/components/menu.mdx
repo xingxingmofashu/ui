@@ -27,9 +27,9 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 
 ## 无障碍
 
-`Menu` 遵循菜单按钮模式：触发器暴露 `aria-haspopup="menu"`、`aria-expanded` 与 `aria-controls`，浮层是菜单，每个操作项都是 `menuitem`。`ArrowDown` 与 `ArrowUp` 在启用的操作项之间移动，typeahead 会匹配操作项标签。`Enter` 或 `Space` 激活高亮项，`Escape` 关闭菜单并把焦点返回触发器。
+`Menu` 遵循菜单按钮模式：触发器暴露 `aria-haspopup="menu"`、`aria-expanded` 与 `aria-controls`；内部列表带有 `role="menu"`，每个操作项都是 `menuitem`。`ArrowDown` 与 `ArrowUp` 在启用的操作项之间移动，typeahead 会匹配操作项标签。`Enter` 或 `Space` 激活高亮项，`Escape` 关闭菜单并把焦点返回触发器。
 
-禁用的操作项仍会被播报，但无法激活。`value` 只作为 React key；当 `label` 不是纯文本时，请传入 `textValue`，让 typeahead 与屏幕阅读器获得可读名称。共享交互模式见[可访问性指南](/docs/zh/guides/accessibility)。
+禁用的操作项仍会被播报，但无法激活。`value` 只作为 React key。当 `label` 不是纯文本时，请传入 `textValue` 供 typeahead 使用，并在操作项需要可访问名称时传入 `aria-label` 或 `aria-labelledby`。共享交互模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
@@ -52,12 +52,14 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `loopFocus` | `boolean` | `true` | 键盘焦点在菜单项之间循环。 |
 | `disabled` | `boolean` | `false` | 禁止打开菜单。 |
 | `className` | `string` | — | 合并到浮层的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue; group?: ClassValue; groupLabel?: ClassValue; separator?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 **MenuItemProps**
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
+| `type` | `"item"` | — | 将条目标记为操作项。未提供 group 或 separator 类型时可省略。 |
 | `value` | `string` | — | 该操作项唯一的 React key。必填。 |
 | `label` | `ReactNode` | — | 操作项中的可见内容。必填。 |
 | `textValue` | `string` | — | 键盘 typeahead 使用的纯文本标签；字符串标签会自动使用。 |
@@ -67,6 +69,7 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `disabled` | `boolean` | `false` | 禁用该操作项。 |
 | `closeOnClick` | `boolean` | `true` | 选中后是否关闭菜单。 |
 | `className` | `string` | — | 合并到操作项的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | 该操作项内部槽位的类名。 |
 
 **MenuGroupProps**
@@ -77,6 +80,7 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `label` | `ReactNode` | — | 分组标题。必填。 |
 | `items` | `readonly MenuItemProps[]` | — | 分组内的操作项。必填。 |
 | `className` | `string` | — | 合并到分组的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | 分组及其操作项内部槽位的类名。 |
 
 `MenuGroupProps` 还会透传其余 `Menu.Group` 属性。
@@ -87,6 +91,7 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | --- | --- | --- | --- |
 | `type` | `"separator"` | — | 标记为分隔线。必填。 |
 | `className` | `string` | — | 合并到分隔线的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ separator?: ClassValue }` | — | 分隔线槽位的类名。 |
 
 `MenuSeparatorProps` 还会透传 `Menu.Separator` 的 `render`、`id` 等属性。

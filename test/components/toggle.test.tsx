@@ -161,6 +161,16 @@ describe("Toggle", () => {
     });
   });
 
+  describe("styling", () => {
+    it("forwards inline styles to the root", () => {
+      render(<Toggle label="Styled" style={{ opacity: 0.5 }} />);
+
+      expect(
+        screen.getByRole("button", { name: "Styled" }),
+      ).toHaveStyle({ opacity: "0.5" });
+    });
+  });
+
   describe("theme", () => {
     it("builds every size from shared variables", () => {
       for (const size of ["xs", "sm", "md", "lg", "xl"] as const) {

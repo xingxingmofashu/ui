@@ -29,7 +29,7 @@ description: "一个 React 对话框，采用 Liquid Glass 表面与自定义操
 
 `Dialog` 渲染模态 `dialog`，由 `title` 命名，并由 `description` 描述。打开时焦点移动到浮层内，打开期间被限制在浮层中，关闭后返回触发器。
 
-除非设置 `disablePointerDismissal`，否则 `Escape` 与点击背景都会关闭对话框；请在 `footer` 中提供可见的关闭操作。`modal={false}` 会放宽焦点限制与滚动锁定。浮层焦点规则见[可访问性指南](/docs/zh/guides/accessibility)。
+默认情况下，`Escape` 与点击背景都会关闭对话框。`disablePointerDismissal` 只会阻止点击背景关闭，`Escape` 仍然可用；请在 `footer` 中提供可见的关闭操作。`modal={false}` 会放宽焦点限制与滚动锁定。浮层焦点规则见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
@@ -50,6 +50,7 @@ description: "一个 React 对话框，采用 Liquid Glass 表面与自定义操
 | `triggerId` | `string \| null` | — | 与对话框关联的触发器 ID。 |
 | `defaultTriggerId` | `string \| null` | — | 初始打开时使用的触发器 ID。 |
 | `className` | `string` | — | 合并到弹窗的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 | 属性 | 说明 |

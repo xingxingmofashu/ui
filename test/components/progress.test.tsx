@@ -184,13 +184,14 @@ describe("Progress", () => {
       expect(getSlot(progress, "description")).toHaveClass("ui-description");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Progress aria-label="Uploading files" style={{ width: 200 }} />
+    it("forwards inline styles to the root", () => {
+      render(
+        <Progress aria-label="Uploading files" style={{ width: 200 }} />,
       );
 
-      expect(element).toBeTruthy();
+      expect(
+        screen.getByRole("progressbar", { name: "Uploading files" }),
+      ).toHaveStyle({ width: "200px" });
     });
   });
 

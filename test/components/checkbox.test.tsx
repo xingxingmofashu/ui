@@ -364,13 +364,14 @@ describe("Checkbox", () => {
       expect(getSlot(checkbox, "description")).toHaveClass("ui-description");
     });
 
-    it("does not accept inline styles", () => {
-      const element = (
-        // @ts-expect-error The glass theme owns inline styles.
-        <Checkbox aria-label="Accept terms" style={{ opacity: 0.5 }} />
+    it("forwards inline styles to the root", () => {
+      render(
+        <Checkbox aria-label="Accept terms" style={{ opacity: 0.5 }} />,
       );
 
-      expect(element).toBeTruthy();
+      expect(
+        screen.getByRole("checkbox", { name: "Accept terms" }),
+      ).toHaveStyle({ opacity: "0.5" });
     });
   });
 

@@ -155,6 +155,16 @@ describe("Tooltip", () => {
     });
   });
 
+  describe("styling", () => {
+    it("forwards inline styles to the popup", async () => {
+      renderTooltip({ style: { opacity: 0.5 } });
+
+      const tooltip = await findPopup();
+
+      expect(tooltip).toHaveStyle({ opacity: "0.5" });
+    });
+  });
+
   describe("interaction", () => {
     it("opens on hover and closes when the pointer leaves", async () => {
       const user = userEvent.setup();

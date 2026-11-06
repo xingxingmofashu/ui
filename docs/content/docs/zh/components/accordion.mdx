@@ -43,7 +43,7 @@ description: "一个 React 手风琴，采用可折叠的 Liquid Glass 面板，
 
 ## 无障碍
 
-每个条目都在真实标题（默认是 `<h3>`）内渲染原生按钮。触发器暴露 `aria-expanded` 与 `aria-controls`，面板由对应触发器命名。`Enter` 或 `Space` 切换当前面板。禁用的触发器仍保留在文档中，但会被 Tab 跳过。
+每个条目都在真实标题（默认是 `<h3>`）内渲染原生按钮。触发器始终暴露 `aria-expanded`；面板打开时还会暴露 `aria-controls`。面板由对应触发器命名。`Enter` 或 `Space` 切换当前面板。禁用的触发器仍保留在文档中，但会被 Tab 跳过。
 
 标题文字应保持有意义；视觉样式不能替代真实的文档大纲。共享交互模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
@@ -67,6 +67,7 @@ description: "一个 React 手风琴，采用可折叠的 Liquid Glass 面板，
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
 | `className` | `string` | — | 合并到根元素的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
 **AccordionItemProps**
@@ -82,6 +83,7 @@ description: "一个 React 手风琴，采用可折叠的 Liquid Glass 面板，
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 item 根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到 item 根元素的 ref。 |
 | `className` | `string` | — | 合并到 item root 的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的该 item 内部槽位类名。 |
 
 根 `ui` 会先合并到每个 item，再合并该 item 的 `ui`，最后合并 item 的 `className`。
