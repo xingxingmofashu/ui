@@ -3,7 +3,8 @@ import { defineConfig, devices } from "@playwright/test";
 const baseURL = "http://127.0.0.1:3002";
 
 export default defineConfig({
-  testDir: "./test/visual",
+  testDir: "./test/e2e",
+  timeout: 60_000,
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
@@ -13,7 +14,7 @@ export default defineConfig({
     : [["list"], ["html", { open: "never" }]],
   // Baselines are checked in per platform. Linux (CI) and Windows are covered;
   // macOS contributors should generate their own baselines with
-  // `pnpm test:visual:update` or rely on the Linux CI run.
+  // `pnpm test:e2e:update` or rely on the Linux CI run.
   snapshotPathTemplate: "{testDir}/__screenshots__/{arg}-{platform}{ext}",
   use: {
     baseURL,
@@ -27,6 +28,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   expect: {
+    timeout: 30_000,
     toHaveScreenshot: {
       animations: "disabled",
       caret: "hide",

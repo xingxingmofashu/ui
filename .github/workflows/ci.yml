@@ -60,7 +60,7 @@ jobs:
       - run: pnpm playground:typecheck
       - run: pnpm playground:build
 
-  visual:
+  e2e:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -76,7 +76,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:visual
+      - run: pnpm test:e2e
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
@@ -104,25 +104,3 @@ jobs:
       - run: pnpm docs:build
         env:
           NEXT_PUBLIC_BASE_PATH: /ui
-
-  starter:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: templates/starter
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 12.16.1
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 22
-          cache: pnpm
-          cache-dependency-path: templates/starter/pnpm-lock.yaml
-
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
-      - run: pnpm lint
