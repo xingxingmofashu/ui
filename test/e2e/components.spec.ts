@@ -27,6 +27,19 @@ async function expectGlass(container: Locator) {
   expect(borderTopStyle).toBe("double");
   expect(backdropFilter).toContain("blur");
   expect(boxShadow).not.toBe("none");
+
+  const box = await glass.boundingBox();
+  const viewport = glass.page().viewportSize();
+
+  expect(box).not.toBeNull();
+  expect(viewport).not.toBeNull();
+
+  if (box && viewport) {
+    expect(box.x).toBeGreaterThanOrEqual(-1);
+    expect(box.y).toBeGreaterThanOrEqual(-1);
+    expect(box.x + box.width).toBeLessThanOrEqual(viewport.width + 1);
+    expect(box.y + box.height).toBeLessThanOrEqual(viewport.height + 1);
+  }
 }
 
 test("select opens a glass popup and chooses an option", async ({ page }) => {
@@ -67,6 +80,24 @@ test("tooltip opens on hover", async ({ page }) => {
 
   await page.getByRole("button", { name: "Save" }).hover();
 
+  const popup = page.locator('[data-slot="popup"]:visible');
+
   await expect(page.getByText("Save changes", { exact: true })).toBeVisible();
-  await expectGlass(page.locator('[data-slot="popup"]:visible'));
+  await expectGlass(popup);
+
+  const arrow = popup.locator('[data-slot="arrow"]');
+
+  await expect(arrow).toBeVisible();
+
+  const { backgroundColor, clipPath } = await arrow.evaluate((element) => {
+    const style = getComputedStyle(element);
+
+    return {
+      backgroundColor: style.backgroundColor,
+      clipPath: style.clipPath,
+    };
+  });
+
+  expect(backgroundColor).not.toBe("rgba(0, 0, 0, 0)");
+  expect(clipPath).toContain("polygon");
 });

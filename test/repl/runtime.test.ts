@@ -126,6 +126,18 @@ render((0, jsx_runtime_1.jsx)(ui_1.Button, { label: "Rendered" }));`,
     expect(formatValue(circular)).toBe("{ name: glass, self: [Circular] }");
   });
 
+  it("formats shared references without treating them as circular", () => {
+    const shared = { name: "glass" };
+
+    expect(formatValue({ first: shared, second: shared })).toBe(
+      "{ first: { name: glass }, second: { name: glass } }",
+    );
+  });
+
+  it("formats invalid dates", () => {
+    expect(formatValue(new Date("nope"))).toBe("Invalid Date");
+  });
+
   it("formats React elements with their component name", () => {
     expect(formatValue(React.createElement(GlassButton))).toBe(
       "<GlassButton />",
