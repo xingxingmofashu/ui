@@ -5,6 +5,7 @@
 @source "../index.html";
 @source "./**/*.{ts,tsx}";
 @source "../../src/**/*.{ts,tsx}";
+@source "../../docs/components/examples/**/*.{ts,tsx}";
 
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 

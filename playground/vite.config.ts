@@ -7,6 +7,18 @@ import { defineConfig } from "vite";
 export default defineConfig({
   base: process.env.VITE_BASE_PATH ?? "/",
   plugins: [react(), tailwindcss()],
+  server: {
+    fs: {
+      allow: [fileURLToPath(new URL("..", import.meta.url))],
+    },
+  },
+  worker: {
+    format: "es",
+  },
+  build: {
+    // Monaco and its TypeScript worker are intentionally large and lazy-loaded.
+    chunkSizeWarningLimit: 8000,
+  },
   resolve: {
     alias: [
       {

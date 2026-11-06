@@ -6,7 +6,7 @@
     "titleLine2": "Build with it.",
     "description": "Twenty-five React components built from one CSS-only Liquid Glass surface. No textures, no canvas, no extra runtime.",
     "readDocs": "Read the docs",
-    "openPlayground": "Open the playground",
+    "openPlayground": "Open the REPL",
     "meta": [
       "25 components",
       "1 stylesheet",
@@ -164,9 +164,9 @@
   "cta": {
     "eyebrow": "05 / Next",
     "title": "Put the material to work.",
-    "description": "Read the docs, open the playground, or take the source and make it yours.",
+    "description": "Read the docs, open the REPL, or take the source and make it yours.",
     "readDocs": "Read the docs",
-    "playground": "Open the playground",
+    "playground": "Open the REPL",
     "github": "GitHub"
   }
 }
