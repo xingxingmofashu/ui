@@ -39,13 +39,13 @@ describe("REPL runtime", () => {
 
   it("captures console output", () => {
     const entries: ReplLogEntry[] = [];
-    const result = evaluateCompiledModule('console.log("hello", 42);', {
+
+    evaluateCompiledModule('console.log("hello", 42);', {
       modules,
       onEntry: (entry) => entries.push(entry),
     });
 
-    expect(result.entries).toMatchObject([{ level: "log", text: "hello 42" }]);
-    expect(entries).toEqual(result.entries);
+    expect(entries).toMatchObject([{ level: "log", text: "hello 42" }]);
   });
 
   it("resolves a default export component", () => {

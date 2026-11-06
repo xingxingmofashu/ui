@@ -117,7 +117,9 @@ test("data-glass scopes presets in light and dark", async ({ page }) => {
   expect(readings.light.map(({ saturate }) => parseFloat(saturate))).toEqual([
     150, 146.7, 143.3, 140,
   ]);
-  expect(readings.inherited).toBe(readings.dark[2].surface);
+  const regular = readings.dark.find(({ preset }) => preset === "regular");
+
+  expect(readings.inherited).toBe(regular?.surface);
 });
 
 test("playground switches the shared glass material", async ({ page }) => {

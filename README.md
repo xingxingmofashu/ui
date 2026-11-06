@@ -152,7 +152,6 @@ pnpm build           # build dist with unbuild
 pnpm lint            # lint with oxlint
 pnpm test            # run the Vitest suite
 pnpm test:e2e        # run the Playwright browser suite
-pnpm test:e2e:update # refresh visual snapshots
 pnpm typecheck       # typecheck the package
 pnpm docs:dev        # docs site on http://localhost:3001
 pnpm playground:dev  # React REPL on http://localhost:3002

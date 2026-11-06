@@ -12,10 +12,6 @@ export default defineConfig({
   reporter: process.env.CI
     ? [["github"], ["html", { open: "never" }]]
     : [["list"], ["html", { open: "never" }]],
-  // Baselines are checked in per platform. Linux (CI) and Windows are covered;
-  // macOS contributors should generate their own baselines with
-  // `pnpm test:e2e:update` or rely on the Linux CI run.
-  snapshotPathTemplate: "{testDir}/__screenshots__/{arg}-{platform}{ext}",
   use: {
     baseURL,
     ...devices["Desktop Chrome"],
@@ -29,13 +25,6 @@ export default defineConfig({
   },
   expect: {
     timeout: 30_000,
-    toHaveScreenshot: {
-      animations: "disabled",
-      caret: "hide",
-      scale: "css",
-      maxDiffPixelRatio: 0.002,
-      threshold: 0.2,
-    },
   },
   webServer: {
     command:

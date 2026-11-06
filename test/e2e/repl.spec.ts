@@ -1,20 +1,26 @@
 import { expect, test, type Page } from "@playwright/test";
 
+// Mirrors the REPL draft storage contract in `playground/src/repl`.
 const STORAGE_KEY = "ui-playground-repl-v1";
+const BLANK_ID = "__blank__";
+
+function consoleOutput(page: Page) {
+  return page.getByTestId("repl-console").locator('[role="log"] pre');
+}
 
 async function openWithCode(page: Page, code: string) {
   await page.addInitScript(
-    ({ storageKey, source }) => {
+    ({ blankId, storageKey, source }) => {
       localStorage.setItem(
         storageKey,
         JSON.stringify({
-          exampleId: "__blank__",
+          exampleId: blankId,
           autoRun: true,
-          drafts: { __blank__: source },
+          drafts: { [blankId]: source },
         }),
       );
     },
-    { storageKey: STORAGE_KEY, source: code },
+    { blankId: BLANK_ID, storageKey: STORAGE_KEY, source: code },
   );
   await page.goto("/");
 }
@@ -29,13 +35,13 @@ test("boots the welcome example and Monaco", async ({ page }) => {
 test("evaluates the last expression", async ({ page }) => {
   await openWithCode(page, "1 + 1;");
 
-  await expect(page.getByTestId("repl-console")).toContainText("2");
+  await expect(consoleOutput(page)).toHaveText("2");
 });
 
 test("awaits promise expression results", async ({ page }) => {
   await openWithCode(page, "Promise.resolve(7);");
 
-  await expect(page.getByTestId("repl-console")).toContainText("7");
+  await expect(consoleOutput(page)).toHaveText("7");
 });
 
 test("renders a JSX expression with imports", async ({ page }) => {
@@ -71,7 +77,7 @@ test("captures console output", async ({ page }) => {
     'console.log("hello", 42);\n\nexport default function App() { return <div>Done</div>; }',
   );
 
-  await expect(page.getByTestId("repl-console")).toContainText("hello 42");
+  await expect(consoleOutput(page)).toHaveText("hello 42");
 });
 
 test("compiles Tailwind utilities written in the REPL", async ({ page }) => {
