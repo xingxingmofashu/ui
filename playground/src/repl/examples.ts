@@ -2,7 +2,6 @@ import { getComponentMeta, groupOrder, toTitle } from "../catalog";
 
 type Example = {
   id: string;
-  component: string;
   demo: string;
   label: string;
   group: string;
@@ -23,7 +22,6 @@ const loaders = import.meta.glob<string>(
 );
 
 const examples: Example[] = [];
-const exampleCache = new Map<string, string>();
 
 for (const [path, load] of Object.entries(loaders)) {
   const match = path.match(/examples\/([^/]+)\/([^/]+)\.tsx$/);
@@ -39,7 +37,6 @@ for (const [path, load] of Object.entries(loaders)) {
 
   examples.push({
     id: `${component}/${demo}`,
-    component,
     demo,
     label: isGuide ? demoTitle : `${meta.title} · ${demoTitle}`,
     group: meta.group,
@@ -69,22 +66,13 @@ const exampleGroups: ExampleGroup[] = groupNames
 const exampleById = new Map(examples.map((example) => [example.id, example]));
 
 async function loadExampleCode(id: string) {
-  const cached = exampleCache.get(id);
-
-  if (cached !== undefined) return cached;
-
   const example = exampleById.get(id);
 
   if (!example) {
     throw new Error(`Unknown example "${id}".`);
   }
 
-  const source = await example.load();
-
-  exampleCache.set(id, source);
-
-  return source;
+  return example.load();
 }
 
-export { exampleById, exampleGroups, examples, loadExampleCode };
-export type { Example, ExampleGroup };
+export { exampleById, exampleGroups, loadExampleCode };

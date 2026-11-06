@@ -113,7 +113,7 @@ function createIconModule() {
         return Reflect.get(target, property);
       }
 
-      if (property in target) {
+      if (Object.hasOwn(target, property)) {
         return target[property as keyof typeof target];
       }
 
@@ -122,4 +122,4 @@ function createIconModule() {
   });
 }
 
-export { createIconModule, iconNames, icons };
+export { createIconModule };

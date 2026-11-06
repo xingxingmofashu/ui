@@ -100,5 +100,4 @@ async function runRepl(
   };
 }
 
-export { compileTsx, runRepl };
-export type { ReplCompileResult };
+export { runRepl };

@@ -7,7 +7,6 @@ const MODEL_URI = monaco.Uri.parse("file:///App.tsx");
 
 type ReplEditorProps = {
   value: string;
-  docKey: number;
   theme: Theme;
   onChange: (value: string) => void;
   onRun: () => void;
@@ -16,7 +15,6 @@ type ReplEditorProps = {
 
 function ReplEditor({
   value,
-  docKey,
   theme,
   onChange,
   onRun,
@@ -27,26 +25,17 @@ function ReplEditor({
     null,
   );
   const applyingExternalValue = React.useRef(false);
-  const appliedDocKeyRef = React.useRef(docKey);
   const onChangeRef = React.useRef(onChange);
   const onRunRef = React.useRef(onRun);
   const onCursorChangeRef = React.useRef(onCursorChange);
-  const valueRef = React.useRef(value);
-  const themeRef = React.useRef(theme);
+  const initialValueRef = React.useRef(value);
+  const initialThemeRef = React.useRef(theme);
 
   React.useEffect(() => {
     onChangeRef.current = onChange;
     onRunRef.current = onRun;
     onCursorChangeRef.current = onCursorChange;
   }, [onChange, onCursorChange, onRun]);
-
-  React.useEffect(() => {
-    valueRef.current = value;
-  }, [value]);
-
-  React.useEffect(() => {
-    themeRef.current = theme;
-  }, [theme]);
 
   React.useEffect(() => {
     const container = containerRef.current;
@@ -56,13 +45,14 @@ function ReplEditor({
     monaco.editor.getModel(MODEL_URI)?.dispose();
 
     const model = monaco.editor.createModel(
-      valueRef.current,
+      initialValueRef.current,
       "typescript",
       MODEL_URI,
     );
     const editor = monaco.editor.create(container, {
       model,
-      theme: themeRef.current === "dark" ? "liquid-dark" : "liquid-light",
+      theme:
+        initialThemeRef.current === "dark" ? "liquid-dark" : "liquid-light",
       ariaLabel: "Code editor",
       automaticLayout: true,
       fontFamily:
@@ -141,21 +131,16 @@ function ReplEditor({
   }, [theme]);
 
   React.useEffect(() => {
-    if (appliedDocKeyRef.current === docKey) return;
-
-    appliedDocKeyRef.current = docKey;
-
     const editor = editorRef.current;
-    const next = valueRef.current;
 
-    if (!editor || editor.getValue() === next) return;
+    if (!editor || editor.getValue() === value) return;
 
     applyingExternalValue.current = true;
-    editor.setValue(next);
+    editor.setValue(value);
     applyingExternalValue.current = false;
     editor.setPosition({ lineNumber: 1, column: 1 });
     editor.setScrollPosition({ scrollTop: 0 });
-  }, [docKey]);
+  }, [value]);
 
   return <div ref={containerRef} className="h-full w-full" />;
 }

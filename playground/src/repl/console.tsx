@@ -1,16 +1,16 @@
 import { ChevronDown, Terminal, Trash2 } from "lucide-react";
 import * as React from "react";
 
-import type { ReplLogEntry, ReplLogLevel } from "./runtime";
+import type { ReplConsoleEntry } from "./runtime";
 
 type ReplConsoleProps = {
-  entries: ReplLogEntry[];
+  entries: ReplConsoleEntry[];
   collapsed: boolean;
   onToggle: () => void;
   onClear: () => void;
 };
 
-const levelClasses: Record<Exclude<ReplLogLevel, "clear">, string> = {
+const levelClasses: Record<ReplConsoleEntry["level"], string> = {
   log: "text-white/75",
   info: "text-sky-200/90",
   warn: "text-amber-200",
@@ -27,7 +27,6 @@ function ReplConsole({
 }: ReplConsoleProps) {
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const stickToBottom = React.useRef(true);
-  const visibleEntries = entries.filter((entry) => entry.level !== "clear");
 
   React.useEffect(() => {
     if (entries.length === 0) return;
@@ -74,7 +73,7 @@ function ReplConsole({
             Console
           </span>
           <span className="rounded-full border border-white/15 px-1.5 py-0.5 font-mono text-[10px] tabular-nums text-white/45">
-            {visibleEntries.length}
+            {entries.length}
           </span>
         </button>
 
@@ -98,7 +97,7 @@ function ReplConsole({
           aria-relevant="additions"
           className="min-h-0 flex-1 overflow-auto p-3 font-mono text-[12px] leading-5"
         >
-          {visibleEntries.length === 0 ? (
+          {entries.length === 0 ? (
             <div className="flex h-full min-h-16 flex-col items-center justify-center gap-2 text-center text-white/35">
               <Terminal aria-hidden="true" className="size-4" />
               <p className="max-w-64 text-[11px] leading-5">
@@ -107,11 +106,11 @@ function ReplConsole({
             </div>
           ) : (
             <div className="flex flex-col gap-1">
-              {visibleEntries.map((entry) => (
+              {entries.map((entry) => (
                 <div key={entry.id} className="flex items-start gap-2">
                   <span
                     className={`w-12 shrink-0 select-none text-right text-[10px] uppercase tracking-[0.12em] ${
-                      levelClasses[entry.level as Exclude<ReplLogLevel, "clear">]
+                      levelClasses[entry.level]
                     }`}
                   >
                     {entry.level === "result" ? "←" : entry.level}

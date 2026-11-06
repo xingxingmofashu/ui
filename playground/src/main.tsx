@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 
 import { GlassPresetProvider } from "@xingxingmofashu/ui/plugins/glass-preset";
 
-import { App } from "./app";
+import { Repl } from "./repl/repl";
 import { ThemeProvider } from "./theme";
 import "./styles.css";
 
@@ -15,7 +15,7 @@ if (!container) {
 createRoot(container).render(
   <ThemeProvider>
     <GlassPresetProvider defaultPreset="thin" storageKey="ui-playground-glass">
-      <App />
+      <Repl />
     </GlassPresetProvider>
   </ThemeProvider>,
 );

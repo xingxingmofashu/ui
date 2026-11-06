@@ -25,6 +25,7 @@ import {
   createLogEntry,
   resolveReplOutput,
   toReplError,
+  type ReplConsoleEntry,
   type ReplError,
   type ReplLogEntry,
 } from "./runtime";
@@ -37,6 +38,7 @@ import {
 } from "./templates";
 
 const STORAGE_KEY = "ui-playground-repl-v1";
+const DOCS_URL = `${import.meta.env.BASE_URL}../docs/en/`;
 
 type StoredState = {
   exampleId: string;
@@ -115,20 +117,15 @@ function removeDraft(exampleId: string) {
   writeStoredState({ ...stored, drafts });
 }
 
-function appendEntry(entries: ReplLogEntry[], entry: ReplLogEntry) {
+function appendEntry(
+  entries: ReplConsoleEntry[],
+  entry: ReplLogEntry,
+): ReplConsoleEntry[] {
   if (entry.level === "clear") return [];
 
-  const next = [...entries, entry];
+  const next = [...entries, entry as ReplConsoleEntry];
 
-  return next.length > 200 ? next.slice(next.length - 200) : next;
-}
-
-function isThenable(value: unknown): value is PromiseLike<unknown> {
-  return (
-    value !== null &&
-    (typeof value === "object" || typeof value === "function") &&
-    typeof (value as { then?: unknown }).then === "function"
-  );
+  return next.length > 200 ? next.slice(-200) : next;
 }
 
 const ReplEditor = React.lazy(async () => {
@@ -150,13 +147,6 @@ function EditorSkeleton() {
       <div className="h-3 w-2/5 animate-pulse rounded-full bg-pg-line/20" />
     </div>
   );
-}
-
-function getDocsUrl() {
-  return new URL(
-    `${import.meta.env.BASE_URL}../docs/en/`,
-    window.location.href,
-  ).toString();
 }
 
 function Repl() {
@@ -184,12 +174,9 @@ function Repl() {
   const [exampleId, setExampleId] = React.useState(initial.exampleId);
   const [code, setCode] = React.useState(initial.code);
   const [autoRun, setAutoRun] = React.useState(initial.autoRun);
-  const [docKey, setDocKey] = React.useState(0);
-  const [entries, setEntries] = React.useState<ReplLogEntry[]>([]);
+  const [entries, setEntries] = React.useState<ReplConsoleEntry[]>([]);
   const [error, setError] = React.useState<ReplError | null>(null);
   const [output, setOutput] = React.useState<React.ReactNode>(null);
-  const [lastGoodOutput, setLastGoodOutput] =
-    React.useState<React.ReactNode>(null);
   const [runId, setRunId] = React.useState(0);
   const [status, setStatus] = React.useState<RunStatus>("idle");
   const [duration, setDuration] = React.useState<number | null>(null);
@@ -205,6 +192,8 @@ function Repl() {
   const initializedRef = React.useRef(false);
   const pendingInitialLoadRef = React.useRef(initial.needsLoad);
   const skipNextAutoRunRef = React.useRef(false);
+  const skipPersistCodeRef = React.useRef<string | null>(null);
+  const cleanCodeRef = React.useRef<string | null>(null);
 
   React.useEffect(() => {
     codeRef.current = code;
@@ -241,14 +230,12 @@ function Repl() {
 
       if (runTokenRef.current !== token || !mountedRef.current) return;
 
-      let completion = result.completion;
+      let completion: unknown;
 
-      if (isThenable(completion)) {
-        try {
-          completion = await completion;
-        } catch (reason) {
-          throw new ReplExecutionError("evaluate", reason);
-        }
+      try {
+        completion = await result.completion;
+      } catch (reason) {
+        throw new ReplExecutionError("evaluate", reason);
       }
 
       if (runTokenRef.current !== token || !mountedRef.current) return;
@@ -264,13 +251,7 @@ function Repl() {
         );
       }
 
-      if (resolved.node !== null && resolved.node !== undefined) {
-        setOutput(resolved.node);
-        setLastGoodOutput(resolved.node);
-      } else {
-        setOutput(null);
-        setLastGoodOutput(null);
-      }
+      setOutput(resolved.node ?? null);
 
       setError(null);
       setStatus("success");
@@ -299,12 +280,13 @@ function Repl() {
 
   const applyCode = React.useCallback(
     (next: string, runNow = true) => {
+      const changed = next !== codeRef.current;
+
       setCode(next);
       codeRef.current = next;
-      setDocKey((key) => key + 1);
 
       if (runNow) {
-        skipNextAutoRunRef.current = true;
+        if (changed) skipNextAutoRunRef.current = true;
         void runCode(next);
       }
     },
@@ -372,6 +354,14 @@ function Repl() {
   React.useEffect(() => {
     if (loadingExample) return;
 
+    if (skipPersistCodeRef.current !== null) {
+      const skip = skipPersistCodeRef.current === code;
+
+      skipPersistCodeRef.current = null;
+
+      if (skip) return;
+    }
+
     const timer = window.setTimeout(() => {
       const stored = readStoredState();
 
@@ -390,7 +380,12 @@ function Repl() {
 
     const previousId = exampleId;
 
-    saveDraft(exampleId, codeRef.current, autoRun);
+    if (codeRef.current !== cleanCodeRef.current) {
+      saveDraft(exampleId, codeRef.current, autoRun);
+    }
+
+    cleanCodeRef.current = null;
+    skipPersistCodeRef.current = null;
 
     const token = ++loadTokenRef.current;
 
@@ -441,6 +436,8 @@ function Repl() {
     const template = getTemplate(exampleId);
 
     if (template !== null) {
+      cleanCodeRef.current = template;
+      skipPersistCodeRef.current = template;
       applyCode(template);
       return;
     }
@@ -450,6 +447,8 @@ function Repl() {
     try {
       const source = await loadExampleCode(exampleId);
 
+      cleanCodeRef.current = source;
+      skipPersistCodeRef.current = source;
       setLoadingExample(false);
       applyCode(source);
     } catch (reason) {
@@ -465,8 +464,6 @@ function Repl() {
   async function copyCode() {
     try {
       await navigator.clipboard.writeText(codeRef.current);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1500);
     } catch {
       const textarea = document.createElement("textarea");
 
@@ -475,9 +472,10 @@ function Repl() {
       textarea.select();
       document.execCommand("copy");
       textarea.remove();
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1500);
     }
+
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1500);
   }
 
   function handleRenderError(reason: Error, info: React.ErrorInfo) {
@@ -488,7 +486,6 @@ function Repl() {
     // The failed tree may still be the last good output. Keep the error panel
     // instead of rendering it again outside the error boundary.
     setOutput(null);
-    setLastGoodOutput(null);
     setError({
       phase: "render",
       name: reason.name || "Error",
@@ -576,7 +573,7 @@ function Repl() {
               </div>
             </Popover>
             <a
-              href={getDocsUrl()}
+              href={DOCS_URL}
               target="_blank"
               rel="noreferrer noopener"
               className="inline-flex h-9 items-center gap-1.5 rounded-full border border-pg-line px-3 text-xs font-medium text-pg-muted transition-colors hover:bg-pg-line/40 hover:text-pg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
@@ -696,7 +693,6 @@ function Repl() {
               <React.Suspense fallback={<EditorSkeleton />}>
                 <ReplEditor
                   value={code}
-                  docKey={docKey}
                   theme={theme}
                   onChange={setCode}
                   onRun={() => {
@@ -720,7 +716,6 @@ function Repl() {
           <div className="flex min-h-0 flex-col gap-3">
             <ReplPreview
               output={output}
-              lastGoodOutput={lastGoodOutput}
               error={error}
               runId={runId}
               onRenderError={handleRenderError}

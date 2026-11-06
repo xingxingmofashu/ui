@@ -47,4 +47,4 @@ function getTemplate(id: string) {
   return null;
 }
 
-export { BLANK_ID, WELCOME_ID, blankCode, getTemplate, welcomeCode };
+export { BLANK_ID, WELCOME_ID, getTemplate, welcomeCode };

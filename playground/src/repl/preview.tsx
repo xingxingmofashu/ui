@@ -5,7 +5,6 @@ import type { ReplError } from "./runtime";
 
 type ReplPreviewProps = {
   output: React.ReactNode;
-  lastGoodOutput: React.ReactNode;
   error: ReplError | null;
   runId: number;
   onRenderError: (error: Error, info: React.ErrorInfo) => void;
@@ -72,14 +71,12 @@ const phaseLabels = {
 
 function ReplPreview({
   output,
-  lastGoodOutput,
   error,
   runId,
   onRenderError,
   onDismissError,
 }: ReplPreviewProps) {
   const hasOutput = output !== null && output !== undefined;
-  const hasLastGood = lastGoodOutput !== null && lastGoodOutput !== undefined;
   const status = error ? "Error" : hasOutput ? "Live" : "Empty";
 
   return (
@@ -146,13 +143,13 @@ function ReplPreview({
       <div className="pg-stage min-h-0 flex-1 overflow-auto p-5 sm:p-8">
         <div
           className={`relative flex min-h-full items-center justify-center ${
-            error && hasLastGood ? "pointer-events-none opacity-35" : ""
+            error && hasOutput ? "pointer-events-none opacity-35" : ""
           }`}
         >
           {error ? (
-            hasLastGood ? (
+            hasOutput ? (
               <div aria-hidden="true" className="w-full">
-                {lastGoodOutput}
+                {output}
               </div>
             ) : (
               <EmptyPreview message="No successful preview yet. Fix the error and run again." />

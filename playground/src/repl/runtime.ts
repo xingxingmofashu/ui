@@ -15,6 +15,10 @@ type ReplLogEntry = {
   text: string;
 };
 
+type ReplConsoleEntry = ReplLogEntry & {
+  level: Exclude<ReplLogLevel, "clear">;
+};
+
 type ReplErrorPhase = "compile" | "evaluate" | "render";
 
 type ReplError = {
@@ -36,8 +40,6 @@ type ReplRunResult = {
   defaultExport: unknown;
   didRender: boolean;
   rendered: unknown;
-  exports: Record<string, unknown>;
-  entries: ReplLogEntry[];
 };
 
 type ReplOutputKind = "render" | "default" | "completion" | "result" | "none";
@@ -45,7 +47,6 @@ type ReplOutputKind = "render" | "default" | "completion" | "result" | "none";
 type ReplOutput = {
   kind: ReplOutputKind;
   node: React.ReactNode | null;
-  value: unknown;
   resultText?: string;
 };
 
@@ -130,7 +131,12 @@ function formatValue(
     return value.stack ? `${value.name}: ${value.message}\n${value.stack}` : `${value.name}: ${value.message}`;
   }
 
-  if (value instanceof Date) return value.toISOString();
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime())
+      ? "Invalid Date"
+      : value.toISOString();
+  }
+
   if (value instanceof RegExp) return String(value);
 
   if (typeof value !== "object") return String(value);
@@ -140,40 +146,50 @@ function formatValue(
 
   seen.add(value);
 
+  let text: string;
+
   if (Array.isArray(value)) {
-    const items = value.slice(0, 20).map((item) => formatValue(item, depth + 1, seen));
+    const items = value
+      .slice(0, 20)
+      .map((item) => formatValue(item, depth + 1, seen));
+
     if (value.length > 20) items.push(`… ${value.length - 20} more`);
 
-    return `[${items.join(", ")}]`;
-  }
-
-  if (value instanceof Map) {
+    text = `[${items.join(", ")}]`;
+  } else if (value instanceof Map) {
     const items = [...value.entries()]
       .slice(0, 10)
-      .map(([key, item]) => `${formatValue(key, depth + 1, seen)} => ${formatValue(item, depth + 1, seen)}`);
+      .map(
+        ([key, item]) =>
+          `${formatValue(key, depth + 1, seen)} => ${formatValue(item, depth + 1, seen)}`,
+      );
 
-    return `Map(${value.size}) { ${items.join(", ")} }`;
-  }
-
-  if (value instanceof Set) {
+    text = `Map(${value.size}) { ${items.join(", ")} }`;
+  } else if (value instanceof Set) {
     const items = [...value.values()]
       .slice(0, 10)
       .map((item) => formatValue(item, depth + 1, seen));
 
-    return `Set(${value.size}) { ${items.join(", ")} }`;
-  }
-
-  if (isPlainObject(value)) {
+    text = `Set(${value.size}) { ${items.join(", ")} }`;
+  } else if (isPlainObject(value)) {
     const keys = Object.keys(value);
     const items = keys
       .slice(0, 12)
-      .map((key) => `${quoteKey(key)}: ${formatValue(value[key], depth + 1, seen)}`);
+      .map(
+        (key) =>
+          `${quoteKey(key)}: ${formatValue(value[key], depth + 1, seen)}`,
+      );
+
     if (keys.length > 12) items.push(`… ${keys.length - 12} more`);
 
-    return `{ ${items.join(", ")} }`;
+    text = `{ ${items.join(", ")} }`;
+  } else {
+    text = String(value);
   }
 
-  return String(value);
+  seen.delete(value);
+
+  return text;
 }
 
 function flattenDiagnosticMessage(message: unknown): string {
@@ -193,18 +209,14 @@ function flattenDiagnosticMessage(message: unknown): string {
 }
 
 function createScopedConsole(options: ReplRunOptions) {
-  const entries: ReplLogEntry[] = [];
   const timers = new Map<string, number>();
   const counts = new Map<string, number>();
   let indent = 0;
 
   function push(level: ReplLogLevel, args: unknown[]) {
     const text = `${"  ".repeat(indent)}${args.map((arg) => formatValue(arg)).join(" ")}`;
-    const entry = createLogEntry(level, text);
 
-    entries.push(entry);
-    if (entries.length > 200) entries.splice(0, entries.length - 200);
-    options.onEntry?.(entry);
+    options.onEntry?.(createLogEntry(level, text));
   }
 
   const scoped = {
@@ -257,7 +269,7 @@ function createScopedConsole(options: ReplRunOptions) {
     },
   };
 
-  return { console: scoped, entries };
+  return scoped;
 }
 
 function evaluateCompiledModule(
@@ -265,7 +277,7 @@ function evaluateCompiledModule(
   options: ReplRunOptions,
 ): ReplRunResult {
   const module = { exports: {} as Record<string, unknown> };
-  const { console: scopedConsole, entries } = createScopedConsole(options);
+  const scopedConsole = createScopedConsole(options);
   let rendered: unknown;
   let didRender = false;
 
@@ -314,8 +326,6 @@ function evaluateCompiledModule(
     defaultExport: module.exports.default,
     didRender,
     rendered,
-    exports: module.exports,
-    entries,
   };
 }
 
@@ -346,13 +356,12 @@ function resolveReplOutput(result: ReplRunResult): ReplOutput {
     const node = createRenderableNode(result.rendered, true);
 
     if (node !== null) {
-      return { kind: "render", node, value: result.rendered };
+      return { kind: "render", node };
     }
 
     return {
       kind: "result",
       node: null,
-      value: result.rendered,
       resultText: formatValue(result.rendered),
     };
   }
@@ -361,35 +370,33 @@ function resolveReplOutput(result: ReplRunResult): ReplOutput {
     const node = createRenderableNode(result.defaultExport, true);
 
     if (node !== null) {
-      return { kind: "default", node, value: result.defaultExport };
+      return { kind: "default", node };
     }
 
     if (result.defaultExport === null) {
-      return { kind: "none", node: null, value: null };
+      return { kind: "none", node: null };
     }
 
     return {
       kind: "result",
       node: null,
-      value: result.defaultExport,
       resultText: formatValue(result.defaultExport),
     };
   }
 
   if (result.completion === undefined) {
-    return { kind: "none", node: null, value: undefined };
+    return { kind: "none", node: null };
   }
 
   const node = createRenderableNode(result.completion, false);
 
   if (node !== null) {
-    return { kind: "completion", node, value: result.completion };
+    return { kind: "completion", node };
   }
 
   return {
     kind: "result",
     node: null,
-    value: result.completion,
     resultText: formatValue(result.completion),
   };
 }
@@ -425,6 +432,7 @@ export {
   toReplError,
 };
 export type {
+  ReplConsoleEntry,
   ReplError,
   ReplErrorPhase,
   ReplLogEntry,

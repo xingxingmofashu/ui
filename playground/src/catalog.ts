@@ -1,44 +1,34 @@
-type ComponentGroup = "Element" | "Form" | "Overlay" | "Feedback";
+const groupOrder = ["Element", "Form", "Overlay", "Feedback"] as const;
 
-type CatalogEntry = {
-  title: string;
-  group: ComponentGroup;
+type ComponentGroup = (typeof groupOrder)[number];
+
+const componentGroups: Partial<Record<string, ComponentGroup>> = {
+  accordion: "Element",
+  "alert-dialog": "Overlay",
+  button: "Element",
+  card: "Element",
+  checkbox: "Form",
+  "checkbox-group": "Form",
+  dialog: "Overlay",
+  drawer: "Overlay",
+  field: "Form",
+  fieldset: "Form",
+  form: "Form",
+  input: "Form",
+  menu: "Overlay",
+  popover: "Overlay",
+  progress: "Feedback",
+  "radio-group": "Form",
+  "scroll-area": "Element",
+  select: "Form",
+  slider: "Form",
+  switch: "Form",
+  tabs: "Element",
+  toast: "Overlay",
+  toggle: "Element",
+  "toggle-group": "Element",
+  tooltip: "Overlay",
 };
-
-const catalog: Record<string, CatalogEntry> = {
-  accordion: { title: "Accordion", group: "Element" },
-  "alert-dialog": { title: "Alert Dialog", group: "Overlay" },
-  button: { title: "Button", group: "Element" },
-  card: { title: "Card", group: "Element" },
-  checkbox: { title: "Checkbox", group: "Form" },
-  "checkbox-group": { title: "Checkbox Group", group: "Form" },
-  dialog: { title: "Dialog", group: "Overlay" },
-  drawer: { title: "Drawer", group: "Overlay" },
-  field: { title: "Field", group: "Form" },
-  fieldset: { title: "Fieldset", group: "Form" },
-  form: { title: "Form", group: "Form" },
-  input: { title: "Input", group: "Form" },
-  menu: { title: "Menu", group: "Overlay" },
-  popover: { title: "Popover", group: "Overlay" },
-  progress: { title: "Progress", group: "Feedback" },
-  "radio-group": { title: "Radio Group", group: "Form" },
-  "scroll-area": { title: "Scroll Area", group: "Element" },
-  select: { title: "Select", group: "Form" },
-  slider: { title: "Slider", group: "Form" },
-  switch: { title: "Switch", group: "Form" },
-  tabs: { title: "Tabs", group: "Element" },
-  toast: { title: "Toast", group: "Overlay" },
-  toggle: { title: "Toggle", group: "Element" },
-  "toggle-group": { title: "Toggle Group", group: "Element" },
-  tooltip: { title: "Tooltip", group: "Overlay" },
-};
-
-const groupOrder: ComponentGroup[] = [
-  "Element",
-  "Form",
-  "Overlay",
-  "Feedback",
-];
 
 function toTitle(value: string) {
   return value
@@ -48,9 +38,8 @@ function toTitle(value: string) {
     .join(" ");
 }
 
-function getComponentMeta(id: string): CatalogEntry {
-  return catalog[id] ?? { title: toTitle(id), group: "Element" };
+function getComponentMeta(id: string) {
+  return { title: toTitle(id), group: componentGroups[id] ?? "Element" };
 }
 
-export { catalog, getComponentMeta, groupOrder, toTitle };
-export type { CatalogEntry, ComponentGroup };
+export { getComponentMeta, groupOrder, toTitle };
