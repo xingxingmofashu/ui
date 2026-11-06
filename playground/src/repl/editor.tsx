@@ -7,6 +7,7 @@ const MODEL_URI = monaco.Uri.parse("file:///App.tsx");
 
 type ReplEditorProps = {
   value: string;
+  resetKey: number;
   theme: Theme;
   onChange: (value: string) => void;
   onRun: () => void;
@@ -15,6 +16,7 @@ type ReplEditorProps = {
 
 function ReplEditor({
   value,
+  resetKey,
   theme,
   onChange,
   onRun,
@@ -30,6 +32,7 @@ function ReplEditor({
   const onCursorChangeRef = React.useRef(onCursorChange);
   const initialValueRef = React.useRef(value);
   const initialThemeRef = React.useRef(theme);
+  const appliedResetKeyRef = React.useRef(resetKey);
 
   React.useEffect(() => {
     onChangeRef.current = onChange;
@@ -138,9 +141,20 @@ function ReplEditor({
     applyingExternalValue.current = true;
     editor.setValue(value);
     applyingExternalValue.current = false;
+  }, [value]);
+
+  React.useEffect(() => {
+    if (appliedResetKeyRef.current === resetKey) return;
+
+    appliedResetKeyRef.current = resetKey;
+
+    const editor = editorRef.current;
+
+    if (!editor) return;
+
     editor.setPosition({ lineNumber: 1, column: 1 });
     editor.setScrollPosition({ scrollTop: 0 });
-  }, [value]);
+  }, [resetKey]);
 
   return <div ref={containerRef} className="h-full w-full" />;
 }

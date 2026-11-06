@@ -109,7 +109,7 @@ function saveDraft(exampleId: string, code: string, autoRun: boolean) {
 function removeDraft(exampleId: string) {
   const stored = readStoredState();
 
-  if (!stored) return;
+  if (!stored || stored.drafts[exampleId] === undefined) return;
 
   const drafts = { ...stored.drafts };
 
@@ -168,12 +168,14 @@ function Repl() {
       autoRun: stored?.autoRun ?? true,
       code: saved ?? template ?? welcomeCode,
       needsLoad: saved === undefined && template === null,
+      cleanCode: saved === undefined ? template : null,
     };
   });
 
   const [exampleId, setExampleId] = React.useState(initial.exampleId);
   const [code, setCode] = React.useState(initial.code);
   const [autoRun, setAutoRun] = React.useState(initial.autoRun);
+  const [resetKey, setResetKey] = React.useState(0);
   const [entries, setEntries] = React.useState<ReplConsoleEntry[]>([]);
   const [error, setError] = React.useState<ReplError | null>(null);
   const [output, setOutput] = React.useState<React.ReactNode>(null);
@@ -192,8 +194,7 @@ function Repl() {
   const initializedRef = React.useRef(false);
   const pendingInitialLoadRef = React.useRef(initial.needsLoad);
   const skipNextAutoRunRef = React.useRef(false);
-  const skipPersistCodeRef = React.useRef<string | null>(null);
-  const cleanCodeRef = React.useRef<string | null>(null);
+  const cleanCodeRef = React.useRef<string | null>(initial.cleanCode);
 
   React.useEffect(() => {
     codeRef.current = code;
@@ -284,6 +285,7 @@ function Repl() {
 
       setCode(next);
       codeRef.current = next;
+      setResetKey((key) => key + 1);
 
       if (runNow) {
         if (changed) skipNextAutoRunRef.current = true;
@@ -330,12 +332,14 @@ function Repl() {
         if (cancelled || loadTokenRef.current !== token) return;
 
         pendingInitialLoadRef.current = false;
+        cleanCodeRef.current = source;
         setLoadingExample(false);
         applyCode(source);
       } catch (reason) {
         if (cancelled) return;
 
         pendingInitialLoadRef.current = false;
+        cleanCodeRef.current = welcomeCode;
         setLoadingExample(false);
         setExampleId(WELCOME_ID);
 
@@ -354,12 +358,9 @@ function Repl() {
   React.useEffect(() => {
     if (loadingExample) return;
 
-    if (skipPersistCodeRef.current !== null) {
-      const skip = skipPersistCodeRef.current === code;
-
-      skipPersistCodeRef.current = null;
-
-      if (skip) return;
+    if (code === cleanCodeRef.current) {
+      removeDraft(exampleId);
+      return;
     }
 
     const timer = window.setTimeout(() => {
@@ -384,9 +385,6 @@ function Repl() {
       saveDraft(exampleId, codeRef.current, autoRun);
     }
 
-    cleanCodeRef.current = null;
-    skipPersistCodeRef.current = null;
-
     const token = ++loadTokenRef.current;
 
     setExampleId(nextId);
@@ -396,6 +394,7 @@ function Repl() {
     const template = getTemplate(nextId);
 
     if (template !== null) {
+      cleanCodeRef.current = template;
       setLoadingExample(false);
       applyCode(template);
       return;
@@ -405,6 +404,7 @@ function Repl() {
     const draft = stored?.drafts[nextId];
 
     if (draft !== undefined) {
+      cleanCodeRef.current = null;
       setLoadingExample(false);
       applyCode(draft);
       return;
@@ -415,6 +415,7 @@ function Repl() {
 
       if (loadTokenRef.current !== token) return;
 
+      cleanCodeRef.current = source;
       setLoadingExample(false);
       applyCode(source);
     } catch (reason) {
@@ -437,7 +438,6 @@ function Repl() {
 
     if (template !== null) {
       cleanCodeRef.current = template;
-      skipPersistCodeRef.current = template;
       applyCode(template);
       return;
     }
@@ -448,7 +448,6 @@ function Repl() {
       const source = await loadExampleCode(exampleId);
 
       cleanCodeRef.current = source;
-      skipPersistCodeRef.current = source;
       setLoadingExample(false);
       applyCode(source);
     } catch (reason) {
@@ -693,6 +692,7 @@ function Repl() {
               <React.Suspense fallback={<EditorSkeleton />}>
                 <ReplEditor
                   value={code}
+                  resetKey={resetKey}
                   theme={theme}
                   onChange={setCode}
                   onRun={() => {
