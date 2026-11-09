@@ -1,27 +1,22 @@
 "use client";
 
 import { Switch as UISwitch } from "@base-ui/react/switch";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../internal/aria";
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { mergeIds } from "../composables/use-aria";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/switch";
 
 type Switch = ComponentConfig<typeof theme>;
 
 interface SwitchProps
-  extends Omit<
-      UISwitch.Root.Props,
-      "className" | "children" | "ref"
-    >,
+  extends Omit<UISwitch.Root.Props, "className" | "children">,
     VariantProps<typeof theme> {
-  /** Ref to the rendered root element. */
-  ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the Base UI switch root. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Switch["slots"];
   /** Visible label. */
@@ -45,7 +40,8 @@ function Switch({
   ...props
 }: SwitchProps) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
   const labelId = React.useId();
   const descriptionId = React.useId();
   const [animating, setAnimating] = React.useState(false);

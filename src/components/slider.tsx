@@ -1,10 +1,10 @@
 "use client";
 
 import { Slider as UISlider } from "@base-ui/react/slider";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/slider";
 
@@ -18,7 +18,7 @@ type SliderProps<
 > &
   Pick<UISlider.Thumb.Props, "getAriaLabel" | "getAriaValueText"> & {
     /** Tailwind classes merged into the root. */
-    className?: string;
+    className?: ClassValue;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Slider["slots"];
   };
@@ -58,7 +58,8 @@ function Slider<Value extends number | readonly number[]>({
   ...props
 }: SliderProps<Value>) {
   const styles = theme();
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
   const syncThumbAria = React.useCallback(
     (input: HTMLInputElement | null) => {
       if (!input) {

@@ -4,11 +4,11 @@ import {
   Button as UIButton,
   type ButtonProps as UIButtonProps,
 } from "@base-ui/react/button";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/button";
 
@@ -20,7 +20,7 @@ interface ButtonProps
   /** Ref to the rendered root element. */
   ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the outer click area. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Button["slots"];
   /** Text or content rendered inside the button. */
@@ -43,7 +43,8 @@ function Button({
   ...props
 }: ButtonProps) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
   const content = label || children;
 
   return (

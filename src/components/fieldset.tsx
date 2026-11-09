@@ -1,13 +1,10 @@
 "use client";
 
 import { Fieldset as UIFieldset } from "@base-ui/react/fieldset";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
-import {
-  FieldsetDisabledProvider,
-  useFieldsetDisabled,
-} from "../internal/fieldset";
+import { FieldsetProvider, useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/fieldset";
 
@@ -20,7 +17,7 @@ interface FieldsetProps
   /** Fields and controls grouped by the fieldset. */
   children: React.ReactNode;
   /** Tailwind classes merged into the fieldset root. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Fieldset["slots"];
 }
@@ -36,12 +33,12 @@ function Fieldset({
 }: FieldsetProps) {
   const styles = theme();
   const legendId = React.useId();
-  const inheritedDisabled = useFieldsetDisabled();
+  const inheritedDisabled = useFieldset().disabled;
   const isDisabled = inheritedDisabled || disabled;
   const labelledBy = ariaLabelledBy ?? (legend ? legendId : undefined);
 
   return (
-    <FieldsetDisabledProvider disabled={isDisabled}>
+    <FieldsetProvider disabled={isDisabled}>
       <UIFieldset.Root
         {...props}
         disabled={isDisabled}
@@ -61,7 +58,7 @@ function Fieldset({
 
         {children}
       </UIFieldset.Root>
-    </FieldsetDisabledProvider>
+    </FieldsetProvider>
   );
 }
 

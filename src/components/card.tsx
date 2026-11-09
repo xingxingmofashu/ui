@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
 import { type ComponentConfig } from "../internal/tv";
@@ -8,7 +8,7 @@ type Card = ComponentConfig<typeof theme>;
 
 type CardProps = Omit<React.ComponentProps<"div">, "title"> & {
   /** Classes merged into the root element. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Card["slots"];
   /** Optional visible title rendered inside the card header. */

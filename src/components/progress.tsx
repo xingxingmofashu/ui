@@ -1,11 +1,11 @@
 "use client";
 
 import { Progress as UIProgress } from "@base-ui/react/progress";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../internal/aria";
+import { mergeIds } from "../composables/use-aria";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/progress";
 
@@ -23,7 +23,7 @@ type ProgressProps = Omit<
     /** Supporting text rendered below the bar. */
     description?: React.ReactNode;
     /** Tailwind classes merged into the root. */
-    className?: string;
+    className?: ClassValue;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Progress["slots"];
   };

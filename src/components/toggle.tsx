@@ -1,11 +1,11 @@
 "use client";
 
 import { Toggle as UIToggle } from "@base-ui/react/toggle";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toggle";
 
@@ -13,13 +13,11 @@ type Toggle = ComponentConfig<typeof theme>;
 
 type ToggleProps<Value extends string> = Omit<
   UIToggle.Props<Value>,
-  "className" | "children" | "ref"
+  "className" | "children"
 > &
   Omit<VariantProps<typeof theme>, "iconOnly"> & {
-    /** Ref to the rendered root element. */
-    ref?: React.Ref<HTMLButtonElement>;
     /** Tailwind classes merged into the toggle root. */
-    className?: string;
+    className?: ClassValue;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Toggle["slots"];
     /** Visible label rendered inside the toggle. */
@@ -38,7 +36,8 @@ function Toggle<Value extends string>({
   ...props
 }: ToggleProps<Value>) {
   const styles = theme({ size, iconOnly: !label });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
 
   return (
     <UIToggle

@@ -1,8 +1,7 @@
 "use client";
 
 import { Form as UIForm } from "@base-ui/react/form";
-import { cn } from "cn";
-import * as React from "react";
+import { cn, type ClassValue } from "cn";
 
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/form";
@@ -13,7 +12,7 @@ type FormProps<
   FormValues extends Record<string, any> = Record<string, any>,
 > = Omit<UIForm.Props<FormValues>, "className"> & {
   /** Tailwind classes merged into the form element. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Form["slots"];
 };

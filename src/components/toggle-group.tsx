@@ -2,11 +2,11 @@
 
 import { Toggle as UIToggle } from "@base-ui/react/toggle";
 import { ToggleGroup as UIToggleGroup } from "@base-ui/react/toggle-group";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toggle-group";
 
@@ -24,7 +24,7 @@ type ToggleGroupItemProps<Value extends string> = Omit<
   /** Icon rendered before the label. */
   icon?: React.ReactNode;
   /** Tailwind classes merged into the item root. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<ToggleGroup["slots"], "item" | "content" | "icon" | "label">
@@ -39,7 +39,7 @@ type ToggleGroupProps<Value extends string> = Omit<
     /** Options rendered by the toggle group. */
     items: readonly ToggleGroupItemProps<Value>[];
     /** Tailwind classes merged into the group root. */
-    className?: string;
+    className?: ClassValue;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: ToggleGroup["slots"];
   };
@@ -53,7 +53,8 @@ function ToggleGroup<Value extends string>({
   ...props
 }: ToggleGroupProps<Value>) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
 
   return (
     <UIToggleGroup

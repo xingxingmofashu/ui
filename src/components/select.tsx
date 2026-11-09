@@ -1,12 +1,12 @@
 "use client";
 
 import { Select as UISelect } from "@base-ui/react/select";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../internal/aria";
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { mergeIds } from "../composables/use-aria";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/select";
 
@@ -45,10 +45,7 @@ type SelectValue<Value, Multiple extends boolean | undefined> =
 type SelectProps<
   Value,
   Multiple extends boolean | undefined = false,
-> = Omit<
-  UISelect.Root.Props<Value, Multiple>,
-  "children" | "className" | "items"
-> &
+> = Omit<UISelect.Root.Props<Value, Multiple>, "children" | "items"> &
   VariantProps<typeof theme> &
   Pick<
     UISelect.Positioner.Props,
@@ -79,7 +76,7 @@ type SelectProps<
     /** Additional description IDs applied to the trigger. */
     "aria-describedby"?: string;
     /** Tailwind classes merged into the root element. */
-    className?: string;
+    className?: ClassValue;
     /** Inline styles merged into the root element. */
     style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
@@ -109,7 +106,8 @@ function Select<Value, Multiple extends boolean | undefined = false>({
   ...props
 }: SelectProps<Value, Multiple>) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
   const descriptionId = React.useId();
   const describedBy = mergeIds(
     ariaDescribedBy,

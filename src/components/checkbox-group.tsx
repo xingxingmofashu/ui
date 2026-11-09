@@ -2,12 +2,12 @@
 
 import { Checkbox as UICheckbox } from "@base-ui/react/checkbox";
 import { CheckboxGroup as UICheckboxGroup } from "@base-ui/react/checkbox-group";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../internal/aria";
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { mergeIds } from "../composables/use-aria";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/checkbox-group";
 
@@ -34,7 +34,7 @@ type CheckboxGroupItemProps = Omit<
   /** Supporting text rendered under the label. */
   description?: React.ReactNode;
   /** Tailwind classes merged into the entry root. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for control slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<
@@ -55,12 +55,7 @@ type CheckboxGroupItemProps = Omit<
 
 type CheckboxGroupProps = Omit<
   UICheckboxGroup.Props,
-  | "allValues"
-  | "children"
-  | "className"
-  | "defaultValue"
-  | "onValueChange"
-  | "value"
+  "allValues" | "children" | "className"
 > &
   VariantProps<typeof theme> &
   Pick<UICheckbox.Root.Props, "name" | "form" | "readOnly"> & {
@@ -70,17 +65,8 @@ type CheckboxGroupProps = Omit<
     label?: React.ReactNode;
     /** Supporting text rendered under the group label. */
     description?: React.ReactNode;
-    /** Controlled checked values. */
-    value?: readonly string[];
-    /** Initial checked values when uncontrolled. */
-    defaultValue?: readonly string[];
-    /** Called when a checkbox in the group is ticked or unticked. */
-    onValueChange?: (
-      value: string[],
-      details: UICheckboxGroup.ChangeEventDetails,
-    ) => void;
     /** Tailwind classes merged into the group root. */
-    className?: string;
+    className?: ClassValue;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: CheckboxGroup["slots"];
   };
@@ -105,7 +91,8 @@ function CheckboxGroup({
   ...props
 }: CheckboxGroupProps) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
   const labelId = React.useId();
   const descriptionId = React.useId();
   const labelledBy =
@@ -126,8 +113,8 @@ function CheckboxGroup({
   return (
     <UICheckboxGroup
       {...props}
-      value={value as string[] | undefined}
-      defaultValue={defaultValue as string[] | undefined}
+      value={value}
+      defaultValue={defaultValue}
       onValueChange={handleValueChange}
       aria-describedby={describedBy}
       aria-label={ariaLabel}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Accordion as UIAccordion } from "@base-ui/react/accordion";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
@@ -26,7 +26,7 @@ type AccordionItemProps = Omit<
   /** Replaces the default plus icon. Set to `false` to hide the indicator. */
   indicator?: React.ReactNode | false;
   /** Tailwind classes merged into the item root. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<
@@ -51,7 +51,7 @@ type AccordionProps<Value = any> = Omit<
     /** Panels rendered by the accordion. */
     items: readonly AccordionItemProps[];
     /** Tailwind classes merged into the root. */
-    className?: string;
+    className?: ClassValue;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Accordion["slots"];
   };

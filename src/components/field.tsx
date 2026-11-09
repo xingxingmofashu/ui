@@ -1,7 +1,7 @@
 "use client";
 
 import { Field as UIField } from "@base-ui/react/field";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
@@ -22,7 +22,7 @@ interface FieldProps
   /** Error message shown under the control. Accepts any React node. */
   error?: React.ReactNode;
   /** Tailwind classes merged into the field root. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Field["slots"];
 }

@@ -3,12 +3,12 @@
 import { useLabelableId } from "@base-ui/react/internals/labelable-provider";
 import { Radio as UIRadio } from "@base-ui/react/radio";
 import { RadioGroup as UIRadioGroup } from "@base-ui/react/radio-group";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../internal/aria";
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { mergeIds } from "../composables/use-aria";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/radio-group";
 
@@ -17,16 +17,14 @@ type RadioGroup = ComponentConfig<typeof theme>;
 /** One option managed by the radio group. */
 type RadioGroupItemProps<Value = any> = Omit<
   UIRadio.Root.Props<Value>,
-  "className" | "children" | "value"
+  "className" | "children"
 > & {
-  /** Value that identifies the option in the group value. */
-  value: Value;
   /** Visible label rendered next to the control. */
   label?: React.ReactNode;
   /** Supporting text rendered under the label. */
   description?: React.ReactNode;
   /** Tailwind classes merged into the item root. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<
@@ -56,7 +54,7 @@ type RadioGroupProps<Value = any> = Omit<
     /** Supporting text rendered under the group label. */
     description?: React.ReactNode;
     /** Tailwind classes merged into the group root. */
-    className?: string;
+    className?: ClassValue;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: RadioGroup["slots"];
   };
@@ -75,7 +73,8 @@ function RadioGroup<Value>({
   ...props
 }: RadioGroupProps<Value>) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
   const labelId = React.useId();
   const descriptionId = React.useId();
   const hasName = Boolean(label || ariaLabel || ariaLabelledBy);

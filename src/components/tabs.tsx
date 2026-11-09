@@ -1,7 +1,7 @@
 "use client";
 
-import { Tabs as UITabs, type TabsTabValue } from "@base-ui/react/tabs";
-import { cn } from "cn";
+import { Tabs as UITabs } from "@base-ui/react/tabs";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
@@ -13,10 +13,8 @@ type Tabs = ComponentConfig<typeof theme>;
 /** One tab and its related panel. */
 type TabsItemProps = Omit<
   UITabs.Tab.Props,
-  "children" | "className" | "content" | "value"
+  "children" | "className" | "content"
 > & {
-  /** Value that identifies the tab and its panel. */
-  value: TabsTabValue;
   /** Visible label inside the tab. */
   label?: React.ReactNode;
   /** Decorative icon rendered before the label. */
@@ -26,7 +24,7 @@ type TabsItemProps = Omit<
   /** Whether to keep the panel mounted while another tab is active. */
   keepMounted?: boolean;
   /** Tailwind classes merged into the tab button. */
-  className?: string;
+  className?: ClassValue;
   /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<Tabs["slots"], "tab" | "icon" | "label" | "panel" | "panelContent">
@@ -40,25 +38,16 @@ type TabsTabProps = Omit<
 
 type TabsProps = Omit<
   UITabs.Root.Props,
-  "children" | "className" | "value" | "defaultValue" | "onValueChange"
+  "children" | "className"
 > &
   Pick<UITabs.List.Props, "activateOnFocus" | "loopFocus"> &
   VariantProps<typeof theme> & {
     /** Tabs and panels rendered by the component. */
     items: readonly TabsItemProps[];
-    /** Controlled active value. Use `null` to render no active tab. */
-    value?: TabsTabValue;
-    /** Initial active value when uncontrolled. */
-    defaultValue?: TabsTabValue;
-    /** Called when the active value changes. */
-    onValueChange?: (
-      value: TabsTabValue,
-      details: UITabs.Root.ChangeEventDetails,
-    ) => void;
     /** Disables every tab. */
     disabled?: boolean;
     /** Tailwind classes merged into the root. */
-    className?: string;
+    className?: ClassValue;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Tabs["slots"];
   };
