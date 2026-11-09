@@ -83,7 +83,7 @@ function ReplPreview({
     <section
       aria-label="Preview"
       data-testid="repl-preview"
-      className="flex min-h-[22rem] flex-1 flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/70 shadow-[var(--pg-shadow)]"
+      className="flex min-h-88 flex-1 flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/70 shadow-(--pg-shadow)"
     >
       <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-pg-line px-3">
         <div className="flex items-center gap-2">
@@ -114,7 +114,7 @@ function ReplPreview({
               <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-rose-700/80 dark:text-rose-200/80">
                 {phaseLabels[error.phase]}
               </p>
-              <pre className="mt-1 whitespace-pre-wrap break-words font-mono text-xs leading-5">
+              <pre className="mt-1 whitespace-pre-wrap wrap-break-word font-mono text-xs leading-5">
                 {error.message}
               </pre>
               {error.stack ? (
@@ -122,7 +122,7 @@ function ReplPreview({
                   <summary className="cursor-pointer text-[11px] text-rose-700/70 dark:text-rose-200/60">
                     Stack trace
                   </summary>
-                  <pre className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap break-words font-mono text-[10px] leading-4 text-rose-800/70 dark:text-rose-100/60">
+                  <pre className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap wrap-break-word font-mono text-[10px] leading-4 text-rose-800/70 dark:text-rose-100/60">
                     {error.stack}
                   </pre>
                 </details>

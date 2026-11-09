@@ -648,7 +648,7 @@ function Repl() {
         </div>
 
         <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
-          <section className="flex h-[60vh] min-h-[26rem] flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/80 shadow-[var(--pg-shadow)] lg:h-auto lg:min-h-0">
+          <section className="flex h-[60vh] min-h-104 flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/80 shadow-(--pg-shadow) lg:h-auto lg:min-h-0">
             <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-pg-line px-3">
               <div className="flex min-w-0 items-center gap-2">
                 <span aria-hidden="true" className="size-2 rounded-full bg-emerald-500/70" />
