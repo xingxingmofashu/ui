@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs as UITabs } from "@base-ui/react/tabs";
+import { Tabs as UITabs, type TabsTabValue } from "@base-ui/react/tabs";
 import { cn } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
@@ -11,12 +11,12 @@ import theme from "../theme/tabs";
 type Tabs = ComponentConfig<typeof theme>;
 
 /** One tab and its related panel. */
-type TabsItemProps<Value extends string = string> = Omit<
+type TabsItemProps = Omit<
   UITabs.Tab.Props,
   "children" | "className" | "content" | "value"
 > & {
   /** Value that identifies the tab and its panel. */
-  value: Value;
+  value: TabsTabValue;
   /** Visible label inside the tab. */
   label?: React.ReactNode;
   /** Decorative icon rendered before the label. */
@@ -33,26 +33,26 @@ type TabsItemProps<Value extends string = string> = Omit<
   >;
 };
 
-type TabsTabProps<Value extends string = string> = Omit<
-  TabsItemProps<Value>,
+type TabsTabProps = Omit<
+  TabsItemProps,
   "content" | "keepMounted"
 >;
 
-type TabsProps<Value extends string = string> = Omit<
+type TabsProps = Omit<
   UITabs.Root.Props,
   "children" | "className" | "value" | "defaultValue" | "onValueChange"
 > &
   Pick<UITabs.List.Props, "activateOnFocus" | "loopFocus"> &
   VariantProps<typeof theme> & {
     /** Tabs and panels rendered by the component. */
-    items: readonly TabsItemProps<Value>[];
+    items: readonly TabsItemProps[];
     /** Controlled active value. Use `null` to render no active tab. */
-    value?: Value | null;
+    value?: TabsTabValue;
     /** Initial active value when uncontrolled. */
-    defaultValue?: Value | null;
+    defaultValue?: TabsTabValue;
     /** Called when the active value changes. */
     onValueChange?: (
-      value: Value,
+      value: TabsTabValue,
       details: UITabs.Root.ChangeEventDetails,
     ) => void;
     /** Disables every tab. */
@@ -63,7 +63,7 @@ type TabsProps<Value extends string = string> = Omit<
     ui?: Tabs["slots"];
   };
 
-function Tabs<Value extends string = string>({
+function Tabs({
   className,
   ui,
   size,
@@ -78,7 +78,7 @@ function Tabs<Value extends string = string>({
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   ...props
-}: TabsProps<Value>) {
+}: TabsProps) {
   const styles = theme({ size });
   const initialValue =
     defaultValue !== undefined
@@ -122,9 +122,12 @@ function Tabs<Value extends string = string>({
         />
 
         {items.map(
-          ({ content: _content, keepMounted: _keepMounted, ui: itemUi, ...item }) => (
+          (
+            { content: _content, keepMounted: _keepMounted, ui: itemUi, ...item },
+            index,
+          ) => (
             <TabsItem
-              key={item.value}
+              key={index}
               {...item}
               disabled={disabled || item.disabled}
               ui={{
@@ -138,9 +141,9 @@ function Tabs<Value extends string = string>({
       </UITabs.List>
 
       <div data-slot="panels" className={cn(styles.panels(), ui?.panels)}>
-        {items.map((item) => (
+        {items.map((item, index) => (
           <UITabs.Panel
-            key={item.value}
+            key={index}
             value={item.value}
             keepMounted={item.keepMounted}
             data-slot="panel"
@@ -163,13 +166,13 @@ function Tabs<Value extends string = string>({
   );
 }
 
-function TabsItem<Value extends string = string>({
+function TabsItem({
   className,
   ui,
   label,
   icon,
   ...props
-}: TabsTabProps<Value>) {
+}: TabsTabProps) {
   const styles = theme();
 
   return (

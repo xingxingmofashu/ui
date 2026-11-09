@@ -10,10 +10,8 @@ const channels = [
   { value: "billing", label: "Billing" },
 ] as const;
 
-type Channel = (typeof channels)[number]["value"];
-
 export default function CheckboxGroupControlledDemo() {
-  const [selected, setSelected] = useState<Channel[]>(["comments", "billing"]);
+  const [selected, setSelected] = useState<string[]>(["comments", "billing"]);
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-3">

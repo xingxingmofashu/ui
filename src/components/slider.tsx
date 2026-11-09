@@ -10,7 +10,9 @@ import theme from "../theme/slider";
 
 type Slider = ComponentConfig<typeof theme>;
 
-type SliderProps<Value extends number | readonly number[] = number> = Omit<
+type SliderProps<
+  Value extends number | readonly number[] = number | readonly number[],
+> = Omit<
   UISlider.Root.Props<Value>,
   "children" | "className"
 > &
@@ -40,7 +42,7 @@ function setAriaAttribute(
  * forwarded so supporting copy is announced with each thumb.
  */
 
-function Slider<Value extends number | readonly number[] = number>({
+function Slider<Value extends number | readonly number[]>({
   className,
   ui,
   value,

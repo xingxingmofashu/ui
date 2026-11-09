@@ -77,6 +77,7 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `aria-label` | `string` | — | 没有可见标签时的可访问名称。 |
 | `aria-labelledby` | `string` | — | 从其他元素为分组命名。 |
 | `aria-describedby` | `string` | — | 外部辅助说明的 ID。可见的 `description` 会与此值合并。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到分组根元素的 ref。 |
 | `className` | `string` | — | 合并到分组根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
@@ -93,6 +94,13 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `disabled` | `boolean` | `false` | 禁用该选项。 |
 | `readOnly` | `boolean` | `false` | 禁止修改，但保留焦点。 |
 | `required` | `boolean` | `false` | 将该复选框标记为表单必填。 |
+| `name` | `string` | — | 该选项的表单字段名；默认使用分组的 `name`。 |
+| `form` | `string` | — | 拥有该选项隐藏输入框的表单 ID；默认使用分组的 `form`。 |
+| `uncheckedValue` | `string` | — | 该选项未选中时提交的值。 |
+| `id` | `string` | — | 隐藏输入框的 ID；当 `nativeButton` 为 true 时改为根元素的 ID。 |
+| `inputRef` | `Ref<HTMLInputElement>` | — | 指向隐藏原生输入框的 ref。 |
+| `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换条目根元素。 |
 | `aria-label` | `string` | — | 没有可见标签时的可访问名称。 |
 | `aria-labelledby` | `string` | — | 外部标签的 ID。 |
 | `aria-describedby` | `string` | — | 外部辅助说明的 ID。 |
@@ -103,7 +111,7 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 
 父复选框不属于组件 API。请使用 `Checkbox` 组合实现，并如上文所示同步数组状态。
 
-`ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `CheckboxGroup` 属性，包括 `id` 与 `render`，都会透传。每个条目还会透传其余 Base UI `Checkbox` 属性，包括 `inputRef` 与 `render`。
+`ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `CheckboxGroup` 属性都会透传；每个条目还会透传其余 Base UI `Checkbox` 属性。
 
 | 属性 | 说明 |
 | --- | --- |

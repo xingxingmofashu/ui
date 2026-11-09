@@ -10,13 +10,13 @@ import theme from "../theme/menu";
 type Menu = ComponentConfig<typeof theme>;
 
 /** One action item in the menu. */
-type MenuItemProps<Value extends string = string> = Omit<
+type MenuItemProps = Omit<
   UIMenu.Item.Props,
   "children" | "className" | "label" | "onClick"
 > & {
   type?: "item";
   /** Value that identifies the item in the menu. */
-  value: Value;
+  value: string;
   /** Visible content inside the item. */
   label: React.ReactNode;
   /** Plain-text label used for keyboard navigation. Defaults to the rendered text. */
@@ -36,7 +36,7 @@ type MenuItemProps<Value extends string = string> = Omit<
 };
 
 /** A labelled group of menu items. */
-type MenuGroupProps<Value extends string = string> = Omit<
+type MenuGroupProps = Omit<
   UIMenu.Group.Props,
   "children" | "className"
 > & {
@@ -44,7 +44,7 @@ type MenuGroupProps<Value extends string = string> = Omit<
   /** Group heading. */
   label: React.ReactNode;
   /** Items rendered inside the group. */
-  items: readonly MenuItemProps<Value>[];
+  items: readonly MenuItemProps[];
   /** Tailwind classes merged into the group. */
   className?: string;
   /** Tailwind classes for the group slots. */
@@ -73,7 +73,7 @@ type MenuSeparatorProps = Omit<
   ui?: Partial<Pick<Menu["slots"], "separator">>;
 };
 
-type MenuProps<Value extends string = string> = Omit<
+type MenuProps = Omit<
   UIMenu.Root.Props,
   "children" | "className"
 > &
@@ -85,8 +85,8 @@ type MenuProps<Value extends string = string> = Omit<
     trigger: React.ReactElement;
     /** Items, groups, and separators rendered by the menu. */
     items: readonly (
-      | MenuItemProps<Value>
-      | MenuGroupProps<Value>
+      | MenuItemProps
+      | MenuGroupProps
       | MenuSeparatorProps
     )[];
     /** Tailwind classes merged into the popup. */
@@ -97,7 +97,7 @@ type MenuProps<Value extends string = string> = Omit<
     ui?: Menu["slots"];
   };
 
-function Menu<Value extends string = string>({
+function Menu({
   trigger,
   items,
   side,
@@ -109,7 +109,7 @@ function Menu<Value extends string = string>({
   style,
   ui,
   ...props
-}: MenuProps<Value>) {
+}: MenuProps) {
   const styles = theme();
 
   return (
@@ -179,7 +179,7 @@ function Menu<Value extends string = string>({
 
                 return (
                   <MenuActionItem
-                    key={entry.value}
+                    key={index}
                     {...entry}
                     ui={{
                       item: cn(ui?.item, entry.ui?.item),
@@ -198,7 +198,7 @@ function Menu<Value extends string = string>({
   );
 }
 
-function MenuActionItem<Value extends string = string>({
+function MenuActionItem({
   className,
   ui,
   icon,
@@ -209,7 +209,7 @@ function MenuActionItem<Value extends string = string>({
   value: _value,
   type: _type,
   ...props
-}: MenuItemProps<Value>) {
+}: MenuItemProps) {
   const styles = theme();
 
   return (
@@ -249,14 +249,14 @@ function MenuActionItem<Value extends string = string>({
   );
 }
 
-function MenuGroup<Value extends string = string>({
+function MenuGroup({
   className,
   ui,
   label,
   items,
   type: _type,
   ...props
-}: MenuGroupProps<Value>) {
+}: MenuGroupProps) {
   const styles = theme();
 
   return (
@@ -272,9 +272,9 @@ function MenuGroup<Value extends string = string>({
         {label}
       </UIMenu.GroupLabel>
 
-      {items.map((item) => (
+      {items.map((item, index) => (
         <MenuActionItem
-          key={item.value}
+          key={index}
           {...item}
           ui={{
             item: cn(ui?.item, item.ui?.item),

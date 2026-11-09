@@ -11,6 +11,34 @@ const items = [
   { value: "cherry", label: "Cherry", disabled: true },
 ] as const;
 
+const groupedItems = [
+  {
+    label: "Fruits",
+    items: [
+      { value: "apple", label: "Apple" },
+      { value: "banana", label: "Banana" },
+    ],
+  },
+  {
+    label: "Vegetables",
+    items: [
+      { value: "carrot", label: "Carrot" },
+      { value: "kale", label: "Kale" },
+    ],
+  },
+] as const;
+
+const shippingMethods = [
+  { id: "standard", name: "Standard", price: "$4.99" },
+  { id: "express", name: "Express", price: "$9.99" },
+];
+
+const methodItems = shippingMethods.map((method) => ({
+  value: method,
+  label: method.name,
+  textValue: method.name,
+}));
+
 function renderSelect(
   props: Partial<ComponentProps<typeof Select>> = {},
 ) {
@@ -94,6 +122,50 @@ describe("Select", () => {
       expect(banana).toHaveAttribute("data-selected");
       expect(indicator).toHaveAttribute("data-selected");
       expect(screen.getByRole("combobox")).toHaveTextContent("Banana");
+    });
+
+    it("renders grouped options with labelled groups", async () => {
+      render(
+        <Select
+          defaultOpen
+          label="Produce"
+          items={groupedItems}
+          ui={{ group: "ui-group", groupLabel: "ui-group-label" }}
+        />,
+      );
+
+      const listbox = await findListbox();
+      const groups = within(listbox).getAllByRole("group");
+      const groupLabel = groups[0].querySelector<HTMLElement>(
+        '[data-slot="group-label"]',
+      );
+
+      expect(groups).toHaveLength(2);
+      expect(groups[0]).toHaveClass("ui-group");
+      expect(groupLabel).toHaveClass("ui-group-label");
+      expect(groupLabel).toHaveTextContent("Fruits");
+      expect(groups[0].getAttribute("aria-labelledby")).toBe(groupLabel?.id);
+      expect(within(listbox).getAllByRole("option")).toHaveLength(4);
+    });
+
+    it("supports object values that are not string references", async () => {
+      render(
+        <Select
+          defaultOpen
+          label="Shipping"
+          items={methodItems}
+          defaultValue={{ ...shippingMethods[0] }}
+          isItemEqualToValue={(item, value) => item.id === value.id}
+        />,
+      );
+
+      const listbox = await findListbox();
+      const standard = within(listbox).getByRole("option", {
+        name: "Standard",
+      });
+
+      expect(standard).toHaveAttribute("data-selected");
+      expect(screen.getByRole("combobox")).toHaveTextContent("Standard");
     });
 
     it("disables an option", async () => {
@@ -217,6 +289,71 @@ describe("Select", () => {
       });
 
       expect(screen.getByRole("combobox")).toHaveTextContent("Apple");
+    });
+
+    it("selects multiple options and keeps the popup open", async () => {
+      const user = userEvent.setup();
+      const onValueChange = vi.fn();
+
+      render(
+        <Select
+          multiple
+          defaultOpen
+          label="Fruit"
+          items={items}
+          onValueChange={onValueChange}
+        />,
+      );
+
+      const listbox = await findListbox();
+
+      expect(listbox).toHaveAttribute("aria-multiselectable", "true");
+
+      await user.click(
+        within(listbox).getByRole("option", { name: "Apple" }),
+      );
+
+      expect(onValueChange).toHaveBeenLastCalledWith(
+        ["apple"],
+        expect.anything(),
+      );
+      expect(screen.getByRole("listbox")).toBeInTheDocument();
+
+      await user.click(
+        within(listbox).getByRole("option", { name: "Banana" }),
+      );
+
+      expect(onValueChange).toHaveBeenLastCalledWith(
+        ["apple", "banana"],
+        expect.anything(),
+      );
+      expect(screen.getByRole("combobox")).toHaveTextContent(
+        "Apple, Banana",
+      );
+    });
+
+    it("renders a custom multiple value and submits every selection", () => {
+      render(
+        <Select
+          multiple
+          name="fruit"
+          label="Fruit"
+          items={items}
+          defaultValue={["apple", "banana"]}
+          renderValue={(value) => `${value.length} selected`}
+        />,
+      );
+
+      expect(screen.getByRole("combobox")).toHaveTextContent("2 selected");
+
+      const inputs = [
+        ...document.querySelectorAll<HTMLInputElement>('input[name="fruit"]'),
+      ];
+
+      expect(inputs.map((input) => input.value)).toEqual([
+        "apple",
+        "banana",
+      ]);
     });
 
     it("closes when Escape is pressed", async () => {

@@ -39,6 +39,8 @@ export {
 } from "./components/scroll-area";
 export {
   Select,
+  type SelectEntry,
+  type SelectItemGroupProps,
   type SelectItemProps,
   type SelectProps,
 } from "./components/select";

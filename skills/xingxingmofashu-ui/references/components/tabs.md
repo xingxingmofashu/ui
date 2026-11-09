@@ -94,9 +94,9 @@ export default function TabsBasicDemo() {
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `items` | `readonly TabsItemProps[]` | — | Tabs and panels rendered by the component. |
-| `value` | `string \| null` | — | Controlled active value. Use `null` to render no active tab. |
-| `defaultValue` | `string \| null` | First enabled item | Initial active value when uncontrolled. |
-| `onValueChange` | `(value: string, details) => void` | — | Called when the active value changes. |
+| `value` | `any` | — | Controlled active value. Use `null` to render no active tab. |
+| `defaultValue` | `any` | First enabled item | Initial active value when uncontrolled. |
+| `onValueChange` | `(value: any, details) => void` | — | Called when the active value changes. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and keyboard orientation. |
 | `activateOnFocus` | `boolean` | `false` | Activates a tab as arrow-key focus moves. |
 | `loopFocus` | `boolean` | `true` | Loops keyboard focus back to the first tab after the last one. |
@@ -115,7 +115,7 @@ export default function TabsBasicDemo() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | Value that links the tab to its panel. |
+| `value` | `any` | — | Value that links the tab to its panel. |
 | `label` | `ReactNode` | — | Visible label inside the tab. |
 | `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
 | `content` | `ReactNode` | — | Panel content shown while the tab is active. |

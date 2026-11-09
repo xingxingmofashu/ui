@@ -61,6 +61,9 @@ export default tv({
       "relative z-10 flex min-w-0 flex-col gap-0.5",
       "max-h-[min(24rem,var(--available-height))] overflow-y-auto scroll-py-2",
     ],
+    group: "flex min-w-0 flex-col gap-0.5",
+    groupLabel:
+      "px-2.5 pb-0.5 pt-1 text-xs font-medium text-ui-ink/55",
     item: [
       "relative flex min-h-8 cursor-default select-none items-center gap-2 rounded-xl px-2.5",
       "text-sm text-ui-ink outline-none",

@@ -50,6 +50,14 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
 | `modal` | `boolean` | `true` | Locks outside interaction while the menu is open. |
 | `loopFocus` | `boolean` | `true` | Loops keyboard focus through the items. |
+| `highlightItemOnHover` | `boolean` | `true` | Highlights items when the pointer moves over them. |
+| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | Roving focus axis used by the arrow keys. |
+| `closeParentOnEsc` | `boolean` | `false` | In a nested menu, closes the whole menu on Escape instead of only the child menu. |
+| `onItemHighlighted` | `(item: HTMLElement \| undefined, details) => void` | — | Called when the highlighted item changes. |
+| `actionsRef` | `RefObject<Menu.Root.Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `triggerId` | `string \| null` | — | ID of the trigger for a controlled menu. |
+| `defaultTriggerId` | `string \| null` | — | ID of the trigger for an initially open menu. |
+| `handle` | `Menu.Handle<Payload>` | — | Handle that lets external triggers control the menu. |
 | `disabled` | `boolean` | `false` | Prevents the menu from opening. |
 | `className` | `string` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
@@ -68,6 +76,9 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `onSelect` | `(event) => void` | — | Called when the item is selected. |
 | `disabled` | `boolean` | `false` | Disables the item. |
 | `closeOnClick` | `boolean` | `true` | Whether selecting the item closes the menu. |
+| `id` | `string` | — | ID of the item element. |
+| `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
 | `className` | `string` | — | Tailwind classes merged into the item. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for this item's slots. |
@@ -79,6 +90,7 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | `type` | `"group"` | — | Marks the entry as a group. Required. |
 | `label` | `ReactNode` | — | Group heading. Required. |
 | `items` | `readonly MenuItemProps[]` | — | Items rendered inside the group. Required. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
 | `className` | `string` | — | Tailwind classes merged into the group. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for the group and its item slots. |
@@ -90,13 +102,14 @@ Disabled items stay announced but cannot be activated. `value` is only the React
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `type` | `"separator"` | — | Marks the entry as a separator. Required. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the separator element. |
 | `className` | `string` | — | Tailwind classes merged into the separator. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ separator?: ClassValue }` | — | Tailwind classes for the separator slot. |
 
 `MenuSeparatorProps` also forwards `Menu.Separator` props such as `render` and `id`.
 
-`ui` keys map to the `data-slot` values listed below. Additional Base UI `Menu.Root` props, including `actionsRef`, `handle`, `triggerId`, and `defaultTriggerId`, are forwarded.
+`ui` keys map to the `data-slot` values listed below. All other Base UI `Menu.Root` props are forwarded.
 
 | Attribute | Description |
 | --- | --- |

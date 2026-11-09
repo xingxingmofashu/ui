@@ -94,7 +94,7 @@ bundler.
 | Keep an action pressed | `Toggle`, `ToggleGroup` |
 | Navigate between views | `Tabs`, `Menu`, `Drawer` |
 | Enter text | `Field` + `Input` |
-| Choose one option | `Select`, `RadioGroup` |
+| Choose one or more options | `Select`, `RadioGroup` |
 | Choose independent options | `Checkbox`, `CheckboxGroup` |
 | Toggle an immediate setting | `Switch` |
 | Pick a number or range | `Slider` |
@@ -128,7 +128,7 @@ bundler.
 - [Fieldset](references/components/fieldset.md) — Group related fields under one legend.
 - [Input](references/components/input.md) — Glass text input with optional icons.
 - [Radio Group](references/components/radio-group.md) — Exactly one choice from a visible list.
-- [Select](references/components/select.md) — Single choice from a dropdown.
+- [Select](references/components/select.md) — Single or multiple choice from a dropdown, with optional groups.
 - [Slider](references/components/slider.md) — Single value or range along a track.
 - [Switch](references/components/switch.md) — Immediate on/off setting.
 

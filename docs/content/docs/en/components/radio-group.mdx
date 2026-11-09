@@ -49,9 +49,9 @@ Arrow keys move between options and update the selection, and `Space` selects th
 | `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
 | `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `items` | `readonly RadioGroupItemProps[]` | — | Options rendered by the group. |
-| `value` | `string` | — | Controlled selected value. |
-| `defaultValue` | `string` | — | Initial selected value when uncontrolled. |
-| `onValueChange` | `(value: string, details) => void` | — | Called when the selected value changes. |
+| `value` | `Value` | — | Controlled selected value. |
+| `defaultValue` | `Value` | — | Initial selected value when uncontrolled. |
+| `onValueChange` | `(value: Value, details) => void` | — | Called when the selected value changes. |
 | `disabled` | `boolean` | `false` | Disables every option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Requires a selection for form submission. |
@@ -69,7 +69,7 @@ Arrow keys move between options and update the selection, and `Space` selects th
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | Value that identifies the option in the group value. |
+| `value` | `Value` | — | Value that identifies the option in the group value. |
 | `label` | `ReactNode` | — | Visible label next to the control. It becomes the accessible name unless `aria-label` or `aria-labelledby` is provided. |
 | `description` | `ReactNode` | — | Supporting copy under the label, linked with `aria-describedby` when the option has a name. |
 | `disabled` | `boolean` | `false` | Disables this option. |
@@ -79,6 +79,7 @@ Arrow keys move between options and update the selection, and `Space` selects th
 | `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | ID of an external label. |
 | `aria-describedby` | `string` | — | ID of external supporting text. |
+| `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the option element. |
 | `ref` | `Ref<HTMLSpanElement>` | — | Ref forwarded to the option element. |
 | `className` | `string` | — | Tailwind classes merged into the option root. |

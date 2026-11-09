@@ -13,7 +13,7 @@ import theme from "../theme/toggle-group";
 type ToggleGroup = ComponentConfig<typeof theme>;
 
 /** One option managed by the toggle group. */
-type ToggleGroupItemProps<Value extends string = string> = Omit<
+type ToggleGroupItemProps<Value extends string> = Omit<
   UIToggle.Props<Value>,
   "className" | "children" | "value" | "pressed" | "defaultPressed"
 > & {
@@ -31,7 +31,7 @@ type ToggleGroupItemProps<Value extends string = string> = Omit<
   >;
 };
 
-type ToggleGroupProps<Value extends string = string> = Omit<
+type ToggleGroupProps<Value extends string> = Omit<
   UIToggleGroup.Props<Value>,
   "className" | "children"
 > &
@@ -44,7 +44,7 @@ type ToggleGroupProps<Value extends string = string> = Omit<
     ui?: ToggleGroup["slots"];
   };
 
-function ToggleGroup<Value extends string = string>({
+function ToggleGroup<Value extends string>({
   className,
   ui,
   size,
@@ -91,7 +91,7 @@ function ToggleGroup<Value extends string = string>({
   );
 }
 
-function ToggleGroupItem<Value extends string = string>({
+function ToggleGroupItem<Value extends string>({
   className,
   ui,
   icon,

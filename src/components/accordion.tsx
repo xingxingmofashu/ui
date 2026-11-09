@@ -13,12 +13,12 @@ import { PlusIcon } from "./icons/plus";
 type Accordion = ComponentConfig<typeof theme>;
 
 /** One panel managed by the accordion. */
-type AccordionItemProps<Value extends string = string> = Omit<
+type AccordionItemProps = Omit<
   UIAccordion.Item.Props,
   "children" | "className" | "content" | "title" | "value"
 > & {
   /** Value that identifies the item in the accordion value. */
-  value: Value;
+  value: any;
   /** Visible heading inside the trigger. */
   title: React.ReactNode;
   /** Panel content. */
@@ -43,20 +43,20 @@ type AccordionItemProps<Value extends string = string> = Omit<
   >;
 };
 
-type AccordionProps<Value extends string = string> = Omit<
+type AccordionProps<Value = any> = Omit<
   UIAccordion.Root.Props<Value>,
   "className" | "children"
 > &
   VariantProps<typeof theme> & {
     /** Panels rendered by the accordion. */
-    items: readonly AccordionItemProps<Value>[];
+    items: readonly AccordionItemProps[];
     /** Tailwind classes merged into the root. */
     className?: string;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Accordion["slots"];
   };
 
-function Accordion<Value extends string = string>({
+function Accordion<Value = any>({
   className,
   ui,
   size,
@@ -84,9 +84,9 @@ function Accordion<Value extends string = string>({
       </span>
 
       <div data-slot="content" className={cn(styles.content(), ui?.content)}>
-        {items.map((item) => (
+        {items.map((item, index) => (
           <AccordionItem
-            key={item.value}
+            key={index}
             {...item}
             ui={{
               item: cn(ui?.item, item.ui?.item),
@@ -105,7 +105,7 @@ function Accordion<Value extends string = string>({
   );
 }
 
-function AccordionItem<Value extends string = string>({
+function AccordionItem({
   value,
   title,
   content,
@@ -114,7 +114,7 @@ function AccordionItem<Value extends string = string>({
   indicator,
   ref,
   ...props
-}: AccordionItemProps<Value>) {
+}: AccordionItemProps) {
   const styles = theme();
 
   return (

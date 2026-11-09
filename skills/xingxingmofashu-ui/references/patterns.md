@@ -211,7 +211,25 @@ export function PlanSelect() {
 ```
 
 For controlled usage, set `value` and `onValueChange`. Use `value={null}` to
-clear the selection; the component has no built-in clear button.
+clear a single selection; the component has no built-in clear button.
+
+Set `multiple` to make `value` an array. The popup stays open between
+selections, and `renderValue` can summarize the selection:
+
+```tsx
+<Select
+  multiple
+  label="Languages"
+  items={languages}
+  value={selected}
+  onValueChange={setSelected}
+  renderValue={(value) => `${value.length} selected`}
+/>
+```
+
+Pass `{ label, items }` entries in `items` for grouped options. `Select` also
+accepts non-string values; use `itemToStringValue` for form submission and
+`isItemEqualToValue` to match equal object records.
 
 ## Toast with a promise
 

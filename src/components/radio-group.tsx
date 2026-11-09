@@ -15,7 +15,7 @@ import theme from "../theme/radio-group";
 type RadioGroup = ComponentConfig<typeof theme>;
 
 /** One option managed by the radio group. */
-type RadioGroupItemProps<Value extends string = string> = Omit<
+type RadioGroupItemProps<Value = any> = Omit<
   UIRadio.Root.Props<Value>,
   "className" | "children" | "value"
 > & {
@@ -44,7 +44,7 @@ type RadioGroupItemProps<Value extends string = string> = Omit<
   >;
 };
 
-type RadioGroupProps<Value extends string = string> = Omit<
+type RadioGroupProps<Value = any> = Omit<
   UIRadioGroup.Props<Value>,
   "className" | "children"
 > &
@@ -61,7 +61,7 @@ type RadioGroupProps<Value extends string = string> = Omit<
     ui?: RadioGroup["slots"];
   };
 
-function RadioGroup<Value extends string = string>({
+function RadioGroup<Value>({
   className,
   ui,
   size,
@@ -127,9 +127,9 @@ function RadioGroup<Value extends string = string>({
       ) : null}
 
       <div data-slot="items" className={cn(styles.items(), ui?.items)}>
-        {items.map((item) => (
+        {items.map((item, index) => (
           <RadioGroupItem
-            key={item.value}
+            key={index}
             {...item}
             ui={{
               item: cn(ui?.item, item.ui?.item),
@@ -156,7 +156,7 @@ function RadioGroup<Value extends string = string>({
   );
 }
 
-function RadioGroupItem<Value extends string = string>({
+function RadioGroupItem<Value>({
   className,
   ui,
   label,

@@ -21,7 +21,7 @@ const plans = [
     label: "Team",
     description: "For larger organizations.",
   },
-] as const satisfies readonly RadioGroupItemProps[];
+] as const satisfies readonly RadioGroupItemProps<string>[];
 
 function ControlledGroup() {
   const [value, setValue] = useState("free");

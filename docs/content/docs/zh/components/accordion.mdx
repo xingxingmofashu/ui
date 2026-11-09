@@ -53,9 +53,9 @@ description: "一个 React 手风琴，采用可折叠的 Liquid Glass 面板，
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `value` | `string[]` | — | 受控的展开值。 |
-| `defaultValue` | `string[]` | `[]` | 初始展开值。 |
-| `onValueChange` | `(value: string[], details) => void` | — | 展开值变化时调用。 |
+| `value` | `Value[]` | — | 受控的展开值。 |
+| `defaultValue` | `Value[]` | `[]` | 初始展开值。 |
+| `onValueChange` | `(value: Value[], details) => void` | — | 展开值变化时调用。 |
 | `multiple` | `boolean` | `false` | 是否允许多个面板同时展开。 |
 | `disabled` | `boolean` | `false` | 禁用所有触发器。 |
 | `hiddenUntilFound` | `boolean` | `false` | 使用 `hidden="until-found"` 保留关闭的面板，让浏览器页内查找可以展开匹配内容。 |
@@ -74,7 +74,7 @@ description: "一个 React 手风琴，采用可折叠的 Liquid Glass 面板，
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `value` | `string` | — | 必填，accordion value 使用的标识。 |
+| `value` | `any` | — | 必填，accordion value 使用的标识。 |
 | `title` | `ReactNode` | — | 必填，触发器内的可见标题。 |
 | `content` | `ReactNode` | — | 面板内容。 |
 | `indicator` | `ReactNode \| false` | 内置加号图标 | 替换默认指示器；设为 `false` 时隐藏。 |
