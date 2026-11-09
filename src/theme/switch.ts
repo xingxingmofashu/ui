@@ -58,29 +58,29 @@ const theme = tv({
       "group-active:[scale:1.65] group-data-[animating=true]:[scale:1.65]",
     ],
     wrapper: "ms-2 min-w-0",
-    label: "block font-medium text-ui-ink",
+    label: "block font-medium text-ui-ink leading-[var(--ui-switch-height)]",
     description: "block text-ui-ink opacity-60",
   },
   variants: {
     size: {
       xs: {
-        base: "[--ui-switch-width:48px] [--ui-switch-height:24px] [--ui-switch-border:2px]",
+        root: "[--ui-switch-width:48px] [--ui-switch-height:24px] [--ui-switch-border:2px]",
         wrapper: "text-xs",
       },
       sm: {
-        base: "[--ui-switch-width:56px] [--ui-switch-height:28px] [--ui-switch-border:2px]",
+        root: "[--ui-switch-width:56px] [--ui-switch-height:28px] [--ui-switch-border:2px]",
         wrapper: "text-xs",
       },
       md: {
-        base: "[--ui-switch-width:64px] [--ui-switch-height:32px] [--ui-switch-border:3px]",
+        root: "[--ui-switch-width:64px] [--ui-switch-height:32px] [--ui-switch-border:3px]",
         wrapper: "text-sm",
       },
       lg: {
-        base: "[--ui-switch-width:72px] [--ui-switch-height:36px] [--ui-switch-border:3px]",
+        root: "[--ui-switch-width:72px] [--ui-switch-height:36px] [--ui-switch-border:3px]",
         wrapper: "text-sm",
       },
       xl: {
-        base: "[--ui-switch-width:80px] [--ui-switch-height:40px] [--ui-switch-border:3px]",
+        root: "[--ui-switch-width:80px] [--ui-switch-height:40px] [--ui-switch-border:3px]",
         wrapper: "text-base",
       },
     },

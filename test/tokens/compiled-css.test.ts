@@ -67,6 +67,7 @@ describe("compiled CSS", () => {
   it("compiles the switch controls from the theme recipe", () => {
     expect(css).toContain("width: var(--ui-switch-width);");
     expect(css).toContain("height: var(--ui-switch-height);");
+    expect(css).toContain("line-height: var(--ui-switch-height);");
     expect(css).toContain("background-color: var(--ui-switch-off);");
     expect(css).toContain("background-color: var(--ui-switch-on);");
     expect(css).toContain("background-color: var(--color-white);");

@@ -435,17 +435,17 @@ describe("Switch", () => {
 
       const switchElement = screen.getByRole("switch", { name: "Sized" });
 
-      expect(getBase(switchElement)).toHaveClass("[--ui-switch-width:64px]");
-      expect(getBase(switchElement)).toHaveClass("[--ui-switch-height:32px]");
-      expect(getBase(switchElement)).toHaveClass("[--ui-switch-border:3px]");
+      expect(getRoot(switchElement)).toHaveClass("[--ui-switch-width:64px]");
+      expect(getRoot(switchElement)).toHaveClass("[--ui-switch-height:32px]");
+      expect(getRoot(switchElement)).toHaveClass("[--ui-switch-border:3px]");
 
       rerender(<Switch aria-label="Sized" size="xs" />);
 
       const resizedSwitch = screen.getByRole("switch", { name: "Sized" });
 
-      expect(getBase(resizedSwitch)).toHaveClass("[--ui-switch-width:48px]");
-      expect(getBase(resizedSwitch)).toHaveClass("[--ui-switch-height:24px]");
-      expect(getBase(resizedSwitch)).toHaveClass("[--ui-switch-border:2px]");
+      expect(getRoot(resizedSwitch)).toHaveClass("[--ui-switch-width:48px]");
+      expect(getRoot(resizedSwitch)).toHaveClass("[--ui-switch-height:24px]");
+      expect(getRoot(resizedSwitch)).toHaveClass("[--ui-switch-border:2px]");
     });
   });
 
@@ -465,6 +465,9 @@ describe("Switch", () => {
       expect(styles.root()).toContain("group");
       expect(styles.base()).toContain("h-[var(--ui-switch-height)]");
       expect(styles.base()).toContain("w-[var(--ui-switch-width)]");
+      expect(styles.label()).toContain(
+        "leading-[var(--ui-switch-height)]",
+      );
       expect(styles.root()).toContain("data-[disabled]:cursor-not-allowed");
       expect(styles.base()).toContain(
         "[&_[data-layer=fill]]:left-0",
@@ -535,14 +538,14 @@ describe("Switch", () => {
             size: size as keyof typeof sizes,
           });
 
-          expect(styles.base()).toContain(`[--ui-switch-width:${width}]`);
-          expect(styles.base()).toContain(`[--ui-switch-height:${height}]`);
-          expect(styles.base()).toContain(`[--ui-switch-border:${border}]`);
+          expect(styles.root()).toContain(`[--ui-switch-width:${width}]`);
+          expect(styles.root()).toContain(`[--ui-switch-height:${height}]`);
+          expect(styles.root()).toContain(`[--ui-switch-border:${border}]`);
           expect(styles.wrapper()).toContain(text);
         },
       );
 
-      expect(theme().base()).toContain("[--ui-switch-width:64px]");
+      expect(theme().root()).toContain("[--ui-switch-width:64px]");
     });
 
     it("uses no dark-mode branches", () => {
