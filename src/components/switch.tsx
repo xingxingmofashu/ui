@@ -5,7 +5,7 @@ import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../composables/use-aria";
+import { useAria } from "../composables/use-aria";
 import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/switch";
@@ -42,17 +42,15 @@ function Switch({
   const styles = theme({ size });
   const fieldset = useFieldset();
   const fieldsetDisabled = fieldset.disabled || disabled;
-  const labelId = React.useId();
-  const descriptionId = React.useId();
+  const { controlProps, descriptionProps, labelProps } = useAria({
+    description,
+    label,
+    "aria-describedby": ariaDescribedBy,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+  });
   const [animating, setAnimating] = React.useState(false);
   const animationTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
-  const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
-  const labelledBy =
-    ariaLabelledBy || (label && !ariaLabel ? labelId : undefined);
-  const describedBy = mergeIds(
-    ariaDescribedBy,
-    description && hasName ? descriptionId : undefined,
-  );
   const stopAnimating = () => {
     clearTimeout(animationTimer.current);
     setAnimating(false);
@@ -93,9 +91,7 @@ function Switch({
   return (
     <UISwitch.Root
       {...props}
-      aria-describedby={describedBy}
-      aria-label={ariaLabel}
-      aria-labelledby={labelledBy}
+      {...controlProps}
       disabled={fieldsetDisabled}
       readOnly={readOnly}
       data-slot="root"
@@ -124,7 +120,7 @@ function Switch({
         >
           {label ? (
             <span
-              id={labelId}
+              {...labelProps}
               data-slot="label"
               className={cn(styles.label(), ui?.label)}
             >
@@ -133,7 +129,7 @@ function Switch({
           ) : null}
           {description ? (
             <span
-              id={descriptionId}
+              {...descriptionProps}
               data-slot="description"
               className={cn(styles.description(), ui?.description)}
             >

@@ -5,7 +5,7 @@ import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../composables/use-aria";
+import { useAria } from "../composables/use-aria";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/progress";
 
@@ -39,17 +39,17 @@ function Progress({
   ...props
 }: ProgressProps) {
   const styles = theme({ size });
-  const descriptionId = React.useId();
-  const describedBy = mergeIds(
-    ariaDescribedBy,
-    description ? descriptionId : undefined,
-  );
+  const { controlProps, descriptionProps } = useAria({
+    description,
+    "aria-describedby": ariaDescribedBy,
+    descriptionAssociation: "always",
+  });
 
   return (
     <UIProgress.Root
       {...props}
       value={value}
-      aria-describedby={describedBy}
+      {...controlProps}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
     >
@@ -81,7 +81,7 @@ function Progress({
 
       {description ? (
         <span
-          id={descriptionId}
+          {...descriptionProps}
           data-slot="description"
           className={cn(styles.description(), ui?.description)}
         >

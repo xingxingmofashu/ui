@@ -5,7 +5,7 @@ import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../composables/use-aria";
+import { useAria } from "../composables/use-aria";
 import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/select";
@@ -108,17 +108,14 @@ function Select<Value, Multiple extends boolean | undefined = false>({
   const styles = theme({ size });
   const fieldset = useFieldset();
   const fieldsetDisabled = fieldset.disabled || disabled;
-  const descriptionId = React.useId();
-  const describedBy = mergeIds(
-    ariaDescribedBy,
-    description ? descriptionId : undefined,
-  );
-  // Leave aria-labelledby absent so Base UI can associate Select.Label.
-  const triggerAriaProps = {
-    ...(ariaLabel ? { "aria-label": ariaLabel } : {}),
-    ...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {}),
-    ...(describedBy ? { "aria-describedby": describedBy } : {}),
-  };
+  // Leave the label association to Select.Label unless the consumer passes one.
+  const { controlProps: triggerAriaProps, descriptionProps } = useAria({
+    description,
+    "aria-describedby": ariaDescribedBy,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    descriptionAssociation: "always",
+  });
   // Base UI discovers labels from the flat item list; groups only affect layout.
   const flatItems = items.flatMap((entry) =>
     "items" in entry ? entry.items : [entry],
@@ -208,7 +205,7 @@ function Select<Value, Multiple extends boolean | undefined = false>({
 
         {description ? (
           <span
-            id={descriptionId}
+            {...descriptionProps}
             data-slot="description"
             className={cn(styles.description(), ui?.description)}
           >
