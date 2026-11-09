@@ -9,7 +9,7 @@ const theme = tv({
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-75",
       "data-[readonly]:cursor-default",
       "[--ui-switch-thumb-size:calc(var(--ui-switch-height)_-_2*var(--ui-switch-inset))]",
-      "[--ui-switch-travel:calc(var(--ui-switch-width)_-_var(--ui-switch-height))]",
+      "[--ui-switch-travel:calc(var(--ui-switch-width)_-_var(--ui-switch-thumb-size)_-_2*var(--ui-switch-inset))]",
     ],
     container: "flex items-center",
     base: [
@@ -25,7 +25,7 @@ const theme = tv({
     ],
     thumb: [
       "absolute left-[var(--ui-switch-inset)] top-1/2 z-10 block h-[var(--ui-switch-thumb-size)] w-[var(--ui-switch-thumb-size)] rounded-full bg-ui-surface",
-      "[box-shadow:0_1px_3px_rgb(0_0_0/0.22),inset_0_1px_1px_rgb(255_255_255/0.65),inset_0_-1px_2px_rgb(0_0_0/0.08)]",
+      "[box-shadow:0_1px_3px_rgb(0_0_0/0.22),inset_0_0_0_1px_rgb(255_255_255/0.5),inset_0_1px_1px_rgb(255_255_255/0.65),inset_0_-1px_2px_rgb(0_0_0/0.08)]",
       "[translate:0_-50%] group-data-[checked]:[translate:var(--ui-switch-travel)_-50%]",
       "transition-[translate,scale] duration-200 ease-out",
       "group-active:scale-95",

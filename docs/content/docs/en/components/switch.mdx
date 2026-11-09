@@ -92,11 +92,12 @@ Switch forwards `name` and `value` and submits the current value through a hidde
 | `data-dirty` | Present after the switch value changes while wrapped in `Field`. |
 | `data-filled` | Present when the switch is on while wrapped in `Field`. |
 | `data-focused` | Present when the switch is focused while wrapped in `Field`. |
+| `data-animating` | Present while the thumb transition is running. |
 | `data-slot` | Marks internal parts (`root`, `container`, `base`, `thumb`, `wrapper`, `label`, `description`) for styling. |
 
 ## Theming
 
-The track and thumb use `--ui-ink` and `--ui-surface`. Component-specific geometry lives in `src/theme/switch.ts` as `--ui-switch-width`, `--ui-switch-height`, `--ui-switch-inset`, `--ui-switch-thumb-size`, and `--ui-switch-travel`. Override them on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+The track and thumb use `--ui-ink` and `--ui-surface`. Component-specific geometry lives in `src/theme/switch.ts` as `--ui-switch-width`, `--ui-switch-height`, `--ui-switch-inset`, `--ui-switch-thumb-size`, and `--ui-switch-travel`. Override them with `style` on the Switch, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
 
 ## Related components
 

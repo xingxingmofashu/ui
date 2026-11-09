@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -358,6 +358,9 @@ describe("Switch", () => {
         "group-data-[checked]:[translate:var(--ui-switch-travel)_-50%]",
       );
       expect(styles.thumb()).toContain("group-active:scale-95");
+      expect(styles.thumb()).toContain(
+        "inset_0_0_0_1px_rgb(255_255_255/0.5)",
+      );
       expect(styles.root()).toContain("data-[disabled]:opacity-75");
 
       for (const slot of [styles.base(), styles.thumb()]) {
@@ -432,6 +435,52 @@ describe("Switch", () => {
       expect(onCheckedChange.mock.calls[0]?.[0]).toBe(true);
     });
 
+    it.each(["translate", "scale"])(
+      "clears data-animating after the %s transition",
+      async (propertyName) => {
+        const user = userEvent.setup();
+
+        render(<Switch aria-label="Notifications" />);
+
+        const switchElement = screen.getByRole("switch", {
+          name: "Notifications",
+        });
+        const thumb = getSlot(switchElement, "thumb");
+
+        await user.click(switchElement);
+
+        expect(switchElement).toHaveAttribute("data-animating", "true");
+
+        fireEvent.transitionEnd(thumb, { propertyName });
+
+        expect(switchElement).not.toHaveAttribute("data-animating");
+      },
+    );
+
+    it("clears data-animating when the transition never ends", () => {
+      vi.useFakeTimers();
+
+      try {
+        render(<Switch aria-label="Notifications" />);
+
+        const switchElement = screen.getByRole("switch", {
+          name: "Notifications",
+        });
+
+        fireEvent.click(switchElement);
+
+        expect(switchElement).toHaveAttribute("data-animating", "true");
+
+        act(() => {
+          vi.advanceTimersByTime(400);
+        });
+
+        expect(switchElement).not.toHaveAttribute("data-animating");
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
     it("does not change when the change is canceled", async () => {
       const user = userEvent.setup();
       const onCheckedChange = vi.fn(
@@ -454,6 +503,7 @@ describe("Switch", () => {
 
       expect(onCheckedChange).toHaveBeenCalled();
       expect(switchElement).toHaveAttribute("aria-checked", "false");
+      expect(switchElement).not.toHaveAttribute("data-animating");
     });
 
     it("toggles with the keyboard", async () => {

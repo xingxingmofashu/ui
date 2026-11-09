@@ -86,11 +86,12 @@ Switch 会把 `name` 与 `value` 用于表单，并在提交时通过隐藏的 c
 | `data-dirty` | 开关包裹在 `Field` 中且值变化后存在。 |
 | `data-filled` | 开关包裹在 `Field` 中且开启时存在。 |
 | `data-focused` | 开关包裹在 `Field` 中且聚焦时存在。 |
+| `data-animating` | thumb 过渡动画运行时存在。 |
 | `data-slot` | 标记内部部件（`root`、`container`、`base`、`thumb`、`wrapper`、`label`、`description`），用于样式选择。 |
 
 ## 主题
 
-轨道和 thumb 使用 `--ui-ink` 与 `--ui-surface`；组件级几何数值位于 `src/theme/switch.ts`，包括 `--ui-switch-width`、`--ui-switch-height`、`--ui-switch-inset`、`--ui-switch-thumb-size` 和 `--ui-switch-travel`。可以在父级覆盖这些变量，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+轨道和 thumb 使用 `--ui-ink` 与 `--ui-surface`；组件级几何数值位于 `src/theme/switch.ts`，包括 `--ui-switch-width`、`--ui-switch-height`、`--ui-switch-inset`、`--ui-switch-thumb-size` 和 `--ui-switch-travel`。可以在 Switch 上通过 `style` 覆盖这些变量，用 `className` 控制布局，并通过 `ui` 按 `data-slot` 调整内部槽位。Token 分层与预设见[主题指南](/docs/zh/guides/theming)。
 
 ## 相关组件
 

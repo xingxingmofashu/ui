@@ -38,6 +38,7 @@ function Switch({
   size,
   disabled,
   readOnly,
+  onCheckedChange,
   "aria-describedby": ariaDescribedBy,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
@@ -47,6 +48,8 @@ function Switch({
   const fieldsetDisabled = useFieldsetDisabled(disabled);
   const labelId = React.useId();
   const descriptionId = React.useId();
+  const [animating, setAnimating] = React.useState(false);
+  const animationTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
   const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
   const labelledBy =
     ariaLabelledBy || (label && !ariaLabel ? labelId : undefined);
@@ -54,6 +57,42 @@ function Switch({
     ariaDescribedBy,
     description && hasName ? descriptionId : undefined,
   );
+  const stopAnimating = () => {
+    clearTimeout(animationTimer.current);
+    setAnimating(false);
+  };
+  React.useEffect(
+    () => () => {
+      clearTimeout(animationTimer.current);
+    },
+    [],
+  );
+  const handleCheckedChange: NonNullable<
+    SwitchProps["onCheckedChange"]
+  > = (checked, details) => {
+    onCheckedChange?.(checked, details);
+
+    if (!details.isCanceled) {
+      setAnimating(true);
+      clearTimeout(animationTimer.current);
+      // Reduced motion disables the transition, so no transitionend fires.
+      animationTimer.current = setTimeout(stopAnimating, 300);
+    }
+  };
+  const handleThumbTransitionEnd = (
+    event: React.TransitionEvent<HTMLSpanElement>,
+  ) => {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    if (
+      event.propertyName === "translate" ||
+      event.propertyName === "scale"
+    ) {
+      stopAnimating();
+    }
+  };
 
   return (
     <UISwitch.Root
@@ -64,6 +103,8 @@ function Switch({
       disabled={fieldsetDisabled}
       readOnly={readOnly}
       data-slot="root"
+      data-animating={animating || undefined}
+      onCheckedChange={handleCheckedChange}
       className={cn(styles.root(), ui?.root, className)}
     >
       <span
@@ -74,6 +115,7 @@ function Switch({
           <UISwitch.Thumb
             data-slot="thumb"
             aria-hidden="true"
+            onTransitionEnd={handleThumbTransitionEnd}
             className={cn(styles.thumb(), ui?.thumb)}
           />
         </span>

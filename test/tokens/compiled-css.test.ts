@@ -80,7 +80,7 @@ describe("compiled CSS", () => {
       "box-shadow: inset 0 1px 1px rgb(255 255 255/0.3),inset 0 -1px 2px rgb(0 0 0/0.14);",
     );
     expect(css).toContain(
-      "box-shadow: 0 1px 3px rgb(0 0 0/0.22),inset 0 1px 1px rgb(255 255 255/0.65),inset 0 -1px 2px rgb(0 0 0/0.08);",
+      "box-shadow: 0 1px 3px rgb(0 0 0/0.22),inset 0 0 0 1px rgb(255 255 255/0.5),inset 0 1px 1px rgb(255 255 255/0.65),inset 0 -1px 2px rgb(0 0 0/0.08);",
     );
     expect(css).toContain("translate: var(--ui-switch-travel) -50%;");
     expect(css).toContain("transition-property: translate,scale;");
@@ -96,7 +96,7 @@ describe("compiled CSS", () => {
       "--ui-switch-thumb-size: calc(var(--ui-switch-height) - 2 * var(--ui-switch-inset));",
     );
     expect(css).toContain(
-      "--ui-switch-travel: calc(var(--ui-switch-width) - var(--ui-switch-height));",
+      "--ui-switch-travel: calc(var(--ui-switch-width) - var(--ui-switch-thumb-size) - 2 * var(--ui-switch-inset));",
     );
     expect(css).not.toContain("--ui-switch-goo-filter");
     expect(css).not.toContain("--ui-switch-remove-black-filter");
