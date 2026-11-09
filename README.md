@@ -39,6 +39,16 @@ Toast, Toggle, Toggle Group, and Tooltip.
 - [llms-full.txt](https://xingxingmofashu.github.io/ui/llms-full.txt) — every
   guide and component page in one file
 
+## Agent skill
+
+The portable skill in
+[`skills/xingxingmofashu-ui`](https://github.com/xingxingmofashu/ui/tree/main/skills/xingxingmofashu-ui)
+teaches coding agents how to install, compose, theme, and troubleshoot the
+components. It lives in the repository and is not included in the npm package.
+See the
+[skill README](https://github.com/xingxingmofashu/ui/blob/main/skills/xingxingmofashu-ui/README.md)
+for OpenCode, Claude Code, and compatible agent setup.
+
 ## Installation
 
 ```bash [pnpm]
@@ -142,7 +152,7 @@ import { Button } from "@xingxingmofashu/ui/components/button";
 import buttonTheme from "@xingxingmofashu/ui/theme/button";
 ```
 
-Toast hooks live under `@xingxingmofashu/ui/composables`.
+Toast hooks live under `@xingxingmofashu/ui/composables/use-toast`.
 
 ## Development
 

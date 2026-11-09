@@ -182,3 +182,5 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 - Build config: `build.config.ts`
 - Docs site: `docs/` (see `docs/AGENTS.md`)
 - Playground app: `playground/`
+- Consumer agent skill: `skills/xingxingmofashu-ui/`
+- Skill guard test: `test/skills/skill.test.ts`
