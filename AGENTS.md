@@ -16,8 +16,6 @@ workspace.
 - `pnpm lint` — lint the package and tests with oxlint.
 - `pnpm lint:fix` — apply oxlint's safe fixes.
 - `pnpm test` — run the Vitest suite.
-- `pnpm check:props` — verify every exported `*Props` type derives from its
-  Base UI part; run `pnpm check:props -- -t ButtonProps` for one component.
 - `pnpm typecheck` — typecheck the package.
 - `pnpm docs:dev` — start the docs site on port 3001.
 - `pnpm docs:build` — export the docs site to `docs/out`.
@@ -118,10 +116,9 @@ workspace.
 - Components are single-structure wrappers: they own the Base UI anatomy and
   expose no Base UI parts or second composition API.
 - Every exported `*Props` type must derive from its Base UI part through
-  `Omit`, `Pick`, or `extends`. Do not redeclare a Base UI prop; when the
-  wrapper deliberately shadows one, register it in
-  `test/types/base-ui-props.test.ts` with a reason. `className` and `style`
-  are wrapper-owned: `className` is `cn`'s `ClassValue` and `style` is
+  `Omit`, `Pick`, or `extends`. Do not redeclare a Base UI prop; keep the
+  wrapper's definition only when it deliberately shadows one. `className` and
+  `style` are wrapper-owned: `className` is `cn`'s `ClassValue` and `style` is
   `React.CSSProperties`.
 - Inherit Base UI props from the part that receives them: use
   `Omit<UIComponent.Root.Props, ...>` for root props and
@@ -172,9 +169,9 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 - Tailwind utilities in user code are compiled at runtime by
   `@tailwindcss/browser`; the playground stylesheet also scans the docs
   examples so the initial render works before that runtime loads.
-- Browser tests: `test/repl/runtime.test.ts` (Vitest) and `test/e2e/*.spec.ts`
-  (Playwright). The Playwright suite covers the REPL, representative component
-  interactions, and shared glass preset values; it does not use screenshots.
+- Browser tests: `test/e2e/*.spec.ts` (Playwright). The suite covers
+  representative component interactions and shared glass preset values; it does
+  not use screenshots.
 
 ## Package files
 
@@ -183,7 +180,6 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 - Glass preset plugin: `src/plugins/glass-preset/`
 - Design tokens and glass material: `src/index.css`
 - Shared glass presets: `src/plugins/glass-preset/index.css`
-- Shared token and theme contract tests: `test/tokens/`
 - Plugin tests: `test/plugins/<name>.test.tsx`
 - Test setup: `test/setup.ts`
 - Vitest config: `vitest.config.ts`
@@ -191,4 +187,3 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 - Docs site: `docs/` (see `docs/AGENTS.md`)
 - Playground app: `playground/`
 - Consumer agent skill: `skills/xingxingmofashu-ui/`
-- Skill guard test: `test/skills/skill.test.ts`
