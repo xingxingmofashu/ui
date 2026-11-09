@@ -67,50 +67,40 @@ describe("compiled CSS", () => {
   it("compiles the switch controls from the theme recipe", () => {
     expect(css).toContain("width: var(--ui-switch-width);");
     expect(css).toContain("height: var(--ui-switch-height);");
+    expect(css).toContain("height: var(--ui-switch-thumb-size);");
+    expect(css).toContain("width: var(--ui-switch-thumb-size);");
+    expect(css).toContain("left: var(--ui-switch-inset);");
     expect(css).toContain("line-height: var(--ui-switch-height);");
     expect(css).toContain("background-color: var(--ui-switch-off);");
     expect(css).toContain("background-color: var(--ui-switch-on);");
-    expect(css).toContain("background-color: var(--color-white);");
     expect(css).toContain(
-      "box-shadow: inset 0 1px 1px rgb(255 255 255/0.35),inset 0 -1px 2px rgb(0 0 0/0.12);",
-    );
-    expect(css).toContain("box-shadow: var(--ui-glass-thumb-shadow);");
-    expect(css).toContain("box-shadow: var(--ui-glass-edge-shadow);");
-    expect(css).toContain("filter: var(--ui-switch-goo-filter);");
-    expect(css).toContain("filter: var(--ui-switch-remove-black-filter);");
-    expect(css).toContain("filter: blur(calc(var(--ui-switch-height) * 0.1));");
-    expect(css).toContain("filter: blur(0);");
-    expect(css).toContain(
-      "translate: calc(100cqi - 100% - 2 * var(--ui-switch-border)) -50%;",
-    );
-    expect(css).toContain("translate: calc(100cqi - 100%) -50%;");
-    expect(css).not.toContain(
-      "translate: calc(100cqi - 100% - 6 * var(--ui-switch-border)) -50%;",
+      "background-image: linear-gradient(180deg,rgb(255 255 255/0.14),transparent 55%);",
     );
     expect(css).toContain(
-      "transition: background-color 120ms ease-out 180ms;",
+      "box-shadow: inset 0 1px 1px rgb(255 255 255/0.3),inset 0 -1px 2px rgb(0 0 0/0.14);",
     );
-    expect(css).toContain("transition: box-shadow 120ms ease-out 180ms;");
     expect(css).toContain(
-      "transition: height 200ms ease-out,translate 120ms ease-out 180ms,background-color 120ms ease-out 180ms;",
+      "box-shadow: 0 1px 3px rgb(0 0 0/0.22),inset 0 1px 1px rgb(255 255 255/0.65),inset 0 -1px 2px rgb(0 0 0/0.08);",
     );
-    expect(css).toContain("[data-layer=filter]");
-    expect(css).toContain("scale: 1.65;");
-    expect(css).toContain("--ui-switch-glow-color: var(--ui-switch-off);");
-    expect(css).toContain("--ui-switch-glow-color: var(--ui-switch-on);");
-    expect(css).toContain("border-top-right-radius: 100px;");
+    expect(css).toContain("translate: var(--ui-switch-travel) -50%;");
+    expect(css).toContain("transition-property: translate,scale;");
+    expect(css).toContain("--ui-switch-off: var(--ui-ink);");
     expect(css).toContain(
       "--ui-switch-off: color-mix(in srgb,var(--ui-ink) 20%,transparent);",
     );
     expect(css).toContain("--ui-switch-on: var(--ui-ink);");
-    expect(css).not.toContain("--ui-switch-hue");
-    expect(css).not.toContain("--ui-switch-thumb:");
-    expect(css).not.toContain("--ui-switch-thumb-shadow");
-    expect(css).not.toContain("--ui-switch-track-shadow");
-    expect(css).not.toContain("--ui-switch-glass-shadow");
     expect(css).toContain("--ui-switch-width: 48px;");
     expect(css).toContain("--ui-switch-width: 80px;");
-    expect(css).toContain("--ui-switch-border: 2px;");
+    expect(css).toContain("--ui-switch-inset: 2px;");
+    expect(css).toContain(
+      "--ui-switch-thumb-size: calc(var(--ui-switch-height) - 2 * var(--ui-switch-inset));",
+    );
+    expect(css).toContain(
+      "--ui-switch-travel: calc(var(--ui-switch-width) - var(--ui-switch-height));",
+    );
+    expect(css).not.toContain("--ui-switch-goo-filter");
+    expect(css).not.toContain("--ui-switch-remove-black-filter");
+    expect(css).not.toContain("--ui-switch-border");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
   });
 

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -23,22 +23,6 @@ function getRoot(switchElement: HTMLElement) {
   }
 
   return root;
-}
-
-function getBase(switchElement: HTMLElement) {
-  return getSlot(getRoot(switchElement), "base");
-}
-
-function getLayer(element: Element, layer: string) {
-  const node = element.querySelector<HTMLElement>(
-    `[data-layer="${layer}"]`,
-  );
-
-  if (!node) {
-    throw new Error(`Switch layer "${layer}" was not rendered.`);
-  }
-
-  return node;
 }
 
 describe("Switch", () => {
@@ -152,92 +136,26 @@ describe("Switch", () => {
       expect(root).toBe(switchElement);
       expect(getSlot(root, "container").tagName).toBe("SPAN");
       expect(getSlot(root, "base").tagName).toBe("SPAN");
+      expect(getSlot(switchElement, "thumb").tagName).toBe("SPAN");
       expect(getSlot(switchElement, "thumb")).toHaveAttribute(
         "aria-hidden",
         "true",
       );
-      expect(
-        switchElement.querySelector('svg[aria-hidden="true"]'),
-      ).not.toBeNull();
+      expect(getSlot(root, "base")).toContainElement(
+        getSlot(root, "thumb"),
+      );
     });
 
-    it("renders the liquid glass layers as internal data attributes", () => {
+    it("does not render the legacy liquid glass layers", () => {
       render(<Switch aria-label="Notifications" />);
 
       const switchElement = screen.getByRole("switch", {
         name: "Notifications",
       });
-      const layers = [
-        "filter",
-        "mask",
-        "track",
-        "track-mask",
-        "glass-rim",
-        "glass-lens",
-        "goo",
-        "inner-glow",
-        "fill",
-        "cover",
-      ];
 
-      layers.forEach((layer) => {
-        const node = getLayer(switchElement, layer);
-
-        expect(node).toBeInTheDocument();
-        expect(node).not.toHaveAttribute("data-slot");
-      });
-    });
-
-    it("anchors the fill to the glass edge without a left cap", () => {
-      const styles = theme();
-
-      expect(styles.base()).toContain("[&_[data-layer=fill]]:left-0");
-      expect(styles.base()).toContain(
-        "[&_[data-layer=fill]]:rounded-r-[100px]",
-      );
-      expect(styles.base()).not.toContain(
-        "[&_[data-layer=fill]]:rounded-[100px]",
-      );
-      expect(styles.base()).not.toContain(
-        "[&_[data-layer=fill]]:left-[calc",
-      );
-    });
-
-    it("covers the full thumb when checked", () => {
-      const styles = theme();
-
-      expect(styles.base()).toContain(
-        "group-data-[checked]:[&_[data-layer=fill]]:[translate:calc(100cqi_-_100%)_-50%]",
-      );
-      expect(styles.base()).not.toContain(
-        "group-data-[checked]:[&_[data-layer=fill]]:[translate:calc(100cqi_-_100%_-_6*var(--ui-switch-border))_-50%]",
-      );
-    });
-
-    it("delays state colors until the thumb starts moving", () => {
-      const styles = theme();
-
-      expect(styles.thumb()).toContain(
-        "[transition:translate_120ms_ease-out_180ms,scale_300ms_ease-out]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=track]]:[transition:background-color_120ms_ease-out_180ms]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=fill]]:[transition:height_200ms_ease-out,translate_120ms_ease-out_180ms,background-color_120ms_ease-out_180ms]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=inner-glow]]:[transition:box-shadow_120ms_ease-out_180ms]",
-      );
-    });
-
-    it("keeps reduced-motion transitions observable", () => {
-      const styles = theme();
-
-      expect(styles.thumb()).not.toContain("motion-reduce:transition-none");
-      expect(styles.base()).toContain(
-        "motion-reduce:[&_*]:[transition-duration:0.01ms!important]",
-      );
+      expect(switchElement.querySelector("svg")).toBeNull();
+      expect(switchElement.querySelector("filter")).toBeNull();
+      expect(switchElement.querySelector("[data-layer]")).toBeNull();
     });
 
     it("renders label and description", () => {
@@ -376,58 +294,11 @@ describe("Switch", () => {
       ).toBeNull();
     });
 
-    it("scopes the liquid glass filters to each switch", () => {
-      render(
-        <>
-          <Switch aria-label="First" />
-          <Switch aria-label="Second" />
-        </>,
-      );
+    it("keeps reduced motion on the track and thumb", () => {
+      const styles = theme();
 
-      const switches = screen.getAllByRole("switch");
-      const filterIds = switches.flatMap((switchElement) =>
-        Array.from(switchElement.querySelectorAll("filter")).map(
-          (filter) => filter.id,
-        ),
-      );
-
-      expect(filterIds).toHaveLength(4);
-      expect(new Set(filterIds).size).toBe(filterIds.length);
-
-      switches.forEach((switchElement) => {
-        const filters = Array.from(
-          switchElement.querySelectorAll("filter"),
-        );
-        const gooFilter = filters.find((filter) =>
-          filter.id.endsWith("-goo"),
-        );
-        const removeBlackFilter = filters.find((filter) =>
-          filter.id.endsWith("-remove-black"),
-        );
-        const base = getBase(switchElement);
-
-        expect(gooFilter).toBeDefined();
-        expect(removeBlackFilter).toBeDefined();
-        expect(base.style.getPropertyValue("--ui-switch-goo-filter")).toBe(
-          `url("#${gooFilter?.id}")`,
-        );
-        expect(
-          base.style.getPropertyValue("--ui-switch-remove-black-filter"),
-        ).toBe(`url("#${removeBlackFilter?.id}")`);
-        expect(gooFilter?.children).toHaveLength(3);
-        expect(gooFilter?.children[0].getAttribute("stdDeviation")).toBe("2");
-        expect(gooFilter?.children[1].getAttribute("values")).toContain(
-          "0 0 0 16 -10",
-        );
-        expect(gooFilter?.children[2].getAttribute("operator")).toBe("atop");
-        expect(removeBlackFilter?.children).toHaveLength(3);
-        expect(
-          removeBlackFilter?.children[1].getAttribute("radius"),
-        ).toBe("0.5");
-        expect(
-          removeBlackFilter?.children[2].getAttribute("operator"),
-        ).toBe("out");
-      });
+      expect(styles.base()).toContain("motion-reduce:transition-none");
+      expect(styles.thumb()).toContain("motion-reduce:transition-none");
     });
 
     it("applies the default md size and supports every size", () => {
@@ -437,7 +308,7 @@ describe("Switch", () => {
 
       expect(getRoot(switchElement)).toHaveClass("[--ui-switch-width:64px]");
       expect(getRoot(switchElement)).toHaveClass("[--ui-switch-height:32px]");
-      expect(getRoot(switchElement)).toHaveClass("[--ui-switch-border:3px]");
+      expect(getRoot(switchElement)).toHaveClass("[--ui-switch-inset:3px]");
 
       rerender(<Switch aria-label="Sized" size="xs" />);
 
@@ -445,12 +316,12 @@ describe("Switch", () => {
 
       expect(getRoot(resizedSwitch)).toHaveClass("[--ui-switch-width:48px]");
       expect(getRoot(resizedSwitch)).toHaveClass("[--ui-switch-height:24px]");
-      expect(getRoot(resizedSwitch)).toHaveClass("[--ui-switch-border:2px]");
+      expect(getRoot(resizedSwitch)).toHaveClass("[--ui-switch-inset:2px]");
     });
   });
 
   describe("theme recipe", () => {
-    it("uses only the Nuxt public slots and keeps layers inside base", () => {
+    it("uses only the public slots and plain CSS layers", () => {
       const styles = theme();
 
       expect(Object.keys(styles).sort()).toEqual([
@@ -463,64 +334,38 @@ describe("Switch", () => {
         "wrapper",
       ]);
       expect(styles.root()).toContain("group");
+      expect(styles.root()).toContain("--ui-switch-thumb-size");
+      expect(styles.root()).toContain("--ui-switch-travel");
       expect(styles.base()).toContain("h-[var(--ui-switch-height)]");
       expect(styles.base()).toContain("w-[var(--ui-switch-width)]");
+      expect(styles.base()).toContain("bg-[var(--ui-switch-off)]");
+      expect(styles.base()).toContain(
+        "group-data-[checked]:bg-[var(--ui-switch-on)]",
+      );
+      expect(styles.base()).toContain(
+        "transition-[background-color,box-shadow]",
+      );
       expect(styles.label()).toContain(
         "leading-[var(--ui-switch-height)]",
       );
-      expect(styles.root()).toContain("data-[disabled]:cursor-not-allowed");
-      expect(styles.base()).toContain(
-        "[&_[data-layer=fill]]:left-0",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=filter]]:pointer-events-none",
-      );
-      expect(styles.base()).not.toContain("[&>svg]");
-      expect(styles.base()).not.toContain("--ui-switch-hue");
-      expect(styles.base()).not.toContain("--ui-switch-thumb");
-      expect(styles.base()).not.toContain("--ui-switch-track-shadow");
-      expect(styles.base()).not.toContain("--ui-switch-glass-shadow");
-      expect(styles.thumb()).not.toContain("--ui-switch-thumb-shadow");
-      expect(styles.base()).not.toContain(
-        "[&_[data-layer=mask]]:h-[var(--ui-switch-height)]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=track]]:bg-[var(--ui-switch-off)]",
-      );
-      expect(styles.base()).toContain(
-        "group-data-[checked]:[&_[data-layer=track]]:bg-[var(--ui-switch-on)]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=track]]:[box-shadow:inset_0_1px_1px_rgb(255_255_255/0.35),inset_0_-1px_2px_rgb(0_0_0/0.12)]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=glass-rim]]:[box-shadow:var(--ui-glass-edge-shadow)]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=glass-lens]]:[filter:blur(calc(var(--ui-switch-height)*0.1))]",
-      );
-      expect(styles.base()).toContain(
-        "group-active:[&_[data-layer=glass-lens]]:[filter:blur(0)]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=inner-glow]]:[--ui-switch-glow-color:var(--ui-switch-off)]",
-      );
-      expect(styles.base()).toContain(
-        "group-data-[checked]:[&_[data-layer=inner-glow]]:[--ui-switch-glow-color:var(--ui-switch-on)]",
-      );
-      expect(styles.base()).toContain(
-        "[&_[data-layer=cover]]:bg-white",
-      );
-      expect(styles.base()).toContain(
-        "group-active:[&_[data-layer=cover]]:opacity-0",
-      );
-      expect(styles.thumb()).toContain("group-data-[checked]");
-      expect(styles.thumb()).toContain("group-active");
-      expect(styles.thumb()).toContain("group-data-[animating=true]");
       expect(styles.thumb()).toContain(
-        "[box-shadow:var(--ui-glass-thumb-shadow)]",
+        "h-[var(--ui-switch-thumb-size)]",
       );
+      expect(styles.thumb()).toContain(
+        "w-[var(--ui-switch-thumb-size)]",
+      );
+      expect(styles.thumb()).toContain(
+        "group-data-[checked]:[translate:var(--ui-switch-travel)_-50%]",
+      );
+      expect(styles.thumb()).toContain("group-active:scale-95");
       expect(styles.root()).toContain("data-[disabled]:opacity-75");
+
+      for (const slot of [styles.base(), styles.thumb()]) {
+        expect(slot).not.toContain("data-layer");
+        expect(slot).not.toContain("filter:");
+        expect(slot).not.toContain("mask");
+        expect(slot).not.toContain("goo");
+      }
     });
 
     it("supports the Nuxt switch size scale", () => {
@@ -533,14 +378,14 @@ describe("Switch", () => {
       } as const;
 
       Object.entries(sizes).forEach(
-        ([size, [width, height, border, text]]) => {
+        ([size, [width, height, inset, text]]) => {
           const styles = theme({
             size: size as keyof typeof sizes,
           });
 
           expect(styles.root()).toContain(`[--ui-switch-width:${width}]`);
           expect(styles.root()).toContain(`[--ui-switch-height:${height}]`);
-          expect(styles.root()).toContain(`[--ui-switch-border:${border}]`);
+          expect(styles.root()).toContain(`[--ui-switch-inset:${inset}]`);
           expect(styles.wrapper()).toContain(text);
         },
       );
@@ -587,49 +432,7 @@ describe("Switch", () => {
       expect(onCheckedChange.mock.calls[0]?.[0]).toBe(true);
     });
 
-    it("keeps the press bubble until the thumb transition settles", async () => {
-      const user = userEvent.setup();
-
-      render(<Switch aria-label="Notifications" />);
-
-      const switchElement = screen.getByRole("switch", {
-        name: "Notifications",
-      });
-      const thumb = getSlot(switchElement, "thumb");
-
-      await user.click(switchElement);
-
-      expect(switchElement).toHaveAttribute("data-animating", "true");
-
-      fireEvent.transitionEnd(thumb, { propertyName: "translate" });
-
-      expect(switchElement).not.toHaveAttribute("data-animating");
-    });
-
-    it("keeps animating until the thumb itself finishes", async () => {
-      const user = userEvent.setup();
-
-      render(<Switch aria-label="Notifications" />);
-
-      const switchElement = screen.getByRole("switch", {
-        name: "Notifications",
-      });
-      const thumb = getSlot(switchElement, "thumb");
-      const cover = getLayer(thumb, "cover");
-
-      await user.click(switchElement);
-
-      fireEvent.transitionEnd(cover, { propertyName: "opacity" });
-      fireEvent.transitionEnd(thumb, { propertyName: "opacity" });
-
-      expect(switchElement).toHaveAttribute("data-animating", "true");
-
-      fireEvent.transitionEnd(thumb, { propertyName: "translate" });
-
-      expect(switchElement).not.toHaveAttribute("data-animating");
-    });
-
-    it("does not start the animation when the change is canceled", async () => {
+    it("does not change when the change is canceled", async () => {
       const user = userEvent.setup();
       const onCheckedChange = vi.fn(
         (_checked: boolean, details: { cancel: () => void }) =>
@@ -650,7 +453,7 @@ describe("Switch", () => {
       await user.click(switchElement);
 
       expect(onCheckedChange).toHaveBeenCalled();
-      expect(switchElement).not.toHaveAttribute("data-animating");
+      expect(switchElement).toHaveAttribute("aria-checked", "false");
     });
 
     it("toggles with the keyboard", async () => {

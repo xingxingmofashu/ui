@@ -81,12 +81,11 @@ export default function SwitchBasicDemo() {
 | `data-dirty` | Present after the switch value changes while wrapped in `Field`. |
 | `data-filled` | Present when the switch is on while wrapped in `Field`. |
 | `data-focused` | Present when the switch is focused while wrapped in `Field`. |
-| `data-animating` | Present while the thumb transition is running. |
 | `data-slot` | Marks internal parts (`root`, `container`, `base`, `thumb`, `wrapper`, `label`, `description`) for styling. |
 
 ## Styling
 
-`className` targets the primary element described in the API table above. Use `ui` to style internal slots keyed by `data-slot`; the `ui` row lists the available keys. Prefer shared `--ui-glass-*` tokens for material changes instead of overriding colors, blur, or shadows on one component.
+`className` targets the primary element described in the API table above. Use `ui` to style internal slots keyed by `data-slot`; the `ui` row lists the available keys. Track and thumb changes should use `--ui-ink`/`--ui-surface` plus the `--ui-switch-*` geometry tokens instead of overriding individual colors or shadows.
 
 `style` merges into the same primary element as `className`. Use it for computed values or per-instance CSS variables.
 
