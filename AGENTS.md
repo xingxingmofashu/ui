@@ -16,6 +16,8 @@ workspace.
 - `pnpm lint` — lint the package and tests with oxlint.
 - `pnpm lint:fix` — apply oxlint's safe fixes.
 - `pnpm test` — run the Vitest suite.
+- `pnpm check:props` — verify every exported `*Props` type derives from its
+  Base UI part; run `pnpm check:props -- -t ButtonProps` for one component.
 - `pnpm typecheck` — typecheck the package.
 - `pnpm docs:dev` — start the docs site on port 3001.
 - `pnpm docs:build` — export the docs site to `docs/out`.
@@ -115,6 +117,12 @@ workspace.
 
 - Components are single-structure wrappers: they own the Base UI anatomy and
   expose no Base UI parts or second composition API.
+- Every exported `*Props` type must derive from its Base UI part through
+  `Omit`, `Pick`, or `extends`. Do not redeclare a Base UI prop; when the
+  wrapper deliberately shadows one, register it in
+  `test/types/base-ui-props.test.ts` with a reason. `className` and `style`
+  are wrapper-owned: `className` is `cn`'s `ClassValue` and `style` is
+  `React.CSSProperties`.
 - Inherit Base UI props from the part that receives them: use
   `Omit<UIComponent.Root.Props, ...>` for root props and
   `Pick<UIComponent.Part.Props, ...>` for forwarded part props. Do not
