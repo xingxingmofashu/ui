@@ -13,6 +13,9 @@ export default tv({
     glass: [
       "ui-glass ui-glass-inner ui-glass-highlight",
       "pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit]",
+      // Keep the filtered glass on a stable compositor layer so the panel
+      // height transition does not re-rasterize the whole surface each frame.
+      "will-change-transform",
     ],
     overlay: "ui-glass-rim",
     content: "relative z-10 overflow-hidden rounded-[inherit]",
