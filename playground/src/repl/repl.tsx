@@ -9,6 +9,12 @@ import {
   RotateCcw,
 } from "lucide-react";
 import * as React from "react";
+import {
+  Panel,
+  PanelGroup,
+  PanelResizeHandle,
+  type ImperativePanelHandle,
+} from "react-resizable-panels";
 
 import { Button, Popover, Switch } from "@xingxingmofashu/ui";
 
@@ -39,6 +45,9 @@ import {
 
 const STORAGE_KEY = "ui-playground-repl-v1";
 const DOCS_URL = `${import.meta.env.BASE_URL}../docs/en/`;
+// Keep in sync with the `h-11` console header and the `h-4` splitter handle.
+const CONSOLE_HEADER_HEIGHT = 44;
+const OUTPUT_SPLIT_HANDLE_HEIGHT = 16;
 
 type StoredState = {
   exampleId: string;
@@ -57,6 +66,24 @@ function loadCompiler() {
   });
 
   return compilerPromise;
+}
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = React.useState(() =>
+    typeof window === "undefined" ? false : window.matchMedia(query).matches,
+  );
+
+  React.useEffect(() => {
+    const media = window.matchMedia(query);
+    const handleChange = () => setMatches(media.matches);
+
+    handleChange();
+    media.addEventListener("change", handleChange);
+
+    return () => media.removeEventListener("change", handleChange);
+  }, [query]);
+
+  return matches;
 }
 
 function readStoredState(): StoredState | null {
@@ -186,7 +213,14 @@ function Repl() {
   const [loadingExample, setLoadingExample] = React.useState(initial.needsLoad);
   const [copied, setCopied] = React.useState(false);
   const [consoleCollapsed, setConsoleCollapsed] = React.useState(false);
+  const [outputHeight, setOutputHeight] = React.useState(0);
+  // Match Tailwind's `lg` breakpoint (64rem) so JS and CSS agree.
+  const isDesktop = useMediaQuery("(min-width: 64rem)");
 
+  const consolePanelRef = React.useRef<ImperativePanelHandle>(null);
+  const lastConsoleSizeRef = React.useRef(30);
+  const dragCollapsedRef = React.useRef(false);
+  const outputGroupRef = React.useRef<HTMLDivElement>(null);
   const codeRef = React.useRef(code);
   const runTokenRef = React.useRef(0);
   const loadTokenRef = React.useRef(0);
@@ -199,6 +233,20 @@ function Repl() {
   React.useEffect(() => {
     codeRef.current = code;
   }, [code]);
+
+  React.useEffect(() => {
+    const element = outputGroupRef.current;
+
+    if (!isDesktop || !element) return;
+
+    const observer = new ResizeObserver((observedEntries) => {
+      setOutputHeight(observedEntries[0]?.contentRect.height ?? 0);
+    });
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [isDesktop]);
 
   React.useEffect(() => {
     installTailwindRuntime();
@@ -510,7 +558,210 @@ function Repl() {
           ? `${Math.round(duration)} ms`
           : "Ready";
 
+  const consoleCollapsedSize =
+    outputHeight > 0
+      ? Math.min(
+          50,
+          (CONSOLE_HEADER_HEIGHT /
+            Math.max(1, outputHeight - OUTPUT_SPLIT_HANDLE_HEIGHT)) *
+            100,
+        )
+      : 9;
+  const consoleMinSize = Math.min(
+    68,
+    Math.max(consoleCollapsedSize + 2, 12),
+  );
+
+  function toggleConsole() {
+    if (!isDesktop) {
+      setConsoleCollapsed((value) => !value);
+      return;
+    }
+
+    const panel = consolePanelRef.current;
+
+    if (!panel) return;
+
+    if (panel.isCollapsed()) {
+      if (dragCollapsedRef.current) {
+        panel.expand(lastConsoleSizeRef.current);
+      } else {
+        panel.expand();
+      }
+
+      dragCollapsedRef.current = false;
+      return;
+    }
+
+    lastConsoleSizeRef.current = panel.getSize();
+    dragCollapsedRef.current = false;
+    panel.collapse();
+  }
+
   const lineCount = code.split("\n").length;
+
+  const codePane = (
+    <section
+      data-testid="repl-code"
+      className="flex h-[60vh] min-h-104 flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/80 shadow-(--pg-shadow) lg:h-full lg:min-h-0"
+    >
+      <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-pg-line px-3">
+        <div className="flex min-w-0 items-center gap-2">
+          <span
+            aria-hidden="true"
+            className="size-2 rounded-full bg-emerald-500/70"
+          />
+          <span className="truncate font-mono text-xs text-pg-ink">
+            App.tsx
+          </span>
+          <span className="rounded-full border border-pg-line px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-pg-muted">
+            TSX
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => {
+              void copyCode();
+            }}
+            className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] text-pg-muted transition-colors hover:bg-pg-line/40 hover:text-pg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
+          >
+            {copied ? (
+              <Check aria-hidden="true" className="size-3" />
+            ) : (
+              <Copy aria-hidden="true" className="size-3" />
+            )}
+            {copied ? "Copied" : "Copy"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              void resetExample();
+            }}
+            className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] text-pg-muted transition-colors hover:bg-pg-line/40 hover:text-pg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
+          >
+            <RotateCcw aria-hidden="true" className="size-3" />
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <div className="min-h-0 flex-1">
+        <React.Suspense fallback={<EditorSkeleton />}>
+          <ReplEditor
+            value={code}
+            resetKey={resetKey}
+            theme={theme}
+            onChange={setCode}
+            onRun={() => {
+              void runCode(codeRef.current);
+            }}
+            onCursorChange={(line, column) => {
+              setCursor({ line, column });
+            }}
+          />
+        </React.Suspense>
+      </div>
+
+      <div className="flex h-7 shrink-0 items-center justify-between border-t border-pg-line px-3 font-mono text-[10px] text-pg-muted">
+        <span>
+          Ln {cursor.line}, Col {cursor.column}
+        </span>
+        <span>{lineCount} lines</span>
+      </div>
+    </section>
+  );
+
+  const previewContent = (
+    <ReplPreview
+      output={output}
+      error={error}
+      runId={runId}
+      onRenderError={handleRenderError}
+      onDismissError={() => {
+        setError(null);
+        setStatus("idle");
+      }}
+    />
+  );
+
+  const consoleContent = (
+    <ReplConsole
+      entries={entries}
+      collapsed={consoleCollapsed}
+      fill={isDesktop}
+      onToggle={toggleConsole}
+      onClear={() => {
+        setEntries([]);
+      }}
+    />
+  );
+
+  const previewPane = (
+    <div
+      className={`flex min-h-0 flex-col gap-3 ${
+        isDesktop ? "h-full" : ""
+      }`}
+    >
+      {isDesktop ? (
+        <div ref={outputGroupRef} className="min-h-0 flex-1">
+          <PanelGroup
+            autoSaveId="ui-playground-repl-output-split"
+            direction="vertical"
+          >
+            <Panel
+              id="repl-preview-panel"
+              defaultSize={70}
+              minSize={20}
+            >
+              {previewContent}
+            </Panel>
+            <PanelResizeHandle
+              aria-label="Resize preview and console panes"
+              onDragging={() => {
+                const panel = consolePanelRef.current;
+
+                if (!panel) return;
+
+                if (panel.isCollapsed()) {
+                  dragCollapsedRef.current = true;
+                  return;
+                }
+
+                dragCollapsedRef.current = false;
+                lastConsoleSizeRef.current = panel.getSize();
+              }}
+              className="group relative h-4 shrink-0 touch-none select-none bg-transparent outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
+            >
+              <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-pg-line transition-colors group-hover:bg-pg-muted/60 group-data-[resize-handle-state=drag]:bg-pg-ink/40" />
+              <span className="absolute left-1/2 top-1/2 flex h-2 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-pg-line bg-pg-panel opacity-0 shadow-sm transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 group-data-[resize-handle-state=drag]:opacity-100">
+                <span className="h-0.5 w-3 rounded-full bg-pg-muted/60" />
+              </span>
+            </PanelResizeHandle>
+            <Panel
+              id="repl-console-panel"
+              ref={consolePanelRef}
+              collapsible
+              collapsedSize={consoleCollapsedSize}
+              defaultSize={30}
+              maxSize={70}
+              minSize={consoleMinSize}
+              onCollapse={() => setConsoleCollapsed(true)}
+              onExpand={() => setConsoleCollapsed(false)}
+            >
+              {consoleContent}
+            </Panel>
+          </PanelGroup>
+        </div>
+      ) : (
+        <>
+          {previewContent}
+          {consoleContent}
+        </>
+      )}
+    </div>
+  );
 
   return (
     <div
@@ -647,96 +898,41 @@ function Repl() {
           </div>
         </div>
 
-        <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
-          <section className="flex h-[60vh] min-h-104 flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/80 shadow-(--pg-shadow) lg:h-auto lg:min-h-0">
-            <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-pg-line px-3">
-              <div className="flex min-w-0 items-center gap-2">
-                <span aria-hidden="true" className="size-2 rounded-full bg-emerald-500/70" />
-                <span className="truncate font-mono text-xs text-pg-ink">
-                  App.tsx
+        {isDesktop ? (
+          <div className="min-h-0 flex-1">
+            <PanelGroup
+              autoSaveId="ui-playground-repl-split"
+              direction="horizontal"
+              keyboardResizeBy={2}
+            >
+              <Panel
+                className="min-w-0"
+                defaultSize={51}
+                maxSize={75}
+                minSize={25}
+              >
+                {codePane}
+              </Panel>
+              <PanelResizeHandle
+                aria-label="Resize code and preview panes"
+                className="group relative w-4 shrink-0 touch-none select-none bg-transparent outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
+              >
+                <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-pg-line transition-colors group-hover:bg-pg-muted/60 group-data-[resize-handle-state=drag]:bg-pg-ink/40" />
+                <span className="absolute top-1/2 left-1/2 flex h-10 w-2 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-pg-line bg-pg-panel opacity-0 shadow-sm transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 group-data-[resize-handle-state=drag]:opacity-100">
+                  <span className="h-3 w-0.5 rounded-full bg-pg-muted/60" />
                 </span>
-                <span className="rounded-full border border-pg-line px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-pg-muted">
-                  TSX
-                </span>
-              </div>
-
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => {
-                    void copyCode();
-                  }}
-                  className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] text-pg-muted transition-colors hover:bg-pg-line/40 hover:text-pg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
-                >
-                  {copied ? (
-                    <Check aria-hidden="true" className="size-3" />
-                  ) : (
-                    <Copy aria-hidden="true" className="size-3" />
-                  )}
-                  {copied ? "Copied" : "Copy"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    void resetExample();
-                  }}
-                  className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] text-pg-muted transition-colors hover:bg-pg-line/40 hover:text-pg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
-                >
-                  <RotateCcw aria-hidden="true" className="size-3" />
-                  Reset
-                </button>
-              </div>
-            </div>
-
-            <div className="min-h-0 flex-1">
-              <React.Suspense fallback={<EditorSkeleton />}>
-                <ReplEditor
-                  value={code}
-                  resetKey={resetKey}
-                  theme={theme}
-                  onChange={setCode}
-                  onRun={() => {
-                    void runCode(codeRef.current);
-                  }}
-                  onCursorChange={(line, column) => {
-                    setCursor({ line, column });
-                  }}
-                />
-              </React.Suspense>
-            </div>
-
-            <div className="flex h-7 shrink-0 items-center justify-between border-t border-pg-line px-3 font-mono text-[10px] text-pg-muted">
-              <span>
-                Ln {cursor.line}, Col {cursor.column}
-              </span>
-              <span>{lineCount} lines</span>
-            </div>
-          </section>
-
-          <div className="flex min-h-0 flex-col gap-3">
-            <ReplPreview
-              output={output}
-              error={error}
-              runId={runId}
-              onRenderError={handleRenderError}
-              onDismissError={() => {
-                setError(null);
-                setStatus("idle");
-              }}
-            />
-
-            <ReplConsole
-              entries={entries}
-              collapsed={consoleCollapsed}
-              onToggle={() => {
-                setConsoleCollapsed((value) => !value);
-              }}
-              onClear={() => {
-                setEntries([]);
-              }}
-            />
+              </PanelResizeHandle>
+              <Panel className="min-w-0" minSize={25}>
+                {previewPane}
+              </Panel>
+            </PanelGroup>
           </div>
-        </div>
+        ) : (
+          <div className="flex min-h-0 flex-1 flex-col gap-3">
+            {codePane}
+            {previewPane}
+          </div>
+        )}
       </main>
     </div>
   );
