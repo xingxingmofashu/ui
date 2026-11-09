@@ -49,9 +49,9 @@ description: "一个 React 单选组，采用圆形 Liquid Glass 控件，支持
 | `aria-labelledby` | `string` | — | 用外部元素命名分组。 |
 | `aria-describedby` | `string` | — | 外部说明文字的 ID；会与可见的 `description` 合并。 |
 | `items` | `readonly RadioGroupItemProps[]` | — | 分组渲染的选项。 |
-| `value` | `string` | — | 受控的选中值。 |
-| `defaultValue` | `string` | — | 非受控时的初始选中值。 |
-| `onValueChange` | `(value: string, details) => void` | — | 选中值变化时调用。 |
+| `value` | `Value` | — | 受控的选中值。 |
+| `defaultValue` | `Value` | — | 非受控时的初始选中值。 |
+| `onValueChange` | `(value: Value, details) => void` | — | 选中值变化时调用。 |
 | `disabled` | `boolean` | `false` | 禁用所有选项。 |
 | `readOnly` | `boolean` | `false` | 只读，不可修改，但仍可聚焦。 |
 | `required` | `boolean` | `false` | 表单提交前必须选择一项。 |
@@ -69,7 +69,7 @@ description: "一个 React 单选组，采用圆形 Liquid Glass 控件，支持
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `value` | `string` | — | 用于标识选项的分组值。 |
+| `value` | `Value` | — | 用于标识选项的分组值。 |
 | `label` | `ReactNode` | — | 控件旁的可见标签；未提供 `aria-label` 或 `aria-labelledby` 时会成为可访问名称。 |
 | `description` | `ReactNode` | — | 标签下方的说明文字；选项有名称时会通过 `aria-describedby` 关联。 |
 | `disabled` | `boolean` | `false` | 禁用该选项。 |
@@ -79,6 +79,7 @@ description: "一个 React 单选组，采用圆形 Liquid Glass 控件，支持
 | `aria-label` | `string` | — | 没有可见标签时使用的可访问名称。 |
 | `aria-labelledby` | `string` | — | 外部标签的 ID。 |
 | `aria-describedby` | `string` | — | 外部说明文字的 ID。 |
+| `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换选项元素。 |
 | `ref` | `Ref<HTMLSpanElement>` | — | 转发到选项元素的 ref。 |
 | `className` | `string` | — | 合并到选项根元素的 Tailwind 类名。 |

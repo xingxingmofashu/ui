@@ -74,6 +74,7 @@ export default function CheckboxBasicDemo() {
 | `form` | `string` | — | ID of the form that owns the hidden input. |
 | `value` | `string` | — | Value submitted with the form when checked. |
 | `uncheckedValue` | `string` | — | Value submitted with the form when unchecked. |
+| `parent` | `boolean` | `false` | Whether this checkbox controls a group of child checkboxes inside a `CheckboxGroup`. |
 | `id` | `string` | — | ID of the hidden input, or of the root element when `nativeButton` is true. |
 | `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |

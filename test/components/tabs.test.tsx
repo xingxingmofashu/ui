@@ -56,7 +56,11 @@ function ControlledTabs() {
       aria-label="Settings"
       items={items}
       value={value}
-      onValueChange={setValue}
+      onValueChange={(nextValue) => {
+        if (nextValue !== null) {
+          setValue(nextValue);
+        }
+      }}
     />
   );
 }

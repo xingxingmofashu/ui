@@ -63,6 +63,11 @@ Tooltip content must be short and supplementary. Do not put interactive controls
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
 | `disabled` | `boolean` | `false` | Prevents the tooltip from opening. |
 | `trackCursorAxis` | `"none" \| "x" \| "y" \| "both"` | `"none"` | Axis the tooltip follows while the pointer moves. |
+| `disableHoverablePopup` | `boolean` | `false` | Whether the tooltip contents can be hovered without closing the tooltip. |
+| `actionsRef` | `RefObject<Tooltip.Root.Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `triggerId` | `string \| null` | — | ID of the trigger for a controlled tooltip. |
+| `defaultTriggerId` | `string \| null` | — | ID of the trigger for an initially open tooltip. |
+| `handle` | `Tooltip.Handle<Payload>` | — | Handle that lets external triggers control the tooltip. |
 | `className` | `string` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |

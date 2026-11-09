@@ -71,9 +71,9 @@ export default function RadioGroupBasicDemo() {
 | `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
 | `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `items` | `readonly RadioGroupItemProps[]` | — | Options rendered by the group. |
-| `value` | `string` | — | Controlled selected value. |
-| `defaultValue` | `string` | — | Initial selected value when uncontrolled. |
-| `onValueChange` | `(value: string, details) => void` | — | Called when the selected value changes. |
+| `value` | `Value` | — | Controlled selected value. |
+| `defaultValue` | `Value` | — | Initial selected value when uncontrolled. |
+| `onValueChange` | `(value: Value, details) => void` | — | Called when the selected value changes. |
 | `disabled` | `boolean` | `false` | Disables every option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Requires a selection for form submission. |
@@ -91,13 +91,14 @@ export default function RadioGroupBasicDemo() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | Value that identifies the option in the group value. |
+| `value` | `Value` | — | Value that identifies the option in the group value. |
 | `label` | `ReactNode` | — | Visible label next to the control. It becomes the accessible name unless `aria-label` or `aria-labelledby` is provided. |
 | `description` | `ReactNode` | — | Supporting copy under the label, linked with `aria-describedby` when the option has a name. |
 | `disabled` | `boolean` | `false` | Disables this option. |
 | `readOnly` | `boolean` | `false` | Prevents changes to this option while remaining focusable. |
 | `required` | `boolean` | `false` | Marks this option as required for form submission. |
 | `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
+| `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | ID of an external label. |
 | `aria-describedby` | `string` | — | ID of external supporting text. |

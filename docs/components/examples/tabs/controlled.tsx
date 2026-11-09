@@ -19,7 +19,11 @@ export default function TabsControlledDemo() {
       <Tabs
         aria-label="Workspace"
         value={value}
-        onValueChange={setValue}
+        onValueChange={(value) => {
+          if (value !== null) {
+            setValue(value);
+          }
+        }}
         items={tabs.map((tab) => ({
           ...tab,
           content: `Showing the ${tab.label.toLowerCase()} panel.`,

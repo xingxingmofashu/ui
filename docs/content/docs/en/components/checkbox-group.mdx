@@ -77,6 +77,7 @@ Disabled options remain announced but cannot change. Each checked option submits
 | `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
 | `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group root. |
 | `className` | `string` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
@@ -93,6 +94,13 @@ Disabled options remain announced but cannot change. Each checked option submits
 | `disabled` | `boolean` | `false` | Disables this option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Marks this checkbox as required for form submission. |
+| `name` | `string` | — | Form field name for this option. Defaults to the group `name`. |
+| `form` | `string` | — | ID of the form that owns this option's hidden input. Defaults to the group `form`. |
+| `uncheckedValue` | `string` | — | Value submitted when this option is unchecked. |
+| `id` | `string` | — | ID of the hidden input, or of the root element when `nativeButton` is true. |
+| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
+| `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the entry root element. |
 | `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | ID of an external label. |
 | `aria-describedby` | `string` | — | ID of external supporting text. |
@@ -103,7 +111,7 @@ Disabled options remain announced but cannot change. Each checked option submits
 
 Parent checkboxes are not part of the component API. Compose them with `Checkbox` and keep the arrays in sync, as shown above.
 
-`ui` keys map to the `data-slot` values listed below. Additional Base UI `CheckboxGroup` props, including `id` and `render`, are forwarded. Each item also forwards additional Base UI `Checkbox` props, including `inputRef` and `render`.
+`ui` keys map to the `data-slot` values listed below. All other Base UI `CheckboxGroup` props are forwarded. Each item also forwards the remaining Base UI `Checkbox` props.
 
 | Attribute | Description |
 | --- | --- |

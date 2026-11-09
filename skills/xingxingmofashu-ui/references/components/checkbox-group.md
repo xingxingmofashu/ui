@@ -82,6 +82,7 @@ export default function CheckboxGroupBasicDemo() {
 | `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
 | `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group root. |
 | `className` | `string` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
@@ -98,6 +99,13 @@ export default function CheckboxGroupBasicDemo() {
 | `disabled` | `boolean` | `false` | Disables this option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Marks this checkbox as required for form submission. |
+| `name` | `string` | — | Form field name for this option. Defaults to the group `name`. |
+| `form` | `string` | — | ID of the form that owns this option's hidden input. Defaults to the group `form`. |
+| `uncheckedValue` | `string` | — | Value submitted when this option is unchecked. |
+| `id` | `string` | — | ID of the hidden input, or of the root element when `nativeButton` is true. |
+| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
+| `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the entry root element. |
 | `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | ID of an external label. |
 | `aria-describedby` | `string` | — | ID of external supporting text. |

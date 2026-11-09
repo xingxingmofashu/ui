@@ -17,7 +17,7 @@ import { DashIcon } from "./icons/dash";
 type CheckboxGroup = ComponentConfig<typeof theme>;
 
 /** One entry in the group. */
-type CheckboxGroupItemProps<Value extends string = string> = Omit<
+type CheckboxGroupItemProps = Omit<
   UICheckbox.Root.Props,
   | "checked"
   | "defaultChecked"
@@ -28,7 +28,7 @@ type CheckboxGroupItemProps<Value extends string = string> = Omit<
   | "value"
 > & {
   /** Value that identifies the option in the group value. */
-  value: Value;
+  value: string;
   /** Visible label rendered next to the control. */
   label?: React.ReactNode;
   /** Supporting text rendered under the label. */
@@ -53,7 +53,7 @@ type CheckboxGroupItemProps<Value extends string = string> = Omit<
   >;
 };
 
-type CheckboxGroupProps<Value extends string = string> = Omit<
+type CheckboxGroupProps = Omit<
   UICheckboxGroup.Props,
   | "allValues"
   | "children"
@@ -65,18 +65,18 @@ type CheckboxGroupProps<Value extends string = string> = Omit<
   VariantProps<typeof theme> &
   Pick<UICheckbox.Root.Props, "name" | "form" | "readOnly"> & {
     /** Entries rendered by the group. */
-    items: readonly CheckboxGroupItemProps<Value>[];
+    items: readonly CheckboxGroupItemProps[];
     /** Visible label for the group. */
     label?: React.ReactNode;
     /** Supporting text rendered under the group label. */
     description?: React.ReactNode;
     /** Controlled checked values. */
-    value?: readonly Value[];
+    value?: readonly string[];
     /** Initial checked values when uncontrolled. */
-    defaultValue?: readonly Value[];
+    defaultValue?: readonly string[];
     /** Called when a checkbox in the group is ticked or unticked. */
     onValueChange?: (
-      value: Value[],
+      value: string[],
       details: UICheckboxGroup.ChangeEventDetails,
     ) => void;
     /** Tailwind classes merged into the group root. */
@@ -85,7 +85,7 @@ type CheckboxGroupProps<Value extends string = string> = Omit<
     ui?: CheckboxGroup["slots"];
   };
 
-function CheckboxGroup<Value extends string = string>({
+function CheckboxGroup({
   className,
   ui,
   size,
@@ -103,7 +103,7 @@ function CheckboxGroup<Value extends string = string>({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   ...props
-}: CheckboxGroupProps<Value>) {
+}: CheckboxGroupProps) {
   const styles = theme({ size });
   const fieldsetDisabled = useFieldsetDisabled(disabled);
   const labelId = React.useId();
@@ -120,19 +120,19 @@ function CheckboxGroup<Value extends string = string>({
     next: string[],
     details: UICheckboxGroup.ChangeEventDetails,
   ) {
-    onValueChange?.(next as Value[], details);
+    onValueChange?.(next, details);
   }
 
   return (
     <UICheckboxGroup
       {...props}
+      value={value as string[] | undefined}
+      defaultValue={defaultValue as string[] | undefined}
+      onValueChange={handleValueChange}
       aria-describedby={describedBy}
       aria-label={ariaLabel}
       {...(labelledBy ? { "aria-labelledby": labelledBy } : {})}
       disabled={fieldsetDisabled}
-      value={value as unknown as string[] | undefined}
-      defaultValue={defaultValue as unknown as string[] | undefined}
-      onValueChange={handleValueChange}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
     >
@@ -197,7 +197,7 @@ function CheckboxGroup<Value extends string = string>({
   );
 }
 
-function CheckboxGroupItem<Value extends string = string>({
+function CheckboxGroupItem({
   className,
   ui,
   label,
@@ -210,7 +210,7 @@ function CheckboxGroupItem<Value extends string = string>({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   ...props
-}: CheckboxGroupItemProps<Value>) {
+}: CheckboxGroupItemProps) {
   const styles = theme();
   const labelId = React.useId();
   const descriptionId = React.useId();

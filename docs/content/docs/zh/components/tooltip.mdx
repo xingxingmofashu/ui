@@ -63,6 +63,11 @@ Tooltip 常与图标按钮搭配使用。请为触发器提供独立的 `aria-la
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
 | `disabled` | `boolean` | `false` | 禁止打开提示。 |
 | `trackCursorAxis` | `"none" \| "x" \| "y" \| "both"` | `"none"` | 提示跟随指针移动的轴。 |
+| `disableHoverablePopup` | `boolean` | `false` | 是否允许悬停在提示内容上而不关闭提示。 |
+| `actionsRef` | `RefObject<Tooltip.Root.Actions \| null>` | — | 命令式的 `close` 与 `unmount` 操作。 |
+| `triggerId` | `string \| null` | — | 受控提示所用触发器的 ID。 |
+| `defaultTriggerId` | `string \| null` | — | 初始打开提示所用触发器的 ID。 |
+| `handle` | `Tooltip.Handle<Payload>` | — | 允许外部触发器控制提示的 handle。 |
 | `className` | `string` | — | 合并到浮层的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |

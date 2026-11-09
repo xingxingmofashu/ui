@@ -11,7 +11,7 @@ import theme from "../theme/toggle";
 
 type Toggle = ComponentConfig<typeof theme>;
 
-type ToggleProps<Value extends string = string> = Omit<
+type ToggleProps<Value extends string> = Omit<
   UIToggle.Props<Value>,
   "className" | "children" | "ref"
 > &
@@ -28,7 +28,7 @@ type ToggleProps<Value extends string = string> = Omit<
     icon?: React.ReactNode;
   };
 
-function Toggle<Value extends string = string>({
+function Toggle<Value extends string>({
   className,
   ui,
   icon,

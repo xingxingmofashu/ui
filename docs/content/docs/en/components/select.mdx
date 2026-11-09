@@ -1,9 +1,9 @@
 ---
 title: "Select"
-description: "A React select with a Liquid Glass trigger, labels, descriptions, disabled options, and five sizes."
+description: "A React select with a Liquid Glass trigger for single or multiple values, grouped options, and five sizes."
 ---
 
-`Select` renders the label, trigger, glass surface, selected value, chevron, portal, glass popup, and options internally. Options are passed through the `items` array, so the same data drives both the trigger value and the popup list.
+`Select` renders the label, trigger, glass surface, selected value, chevron, portal, glass popup, and options internally. Options are passed through the `items` array, so the same data drives both the trigger value and the popup list. Items can be flat or grouped, and `multiple` switches the value to an array.
 
 Use `label` and `description` for visible field text. When no visible label is rendered, give the trigger an accessible name with `aria-label` or `aria-labelledby`. The selected value is submitted through a hidden native input when `name` is set.
 
@@ -12,6 +12,24 @@ Use `label` and `description` for visible field text. When no visible label is r
 The example shows a labelled field with a description, a placeholder, and a disabled option. The first option is selected through `defaultValue`.
 
 <Example name="select/basic" />
+
+## Multiple selection
+
+Set `multiple` to select more than one option. The value becomes an array, the popup stays open between selections, and the list exposes `aria-multiselectable`. Use `renderValue` when the trigger should summarize the selection instead of listing every label; it overrides `placeholder`, so return the empty-state text yourself.
+
+<Example name="select/multiple" />
+
+## Grouped options
+
+Pass groups as `{ label, items }` entries in `items`. Each group renders a heading and is announced as a labelled group, while the trigger still resolves labels from the flattened options.
+
+<Example name="select/groups" />
+
+## Object values
+
+`Value` is not limited to strings. Pass objects as item values and use `itemToStringValue` for form submission and `isItemEqualToValue` when equal records are not the same reference. `renderValue` can show the full object inside the trigger.
+
+<Example name="select/objects" />
 
 ## Sizes
 
@@ -35,6 +53,8 @@ Set `name` to submit the selected value through a hidden native input. `required
 
 `Select` follows the Base UI select pattern: the trigger is a `combobox` with `aria-haspopup="listbox"`, `aria-expanded`, and `aria-controls`; the inner list is the `listbox`, and each option is an `option`. `ArrowDown` and `ArrowUp` move through options, typeahead matches labels, and `Enter` selects the highlighted option. `Escape` closes the popup and returns focus to the trigger.
 
+With `multiple`, the list reports `aria-multiselectable="true"`, each option exposes `aria-selected`, and activating an option toggles it without closing the popup. Grouped options render inside a `group` labelled by their heading.
+
 The visible `label` names the trigger and `description` is linked with `aria-describedby`. Without a visible label, use `aria-label` or `aria-labelledby`. Disabled options remain announced but cannot be selected. Set `required` when a value must be chosen, and see the [accessibility guide](/docs/en/guides/accessibility) for shared form patterns.
 
 ## API reference
@@ -43,22 +63,36 @@ The visible `label` names the trigger and `description` is linked with `aria-des
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `readonly SelectItemProps[]` | — | Options rendered by the select. Required. |
+| `items` | `readonly (SelectItemProps \| SelectItemGroupProps)[]` | — | Options rendered by the select, optionally grouped. Required. |
 | `label` | `ReactNode` | — | Visible label associated with the trigger. |
 | `description` | `ReactNode` | — | Supporting text under the trigger, linked with `aria-describedby`. |
 | `placeholder` | `ReactNode` | — | Text shown when no value is selected. |
-| `value` | `string \| null` | — | Controlled value. |
-| `defaultValue` | `string \| null` | — | Initial value when uncontrolled. |
-| `onValueChange` | `(value: string \| null, details) => void` | — | Called when the selected value changes. |
+| `renderValue` | `(value) => ReactNode` | — | Formats the trigger value. Receives `Value \| null`, or `readonly Value[]` when `multiple`. Overrides `placeholder`. |
+| `multiple` | `boolean` | `false` | Allows selecting several options; `value`, `defaultValue`, and `onValueChange` then use arrays. |
+| `value` | `Value \| null` | — | Controlled value. Use `readonly Value[] \| null` when `multiple`. |
+| `defaultValue` | `Value \| null` | — | Initial value when uncontrolled. Use `readonly Value[] \| null` when `multiple`. |
+| `onValueChange` | `(value, details) => void` | — | Called when the selected value changes. Receives `Value \| null`, or `Value[]` when `multiple`. |
+| `open` | `boolean` | — | Controlled popup open state. |
+| `defaultOpen` | `boolean` | `false` | Initial popup open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the popup opens or closes. |
+| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
+| `modal` | `boolean` | `true` | Locks outside interaction while the popup is open. |
+| `readOnly` | `boolean` | `false` | Prevents changing the selected value. |
+| `disabled` | `boolean` | `false` | Disables the trigger and options. |
+| `highlightItemOnHover` | `boolean` | `true` | Highlights options on pointer move. Set to `false` to style `:hover` separately from `data-highlighted`. |
+| `itemToStringLabel` | `(itemValue: Value) => string` | — | Converts an object value to the text shown in the trigger. |
+| `itemToStringValue` | `(itemValue: Value) => string` | — | Converts an object value to the string submitted with the form. |
+| `isItemEqualToValue` | `(itemValue: Value, value: Value) => boolean` | `Object.is` | Custom equality used to match object values that are not the same reference. |
+| `name` | `string` | — | Form field name for the hidden input. In `multiple` mode one input is submitted per selected value. |
+| `form` | `string` | — | Form that owns the hidden input. |
+| `autoComplete` | `string` | — | Autofill hint forwarded to the hidden input. |
+| `required` | `boolean` | `false` | Requires a value before form submission. |
+| `id` | `string` | — | Base id for the select parts. |
+| `actionsRef` | `RefObject<Select.Root.Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden input element. |
 | `aria-label` | `string` | — | Accessible name for the trigger when no visible label is rendered. |
 | `aria-labelledby` | `string` | — | Names the trigger from another element. |
 | `aria-describedby` | `string` | — | Additional description IDs applied to the trigger. |
-| `name` | `string` | — | Form field name for the hidden input. |
-| `form` | `string` | — | Form that owns the hidden input. |
-| `required` | `boolean` | `false` | Requires a value before form submission. |
-| `readOnly` | `boolean` | `false` | Prevents changing the selected value. |
-| `disabled` | `boolean` | `false` | Disables the trigger and options. |
-| `modal` | `boolean` | `true` | Locks outside interaction while the popup is open. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and icon size. |
 | `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Preferred side of the trigger. |
 | `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment relative to the trigger. |
@@ -66,24 +100,27 @@ The visible `label` names the trigger and `description` is linked with `aria-des
 | `alignOffset` | `number \| OffsetFunction` | `0` | Offset along the alignment axis in pixels. |
 | `collisionPadding` | `Padding` | `5px per side` | Space kept between the popup and the collision boundary. |
 | `alignItemWithTrigger` | `boolean` | `false` | Overlaps the popup so the selected item aligns with the trigger. |
-| `open` | `boolean` | — | Controlled popup open state. |
-| `defaultOpen` | `boolean` | `false` | Initial popup open state when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the popup opens or closes. |
-| `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
 | `className` | `string` | — | Tailwind classes merged into the field root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
-| `ui` | `{ root?: ClassValue; label?: ClassValue; trigger?: ClassValue; glass?: ClassValue; overlay?: ClassValue; value?: ClassValue; icon?: ClassValue; description?: ClassValue; positioner?: ClassValue; popup?: ClassValue; popupGlass?: ClassValue; popupOverlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIndicator?: ClassValue; itemText?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+| `ui` | `{ root?: ClassValue; label?: ClassValue; trigger?: ClassValue; glass?: ClassValue; overlay?: ClassValue; value?: ClassValue; icon?: ClassValue; description?: ClassValue; positioner?: ClassValue; popup?: ClassValue; popupGlass?: ClassValue; popupOverlay?: ClassValue; list?: ClassValue; group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIndicator?: ClassValue; itemText?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
 **SelectItemProps**
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | Value submitted and passed to `onValueChange`. Required. |
+| `value` | `any` | — | Value submitted and passed to `onValueChange`. Any type is accepted. Required. |
 | `label` | `ReactNode` | — | Visible content inside the option and trigger. Required. |
 | `textValue` | `string` | — | Plain-text label used for keyboard typeahead. Defaults to a string label. |
 | `disabled` | `boolean` | `false` | Disables the option. |
 
-`ui` keys map to the `data-slot` values listed below. Additional Base UI `Select.Root` props, including `actionsRef`, `inputRef`, and `highlightItemOnHover`, are forwarded.
+**SelectItemGroupProps**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Visible heading rendered above the group. Required. |
+| `items` | `readonly SelectItemProps[]` | — | Options in the group. Required. |
+
+`ui` keys map to the `data-slot` values listed below. All other Base UI `Select.Root` props are forwarded unchanged.
 
 | Attribute | Description |
 | --- | --- |
@@ -99,7 +136,8 @@ The visible `label` names the trigger and `description` is linked with `aria-des
 | `data-align` | Indicates the resolved alignment (`start`, `center`, or `end`). |
 | `data-starting-style` | Present when the popup begins animating in. |
 | `data-ending-style` | Present when the popup is animating out. |
-| `data-slot` | Marks internal parts (`root`, `label`, `trigger`, `glass`, `overlay`, `value`, `icon`, `description`, `positioner`, `popup`, `popup-glass`, `popup-overlay`, `list`, `item`, `item-indicator`, `item-text`). |
+| `aria-multiselectable` | `true` on the list when `multiple` is set. |
+| `data-slot` | Marks internal parts (`root`, `label`, `trigger`, `glass`, `overlay`, `value`, `icon`, `description`, `positioner`, `popup`, `popup-glass`, `popup-overlay`, `list`, `group`, `group-label`, `item`, `item-indicator`, `item-text`). |
 
 ## Theming
 

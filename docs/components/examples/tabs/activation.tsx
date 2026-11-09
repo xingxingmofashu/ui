@@ -20,7 +20,11 @@ export default function TabsActivationDemo() {
         aria-label="Workspace"
         activateOnFocus
         value={value}
-        onValueChange={setValue}
+        onValueChange={(value) => {
+          if (value !== null) {
+            setValue(value);
+          }
+        }}
         items={tabs.map((tab) => ({
           ...tab,
           content: `Showing the ${tab.label.toLowerCase()} panel.`,

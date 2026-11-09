@@ -65,9 +65,9 @@ export default function AccordionBasicDemo() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string[]` | — | Controlled expanded item values. |
-| `defaultValue` | `string[]` | `[]` | Initially expanded item values. |
-| `onValueChange` | `(value: string[], details) => void` | — | Called when the expanded values change. |
+| `value` | `Value[]` | — | Controlled expanded item values. |
+| `defaultValue` | `Value[]` | `[]` | Initially expanded item values. |
+| `onValueChange` | `(value: Value[], details) => void` | — | Called when the expanded values change. |
 | `multiple` | `boolean` | `false` | Allows more than one panel to stay open. |
 | `disabled` | `boolean` | `false` | Disables every trigger. |
 | `hiddenUntilFound` | `boolean` | `false` | Keeps closed panels searchable with `hidden="until-found"`. |
@@ -86,7 +86,7 @@ export default function AccordionBasicDemo() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | Required identifier used by the accordion value. |
+| `value` | `any` | — | Required identifier used by the accordion value. |
 | `title` | `ReactNode` | — | Required visible heading inside the trigger. |
 | `content` | `ReactNode` | — | Panel content. |
 | `indicator` | `ReactNode \| false` | Built-in plus icon | Replaces the default indicator. Set to `false` to hide it. |

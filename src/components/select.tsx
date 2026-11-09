@@ -16,9 +16,9 @@ import { ChevronDownIcon } from "./icons/chevron-down";
 type Select = ComponentConfig<typeof theme>;
 
 /** One option rendered by the select. */
-type SelectItemProps<Value extends string = string> = {
+type SelectItemProps = {
   /** Value submitted and passed to `onValueChange`. */
-  value: Value;
+  value: any;
   /** Visible content inside the option and the trigger. */
   label: React.ReactNode;
   /** Plain-text label used for keyboard navigation. Defaults to a string label. */
@@ -27,15 +27,27 @@ type SelectItemProps<Value extends string = string> = {
   disabled?: boolean;
 };
 
-type SelectProps<Value extends string = string> = Omit<
-  UISelect.Root.Props<Value>,
-  | "children"
-  | "className"
-  | "items"
-  | "multiple"
-  | "value"
-  | "defaultValue"
-  | "onValueChange"
+/** A labelled group of options. */
+type SelectItemGroupProps = {
+  /** Visible heading rendered above the group. */
+  label: React.ReactNode;
+  /** Options in the group. */
+  items: readonly SelectItemProps[];
+};
+
+/** An option or a labelled group of options. */
+type SelectEntry = SelectItemProps | SelectItemGroupProps;
+
+/** Value shape exposed to `renderValue` for the active selection mode. */
+type SelectValue<Value, Multiple extends boolean | undefined> =
+  Multiple extends true ? readonly Value[] : Value | null;
+
+type SelectProps<
+  Value,
+  Multiple extends boolean | undefined = false,
+> = Omit<
+  UISelect.Root.Props<Value, Multiple>,
+  "children" | "className" | "items"
 > &
   VariantProps<typeof theme> &
   Pick<
@@ -47,23 +59,19 @@ type SelectProps<Value extends string = string> = Omit<
     | "collisionPadding"
     | "alignItemWithTrigger"
   > & {
-    /** Options rendered by the select. */
-    items: readonly SelectItemProps<Value>[];
+    /** Options rendered by the select, optionally grouped. */
+    items: readonly SelectEntry[];
     /** Visible label associated with the trigger. */
     label?: React.ReactNode;
     /** Supporting text under the trigger. */
     description?: React.ReactNode;
     /** Text shown when no value is selected. */
     placeholder?: React.ReactNode;
-    /** Controlled value. */
-    value?: Value | null;
-    /** Initial value when uncontrolled. */
-    defaultValue?: Value | null;
-    /** Called when the selected value changes. */
-    onValueChange?: (
-      value: Value | null,
-      details: UISelect.Root.ChangeEventDetails,
-    ) => void;
+    /**
+     * Formats the selected value inside the trigger.
+     * When provided, it overrides `placeholder`.
+     */
+    renderValue?: (value: SelectValue<Value, Multiple>) => React.ReactNode;
     /** Accessible name for the trigger when no visible label is rendered. */
     "aria-label"?: string;
     /** Names the trigger from another element. */
@@ -78,7 +86,7 @@ type SelectProps<Value extends string = string> = Omit<
     ui?: Select["slots"];
   };
 
-function Select<Value extends string = string>({
+function Select<Value, Multiple extends boolean | undefined = false>({
   className,
   ui,
   size,
@@ -86,9 +94,7 @@ function Select<Value extends string = string>({
   label,
   description,
   placeholder,
-  value,
-  defaultValue,
-  onValueChange,
+  renderValue,
   side,
   align,
   sideOffset = 6,
@@ -101,7 +107,7 @@ function Select<Value extends string = string>({
   "aria-describedby": ariaDescribedBy,
   style,
   ...props
-}: SelectProps<Value>) {
+}: SelectProps<Value, Multiple>) {
   const styles = theme({ size });
   const fieldsetDisabled = useFieldsetDisabled(disabled);
   const descriptionId = React.useId();
@@ -115,16 +121,44 @@ function Select<Value extends string = string>({
     ...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {}),
     ...(describedBy ? { "aria-describedby": describedBy } : {}),
   };
+  // Base UI discovers labels from the flat item list; groups only affect layout.
+  const flatItems = items.flatMap((entry) =>
+    "items" in entry ? entry.items : [entry],
+  );
+
+  function renderItem(item: SelectItemProps, key: React.Key) {
+    return (
+      <UISelect.Item
+        key={key}
+        value={item.value}
+        disabled={item.disabled}
+        label={
+          item.textValue ??
+          (typeof item.label === "string" ? item.label : undefined)
+        }
+        data-slot="item"
+        className={cn(styles.item(), ui?.item)}
+      >
+        <UISelect.ItemIndicator
+          keepMounted
+          data-slot="item-indicator"
+          className={cn(styles.itemIndicator(), ui?.itemIndicator)}
+        >
+          <CheckIcon />
+        </UISelect.ItemIndicator>
+
+        <UISelect.ItemText
+          data-slot="item-text"
+          className={cn(styles.itemText(), ui?.itemText)}
+        >
+          {item.label}
+        </UISelect.ItemText>
+      </UISelect.Item>
+    );
+  }
 
   return (
-    <UISelect.Root
-      {...props}
-      items={items}
-      value={value}
-      defaultValue={defaultValue}
-      onValueChange={onValueChange}
-      disabled={fieldsetDisabled}
-    >
+    <UISelect.Root {...props} items={flatItems} disabled={fieldsetDisabled}>
       <div
         data-slot="root"
         data-disabled={fieldsetDisabled || undefined}
@@ -162,7 +196,9 @@ function Select<Value extends string = string>({
             data-slot="value"
             placeholder={placeholder}
             className={cn(styles.value(), ui?.value)}
-          />
+          >
+            {renderValue}
+          </UISelect.Value>
 
           <UISelect.Icon
             data-slot="icon"
@@ -214,37 +250,28 @@ function Select<Value extends string = string>({
               data-slot="list"
               className={cn(styles.list(), ui?.list)}
             >
-              {items.map((item) => (
-                <UISelect.Item
-                  key={item.value}
-                  value={item.value}
-                  disabled={item.disabled}
-                  label={
-                    item.textValue ??
-                    (typeof item.label === "string" ? item.label : undefined)
-                  }
-                  data-slot="item"
-                  className={cn(styles.item(), ui?.item)}
-                >
-                  <UISelect.ItemIndicator
-                    keepMounted
-                    data-slot="item-indicator"
-                    className={cn(
-                      styles.itemIndicator(),
-                      ui?.itemIndicator,
-                    )}
+              {items.map((entry, index) =>
+                "items" in entry ? (
+                  <UISelect.Group
+                    key={`group-${index}`}
+                    data-slot="group"
+                    className={cn(styles.group(), ui?.group)}
                   >
-                    <CheckIcon />
-                  </UISelect.ItemIndicator>
+                    <UISelect.GroupLabel
+                      data-slot="group-label"
+                      className={cn(styles.groupLabel(), ui?.groupLabel)}
+                    >
+                      {entry.label}
+                    </UISelect.GroupLabel>
 
-                  <UISelect.ItemText
-                    data-slot="item-text"
-                    className={cn(styles.itemText(), ui?.itemText)}
-                  >
-                    {item.label}
-                  </UISelect.ItemText>
-                </UISelect.Item>
-              ))}
+                    {entry.items.map((item, itemIndex) =>
+                      renderItem(item, itemIndex),
+                    )}
+                  </UISelect.Group>
+                ) : (
+                  renderItem(entry, index)
+                ),
+              )}
             </UISelect.List>
           </UISelect.Popup>
         </UISelect.Positioner>
@@ -254,4 +281,9 @@ function Select<Value extends string = string>({
 }
 
 export { Select };
-export type { SelectItemProps, SelectProps };
+export type {
+  SelectEntry,
+  SelectItemGroupProps,
+  SelectItemProps,
+  SelectProps,
+};
