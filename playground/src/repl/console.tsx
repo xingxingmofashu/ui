@@ -6,22 +6,24 @@ import type { ReplConsoleEntry } from "./runtime";
 type ReplConsoleProps = {
   entries: ReplConsoleEntry[];
   collapsed: boolean;
+  fill?: boolean;
   onToggle: () => void;
   onClear: () => void;
 };
 
 const levelClasses: Record<ReplConsoleEntry["level"], string> = {
-  log: "text-white/75",
-  info: "text-sky-200/90",
-  warn: "text-amber-200",
-  error: "text-rose-200",
-  debug: "text-white/50",
-  result: "text-emerald-200",
+  log: "text-pg-ink/75",
+  info: "text-sky-700 dark:text-sky-300",
+  warn: "text-amber-700 dark:text-amber-300",
+  error: "text-rose-700 dark:text-rose-300",
+  debug: "text-pg-muted",
+  result: "text-emerald-700 dark:text-emerald-300",
 };
 
 function ReplConsole({
   entries,
   collapsed,
+  fill = false,
   onToggle,
   onClear,
 }: ReplConsoleProps) {
@@ -51,28 +53,31 @@ function ReplConsole({
     <section
       data-testid="repl-console"
       aria-label="Console"
-      className={`flex min-h-0 flex-col overflow-hidden rounded-2xl border border-pg-line bg-[#0b0b0b] text-white/80 shadow-[var(--pg-shadow)] ${
-        collapsed ? "h-11 shrink-0" : "h-56 shrink-0"
+      className={`flex min-h-0 flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/80 text-pg-ink shadow-[var(--pg-shadow)] ${
+        fill ? "h-full" : collapsed ? "h-11 shrink-0" : "h-56 shrink-0"
       }`}
     >
-      <div className="flex h-11 shrink-0 items-center justify-between gap-2 border-b border-white/10 px-3">
+      <div className="flex h-11 shrink-0 items-center justify-between gap-2 border-b border-pg-line px-3">
         <button
           type="button"
           onClick={onToggle}
           aria-expanded={!collapsed}
-          className="flex min-w-0 items-center gap-2 rounded-lg px-1 py-1 text-left transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
+          className="flex min-w-0 items-center gap-2 rounded-lg px-1 py-1 text-left text-pg-muted transition-colors hover:text-pg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
         >
           <ChevronDown
             aria-hidden="true"
-            className={`size-3.5 text-white/45 transition-transform ${
+            className={`size-3.5 text-pg-muted/70 transition-transform ${
               collapsed ? "-rotate-90" : ""
             }`}
           />
-          <Terminal aria-hidden="true" className="size-3.5 text-white/45" />
-          <span className="text-xs font-medium tracking-wide text-white/75">
+          <Terminal
+            aria-hidden="true"
+            className="size-3.5 text-pg-muted/70"
+          />
+          <span className="text-xs font-medium tracking-wide text-pg-ink/80">
             Console
           </span>
-          <span className="rounded-full border border-white/15 px-1.5 py-0.5 font-mono text-[10px] tabular-nums text-white/45">
+          <span className="rounded-full border border-pg-line px-1.5 py-0.5 font-mono text-[10px] tabular-nums text-pg-muted/70">
             {entries.length}
           </span>
         </button>
@@ -82,7 +87,7 @@ function ReplConsole({
           onClick={onClear}
           aria-label="Clear console"
           title="Clear console"
-          className="rounded-lg p-1.5 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
+          className="rounded-lg p-1.5 text-pg-muted/70 transition-colors hover:bg-pg-line/40 hover:text-pg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-glass-focus"
         >
           <Trash2 aria-hidden="true" className="size-3.5" />
         </button>
@@ -98,7 +103,7 @@ function ReplConsole({
           className="min-h-0 flex-1 overflow-auto p-3 font-mono text-[12px] leading-5"
         >
           {entries.length === 0 ? (
-            <div className="flex h-full min-h-16 flex-col items-center justify-center gap-2 text-center text-white/35">
+            <div className="flex h-full min-h-16 flex-col items-center justify-center gap-2 text-center text-pg-muted/60">
               <Terminal aria-hidden="true" className="size-4" />
               <p className="max-w-64 text-[11px] leading-5">
                 console.log output and expression results appear here.
@@ -115,7 +120,7 @@ function ReplConsole({
                   >
                     {entry.level === "result" ? "←" : entry.level}
                   </span>
-                  <pre className="min-w-0 flex-1 whitespace-pre-wrap break-words font-mono text-[12px] leading-5">
+                  <pre className="min-w-0 flex-1 whitespace-pre-wrap break-words font-mono text-[12px] leading-5 text-pg-ink/85">
                     {entry.text}
                   </pre>
                 </div>

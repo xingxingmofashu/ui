@@ -83,7 +83,7 @@ function ReplPreview({
     <section
       aria-label="Preview"
       data-testid="repl-preview"
-      className="flex min-h-88 flex-1 flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/70 shadow-(--pg-shadow)"
+      className="flex h-full min-h-88 flex-1 flex-col overflow-hidden rounded-2xl border border-pg-line bg-pg-canvas/70 shadow-(--pg-shadow) lg:min-h-0"
     >
       <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-pg-line px-3">
         <div className="flex items-center gap-2">

@@ -15,7 +15,8 @@
     "lucide-react": "catalog:",
     "monaco-editor": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "react-resizable-panels": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/vite": "catalog:",
