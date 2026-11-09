@@ -99,7 +99,7 @@ export default function FormBasicDemo() {
 | `onFormSubmit` | `(formValues: Record<string, any>, eventDetails: { reason: "none"; event: Event }) => void` | — | Receives values from `Field`-registered controls and prevents the native submit event. |
 | `validationMode` | `"onSubmit" \| "onBlur" \| "onChange"` | `"onSubmit"` | Default validation timing for fields in the form. A `Field` prop takes precedence. |
 | `actionsRef` | `RefObject<{ validate: (fieldName?: string) => void } \| null>` | — | Imperative validation for all fields or one field by name. |
-| `className` | `string` | — | Tailwind classes merged into the form element. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the form element. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue }` | — | Tailwind classes for the `root` slot, keyed by `data-slot`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the form root element. |

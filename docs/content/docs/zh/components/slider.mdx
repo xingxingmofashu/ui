@@ -83,7 +83,7 @@ Slider 会把 `name` 用于表单，并通过隐藏的 `input[type="range"]` 提
 | `thumbCollisionBehavior` | `"push" \| "swap" \| "none"` | `"push"` | 区间 thumb 碰撞时的行为。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
-| `className` | `string` | — | Tailwind 类名，合并到最外层 `root`。 |
+| `className` | `ClassValue` | — | Tailwind 类名，合并到最外层 `root`。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; control?: ClassValue; track?: ClassValue; indicator?: ClassValue; thumb?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 

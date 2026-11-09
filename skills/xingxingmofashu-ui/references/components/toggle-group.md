@@ -77,7 +77,7 @@ export default function ToggleGroupBasicDemo() {
 | `aria-labelledby` | `string` | — | Names the group from another element. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
-| `className` | `string` | — | Tailwind classes merged into the group root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -95,7 +95,7 @@ export default function ToggleGroupBasicDemo() {
 | `nativeButton` | `boolean` | `true` | Whether the item renders a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
 | `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the item element. |
-| `className` | `string` | — | Tailwind classes merged into the item root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the item root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for this item's internal slots, keyed by `data-slot`. |
 

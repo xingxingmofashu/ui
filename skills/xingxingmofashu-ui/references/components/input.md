@@ -78,7 +78,7 @@ export default function InputBasicDemo() {
 | `aria-describedby` | `string` | — | ID reference for extra supporting text. `Field` descriptions and errors are merged with this value. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the input element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the input element. |
-| `className` | `string` | — | Tailwind classes merged into the outer root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the outer root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

@@ -107,7 +107,7 @@ export default function TabsBasicDemo() {
 | `aria-describedby` | `string` | — | ID of external text that describes the tab list. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; list?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panels?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -126,7 +126,7 @@ export default function TabsBasicDemo() {
 | `nativeButton` | `boolean` | `true` | Whether the tab renders a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the tab element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the tab element. |
-| `className` | `string` | — | Tailwind classes merged into the tab button. Use `ui.panel` for the panel. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the tab button. Use `ui.panel` for the panel. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this tab's internal slots, keyed by `data-slot`. |
 

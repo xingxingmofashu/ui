@@ -70,7 +70,7 @@ description: "一个 React 切换组，采用 Liquid Glass 选中状态，支持
 | `aria-labelledby` | `string` | — | 用外部元素命名分组。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 group 元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到 group 元素的 ref。 |
-| `className` | `string` | — | Tailwind 类名，合并到 group root。 |
+| `className` | `ClassValue` | — | Tailwind 类名，合并到 group root。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
@@ -88,7 +88,7 @@ description: "一个 React 切换组，采用 Liquid Glass 选中状态，支持
 | `nativeButton` | `boolean` | `true` | item 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 item 元素。 |
 | `ref` | `Ref<HTMLButtonElement>` | — | 转发到 item 元素的 ref。 |
-| `className` | `string` | — | 合并到 item root。 |
+| `className` | `ClassValue` | — | 合并到 item root。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的该 item 内部槽位类名。 |
 

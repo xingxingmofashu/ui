@@ -109,7 +109,7 @@ export default function DrawerBasicDemo() {
 | `snapPoint` | `DrawerSnapPoint \| null` | — | Controlled active snap point. |
 | `defaultSnapPoint` | `DrawerSnapPoint \| null` | — | Initial snap point when uncontrolled. |
 | `onSnapPointChange` | `(snapPoint: DrawerSnapPoint \| null, details) => void` | — | Called when the active snap point changes. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

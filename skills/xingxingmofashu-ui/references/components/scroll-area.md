@@ -105,7 +105,7 @@ export default function ScrollAreaBasicDemo() {
 | `aria-describedby` | `string` | — | ID of an element that describes the viewport. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the root. Set the height here. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the root. Set the height here. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; viewport?: ClassValue; content?: ClassValue; scrollbar?: ClassValue; thumb?: ClassValue; corner?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

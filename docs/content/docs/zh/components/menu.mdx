@@ -59,7 +59,7 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `defaultTriggerId` | `string \| null` | — | 初始打开菜单所用触发器的 ID。 |
 | `handle` | `Menu.Handle<Payload>` | — | 允许外部触发器控制菜单的 handle。 |
 | `disabled` | `boolean` | `false` | 禁止打开菜单。 |
-| `className` | `string` | — | 合并到浮层的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到浮层的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue; group?: ClassValue; groupLabel?: ClassValue; separator?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
@@ -79,7 +79,7 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `id` | `string` | — | 操作项元素的 ID。 |
 | `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换操作项元素。 |
-| `className` | `string` | — | 合并到操作项的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到操作项的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | 该操作项内部槽位的类名。 |
 
@@ -91,7 +91,7 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `label` | `ReactNode` | — | 分组标题。必填。 |
 | `items` | `readonly MenuItemProps[]` | — | 分组内的操作项。必填。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组元素。 |
-| `className` | `string` | — | 合并到分组的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到分组的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | 分组及其操作项内部槽位的类名。 |
 
@@ -103,7 +103,7 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | --- | --- | --- | --- |
 | `type` | `"separator"` | — | 标记为分隔线。必填。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分隔线元素。 |
-| `className` | `string` | — | 合并到分隔线的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到分隔线的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ separator?: ClassValue }` | — | 分隔线槽位的类名。 |
 

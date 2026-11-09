@@ -61,7 +61,7 @@ description: "一个 React 单选组，采用圆形 Liquid Glass 控件，支持
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控件、指示器与文字尺寸。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到分组元素的 ref。 |
-| `className` | `string` | — | 合并到分组根元素的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到分组根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
@@ -82,7 +82,7 @@ description: "一个 React 单选组，采用圆形 Liquid Glass 控件，支持
 | `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换选项元素。 |
 | `ref` | `Ref<HTMLSpanElement>` | — | 转发到选项元素的 ref。 |
-| `className` | `string` | — | 合并到选项根元素的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到选项根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的该选项内部槽位类名。 |
 

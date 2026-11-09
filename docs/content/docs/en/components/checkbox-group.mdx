@@ -66,8 +66,8 @@ Disabled options remain announced but cannot change. Each checked option submits
 | `items` | `readonly CheckboxGroupItemProps[]` | — | Options rendered by the group. Required. |
 | `label` | `ReactNode` | — | Visible label for the group. |
 | `description` | `ReactNode` | — | Supporting text under the group label, linked with `aria-describedby`. |
-| `value` | `readonly string[]` | — | Controlled checked values. |
-| `defaultValue` | `readonly string[]` | `[]` | Initial checked values when uncontrolled. |
+| `value` | `string[]` | — | Controlled checked values. |
+| `defaultValue` | `string[]` | `[]` | Initial checked values when uncontrolled. |
 | `onValueChange` | `(value: string[], details) => void` | — | Called when a checkbox is ticked or unticked. |
 | `name` | `string` | — | Form field name applied to every checkbox in the group. |
 | `form` | `string` | — | ID of the form that owns the hidden inputs. |
@@ -79,7 +79,7 @@ Disabled options remain announced but cannot change. Each checked option submits
 | `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group root. |
-| `className` | `string` | — | Tailwind classes merged into the group root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -105,7 +105,7 @@ Disabled options remain announced but cannot change. Each checked option submits
 | `aria-labelledby` | `string` | — | ID of an external label. |
 | `aria-describedby` | `string` | — | ID of external supporting text. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the entry root. |
-| `className` | `string` | — | Tailwind classes merged into the entry root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the entry root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for control slots, keyed by `data-slot`. |
 

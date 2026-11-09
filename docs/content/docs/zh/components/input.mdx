@@ -55,7 +55,7 @@ description: "一个 React 输入框，采用 Liquid Glass 字段与图标插槽
 | `aria-describedby` | `string` | — | 指向额外辅助说明的 ID 引用。`Field` 的说明与错误信息会与它合并。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换输入元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到输入元素的 ref。 |
-| `className` | `string` | — | Tailwind 类名，合并到外层 `root`。 |
+| `className` | `ClassValue` | — | Tailwind 类名，合并到外层 `root`。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 

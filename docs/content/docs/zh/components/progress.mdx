@@ -64,7 +64,7 @@ description: "一个 React 进度条，采用线性 Liquid Glass 轨道，支持
 | `aria-describedby` | `string` | — | 指向外部辅助说明的 ID 引用。可见 `description` 会与它合并。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素的渲染结果。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
-| `className` | `string` | — | 合并到根元素的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; value?: ClassValue; track?: ClassValue; indicator?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 

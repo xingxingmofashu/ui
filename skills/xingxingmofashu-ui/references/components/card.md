@@ -63,7 +63,7 @@ export default function CardBasicDemo() {
 | `footer` | `ReactNode` | — | Footer action area. |
 | `children` | `ReactNode` | — | Card body content. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Merged into `root`; use it for layout. |
+| `className` | `ClassValue` | — | Merged into `root`; use it for layout. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; layout?: ClassValue; header?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

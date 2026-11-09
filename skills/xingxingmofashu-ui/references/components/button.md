@@ -80,7 +80,7 @@ export default function ButtonBasicDemo() {
 | `onClick` | `MouseEventHandler<HTMLElement>` | — | Called when the button is pressed. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the rendered element. |
-| `className` | `string` | — | Tailwind classes merged into the outer `root`. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the outer `root`. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; base?: ClassValue; glass?: ClassValue; overlay?: ClassValue; label?: ClassValue; leadingIcon?: ClassValue; trailingIcon?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

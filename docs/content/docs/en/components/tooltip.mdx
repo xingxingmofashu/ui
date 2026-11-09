@@ -68,7 +68,7 @@ Tooltip content must be short and supplementary. Do not put interactive controls
 | `triggerId` | `string \| null` | — | ID of the trigger for a controlled tooltip. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger for an initially open tooltip. |
 | `handle` | `Tooltip.Handle<Payload>` | — | Handle that lets external triggers control the tooltip. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

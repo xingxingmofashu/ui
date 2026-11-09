@@ -64,7 +64,7 @@ export default function SwitchBasicDemo() {
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the switch root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the switch root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; container?: ClassValue; base?: ClassValue; thumb?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

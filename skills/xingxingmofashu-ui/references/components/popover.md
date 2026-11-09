@@ -82,7 +82,7 @@ export default function PopoverBasicDemo() {
 | `handle` | `PopoverHandle` | — | Associates the popover with external triggers. |
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the popover. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open popover. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

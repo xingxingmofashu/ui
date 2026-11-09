@@ -80,7 +80,7 @@ The stack supports F6 focus entry plus swipe dismissal, and timers pause while t
 | --- | --- | --- | --- |
 | `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | Corner where the stack is anchored. |
 | `close` | `ReactNode` | Built-in close button | Custom content rendered in place of the default close button. |
-| `className` | `string` | — | Tailwind classes merged into each toast. |
+| `className` | `ClassValue` | — | Tailwind classes merged into each toast. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ viewport?: ClassValue; root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; icon?: ClassValue; text?: ClassValue; title?: ClassValue; description?: ClassValue; actions?: ClassValue; action?: ClassValue; close?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces each toast root element. |

@@ -66,8 +66,8 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `items` | `readonly CheckboxGroupItemProps[]` | — | 分组中的选项。必填。 |
 | `label` | `ReactNode` | — | 分组的可见标签。 |
 | `description` | `ReactNode` | — | 分组标签下方的辅助说明，通过 `aria-describedby` 关联。 |
-| `value` | `readonly string[]` | — | 受控的选中值。 |
-| `defaultValue` | `readonly string[]` | `[]` | 非受控时的初始选中值。 |
+| `value` | `string[]` | — | 受控的选中值。 |
+| `defaultValue` | `string[]` | `[]` | 非受控时的初始选中值。 |
 | `onValueChange` | `(value: string[], details) => void` | — | 勾选或取消勾选时调用。 |
 | `name` | `string` | — | 应用于分组内每个复选框的表单字段名。 |
 | `form` | `string` | — | 隐藏输入所属的表单 ID。 |
@@ -79,7 +79,7 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `aria-describedby` | `string` | — | 外部辅助说明的 ID。可见的 `description` 会与此值合并。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组根元素。 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发到分组根元素的 ref。 |
-| `className` | `string` | — | 合并到分组根元素的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到分组根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
@@ -105,7 +105,7 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `aria-labelledby` | `string` | — | 外部标签的 ID。 |
 | `aria-describedby` | `string` | — | 外部辅助说明的 ID。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到条目根元素的 ref。 |
-| `className` | `string` | — | 合并到条目根元素的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到条目根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的控件槽位类名。 |
 

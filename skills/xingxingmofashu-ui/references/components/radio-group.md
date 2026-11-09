@@ -83,7 +83,7 @@ export default function RadioGroupBasicDemo() {
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control, indicator, and text size. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
-| `className` | `string` | — | Tailwind classes merged into the group root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -104,7 +104,7 @@ export default function RadioGroupBasicDemo() {
 | `aria-describedby` | `string` | — | ID of external supporting text. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the option element. |
 | `ref` | `Ref<HTMLSpanElement>` | — | Ref forwarded to the option element. |
-| `className` | `string` | — | Tailwind classes merged into the option root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the option root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for this option's internal slots, keyed by `data-slot`. |
 

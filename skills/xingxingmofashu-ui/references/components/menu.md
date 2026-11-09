@@ -128,7 +128,7 @@ export default function MenuBasicDemo() {
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger for an initially open menu. |
 | `handle` | `Menu.Handle<Payload>` | — | Handle that lets external triggers control the menu. |
 | `disabled` | `boolean` | `false` | Prevents the menu from opening. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue; group?: ClassValue; groupLabel?: ClassValue; separator?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -148,7 +148,7 @@ export default function MenuBasicDemo() {
 | `id` | `string` | — | ID of the item element. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
-| `className` | `string` | — | Tailwind classes merged into the item. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the item. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for this item's slots. |
 
@@ -160,7 +160,7 @@ export default function MenuBasicDemo() {
 | `label` | `ReactNode` | — | Group heading. Required. |
 | `items` | `readonly MenuItemProps[]` | — | Items rendered inside the group. Required. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
-| `className` | `string` | — | Tailwind classes merged into the group. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the group. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for the group and its item slots. |
 
@@ -172,7 +172,7 @@ export default function MenuBasicDemo() {
 | --- | --- | --- | --- |
 | `type` | `"separator"` | — | Marks the entry as a separator. Required. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the separator element. |
-| `className` | `string` | — | Tailwind classes merged into the separator. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the separator. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ separator?: ClassValue }` | — | Tailwind classes for the separator slot. |
 

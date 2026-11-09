@@ -61,7 +61,7 @@ export default function ProgressBasic() {
 | `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; value?: ClassValue; track?: ClassValue; indicator?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

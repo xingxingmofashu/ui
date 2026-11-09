@@ -186,7 +186,7 @@ type ShippingMethod = {
 | `alignOffset` | `number \| OffsetFunction` | `0` | Offset along the alignment axis in pixels. |
 | `collisionPadding` | `Padding` | `5px per side` | Space kept between the popup and the collision boundary. |
 | `alignItemWithTrigger` | `boolean` | `false` | Overlaps the popup so the selected item aligns with the trigger. |
-| `className` | `string` | — | Tailwind classes merged into the field root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the field root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; label?: ClassValue; trigger?: ClassValue; glass?: ClassValue; overlay?: ClassValue; value?: ClassValue; icon?: ClassValue; description?: ClassValue; positioner?: ClassValue; popup?: ClassValue; popupGlass?: ClassValue; popupOverlay?: ClassValue; list?: ClassValue; group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIndicator?: ClassValue; itemText?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

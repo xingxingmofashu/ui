@@ -54,7 +54,7 @@ export default function ToggleBasicDemo() {
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control size. |
 | `label` | `ReactNode` | — | Visible label rendered inside the toggle. |
 | `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
-| `className` | `string` | — | Tailwind classes merged into the toggle root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the toggle root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; thumb?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 | `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the rendered button. |

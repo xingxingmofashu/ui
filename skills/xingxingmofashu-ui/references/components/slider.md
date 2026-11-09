@@ -80,7 +80,7 @@ export default function SliderBasicDemo() {
 | `thumbCollisionBehavior` | `"push" \| "swap" \| "none"` | `"push"` | How range thumbs behave when they collide. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the outermost root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the outermost root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; control?: ClassValue; track?: ClassValue; indicator?: ClassValue; thumb?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

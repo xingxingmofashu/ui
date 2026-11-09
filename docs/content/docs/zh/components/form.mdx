@@ -71,7 +71,7 @@ actionsRef.current?.validate("email");
 | `onFormSubmit` | `(formValues: Record<string, any>, eventDetails: { reason: "none"; event: Event }) => void` | — | 接收通过 `Field` 注册的控件值，并阻止原生提交事件。 |
 | `validationMode` | `"onSubmit" \| "onBlur" \| "onChange"` | `"onSubmit"` | 表单内字段的默认校验时机。`Field` 上的属性优先。 |
 | `actionsRef` | `RefObject<{ validate: (fieldName?: string) => void } \| null>` | — | 主动校验全部字段，或按名称校验单个字段。 |
-| `className` | `string` | — | 合并到 form 元素的 Tailwind 类。 |
+| `className` | `ClassValue` | — | 合并到 form 元素的 Tailwind 类。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue }` | — | 按 `data-slot` 覆盖 `root` 槽位的 Tailwind 类。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换表单根元素。 |

@@ -61,7 +61,7 @@ Arrow keys move between options and update the selection, and `Space` selects th
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control, indicator, and text size. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
-| `className` | `string` | — | Tailwind classes merged into the group root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -82,7 +82,7 @@ Arrow keys move between options and update the selection, and `Space` selects th
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the option element. |
 | `ref` | `Ref<HTMLSpanElement>` | — | Ref forwarded to the option element. |
-| `className` | `string` | — | Tailwind classes merged into the option root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the option root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for this option's internal slots, keyed by `data-slot`. |
 
