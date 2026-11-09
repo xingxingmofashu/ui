@@ -550,6 +550,7 @@ describe("Accordion", () => {
       expect(styles.glass()).toContain("ui-glass-highlight");
       expect(styles.glass()).toContain("overflow-hidden");
       expect(styles.glass()).toContain("rounded-[inherit]");
+      expect(styles.glass()).toContain("will-change-transform");
       expect(styles.overlay()).toContain("ui-glass-rim");
       expect(styles.panel()).toContain("h-[var(--accordion-panel-height)]");
       expect(styles.panel()).toContain("data-[starting-style]:h-0");

@@ -56,6 +56,9 @@ describe("compiled CSS", () => {
     expect(css).toContain("border: 1px solid var(--ui-glass-inner-border);");
     expect(css).toContain("border: 1px solid var(--ui-glass-rim);");
     expect(css).toContain(
+      "inset: calc(var(--ui-glass-rim-inset, 9px) / 2);",
+    );
+    expect(css).toContain(
       "filter: var(--ui-glass-tone, brightness(0.98)) contrast(var(--ui-glass-contrast, 1.05));",
     );
     expect(css).toContain("filter: var(--ui-drop-shadow-label);");
@@ -126,6 +129,7 @@ describe("compiled CSS", () => {
     expect(css).toContain("width: var(--ui-accordion-indicator-size);");
     expect(css).toContain("color: var(--ui-ink-active);");
     expect(css).toContain("outline-color: var(--ui-glass-focus);");
+    expect(css).toContain("will-change: transform;");
     expect(css).toContain("--ui-accordion-trigger-height: 36px;");
     expect(css).toContain("--ui-accordion-trigger-height: 64px;");
     expect(css).toContain("--ui-accordion-panel-font-size: 0.875rem;");

@@ -218,12 +218,8 @@
   /* Inset rim overlay, rendered as a decorative child span. */
   .ui-glass-rim {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    inset: calc(var(--ui-glass-rim-inset, 9px) / 2);
     z-index: 2;
-    width: calc(100% - var(--ui-glass-rim-inset, 9px));
-    height: calc(100% - var(--ui-glass-rim-inset, 9px));
-    transform: translate(-50%, -50%);
     border: 1px solid var(--ui-glass-rim);
     border-radius: inherit;
     filter: blur(var(--ui-glass-rim-blur, 1px));
