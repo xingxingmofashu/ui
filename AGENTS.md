@@ -164,8 +164,9 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
   `playground/src/repl/icons.ts`.
 - Preview priority is `render(...)`, then `export default`, then the last
   expression. Primitive results go to the console.
-- Examples are loaded from `docs/components/examples/*/*.tsx` through a raw
-  Vite glob. Add a docs example and the REPL picker picks it up automatically.
+- The REPL loads each component's `basic` example from
+  `docs/components/examples/*/basic.tsx` through a raw Vite glob. Other docs
+  examples stay on the docs site and are not listed in the REPL picker.
 - Tailwind utilities in user code are compiled at runtime by
   `@tailwindcss/browser`; the playground stylesheet also scans the docs
   examples so the initial render works before that runtime loads.
