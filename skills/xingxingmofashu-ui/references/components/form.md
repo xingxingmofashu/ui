@@ -75,12 +75,9 @@ export default function FormBasicDemo() {
         />
       </Field>
 
-      <Button
-        type="submit"
-        label="Submit"
-        disabled={loading}
-        focusableWhenDisabled
-      />
+      <Button type="submit" disabled={loading} focusableWhenDisabled>
+        Submit
+      </Button>
 
       {status ? <p className="text-sm text-ui-ink/60">{status}</p> : null}
     </Form>

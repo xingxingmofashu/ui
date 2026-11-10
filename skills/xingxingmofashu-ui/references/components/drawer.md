@@ -41,11 +41,9 @@ export default function DrawerBasicDemo() {
 
   return (
     <>
-      <Button
-        label="Open settings"
-        leadingIcon={<Settings />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Settings />} onClick={() => setOpen(true)}>
+        Open settings
+      </Button>
 
       <Drawer
         open={open}
@@ -55,11 +53,9 @@ export default function DrawerBasicDemo() {
         footer={
           <>
             <Button size="sm" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button
-              size="sm"
-              label="Save changes"
-              onClick={() => setOpen(false)}
-            />
+            <Button size="sm" onClick={() => setOpen(false)}>
+              Save changes
+            </Button>
           </>
         }
       >

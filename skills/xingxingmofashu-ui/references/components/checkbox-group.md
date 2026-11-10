@@ -62,6 +62,48 @@ export default function CheckboxGroupBasicDemo() {
 }
 ```
 
+## Parent checkbox
+
+Pass every child value through `allValues`, keep the group controlled, and set `parent: true` on the parent item:
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+import {
+  CheckboxGroup,
+  type CheckboxGroupItemProps,
+} from "@xingxingmofashu/ui";
+
+const channels = [
+  { value: "comments", label: "Comments" },
+  { value: "releases", label: "Releases" },
+  { value: "billing", label: "Billing" },
+] as const satisfies readonly CheckboxGroupItemProps[];
+
+const channelValues = channels.map((channel) => channel.value);
+
+const items = [
+  { parent: true, label: "All channels" },
+  ...channels,
+] as const satisfies readonly CheckboxGroupItemProps[];
+
+export default function CheckboxGroupParentDemo() {
+  const [value, setValue] = useState<string[]>(["comments"]);
+
+  return (
+    <CheckboxGroup
+      label="Notification channels"
+      allValues={channelValues}
+      items={items}
+      value={value}
+      onValueChange={setValue}
+    />
+  );
+}
+```
+
 ## API reference
 
 **CheckboxGroup**
@@ -74,6 +116,7 @@ export default function CheckboxGroupBasicDemo() {
 | `value` | `string[]` | — | Controlled checked values. |
 | `defaultValue` | `string[]` | `[]` | Initial checked values when uncontrolled. |
 | `onValueChange` | `(value: string[], details) => void` | — | Called when a checkbox is ticked or unticked. |
+| `allValues` | `string[]` | — | Every child value in the group. Required when an item uses `parent: true`. |
 | `disabled` | `boolean` | `false` | Disables every option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while keeping every option focusable. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control, label, description, and spacing size. |
@@ -86,21 +129,22 @@ export default function CheckboxGroupBasicDemo() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | Identifies the option in the group value. Required. |
+| `value` | `string` | — | Identifies the option in the group value. Required for child items; optional for a parent item. |
+| `parent` | `boolean` | `false` | Renders the group's parent checkbox. Requires a controlled group with `allValues`. |
 | `indeterminate` | `boolean` | `false` | Forces the mixed state. |
 | `label` | `ReactNode` | — | Visible label next to the control. It becomes the accessible name unless `aria-label` or `aria-labelledby` is provided. |
 | `description` | `ReactNode` | — | Supporting copy under the label, linked with `aria-describedby` when the control has a name. |
+| `onCheckedChange` | `(checked: boolean, details) => void` | — | Called when this option changes, before the group update. Call `details.cancel()` to cancel the group update. |
 | `disabled` | `boolean` | `false` | Disables this option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Marks this checkbox as required for form submission. |
-| `uncheckedValue` | `string` | — | Value submitted when this option is unchecked. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the entry root element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the entry root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for control slots, keyed by `data-slot`. |
 
-Parent checkboxes are not part of the component API. Compose them with `Checkbox` and keep the arrays in sync, as shown above.
+Parent items use `parent: true` and require the group's `allValues`; they do not submit a value. `uncheckedValue` is not supported on group items.
 
 `ui` keys map to the `data-slot` values listed below. `name`, `form`, `id`, `ref`, and other native attributes are forwarded to the group and each control.
 
@@ -112,6 +156,7 @@ Parent checkboxes are not part of the component API. Compose them with `Checkbox
 | `data-checked` | Present on a checked option. |
 | `data-unchecked` | Present on an unchecked option. |
 | `data-indeterminate` | Present when an option is mixed. |
+| `data-parent` | Present on the group's parent item. |
 | `data-slot` | Marks internal group parts (`root`, `header`, `label`, `description`, `items`) and each control (`item`, `box`, `fill`, `glass`, `overlay`, `indicator`, `indicator-icon`, `wrapper`, `item-label`, `item-description`). |
 
 
@@ -125,15 +170,16 @@ Parent checkboxes are not part of the component API. Compose them with `Checkbox
 
 `CheckboxGroup` exposes a `group` named by `label` or by `aria-label` / `aria-labelledby`. Each option is a checkbox with its visible `label` and `description` linked automatically. `Space` toggles the focused checkbox, and `Tab` moves between options because a checkbox group is not a composite widget.
 
-A parent checkbox is a separate `Checkbox`: give the group its own accessible name, derive the parent's `checked` and `indeterminate` state from the shared arrays, and keep both levels in sync. Parent checkboxes are controls only, so they do not submit a value unless you give them a `name` and `value`.
+A parent item with `parent: true` is named by its `label` and keeps its children in sync through `allValues`. The group supplies the parent's checked and mixed states and links it to its children with `aria-controls`. Parent items are controls only and never submit a value. When one parent must control multiple groups, use a separate `Checkbox` and keep each group array in sync.
 
 Disabled options remain announced but cannot change. Each checked option submits its own hidden native checkbox; there is no native `required` for a group, so validate that at least one value is selected in your form handler. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for form patterns.
 
 ## Gotchas
 
 - Pass options through `items`; the group value is `string[]`.
-- A select-all parent checkbox is not part of the API; compose it with `Checkbox` and keep the arrays in sync.
-- `name` is applied to every checkbox; each checked option submits its own value.
+- Use `parent: true` with the group's `allValues` for a built-in parent; a parent item never submits a value.
+- `uncheckedValue` is not supported on group items; it is omitted from the item type.
+- `name` is applied to every child checkbox; each checked item submits its own value. Parent items are excluded.
 - There is no native `required` for the group; validate that at least one value is selected.
 - `readOnly` keeps options focusable.
 

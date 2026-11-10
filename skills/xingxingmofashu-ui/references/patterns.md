@@ -250,7 +250,6 @@ async function saveProject() {
 function SaveButton({ toast }: { toast: ToastApi }) {
   return (
     <Button
-      label="Save project"
       onClick={() =>
         toast.promise(saveProject(), {
           loading: "Saving project…",
@@ -259,7 +258,9 @@ function SaveButton({ toast }: { toast: ToastApi }) {
             error instanceof Error ? error.message : "Could not save.",
         })
       }
-    />
+    >
+      Save project
+    </Button>
   );
 }
 

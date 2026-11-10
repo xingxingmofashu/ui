@@ -117,7 +117,7 @@ to the theming guide.
   `import.meta.glob`, so adding a file registers `component/demo` without
   editing the registry. Every `.tsx` file in a component folder must default-export
   a demo component; keep helpers elsewhere.
-- MDX renders examples with `<Example name="button/children" />`. `components/example.tsx`
+- MDX renders examples with `<Example name="button/basic" />`. `components/example.tsx`
   renders the live component and the source from the same file; pass
   `showCode={false}` for a preview without the source toggle. Do not duplicate
   the example code in MDX.

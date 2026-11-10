@@ -65,11 +65,9 @@ export function SettingsDialog() {
 
   return (
     <>
-      <Button
-        label="Open settings"
-        leadingIcon={<Settings />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Settings />} onClick={() => setOpen(true)}>
+        Open settings
+      </Button>
       <Dialog
         open={open}
         onOpenChange={setOpen}

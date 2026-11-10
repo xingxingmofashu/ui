@@ -41,7 +41,6 @@ function ToastTrigger() {
 
   return (
     <Button
-      label="Show notification"
       leadingIcon={<Bell />}
       onClick={() =>
         toast.add({
@@ -49,7 +48,9 @@ function ToastTrigger() {
           description: "Your workspace settings were updated for everyone.",
         })
       }
-    />
+    >
+      Show notification
+    </Button>
   );
 }
 
