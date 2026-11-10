@@ -11,10 +11,11 @@ export default function DrawerLockedDemo() {
   return (
     <>
       <Button
-        label="Open locked drawer"
         leadingIcon={<Lock />}
         onClick={() => setOpen(true)}
-      />
+      >
+        Open locked drawer
+      </Button>
 
       <Drawer
         open={open}
@@ -23,7 +24,7 @@ export default function DrawerLockedDemo() {
         title="Unsaved changes"
         description="Pressing the backdrop will not close this drawer. Use the action below or press Escape."
         footer={
-          <Button size="sm" label="Keep editing" onClick={() => setOpen(false)} />
+          <Button size="sm" onClick={() => setOpen(false)}>Keep editing</Button>
         }
       >
         <p className="text-sm text-ui-ink/70">

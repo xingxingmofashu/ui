@@ -49,10 +49,11 @@ function ToastTypeButtons() {
         <Button
           key={type}
           size="sm"
-          label={label}
           leadingIcon={icon}
           onClick={() => toast.add({ type, title, description })}
-        />
+        >
+          {label}
+        </Button>
       ))}
     </div>
   );

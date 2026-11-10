@@ -13,16 +13,17 @@ export default function MenuControlledDemo() {
         <Menu
           open={open}
           onOpenChange={setOpen}
-          trigger={<Button label="Controlled menu" />}
+          trigger={<Button>Controlled menu</Button>}
           items={[
             { value: "profile", label: "Profile" },
             { value: "settings", label: "Settings" },
           ]}
         />
         <Button
-          label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((value) => !value)}
-        />
+        >
+          {open ? "Close menu" : "Open menu"}
+        </Button>
       </div>
       <p className="text-sm text-ui-ink/60" aria-live="polite">
         The menu is {open ? "open" : "closed"}.

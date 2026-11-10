@@ -58,15 +58,16 @@ export default function App() {
             description="The card surface samples the artwork behind it."
             footer={
               <div className="flex flex-wrap items-center gap-3">
-                <Button label="Save changes" trailingIcon={<ArrowRight />} />
+                <Button trailingIcon={<ArrowRight />}>Save changes</Button>
                 <Button
-                  label="Reset"
                   onClick={() => {
                     setName("Liquid Glass");
                     setDigest(true);
                     setIntensity(64);
                   }}
-                />
+                >
+                  Reset
+                </Button>
               </div>
             }
           >
@@ -137,8 +138,8 @@ export default function App() {
             </Card>
 
             <div className="flex flex-wrap gap-3">
-              <Button label="Primary action" trailingIcon={<ArrowRight />} />
-              <Button label="Upload" leadingIcon={<Upload />} />
+              <Button trailingIcon={<ArrowRight />}>Primary action</Button>
+              <Button leadingIcon={<Upload />}>Upload</Button>
             </div>
           </div>
         </div>

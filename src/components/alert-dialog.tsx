@@ -110,12 +110,12 @@ function AlertDialog({
               >
                 <UIAlertDialog.Close
                   onClick={onCancel}
-                  render={<Button label={cancelLabel} />}
+                  render={<Button>{cancelLabel}</Button>}
                 />
 
                 <UIAlertDialog.Close
                   onClick={onConfirm}
-                  render={<Button label={confirmLabel} />}
+                  render={<Button>{confirmLabel}</Button>}
                 />
               </div>
             </div>

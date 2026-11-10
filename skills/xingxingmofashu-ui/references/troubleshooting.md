@@ -122,7 +122,7 @@ Button and control the open state:
 ```tsx
 const [open, setOpen] = useState(false);
 
-<Button label="Open" onClick={() => setOpen(true)} />;
+<Button onClick={() => setOpen(true)}>Open</Button>;
 <Dialog open={open} onOpenChange={setOpen} title="Title" />;
 ```
 

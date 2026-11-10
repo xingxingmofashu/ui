@@ -29,7 +29,7 @@ export default function CheckboxGroupFormDemo() {
         items={channels}
         defaultValue={["comments", "billing"]}
       />
-      <Button type="submit" label="Submit" />
+      <Button type="submit">Submit</Button>
       <p className="text-sm text-ui-ink/60" aria-live="polite">
         Submitted: {submitted === null ? "nothing yet" : submitted.join(", ")}
       </p>

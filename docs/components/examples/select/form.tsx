@@ -34,7 +34,7 @@ export default function SelectFormDemo() {
         description="The selected value is submitted with the form."
         items={plans}
       />
-      <Button type="submit" label="Submit" className="self-start" />
+      <Button type="submit" className="self-start">Submit</Button>
       <p className="text-sm text-ui-ink/60" aria-live="polite">
         {submitted}
       </p>

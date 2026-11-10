@@ -36,15 +36,17 @@ export default function ButtonFormActionsDemo() {
           form="button-form-actions-demo"
           name="intent"
           value="save"
-          label="Save draft"
-        />
+        >
+          Save draft
+        </Button>
         <Button
           type="submit"
           form="button-form-actions-demo"
           name="intent"
           value="publish"
-          label="Publish"
-        />
+        >
+          Publish
+        </Button>
       </div>
 
       <p aria-live="polite" className="text-sm text-ui-ink/60">

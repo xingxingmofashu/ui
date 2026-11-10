@@ -25,7 +25,7 @@ export default function FormSubmitValuesDemo() {
         <Input type="email" defaultValue="ada@example.com" />
       </Field>
 
-      <Button type="submit" label="Submit" />
+      <Button type="submit">Submit</Button>
 
       {submitted ? (
         <p className="text-sm text-ui-ink/60">

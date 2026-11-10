@@ -65,7 +65,7 @@ export function ProfileForm() {
         <Input type="email" placeholder="you@example.com" />
       </Field>
 
-      <Button type="submit" label="Save" />
+      <Button type="submit">Save</Button>
     </Form>
   );
 }
@@ -90,7 +90,7 @@ export function SettingsDialog() {
 
   return (
     <>
-      <Button label="Open settings" onClick={() => setOpen(true)} />
+      <Button onClick={() => setOpen(true)}>Open settings</Button>
 
       <Dialog
         open={open}
@@ -99,8 +99,8 @@ export function SettingsDialog() {
         description="Choose how your workspace behaves for everyone."
         footer={
           <>
-            <Button size="sm" label="Cancel" onClick={() => setOpen(false)} />
-            <Button size="sm" label="Save" onClick={() => setOpen(false)} />
+            <Button size="sm" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button size="sm" onClick={() => setOpen(false)}>Save</Button>
           </>
         }
       >
@@ -131,7 +131,7 @@ export function DeleteProject() {
 
   return (
     <>
-      <Button label="Delete project" onClick={() => setOpen(true)} />
+      <Button onClick={() => setOpen(true)}>Delete project</Button>
 
       <AlertDialog
         open={open}
@@ -164,7 +164,7 @@ import { Button, Menu } from "@xingxingmofashu/ui";
 export function ProjectMenu() {
   return (
     <Menu
-      trigger={<Button label="Actions" />}
+      trigger={<Button>Actions</Button>}
       items={[
         { value: "rename", label: "Rename", onSelect: () => {} },
         { value: "duplicate", label: "Duplicate", onSelect: () => {} },
@@ -329,7 +329,7 @@ export function FiltersDrawer() {
 
   return (
     <>
-      <Button label="Filters" onClick={() => setOpen(true)} />
+      <Button onClick={() => setOpen(true)}>Filters</Button>
 
       <Drawer
         open={open}
@@ -338,7 +338,7 @@ export function FiltersDrawer() {
         title="Filters"
         description="Narrow the results."
         footer={
-          <Button label="Apply" onClick={() => setOpen(false)} />
+          <Button onClick={() => setOpen(false)}>Apply</Button>
         }
       >
         <p className="text-sm text-ui-ink/70">Filter controls go here.</p>

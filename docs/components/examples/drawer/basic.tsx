@@ -11,10 +11,11 @@ export default function DrawerBasicDemo() {
   return (
     <>
       <Button
-        label="Open settings"
         leadingIcon={<Settings />}
         onClick={() => setOpen(true)}
-      />
+      >
+        Open settings
+      </Button>
 
       <Drawer
         open={open}
@@ -23,12 +24,13 @@ export default function DrawerBasicDemo() {
         description="Choose how your workspace behaves for everyone on the team."
         footer={
           <>
-            <Button size="sm" label="Cancel" onClick={() => setOpen(false)} />
+            <Button size="sm" onClick={() => setOpen(false)}>Cancel</Button>
             <Button
               size="sm"
-              label="Save changes"
               onClick={() => setOpen(false)}
-            />
+            >
+              Save changes
+            </Button>
           </>
         }
       >

@@ -84,7 +84,7 @@ bundler.
 | Array-driven content | `Accordion`, `CheckboxGroup`, `Menu`, `RadioGroup`, `Select`, `Tabs`, and `ToggleGroup` take `items={[...]}`. |
 | Toast | Wrap the app in `ToastProvider`, render `<Toast />`, and call `useToast()` inside. |
 | Form layout | `Form` owns submission and errors; `Field` labels one control; `Fieldset` groups fields under a legend. |
-| Actions and state | `Button` uses `label` (or `children`); `Toggle` uses `pressed`; `Checkbox`/`Switch` use `checked`. |
+| Actions and state | `Button` uses `children`; `Toggle` uses `pressed`; `Checkbox`/`Switch` use `checked`. |
 
 ## Choose a component
 

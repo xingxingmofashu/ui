@@ -13,9 +13,10 @@ export default function ButtonSizesDemo() {
         <div key={size} className="flex flex-col items-center gap-3">
           <Button
             size={size}
-            label={size.toUpperCase()}
             trailingIcon={<ArrowRight />}
-          />
+          >
+            {size.toUpperCase()}
+          </Button>
           <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-ui-ink/60">
             {size}
           </span>

@@ -17,10 +17,11 @@ export default function DialogActionsDemo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <Button
-        label="Publish release"
         leadingIcon={<Rocket />}
         onClick={() => setOpen(true)}
-      />
+      >
+        Publish release
+      </Button>
 
       <Dialog
         open={open}
@@ -31,19 +32,22 @@ export default function DialogActionsDemo() {
           <>
             <Button
               size="sm"
-              label="Cancel"
               onClick={() => close("Release cancelled.")}
-            />
+            >
+              Cancel
+            </Button>
             <Button
               size="sm"
-              label="Save draft"
               onClick={() => close("Draft saved.")}
-            />
+            >
+              Save draft
+            </Button>
             <Button
               size="sm"
-              label="Publish"
               onClick={() => close("Release 2.4.0 published.")}
-            />
+            >
+              Publish
+            </Button>
           </>
         }
       >

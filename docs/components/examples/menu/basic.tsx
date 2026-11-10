@@ -11,7 +11,7 @@ export default function MenuBasicDemo() {
   return (
     <div className="flex flex-col items-start gap-3">
       <Menu
-        trigger={<Button label="Open menu" />}
+        trigger={<Button>Open menu</Button>}
         items={[
           {
             type: "group",

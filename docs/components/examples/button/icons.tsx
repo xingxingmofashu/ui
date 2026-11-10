@@ -7,9 +7,9 @@ import { Button } from "@xingxingmofashu/ui";
 export default function ButtonIconsDemo() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-4">
-      <Button label="Create" leadingIcon={<Plus />} />
-      <Button label="Search" leadingIcon={<Search />} />
-      <Button label="Continue" trailingIcon={<ArrowRight />} />
+      <Button leadingIcon={<Plus />}>Create</Button>
+      <Button leadingIcon={<Search />}>Search</Button>
+      <Button trailingIcon={<ArrowRight />}>Continue</Button>
       <Button aria-label="Next" leadingIcon={<ArrowRight />} />
     </div>
   );

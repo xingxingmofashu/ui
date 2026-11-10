@@ -75,7 +75,7 @@ export function SettingsDialog() {
         onOpenChange={setOpen}
         title="Workspace settings"
         description="Choose how your workspace behaves."
-        footer={<Button label="Done" onClick={() => setOpen(false)} />}
+        footer={<Button onClick={() => setOpen(false)}>Done</Button>}
       >
         <Switch label="Email notifications" defaultChecked />
       </Dialog>

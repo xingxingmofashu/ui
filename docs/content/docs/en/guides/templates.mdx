@@ -190,8 +190,8 @@ export function MobileSettings() {
         description="Changes apply to this device."
         footer={
           <>
-            <Button size="sm" label="Cancel" onClick={() => setOpen(false)} />
-            <Button size="sm" label="Done" onClick={() => setOpen(false)} />
+            <Button size="sm" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button size="sm" onClick={() => setOpen(false)}>Done</Button>
           </>
         }
       >

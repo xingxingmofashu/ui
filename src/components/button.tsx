@@ -17,7 +17,11 @@ type Button = ComponentConfig<typeof theme>;
 interface ButtonProps
   extends Omit<UIButtonProps, "style" | "className" | "children">,
   VariantProps<typeof theme> {
-  label?: React.ReactNode;
+  /**
+   * Visible button content. Also supplies the accessible name unless an ARIA
+   * name is set.
+   */
+  children?: React.ReactNode;
   leadingIcon?: React.ReactNode;
   trailingIcon?: React.ReactNode;
   ui?: Button["slots"];
@@ -28,7 +32,7 @@ interface ButtonProps
 function Button({
   className,
   ui,
-  label,
+  children,
   leadingIcon,
   trailingIcon,
   size,
@@ -69,9 +73,9 @@ function Button({
           </span>
         ) : null}
 
-        {label ? (
+        {children ? (
           <span data-slot="label" className={cn(styles.label(), ui?.label)}>
-            {label}
+            {children}
           </span>
         ) : null}
 

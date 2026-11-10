@@ -15,7 +15,6 @@ export default function ToastManagerDemo() {
   return (
     <ToastProvider toastManager={toastManager}>
       <Button
-        label="Notify from the manager"
         leadingIcon={<Radio />}
         onClick={() =>
           toastManager.add({
@@ -24,7 +23,9 @@ export default function ToastManagerDemo() {
               "This toast was added by the manager, so any module can call it.",
           })
         }
-      />
+      >
+        Notify from the manager
+      </Button>
       <Toast />
     </ToastProvider>
   );

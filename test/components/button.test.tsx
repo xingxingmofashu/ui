@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, expectTypeOf, it, vi } from "vitest";
 
-import { Button } from "../../src/components/button";
+import { Button, type ButtonProps } from "../../src/components/button";
 import button from "../../src/theme/button";
 
 const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
@@ -19,9 +19,14 @@ function getSlot(element: HTMLElement, slot: string) {
 }
 
 describe("Button", () => {
+  it("uses children for its content and does not expose a label prop", () => {
+    expectTypeOf<ButtonProps>().toHaveProperty("children");
+    expectTypeOf<ButtonProps>().not.toHaveProperty("label");
+  });
+
   describe("accessible names", () => {
-    it("uses the visible label as its accessible name", () => {
-      render(<Button label="Continue" />);
+    it("uses the visible content as its accessible name", () => {
+      render(<Button>Continue</Button>);
 
       expect(
         screen.getByRole("button", { name: "Continue" }),
@@ -54,10 +59,11 @@ describe("Button", () => {
     it("marks icons as decorative when the button has an accessible name", () => {
       render(
         <Button
-          label="Next"
           leadingIcon={<svg data-testid="leading-icon" />}
           trailingIcon={<svg data-testid="trailing-icon" />}
-        />,
+        >
+          Next
+        </Button>,
       );
 
       const buttonElement = screen.getByRole("button", { name: "Next" });
@@ -75,7 +81,7 @@ describe("Button", () => {
 
   describe("sizes", () => {
     it("defaults to md", () => {
-      render(<Button label="Default" />);
+      render(<Button>Default</Button>);
 
       const buttonElement = screen.getByRole("button");
 
@@ -155,10 +161,11 @@ describe("Button", () => {
       render(
         <Button
           size={size}
-          label={size}
           leadingIcon={<svg />}
           trailingIcon={<svg />}
-        />,
+        >
+          {size}
+        </Button>,
       );
 
       const buttonElement = screen.getByRole("button");
@@ -245,11 +252,12 @@ describe("Button", () => {
     it("applies className to the root only", () => {
       render(
         <Button
-          label="Styled"
           className="custom-root"
           leadingIcon={<svg />}
           trailingIcon={<svg />}
-        />,
+        >
+          Styled
+        </Button>,
       );
 
       const buttonElement = screen.getByRole("button", { name: "Styled" });
@@ -268,7 +276,6 @@ describe("Button", () => {
     it("applies ui classes to internal slots", () => {
       render(
         <Button
-          label="Internal"
           className="custom-root"
           leadingIcon={<svg />}
           trailingIcon={<svg />}
@@ -281,7 +288,9 @@ describe("Button", () => {
             leadingIcon: "ui-leading",
             trailingIcon: "ui-trailing",
           }}
-        />,
+        >
+          Internal
+        </Button>,
       );
 
       const buttonElement = screen.getByRole("button", { name: "Internal" });
@@ -297,13 +306,14 @@ describe("Button", () => {
       );
     });
 
-    it("keeps the label and icons on one row", () => {
+    it("keeps the content and icons on one row", () => {
       render(
         <Button
-          label="Both"
           leadingIcon={<svg />}
           trailingIcon={<svg />}
-        />,
+        >
+          Both
+        </Button>,
       );
 
       const base = getSlot(
@@ -337,10 +347,11 @@ describe("Button", () => {
     it("keeps content outside the filtered glass layer", () => {
       render(
         <Button
-          label="Layered"
           leadingIcon={<svg />}
           trailingIcon={<svg />}
-        />,
+        >
+          Layered
+        </Button>,
       );
 
       const buttonElement = screen.getByRole("button", { name: "Layered" });
@@ -360,7 +371,7 @@ describe("Button", () => {
 
   describe("base-ui props", () => {
     it("merges Tailwind classes with the themed root classes", () => {
-      render(<Button label="Merged" className="rounded-none p-2" />);
+      render(<Button className="rounded-none p-2">Merged</Button>);
 
       const buttonElement = screen.getByRole("button", { name: "Merged" });
 
@@ -369,7 +380,7 @@ describe("Button", () => {
     });
 
     it("forwards inline styles to the root", () => {
-      render(<Button label="Styled" style={{ opacity: 0.5 }} />);
+      render(<Button style={{ opacity: 0.5 }}>Styled</Button>);
 
       expect(
         screen.getByRole("button", { name: "Styled" }),
@@ -381,8 +392,9 @@ describe("Button", () => {
         <Button
           nativeButton={false}
           render={<a href="/docs" />}
-          label="Docs"
-        />,
+        >
+          Docs
+        </Button>,
       );
 
       const link = screen.getByRole("button", { name: "Docs" });
@@ -395,13 +407,13 @@ describe("Button", () => {
     it("forwards refs to the rendered root", () => {
       const ref = createRef<HTMLButtonElement>();
 
-      render(<Button ref={ref} label="Ref" />);
+      render(<Button ref={ref}>Ref</Button>);
 
       expect(ref.current).toBe(screen.getByRole("button", { name: "Ref" }));
     });
 
     it("keeps disabled buttons focusable with focusableWhenDisabled", () => {
-      render(<Button label="Focusable" disabled focusableWhenDisabled />);
+      render(<Button disabled focusableWhenDisabled>Focusable</Button>);
 
       const buttonElement = screen.getByRole("button", { name: "Focusable" });
 
@@ -414,13 +426,13 @@ describe("Button", () => {
     it("fires onClick and respects the disabled state", async () => {
       const user = userEvent.setup();
       const onClick = vi.fn();
-      const { rerender } = render(<Button label="Run" onClick={onClick} />);
+      const { rerender } = render(<Button onClick={onClick}>Run</Button>);
 
       await user.click(screen.getByRole("button", { name: "Run" }));
 
       expect(onClick).toHaveBeenCalledTimes(1);
 
-      rerender(<Button label="Run" onClick={onClick} disabled />);
+      rerender(<Button onClick={onClick} disabled>Run</Button>);
 
       const disabledButton = screen.getByRole("button", { name: "Run" });
 

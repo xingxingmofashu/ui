@@ -40,7 +40,7 @@ export default function PopoverPlacementDemo() {
       <Popover
         side={side}
         sideOffset={10}
-        trigger={<Button label={`Open ${side} popover`} />}
+        trigger={<Button>{`Open ${side} popover`}</Button>}
         title="Placement"
         description={`This popover prefers the ${side} side of its trigger.`}
       >

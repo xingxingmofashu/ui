@@ -11,10 +11,11 @@ export default function AlertDialogContentDemo() {
   return (
     <>
       <Button
-        label="Remove member"
         leadingIcon={<UserMinus />}
         onClick={() => setOpen(true)}
-      />
+      >
+        Remove member
+      </Button>
 
       <AlertDialog
         open={open}

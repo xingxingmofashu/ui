@@ -150,7 +150,7 @@ describe("Form", () => {
           <Field label="Email" name="email">
             <Input type="email" defaultValue="ada@example.com" />
           </Field>
-          <Button type="submit" label="Submit" />
+          <Button type="submit">Submit</Button>
         </Form>,
       );
 

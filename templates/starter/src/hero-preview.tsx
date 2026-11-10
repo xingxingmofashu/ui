@@ -144,7 +144,6 @@ export function HeroPreview() {
             <Button
               type="button"
               size="sm"
-              label="Publish"
               leadingIcon={<Rocket />}
               onClick={() =>
                 toast.add({
@@ -153,7 +152,9 @@ export function HeroPreview() {
                   description: "Lumen 2.4 is live for everyone.",
                 })
               }
-            />
+            >
+              Publish
+            </Button>
           </div>
         </Card>
       </GlassPresetScope>

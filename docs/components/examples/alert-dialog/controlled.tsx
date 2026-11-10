@@ -10,7 +10,7 @@ export default function AlertDialogControlledDemo() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Button label="Publish changes" onClick={() => setOpen(true)} />
+      <Button onClick={() => setOpen(true)}>Publish changes</Button>
 
       <AlertDialog
         open={open}

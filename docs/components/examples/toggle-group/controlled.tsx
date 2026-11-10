@@ -27,10 +27,11 @@ export default function ToggleGroupControlledDemo() {
         </span>
         <Button
           size="sm"
-          label="Clear"
           onClick={() => setValue([])}
           disabled={value.length === 0}
-        />
+        >
+          Clear
+        </Button>
       </div>
     </div>
   );

@@ -184,8 +184,8 @@ export function MobileSettings() {
         description="更改仅应用于此设备。"
         footer={
           <>
-            <Button size="sm" label="取消" onClick={() => setOpen(false)} />
-            <Button size="sm" label="完成" onClick={() => setOpen(false)} />
+            <Button size="sm" onClick={() => setOpen(false)}>取消</Button>
+            <Button size="sm" onClick={() => setOpen(false)}>完成</Button>
           </>
         }
       >

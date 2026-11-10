@@ -40,10 +40,11 @@ export default function DrawerSidesDemo() {
       />
 
       <Button
-        label={`Open ${direction} drawer`}
         leadingIcon={<Menu />}
         onClick={() => setOpen(true)}
-      />
+      >
+        {`Open ${direction} drawer`}
+      </Button>
 
       <Drawer
         open={open}
@@ -52,7 +53,7 @@ export default function DrawerSidesDemo() {
         title="Release notes"
         description={`Version 2.4.0 slides in from the ${direction} edge.`}
         footer={
-          <Button size="sm" label="Close" onClick={() => setOpen(false)} />
+          <Button size="sm" onClick={() => setOpen(false)}>Close</Button>
         }
       >
         <ul className="list-disc space-y-2 pl-5">

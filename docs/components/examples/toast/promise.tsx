@@ -38,11 +38,12 @@ function ToastPromise() {
   return (
     <div className="flex flex-col items-center gap-3">
       <Button
-        label={publishing ? "Publishing..." : "Publish release"}
         leadingIcon={<Rocket />}
         disabled={publishing}
         onClick={publish}
-      />
+      >
+        {publishing ? "Publishing..." : "Publish release"}
+      </Button>
       <p className="text-sm text-ui-ink/60">
         {publishing
           ? "Waiting for the promise to settle."

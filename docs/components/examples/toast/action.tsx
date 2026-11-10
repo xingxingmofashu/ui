@@ -28,7 +28,7 @@ function ToastAction() {
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <Button label="Archive message" leadingIcon={<Archive />} onClick={archive} />
+      <Button leadingIcon={<Archive />} onClick={archive}>Archive message</Button>
       <p aria-live="polite" className="text-sm text-ui-ink/60">
         {status}
       </p>

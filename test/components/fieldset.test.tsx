@@ -212,7 +212,7 @@ describe("Fieldset", () => {
           />
           <Slider aria-label="Volume" />
           <Switch label="Notifications" />
-          <Button label="Save" />
+          <Button>Save</Button>
           <Toggle label="Bold" />
           <ToggleGroup
             aria-label="Density"

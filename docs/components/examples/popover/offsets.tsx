@@ -6,7 +6,7 @@ export default function PopoverOffsetsDemo() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
       <Popover
-        trigger={<Button size="sm" label="Align start" />}
+        trigger={<Button size="sm">Align start</Button>}
         title="Aligned to the start"
         description="align, alignOffset, and collisionPadding control how the popup sits next to the trigger."
         side="bottom"
@@ -22,7 +22,7 @@ export default function PopoverOffsetsDemo() {
       </Popover>
 
       <Popover
-        trigger={<Button size="sm" label="Right aligned" />}
+        trigger={<Button size="sm">Right aligned</Button>}
         title="Right aligned"
         description="The arrow follows the resolved side automatically."
         side="right"

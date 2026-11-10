@@ -72,7 +72,7 @@ export function SettingsDialog() {
         onOpenChange={setOpen}
         title="工作区设置"
         description="选择工作区的行为。"
-        footer={<Button label="完成" onClick={() => setOpen(false)} />}
+        footer={<Button onClick={() => setOpen(false)}>完成</Button>}
       >
         <Switch label="邮件通知" defaultChecked />
       </Dialog>

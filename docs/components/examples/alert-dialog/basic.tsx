@@ -11,10 +11,11 @@ export default function AlertDialogBasicDemo() {
   return (
     <>
       <Button
-        label="Delete project"
         leadingIcon={<Trash2 />}
         onClick={() => setOpen(true)}
-      />
+      >
+        Delete project
+      </Button>
 
       <AlertDialog
         open={open}

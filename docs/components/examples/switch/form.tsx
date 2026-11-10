@@ -31,9 +31,10 @@ export default function SwitchFormDemo() {
         <Button
           type="submit"
           size="sm"
-          label="Submit"
           trailingIcon={<ArrowRight />}
-        />
+        >
+          Submit
+        </Button>
         <p aria-live="polite" className="text-sm text-ui-ink/60">
           {submitted === null
             ? "Not submitted yet"

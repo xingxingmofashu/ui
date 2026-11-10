@@ -26,7 +26,7 @@ export default function SelectControlledDemo() {
         onValueChange={(value) => setPlan(value)}
       />
       <div className="flex flex-wrap items-center gap-3">
-        <Button label="Clear selection" onClick={() => setPlan(null)} />
+        <Button onClick={() => setPlan(null)}>Clear selection</Button>
         <p className="text-sm text-ui-ink/60" aria-live="polite">
           Selected plan: {plan ?? "none"}
         </p>
