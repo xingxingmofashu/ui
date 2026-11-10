@@ -68,7 +68,7 @@ When `nativeButton={false}` renders a link or another element, keep the visible 
 | `type` | `"button" \| "submit" \| "reset"` | `"button"` | Native button type. Set `"submit"` when the button should submit a form. |
 | `form` | `string` | — | ID of the form that owns the button. |
 | `name` | `string` | — | Name submitted with the form. |
-| `value` | `string` | — | Value submitted with the form. |
+| `value` | `string \| number \| readonly string[]` | — | Value submitted with the form. |
 | `onClick` | `MouseEventHandler<HTMLElement>` | — | Called when the button is pressed. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered element. |
 | `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the rendered element. |

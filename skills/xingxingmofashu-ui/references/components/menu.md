@@ -148,6 +148,7 @@ export default function MenuBasicDemo() {
 | `id` | `string` | — | ID of the item element. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the item element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the item. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for this item's slots. |
@@ -160,6 +161,7 @@ export default function MenuBasicDemo() {
 | `label` | `ReactNode` | — | Group heading. Required. |
 | `items` | `readonly MenuItemProps[]` | — | Items rendered inside the group. Required. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the group. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for the group and its item slots. |
@@ -172,6 +174,7 @@ export default function MenuBasicDemo() {
 | --- | --- | --- | --- |
 | `type` | `"separator"` | — | Marks the entry as a separator. Required. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the separator element. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the separator element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the separator. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ separator?: ClassValue }` | — | Tailwind classes for the separator slot. |

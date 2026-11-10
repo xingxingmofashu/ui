@@ -125,7 +125,7 @@ export default function TabsBasicDemo() {
 | `aria-labelledby` | `string` | — | Names an icon-only tab from another element. |
 | `nativeButton` | `boolean` | `true` | Whether the tab renders a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the tab element. |
-| `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the tab element. |
+| `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the tab element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the tab button. Use `ui.panel` for the panel. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this tab's internal slots, keyed by `data-slot`. |

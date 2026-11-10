@@ -64,6 +64,7 @@ export default function FieldBasicDemo() {
 | `dirty` | `boolean` | — | Marks the field dirty from external state. |
 | `touched` | `boolean` | — | Marks the field touched from external state. |
 | `actionsRef` | `RefObject<Field.Root.Actions \| null>` | — | Imperative actions. `validate` validates the field on demand. |
+| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the field root. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the field root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; label?: ClassValue; error?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |

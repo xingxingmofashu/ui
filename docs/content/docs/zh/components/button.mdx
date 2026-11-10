@@ -68,7 +68,7 @@ description: "一个 React 按钮，采用 Liquid Glass 风格，支持五种尺
 | `type` | `"button" \| "submit" \| "reset"` | `"button"` | 原生按钮类型。需要在表单中提交时设为 `"submit"`。 |
 | `form` | `string` | — | 拥有该按钮的表单 ID。 |
 | `name` | `string` | — | 随表单提交的字段名。 |
-| `value` | `string` | — | 随表单提交的值。 |
+| `value` | `string \| number \| readonly string[]` | — | 随表单提交的值。 |
 | `onClick` | `MouseEventHandler<HTMLElement>` | — | 按钮被按下时调用。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换渲染的元素。 |
 | `ref` | `Ref<HTMLElement>` | — | 转发到渲染元素的 ref。 |
