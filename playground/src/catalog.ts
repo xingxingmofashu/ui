@@ -1,9 +1,15 @@
-const groupOrder = ["Element", "Form", "Overlay", "Feedback"] as const;
+const groupOrder = [
+  "Element",
+  "Form",
+  "Data",
+  "Navigation",
+  "Overlay",
+] as const;
 
 type ComponentGroup = (typeof groupOrder)[number];
 
 const componentGroups: Partial<Record<string, ComponentGroup>> = {
-  accordion: "Element",
+  accordion: "Data",
   "alert-dialog": "Overlay",
   button: "Element",
   card: "Element",
@@ -17,13 +23,13 @@ const componentGroups: Partial<Record<string, ComponentGroup>> = {
   input: "Form",
   menu: "Overlay",
   popover: "Overlay",
-  progress: "Feedback",
+  progress: "Element",
   "radio-group": "Form",
-  "scroll-area": "Element",
+  "scroll-area": "Data",
   select: "Form",
   slider: "Form",
   switch: "Form",
-  tabs: "Element",
+  tabs: "Navigation",
   toast: "Overlay",
   toggle: "Element",
   "toggle-group": "Element",

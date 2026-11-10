@@ -3,11 +3,9 @@
   "pages": [
     "index",
     "---Element---",
-    "accordion",
     "button",
     "card",
-    "scroll-area",
-    "tabs",
+    "progress",
     "toggle",
     "toggle-group",
     "---Form---",
@@ -21,6 +19,11 @@
     "select",
     "slider",
     "switch",
+    "---Data---",
+    "accordion",
+    "scroll-area",
+    "---Navigation---",
+    "tabs",
     "---Overlay---",
     "alert-dialog",
     "dialog",
@@ -28,8 +31,6 @@
     "menu",
     "popover",
     "toast",
-    "tooltip",
-    "---Feedback---",
-    "progress"
+    "tooltip"
   ]
 }
