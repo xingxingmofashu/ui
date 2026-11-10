@@ -6,9 +6,9 @@ built with Vite, React 19, TypeScript, Tailwind CSS 4, and Lucide icons.
 
 The starter is a single responsive page. It includes:
 
-- A CSS-only atmospheric background that makes the glass material visible.
-- A live workspace preview with tabs, a switch, progress, four glass presets,
-  and a toast on publish.
+- A full-page photo background that makes the glass material visible.
+- A live workspace preview with tabs, a switch, progress, and a toast on publish.
+- A header switch for the four global glass presets.
 - A persisted light/dark theme toggle.
 - Three short feature cards and a compact call to action.
 - No router or data layer.
@@ -30,22 +30,22 @@ pnpm preview
 ## Files
 
 - `src/App.tsx` — page layout, hero copy, features, CTA, and footer.
-- `src/hero-preview.tsx` — the interactive preview card and scoped glass preset.
+- `src/hero-preview.tsx` — the interactive preview card.
 - `src/use-theme.ts` — persisted light/dark state.
-- `src/index.css` — Tailwind, the package stylesheet, the glass preset
-  stylesheet, and the page canvas.
+- `src/index.css` — Tailwind, the package stylesheet, and the glass preset
+  stylesheet.
 - `index.html` — metadata and the no-flash theme script.
 
 ## Customize
 
 - Change the copy, `features` array, and links in `src/App.tsx`.
 - Change the preview content in `src/hero-preview.tsx`.
-- Override the shared `--ui-*` tokens or the `--starter-*` canvas tokens in
-  `src/index.css`.
-- The preview uses `GlassPresetScope`, so its material switch only affects the
-  preview card. Wrap the app in `GlassPresetProvider` from
-  `@xingxingmofashu/ui/plugins/glass-preset` when you want a global, persisted
-  preset.
+- Swap `public/rqev27.jpg` or edit the background classes on the page shell in
+  `src/App.tsx` to change the photo.
+- Override the shared `--ui-*` tokens in `src/index.css`.
+- The app is wrapped in `GlassPresetProvider`, so the header switch changes the
+  whole page and persists in `localStorage`. Import `GlassPresetScope` from
+  `@xingxingmofashu/ui/plugins/glass-preset` when a section needs its own preset.
 
 Every component in `@xingxingmofashu/ui` is installed. Import only the ones you
 use; the package ships an ESM build with deep imports for individual components

@@ -7,7 +7,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { Button, Card, Toggle } from "@xingxingmofashu/ui";
+import { Button, Card, Toggle, ToggleGroup } from "@xingxingmofashu/ui";
+import { useGlassPreset } from "@xingxingmofashu/ui/plugins/glass-preset";
 
 import { HeroPreview } from "./hero-preview";
 import { useTheme } from "./use-theme";
@@ -46,6 +47,13 @@ const features: Feature[] = [
   },
 ];
 
+const presetItems = [
+  { value: "thin", label: "Thin" },
+  { value: "soft", label: "Soft" },
+  { value: "regular", label: "Regular" },
+  { value: "thick", label: "Thick" },
+] as const;
+
 function GitHubIcon() {
   return (
     <svg
@@ -61,17 +69,13 @@ function GitHubIcon() {
 
 export default function App() {
   const { theme, setTheme } = useTheme();
+  const { preset, setPreset } = useGlassPreset();
 
   return (
-    <div id="top" className="relative isolate min-h-svh overflow-x-clip">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 -z-10"
-      >
-        <div className="starter-canvas absolute inset-0" />
-        <div className="starter-grid absolute inset-0" />
-      </div>
-
+    <div
+      id="top"
+      className="relative isolate min-h-svh overflow-x-clip bg-[url('/rqev27.jpg')] bg-cover bg-center bg-fixed"
+    >
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-6">
         <a
           href="#top"
@@ -112,6 +116,21 @@ export default function App() {
               Docs
             </a>
           </nav>
+
+          <ToggleGroup
+            aria-label="Glass preset"
+            size="sm"
+            className="hidden md:flex"
+            value={[preset]}
+            onValueChange={(value) => {
+              const next = value[0];
+
+              if (next) {
+                setPreset(next);
+              }
+            }}
+            items={presetItems}
+          />
 
           <div className="flex items-center gap-2">
             <Toggle
