@@ -15,26 +15,19 @@ import theme from "../theme/button";
 type Button = ComponentConfig<typeof theme>;
 
 interface ButtonProps
-  extends Omit<UIButtonProps, "ref" | "className">,
-    VariantProps<typeof theme> {
-  /** Ref to the rendered root element. */
-  ref?: React.Ref<HTMLElement>;
-  /** Tailwind classes merged into the outer click area. */
-  className?: ClassValue;
-  /** Tailwind classes for internal slots, keyed by `data-slot`. */
-  ui?: Button["slots"];
-  /** Text or content rendered inside the button. */
+  extends Omit<UIButtonProps, 'style' | "className" | 'children'>,
+  VariantProps<typeof theme> {
   label?: React.ReactNode;
-  /** Icon rendered before the label. */
   leadingIcon?: React.ReactNode;
-  /** Icon rendered after the label. */
   trailingIcon?: React.ReactNode;
+  ui?: Button["slots"];
+  className?: ClassValue;
+  style?: React.CSSProperties;
 }
 
 function Button({
   className,
   ui,
-  children,
   label,
   leadingIcon,
   trailingIcon,
@@ -45,7 +38,6 @@ function Button({
   const styles = theme({ size });
   const fieldset = useFieldset();
   const fieldsetDisabled = fieldset.disabled || disabled;
-  const content = label || children;
 
   return (
     <UIButton
@@ -77,9 +69,9 @@ function Button({
           </span>
         ) : null}
 
-        {content ? (
+        {label ? (
           <span data-slot="label" className={cn(styles.label(), ui?.label)}>
-            {content}
+            {label}
           </span>
         ) : null}
 

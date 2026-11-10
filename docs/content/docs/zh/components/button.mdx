@@ -49,7 +49,7 @@ description: "一个 React 按钮，采用 Liquid Glass 风格，支持五种尺
 
 ## 无障碍
 
-`Button` 默认渲染原生 `<button>`，因此焦点、`Enter` 与 `Space` 激活以及禁用行为都由平台提供。`label` 或 `children` 提供可访问名称。纯图标按钮必须使用 `aria-label` 或 `aria-labelledby`；图标插槽是装饰性的，对辅助技术隐藏。
+`Button` 默认渲染原生 `<button>`，因此焦点、`Enter` 与 `Space` 激活以及禁用行为都由平台提供。`label` 提供可访问名称。纯图标按钮必须使用 `aria-label` 或 `aria-labelledby`；图标插槽是装饰性的，对辅助技术隐藏。
 
 使用 `nativeButton={false}` 渲染链接或其他元素时，请保持可见标签有意义，并选择与操作语义匹配的元素。`focusableWhenDisabled` 会让禁用的操作保留在 Tab 顺序中，通过 `aria-disabled` 暴露状态，同时阻止激活。
 
@@ -57,24 +57,18 @@ description: "一个 React 按钮，采用 Liquid Glass 风格，支持五种尺
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | 按钮文字；`label` 为真值时优先于 `children`。 |
-| `children` | `ReactNode` | — | `label` 为假值或未提供时使用的可见内容。 |
+| `label` | `ReactNode` | — | 按钮可见文字；未设置 ARIA 名称时同时作为可访问名称。 |
 | `leadingIcon` | `ReactNode` | — | 标签前的装饰性图标。 |
 | `trailingIcon` | `ReactNode` | — | 标签后的装饰性图标。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制高度、内边距、文字与图标尺寸。 |
-| `disabled` | `boolean` | `false` | 禁用按钮。 |
 | `focusableWhenDisabled` | `boolean` | `false` | 禁用时仍保留在 Tab 顺序中，并通过 `aria-disabled` 表达状态。 |
-| `nativeButton` | `boolean` | `true` | 是否渲染原生 `<button>`；渲染链接或其他元素时设为 `false`。 |
-| `type` | `"button" \| "submit" \| "reset"` | `"button"` | 原生按钮类型。需要在表单中提交时设为 `"submit"`。 |
-| `form` | `string` | — | 拥有该按钮的表单 ID。 |
-| `name` | `string` | — | 随表单提交的字段名。 |
-| `value` | `string \| number \| readonly string[]` | — | 随表单提交的值。 |
-| `onClick` | `MouseEventHandler<HTMLElement>` | — | 按钮被按下时调用。 |
-| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换渲染的元素。 |
-| `ref` | `Ref<HTMLElement>` | — | 转发到渲染元素的 ref。 |
+| `nativeButton` | `boolean` | `true` | `Button` 渲染的根元素是否为原生 `<button>`；`render` 渲染 `<div>` 等其他元素时设为 `false`。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素，或与其他组件组合。 |
 | `className` | `ClassValue` | — | Tailwind 类名，合并到外层 `root`。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; base?: ClassValue; glass?: ClassValue; overlay?: ClassValue; label?: ClassValue; leadingIcon?: ClassValue; trailingIcon?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
+
+原生 `<button>` 属性（如 `disabled`、`type`、`form`、`name`、`value`、`onClick`、`aria-*`）以及 `ref` 会透传到渲染元素。不支持 `children`，请使用 `label`。
 
 | 属性 | 说明 |
 | --- | --- |

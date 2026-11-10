@@ -28,29 +28,6 @@ describe("Button", () => {
       ).toBeInTheDocument();
     });
 
-    it("uses children as its accessible name", () => {
-      render(<Button>Continue</Button>);
-
-      expect(
-        screen.getByRole("button", { name: "Continue" }),
-      ).toBeInTheDocument();
-    });
-
-    it("prefers the label over children", () => {
-      render(<Button label="Save">Delete</Button>);
-
-      expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
-      expect(screen.queryByText("Delete")).not.toBeInTheDocument();
-    });
-
-    it("falls back to children when label is empty", () => {
-      render(<Button label="">Fallback</Button>);
-
-      expect(
-        screen.getByRole("button", { name: "Fallback" }),
-      ).toBeInTheDocument();
-    });
-
     it("supports aria-label for icon-only buttons", () => {
       render(<Button aria-label="Add item" leadingIcon={<svg />} />);
 
@@ -416,7 +393,7 @@ describe("Button", () => {
     });
 
     it("forwards refs to the rendered root", () => {
-      const ref = createRef<HTMLElement>();
+      const ref = createRef<HTMLButtonElement>();
 
       render(<Button ref={ref} label="Ref" />);
 
