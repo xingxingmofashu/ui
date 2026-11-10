@@ -21,10 +21,11 @@ export default function DrawerGestureDemo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <Button
-        label="Open gesture drawer"
         leadingIcon={<MoveDown />}
         onClick={() => setOpen(true)}
-      />
+      >
+        Open gesture drawer
+      </Button>
 
       <Drawer
         open={open}
@@ -44,12 +45,13 @@ export default function DrawerGestureDemo() {
         footer={
           <Button
             size="sm"
-            label="Close"
             onClick={() => {
               setOpen(false);
               setStatus("Closed with the Close button.");
             }}
-          />
+          >
+            Close
+          </Button>
         }
       >
         <div className="flex items-start gap-3">

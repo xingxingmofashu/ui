@@ -65,17 +65,15 @@ export function SettingsDialog() {
 
   return (
     <>
-      <Button
-        label="Open settings"
-        leadingIcon={<Settings />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Settings />} onClick={() => setOpen(true)}>
+        Open settings
+      </Button>
       <Dialog
         open={open}
         onOpenChange={setOpen}
         title="Workspace settings"
         description="Choose how your workspace behaves."
-        footer={<Button label="Done" onClick={() => setOpen(false)} />}
+        footer={<Button onClick={() => setOpen(false)}>Done</Button>}
       >
         <Switch label="Email notifications" defaultChecked />
       </Dialog>

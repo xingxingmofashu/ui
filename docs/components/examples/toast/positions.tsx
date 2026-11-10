@@ -79,7 +79,6 @@ function PositionControls({
       </div>
 
       <Button
-        label={`Show at ${position}`}
         leadingIcon={<MapPin />}
         onClick={() =>
           toast.add({
@@ -87,7 +86,9 @@ function PositionControls({
             description: `This toast is anchored to the ${position} position.`,
           })
         }
-      />
+      >
+        {`Show at ${position}`}
+      </Button>
 
       <p className="text-sm text-ui-ink/60">Current position: {position}</p>
     </div>

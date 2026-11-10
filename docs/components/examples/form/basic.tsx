@@ -48,10 +48,11 @@ export default function FormBasicDemo() {
 
       <Button
         type="submit"
-        label="Submit"
         disabled={loading}
         focusableWhenDisabled
-      />
+      >
+        Submit
+      </Button>
 
       {status ? <p className="text-sm text-ui-ink/60">{status}</p> : null}
     </Form>

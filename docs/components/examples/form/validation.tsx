@@ -20,7 +20,7 @@ export default function FormValidationDemo() {
         <Input placeholder="ada" />
       </Field>
 
-      <Button type="submit" label="Create account" />
+      <Button type="submit">Create account</Button>
     </Form>
   );
 }

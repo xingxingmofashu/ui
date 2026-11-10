@@ -47,23 +47,24 @@ export default function ToggleBasicDemo() {
 | `pressed` | `boolean` | — | Controlled pressed state. |
 | `defaultPressed` | `boolean` | `false` | Initial pressed state when uncontrolled. |
 | `onPressedChange` | `(pressed, details) => void` | — | Called when the pressed state changes. |
-| `disabled` | `boolean` | `false` | Disables the toggle. |
 | `value` | `string` | — | Identifies the toggle when it is used inside a toggle group. |
 | `nativeButton` | `boolean` | `true` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered element. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control size. |
 | `label` | `ReactNode` | — | Visible label rendered inside the toggle. |
 | `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
-| `className` | `string` | — | Tailwind classes merged into the toggle root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the toggle root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; thumb?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
-| `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the rendered button. |
+
+`disabled`, other native button attributes, and `ref` are forwarded to the rendered button.
 
 | Attribute | Description |
 | --- | --- |
 | `data-pressed` | Present when the toggle is pressed. |
 | `data-disabled` | Present when the toggle is disabled. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `rim`, `thumb`, `content`, `icon`, `label`) for styling. |
+
 
 ## Styling
 

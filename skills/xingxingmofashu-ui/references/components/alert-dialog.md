@@ -39,11 +39,9 @@ export default function AlertDialogBasicDemo() {
 
   return (
     <>
-      <Button
-        label="Delete project"
-        leadingIcon={<Trash2 />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Trash2 />} onClick={() => setOpen(true)}>
+        Delete project
+      </Button>
 
       <AlertDialog
         open={open}
@@ -73,11 +71,10 @@ export default function AlertDialogBasicDemo() {
 | `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when the dialog opens or closes. |
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
-| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
 | `handle` | `AlertDialogHandle` | — | Associates the dialog with external triggers. |
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the dialog. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open dialog. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -90,6 +87,7 @@ export default function AlertDialogBasicDemo() {
 | `data-nested` | Present when the dialog is nested within another dialog. |
 | `data-nested-dialog-open` | Present when another dialog is open inside this one. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
+
 
 ## Styling
 

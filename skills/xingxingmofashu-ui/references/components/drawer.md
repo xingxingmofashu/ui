@@ -41,11 +41,9 @@ export default function DrawerBasicDemo() {
 
   return (
     <>
-      <Button
-        label="Open settings"
-        leadingIcon={<Settings />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Settings />} onClick={() => setOpen(true)}>
+        Open settings
+      </Button>
 
       <Drawer
         open={open}
@@ -54,12 +52,10 @@ export default function DrawerBasicDemo() {
         description="Choose how your workspace behaves for everyone on the team."
         footer={
           <>
-            <Button size="sm" label="Cancel" onClick={() => setOpen(false)} />
-            <Button
-              size="sm"
-              label="Save changes"
-              onClick={() => setOpen(false)}
-            />
+            <Button size="sm" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button size="sm" onClick={() => setOpen(false)}>
+              Save changes
+            </Button>
           </>
         }
       >
@@ -100,7 +96,6 @@ export default function DrawerBasicDemo() {
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
 | `modal` | `boolean \| "trap-focus"` | `true` | Controls focus trapping and page scroll locking. |
 | `disablePointerDismissal` | `boolean` | `false` | Prevents the backdrop from closing the drawer. |
-| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
 | `handle` | `DrawerHandle` | — | Associates the drawer with external triggers. |
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the drawer. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open drawer. |
@@ -109,7 +104,7 @@ export default function DrawerBasicDemo() {
 | `snapPoint` | `DrawerSnapPoint \| null` | — | Controlled active snap point. |
 | `defaultSnapPoint` | `DrawerSnapPoint \| null` | — | Initial snap point when uncontrolled. |
 | `onSnapPointChange` | `(snapPoint: DrawerSnapPoint \| null, details) => void` | — | Called when the active snap point changes. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -127,6 +122,7 @@ export default function DrawerBasicDemo() {
 | `data-swipe-direction` | Indicates the swipe direction (`up`, `down`, `left`, or `right`). |
 | `data-swiping` | Present while the drawer is being swiped. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
+
 
 ## Styling
 

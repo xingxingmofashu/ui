@@ -23,9 +23,10 @@ export default function ToggleControlledDemo() {
 
       <Button
         size="sm"
-        label={pressed ? "Unpin externally" : "Pin externally"}
         onClick={() => setPressed((current) => !current)}
-      />
+      >
+        {pressed ? "Unpin externally" : "Pin externally"}
+      </Button>
     </div>
   );
 }

@@ -3,12 +3,12 @@
 import { useLabelableId } from "@base-ui/react/internals/labelable-provider";
 import { Radio as UIRadio } from "@base-ui/react/radio";
 import { RadioGroup as UIRadioGroup } from "@base-ui/react/radio-group";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../internal/aria";
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { useAria } from "../composables/use-aria";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/radio-group";
 
@@ -17,16 +17,16 @@ type RadioGroup = ComponentConfig<typeof theme>;
 /** One option managed by the radio group. */
 type RadioGroupItemProps<Value = any> = Omit<
   UIRadio.Root.Props<Value>,
-  "className" | "children" | "value"
+  "className" | "children" | "style"
 > & {
-  /** Value that identifies the option in the group value. */
-  value: Value;
   /** Visible label rendered next to the control. */
   label?: React.ReactNode;
   /** Supporting text rendered under the label. */
   description?: React.ReactNode;
   /** Tailwind classes merged into the item root. */
-  className?: string;
+  className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<
@@ -46,7 +46,7 @@ type RadioGroupItemProps<Value = any> = Omit<
 
 type RadioGroupProps<Value = any> = Omit<
   UIRadioGroup.Props<Value>,
-  "className" | "children"
+  "className" | "children" | "style"
 > &
   VariantProps<typeof theme> & {
     /** Options rendered by the radio group. */
@@ -56,7 +56,9 @@ type RadioGroupProps<Value = any> = Omit<
     /** Supporting text rendered under the group label. */
     description?: React.ReactNode;
     /** Tailwind classes merged into the group root. */
-    className?: string;
+    className?: ClassValue;
+    /** Inline styles merged into the same element as `className`. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: RadioGroup["slots"];
   };
@@ -75,15 +77,15 @@ function RadioGroup<Value>({
   ...props
 }: RadioGroupProps<Value>) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
-  const labelId = React.useId();
-  const descriptionId = React.useId();
-  const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
-  const labelledBy = ariaLabelledBy || (label && !ariaLabel ? labelId : undefined);
-  const describedBy = mergeIds(
-    ariaDescribedBy,
-    description && hasName ? descriptionId : undefined,
-  );
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
+  const { controlProps, descriptionProps, labelProps } = useAria({
+    description,
+    label,
+    "aria-describedby": ariaDescribedBy,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+  });
 
   // Match Base UI's CheckboxGroup: the group is the field's control and takes
   // its name from `aria-labelledby`, so `Field.Label` must not point `htmlFor`
@@ -95,9 +97,7 @@ function RadioGroup<Value>({
   return (
     <UIRadioGroup
       {...props}
-      aria-describedby={describedBy}
-      aria-label={ariaLabel}
-      {...(labelledBy ? { "aria-labelledby": labelledBy } : {})}
+      {...controlProps}
       disabled={fieldsetDisabled}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
@@ -106,7 +106,7 @@ function RadioGroup<Value>({
         <div data-slot="header" className={cn(styles.header(), ui?.header)}>
           {label ? (
             <span
-              id={labelId}
+              {...labelProps}
               data-slot="label"
               className={cn(styles.label(), ui?.label)}
             >
@@ -116,7 +116,7 @@ function RadioGroup<Value>({
 
           {description ? (
             <span
-              id={descriptionId}
+              {...descriptionProps}
               data-slot="description"
               className={cn(styles.description(), ui?.description)}
             >
@@ -167,21 +167,18 @@ function RadioGroupItem<Value>({
   ...props
 }: RadioGroupItemProps<Value>) {
   const styles = theme();
-  const labelId = React.useId();
-  const descriptionId = React.useId();
-  const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
-  const labelledBy = ariaLabelledBy || (label && !ariaLabel ? labelId : undefined);
-  const describedBy = mergeIds(
-    ariaDescribedBy,
-    description && hasName ? descriptionId : undefined,
-  );
+  const { controlProps, descriptionProps, labelProps } = useAria({
+    description,
+    label,
+    "aria-describedby": ariaDescribedBy,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+  });
 
   return (
     <UIRadio.Root
       {...props}
-      aria-describedby={describedBy}
-      aria-label={ariaLabel}
-      aria-labelledby={labelledBy}
+      {...controlProps}
       data-slot="item"
       className={cn(styles.item(), ui?.item, className)}
     >
@@ -212,7 +209,7 @@ function RadioGroupItem<Value>({
         <span data-slot="wrapper" className={cn(styles.wrapper(), ui?.wrapper)}>
           {label ? (
             <span
-              id={labelId}
+              {...labelProps}
               data-slot="item-label"
               className={cn(styles.itemLabel(), ui?.itemLabel)}
             >
@@ -222,7 +219,7 @@ function RadioGroupItem<Value>({
 
           {description ? (
             <span
-              id={descriptionId}
+              {...descriptionProps}
               data-slot="item-description"
               className={cn(styles.itemDescription(), ui?.itemDescription)}
             >

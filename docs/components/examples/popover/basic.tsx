@@ -7,7 +7,7 @@ import { Button, Popover, Switch } from "@xingxingmofashu/ui";
 export default function PopoverBasicDemo() {
   return (
     <Popover
-      trigger={<Button label="Open settings" leadingIcon={<Settings />} />}
+      trigger={<Button leadingIcon={<Settings />}>Open settings</Button>}
       title="Workspace settings"
       description="Changes apply to everyone on the team."
     >

@@ -67,9 +67,6 @@ export default function RadioGroupBasicDemo() {
 | --- | --- | --- | --- |
 | `label` | `ReactNode` | — | Visible label for the group. |
 | `description` | `ReactNode` | — | Supporting text under the group label, linked with `aria-describedby`. |
-| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
-| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
-| `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `items` | `readonly RadioGroupItemProps[]` | — | Options rendered by the group. |
 | `value` | `Value` | — | Controlled selected value. |
 | `defaultValue` | `Value` | — | Initial selected value when uncontrolled. |
@@ -77,13 +74,9 @@ export default function RadioGroupBasicDemo() {
 | `disabled` | `boolean` | `false` | Disables every option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Requires a selection for form submission. |
-| `name` | `string` | — | Form field name. |
-| `form` | `string` | — | ID of the form that owns the hidden inputs. |
-| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control, indicator, and text size. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
-| `className` | `string` | — | Tailwind classes merged into the group root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -97,16 +90,13 @@ export default function RadioGroupBasicDemo() {
 | `disabled` | `boolean` | `false` | Disables this option. |
 | `readOnly` | `boolean` | `false` | Prevents changes to this option while remaining focusable. |
 | `required` | `boolean` | `false` | Marks this option as required for form submission. |
-| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
-| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
-| `aria-labelledby` | `string` | — | ID of an external label. |
-| `aria-describedby` | `string` | — | ID of external supporting text. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the option element. |
-| `ref` | `Ref<HTMLSpanElement>` | — | Ref forwarded to the option element. |
-| `className` | `string` | — | Tailwind classes merged into the option root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the option root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for this option's internal slots, keyed by `data-slot`. |
+
+`name`, `form`, `inputRef`, ARIA attributes, and `ref` are forwarded to the group or option and its hidden input.
 
 | Attribute | Description |
 | --- | --- |
@@ -124,6 +114,7 @@ export default function RadioGroupBasicDemo() {
 | `data-starting-style` | Present when the indicator begins animating in. |
 | `data-ending-style` | Present when the indicator is animating out. |
 | `data-slot` | Marks internal parts (`root`, `header`, `label`, `description`, `items`, `item`, `box`, `glass`, `overlay`, `indicator`, `dot`, `wrapper`, `item-label`, `item-description`) for styling. |
+
 
 ## Styling
 

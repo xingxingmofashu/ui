@@ -113,7 +113,7 @@ client.
 - The CSS entry contains the Tailwind import first and the package import
   second.
 - The package is imported once, not in multiple CSS files.
-- A simple `<Button label="Continue" />` renders with its glass surface.
+- A simple `<Button>Continue</Button>` renders with its glass surface.
 - `pnpm typecheck` or the project's build succeeds.
 - The page works in both light and dark themes.
 - No hydration warning appears in a server-rendered app.

@@ -34,10 +34,11 @@ export default function DrawerSnapPointsDemo() {
   return (
     <>
       <Button
-        label="Open filter drawer"
         leadingIcon={<SlidersHorizontal />}
         onClick={() => setOpen(true)}
-      />
+      >
+        Open filter drawer
+      </Button>
 
       <Drawer
         open={open}
@@ -51,9 +52,10 @@ export default function DrawerSnapPointsDemo() {
         footer={
           <Button
             size="sm"
-            label="Show results"
             onClick={() => setOpen(false)}
-          />
+          >
+            Show results
+          </Button>
         }
       >
         <div className="flex flex-col gap-5">

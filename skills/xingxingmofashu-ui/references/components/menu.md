@@ -42,7 +42,7 @@ export default function MenuBasicDemo() {
   return (
     <div className="flex flex-col items-start gap-3">
       <Menu
-        trigger={<Button label="Open menu" />}
+        trigger={<Button>Open menu</Button>}
         items={[
           {
             type: "group",
@@ -123,12 +123,11 @@ export default function MenuBasicDemo() {
 | `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | Roving focus axis used by the arrow keys. |
 | `closeParentOnEsc` | `boolean` | `false` | In a nested menu, closes the whole menu on Escape instead of only the child menu. |
 | `onItemHighlighted` | `(item: HTMLElement \| undefined, details) => void` | — | Called when the highlighted item changes. |
-| `actionsRef` | `RefObject<Menu.Root.Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `disabled` | `boolean` | `false` | Prevents the menu from opening. |
+| `handle` | `Menu.Handle<Payload>` | — | Handle that lets external triggers control the menu. |
 | `triggerId` | `string \| null` | — | ID of the trigger for a controlled menu. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger for an initially open menu. |
-| `handle` | `Menu.Handle<Payload>` | — | Handle that lets external triggers control the menu. |
-| `disabled` | `boolean` | `false` | Prevents the menu from opening. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; list?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue; group?: ClassValue; groupLabel?: ClassValue; separator?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -145,10 +144,9 @@ export default function MenuBasicDemo() {
 | `onSelect` | `(event) => void` | — | Called when the item is selected. |
 | `disabled` | `boolean` | `false` | Disables the item. |
 | `closeOnClick` | `boolean` | `true` | Whether selecting the item closes the menu. |
-| `id` | `string` | — | ID of the item element. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
-| `className` | `string` | — | Tailwind classes merged into the item. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the item. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for this item's slots. |
 
@@ -160,11 +158,9 @@ export default function MenuBasicDemo() {
 | `label` | `ReactNode` | — | Group heading. Required. |
 | `items` | `readonly MenuItemProps[]` | — | Items rendered inside the group. Required. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
-| `className` | `string` | — | Tailwind classes merged into the group. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the group. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | Tailwind classes for the group and its item slots. |
-
-`MenuGroupProps` also forwards the remaining `Menu.Group` props.
 
 **MenuSeparatorProps**
 
@@ -172,13 +168,11 @@ export default function MenuBasicDemo() {
 | --- | --- | --- | --- |
 | `type` | `"separator"` | — | Marks the entry as a separator. Required. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the separator element. |
-| `className` | `string` | — | Tailwind classes merged into the separator. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the separator. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ separator?: ClassValue }` | — | Tailwind classes for the separator slot. |
 
-`MenuSeparatorProps` also forwards `Menu.Separator` props such as `render` and `id`.
-
-`ui` keys map to the `data-slot` values listed below. Additional Base UI `Menu.Root` props, including `actionsRef`, `handle`, `triggerId`, and `defaultTriggerId`, are forwarded.
+`ui` keys map to the `data-slot` values listed below. Native attributes and `ref` are forwarded to the root, each item, group, and separator.
 
 | Attribute | Description |
 | --- | --- |
@@ -193,6 +187,7 @@ export default function MenuBasicDemo() {
 | `data-starting-style` | Present when the popup begins animating in. |
 | `data-ending-style` | Present when the popup is animating out. |
 | `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `list`, `item`, `item-icon`, `item-label`, `shortcut`, `group`, `group-label`, `separator`). |
+
 
 ## Styling
 

@@ -76,12 +76,8 @@ Arrow keys move focus along the orientation, `Home` and `End` jump to the ends, 
 | `loopFocus` | `boolean` | `true` | Loops keyboard focus back to the first tab after the last one. |
 | `disabled` | `boolean` | `false` | Disables every tab. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Tab height, padding, text, icons, and spacing. |
-| `aria-label` | `string` | — | Accessible name for the tab list. |
-| `aria-labelledby` | `string` | — | ID of an external element that names the tab list. |
-| `aria-describedby` | `string` | — | ID of external text that describes the tab list. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; list?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panels?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -94,17 +90,13 @@ Arrow keys move focus along the orientation, `Home` and `End` jump to the ends, 
 | `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
 | `content` | `ReactNode` | — | Panel content shown while the tab is active. |
 | `keepMounted` | `boolean` | `false` | Keeps the panel in the DOM while another tab is active. |
-| `disabled` | `boolean` | `false` | Disables this tab. |
-| `aria-label` | `string` | — | Accessible name for an icon-only tab. |
-| `aria-labelledby` | `string` | — | Names an icon-only tab from another element. |
 | `nativeButton` | `boolean` | `true` | Whether the tab renders a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the tab element. |
-| `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the tab element. |
-| `className` | `string` | — | Tailwind classes merged into the tab button. Use `ui.panel` for the panel. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the tab button. Use `ui.panel` for the panel. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this tab's internal slots, keyed by `data-slot`. |
 
-Root `ui` is merged into every tab and panel first, then the item's `ui`. The item's `className` applies only to the tab button; style the panel through `ui.panel`.
+Root `ui` is merged into every tab and panel first, then the item's `ui`. The item's `className` applies only to the tab button; style the panel through `ui.panel`. ARIA attributes and `ref` are forwarded to the root, list, and tab elements.
 
 | Attribute | Description |
 | --- | --- |

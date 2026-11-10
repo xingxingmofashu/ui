@@ -11,7 +11,7 @@ export default function CardBasicDemo() {
       title="Liquid glass"
       description="A CSS-only frosted glass panel."
       footer={
-        <Button size="sm" label="View" trailingIcon={<ArrowRight />} />
+        <Button size="sm" trailingIcon={<ArrowRight />}>View</Button>
       }
     >
       <div className="text-sm text-ui-ink/70">

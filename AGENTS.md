@@ -113,16 +113,21 @@ workspace.
 
 ## Component API
 
-- Components are single-structure wrappers: they own the Base UI anatomy and
-  expose no Base UI parts or second composition API.
-- Inherit Base UI props from the part that receives them: use
+- Components are single-structure wrappers: they own the primitive anatomy and
+  expose no primitive parts or second composition API.
+- Every exported `*Props` type must derive from its underlying primitive part
+  through `Omit`, `Pick`, or `extends`. Do not redeclare a primitive prop;
+  keep the wrapper's definition only when it deliberately shadows one.
+  `className` and `style` are wrapper-owned: `className` is `cn`'s
+  `ClassValue` and `style` is `React.CSSProperties`.
+- Inherit primitive props from the part that receives them: use
   `Omit<UIComponent.Root.Props, ...>` for root props and
   `Pick<UIComponent.Part.Props, ...>` for forwarded part props. Do not
   re-declare them with indexed access or use `Omit` to expose props the wrapper
   does not forward.
 - Declare wrapper-owned props locally (`trigger`, `arrow`, `className`, `ui`,
-  item fields). Pass-through props keep Base UI names; a single content slot
-  uses `children`, while array item fields keep their own names.
+  item fields). Pass-through props keep their original names; a single content
+  slot uses `children`, while array item fields keep their own names.
 - `className` targets the primary element; internal slots use `ui`, keyed by
   `data-slot`. Derive `ui` from the theme via `ComponentConfig`
   (`src/internal/tv.ts`); never hand-write slot maps or aliases. `ui` values
@@ -159,14 +164,15 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
   `playground/src/repl/icons.ts`.
 - Preview priority is `render(...)`, then `export default`, then the last
   expression. Primitive results go to the console.
-- Examples are loaded from `docs/components/examples/*/*.tsx` through a raw
-  Vite glob. Add a docs example and the REPL picker picks it up automatically.
+- The REPL loads each component's `basic` example from
+  `docs/components/examples/*/basic.tsx` through a raw Vite glob. Other docs
+  examples stay on the docs site and are not listed in the REPL picker.
 - Tailwind utilities in user code are compiled at runtime by
   `@tailwindcss/browser`; the playground stylesheet also scans the docs
   examples so the initial render works before that runtime loads.
-- Browser tests: `test/repl/runtime.test.ts` (Vitest) and `test/e2e/*.spec.ts`
-  (Playwright). The Playwright suite covers the REPL, representative component
-  interactions, and shared glass preset values; it does not use screenshots.
+- Browser tests: `test/e2e/*.spec.ts` (Playwright). The suite covers
+  representative component interactions and shared glass preset values; it does
+  not use screenshots.
 
 ## Package files
 
@@ -175,7 +181,6 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 - Glass preset plugin: `src/plugins/glass-preset/`
 - Design tokens and glass material: `src/index.css`
 - Shared glass presets: `src/plugins/glass-preset/index.css`
-- Shared token and theme contract tests: `test/tokens/`
 - Plugin tests: `test/plugins/<name>.test.tsx`
 - Test setup: `test/setup.ts`
 - Vitest config: `vitest.config.ts`
@@ -183,4 +188,3 @@ type AccordionItemProps<Value extends string = string> = /* ... */ & {
 - Docs site: `docs/` (see `docs/AGENTS.md`)
 - Playground app: `playground/`
 - Consumer agent skill: `skills/xingxingmofashu-ui/`
-- Skill guard test: `test/skills/skill.test.ts`

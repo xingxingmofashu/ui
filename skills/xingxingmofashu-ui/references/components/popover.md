@@ -38,7 +38,7 @@ import { Button, Popover, Switch } from "@xingxingmofashu/ui";
 export default function PopoverBasicDemo() {
   return (
     <Popover
-      trigger={<Button label="Open settings" leadingIcon={<Settings />} />}
+      trigger={<Button leadingIcon={<Settings />}>Open settings</Button>}
       title="Workspace settings"
       description="Changes apply to everyone on the team."
     >
@@ -77,12 +77,11 @@ export default function PopoverBasicDemo() {
 | `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when the popover opens or closes. |
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
-| `modal` | `boolean \| "trap-focus"` | `false` | `true` locks page scroll and blocks outside interaction; `"trap-focus"` leaves scroll and outside interaction enabled. Neither traps focus because the component does not render a `Popover.Close` part. |
-| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `modal` | `boolean \| "trap-focus"` | `false` | `true` locks page scroll and blocks outside interaction; `"trap-focus"` leaves scroll and outside interaction enabled. Focus is not trapped by this component. |
 | `handle` | `PopoverHandle` | — | Associates the popover with external triggers. |
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the popover. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open popover. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -101,6 +100,7 @@ export default function PopoverBasicDemo() {
 | `data-pressed` | Present while the trigger is pressed. |
 | `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`, `title`, `description`, `body`, `footer`) for styling. |
 
+
 ## Styling
 
 `className` targets the primary element described in the API table above. Use `ui` to style internal slots keyed by `data-slot`; the `ui` row lists the available keys. Prefer shared `--ui-glass-*` tokens for material changes instead of overriding colors, blur, or shadows on one component.
@@ -111,7 +111,7 @@ export default function PopoverBasicDemo() {
 
 `Popover` adds `aria-haspopup="dialog"` and `aria-expanded` to the trigger and renders a popup named by `title` and described by `description`.
 
-It is non-modal by default: focus is not trapped, the page stays scrollable, and `Escape` or an outside press closes it. Provide a visible close or done action when the popup changes settings. The `modal` prop cannot enable focus trapping with this wrapper: Base UI only does that when a `Popover.Close` part is rendered, and the component does not render one. `modal={true}` still locks page scroll and blocks outside interaction. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for focus rules.
+It is non-modal by default: focus is not trapped, the page stays scrollable, and `Escape` or an outside press closes it. Provide a visible close or done action when the popup changes settings. The `modal` prop controls page scroll and outside interaction, but this component does not trap focus. `modal={true}` still locks page scroll and blocks outside interaction. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for focus rules.
 
 ## Gotchas
 

@@ -180,7 +180,7 @@ component's primary element. Use them for layout, not for replacing the
 material:
 
 ```tsx
-<Button className="w-full" style={{ maxWidth: 320 }} label="Continue" />
+<Button className="w-full" style={{ maxWidth: 320 }}>Continue</Button>
 ```
 
 Every component also accepts `ui`, an object keyed by the component's

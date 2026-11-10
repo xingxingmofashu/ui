@@ -1,11 +1,11 @@
 "use client";
 
 import { Input as UIInput } from "@base-ui/react/input";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/input";
 
@@ -18,7 +18,7 @@ interface InputProps
     >,
     VariantProps<typeof theme> {
   /** Tailwind classes merged into the root element. */
-  className?: string;
+  className?: ClassValue;
   /** Inline styles merged into the outer root. Use `ui.input` for the native input. */
   style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
@@ -40,7 +40,8 @@ function Input({
   ...props
 }: InputProps) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
 
   return (
     <div

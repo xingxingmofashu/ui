@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu as UIMenu } from "@base-ui/react/menu";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
 import { type ComponentConfig } from "../internal/tv";
@@ -12,7 +12,7 @@ type Menu = ComponentConfig<typeof theme>;
 /** One action item in the menu. */
 type MenuItemProps = Omit<
   UIMenu.Item.Props,
-  "children" | "className" | "label" | "onClick"
+  "children" | "className" | "label" | "onClick" | "onSelect" | "style"
 > & {
   type?: "item";
   /** Value that identifies the item in the menu. */
@@ -28,7 +28,9 @@ type MenuItemProps = Omit<
   /** Called when the item is selected. The menu closes by default. */
   onSelect?: React.MouseEventHandler<HTMLElement>;
   /** Tailwind classes merged into the item. */
-  className?: string;
+  className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for this item's internal slots. */
   ui?: Partial<
     Pick<Menu["slots"], "item" | "itemIcon" | "itemLabel" | "shortcut">
@@ -38,7 +40,7 @@ type MenuItemProps = Omit<
 /** A labelled group of menu items. */
 type MenuGroupProps = Omit<
   UIMenu.Group.Props,
-  "children" | "className"
+  "children" | "className" | "style"
 > & {
   type: "group";
   /** Group heading. */
@@ -46,7 +48,9 @@ type MenuGroupProps = Omit<
   /** Items rendered inside the group. */
   items: readonly MenuItemProps[];
   /** Tailwind classes merged into the group. */
-  className?: string;
+  className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for the group slots. */
   ui?: Partial<
     Pick<
@@ -64,19 +68,18 @@ type MenuGroupProps = Omit<
 /** A separator between menu items. */
 type MenuSeparatorProps = Omit<
   UIMenu.Separator.Props,
-  "children" | "className" | "orientation"
+  "children" | "className" | "orientation" | "style"
 > & {
   type: "separator";
   /** Tailwind classes merged into the separator. */
-  className?: string;
+  className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for the separator slot. */
   ui?: Partial<Pick<Menu["slots"], "separator">>;
 };
 
-type MenuProps = Omit<
-  UIMenu.Root.Props,
-  "children" | "className"
-> &
+type MenuProps = Omit<UIMenu.Root.Props, "children"> &
   Pick<
     UIMenu.Positioner.Props,
     "side" | "align" | "sideOffset" | "alignOffset" | "collisionPadding"
@@ -90,7 +93,7 @@ type MenuProps = Omit<
       | MenuSeparatorProps
     )[];
     /** Tailwind classes merged into the popup. */
-    className?: string;
+    className?: ClassValue;
     /** Inline styles merged into the popup. */
     style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */

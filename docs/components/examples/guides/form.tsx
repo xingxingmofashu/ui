@@ -95,9 +95,10 @@ export default function GuideFormDemo() {
         <Button
           type="submit"
           size="sm"
-          label="Save preferences"
           trailingIcon={<ArrowRight />}
-        />
+        >
+          Save preferences
+        </Button>
         <p aria-live="polite" className="text-sm text-ui-ink/60">
           {status}
         </p>

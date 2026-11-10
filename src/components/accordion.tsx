@@ -1,7 +1,7 @@
 "use client";
 
 import { Accordion as UIAccordion } from "@base-ui/react/accordion";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
@@ -15,7 +15,7 @@ type Accordion = ComponentConfig<typeof theme>;
 /** One panel managed by the accordion. */
 type AccordionItemProps = Omit<
   UIAccordion.Item.Props,
-  "children" | "className" | "content" | "title" | "value"
+  "children" | "className" | "content" | "style" | "title" | "value"
 > & {
   /** Value that identifies the item in the accordion value. */
   value: any;
@@ -26,7 +26,9 @@ type AccordionItemProps = Omit<
   /** Replaces the default plus icon. Set to `false` to hide the indicator. */
   indicator?: React.ReactNode | false;
   /** Tailwind classes merged into the item root. */
-  className?: string;
+  className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<
@@ -45,19 +47,22 @@ type AccordionItemProps = Omit<
 
 type AccordionProps<Value = any> = Omit<
   UIAccordion.Root.Props<Value>,
-  "className" | "children"
+  "className" | "children" | "style"
 > &
   VariantProps<typeof theme> & {
     /** Panels rendered by the accordion. */
     items: readonly AccordionItemProps[];
     /** Tailwind classes merged into the root. */
-    className?: string;
+    className?: ClassValue;
+    /** Inline styles merged into the same element as `className`. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Accordion["slots"];
   };
 
 function Accordion<Value = any>({
   className,
+  style,
   ui,
   size,
   items,
@@ -68,6 +73,7 @@ function Accordion<Value = any>({
   return (
     <UIAccordion.Root
       {...props}
+      style={style}
       data-slot="root"
       className={cn(styles.root(), ui?.root, className)}
     >
@@ -110,6 +116,7 @@ function AccordionItem({
   title,
   content,
   className,
+  style,
   ui,
   indicator,
   ref,
@@ -122,6 +129,7 @@ function AccordionItem({
       {...props}
       ref={ref}
       value={value}
+      style={style}
       data-slot="item"
       className={cn(styles.item(), ui?.item, className)}
     >

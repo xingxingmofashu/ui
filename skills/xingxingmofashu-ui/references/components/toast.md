@@ -41,7 +41,6 @@ function ToastTrigger() {
 
   return (
     <Button
-      label="Show notification"
       leadingIcon={<Bell />}
       onClick={() =>
         toast.add({
@@ -49,7 +48,9 @@ function ToastTrigger() {
           description: "Your workspace settings were updated for everyone.",
         })
       }
-    />
+    >
+      Show notification
+    </Button>
   );
 }
 
@@ -80,11 +81,12 @@ export default function ToastBasicDemo() {
 | --- | --- | --- | --- |
 | `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | Corner where the stack is anchored. |
 | `close` | `ReactNode` | Built-in close button | Custom content rendered in place of the default close button. |
-| `className` | `string` | — | Tailwind classes merged into each toast. |
+| `className` | `ClassValue` | — | Tailwind classes merged into each toast. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ viewport?: ClassValue; root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; icon?: ClassValue; text?: ClassValue; title?: ClassValue; description?: ClassValue; actions?: ClassValue; action?: ClassValue; close?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces each toast root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to each toast root. |
+
+Native attributes and `ref` are forwarded to each toast root.
 
 **useToast**
 
@@ -140,6 +142,7 @@ export default function ToastBasicDemo() {
 | `data-position` | Indicates the anchored corner on the viewport. |
 | `data-icon` | Indicates the status icon type on the icon slot. |
 | `data-slot` | Marks internal parts (`viewport`, `root`, `glass`, `overlay`, `content`, `icon`, `text`, `title`, `description`, `actions`, `action`, `close`) for styling. |
+
 
 ## Styling
 

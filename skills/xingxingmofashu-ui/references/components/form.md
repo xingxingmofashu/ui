@@ -75,12 +75,9 @@ export default function FormBasicDemo() {
         />
       </Field>
 
-      <Button
-        type="submit"
-        label="Submit"
-        disabled={loading}
-        focusableWhenDisabled
-      />
+      <Button type="submit" disabled={loading} focusableWhenDisabled>
+        Submit
+      </Button>
 
       {status ? <p className="text-sm text-ui-ink/60">{status}</p> : null}
     </Form>
@@ -98,19 +95,19 @@ export default function FormBasicDemo() {
 | `errors` | `Record<string, string \| string[]>` | — | External errors keyed by the `name` of a `Field`. Strings render one message; arrays render their messages, with two or more wrapped in a list. |
 | `onFormSubmit` | `(formValues: Record<string, any>, eventDetails: { reason: "none"; event: Event }) => void` | — | Receives values from `Field`-registered controls and prevents the native submit event. |
 | `validationMode` | `"onSubmit" \| "onBlur" \| "onChange"` | `"onSubmit"` | Default validation timing for fields in the form. A `Field` prop takes precedence. |
-| `actionsRef` | `RefObject<{ validate: (fieldName?: string) => void } \| null>` | — | Imperative validation for all fields or one field by name. |
-| `className` | `string` | — | Tailwind classes merged into the form element. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the form element. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue }` | — | Tailwind classes for the `root` slot, keyed by `data-slot`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the form root element. |
 
-Additional Base UI `Form` props and native `<form>` attributes are forwarded, including `action`, `method`, `onSubmit`, `id`, and `aria-*`.
+Native `<form>` attributes and `ref` are forwarded, including `action`, `method`, `onSubmit`, `id`, and `aria-*`.
 
 | Attribute | Description |
 | --- | --- |
 | `data-slot` | Marks the form root (`root`) for styling. |
 
 `Form` has no `data-*` state attributes of its own.
+
 
 ## Styling
 
@@ -122,7 +119,7 @@ Additional Base UI `Form` props and native `<form>` attributes are forwarded, in
 
 `Form` renders a native `<form>` element. It does not add an accessible name; use `aria-label` or `aria-labelledby` when a page contains more than one form. Labels for individual controls come from `Field`, and submit buttons keep their own accessible names.
 
-Native form behavior is preserved: `Enter` submits from a text field when a submit button exists, and autofill and `FormData` keep working. Base UI suppresses the browser's validation bubble and validates through `Field` instead. On a failed submission, focus moves to the first invalid control so keyboard and screen reader users land on the problem. Form-level errors are announced through the control's `aria-describedby` relationship. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for form patterns.
+Native form behavior is preserved: `Enter` submits from a text field when a submit button exists, and autofill and `FormData` keep working. The component suppresses the browser's validation bubble and validates through `Field` instead. On a failed submission, focus moves to the first invalid control so keyboard and screen reader users land on the problem. Form-level errors are announced through the control's `aria-describedby` relationship. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for form patterns.
 
 ## Gotchas
 

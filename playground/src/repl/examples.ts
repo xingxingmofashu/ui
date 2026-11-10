@@ -1,8 +1,7 @@
-import { getComponentMeta, groupOrder, toTitle } from "../catalog";
+import { getComponentMeta, groupOrder } from "../catalog";
 
 type Example = {
   id: string;
-  demo: string;
   label: string;
   group: string;
   load: () => Promise<string>;
@@ -14,7 +13,7 @@ type ExampleGroup = {
 };
 
 const loaders = import.meta.glob<string>(
-  "../../../docs/components/examples/*/*.tsx",
+  "../../../docs/components/examples/*/basic.tsx",
   {
     query: "?raw",
     import: "default",
@@ -24,39 +23,24 @@ const loaders = import.meta.glob<string>(
 const examples: Example[] = [];
 
 for (const [path, load] of Object.entries(loaders)) {
-  const match = path.match(/examples\/([^/]+)\/([^/]+)\.tsx$/);
+  const match = path.match(/examples\/([^/]+)\/basic\.tsx$/);
 
   if (!match) continue;
 
-  const [, component, demo] = match;
-  const isGuide = component === "guides";
-  const meta = isGuide
-    ? { title: "Guides", group: "Guides" }
-    : getComponentMeta(component);
-  const demoTitle = demo === "basic" ? "Basic" : toTitle(demo);
+  const [, component] = match;
+  const meta = getComponentMeta(component);
 
   examples.push({
-    id: `${component}/${demo}`,
-    demo,
-    label: isGuide ? demoTitle : `${meta.title} · ${demoTitle}`,
+    id: `${component}/basic`,
+    label: `${meta.title} · Basic`,
     group: meta.group,
     load,
   });
 }
 
-examples.sort((a, b) => {
-  if (a.group !== b.group) {
-    return a.group.localeCompare(b.group);
-  }
+examples.sort((a, b) => a.label.localeCompare(b.label));
 
-  if (a.demo === "basic" && b.demo !== "basic") return -1;
-  if (b.demo === "basic" && a.demo !== "basic") return 1;
-
-  return a.label.localeCompare(b.label);
-});
-
-const groupNames = [...groupOrder, "Guides"];
-const exampleGroups: ExampleGroup[] = groupNames
+const exampleGroups: ExampleGroup[] = groupOrder
   .map((group) => ({
     group,
     examples: examples.filter((example) => example.group === group),

@@ -9,14 +9,14 @@ export default function TooltipDelayDemo() {
     <div className="flex flex-wrap items-center gap-3">
       <Tooltip
         delay={0}
-        trigger={<Button label="No delay" leadingIcon={<Zap />} />}
+        trigger={<Button leadingIcon={<Zap />}>No delay</Button>}
       >
         Opens immediately
       </Tooltip>
       <Tooltip
         delay={1200}
         closeDelay={300}
-        trigger={<Button label="Slow delay" />}
+        trigger={<Button>Slow delay</Button>}
       >
         Opens after 1.2 seconds and waits 0.3 seconds to close
       </Tooltip>

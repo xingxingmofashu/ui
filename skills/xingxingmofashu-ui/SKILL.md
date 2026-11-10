@@ -84,7 +84,7 @@ bundler.
 | Array-driven content | `Accordion`, `CheckboxGroup`, `Menu`, `RadioGroup`, `Select`, `Tabs`, and `ToggleGroup` take `items={[...]}`. |
 | Toast | Wrap the app in `ToastProvider`, render `<Toast />`, and call `useToast()` inside. |
 | Form layout | `Form` owns submission and errors; `Field` labels one control; `Fieldset` groups fields under a legend. |
-| Actions and state | `Button` uses `label` (or `children`); `Toggle` uses `pressed`; `Checkbox`/`Switch` use `checked`. |
+| Actions and state | `Button` uses `children`; `Toggle` uses `pressed`; `Checkbox`/`Switch` use `checked`. |
 
 ## Choose a component
 
@@ -111,11 +111,9 @@ bundler.
 
 ### Element
 
-- [Accordion](references/components/accordion.md) — Collapsible glass panels on one surface.
 - [Button](references/components/button.md) — Action button with sizes, icons, and link rendering.
 - [Card](references/components/card.md) — Server-safe glass panel with header, body, and footer.
-- [Scroll Area](references/components/scroll-area.md) — Native scrolling with custom glass scrollbars.
-- [Tabs](references/components/tabs.md) — Related panels with a glass tab list.
+- [Progress](references/components/progress.md) — Determinate and indeterminate task progress.
 - [Toggle](references/components/toggle.md) — Persistent on/off action.
 - [Toggle Group](references/components/toggle-group.md) — Related toggle buttons with single or multiple selection.
 
@@ -132,6 +130,15 @@ bundler.
 - [Slider](references/components/slider.md) — Single value or range along a track.
 - [Switch](references/components/switch.md) — Immediate on/off setting.
 
+### Data
+
+- [Accordion](references/components/accordion.md) — Collapsible glass panels on one surface.
+- [Scroll Area](references/components/scroll-area.md) — Native scrolling with custom glass scrollbars.
+
+### Navigation
+
+- [Tabs](references/components/tabs.md) — Related panels with a glass tab list.
+
 ### Overlay
 
 - [Alert Dialog](references/components/alert-dialog.md) — Destructive confirmation with cancel and confirm.
@@ -141,10 +148,6 @@ bundler.
 - [Popover](references/components/popover.md) — Non-modal panel anchored to a trigger.
 - [Toast](references/components/toast.md) — Notifications, actions, and promise states.
 - [Tooltip](references/components/tooltip.md) — Short hint on hover or focus.
-
-### Feedback
-
-- [Progress](references/components/progress.md) — Determinate and indeterminate task progress.
 
 ## Core references
 

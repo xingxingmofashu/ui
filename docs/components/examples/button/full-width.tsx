@@ -3,5 +3,5 @@
 import { Button } from "@xingxingmofashu/ui";
 
 export default function ButtonFullWidthDemo() {
-  return <Button label="Full width" className="w-full" />;
+  return <Button className="w-full">Full width</Button>;
 }

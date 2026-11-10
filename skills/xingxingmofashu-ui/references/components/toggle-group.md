@@ -73,11 +73,8 @@ export default function ToggleGroupBasicDemo() {
 | `disabled` | `boolean` | `false` | Disables every item. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, and icons. |
 | `items` | `readonly ToggleGroupItemProps[]` | — | Options rendered by the group. |
-| `aria-label` | `string` | — | Accessible name for the group. |
-| `aria-labelledby` | `string` | — | Names the group from another element. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group element. |
-| `className` | `string` | — | Tailwind classes merged into the group root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -89,17 +86,13 @@ export default function ToggleGroupBasicDemo() {
 | `label` | `ReactNode` | — | Visible content inside the item. |
 | `icon` | `ReactNode` | — | Decorative icon rendered before the label. |
 | `onPressedChange` | `(pressed, details) => void` | — | Called when this item's pressed state changes. |
-| `disabled` | `boolean` | `false` | Disables the item. |
-| `aria-label` | `string` | — | Accessible name for icon-only items. |
-| `aria-labelledby` | `string` | — | Names an icon-only item from another element. |
 | `nativeButton` | `boolean` | `true` | Whether the item renders a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item element. |
-| `ref` | `Ref<HTMLButtonElement>` | — | Ref forwarded to the item element. |
-| `className` | `string` | — | Tailwind classes merged into the item root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the item root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | Tailwind classes for this item's internal slots, keyed by `data-slot`. |
 
-Items do not accept `pressed` or `defaultPressed`; the group `value` / `defaultValue` is the single source of truth for selection. Root `ui` is merged into every item first, then the item's `ui`, then the item's `className`.
+Items do not accept `pressed` or `defaultPressed`; the group `value` / `defaultValue` is the single source of truth for selection. Root `ui` is merged into every item first, then the item's `ui`, then the item's `className`. ARIA attributes, `disabled`, and `ref` are forwarded to the group and item buttons.
 
 | Attribute | Description |
 | --- | --- |
@@ -108,6 +101,7 @@ Items do not accept `pressed` or `defaultPressed`; the group `value` / `defaultV
 | `data-multiple` | Present when the group allows multiple pressed items. |
 | `data-pressed` | Present on a pressed item. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `rim`, `item`, `content`, `icon`, `label`). |
+
 
 ## Styling
 

@@ -38,13 +38,13 @@ import { Button, Tooltip } from "@xingxingmofashu/ui";
 export default function TooltipBasicDemo() {
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <Tooltip trigger={<Button label="Save" leadingIcon={<Save />} />}>
+      <Tooltip trigger={<Button leadingIcon={<Save />}>Save</Button>}>
         Save changes
       </Tooltip>
-      <Tooltip trigger={<Button label="Preview" leadingIcon={<Eye />} />}>
+      <Tooltip trigger={<Button leadingIcon={<Eye />}>Preview</Button>}>
         Preview the current draft
       </Tooltip>
-      <Tooltip trigger={<Button label="Publish" leadingIcon={<Rocket />} />}>
+      <Tooltip trigger={<Button leadingIcon={<Rocket />}>Publish</Button>}>
         Publish to everyone
       </Tooltip>
     </div>
@@ -73,15 +73,14 @@ export default function TooltipBasicDemo() {
 | `disabled` | `boolean` | `false` | Prevents the tooltip from opening. |
 | `trackCursorAxis` | `"none" \| "x" \| "y" \| "both"` | `"none"` | Axis the tooltip follows while the pointer moves. |
 | `disableHoverablePopup` | `boolean` | `false` | Whether the tooltip contents can be hovered without closing the tooltip. |
-| `actionsRef` | `RefObject<Tooltip.Root.Actions \| null>` | — | Imperative `close` and `unmount` actions. |
 | `triggerId` | `string \| null` | — | ID of the trigger for a controlled tooltip. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger for an initially open tooltip. |
 | `handle` | `Tooltip.Handle<Payload>` | — | Handle that lets external triggers control the tooltip. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
-`ui` keys map to the `data-slot` values listed below. All other Base UI `Tooltip.Root` props are forwarded.
+`ui` keys map to the `data-slot` values listed below. Additional native attributes are forwarded through the trigger element.
 
 | Attribute | Description |
 | --- | --- |
@@ -94,6 +93,7 @@ export default function TooltipBasicDemo() {
 | `data-instant` | Present when animations should be skipped. |
 | `data-popup-open` | Present on the trigger while the tooltip is open. |
 | `data-slot` | Marks internal parts (`positioner`, `popup`, `glass`, `overlay`, `arrow`, `content`). |
+
 
 ## Styling
 

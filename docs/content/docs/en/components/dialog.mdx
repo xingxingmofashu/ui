@@ -45,11 +45,10 @@ The component is typically used in controlled mode: `open` controls visibility a
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
 | `modal` | `boolean \| "trap-focus"` | `true` | Controls focus trapping and page scroll locking. |
 | `disablePointerDismissal` | `boolean` | `false` | Prevents the backdrop from closing the dialog. |
-| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
 | `handle` | `DialogHandle` | — | Associates the dialog with external triggers. |
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the dialog. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open dialog. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 

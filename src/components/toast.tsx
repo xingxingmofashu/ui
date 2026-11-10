@@ -1,7 +1,7 @@
 "use client";
 
 import { Toast as UIToast } from "@base-ui/react/toast";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
 import { useToast } from "../composables/use-toast";
@@ -32,25 +32,26 @@ const SWIPE_DIRECTIONS = {
   ("up" | "down" | "left" | "right")[]
 >;
 
-interface ToastProviderProps
-  extends Omit<UIToast.Provider.Props, "children"> {
-  /** App content that can call `useToast`. */
+type ToastProviderProps = Omit<UIToast.Provider.Props, "children"> & {
+  /** App content that can access the toast manager. */
   children?: React.ReactNode;
-}
+};
 
 type Toast = ComponentConfig<typeof theme>;
 
 interface ToastProps
   extends Omit<
     UIToast.Root.Props,
-    "children" | "className" | "swipeDirection" | "toast"
+    "children" | "className" | "style" | "swipeDirection" | "toast"
   > {
   /** Corner where the toast stack is anchored. */
   position?: ToastPosition;
   /** Content rendered in place of the default close button. */
   close?: React.ReactNode;
   /** Tailwind classes merged into each toast. */
-  className?: string;
+  className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Toast["slots"];
 }

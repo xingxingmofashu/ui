@@ -3,11 +3,9 @@
   "pages": [
     "index",
     "---基础元素---",
-    "accordion",
     "button",
     "card",
-    "scroll-area",
-    "tabs",
+    "progress",
     "toggle",
     "toggle-group",
     "---表单---",
@@ -21,6 +19,11 @@
     "select",
     "slider",
     "switch",
+    "---数据---",
+    "accordion",
+    "scroll-area",
+    "---导航---",
+    "tabs",
     "---浮层---",
     "alert-dialog",
     "dialog",
@@ -28,8 +31,6 @@
     "menu",
     "popover",
     "toast",
-    "tooltip",
-    "---反馈---",
-    "progress"
+    "tooltip"
   ]
 }

@@ -136,7 +136,7 @@ export function Example() {
   return (
     <Card title="Liquid glass" description="CSS-only frosted panel.">
       <Switch label="Notifications" defaultChecked />
-      <Button label="Continue" />
+      <Button>Continue</Button>
     </Card>
   );
 }

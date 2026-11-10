@@ -46,9 +46,10 @@ export default function AccordionControlledDemo() {
         </span>
         <Button
           size="sm"
-          label={allOpen ? "Collapse all" : "Expand all"}
           onClick={() => setValue(allOpen ? [] : allValues)}
-        />
+        >
+          {allOpen ? "Collapse all" : "Expand all"}
+        </Button>
       </div>
     </div>
   );

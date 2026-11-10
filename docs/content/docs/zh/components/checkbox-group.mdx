@@ -15,19 +15,19 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 
 ## 父复选框
 
-父复选框由 `Checkbox` 与 `CheckboxGroup` 组合实现，而不是分组的内置功能。在状态中保存选中值，根据状态推导父复选框的 `checked` 与 `indeterminate`，并在 `onCheckedChange` 中全选或清空所有选项。父复选框位于缩进的分组上方。为两个控件设置相同的 `size`，让两行保持对齐。
+在第一个 item 上设置 `parent: true`，并通过分组的 `allValues` 传入所有子项的值。分组必须使用 `value` 与 `onValueChange` 受控。分组会根据选中值推导父复选框的选中与混合状态；点击父复选框会添加或移除所有子项的值。父复选框位于缩进的选项上方。
 
 <Example name="checkbox-group/parent" />
 
 ## 嵌套父复选框
 
-将第二个 `Checkbox` 与 `CheckboxGroup` 再缩进一级。每个父复选框由自己的数组推导，外层父复选框由两个数组共同推导。点击外层父复选框会同时更新两个数组，因此反复点击始终在全部选项与全不选之间切换。
+将第二个 `CheckboxGroup` 再缩进一级。分组自己的父复选框通过 `parent: true` 与 `allValues` 创建。当一个父复选框需要控制多个分组时，使用独立的 `Checkbox` 作为外层父复选框，并在 `onCheckedChange` 中更新每个分组的数组。点击外层父复选框会同时更新两个数组，因此反复点击始终在全部选项与全不选之间切换。
 
 <Example name="checkbox-group/nested-parent" />
 
 ## 受控用法
 
-`value` 与 `onValueChange` 让选中状态完全由外部控制。回调会收到下一次的选中值数组与 Base UI 事件详情。
+`value` 与 `onValueChange` 让选中状态完全由外部控制。回调会收到下一次的选中值数组与事件详情。
 
 <Example name="checkbox-group/controlled" />
 
@@ -45,7 +45,7 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 
 ## 表单用法
 
-设置 `name` 后，每个选中项都会通过同名隐藏原生复选框提交。使用 `FormData.getAll(name)` 读取全部值。`form` 可将这些输入关联到文档其他位置的表单。
+设置 `name` 后，每个选中的子项都会通过同名隐藏原生复选框提交；父项不会提交。使用 `FormData.getAll(name)` 读取全部值。`form` 可将这些输入关联到文档其他位置的表单。
 
 <Example name="checkbox-group/form" />
 
@@ -53,7 +53,7 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 
 `CheckboxGroup` 暴露 `group`，由 `label` 或 `aria-label` / `aria-labelledby` 命名。每个选项都是复选框，可见的 `label` 与 `description` 会自动关联。`Space` 切换当前复选框，`Tab` 在选项之间移动，因为复选框组不是复合控件。
 
-父复选框是独立的 `Checkbox`：为分组提供自己的可访问名称，根据共享数组推导父复选框的 `checked` 与 `indeterminate`，并保持两层状态同步。父复选框只作为控件使用；除非为它设置 `name` 与 `value`，否则不会提交值。
+使用 `parent: true` 的父项由自身的 `label` 命名，并通过 `allValues` 与所有子项保持同步。分组负责父复选框的选中与混合状态，并通过 `aria-controls` 将其与子项关联。父项只作为控件使用，不会提交值。当一个父复选框需要控制多个分组时，请使用独立的 `Checkbox`，并保持每个分组的数组同步。
 
 禁用的选项仍会被播报，但无法修改。每个选中的选项都会提交自己的隐藏原生复选框；复选框组没有原生 `required`，请在表单提交处理函数中校验至少选中一个值。表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
@@ -66,20 +66,15 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `items` | `readonly CheckboxGroupItemProps[]` | — | 分组中的选项。必填。 |
 | `label` | `ReactNode` | — | 分组的可见标签。 |
 | `description` | `ReactNode` | — | 分组标签下方的辅助说明，通过 `aria-describedby` 关联。 |
-| `value` | `readonly string[]` | — | 受控的选中值。 |
-| `defaultValue` | `readonly string[]` | `[]` | 非受控时的初始选中值。 |
+| `value` | `string[]` | — | 受控的选中值。 |
+| `defaultValue` | `string[]` | `[]` | 非受控时的初始选中值。 |
 | `onValueChange` | `(value: string[], details) => void` | — | 勾选或取消勾选时调用。 |
-| `name` | `string` | — | 应用于分组内每个复选框的表单字段名。 |
-| `form` | `string` | — | 隐藏输入所属的表单 ID。 |
+| `allValues` | `string[]` | — | 分组中所有子项的值。item 使用 `parent: true` 时必填。 |
 | `disabled` | `boolean` | `false` | 禁用全部选项。 |
 | `readOnly` | `boolean` | `false` | 禁止修改，但保留每个选项的焦点。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控件、标签、说明与间距尺寸。 |
-| `aria-label` | `string` | — | 没有可见标签时的可访问名称。 |
-| `aria-labelledby` | `string` | — | 从其他元素为分组命名。 |
-| `aria-describedby` | `string` | — | 外部辅助说明的 ID。可见的 `description` 会与此值合并。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组根元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到分组根元素的 ref。 |
-| `className` | `string` | — | 合并到分组根元素的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到分组根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
@@ -87,31 +82,24 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `value` | `string` | — | 标识选项在组值中的值。必填。 |
+| `value` | `string` | — | 标识选项在组值中的值。子项必填；父项可选。 |
+| `parent` | `boolean` | `false` | 渲染分组的父复选框。需要受控分组与 `allValues`。 |
 | `indeterminate` | `boolean` | `false` | 强制混合状态。 |
 | `label` | `ReactNode` | — | 控件旁的可见标签；未提供 `aria-label` 或 `aria-labelledby` 时作为可访问名称。 |
 | `description` | `ReactNode` | — | 标签下方的辅助说明；控件有名称时通过 `aria-describedby` 关联。 |
+| `onCheckedChange` | `(checked: boolean, details) => void` | — | 该选项变化时、分组更新前调用。调用 `details.cancel()` 可取消分组更新。 |
 | `disabled` | `boolean` | `false` | 禁用该选项。 |
 | `readOnly` | `boolean` | `false` | 禁止修改，但保留焦点。 |
 | `required` | `boolean` | `false` | 将该复选框标记为表单必填。 |
-| `name` | `string` | — | 该选项的表单字段名；默认使用分组的 `name`。 |
-| `form` | `string` | — | 拥有该选项隐藏输入框的表单 ID；默认使用分组的 `form`。 |
-| `uncheckedValue` | `string` | — | 该选项未选中时提交的值。 |
-| `id` | `string` | — | 隐藏输入框的 ID；当 `nativeButton` 为 true 时改为根元素的 ID。 |
-| `inputRef` | `Ref<HTMLInputElement>` | — | 指向隐藏原生输入框的 ref。 |
 | `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换条目根元素。 |
-| `aria-label` | `string` | — | 没有可见标签时的可访问名称。 |
-| `aria-labelledby` | `string` | — | 外部标签的 ID。 |
-| `aria-describedby` | `string` | — | 外部辅助说明的 ID。 |
-| `ref` | `Ref<HTMLElement>` | — | 转发到条目根元素的 ref。 |
-| `className` | `string` | — | 合并到条目根元素的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到条目根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | 按 `data-slot` 组织的控件槽位类名。 |
 
-父复选框不属于组件 API。请使用 `Checkbox` 组合实现，并如上文所示同步数组状态。
+父项使用 `parent: true`，并要求分组提供 `allValues`；父项不会提交值。分组 item 不支持 `uncheckedValue`。
 
-`ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `CheckboxGroup` 属性都会透传；每个条目还会透传其余 Base UI `Checkbox` 属性。
+`ui` 的键对应下方列出的 `data-slot` 值。`name`、`form`、`id`、`ref` 与其他原生属性会透传到分组和每个控件。
 
 | 属性 | 说明 |
 | --- | --- |
@@ -121,6 +109,7 @@ description: "一个 React 复选框组，采用 Liquid Glass 控件，支持标
 | `data-checked` | 选项选中时存在。 |
 | `data-unchecked` | 选项未选中时存在。 |
 | `data-indeterminate` | 选项处于混合状态时存在。 |
+| `data-parent` | 分组父项上存在。 |
 | `data-slot` | 标记分组内部结构（`root`、`header`、`label`、`description`、`items`）与每个控件（`item`、`box`、`fill`、`glass`、`overlay`、`indicator`、`indicator-icon`、`wrapper`、`item-label`、`item-description`）。 |
 
 ## 主题

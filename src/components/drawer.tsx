@@ -1,7 +1,7 @@
 "use client";
 
 import { Drawer as UIDrawer } from "@base-ui/react/drawer";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
 import { type ComponentConfig } from "../internal/tv";
@@ -10,10 +10,7 @@ import theme from "../theme/drawer";
 type Drawer = ComponentConfig<typeof theme>;
 
 interface DrawerProps
-  extends Omit<
-    UIDrawer.Root.Props,
-    "children" | "className" | "swipeDirection"
-  > {
+  extends Omit<UIDrawer.Root.Props, "children" | "swipeDirection"> {
   /** Drawer heading. */
   title: React.ReactNode;
   /** Supporting copy under the title. */
@@ -25,7 +22,7 @@ interface DrawerProps
   /** Edge the drawer slides in from. */
   direction?: NonNullable<UIDrawer.Root.Props["swipeDirection"]>;
   /** Tailwind classes merged into the popup. */
-  className?: string;
+  className?: ClassValue;
   /** Inline styles merged into the popup. */
   style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */

@@ -12,17 +12,19 @@ export default function ButtonBasicDemo() {
     <div className="flex w-full flex-col items-center gap-4">
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Button
-          label="Add one"
           leadingIcon={<Plus />}
           onClick={() => setCount((value) => value + 1)}
-        />
+        >
+          Add one
+        </Button>
         <Button
           size="sm"
-          label="Reset"
           leadingIcon={<RotateCcw />}
           onClick={() => setCount(0)}
           disabled={count === 0}
-        />
+        >
+          Reset
+        </Button>
       </div>
       <p aria-live="polite" className="text-sm text-ui-ink/60">
         Clicked {count} {count === 1 ? "time" : "times"}

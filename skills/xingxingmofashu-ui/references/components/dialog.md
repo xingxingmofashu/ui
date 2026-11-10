@@ -41,11 +41,9 @@ export default function DialogBasicDemo() {
 
   return (
     <>
-      <Button
-        label="Open settings"
-        leadingIcon={<Settings />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Settings />} onClick={() => setOpen(true)}>
+        Open settings
+      </Button>
 
       <Dialog
         open={open}
@@ -54,12 +52,10 @@ export default function DialogBasicDemo() {
         description="Choose how your workspace behaves for everyone on the team."
         footer={
           <>
-            <Button size="sm" label="Cancel" onClick={() => setOpen(false)} />
-            <Button
-              size="sm"
-              label="Save changes"
-              onClick={() => setOpen(false)}
-            />
+            <Button size="sm" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button size="sm" onClick={() => setOpen(false)}>
+              Save changes
+            </Button>
           </>
         }
       >
@@ -88,11 +84,10 @@ export default function DialogBasicDemo() {
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
 | `modal` | `boolean \| "trap-focus"` | `true` | Controls focus trapping and page scroll locking. |
 | `disablePointerDismissal` | `boolean` | `false` | Prevents the backdrop from closing the dialog. |
-| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
 | `handle` | `DialogHandle` | — | Associates the dialog with external triggers. |
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the dialog. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open dialog. |
-| `className` | `string` | — | Tailwind classes merged into the popup. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the popup. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -105,6 +100,7 @@ export default function DialogBasicDemo() {
 | `data-nested` | Present when the dialog is nested within another dialog. |
 | `data-nested-dialog-open` | Present when another dialog is open inside this one. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
+
 
 ## Styling
 

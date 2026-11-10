@@ -19,21 +19,23 @@ export default function PopoverControlledDemo() {
       <Popover
         open={open}
         onOpenChange={setOpen}
-        trigger={<Button label="Publish release" leadingIcon={<Rocket />} />}
+        trigger={<Button leadingIcon={<Rocket />}>Publish release</Button>}
         title="Publish release 2.4.0?"
         description="The release will become available to everyone immediately."
         footer={
           <>
             <Button
               size="sm"
-              label="Cancel"
               onClick={() => close("Release cancelled.")}
-            />
+            >
+              Cancel
+            </Button>
             <Button
               size="sm"
-              label="Publish"
               onClick={() => close("Release 2.4.0 published.")}
-            />
+            >
+              Publish
+            </Button>
           </>
         }
       >

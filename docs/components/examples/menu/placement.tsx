@@ -39,7 +39,7 @@ export default function MenuPlacementDemo() {
 
       <Menu
         side={side}
-        trigger={<Button label={`Open ${side} menu`} />}
+        trigger={<Button>{`Open ${side} menu`}</Button>}
         items={[
           { value: "profile", label: "Profile" },
           { value: "billing", label: "Billing" },

@@ -1,7 +1,7 @@
 "use client";
 
 import { Popover as UIPopover } from "@base-ui/react/popover";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
 import { type ComponentConfig } from "../internal/tv";
@@ -27,7 +27,7 @@ type PopoverProps = Omit<UIPopover.Root.Props, "children"> &
     /** Whether to render the directional arrow. */
     arrow?: boolean;
     /** Tailwind classes merged into the popup. */
-    className?: string;
+    className?: ClassValue;
     /** Inline styles merged into the popup. */
     style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */

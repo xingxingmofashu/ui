@@ -4,38 +4,35 @@ import {
   Button as UIButton,
   type ButtonProps as UIButtonProps,
 } from "@base-ui/react/button";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/button";
 
 type Button = ComponentConfig<typeof theme>;
 
 interface ButtonProps
-  extends Omit<UIButtonProps, "ref" | "className">,
-    VariantProps<typeof theme> {
-  /** Ref to the rendered root element. */
-  ref?: React.Ref<HTMLElement>;
-  /** Tailwind classes merged into the outer click area. */
-  className?: string;
-  /** Tailwind classes for internal slots, keyed by `data-slot`. */
-  ui?: Button["slots"];
-  /** Text or content rendered inside the button. */
-  label?: React.ReactNode;
-  /** Icon rendered before the label. */
+  extends Omit<UIButtonProps, "style" | "className" | "children">,
+  VariantProps<typeof theme> {
+  /**
+   * Visible button content. Also supplies the accessible name unless an ARIA
+   * name is set.
+   */
+  children?: React.ReactNode;
   leadingIcon?: React.ReactNode;
-  /** Icon rendered after the label. */
   trailingIcon?: React.ReactNode;
+  ui?: Button["slots"];
+  className?: ClassValue;
+  style?: React.CSSProperties;
 }
 
 function Button({
   className,
   ui,
   children,
-  label,
   leadingIcon,
   trailingIcon,
   size,
@@ -43,8 +40,8 @@ function Button({
   ...props
 }: ButtonProps) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
-  const content = label || children;
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
 
   return (
     <UIButton
@@ -76,9 +73,9 @@ function Button({
           </span>
         ) : null}
 
-        {content ? (
+        {children ? (
           <span data-slot="label" className={cn(styles.label(), ui?.label)}>
-            {content}
+            {children}
           </span>
         ) : null}
 

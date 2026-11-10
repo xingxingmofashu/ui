@@ -11,10 +11,11 @@ export default function DialogDismissalDemo() {
   return (
     <>
       <Button
-        label="Open locked dialog"
         leadingIcon={<Lock />}
         onClick={() => setOpen(true)}
-      />
+      >
+        Open locked dialog
+      </Button>
 
       <Dialog
         open={open}
@@ -24,8 +25,8 @@ export default function DialogDismissalDemo() {
         description="Pressing the backdrop will not close this dialog. Choose an action or press Escape."
         footer={
           <>
-            <Button size="sm" label="Cancel" onClick={() => setOpen(false)} />
-            <Button size="sm" label="Continue" onClick={() => setOpen(false)} />
+            <Button size="sm" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button size="sm" onClick={() => setOpen(false)}>Continue</Button>
           </>
         }
       >

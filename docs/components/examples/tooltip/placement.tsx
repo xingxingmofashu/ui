@@ -37,7 +37,7 @@ export default function TooltipPlacementDemo() {
         items={sides}
       />
 
-      <Tooltip side={side} trigger={<Button label="Hover or focus" />}>
+      <Tooltip side={side} trigger={<Button>Hover or focus</Button>}>
         {`Placed on the ${side}`}
       </Tooltip>
     </div>

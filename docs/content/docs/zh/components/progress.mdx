@@ -58,15 +58,12 @@ description: "一个 React 进度条，采用线性 Liquid Glass 轨道，支持
 | `format` | `Intl.NumberFormatOptions` | — | 用于格式化可见数值与默认 `aria-valuetext` 的选项。 |
 | `locale` | `Intl.LocalesArgument` | — | `Intl.NumberFormat` 使用的 locale。默认使用运行环境 locale。 |
 | `getAriaValueText` | `(formattedValue: string, value: number \| null) => string` | — | 返回当前值的可读文本替代。 |
-| `aria-valuetext` | `string` | — | 覆盖无障碍数值文本。 |
-| `aria-label` | `string` | — | 没有可见标签时使用的可访问名称。 |
-| `aria-labelledby` | `string` | — | 指向外部可访问名称的 ID 引用。 |
-| `aria-describedby` | `string` | — | 指向外部辅助说明的 ID 引用。可见 `description` 会与它合并。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素的渲染结果。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
-| `className` | `string` | — | 合并到根元素的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; value?: ClassValue; track?: ClassValue; indicator?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
+
+原生 `<div>` 属性、ARIA 属性（如 `aria-label`、`aria-labelledby`、`aria-describedby`、`aria-valuetext`）以及 `ref` 会透传到根元素。
 
 | 属性 | 说明 |
 | --- | --- |

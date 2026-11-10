@@ -24,11 +24,12 @@ function ToastQueue() {
     <div className="flex flex-wrap items-center justify-center gap-2">
       <Button
         size="sm"
-        label="Add toast"
         leadingIcon={<Layers />}
         onClick={addToast}
-      />
-      <Button size="sm" label="Close all" onClick={() => toast.close()} />
+      >
+        Add toast
+      </Button>
+      <Button size="sm" onClick={() => toast.close()}>Close all</Button>
     </div>
   );
 }

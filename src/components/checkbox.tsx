@@ -1,12 +1,12 @@
 "use client";
 
 import { Checkbox as UICheckbox } from "@base-ui/react/checkbox";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 
-import { mergeIds } from "../internal/aria";
-import { useFieldsetDisabled } from "../internal/fieldset";
+import { useAria } from "../composables/use-aria";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/checkbox";
 
@@ -16,15 +16,12 @@ import { DashIcon } from "./icons/dash";
 type Checkbox = ComponentConfig<typeof theme>;
 
 interface CheckboxProps
-  extends Omit<
-      UICheckbox.Root.Props,
-      "className" | "children" | "ref"
-    >,
+  extends Omit<UICheckbox.Root.Props, "className" | "children" | "style">,
     VariantProps<typeof theme> {
-  /** Ref to the rendered root element. */
-  ref?: React.Ref<HTMLElement>;
   /** Tailwind classes merged into the Base UI checkbox root. */
-  className?: string;
+  className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Checkbox["slots"];
   /** Visible label. */
@@ -47,23 +44,20 @@ function Checkbox({
   ...props
 }: CheckboxProps) {
   const styles = theme({ size });
-  const fieldsetDisabled = useFieldsetDisabled(disabled);
-  const labelId = React.useId();
-  const descriptionId = React.useId();
-  const hasName = Boolean(label || ariaLabel || ariaLabelledBy);
-  const labelledBy =
-    ariaLabelledBy || (label && !ariaLabel ? labelId : undefined);
-  const describedBy = mergeIds(
-    ariaDescribedBy,
-    description && hasName ? descriptionId : undefined,
-  );
+  const fieldset = useFieldset();
+  const fieldsetDisabled = fieldset.disabled || disabled;
+  const { controlProps, descriptionProps, labelProps } = useAria({
+    description,
+    label,
+    "aria-describedby": ariaDescribedBy,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+  });
 
   return (
     <UICheckbox.Root
       {...props}
-      aria-describedby={describedBy}
-      aria-label={ariaLabel}
-      aria-labelledby={labelledBy}
+      {...controlProps}
       disabled={fieldsetDisabled}
       indeterminate={indeterminate}
       data-slot="root"
@@ -110,7 +104,7 @@ function Checkbox({
         >
           {label ? (
             <span
-              id={labelId}
+              {...labelProps}
               data-slot="label"
               className={cn(styles.label(), ui?.label)}
             >
@@ -119,7 +113,7 @@ function Checkbox({
           ) : null}
           {description ? (
             <span
-              id={descriptionId}
+              {...descriptionProps}
               data-slot="description"
               className={cn(styles.description(), ui?.description)}
             >

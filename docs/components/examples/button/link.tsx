@@ -15,8 +15,9 @@ export default function ButtonLinkDemo() {
           rel="noreferrer noopener"
         />
       }
-      label="View on GitHub"
       trailingIcon={<ArrowRight />}
-    />
+    >
+      View on GitHub
+    </Button>
   );
 }

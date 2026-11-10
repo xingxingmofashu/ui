@@ -94,8 +94,8 @@ test("data-glass scopes presets in light and dark", async ({ page }) => {
   expect(readings.light.map(({ preset }) => preset)).toEqual([...PRESETS]);
   expect(readings.dark.map(({ preset }) => preset)).toEqual([...PRESETS]);
 
-  // Exact preset values live in `test/tokens/runtime.test.ts`; this checks
-  // that the browser resolves the preset, its theme, and the blur scale.
+  // This checks that the browser resolves the preset, its theme, and the
+  // blur scale.
   expect(readings.light.map(({ blur }) => blur)).toEqual([
     "4px",
     "8px",

@@ -61,11 +61,12 @@ function ToastUpdate() {
       <div className="flex flex-wrap items-center justify-center gap-2">
         <Button
           size="sm"
-          label="Upload next file"
           leadingIcon={<Upload />}
           onClick={advance}
-        />
-        <Button size="sm" label="Dismiss" onClick={dismiss} />
+        >
+          Upload next file
+        </Button>
+        <Button size="sm" onClick={dismiss}>Dismiss</Button>
       </div>
       <p aria-live="polite" className="text-sm text-ui-ink/60">
         {status}

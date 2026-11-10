@@ -170,20 +170,22 @@ export default function App() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Button
                 size="lg"
-                label="Get started"
                 nativeButton={false}
                 render={
                   <a href={installUrl} target="_blank" rel="noreferrer" />
                 }
-              />
+              >
+                Get started
+              </Button>
               <Button
                 size="lg"
-                label="View components"
                 nativeButton={false}
                 render={
                   <a href={componentsUrl} target="_blank" rel="noreferrer" />
                 }
-              />
+              >
+                View components
+              </Button>
             </div>
 
             <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-ui-ink/40">
@@ -241,20 +243,22 @@ export default function App() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Button
                   size="lg"
-                  label="Use this template"
                   nativeButton={false}
                   render={
                     <a href={templatesUrl} target="_blank" rel="noreferrer" />
                   }
-                />
+                >
+                  Use this template
+                </Button>
                 <Button
                   size="lg"
-                  label="View on GitHub"
                   nativeButton={false}
                   render={
                     <a href={githubUrl} target="_blank" rel="noreferrer" />
                   }
-                />
+                >
+                  View on GitHub
+                </Button>
               </div>
             </div>
           </div>

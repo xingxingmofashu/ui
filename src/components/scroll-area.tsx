@@ -1,8 +1,7 @@
 "use client";
 
 import { ScrollArea as UIScrollArea } from "@base-ui/react/scroll-area";
-import { cn } from "cn";
-import * as React from "react";
+import { cn, type ClassValue } from "cn";
 
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/scroll-area";
@@ -14,14 +13,16 @@ type ScrollArea = ComponentConfig<typeof theme>;
 
 type ScrollAreaProps = Omit<
   UIScrollArea.Root.Props,
-  "children" | "className"
+  "children" | "className" | "style"
 > & {
-  /** Scrollable content. */
+  /** Scrollable content rendered inside the viewport. */
   children?: React.ReactNode;
   /** Scrollbar axes to render. Defaults to `"vertical"`. */
   orientation?: ScrollAreaOrientation;
   /** Tailwind classes merged into the root. */
-  className?: string;
+  className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: ScrollArea["slots"];
 };

@@ -65,6 +65,7 @@ export default function AccordionBasicDemo() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `items` | `readonly AccordionItemProps[]` | — | Panels rendered inside the accordion. |
 | `value` | `Value[]` | — | Controlled expanded item values. |
 | `defaultValue` | `Value[]` | `[]` | Initially expanded item values. |
 | `onValueChange` | `(value: Value[], details) => void` | — | Called when the expanded values change. |
@@ -75,10 +76,8 @@ export default function AccordionBasicDemo() {
 | `loopFocus` | `boolean` | — | Deprecated. No longer affects keyboard focus. |
 | `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | Deprecated. No longer affects keyboard focus. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and the indicator. |
-| `items` | `readonly AccordionItemProps[]` | — | Panels rendered inside the accordion. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -93,12 +92,13 @@ export default function AccordionBasicDemo() {
 | `disabled` | `boolean` | `false` | Disables this item. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when this panel opens or closes. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the item root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the item root. |
-| `className` | `string` | — | Tailwind classes merged into the item root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the item root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this item's internal slots, keyed by `data-slot`. |
 
 Root `ui` is merged into every item first, then the item's `ui`, then the item's `className`.
+
+Native `<div>` attributes and `ref` are forwarded to the root and to each item root.
 
 | Attribute | Description |
 | --- | --- |
@@ -110,6 +110,7 @@ Root `ui` is merged into every item first, then the item's `ui`, then the item's
 | `data-starting-style` | Present when a panel begins animating in. |
 | `data-ending-style` | Present when a panel is animating out. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `content`, `item`, `header`, `trigger`, `title`, `indicator`, `indicator-icon`, `panel`, `panel-content`). |
+
 
 ## Styling
 

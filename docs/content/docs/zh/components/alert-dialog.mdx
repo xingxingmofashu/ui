@@ -44,11 +44,10 @@ description: "一个 React 警告对话框，用于破坏性操作确认，采�
 | `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
 | `onOpenChange` | `(open: boolean, details) => void` | — | 对话框打开或关闭时调用。 |
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
-| `actionsRef` | `RefObject<Actions \| null>` | — | 命令式的 `close` 与 `unmount` 操作。 |
 | `handle` | `AlertDialogHandle` | — | 将对话框与外部触发器关联。 |
 | `triggerId` | `string \| null` | — | 与对话框关联的触发器 ID。 |
 | `defaultTriggerId` | `string \| null` | — | 初始打开时使用的触发器 ID。 |
-| `className` | `string` | — | 合并到弹窗的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到弹窗的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ backdrop?: ClassValue; viewport?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 

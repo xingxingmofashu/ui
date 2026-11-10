@@ -41,17 +41,19 @@ export default function ButtonBasicDemo() {
     <div className="flex w-full flex-col items-center gap-4">
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Button
-          label="Add one"
           leadingIcon={<Plus />}
           onClick={() => setCount((value) => value + 1)}
-        />
+        >
+          Add one
+        </Button>
         <Button
           size="sm"
-          label="Reset"
           leadingIcon={<RotateCcw />}
           onClick={() => setCount(0)}
           disabled={count === 0}
-        />
+        >
+          Reset
+        </Button>
       </div>
       <p aria-live="polite" className="text-sm text-ui-ink/60">
         Clicked {count} {count === 1 ? "time" : "times"}
@@ -65,29 +67,24 @@ export default function ButtonBasicDemo() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Button text. A truthy `label` takes precedence over `children`. |
-| `children` | `ReactNode` | — | Visible content used when `label` is falsy or omitted. |
-| `leadingIcon` | `ReactNode` | — | Decorative icon before the label. |
-| `trailingIcon` | `ReactNode` | — | Decorative icon after the label. |
+| `children` | `ReactNode` | — | Visible button content. Also supplies the accessible name unless an ARIA name is set. |
+| `leadingIcon` | `ReactNode` | — | Decorative icon before the content. |
+| `trailingIcon` | `ReactNode` | — | Decorative icon after the content. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls height, padding, text, and icon size. |
-| `disabled` | `boolean` | `false` | Disables the button. |
 | `focusableWhenDisabled` | `boolean` | `false` | Keeps a disabled button in the Tab order and exposes it with `aria-disabled`. |
-| `nativeButton` | `boolean` | `true` | Whether the rendered element is a native `<button>`. Set it to `false` when rendering a link or another element. |
-| `type` | `"button" \| "submit" \| "reset"` | `"button"` | Native button type. Set `"submit"` when the button should submit a form. |
-| `form` | `string` | — | ID of the form that owns the button. |
-| `name` | `string` | — | Name submitted with the form. |
-| `value` | `string` | — | Value submitted with the form. |
-| `onClick` | `MouseEventHandler<HTMLElement>` | — | Called when the button is pressed. |
-| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered element. |
-| `ref` | `Ref<HTMLElement>` | — | Ref forwarded to the rendered element. |
-| `className` | `string` | — | Tailwind classes merged into the outer `root`. |
+| `nativeButton` | `boolean` | `true` | Whether `Button` renders a native `<button>` as its root. Set it to `false` when `render` targets another element, such as a `<div>`. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element, or composes it with another component. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the outer `root`. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; base?: ClassValue; glass?: ClassValue; overlay?: ClassValue; label?: ClassValue; leadingIcon?: ClassValue; trailingIcon?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+Native `<button>` attributes such as `disabled`, `type`, `form`, `name`, `value`, `onClick`, and `aria-*`, as well as `ref`, are forwarded to the rendered element. Pass the visible content as `children`.
 
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | Present when the button is disabled. |
 | `data-slot` | Marks internal parts (`root`, `base`, `glass`, `overlay`, `leading-icon`, `label`, `trailing-icon`) for styling. `label` is omitted for icon-only buttons. |
+
 
 ## Styling
 
@@ -97,13 +94,13 @@ export default function ButtonBasicDemo() {
 
 ## Accessibility
 
-`Button` renders a native `<button>` by default, so it gets focus, `Enter` and `Space` activation, and disabled behavior from the platform. `label` or `children` provides the accessible name. Icon-only buttons must use `aria-label` or `aria-labelledby`; icon slots are decorative and hidden from assistive technology.
+`Button` renders a native `<button>` by default, so it gets focus, `Enter` and `Space` activation, and disabled behavior from the platform. The visible content provides the accessible name. Icon-only buttons must use `aria-label` or `aria-labelledby`; icon slots are decorative and hidden from assistive technology.
 
-When `nativeButton={false}` renders a link or another element, keep the visible label meaningful and use the element that matches the action. `focusableWhenDisabled` keeps a disabled action in the Tab order with `aria-disabled` while blocking activation.
+When `nativeButton={false}` renders a link or another element, keep the visible content meaningful and use the element that matches the action. `focusableWhenDisabled` keeps a disabled action in the Tab order with `aria-disabled` while blocking activation.
 
 ## Gotchas
 
-- `label` takes precedence over `children`; use one.
+- `children` is the only content prop; `label` is not supported.
 - Icon-only buttons need `aria-label` or `aria-labelledby`.
 - Set `type="submit"` inside forms; the default is `button`.
 - For links, set `nativeButton={false}` and `render={<a href="..." />}`.

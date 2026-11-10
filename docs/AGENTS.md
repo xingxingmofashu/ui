@@ -28,27 +28,30 @@ Every component page uses the same skeleton in both locales:
 1. Frontmatter with a one-sentence description.
 2. A lead paragraph of two or three sentences: what the component renders,
    when to use it, and the one behavior a reader must know.
-3. `Basic example` with a live, interactive example.
-4. Feature sections in a useful order, each followed by an example or a short
-   explanation.
-5. `Accessibility`.
-6. `API reference`.
-7. `Theming`.
-8. `Related components`.
+3. `Usage` with one `### <PropName>` subsection per documented prop that
+   needs a demo. The first prop example is the basic example.
+4. `Accessibility`.
+5. `API reference`.
+6. `Theming`.
+7. `Related components`.
+
+`Usage` headings capitalize the prop name's first letter and keep its
+internal casing: `Label`, `LeadingIcon`, `FocusableWhenDisabled`,
+`NativeButton`, `Render`. Keep the prop name in English in both locales.
+`className`, `style`, and `ui` do not get `Usage` examples.
 
 Headings use these exact translations:
 
 | English | Chinese |
 | --- | --- |
-| Basic example | 基础示例 |
-| Sizes | 尺寸 |
-| Controlled usage | 受控用法 |
-| Placement | 定位 |
-| Disabled | 禁用 |
+| Usage | 用法 |
 | Accessibility | 无障碍 |
 | API reference | API 参考 |
 | Theming | 主题 |
 | Related components | 相关组件 |
+
+Existing pages may keep older feature headings until their examples are
+migrated to the prop-based `Usage` skeleton.
 
 Use `Theming` for token and material overrides; do not add a separate
 `Styling` section with a different anchor.
@@ -79,14 +82,28 @@ API reference rules:
 - Start with a bold component name (`**Menu**`), then one `Props` table per
   public type. Order props by purpose: content and state, behavior, form and
   ARIA pass-through, rendering, styling.
+- A `Props` table contains only the component's own API: the
+  component-specific props listed in the Base UI API reference for the
+  matching part, plus wrapper-owned props such as `label`, `leadingIcon`,
+  `trailingIcon`, `size`, and `ui`.
+- Do not list props that are only native pass-throughs for the rendered
+  element, such as `disabled` on a native button or input, `type`, `name`,
+  `value`, `onClick`, and `aria-*`, or `ref` and `key`. State props that the
+  component implements on a non-native root (`disabled`, `readOnly`,
+  `required`) are part of its own API and stay in the table. Do not list
+  `children` inherited from the Base UI part. A `children` slot that the
+  wrapper defines itself (for example Field, Dialog, or Card) is a
+  wrapper-owned prop and belongs in the table. Describe forwarded Base UI and
+  native props in prose instead of adding table rows.
+- `className` and `style` always use the wrapper types: `ClassValue` and
+  `React.CSSProperties`. `ui` stays the derived slot object; do not hand-write
+  a second slot type.
+- Components without a Base UI counterpart list wrapper-owned props only.
 - Use `| Prop | Type | Default | Description |` and
   `| 属性 | 类型 | 默认值 | 说明 |`.
 - Follow with one `| Attribute | Description |` table (Chinese:
   `| 属性 | 说明 |`) when the component exposes data attributes, and list the
   `data-slot` values.
-- Explain that additional Base UI root props are forwarded when the wrapper
-  accepts them.
-- Keep `ui` as the derived slot object; do not hand-write a second slot type.
 
 The `Theming` section is required. It explains the shared `--ui-glass-*`
 tokens, `className` for layout, and `ui` for internal slots. Include
@@ -104,8 +121,13 @@ to the theming guide.
   renders the live component and the source from the same file; pass
   `showCode={false}` for a preview without the source toggle. Do not duplicate
   the example code in MDX.
-- Every component page starts with a basic example that renders the real,
-  interactive component.
+- Every documented prop that needs a demo gets exactly one example file, named
+  `<kebab-case-prop>.tsx` and referenced from its `### <PropName>` subsection.
+  The first prop example is the page's basic example.
+- `className`, `style`, and `ui` do not get examples; document them in the
+  `API reference` and `Theming` sections.
+- An example focuses on one prop. Other props may appear only as necessary
+  context, and the demo must render the real, interactive component.
 - Shared example frame: `components/demo-stage.tsx`.
 - Examples must stay standalone and copy-pasteable: use English demo text, import only from `@xingxingmofashu/ui`, React, and icon packages, and do not use docs-only helpers or `fd-*` classes.
 - The site uses Fumadocs' `black.css` theme and the Glass layout.

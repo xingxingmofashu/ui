@@ -2,39 +2,37 @@
 
 import { useState } from "react";
 
-import { Checkbox, CheckboxGroup } from "@xingxingmofashu/ui";
+import {
+  CheckboxGroup,
+  type CheckboxGroupItemProps,
+} from "@xingxingmofashu/ui";
+
+const indent = "ms-[calc(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap))]";
 
 const channels = [
-  { value: "comments", label: "Comments" },
-  { value: "releases", label: "Releases" },
-  { value: "billing", label: "Billing" },
-] as const;
+  { value: "comments", label: "Comments", className: indent },
+  { value: "releases", label: "Releases", className: indent },
+  { value: "billing", label: "Billing", className: indent },
+] as const satisfies readonly CheckboxGroupItemProps[];
 
 const channelValues = channels.map((channel) => channel.value);
+
+const items = [
+  { parent: true, label: "All channels" },
+  ...channels,
+] as const satisfies readonly CheckboxGroupItemProps[];
 
 export default function CheckboxGroupParentDemo() {
   const [value, setValue] = useState<string[]>(["comments"]);
 
-  const allSelected = value.length === channelValues.length;
-  const someSelected = value.length > 0 && !allSelected;
-
   return (
-    <div className="flex w-full max-w-sm flex-col gap-3">
-      <Checkbox
-        label="Notifications"
-        checked={allSelected}
-        indeterminate={someSelected}
-        onCheckedChange={(checked) => {
-          setValue(checked ? [...channelValues] : []);
-        }}
-      />
-      <CheckboxGroup
-        aria-label="Notification channels"
-        value={value}
-        onValueChange={setValue}
-        items={channels}
-        className="ms-[calc(var(--ui-checkbox-size)_+_var(--ui-checkbox-gap))]"
-      />
-    </div>
+    <CheckboxGroup
+      label="Notification channels"
+      allValues={channelValues}
+      items={items}
+      value={value}
+      onValueChange={setValue}
+      className="w-full max-w-sm"
+    />
   );
 }

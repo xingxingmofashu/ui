@@ -27,7 +27,7 @@ description: "一个 React 提示，采用 Liquid Glass 浮层，支持可配置
 
 ## 延迟
 
-`delay` 控制鼠标停留多久后打开，`closeDelay` 控制关闭延迟，两者都会传给 Base UI 触发器。新手引导需要即时反馈时可设 `delay={0}`；提示出现频繁时则使用更长的延迟。
+`delay` 控制鼠标停留多久后打开，`closeDelay` 控制关闭延迟，两者都会转发给触发器。新手引导需要即时反馈时可设 `delay={0}`；提示出现频繁时则使用更长的延迟。
 
 <Example name="tooltip/delay" />
 
@@ -64,15 +64,14 @@ Tooltip 常与图标按钮搭配使用。请为触发器提供独立的 `aria-la
 | `disabled` | `boolean` | `false` | 禁止打开提示。 |
 | `trackCursorAxis` | `"none" \| "x" \| "y" \| "both"` | `"none"` | 提示跟随指针移动的轴。 |
 | `disableHoverablePopup` | `boolean` | `false` | 是否允许悬停在提示内容上而不关闭提示。 |
-| `actionsRef` | `RefObject<Tooltip.Root.Actions \| null>` | — | 命令式的 `close` 与 `unmount` 操作。 |
 | `triggerId` | `string \| null` | — | 受控提示所用触发器的 ID。 |
 | `defaultTriggerId` | `string \| null` | — | 初始打开提示所用触发器的 ID。 |
 | `handle` | `Tooltip.Handle<Payload>` | — | 允许外部触发器控制提示的 handle。 |
-| `className` | `string` | — | 合并到浮层的 Tailwind 类名。 |
+| `className` | `ClassValue` | — | 合并到浮层的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 
-`ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `Tooltip.Root` 属性都会透传。
+`ui` 的键对应下方列出的 `data-slot` 值。其他原生属性通过触发元素透传。
 
 | 属性 | 说明 |
 | --- | --- |

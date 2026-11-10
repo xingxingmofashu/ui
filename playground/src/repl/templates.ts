@@ -6,7 +6,7 @@ const BLANK_ID = "__blank__";
 const blankCode = `import { Button } from "@xingxingmofashu/ui";
 
 export default function App() {
-  return <Button label="Click me" />;
+  return <Button>Click me</Button>;
 }
 `;
 

@@ -100,14 +100,12 @@ export default function ScrollAreaBasicDemo() {
 | `children` | `ReactNode` | — | Scrollable content rendered inside the viewport. |
 | `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | Scrollbar axes to render. |
 | `overflowEdgeThreshold` | `number \| Partial<{ xStart: number; xEnd: number; yStart: number; yEnd: number }>` | `0` | Distance in pixels before an edge is marked as overflowing. |
-| `aria-label` | `string` | — | Accessible name forwarded to the scrollable viewport. |
-| `aria-labelledby` | `string` | — | ID of an element that labels the viewport. |
-| `aria-describedby` | `string` | — | ID of an element that describes the viewport. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
-| `className` | `string` | — | Tailwind classes merged into the root. Set the height here. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the root. Set the height here. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; viewport?: ClassValue; content?: ClassValue; scrollbar?: ClassValue; thumb?: ClassValue; corner?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+`aria-label`, `aria-labelledby`, `aria-describedby`, other native attributes, and `ref` are forwarded to the scrollable viewport.
 
 | Attribute | Description |
 | --- | --- |
@@ -121,6 +119,7 @@ export default function ScrollAreaBasicDemo() {
 | `data-overflow-y-end` | Present when there is vertical overflow on the end side. |
 | `data-hovering` | Present on a scrollbar while the pointer is over the area. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `viewport`, `content`, `scrollbar`, `thumb`, `corner`) for styling. |
+
 
 ## Styling
 

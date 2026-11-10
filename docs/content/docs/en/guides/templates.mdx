@@ -90,11 +90,9 @@ export function SettingsPanel() {
       title="Notifications"
       description="Choose what your workspace sends to your inbox."
       footer={
-        <Button
-          size="sm"
-          label={saved ? "Saved" : "Save changes"}
-          onClick={() => setSaved(true)}
-        />
+        <Button size="sm" onClick={() => setSaved(true)}>
+          {saved ? "Saved" : "Save changes"}
+        </Button>
       }
     >
       <div className="flex flex-col gap-5">
@@ -138,11 +136,9 @@ export function DeleteProject() {
 
   return (
     <>
-      <Button
-        label="Delete project"
-        leadingIcon={<Trash2 />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Trash2 />} onClick={() => setOpen(true)}>
+        Delete project
+      </Button>
       <AlertDialog
         open={open}
         onOpenChange={setOpen}
@@ -178,11 +174,9 @@ export function MobileSettings() {
 
   return (
     <>
-      <Button
-        label="Settings"
-        leadingIcon={<Settings />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Settings />} onClick={() => setOpen(true)}>
+        Settings
+      </Button>
       <Drawer
         open={open}
         onOpenChange={setOpen}
@@ -190,8 +184,8 @@ export function MobileSettings() {
         description="Changes apply to this device."
         footer={
           <>
-            <Button size="sm" label="Cancel" onClick={() => setOpen(false)} />
-            <Button size="sm" label="Done" onClick={() => setOpen(false)} />
+            <Button size="sm" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button size="sm" onClick={() => setOpen(false)}>Done</Button>
           </>
         }
       >

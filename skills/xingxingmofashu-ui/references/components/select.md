@@ -169,16 +169,6 @@ type ShippingMethod = {
 | `itemToStringLabel` | `(itemValue: Value) => string` | — | Converts an object value to the text shown in the trigger. |
 | `itemToStringValue` | `(itemValue: Value) => string` | — | Converts an object value to the string submitted with the form. |
 | `isItemEqualToValue` | `(itemValue: Value, value: Value) => boolean` | `Object.is` | Custom equality used to match object values that are not the same reference. |
-| `name` | `string` | — | Form field name for the hidden input. In `multiple` mode one input is submitted per selected value. |
-| `form` | `string` | — | Form that owns the hidden input. |
-| `autoComplete` | `string` | — | Autofill hint forwarded to the hidden input. |
-| `required` | `boolean` | `false` | Requires a value before form submission. |
-| `id` | `string` | — | Base id for the select parts. |
-| `actionsRef` | `RefObject<Select.Root.Actions \| null>` | — | Imperative `close` and `unmount` actions. |
-| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden input element. |
-| `aria-label` | `string` | — | Accessible name for the trigger when no visible label is rendered. |
-| `aria-labelledby` | `string` | — | Names the trigger from another element. |
-| `aria-describedby` | `string` | — | Additional description IDs applied to the trigger. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and icon size. |
 | `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Preferred side of the trigger. |
 | `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment relative to the trigger. |
@@ -186,7 +176,7 @@ type ShippingMethod = {
 | `alignOffset` | `number \| OffsetFunction` | `0` | Offset along the alignment axis in pixels. |
 | `collisionPadding` | `Padding` | `5px per side` | Space kept between the popup and the collision boundary. |
 | `alignItemWithTrigger` | `boolean` | `false` | Overlaps the popup so the selected item aligns with the trigger. |
-| `className` | `string` | — | Tailwind classes merged into the field root. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the field root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; label?: ClassValue; trigger?: ClassValue; glass?: ClassValue; overlay?: ClassValue; value?: ClassValue; icon?: ClassValue; description?: ClassValue; positioner?: ClassValue; popup?: ClassValue; popupGlass?: ClassValue; popupOverlay?: ClassValue; list?: ClassValue; group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIndicator?: ClassValue; itemText?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
@@ -206,7 +196,7 @@ type ShippingMethod = {
 | `label` | `ReactNode` | — | Visible heading rendered above the group. Required. |
 | `items` | `readonly SelectItemProps[]` | — | Options in the group. Required. |
 
-`ui` keys map to the `data-slot` values listed below. All other Base UI `Select.Root` props are forwarded unchanged.
+`ui` keys map to the `data-slot` values listed below. `name`, `form`, `autoComplete`, `required`, `id`, ARIA attributes, and `ref` are forwarded to the trigger and hidden input.
 
 | Attribute | Description |
 | --- | --- |
@@ -222,8 +212,8 @@ type ShippingMethod = {
 | `data-align` | Indicates the resolved alignment (`start`, `center`, or `end`). |
 | `data-starting-style` | Present when the popup begins animating in. |
 | `data-ending-style` | Present when the popup is animating out. |
-| `aria-multiselectable` | `true` on the list when `multiple` is set. |
 | `data-slot` | Marks internal parts (`root`, `label`, `trigger`, `glass`, `overlay`, `value`, `icon`, `description`, `positioner`, `popup`, `popup-glass`, `popup-overlay`, `list`, `group`, `group-label`, `item`, `item-indicator`, `item-text`). |
+
 
 ## Styling
 
@@ -233,7 +223,7 @@ type ShippingMethod = {
 
 ## Accessibility
 
-`Select` follows the Base UI select pattern: the trigger is a `combobox` with `aria-haspopup="listbox"`, `aria-expanded`, and `aria-controls`; the inner list is the `listbox`, and each option is an `option`. `ArrowDown` and `ArrowUp` move through options, typeahead matches labels, and `Enter` selects the highlighted option. `Escape` closes the popup and returns focus to the trigger.
+`Select` follows the select pattern: the trigger is a `combobox` with `aria-haspopup="listbox"`, `aria-expanded`, and `aria-controls`; the inner list is the `listbox`, and each option is an `option`. `ArrowDown` and `ArrowUp` move through options, typeahead matches labels, and `Enter` selects the highlighted option. `Escape` closes the popup and returns focus to the trigger.
 
 With `multiple`, the list reports `aria-multiselectable="true"`, each option exposes `aria-selected`, and activating an option toggles it without closing the popup. Grouped options render inside a `group` labelled by their heading.
 

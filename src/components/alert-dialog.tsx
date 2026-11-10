@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertDialog as UIAlertDialog } from "@base-ui/react/alert-dialog";
-import { cn } from "cn";
+import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
 import { type ComponentConfig } from "../internal/tv";
@@ -27,7 +27,7 @@ type AlertDialogProps = Omit<UIAlertDialog.Root.Props, "children"> & {
   /** Called when the confirm button is pressed. */
   onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
   /** Tailwind classes merged into the popup. */
-  className?: string;
+  className?: ClassValue;
   /** Inline styles merged into the popup. */
   style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
@@ -110,12 +110,12 @@ function AlertDialog({
               >
                 <UIAlertDialog.Close
                   onClick={onCancel}
-                  render={<Button label={cancelLabel} />}
+                  render={<Button>{cancelLabel}</Button>}
                 />
 
                 <UIAlertDialog.Close
                   onClick={onConfirm}
-                  render={<Button label={confirmLabel} />}
+                  render={<Button>{confirmLabel}</Button>}
                 />
               </div>
             </div>

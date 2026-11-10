@@ -88,11 +88,9 @@ export function SettingsPanel() {
       title="通知"
       description="选择工作区向你的收件箱发送哪些内容。"
       footer={
-        <Button
-          size="sm"
-          label={saved ? "已保存" : "保存更改"}
-          onClick={() => setSaved(true)}
-        />
+        <Button size="sm" onClick={() => setSaved(true)}>
+          {saved ? "已保存" : "保存更改"}
+        </Button>
       }
     >
       <div className="flex flex-col gap-5">
@@ -133,11 +131,9 @@ export function DeleteProject() {
 
   return (
     <>
-      <Button
-        label="删除项目"
-        leadingIcon={<Trash2 />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Trash2 />} onClick={() => setOpen(true)}>
+        删除项目
+      </Button>
       <AlertDialog
         open={open}
         onOpenChange={setOpen}
@@ -172,11 +168,9 @@ export function MobileSettings() {
 
   return (
     <>
-      <Button
-        label="设置"
-        leadingIcon={<Settings />}
-        onClick={() => setOpen(true)}
-      />
+      <Button leadingIcon={<Settings />} onClick={() => setOpen(true)}>
+        设置
+      </Button>
       <Drawer
         open={open}
         onOpenChange={setOpen}
@@ -184,8 +178,8 @@ export function MobileSettings() {
         description="更改仅应用于此设备。"
         footer={
           <>
-            <Button size="sm" label="取消" onClick={() => setOpen(false)} />
-            <Button size="sm" label="完成" onClick={() => setOpen(false)} />
+            <Button size="sm" onClick={() => setOpen(false)}>取消</Button>
+            <Button size="sm" onClick={() => setOpen(false)}>完成</Button>
           </>
         }
       >

@@ -874,7 +874,6 @@ function Repl() {
             />
             <Button
               size="sm"
-              label={status === "running" ? "Running" : "Run"}
               leadingIcon={
                 status === "running" ? (
                   <Loader2 className="animate-spin" />
@@ -885,7 +884,9 @@ function Repl() {
               onClick={() => {
                 void runCode(codeRef.current);
               }}
-            />
+            >
+              {status === "running" ? "Running" : "Run"}
+            </Button>
           </div>
 
           <div className="ml-auto flex items-center gap-2">
