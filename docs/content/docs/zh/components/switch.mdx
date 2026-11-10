@@ -60,18 +60,14 @@ Switch 会把 `name` 与 `value` 用于表单，并在提交时通过隐藏的 c
 | `disabled` | `boolean` | `false` | 禁用开关。 |
 | `readOnly` | `boolean` | `false` | 只读，不允许切换，但仍可聚焦。 |
 | `required` | `boolean` | `false` | 表单提交前必须开启。 |
-| `name` | `string` | — | 表单字段名。 |
-| `form` | `string` | — | 拥有隐藏输入框的表单 ID。 |
-| `value` | `string` | — | 开启时随表单提交的值。 |
 | `uncheckedValue` | `string` | — | 关闭时随表单提交的值。 |
-| `id` | `string` | — | 隐藏输入框的 ID；当 `nativeButton` 为 true 时改为根元素的 ID。 |
-| `inputRef` | `Ref<HTMLInputElement>` | — | 指向隐藏原生输入框的 ref。 |
 | `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
-| `ref` | `Ref<HTMLSpanElement>` | — | 转发到根元素的 ref。 |
 | `className` | `ClassValue` | — | Tailwind 类名，合并到 switch root。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; container?: ClassValue; base?: ClassValue; thumb?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
+
+`name`、`form`、`value`、`id`、`ref` 与其他原生属性会透传到渲染的控件及其隐藏输入框。
 
 | 属性 | 说明 |
 | --- | --- |

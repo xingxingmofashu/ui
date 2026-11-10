@@ -54,7 +54,6 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | 方向键使用的焦点移动轴。 |
 | `closeParentOnEsc` | `boolean` | `false` | 在嵌套菜单中按 Escape 时关闭整个菜单，而不是只关闭子菜单。 |
 | `onItemHighlighted` | `(item: HTMLElement \| undefined, details) => void` | — | 高亮项变化时调用。 |
-| `actionsRef` | `RefObject<Menu.Root.Actions \| null>` | — | 命令式的 `close` 与 `unmount` 操作。 |
 | `triggerId` | `string \| null` | — | 受控菜单所用触发器的 ID。 |
 | `defaultTriggerId` | `string \| null` | — | 初始打开菜单所用触发器的 ID。 |
 | `handle` | `Menu.Handle<Payload>` | — | 允许外部触发器控制菜单的 handle。 |
@@ -76,10 +75,8 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `onSelect` | `(event) => void` | — | 选中操作项时调用。 |
 | `disabled` | `boolean` | `false` | 禁用该操作项。 |
 | `closeOnClick` | `boolean` | `true` | 选中后是否关闭菜单。 |
-| `id` | `string` | — | 操作项元素的 ID。 |
 | `nativeButton` | `boolean` | `false` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换操作项元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到操作项元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到操作项的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | 该操作项内部槽位的类名。 |
@@ -92,12 +89,9 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | `label` | `ReactNode` | — | 分组标题。必填。 |
 | `items` | `readonly MenuItemProps[]` | — | 分组内的操作项。必填。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到分组元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到分组的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ group?: ClassValue; groupLabel?: ClassValue; item?: ClassValue; itemIcon?: ClassValue; itemLabel?: ClassValue; shortcut?: ClassValue }` | — | 分组及其操作项内部槽位的类名。 |
-
-`MenuGroupProps` 还会透传其余 `Menu.Group` 属性。
 
 **MenuSeparatorProps**
 
@@ -105,14 +99,11 @@ description: "一个 React 菜单，采用 Liquid Glass 浮层，支持分组、
 | --- | --- | --- | --- |
 | `type` | `"separator"` | — | 标记为分隔线。必填。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分隔线元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到分隔线元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到分隔线的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ separator?: ClassValue }` | — | 分隔线槽位的类名。 |
 
-`MenuSeparatorProps` 还会透传 `Menu.Separator` 的 `render`、`id` 等属性。
-
-`ui` 的键对应下方列出的 `data-slot` 值。其余 Base UI `Menu.Root` 属性都会透传。
+`ui` 的键对应下方列出的 `data-slot` 值。原生属性与 `ref` 会透传到根元素、每个操作项、分组和分隔线。
 
 | 属性 | 说明 |
 | --- | --- |

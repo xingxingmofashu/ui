@@ -53,6 +53,7 @@ description: "一个 React 手风琴，采用可折叠的 Liquid Glass 面板，
 
 | 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
+| `items` | `readonly AccordionItemProps[]` | — | 渲染在 accordion 内部的面板。 |
 | `value` | `Value[]` | — | 受控的展开值。 |
 | `defaultValue` | `Value[]` | `[]` | 初始展开值。 |
 | `onValueChange` | `(value: Value[], details) => void` | — | 展开值变化时调用。 |
@@ -63,9 +64,7 @@ description: "一个 React 手风琴，采用可折叠的 Liquid Glass 面板，
 | `loopFocus` | `boolean` | — | 已废弃，不再影响键盘焦点。 |
 | `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | 已废弃，不再影响键盘焦点。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制触发器高度、内边距、文字与指示器尺寸。 |
-| `items` | `readonly AccordionItemProps[]` | — | 渲染在 accordion 内部的面板。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
@@ -81,12 +80,13 @@ description: "一个 React 手风琴，采用可折叠的 Liquid Glass 面板，
 | `disabled` | `boolean` | `false` | 禁用该 item。 |
 | `onOpenChange` | `(open: boolean, details) => void` | — | 该面板展开或收起时调用。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 item 根元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到 item 根元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到 item root 的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; header?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的该 item 内部槽位类名。 |
 
 根 `ui` 会先合并到每个 item，再合并该 item 的 `ui`，最后合并 item 的 `className`。
+
+原生 `<div>` 属性与 `ref` 会透传到根元素和每个 item 根元素。
 
 | 属性 | 说明 |
 | --- | --- |

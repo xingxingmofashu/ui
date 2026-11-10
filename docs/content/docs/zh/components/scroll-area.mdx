@@ -48,14 +48,12 @@ viewport 只在可滚动时可聚焦，与原生滚动容器行为一致。通�
 | `children` | `ReactNode` | — | 渲染在视口内的可滚动内容。 |
 | `orientation` | `"vertical" \| "horizontal" \| "both"` | `"vertical"` | 要渲染的滚动条方向。 |
 | `overflowEdgeThreshold` | `number \| Partial<{ xStart: number; xEnd: number; yStart: number; yEnd: number }>` | `0` | 将一个边缘标记为溢出前需要越过的像素距离。 |
-| `aria-label` | `string` | — | 转发到可滚动视口的无障碍名称。 |
-| `aria-labelledby` | `string` | — | 为视口提供名称的元素 ID。 |
-| `aria-describedby` | `string` | — | 为视口提供说明的元素 ID。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到根元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到根节点的 Tailwind 类；在这里设置高度。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; viewport?: ClassValue; content?: ClassValue; scrollbar?: ClassValue; thumb?: ClassValue; corner?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
+
+`aria-label`、`aria-labelledby`、`aria-describedby`、其他原生属性与 `ref` 会透传到可滚动视口。
 
 | 属性 | 说明 |
 | --- | --- |

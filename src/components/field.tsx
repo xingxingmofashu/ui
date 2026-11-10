@@ -11,9 +11,9 @@ import theme from "../theme/field";
 type Field = ComponentConfig<typeof theme>;
 
 interface FieldProps
-  extends Omit<UIField.Root.Props, "children" | "className">,
+  extends Omit<UIField.Root.Props, "children" | "className" | "style">,
     VariantProps<typeof theme> {
-  /** Single Base UI control labelled and validated by the field. */
+  /** Single form control labelled and validated by the field. */
   children: React.ReactElement;
   /** Visible label associated with the control. */
   label?: React.ReactNode;
@@ -23,6 +23,8 @@ interface FieldProps
   error?: React.ReactNode;
   /** Tailwind classes merged into the field root. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Field["slots"];
 }

@@ -88,7 +88,6 @@ export default function DialogBasicDemo() {
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
 | `modal` | `boolean \| "trap-focus"` | `true` | Controls focus trapping and page scroll locking. |
 | `disablePointerDismissal` | `boolean` | `false` | Prevents the backdrop from closing the dialog. |
-| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
 | `handle` | `DialogHandle` | — | Associates the dialog with external triggers. |
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the dialog. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open dialog. |
@@ -105,6 +104,7 @@ export default function DialogBasicDemo() {
 | `data-nested` | Present when the dialog is nested within another dialog. |
 | `data-nested-dialog-open` | Present when another dialog is open inside this one. |
 | `data-slot` | Marks internal parts (`backdrop`, `viewport`, `popup`, `glass`, `overlay`, `content`, `title`, `description`, `body`, `footer`) for styling. |
+
 
 ## Styling
 

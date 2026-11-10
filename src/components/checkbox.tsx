@@ -16,10 +16,12 @@ import { DashIcon } from "./icons/dash";
 type Checkbox = ComponentConfig<typeof theme>;
 
 interface CheckboxProps
-  extends Omit<UICheckbox.Root.Props, "className" | "children">,
+  extends Omit<UICheckbox.Root.Props, "className" | "children" | "style">,
     VariantProps<typeof theme> {
   /** Tailwind classes merged into the Base UI checkbox root. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Checkbox["slots"];
   /** Visible label. */

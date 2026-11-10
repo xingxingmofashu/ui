@@ -11,11 +11,18 @@ type ScrollAreaOrientation = "vertical" | "horizontal" | "both";
 
 type ScrollArea = ComponentConfig<typeof theme>;
 
-type ScrollAreaProps = Omit<UIScrollArea.Root.Props, "className"> & {
+type ScrollAreaProps = Omit<
+  UIScrollArea.Root.Props,
+  "children" | "className" | "style"
+> & {
+  /** Scrollable content rendered inside the viewport. */
+  children?: React.ReactNode;
   /** Scrollbar axes to render. Defaults to `"vertical"`. */
   orientation?: ScrollAreaOrientation;
   /** Tailwind classes merged into the root. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: ScrollArea["slots"];
 };

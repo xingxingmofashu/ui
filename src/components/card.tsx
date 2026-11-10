@@ -6,15 +6,22 @@ import theme from "../theme/card";
 
 type Card = ComponentConfig<typeof theme>;
 
-type CardProps = Omit<React.ComponentProps<"div">, "title"> & {
+type CardProps = Omit<
+  React.ComponentProps<"div">,
+  "children" | "className" | "style" | "title"
+> & {
   /** Classes merged into the root element. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Card["slots"];
   /** Optional visible title rendered inside the card header. */
   title?: React.ReactNode;
   /** Optional supporting copy rendered under the title. */
   description?: React.ReactNode;
+  /** Card body content. */
+  children?: React.ReactNode;
   /** Optional footer row rendered below the body. */
   footer?: React.ReactNode;
 };

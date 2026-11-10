@@ -43,21 +43,12 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. Height, padding, rad
 | `value` | `string \| number \| readonly string[]` | — | Controlled value. |
 | `defaultValue` | `string \| number \| readonly string[]` | — | Initial value when uncontrolled. |
 | `onValueChange` | `(value: string, details) => void` | — | Called when the value changes. |
-| `type` | `HTMLInputTypeAttribute` | `"text"` | Native input type. |
-| `placeholder` | `string` | — | Placeholder text. |
-| `name` | `string` | — | Form field name. |
-| `id` | `string` | generated | ID of the input. A generated ID is used when omitted. |
-| `disabled` | `boolean` | `false` | Disables the input and fades the whole control. |
-| `readOnly` | `boolean` | `false` | Prevents edits while keeping the value focusable and selectable. |
-| `required` | `boolean` | `false` | Requires a value for form submission. |
-| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
-| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
-| `aria-describedby` | `string` | — | ID reference for extra supporting text. `Field` descriptions and errors are merged with this value. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the input element. |
-| `ref` | `Ref<HTMLInputElement>` | — | Ref forwarded to the input element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the outer root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; control?: ClassValue; glass?: ClassValue; overlay?: ClassValue; leadingIcon?: ClassValue; input?: ClassValue; trailingIcon?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+Native `<input>` attributes such as `type`, `name`, `placeholder`, `required`, `readOnly`, `disabled`, `id`, and `aria-*`, as well as `ref`, are forwarded to the input element.
 
 | Attribute | Description |
 | --- | --- |

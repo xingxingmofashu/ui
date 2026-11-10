@@ -66,10 +66,7 @@ description: "一个 React 切换组，采用 Liquid Glass 选中状态，支持
 | `disabled` | `boolean` | `false` | 禁用所有 item。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制 item 高度、内边距、文字和图标尺寸。 |
 | `items` | `readonly ToggleGroupItemProps[]` | — | 渲染在 group 内部的选项。 |
-| `aria-label` | `string` | — | 分组的无障碍名称。 |
-| `aria-labelledby` | `string` | — | 用外部元素命名分组。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 group 元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到 group 元素的 ref。 |
 | `className` | `ClassValue` | — | Tailwind 类名，合并到 group root。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
@@ -82,17 +79,13 @@ description: "一个 React 切换组，采用 Liquid Glass 选中状态，支持
 | `label` | `ReactNode` | — | item 内的可见文字。 |
 | `icon` | `ReactNode` | — | 文字前的装饰性图标。 |
 | `onPressedChange` | `(pressed, details) => void` | — | 该 item 的按下状态变化时调用。 |
-| `disabled` | `boolean` | `false` | 禁用该项。 |
-| `aria-label` | `string` | — | 仅图标时使用的无障碍名称。 |
-| `aria-labelledby` | `string` | — | 用外部元素命名仅图标 item。 |
 | `nativeButton` | `boolean` | `true` | item 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 item 元素。 |
-| `ref` | `Ref<HTMLButtonElement>` | — | 转发到 item 元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到 item root。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的该 item 内部槽位类名。 |
 
-item 不接收 `pressed` 或 `defaultPressed`；选中状态以 group 的 `value` / `defaultValue` 为唯一数据源。根 `ui` 会先合并到每个 item，再合并该 item 的 `ui`，最后合并 item 的 `className`。
+item 不接收 `pressed` 或 `defaultPressed`；选中状态以 group 的 `value` / `defaultValue` 为唯一数据源。根 `ui` 会先合并到每个 item，再合并该 item 的 `ui`，最后合并 item 的 `className`。ARIA 属性、`disabled` 与 `ref` 会透传到 group 和 item 按钮。
 
 | 属性 | 说明 |
 | --- | --- |

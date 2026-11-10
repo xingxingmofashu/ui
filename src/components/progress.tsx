@@ -13,7 +13,7 @@ type Progress = ComponentConfig<typeof theme>;
 
 type ProgressProps = Omit<
   UIProgress.Root.Props,
-  "children" | "className" | "value"
+  "children" | "className" | "style" | "value"
 > &
   VariantProps<typeof theme> & {
     /** Current value. Use `null` for an indeterminate progress bar. */
@@ -24,6 +24,8 @@ type ProgressProps = Omit<
     description?: React.ReactNode;
     /** Tailwind classes merged into the root. */
     className?: ClassValue;
+    /** Inline styles merged into the same element as `className`. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Progress["slots"];
   };

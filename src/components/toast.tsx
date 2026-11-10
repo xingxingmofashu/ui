@@ -32,14 +32,17 @@ const SWIPE_DIRECTIONS = {
   ("up" | "down" | "left" | "right")[]
 >;
 
-type ToastProviderProps = UIToast.Provider.Props;
+type ToastProviderProps = Omit<UIToast.Provider.Props, "children"> & {
+  /** App content that can access the toast manager. */
+  children?: React.ReactNode;
+};
 
 type Toast = ComponentConfig<typeof theme>;
 
 interface ToastProps
   extends Omit<
     UIToast.Root.Props,
-    "children" | "className" | "swipeDirection" | "toast"
+    "children" | "className" | "style" | "swipeDirection" | "toast"
   > {
   /** Corner where the toast stack is anchored. */
   position?: ToastPosition;
@@ -47,6 +50,8 @@ interface ToastProps
   close?: React.ReactNode;
   /** Tailwind classes merged into each toast. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Toast["slots"];
 }

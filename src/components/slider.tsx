@@ -14,11 +14,13 @@ type SliderProps<
   Value extends number | readonly number[] = number | readonly number[],
 > = Omit<
   UISlider.Root.Props<Value>,
-  "children" | "className"
+  "children" | "className" | "style"
 > &
   Pick<UISlider.Thumb.Props, "getAriaLabel" | "getAriaValueText"> & {
     /** Tailwind classes merged into the root. */
     className?: ClassValue;
+    /** Inline styles merged into the same element as `className`. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Slider["slots"];
   };

@@ -10,9 +10,13 @@ type Form = ComponentConfig<typeof theme>;
 
 type FormProps<
   FormValues extends Record<string, any> = Record<string, any>,
-> = Omit<UIForm.Props<FormValues>, "className"> & {
+> = Omit<UIForm.Props<FormValues>, "children" | "className" | "style"> & {
+  /** Fields and actions rendered inside the form. */
+  children?: React.ReactNode;
   /** Tailwind classes merged into the form element. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Form["slots"];
 };

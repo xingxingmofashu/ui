@@ -54,19 +54,18 @@ export default function FieldsetBasicDemo() {
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | — | Fields and controls grouped by the fieldset. Required. |
 | `legend` | `ReactNode` | — | Visible legend naming the group. |
-| `disabled` | `boolean` | `false` | Disables the native fieldset and nested fields and form controls. |
-| `ref` | `Ref<HTMLFieldSetElement>` | — | Ref forwarded to the fieldset root. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the fieldset root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; legend?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the fieldset root element. |
 
-Additional Base UI `Fieldset.Root` props are forwarded, including `id` and native fieldset attributes.
+Native `<fieldset>` attributes and `ref` are forwarded, including `disabled`, `id`, and `name`.
 
 | Attribute | Description |
 | --- | --- |
 | `data-disabled` | Present when the fieldset is disabled. |
 | `data-slot` | Marks internal parts (`root`, `legend`) for styling. |
+
 
 ## Styling
 

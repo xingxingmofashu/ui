@@ -84,7 +84,8 @@ viewport 是实时区域。高优先级通知使用 `alertdialog` 角色，其�
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ viewport?: ClassValue; root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; icon?: ClassValue; text?: ClassValue; title?: ClassValue; description?: ClassValue; actions?: ClassValue; action?: ClassValue; close?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换每条 Toast 的根元素。 |
-| `ref` | `Ref<HTMLDivElement>` | — | 转发到每条 Toast 根元素的 ref。 |
+
+原生属性与 `ref` 会透传到每条 Toast 的根元素。
 
 **useToast**
 

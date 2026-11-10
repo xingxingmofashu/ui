@@ -35,7 +35,7 @@ Pass one element as `trigger`. It must forward props and refs to its root elemen
 
 `Popover` adds `aria-haspopup="dialog"` and `aria-expanded` to the trigger and renders a popup named by `title` and described by `description`.
 
-It is non-modal by default: focus is not trapped, the page stays scrollable, and `Escape` or an outside press closes it. Provide a visible close or done action when the popup changes settings. The `modal` prop cannot enable focus trapping with this wrapper: Base UI only does that when a `Popover.Close` part is rendered, and the component does not render one. `modal={true}` still locks page scroll and blocks outside interaction. See the [accessibility guide](/docs/en/guides/accessibility) for focus rules.
+It is non-modal by default: focus is not trapped, the page stays scrollable, and `Escape` or an outside press closes it. Provide a visible close or done action when the popup changes settings. The `modal` prop controls page scroll and outside interaction, but this component does not trap focus. `modal={true}` still locks page scroll and blocks outside interaction. See the [accessibility guide](/docs/en/guides/accessibility) for focus rules.
 
 ## API reference
 
@@ -56,8 +56,7 @@ It is non-modal by default: focus is not trapped, the page stays scrollable, and
 | `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when the popover opens or closes. |
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | Called after the open or close animation finishes. |
-| `modal` | `boolean \| "trap-focus"` | `false` | `true` locks page scroll and blocks outside interaction; `"trap-focus"` leaves scroll and outside interaction enabled. Neither traps focus because the component does not render a `Popover.Close` part. |
-| `actionsRef` | `RefObject<Actions \| null>` | — | Imperative `close` and `unmount` actions. |
+| `modal` | `boolean \| "trap-focus"` | `false` | `true` locks page scroll and blocks outside interaction; `"trap-focus"` leaves scroll and outside interaction enabled. Focus is not trapped by this component. |
 | `handle` | `PopoverHandle` | — | Associates the popover with external triggers. |
 | `triggerId` | `string \| null` | — | ID of the trigger associated with the popover. |
 | `defaultTriggerId` | `string \| null` | — | ID of the trigger used for an initially open popover. |

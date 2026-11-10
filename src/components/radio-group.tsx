@@ -17,7 +17,7 @@ type RadioGroup = ComponentConfig<typeof theme>;
 /** One option managed by the radio group. */
 type RadioGroupItemProps<Value = any> = Omit<
   UIRadio.Root.Props<Value>,
-  "className" | "children"
+  "className" | "children" | "style"
 > & {
   /** Visible label rendered next to the control. */
   label?: React.ReactNode;
@@ -25,6 +25,8 @@ type RadioGroupItemProps<Value = any> = Omit<
   description?: React.ReactNode;
   /** Tailwind classes merged into the item root. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<
@@ -44,7 +46,7 @@ type RadioGroupItemProps<Value = any> = Omit<
 
 type RadioGroupProps<Value = any> = Omit<
   UIRadioGroup.Props<Value>,
-  "className" | "children"
+  "className" | "children" | "style"
 > &
   VariantProps<typeof theme> & {
     /** Options rendered by the radio group. */
@@ -55,6 +57,8 @@ type RadioGroupProps<Value = any> = Omit<
     description?: React.ReactNode;
     /** Tailwind classes merged into the group root. */
     className?: ClassValue;
+    /** Inline styles merged into the same element as `className`. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: RadioGroup["slots"];
   };

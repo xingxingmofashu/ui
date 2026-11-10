@@ -12,13 +12,15 @@ import theme from "../theme/fieldset";
 type Fieldset = ComponentConfig<typeof theme>;
 
 interface FieldsetProps
-  extends Omit<UIFieldset.Root.Props, "children" | "className"> {
+  extends Omit<UIFieldset.Root.Props, "children" | "className" | "style"> {
   /** Visible legend naming the group. */
   legend?: React.ReactNode;
   /** Fields and controls grouped by the fieldset. */
   children: React.ReactNode;
   /** Tailwind classes merged into the fieldset root. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Fieldset["slots"];
 }

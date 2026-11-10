@@ -50,7 +50,6 @@ description: "一个 React 切换按钮，采用 Liquid Glass 选中滑块、可
 | `pressed` | `boolean` | — | 受控的按下状态。 |
 | `defaultPressed` | `boolean` | `false` | 非受控时的初始按下状态。 |
 | `onPressedChange` | `(pressed, details) => void` | — | 按下状态变化时调用。 |
-| `disabled` | `boolean` | `false` | 禁用 Toggle。 |
 | `value` | `string` | — | 在 toggle group 内标识该 Toggle。 |
 | `nativeButton` | `boolean` | `true` | 是否渲染原生 `<button>`。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换渲染的元素。 |
@@ -60,7 +59,8 @@ description: "一个 React 切换按钮，采用 Liquid Glass 选中滑块、可
 | `className` | `ClassValue` | — | 合并到 Toggle 根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; rim?: ClassValue; thumb?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
-| `ref` | `Ref<HTMLButtonElement>` | — | 透传到渲染按钮的 ref。 |
+
+`disabled`、其他原生按钮属性与 `ref` 会透传到渲染的按钮。
 
 | 属性 | 说明 |
 | --- | --- |

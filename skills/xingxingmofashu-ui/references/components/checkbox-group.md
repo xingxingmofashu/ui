@@ -74,16 +74,10 @@ export default function CheckboxGroupBasicDemo() {
 | `value` | `string[]` | — | Controlled checked values. |
 | `defaultValue` | `string[]` | `[]` | Initial checked values when uncontrolled. |
 | `onValueChange` | `(value: string[], details) => void` | — | Called when a checkbox is ticked or unticked. |
-| `name` | `string` | — | Form field name applied to every checkbox in the group. |
-| `form` | `string` | — | ID of the form that owns the hidden inputs. |
 | `disabled` | `boolean` | `false` | Disables every option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while keeping every option focusable. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Control, label, description, and spacing size. |
-| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
-| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
-| `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the group root. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the group root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; description?: ClassValue; items?: ClassValue; item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
@@ -99,24 +93,16 @@ export default function CheckboxGroupBasicDemo() {
 | `disabled` | `boolean` | `false` | Disables this option. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Marks this checkbox as required for form submission. |
-| `name` | `string` | — | Form field name for this option. Defaults to the group `name`. |
-| `form` | `string` | — | ID of the form that owns this option's hidden input. Defaults to the group `form`. |
 | `uncheckedValue` | `string` | — | Value submitted when this option is unchecked. |
-| `id` | `string` | — | ID of the hidden input, or of the root element when `nativeButton` is true. |
-| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the entry root element. |
-| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
-| `aria-labelledby` | `string` | — | ID of an external label. |
-| `aria-describedby` | `string` | — | ID of external supporting text. |
-| `ref` | `Ref<HTMLSpanElement>` | — | Ref forwarded to the entry root. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the entry root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for control slots, keyed by `data-slot`. |
 
 Parent checkboxes are not part of the component API. Compose them with `Checkbox` and keep the arrays in sync, as shown above.
 
-`ui` keys map to the `data-slot` values listed below. Additional Base UI `CheckboxGroup` props, including `id` and `render`, are forwarded. Each item also forwards additional Base UI `Checkbox` props, including `inputRef` and `render`.
+`ui` keys map to the `data-slot` values listed below. `name`, `form`, `id`, `ref`, and other native attributes are forwarded to the group and each control.
 
 | Attribute | Description |
 | --- | --- |
@@ -127,6 +113,7 @@ Parent checkboxes are not part of the component API. Compose them with `Checkbox
 | `data-unchecked` | Present on an unchecked option. |
 | `data-indeterminate` | Present when an option is mixed. |
 | `data-slot` | Marks internal group parts (`root`, `header`, `label`, `description`, `items`) and each control (`item`, `box`, `fill`, `glass`, `overlay`, `indicator`, `indicator-icon`, `wrapper`, `item-label`, `item-description`). |
+
 
 ## Styling
 

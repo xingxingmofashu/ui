@@ -15,7 +15,7 @@ Pass fields and actions as children. `Form` applies a vertical layout with the s
 
 ## Consolidated errors
 
-Set `errors` to an object keyed by the `name` of each `Field`. A string renders one message; an array renders its messages, and two or more messages are wrapped in a list. `Field` connects the message to its control with `aria-describedby` and marks it invalid, and Base UI clears the entry when the user edits that field.
+Set `errors` to an object keyed by the `name` of each `Field`. A string renders one message; an array renders its messages, and two or more messages are wrapped in a list. `Field` connects the message to its control with `aria-describedby` and marks it invalid, and the form clears the entry when the user edits that field.
 
 <Example name="form/errors" />
 
@@ -58,7 +58,7 @@ Because the object comes from `Field` registration, controls that submit through
 
 `Form` renders a native `<form>` element. It does not add an accessible name; use `aria-label` or `aria-labelledby` when a page contains more than one form. Labels for individual controls come from `Field`, and submit buttons keep their own accessible names.
 
-Native form behavior is preserved: `Enter` submits from a text field when a submit button exists, and autofill and `FormData` keep working. Base UI suppresses the browser's validation bubble and validates through `Field` instead. On a failed submission, focus moves to the first invalid control so keyboard and screen reader users land on the problem. Form-level errors are announced through the control's `aria-describedby` relationship. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
+Native form behavior is preserved: `Enter` submits from a text field when a submit button exists, and autofill and `FormData` keep working. The component suppresses the browser's validation bubble and validates through `Field` instead. On a failed submission, focus moves to the first invalid control so keyboard and screen reader users land on the problem. Form-level errors are announced through the control's `aria-describedby` relationship. See the [accessibility guide](/docs/en/guides/accessibility) for form patterns.
 
 ## API reference
 
@@ -70,14 +70,12 @@ Native form behavior is preserved: `Enter` submits from a text field when a subm
 | `errors` | `Record<string, string \| string[]>` | — | External errors keyed by the `name` of a `Field`. Strings render one message; arrays render their messages, with two or more wrapped in a list. |
 | `onFormSubmit` | `(formValues: Record<string, any>, eventDetails: { reason: "none"; event: Event }) => void` | — | Receives values from `Field`-registered controls and prevents the native submit event. |
 | `validationMode` | `"onSubmit" \| "onBlur" \| "onChange"` | `"onSubmit"` | Default validation timing for fields in the form. A `Field` prop takes precedence. |
-| `actionsRef` | `RefObject<{ validate: (fieldName?: string) => void } \| null>` | — | Imperative validation for all fields or one field by name. |
-| `ref` | `Ref<HTMLFormElement>` | — | Ref forwarded to the form element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the form element. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue }` | — | Tailwind classes for the `root` slot, keyed by `data-slot`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the form root element. |
 
-Additional Base UI `Form` props and native `<form>` attributes are forwarded, including `action`, `method`, `onSubmit`, `id`, and `aria-*`.
+Native `<form>` attributes and `ref` are forwarded, including `action`, `method`, `onSubmit`, `id`, and `aria-*`.
 
 | Attribute | Description |
 | --- | --- |

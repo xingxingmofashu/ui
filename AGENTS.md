@@ -113,21 +113,21 @@ workspace.
 
 ## Component API
 
-- Components are single-structure wrappers: they own the Base UI anatomy and
-  expose no Base UI parts or second composition API.
-- Every exported `*Props` type must derive from its Base UI part through
-  `Omit`, `Pick`, or `extends`. Do not redeclare a Base UI prop; keep the
-  wrapper's definition only when it deliberately shadows one. `className` and
-  `style` are wrapper-owned: `className` is `cn`'s `ClassValue` and `style` is
-  `React.CSSProperties`.
-- Inherit Base UI props from the part that receives them: use
+- Components are single-structure wrappers: they own the primitive anatomy and
+  expose no primitive parts or second composition API.
+- Every exported `*Props` type must derive from its underlying primitive part
+  through `Omit`, `Pick`, or `extends`. Do not redeclare a primitive prop;
+  keep the wrapper's definition only when it deliberately shadows one.
+  `className` and `style` are wrapper-owned: `className` is `cn`'s
+  `ClassValue` and `style` is `React.CSSProperties`.
+- Inherit primitive props from the part that receives them: use
   `Omit<UIComponent.Root.Props, ...>` for root props and
   `Pick<UIComponent.Part.Props, ...>` for forwarded part props. Do not
   re-declare them with indexed access or use `Omit` to expose props the wrapper
   does not forward.
 - Declare wrapper-owned props locally (`trigger`, `arrow`, `className`, `ui`,
-  item fields). Pass-through props keep Base UI names; a single content slot
-  uses `children`, while array item fields keep their own names.
+  item fields). Pass-through props keep their original names; a single content
+  slot uses `children`, while array item fields keep their own names.
 - `className` targets the primary element; internal slots use `ui`, keyed by
   `data-slot`. Derive `ui` from the theme via `ComponentConfig`
   (`src/internal/tv.ts`); never hand-write slot maps or aliases. `ui` values

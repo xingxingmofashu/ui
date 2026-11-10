@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, expectTypeOf, it, vi } from "vitest";
 
 import {
   CheckboxGroup,
@@ -25,6 +25,40 @@ const channels = [
     description: "Invoices, receipts, and plan changes.",
   },
 ] as const satisfies readonly CheckboxGroupItemProps[];
+
+const channelValues = ["comments", "releases", "billing"];
+
+const parentItems = [
+  { parent: true, label: "All channels" },
+  ...channels,
+] as const satisfies readonly CheckboxGroupItemProps[];
+
+const parentItemsWithDisabled = [
+  { parent: true, label: "All channels" },
+  { value: "comments", label: "Comments" },
+  { value: "releases", label: "Releases", disabled: true },
+  { value: "billing", label: "Billing" },
+] as const satisfies readonly CheckboxGroupItemProps[];
+
+function ControlledParentGroup({
+  initialValue = [],
+  items = parentItems,
+}: {
+  initialValue?: string[];
+  items?: readonly CheckboxGroupItemProps[];
+}) {
+  const [value, setValue] = useState<string[]>(initialValue);
+
+  return (
+    <CheckboxGroup
+      aria-label="Notifications"
+      allValues={channelValues}
+      items={items}
+      value={value}
+      onValueChange={setValue}
+    />
+  );
+}
 
 function ControlledGroup() {
   const [value, setValue] = useState<string[]>(["comments"]);
@@ -386,6 +420,201 @@ describe("CheckboxGroup", () => {
       );
 
       expect(input).toHaveAttribute("form", "notifications");
+    });
+  });
+
+  describe("parent checkbox", () => {
+    it("reflects the group value in unchecked, mixed, and checked states", () => {
+      render(
+        <>
+          <CheckboxGroup
+            aria-label="None"
+            allValues={channelValues}
+            items={parentItems}
+            value={[]}
+          />
+          <CheckboxGroup
+            aria-label="Some"
+            allValues={channelValues}
+            items={parentItems}
+            value={["comments"]}
+          />
+          <CheckboxGroup
+            aria-label="All"
+            allValues={channelValues}
+            items={parentItems}
+            value={channelValues}
+          />
+        </>,
+      );
+
+      const none = within(getGroup("None")).getByRole("checkbox", {
+        name: "All channels",
+      });
+      const some = within(getGroup("Some")).getByRole("checkbox", {
+        name: "All channels",
+      });
+      const all = within(getGroup("All")).getByRole("checkbox", {
+        name: "All channels",
+      });
+
+      expect(none).toHaveAttribute("aria-checked", "false");
+      expect(some).toHaveAttribute("aria-checked", "mixed");
+      expect(all).toHaveAttribute("aria-checked", "true");
+      expect(none).toHaveAttribute("data-parent", "");
+    });
+
+    it("selects and clears every option from the parent checkbox", async () => {
+      const user = userEvent.setup();
+
+      render(<ControlledParentGroup />);
+
+      const parent = screen.getByRole("checkbox", { name: "All channels" });
+
+      await user.click(parent);
+
+      expect(parent).toHaveAttribute("aria-checked", "true");
+      for (const name of ["Comments", "Releases", "Billing"]) {
+        expect(screen.getByRole("checkbox", { name })).toBeChecked();
+      }
+
+      await user.click(parent);
+
+      expect(parent).toHaveAttribute("aria-checked", "false");
+      for (const name of ["Comments", "Releases", "Billing"]) {
+        expect(screen.getByRole("checkbox", { name })).not.toBeChecked();
+      }
+    });
+
+    it("selects every option when the parent starts mixed", async () => {
+      const user = userEvent.setup();
+
+      render(<ControlledParentGroup initialValue={["comments"]} />);
+
+      const parent = screen.getByRole("checkbox", { name: "All channels" });
+
+      expect(parent).toHaveAttribute("aria-checked", "mixed");
+
+      await user.click(parent);
+
+      expect(parent).toHaveAttribute("aria-checked", "true");
+      expect(
+        screen.getByRole("checkbox", { name: "Releases" }),
+      ).toBeChecked();
+    });
+
+    it("keeps disabled children checked when the parent clears the group", async () => {
+      const user = userEvent.setup();
+
+      render(
+        <ControlledParentGroup
+          initialValue={channelValues}
+          items={parentItemsWithDisabled}
+        />,
+      );
+
+      const parent = screen.getByRole("checkbox", { name: "All channels" });
+
+      await user.click(parent);
+
+      expect(
+        screen.getByRole("checkbox", { name: "Comments" }),
+      ).not.toBeChecked();
+      expect(
+        screen.getByRole("checkbox", { name: "Releases" }),
+      ).toBeChecked();
+      expect(
+        screen.getByRole("checkbox", { name: "Billing" }),
+      ).not.toBeChecked();
+      expect(parent).toHaveAttribute("aria-checked", "mixed");
+    });
+
+    it("links the parent checkbox to every child with aria-controls", () => {
+      render(
+        <CheckboxGroup
+          aria-label="Notifications"
+          allValues={channelValues}
+          items={parentItems}
+          value={[]}
+        />,
+      );
+
+      const group = getGroup();
+      const parent = within(group).getByRole("checkbox", {
+        name: "All channels",
+      });
+      const controls = (parent.getAttribute("aria-controls") ?? "")
+        .split(" ")
+        .filter(Boolean);
+
+      expect(controls).toHaveLength(3);
+      for (const id of controls) {
+        expect(document.getElementById(id)).toHaveAttribute(
+          "role",
+          "checkbox",
+        );
+      }
+    });
+  });
+
+  describe("item callbacks", () => {
+    it("calls onCheckedChange before the group update", async () => {
+      const user = userEvent.setup();
+      const onItemCheckedChange = vi.fn();
+      const onValueChange = vi.fn();
+
+      render(
+        <CheckboxGroup
+          aria-label="Notifications"
+          items={[
+            {
+              value: "comments",
+              label: "Comments",
+              onCheckedChange: onItemCheckedChange,
+            },
+          ]}
+          onValueChange={onValueChange}
+        />,
+      );
+
+      await user.click(screen.getByRole("checkbox", { name: "Comments" }));
+
+      expect(onItemCheckedChange).toHaveBeenCalledTimes(1);
+      expect(onItemCheckedChange.mock.calls[0]?.[0]).toBe(true);
+      expect(onValueChange).toHaveBeenCalledTimes(1);
+      expect(onValueChange.mock.calls[0]?.[0]).toEqual(["comments"]);
+    });
+
+    it("lets an item cancel the group update", async () => {
+      const user = userEvent.setup();
+      const onValueChange = vi.fn();
+
+      render(
+        <CheckboxGroup
+          aria-label="Notifications"
+          items={[
+            {
+              value: "comments",
+              label: "Comments",
+              onCheckedChange: (_checked, details) => details.cancel(),
+            },
+          ]}
+          onValueChange={onValueChange}
+        />,
+      );
+
+      await user.click(screen.getByRole("checkbox", { name: "Comments" }));
+
+      expect(onValueChange).not.toHaveBeenCalled();
+      expect(
+        screen.getByRole("checkbox", { name: "Comments" }),
+      ).not.toBeChecked();
+    });
+
+    it("does not expose uncheckedValue on group items", () => {
+      expectTypeOf<CheckboxGroupItemProps>().not.toHaveProperty(
+        "uncheckedValue",
+      );
     });
   });
 

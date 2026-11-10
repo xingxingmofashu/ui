@@ -13,10 +13,12 @@ import theme from "../theme/switch";
 type Switch = ComponentConfig<typeof theme>;
 
 interface SwitchProps
-  extends Omit<UISwitch.Root.Props, "className" | "children">,
+  extends Omit<UISwitch.Root.Props, "className" | "children" | "style">,
     VariantProps<typeof theme> {
   /** Tailwind classes merged into the Base UI switch root. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for internal slots, keyed by `data-slot`. */
   ui?: Switch["slots"];
   /** Visible label. */

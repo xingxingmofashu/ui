@@ -12,7 +12,7 @@ type Menu = ComponentConfig<typeof theme>;
 /** One action item in the menu. */
 type MenuItemProps = Omit<
   UIMenu.Item.Props,
-  "children" | "className" | "label" | "onClick" | "onSelect"
+  "children" | "className" | "label" | "onClick" | "onSelect" | "style"
 > & {
   type?: "item";
   /** Value that identifies the item in the menu. */
@@ -29,6 +29,8 @@ type MenuItemProps = Omit<
   onSelect?: React.MouseEventHandler<HTMLElement>;
   /** Tailwind classes merged into the item. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for this item's internal slots. */
   ui?: Partial<
     Pick<Menu["slots"], "item" | "itemIcon" | "itemLabel" | "shortcut">
@@ -38,7 +40,7 @@ type MenuItemProps = Omit<
 /** A labelled group of menu items. */
 type MenuGroupProps = Omit<
   UIMenu.Group.Props,
-  "children" | "className"
+  "children" | "className" | "style"
 > & {
   type: "group";
   /** Group heading. */
@@ -47,6 +49,8 @@ type MenuGroupProps = Omit<
   items: readonly MenuItemProps[];
   /** Tailwind classes merged into the group. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for the group slots. */
   ui?: Partial<
     Pick<
@@ -64,11 +68,13 @@ type MenuGroupProps = Omit<
 /** A separator between menu items. */
 type MenuSeparatorProps = Omit<
   UIMenu.Separator.Props,
-  "children" | "className" | "orientation"
+  "children" | "className" | "orientation" | "style"
 > & {
   type: "separator";
   /** Tailwind classes merged into the separator. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for the separator slot. */
   ui?: Partial<Pick<Menu["slots"], "separator">>;
 };

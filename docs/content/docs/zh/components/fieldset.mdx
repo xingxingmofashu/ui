@@ -15,7 +15,7 @@ description: "一个 React fieldset，采用 Liquid Glass 图例，用于组织�
 
 ## 禁用
 
-`disabled` 会透传给原生 `<fieldset>`、Base UI 的 fieldset 上下文，以及包内嵌套的表单控件。字段与控件会一起禁用，图例也会淡出。
+`disabled` 会透传给原生 `<fieldset>` 以及包内嵌套的表单控件。字段与控件会一起禁用，图例也会淡出。
 
 <Example name="fieldset/disabled" />
 
@@ -33,14 +33,12 @@ description: "一个 React fieldset，采用 Liquid Glass 图例，用于组织�
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | — | 由 fieldset 分组的字段与控件。必填。 |
 | `legend` | `ReactNode` | — | 为分组命名的可见图例。 |
-| `disabled` | `boolean` | `false` | 禁用原生 fieldset 与内部字段及表单控件。 |
-| `ref` | `Ref<HTMLFieldSetElement>` | — | 转发到 fieldset 根元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到 fieldset 根元素的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue; legend?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位类名。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换 fieldset 根元素。 |
 
-其余 Base UI `Fieldset.Root` 属性会透传，包括 `id` 与原生 fieldset 属性。
+原生 `<fieldset>` 属性与 `ref` 会透传，包括 `disabled`、`id` 与 `name`。
 
 | 属性 | 说明 |
 | --- | --- |

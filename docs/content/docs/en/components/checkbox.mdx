@@ -57,19 +57,15 @@ Five sizes are available: `xs`, `sm`, `md`, `lg`, and `xl`. The label and descri
 | `disabled` | `boolean` | `false` | Disables interaction. |
 | `readOnly` | `boolean` | `false` | Prevents changes while remaining focusable. |
 | `required` | `boolean` | `false` | Requires the checkbox to be checked for form submission. |
-| `name` | `string` | — | Form field name. |
-| `form` | `string` | — | ID of the form that owns the hidden input. |
-| `value` | `string` | — | Value submitted with the form when checked. |
 | `uncheckedValue` | `string` | — | Value submitted with the form when unchecked. |
 | `parent` | `boolean` | `false` | Whether this checkbox controls a group of child checkboxes inside a `CheckboxGroup`. |
-| `id` | `string` | — | ID of the hidden input, or of the root element when `nativeButton` is true. |
-| `inputRef` | `Ref<HTMLInputElement>` | — | Ref to the hidden native input. |
 | `nativeButton` | `boolean` | `false` | Whether the rendered element is a native `<button>`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
-| `ref` | `Ref<HTMLSpanElement>` | — | Ref forwarded to the root element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the checkbox root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; box?: ClassValue; fill?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+`disabled`, `name`, `form`, `value`, `id`, `ref`, and other native attributes are still forwarded to the rendered control and its hidden input.
 
 | Attribute | Description |
 | --- | --- |

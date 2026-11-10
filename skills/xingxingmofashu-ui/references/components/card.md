@@ -1,9 +1,9 @@
 # Card
 
 `Card` is a native layout primitive: it has no interactive state and forwards
-its remaining native props, including `style`, to the root `div`. It is
-server-safe and does not support the `render` prop. Use `ui` to style the glass
-layers or any internal section.
+its remaining native props to the root `div`. It is server-safe and does not
+support the `render` prop. Use `ui` to style the glass layers or any internal
+section.
 
 > This reference mirrors the English documentation for convenience. If it disagrees with the installed package types or the canonical docs, trust the installed package and the canonical docs.
 
@@ -62,14 +62,16 @@ export default function CardBasicDemo() {
 | `description` | `ReactNode` | — | Supporting text below the heading. |
 | `footer` | `ReactNode` | — | Footer action area. |
 | `children` | `ReactNode` | — | Card body content. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `ClassValue` | — | Merged into `root`; use it for layout. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; layout?: ClassValue; header?: ClassValue; title?: ClassValue; description?: ClassValue; body?: ClassValue; footer?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
+Native `<div>` attributes and `ref` are forwarded to the root.
+
 | Attribute | Description |
 | --- | --- |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `layout`, `header`, `title`, `description`, `body`, `footer`) for styling. |
+
 
 ## Styling
 

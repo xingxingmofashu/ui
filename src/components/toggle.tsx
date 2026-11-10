@@ -13,11 +13,13 @@ type Toggle = ComponentConfig<typeof theme>;
 
 type ToggleProps<Value extends string> = Omit<
   UIToggle.Props<Value>,
-  "className" | "children"
+  "className" | "children" | "style"
 > &
   Omit<VariantProps<typeof theme>, "iconOnly"> & {
     /** Tailwind classes merged into the toggle root. */
     className?: ClassValue;
+    /** Inline styles merged into the same element as `className`. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Toggle["slots"];
     /** Visible label rendered inside the toggle. */

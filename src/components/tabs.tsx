@@ -13,7 +13,7 @@ type Tabs = ComponentConfig<typeof theme>;
 /** One tab and its related panel. */
 type TabsItemProps = Omit<
   UITabs.Tab.Props,
-  "children" | "className" | "content"
+  "children" | "className" | "content" | "style"
 > & {
   /** Visible label inside the tab. */
   label?: React.ReactNode;
@@ -25,6 +25,8 @@ type TabsItemProps = Omit<
   keepMounted?: boolean;
   /** Tailwind classes merged into the tab button. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for this item's internal slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<Tabs["slots"], "tab" | "icon" | "label" | "panel" | "panelContent">
@@ -38,7 +40,7 @@ type TabsTabProps = Omit<
 
 type TabsProps = Omit<
   UITabs.Root.Props,
-  "children" | "className"
+  "children" | "className" | "style"
 > &
   Pick<UITabs.List.Props, "activateOnFocus" | "loopFocus"> &
   VariantProps<typeof theme> & {
@@ -48,6 +50,8 @@ type TabsProps = Omit<
     disabled?: boolean;
     /** Tailwind classes merged into the root. */
     className?: ClassValue;
+    /** Inline styles merged into the same element as `className`. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: Tabs["slots"];
   };

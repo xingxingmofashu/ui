@@ -58,15 +58,12 @@ An indeterminate bar has no `aria-valuenow`; it is announced as indeterminate pr
 | `format` | `Intl.NumberFormatOptions` | — | Options used to format the visible value and the default `aria-valuetext`. |
 | `locale` | `Intl.LocalesArgument` | — | The locale used by `Intl.NumberFormat`. Defaults to the runtime locale. |
 | `getAriaValueText` | `(formattedValue: string, value: number \| null) => string` | — | Returns a human-readable text alternative for the current value. |
-| `aria-valuetext` | `string` | — | Overrides the accessible value text. |
-| `aria-label` | `string` | — | Accessible name when no visible label is rendered. |
-| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
-| `aria-describedby` | `string` | — | ID reference for external supporting text. A visible `description` is merged with this value. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the rendered root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; header?: ClassValue; label?: ClassValue; value?: ClassValue; track?: ClassValue; indicator?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+Native `<div>` attributes, ARIA attributes such as `aria-label`, `aria-labelledby`, `aria-describedby`, and `aria-valuetext`, and `ref` are forwarded to the root.
 
 | Attribute | Description |
 | --- | --- |

@@ -15,7 +15,7 @@ description: "一个 React 表单，采用 Liquid Glass 布局，提供统一的
 
 ## 统一错误
 
-把 `errors` 设置为以每个 `Field` 的 `name` 为 key 的对象。字符串渲染一条信息；数组会渲染其中的每条信息，两条及以上会包裹为列表。`Field` 会通过 `aria-describedby` 把信息关联到控件并标记为无效；用户编辑该字段时，Base UI 会清除对应条目。
+把 `errors` 设置为以每个 `Field` 的 `name` 为 key 的对象。字符串渲染一条信息；数组会渲染其中的每条信息，两条及以上会包裹为列表。`Field` 会通过 `aria-describedby` 把信息关联到控件并标记为无效；用户编辑该字段时，表单会清除对应条目。
 
 <Example name="form/errors" />
 
@@ -58,7 +58,7 @@ actionsRef.current?.validate("email");
 
 `Form` 渲染原生 `<form>` 元素，但不会自动添加可访问名称；当页面包含多个表单时，请使用 `aria-label` 或 `aria-labelledby`。单个控件的标签来自 `Field`，提交按钮保留自己的可访问名称。
 
-原生表单行为保持不变：存在提交按钮时，在文本框中按 `Enter` 会提交，自动填充与 `FormData` 也能继续使用。Base UI 会关闭浏览器的原生校验气泡，改由 `Field` 完成校验。提交失败后，焦点会移到第一个无效控件，让键盘与屏幕阅读器用户直接到达问题位置。表单级错误通过控件的 `aria-describedby` 关系播报。表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
+原生表单行为保持不变：存在提交按钮时，在文本框中按 `Enter` 会提交，自动填充与 `FormData` 也能继续使用。组件会关闭浏览器的原生校验气泡，改由 `Field` 完成校验。提交失败后，焦点会移到第一个无效控件，让键盘与屏幕阅读器用户直接到达问题位置。表单级错误通过控件的 `aria-describedby` 关系播报。表单模式见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
@@ -70,14 +70,12 @@ actionsRef.current?.validate("email");
 | `errors` | `Record<string, string \| string[]>` | — | 按 `Field` 的 `name` 组织的外部错误。字符串渲染一条信息；数组会渲染其中的每条信息，两条及以上会包裹为列表。 |
 | `onFormSubmit` | `(formValues: Record<string, any>, eventDetails: { reason: "none"; event: Event }) => void` | — | 接收通过 `Field` 注册的控件值，并阻止原生提交事件。 |
 | `validationMode` | `"onSubmit" \| "onBlur" \| "onChange"` | `"onSubmit"` | 表单内字段的默认校验时机。`Field` 上的属性优先。 |
-| `actionsRef` | `RefObject<{ validate: (fieldName?: string) => void } \| null>` | — | 主动校验全部字段，或按名称校验单个字段。 |
-| `ref` | `Ref<HTMLFormElement>` | — | 转发到 form 元素的 ref。 |
 | `className` | `ClassValue` | — | 合并到 form 元素的 Tailwind 类。 |
 | `style` | `CSSProperties` | — | 内联样式，合并到与 `className` 相同的元素。 |
 | `ui` | `{ root?: ClassValue }` | — | 按 `data-slot` 覆盖 `root` 槽位的 Tailwind 类。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换表单根元素。 |
 
-其余 Base UI `Form` 属性与原生 `<form>` 属性会透传，包括 `action`、`method`、`onSubmit`、`id` 与 `aria-*`。
+原生 `<form>` 属性与 `ref` 会透传，包括 `action`、`method`、`onSubmit`、`id` 与 `aria-*`。
 
 | 属性 | 说明 |
 | --- | --- |

@@ -35,7 +35,7 @@ description: "一个非模态 React 浮层，锚定在触发元素旁，采用 L
 
 `Popover` 会为触发器添加 `aria-haspopup="dialog"` 与 `aria-expanded`，并渲染由 `title` 命名、由 `description` 描述的浮层。
 
-默认是非模态的：焦点不会被限制，页面仍可滚动，`Escape` 或点击外部会关闭。浮层会修改设置时，请提供可见的关闭或完成操作。当前封装无法通过 `modal` 启用焦点陷阱：Base UI 只有在渲染了 `Popover.Close` 时才会启用，而组件没有渲染该部分。`modal={true}` 仍会锁定页面滚动并阻止外部交互。焦点规则见[可访问性指南](/docs/zh/guides/accessibility)。
+默认是非模态的：焦点不会被限制，页面仍可滚动，`Escape` 或点击外部会关闭。浮层会修改设置时，请提供可见的关闭或完成操作。`modal` 控制页面滚动与外部交互，但组件本身不会启用焦点陷阱。`modal={true}` 仍会锁定页面滚动并阻止外部交互。焦点规则见[可访问性指南](/docs/zh/guides/accessibility)。
 
 ## API 参考
 
@@ -56,8 +56,7 @@ description: "一个非模态 React 浮层，锚定在触发元素旁，采用 L
 | `defaultOpen` | `boolean` | `false` | 非受控时的初始打开状态。 |
 | `onOpenChange` | `(open: boolean, details) => void` | — | 浮层打开或关闭时调用。 |
 | `onOpenChangeComplete` | `(open: boolean) => void` | — | 打开或关闭动画结束后调用。 |
-| `modal` | `boolean \| "trap-focus"` | `false` | `true` 会锁定页面滚动并阻止外部交互；`"trap-focus"` 不锁定滚动，也保留外部交互。组件未渲染 `Popover.Close`，因此两者都不会启用焦点陷阱。 |
-| `actionsRef` | `RefObject<Actions \| null>` | — | 命令式的 `close` 与 `unmount` 操作。 |
+| `modal` | `boolean \| "trap-focus"` | `false` | `true` 会锁定页面滚动并阻止外部交互；`"trap-focus"` 不锁定滚动，也保留外部交互。组件本身不会启用焦点陷阱。 |
 | `handle` | `PopoverHandle` | — | 将浮层与外部触发器关联。 |
 | `triggerId` | `string \| null` | — | 与浮层关联的触发器 ID。 |
 | `defaultTriggerId` | `string \| null` | — | 初始打开时使用的触发器 ID。 |

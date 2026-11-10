@@ -15,7 +15,7 @@ import theme from "../theme/button";
 type Button = ComponentConfig<typeof theme>;
 
 interface ButtonProps
-  extends Omit<UIButtonProps, 'style' | "className" | 'children'>,
+  extends Omit<UIButtonProps, "style" | "className" | "children">,
   VariantProps<typeof theme> {
   label?: React.ReactNode;
   leadingIcon?: React.ReactNode;

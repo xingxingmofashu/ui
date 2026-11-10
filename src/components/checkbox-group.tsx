@@ -16,25 +16,26 @@ import { DashIcon } from "./icons/dash";
 
 type CheckboxGroup = ComponentConfig<typeof theme>;
 
-/** One entry in the group. */
+/** One entry in the group, or its parent checkbox. */
 type CheckboxGroupItemProps = Omit<
   UICheckbox.Root.Props,
   | "checked"
   | "defaultChecked"
   | "children"
   | "className"
-  | "onCheckedChange"
   | "parent"
+  | "style"
+  | "uncheckedValue"
   | "value"
 > & {
-  /** Value that identifies the option in the group value. */
-  value: string;
   /** Visible label rendered next to the control. */
   label?: React.ReactNode;
   /** Supporting text rendered under the label. */
   description?: React.ReactNode;
   /** Tailwind classes merged into the entry root. */
   className?: ClassValue;
+  /** Inline styles merged into the same element as `className`. */
+  style?: React.CSSProperties;
   /** Tailwind classes for control slots, keyed by `data-slot`. */
   ui?: Partial<
     Pick<
@@ -51,11 +52,27 @@ type CheckboxGroupItemProps = Omit<
       | "itemDescription"
     >
   >;
-};
+} & (
+  | {
+      /**
+       * Renders the group's parent checkbox. The group must be controlled and
+       * receive every child value through `allValues`.
+       */
+      parent: true;
+      /** Optional identifier for the parent entry. */
+      value?: string;
+    }
+  | {
+      /** Value that identifies the option in the group value. */
+      value: string;
+      /** Renders a regular option; a dynamic `parent` still needs a value. */
+      parent?: boolean;
+    }
+);
 
 type CheckboxGroupProps = Omit<
   UICheckboxGroup.Props,
-  "allValues" | "children" | "className"
+  "children" | "className" | "style"
 > &
   VariantProps<typeof theme> &
   Pick<UICheckbox.Root.Props, "name" | "form" | "readOnly"> & {
@@ -67,6 +84,8 @@ type CheckboxGroupProps = Omit<
     description?: React.ReactNode;
     /** Tailwind classes merged into the group root. */
     className?: ClassValue;
+    /** Inline styles merged into the same element as `className`. */
+    style?: React.CSSProperties;
     /** Tailwind classes for internal slots, keyed by `data-slot`. */
     ui?: CheckboxGroup["slots"];
   };
@@ -144,9 +163,9 @@ function CheckboxGroup({
       ) : null}
 
       <div data-slot="items" className={cn(styles.items(), ui?.items)}>
-        {items.map((item) => (
+        {items.map((item, index) => (
           <CheckboxGroupItem
-            key={item.value}
+            key={item.value ?? index}
             {...item}
             name={item.name ?? name}
             form={item.form ?? form}
@@ -186,6 +205,7 @@ function CheckboxGroupItem({
   label,
   description,
   value,
+  parent,
   name,
   form,
   readOnly,
@@ -207,6 +227,7 @@ function CheckboxGroupItem({
     <UICheckbox.Root
       {...props}
       value={value}
+      parent={parent}
       name={name}
       form={form}
       readOnly={readOnly}

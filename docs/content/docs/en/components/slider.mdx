@@ -61,8 +61,6 @@ Arrow keys change the value by `step`, and `Page Up` and `Page Down` use `largeS
 | `defaultValue` | `number \| readonly number[]` | — | Uncontrolled initial value. |
 | `onValueChange` | `(value, details) => void` | — | Called when the value changes. |
 | `onValueCommitted` | `(value, details) => void` | — | Called when a value change is committed. |
-| `name` | `string` | — | Field name used when submitting a form. |
-| `form` | `string` | — | Identifies the form that owns the slider inputs. |
 | `min` | `number` | `0` | Minimum value. |
 | `max` | `number` | `100` | Maximum value. |
 | `step` | `number` | `1` | Step for dragging and arrow keys. |
@@ -73,19 +71,14 @@ Arrow keys change the value by `step`, and `Page Up` and `Page Down` use `largeS
 | `locale` | `Intl.LocalesArgument` | — | Locale used for number formatting. |
 | `getAriaLabel` | `(index: number) => string` | — | Accessible name for the thumb at the given index. Use it for range sliders. |
 | `getAriaValueText` | `(formattedValue, value, index) => string` | — | Custom accessible value text for each thumb. |
-| `aria-label` | `string` | — | Accessible name shared by every thumb. |
-| `aria-labelledby` | `string` | — | ID reference for an external accessible name. |
-| `aria-describedby` | `string` | — | ID reference for supporting text announced with each thumb. |
-| `aria-invalid` | `boolean \| "grammar" \| "spelling" \| "true" \| "false"` | — | Marks the underlying range input as invalid. |
-| `aria-errormessage` | `string` | — | ID of the error message associated with the underlying range input. |
-| `disabled` | `boolean` | `false` | Disables the slider. |
 | `thumbAlignment` | `"center" \| "edge" \| "edge-client-only"` | `"center"` | How thumbs align with the control edges. |
 | `thumbCollisionBehavior` | `"push" \| "swap" \| "none"` | `"push"` | How range thumbs behave when they collide. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the root element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the outermost root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; control?: ClassValue; track?: ClassValue; indicator?: ClassValue; thumb?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+`disabled`, `name`, `form`, ARIA attributes such as `aria-label` and `aria-describedby`, and `ref` are forwarded to the slider and its thumbs.
 
 | Attribute | Description |
 | --- | --- |

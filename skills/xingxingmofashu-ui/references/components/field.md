@@ -1,6 +1,6 @@
 # Field
 
-`Field` wraps one Base UI form control with a visible label, supporting text, and a validation message. It owns the labeling and validity wiring, while the child control owns its own glass surface and interaction.
+`Field` wraps one form control with a visible label, supporting text, and a validation message. It owns the labeling and validity wiring, while the child control owns its own glass surface and interaction.
 
 Use `Field` to give `Input` a visible label, description, and validation message. Controls that already render their own label, such as `Checkbox`, `Select`, `CheckboxGroup`, `RadioGroup`, and `Switch`, keep their built-in `label` prop. Use [Fieldset](https://xingxingmofashu.github.io/ui/docs/en/components/fieldset) when several fields need one shared legend.
 
@@ -50,7 +50,7 @@ export default function FieldBasicDemo() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `children` | `ReactElement` | — | Single Base UI control labelled and validated by the field. Required. |
+| `children` | `ReactElement` | — | Single form control labelled and validated by the field. Required. |
 | `label` | `ReactNode` | — | Visible label associated with the control. |
 | `description` | `ReactNode` | — | Supporting text rendered under the control and linked with `aria-describedby`. |
 | `error` | `ReactNode` | — | Error message. A string renders directly; a React element replaces the body. A truthy value marks the field invalid. |
@@ -63,14 +63,12 @@ export default function FieldBasicDemo() {
 | `name` | `string` | — | Form field name registered by the field. |
 | `dirty` | `boolean` | — | Marks the field dirty from external state. |
 | `touched` | `boolean` | — | Marks the field touched from external state. |
-| `actionsRef` | `RefObject<Field.Root.Actions \| null>` | — | Imperative actions. `validate` validates the field on demand. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to the field root. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the field root. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; label?: ClassValue; error?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the field root element. |
 
-Additional Base UI `Field.Root` props are forwarded, including `id`. The child control also accepts its own props; set `required`, `disabled`, and native constraints on the control when they belong to that element.
+Native `<div>` attributes and `ref` are forwarded to the field root. The child control also accepts its own props; set `required`, `disabled`, and native constraints on the control when they belong to that element.
 
 | Attribute | Description |
 | --- | --- |
@@ -82,6 +80,7 @@ Additional Base UI `Field.Root` props are forwarded, including `id`. The child c
 | `data-filled` | Present when the control has a value. |
 | `data-focused` | Present when the control is focused. |
 | `data-slot` | Marks internal parts (`root`, `label`, `error`, `description`) for styling. |
+
 
 ## Styling
 

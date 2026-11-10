@@ -86,12 +86,15 @@ API reference rules:
   component-specific props listed in the Base UI API reference for the
   matching part, plus wrapper-owned props such as `label`, `leadingIcon`,
   `trailingIcon`, `size`, and `ui`.
-- Do not list native DOM attributes (`disabled`, `type`, `form`, `name`,
-  `value`, `onClick`, `aria-*`), `ref`, `key`, or `children` inherited from
-  the Base UI part. A `children` slot that the wrapper defines itself (for
-  example Field, Dialog, or Card) is a wrapper-owned prop and belongs in the
-  table. Describe forwarded Base UI and native props in prose instead of
-  adding table rows.
+- Do not list props that are only native pass-throughs for the rendered
+  element, such as `disabled` on a native button or input, `type`, `name`,
+  `value`, `onClick`, and `aria-*`, or `ref` and `key`. State props that the
+  component implements on a non-native root (`disabled`, `readOnly`,
+  `required`) are part of its own API and stay in the table. Do not list
+  `children` inherited from the Base UI part. A `children` slot that the
+  wrapper defines itself (for example Field, Dialog, or Card) is a
+  wrapper-owned prop and belongs in the table. Describe forwarded Base UI and
+  native props in prose instead of adding table rows.
 - `className` and `style` always use the wrapper types: `ClassValue` and
   `React.CSSProperties`. `ui` stays the derived slot object; do not hand-write
   a second slot type.

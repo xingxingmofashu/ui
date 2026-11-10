@@ -84,7 +84,8 @@ The stack supports F6 focus entry plus swipe dismissal, and timers pause while t
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ viewport?: ClassValue; root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; icon?: ClassValue; text?: ClassValue; title?: ClassValue; description?: ClassValue; actions?: ClassValue; action?: ClassValue; close?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces each toast root element. |
-| `ref` | `Ref<HTMLDivElement>` | — | Ref forwarded to each toast root. |
+
+Native attributes and `ref` are forwarded to each toast root.
 
 **useToast**
 
