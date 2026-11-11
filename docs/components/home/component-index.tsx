@@ -13,6 +13,7 @@ const groups = [
       ["Accordion", "accordion"],
       ["Button", "button"],
       ["Card", "card"],
+      ["Collapsible", "collapsible"],
       ["Scroll Area", "scroll-area"],
       ["Tabs", "tabs"],
       ["Toggle", "toggle"],

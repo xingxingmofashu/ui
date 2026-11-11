@@ -1,0 +1,107 @@
+---
+title: "Collapsible"
+description: "A React collapsible with a Liquid Glass trigger and an animated panel."
+---
+
+`Collapsible` renders one disclosure panel on a glass surface. The trigger is a real button, and the panel animates its height when it opens. Use it for a single expandable section; use `Accordion` when several disclosures share one surface.
+
+## Usage
+
+### Trigger
+
+`trigger` is the visible label inside the built-in button. Pass any React node for richer content, such as an icon before the text. The panel content goes in `children`.
+
+<Example name="collapsible/basic" />
+
+### DefaultOpen
+
+`defaultOpen` starts the panel expanded while the component manages its own state.
+
+<Example name="collapsible/default-open" />
+
+### OnOpenChange
+
+Pass `open` with `onOpenChange` to control the panel from your own state. `onOpenChange` receives the next open state and Base UI's event details.
+
+<Example name="collapsible/on-open-change" />
+
+### Indicator
+
+The default indicator is a plus icon that rotates into a close icon. Replace it with any decorative node through `indicator`, or set `indicator={false}` to hide it.
+
+<Example name="collapsible/indicator" />
+
+### Disabled
+
+Set `disabled` to ignore pointer and keyboard interaction. Disabled triggers stay in the document but are skipped by the Tab key.
+
+<Example name="collapsible/disabled" />
+
+### KeepMounted
+
+Closed panels are removed from the DOM by default. Set `keepMounted` to keep the panel mounted so form state and other local state survive while it is closed.
+
+<Example name="collapsible/keep-mounted" />
+
+### HiddenUntilFound
+
+`hiddenUntilFound` hides the closed panel with `hidden="until-found"`, so the browser's find-in-page can search its contents and reveal the panel. The panel stays mounted, which also makes its contents indexable by search engines.
+
+<Example name="collapsible/hidden-until-found" />
+
+### Size
+
+`xs`, `sm`, `md`, `lg`, and `xl` change trigger height, padding, text size, and the indicator. The default is `md`.
+
+<Example name="collapsible/size" />
+
+## Accessibility
+
+`Collapsible` renders a native `<button>` for the trigger. The button exposes `aria-expanded`, and while the panel is open it also exposes `aria-controls` pointing at the panel. `Enter` and `Space` toggle the focused trigger. The accessible name comes from the `trigger` content, so keep a meaningful text label; for an icon-only trigger, include visually hidden text inside `trigger`. ARIA label props passed to `Collapsible` land on the root wrapper rather than the button.
+
+The panel is a plain `<div>`, so it has no landmark role of its own. When the expanded content is long enough to need navigation landmarks, wrap it in a `<section>` with an `aria-labelledby` that points at your own heading. See the [accessibility guide](/docs/en/guides/accessibility) for shared interaction patterns.
+
+## API reference
+
+**Collapsible**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `trigger` | `ReactNode` | — | Required visible label inside the trigger. |
+| `children` | `ReactNode` | — | Panel content revealed by the trigger. |
+| `indicator` | `ReactNode \| false` | Built-in plus icon | Replaces the default indicator with decorative content. Set to `false` to hide it. |
+| `open` | `boolean` | — | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Initially open state when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | — | Called when the panel opens or closes. |
+| `disabled` | `boolean` | `false` | Ignores pointer and keyboard interaction. |
+| `keepMounted` | `boolean` | `false` | Keeps the closed panel mounted in the DOM. |
+| `hiddenUntilFound` | `boolean` | `false` | Keeps the closed panel searchable with `hidden="until-found"`. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls trigger height, padding, text, and the indicator. |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the root element. |
+| `className` | `ClassValue` | — | Tailwind classes merged into the root. |
+| `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
+| `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
+
+Native `<div>` attributes and `ref` are forwarded to the root.
+
+| Attribute | Description |
+| --- | --- |
+| `aria-controls` | Set on the trigger while the panel is open. |
+| `aria-expanded` | Reports whether the panel is open. |
+| `data-open` | Present on the root and panel when open. |
+| `data-closed` | Present on the root and panel when closed. |
+| `data-panel-open` | Present on the trigger while the panel is open. |
+| `data-disabled` | Present when the collapsible is disabled. |
+| `data-starting-style` | Present when the panel begins animating in. |
+| `data-ending-style` | Present when the panel is animating out. |
+| `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `content`, `trigger`, `title`, `indicator`, `indicator-icon`, `panel`, `panel-content`). |
+
+## Theming
+
+The component uses the shared glass material. Tune shared `--ui-glass-*` tokens on a parent, use `className` for layout, and use `ui` for internal slots keyed by `data-slot`. Component-specific values live in `src/theme/collapsible.ts`: `--ui-collapsible-trigger-height`, `--ui-collapsible-trigger-px`, `--ui-collapsible-trigger-py`, `--ui-collapsible-font-size`, `--ui-collapsible-indicator-size`, `--ui-collapsible-icon-size`, `--ui-collapsible-panel-px`, `--ui-collapsible-panel-pb`, and `--ui-collapsible-panel-font-size`. The trigger background and divider colors are mixed from `--ui-ink`. See the [theming guide](/docs/en/guides/theming) for token layers and presets.
+
+## Related components
+
+- [Accordion](/docs/en/components/accordion) — For several disclosure panels that share one glass surface.
+- [Tabs](/docs/en/components/tabs) — For switching between sibling views instead of expanding one.
+- [Toggle](/docs/en/components/toggle) — For a single on/off action without a panel.

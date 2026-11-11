@@ -12,6 +12,7 @@ export {
   type CheckboxGroupItemProps,
   type CheckboxGroupProps,
 } from "./components/checkbox-group";
+export { Collapsible, type CollapsibleProps } from "./components/collapsible";
 export { Dialog, type DialogProps } from "./components/dialog";
 export { Drawer, type DrawerProps } from "./components/drawer";
 export { Field, type FieldProps } from "./components/field";

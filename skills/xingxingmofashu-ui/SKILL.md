@@ -133,6 +133,7 @@ bundler.
 ### Data
 
 - [Accordion](references/components/accordion.md) — Collapsible glass panels on one surface.
+- [Collapsible](references/components/collapsible.md) — One disclosure panel with an animated glass trigger.
 - [Scroll Area](references/components/scroll-area.md) — Native scrolling with custom glass scrollbars.
 
 ### Navigation

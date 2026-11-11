@@ -1,0 +1,107 @@
+---
+title: "Collapsible"
+description: "一个 React 折叠面板，采用 Liquid Glass 触发器与高度动画。"
+---
+
+`Collapsible` 在玻璃面板上渲染一个折叠区域。触发器是原生按钮，面板展开时会对高度做动画。适合单独的可展开区块；当多个折叠项共享同一块玻璃表面时，请使用 `Accordion`。
+
+## 用法
+
+### Trigger
+
+`trigger` 是内置按钮中的可见标签。可以传入任意 React 节点，例如在文字前加图标。面板内容通过 `children` 传入。
+
+<Example name="collapsible/basic" />
+
+### DefaultOpen
+
+`defaultOpen` 让面板在组件自管状态时默认展开。
+
+<Example name="collapsible/default-open" />
+
+### OnOpenChange
+
+同时传入 `open` 与 `onOpenChange`，即可用外部状态控制面板。`onOpenChange` 会收到下一个展开状态以及 Base UI 的事件详情。
+
+<Example name="collapsible/on-open-change" />
+
+### Indicator
+
+默认指示器是加号图标，展开时会旋转成关闭图标。通过 `indicator` 可以替换成任意装饰性节点，设置 `indicator={false}` 则隐藏指示器。
+
+<Example name="collapsible/indicator" />
+
+### Disabled
+
+设置 `disabled` 后忽略指针与键盘交互。禁用的触发器仍保留在文档中，但 Tab 键会跳过它。
+
+<Example name="collapsible/disabled" />
+
+### KeepMounted
+
+关闭的面板默认会从 DOM 中移除。设置 `keepMounted` 可以让面板保持挂载，从而保留表单状态和其他本地状态。
+
+<Example name="collapsible/keep-mounted" />
+
+### HiddenUntilFound
+
+`hiddenUntilFound` 使用 `hidden="until-found"` 隐藏关闭的面板，浏览器的页内查找可以搜索其内容并自动展开面板。面板会保持挂载，因此内容也能被搜索引擎索引。
+
+<Example name="collapsible/hidden-until-found" />
+
+### Size
+
+`xs`、`sm`、`md`、`lg`、`xl` 控制触发器高度、内边距、字号与指示器，默认 `md`。
+
+<Example name="collapsible/size" />
+
+## 无障碍
+
+`Collapsible` 的触发器是原生 `<button>`。按钮暴露 `aria-expanded`，面板展开时还会通过 `aria-controls` 指向面板。聚焦触发器后，`Enter` 与 `Space` 都能切换展开状态。可访问名称来自 `trigger` 内容，请保留有意义的文本标签；如果触发器只有图标，请在 `trigger` 中加入视觉隐藏文本。传给 `Collapsible` 的 `aria-label` 等属性会落在根元素上，而不是内部按钮。
+
+面板本身是普通 `<div>`，没有地标角色。当展开内容较长、需要地标导航时，请在外层包一个 `<section>`，并用 `aria-labelledby` 指向你自己的标题。键盘与标签细节见[无障碍指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+**Collapsible**
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `trigger` | `ReactNode` | — | 必填，触发器中的可见标签。 |
+| `children` | `ReactNode` | — | 触发器展开后显示的面板内容。 |
+| `indicator` | `ReactNode \| false` | 内置加号图标 | 用装饰性内容替换默认指示器，设为 `false` 可隐藏。 |
+| `open` | `boolean` | — | 受控的展开状态。 |
+| `defaultOpen` | `boolean` | `false` | 非受控时的初始展开状态。 |
+| `onOpenChange` | `(open: boolean, details) => void` | — | 面板展开或关闭时调用。 |
+| `disabled` | `boolean` | `false` | 忽略指针与键盘交互。 |
+| `keepMounted` | `boolean` | `false` | 关闭时仍将面板保留在 DOM 中。 |
+| `hiddenUntilFound` | `boolean` | `false` | 用 `hidden="until-found"` 保留面板的可搜索性。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制触发器高度、内边距、字号与指示器。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换根元素。 |
+| `className` | `ClassValue` | — | 合并到根元素的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 合并到与 `className` 相同元素的行内样式。 |
+| `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; trigger?: ClassValue; title?: ClassValue; indicator?: ClassValue; indicatorIcon?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位 Tailwind 类名。 |
+
+原生 `<div>` 属性与 `ref` 会透传到根元素。
+
+| 属性 | 说明 |
+| --- | --- |
+| `aria-controls` | 面板展开时出现在触发器上。 |
+| `aria-expanded` | 报告面板是否展开。 |
+| `data-open` | 展开时出现在根元素与面板上。 |
+| `data-closed` | 关闭时出现在根元素与面板上。 |
+| `data-panel-open` | 面板展开时出现在触发器上。 |
+| `data-disabled` | 禁用时出现。 |
+| `data-starting-style` | 面板开始展开动画时出现。 |
+| `data-ending-style` | 面板播放关闭动画时出现。 |
+| `data-slot` | 标记内部结构（`root`、`glass`、`overlay`、`content`、`trigger`、`title`、`indicator`、`indicator-icon`、`panel`、`panel-content`）。 |
+
+## 主题
+
+组件使用共享玻璃材质。可在父级调整共享 `--ui-glass-*` token，用 `className` 控制布局，用 `ui` 按 `data-slot` 调整内部结构。组件专属值位于 `src/theme/collapsible.ts`：`--ui-collapsible-trigger-height`、`--ui-collapsible-trigger-px`、`--ui-collapsible-trigger-py`、`--ui-collapsible-font-size`、`--ui-collapsible-indicator-size`、`--ui-collapsible-icon-size`、`--ui-collapsible-panel-px`、`--ui-collapsible-panel-pb` 与 `--ui-collapsible-panel-font-size`。触发器的背景与分隔线颜色由 `--ui-ink` 混合生成。token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
+## 相关组件
+
+- [Accordion](/docs/zh/components/accordion) — 多个折叠项共享同一块玻璃表面时使用。
+- [Tabs](/docs/zh/components/tabs) — 需要在同级视图之间切换，而不是展开一个区域时使用。
+- [Toggle](/docs/zh/components/toggle) — 只需要开/关操作，不需要面板时使用。

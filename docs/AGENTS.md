@@ -123,7 +123,8 @@ to the theming guide.
   the example code in MDX.
 - Every documented prop that needs a demo gets exactly one example file, named
   `<kebab-case-prop>.tsx` and referenced from its `### <PropName>` subsection.
-  The first prop example is the page's basic example.
+  The first prop example is the page's basic example and lives in `basic.tsx`;
+  the playground REPL loads that file, so keep the `basic.tsx` name.
 - `className`, `style`, and `ui` do not get examples; document them in the
   `API reference` and `Theming` sections.
 - An example focuses on one prop. Other props may appear only as necessary

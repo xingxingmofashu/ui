@@ -50,6 +50,7 @@ workspace.
 | Card | `src/components/card.tsx` | `src/theme/card.ts` | `test/components/card.test.tsx` |
 | Checkbox | `src/components/checkbox.tsx` | `src/theme/checkbox.ts` | `test/components/checkbox.test.tsx` |
 | Checkbox Group | `src/components/checkbox-group.tsx` | `src/theme/checkbox-group.ts` | `test/components/checkbox-group.test.tsx` |
+| Collapsible | `src/components/collapsible.tsx` | `src/theme/collapsible.ts` | `test/components/collapsible.test.tsx` |
 | Dialog | `src/components/dialog.tsx` | `src/theme/dialog.ts` | `test/components/dialog.test.tsx` |
 | Drawer | `src/components/drawer.tsx` | `src/theme/drawer.ts` | `test/components/drawer.test.tsx` |
 | Field | `src/components/field.tsx` | `src/theme/field.ts` | `test/components/field.test.tsx` |
