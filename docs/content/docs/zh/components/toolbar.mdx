@@ -1,0 +1,174 @@
+---
+title: "Toolbar"
+description: "一个 React 工具栏，在同一块 Liquid Glass 表面上组合操作、切换按钮、链接与分隔线。"
+---
+
+`Toolbar` 渲染一条玻璃操作栏，内部可以包含操作按钮、切换按钮、链接、分组与分隔线。它适合编辑器控件、格式工具栏，以及需要共享同一个键盘停靠点的紧凑操作行。条目通过 `items` 传入，方向键用于在栏内移动焦点。
+
+## 用法
+
+### Items
+
+`items` 接受操作按钮、切换按钮、链接、分组与分隔线。普通按钮条目不需要 `kind`；通过 `label`、`icon` 以及 `onClick`、`disabled` 等原生按钮属性配置。只有图标的按钮需要单独提供 `aria-label`，因为图标是装饰性的。
+
+使用 `{ kind: "separator" }` 添加分隔线。分隔线默认采用与工具栏相反的方向，因此在水平工具栏中显示为竖线。
+
+<Example name="toolbar/basic" />
+
+### Toggle
+
+使用 `{ kind: "toggle" }` 表示双状态操作。传入 `pressed` 与 `onPressedChange` 可完全受控，或用 `defaultPressed` 设置非受控初始状态。按下的切换按钮会暴露 `aria-pressed`，并复用其他按下控件共用的玻璃滑块。
+
+<Example name="toolbar/toggle" />
+
+### Group
+
+使用 `{ kind: "group" }` 表示一组相关的条目。分组通过自己的 `items` 数组接受操作按钮、切换按钮与链接。需要名称时，为分组提供 `aria-label` 或 `aria-labelledby`。
+
+<Example name="toolbar/group" />
+
+### Link
+
+使用 `{ kind: "link" }` 表示导航。链接条目必须提供 `href`，并渲染为原生锚点，因此保留标准的链接行为。链接条目没有禁用状态。
+
+<Example name="toolbar/link" />
+
+### Orientation
+
+`orientation` 同时控制布局与方向键所在的轴，默认值为 `"horizontal"`。下例把纵向工具栏放在它控制的数值旁边。
+
+<Example name="toolbar/orientation" />
+
+### Size
+
+`xs`、`sm`、`md`、`lg` 与 `xl` 会改变条目高度、内边距、文字、图标与分隔线长度，默认值为 `md`。
+
+<Example name="toolbar/size" />
+
+### Disabled
+
+在工具栏上设置 `disabled` 会禁用全部条目；在按钮、切换按钮或分组上设置则只影响该部分。条目默认仍保留在 roving focus 顺序中，方便键盘用户发现它们；在条目上传入 `focusableWhenDisabled={false}` 可将其移出该导航。
+
+<Example name="toolbar/disabled" />
+
+## 无障碍
+
+`Toolbar` 渲染带有 `aria-orientation` 的 `role="toolbar"`。请使用 `aria-label` 或 `aria-labelledby` 为它命名。整条工具栏在 Tab 顺序中只占一个停靠点：水平工具栏使用 `ArrowRight` 与 `ArrowLeft` 移动焦点，纵向工具栏使用 `ArrowDown` 与 `ArrowUp`。`loopFocus` 默认为 `true`，焦点会在两端循环。
+
+切换条目暴露 `aria-pressed`。禁用条目保留 `aria-disabled`，除非将 `focusableWhenDisabled` 设为 `false`，否则它们仍可聚焦，但会跳过激活。分组渲染 `role="group"`，使用自身的 `aria-label` 或 `aria-labelledby` 命名。分隔线渲染 `role="separator"`，方向与工具栏相反。只有图标的条目需要通过 `aria-label` 或 `aria-labelledby` 提供可访问名称，图标槽位对辅助技术隐藏。链接条目是原生锚点，保留浏览器的链接语义。
+
+共享的焦点与键盘模式见[无障碍指南](/docs/zh/guides/accessibility)。
+
+## API 参考
+
+**Toolbar**
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `items` | `readonly ToolbarItemProps[]` | — | 工具栏渲染的操作、切换按钮、链接、分组与分隔线。 |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局与方向键所在的轴。 |
+| `loopFocus` | `boolean` | `true` | 方向键越过最后一个条目时，将焦点循环到另一端。 |
+| `disabled` | `boolean` | `false` | 禁用全部条目，同时让可聚焦条目保留在 roving focus 顺序中。 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制条目高度、内边距、文字、图标与分隔线长度。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换工具栏根元素。 |
+| `className` | `ClassValue` | — | 合并到工具栏根元素的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 与 `className` 合并到同一元素的内联样式。 |
+| `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; group?: ClassValue; item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue; separator?: ClassValue }` | — | 按 `data-slot` 组织的内部槽位 Tailwind 类名。 |
+
+原生 `<div>` 属性、`aria-*` 与 `ref` 会转发到工具栏根元素。
+
+**ToolbarButtonProps**
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `kind` | `"button"` | `"button"` | 标记该条目为操作按钮。按钮条目可省略。 |
+| `label` | `ReactNode` | — | 按钮内的可见标签。 |
+| `icon` | `ReactNode` | — | 渲染在标签前的装饰性图标。 |
+| `disabled` | `boolean` | `false` | 忽略指针与键盘激活。 |
+| `focusableWhenDisabled` | `boolean` | `true` | 禁用时仍保留在工具栏的 roving focus 顺序中。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换按钮元素，或与其他组件组合。 |
+| `className` | `ClassValue` | — | 合并到按钮的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 与 `className` 合并到同一元素的内联样式。 |
+| `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的该条目内部槽位 Tailwind 类名。 |
+
+`onClick`、`type`、`form`、`name`、`value`、`aria-*` 等原生 `<button>` 属性以及 `ref` 会转发到渲染元素。
+
+**ToolbarToggleProps**
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `kind` | `"toggle"` | — | 标记该条目为双状态按钮。必填。 |
+| `label` | `ReactNode` | — | 切换按钮内的可见标签。 |
+| `icon` | `ReactNode` | — | 渲染在标签前的装饰性图标。 |
+| `pressed` | `boolean` | — | 受控的按下状态。 |
+| `defaultPressed` | `boolean` | `false` | 非受控时的初始按下状态。 |
+| `onPressedChange` | `(pressed: boolean, details) => void` | — | 按下状态变化时调用。 |
+| `disabled` | `boolean` | `false` | 忽略指针与键盘激活。 |
+| `focusableWhenDisabled` | `boolean` | `true` | 禁用时仍保留在工具栏的 roving focus 顺序中。 |
+| `className` | `ClassValue` | — | 合并到切换按钮的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 与 `className` 合并到同一元素的内联样式。 |
+| `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的该条目内部槽位 Tailwind 类名。 |
+
+原生 `<button>` 属性与 `aria-*` 会转发到切换按钮。
+
+**ToolbarLinkProps**
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `kind` | `"link"` | — | 标记该条目为链接。必填。 |
+| `href` | `string` | — | 链接目标。必填。 |
+| `label` | `ReactNode` | — | 链接内的可见标签。 |
+| `icon` | `ReactNode` | — | 渲染在标签前的装饰性图标。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换链接元素，或与其他组件组合。 |
+| `className` | `ClassValue` | — | 合并到链接的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 与 `className` 合并到同一元素的内联样式。 |
+| `ui` | `{ item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的该条目内部槽位 Tailwind 类名。 |
+
+`target`、`rel`、`aria-*` 等原生锚点属性以及 `ref` 会转发到渲染的锚点。
+
+**ToolbarGroupProps**
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `kind` | `"group"` | — | 标记该条目为分组。必填。 |
+| `items` | `readonly ToolbarGroupItemProps[]` | — | 分组内渲染的操作按钮、切换按钮与链接。必填。 |
+| `disabled` | `boolean` | `false` | 禁用分组内的全部条目。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组元素。 |
+| `className` | `ClassValue` | — | 合并到分组的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 与 `className` 合并到同一元素的内联样式。 |
+| `ui` | `{ group?: ClassValue; item?: ClassValue; content?: ClassValue; icon?: ClassValue; label?: ClassValue }` | — | 按 `data-slot` 组织的分组及其条目槽位 Tailwind 类名。 |
+
+使用 `aria-label` 或 `aria-labelledby` 为分组提供可访问名称。分组的 `ui` 会先应用到嵌套条目，再应用每个条目自己的 `ui` 与 `className`。
+
+**ToolbarSeparatorProps**
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `kind` | `"separator"` | — | 标记该条目为分隔线。必填。 |
+| `orientation` | `"horizontal" \| "vertical"` | 与工具栏相反 | 分隔线的方向。 |
+| `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分隔线元素。 |
+| `className` | `ClassValue` | — | 合并到分隔线的 Tailwind 类名。 |
+| `style` | `CSSProperties` | — | 与 `className` 合并到同一元素的内联样式。 |
+| `ui` | `{ separator?: ClassValue }` | — | 分隔线槽位的 Tailwind 类名。 |
+
+| 属性 | 说明 |
+| --- | --- |
+| `aria-disabled` | 表示禁用的可聚焦条目。 |
+| `aria-orientation` | 表示工具栏与分隔线的方向。 |
+| `aria-pressed` | 表示切换条目的按下状态。 |
+| `data-disabled` | 当工具栏、分组或条目禁用时存在。 |
+| `data-focusable` | 当禁用条目仍保留在 roving focus 顺序中时存在。 |
+| `data-orientation` | 在工具栏、分组、条目与分隔线上表示方向。 |
+| `data-pressed` | 在按下的切换条目上存在。 |
+| `data-slot` | 标记内部结构（`root`、`glass`、`overlay`、`group`、`item`、`content`、`icon`、`label`、`separator`）。 |
+
+## 主题
+
+组件使用共享玻璃材质。可在父级调整共享 `--ui-glass-*` token，用 `className` 控制布局，用 `ui` 按 `data-slot` 调整内部结构。组件专属值位于 `src/theme/toolbar.ts`：`--ui-toolbar-item-height`、`--ui-toolbar-item-px`、`--ui-toolbar-font-size`、`--ui-toolbar-icon-size`、`--ui-toolbar-item-gap`、`--ui-toolbar-padding`、`--ui-toolbar-gap`、`--ui-toolbar-group-gap`、`--ui-toolbar-vertical-radius` 与 `--ui-toolbar-separator-length`。悬停填充、按下滑块、边缘、阴影与分隔线颜色由 `--ui-ink` 混合生成。token 分层与预设见[主题指南](/docs/zh/guides/theming)。
+
+## 相关组件
+
+- [Toggle Group](/docs/zh/components/toggle-group) — 只需一组选择按钮、没有其他工具栏操作时使用。
+- [Button](/docs/zh/components/button) — 用于单个独立操作。
+- [Menu](/docs/zh/components/menu) — 用于放不进工具栏的操作。
+- [Tabs](/docs/zh/components/tabs) — 用于在内容面板之间切换。

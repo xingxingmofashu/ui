@@ -34,6 +34,7 @@ const componentGroups: Partial<Record<string, ComponentGroup>> = {
   toast: "Overlay",
   toggle: "Element",
   "toggle-group": "Element",
+  toolbar: "Element",
   tooltip: "Overlay",
 };
 

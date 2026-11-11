@@ -70,4 +70,15 @@ export {
   type ToggleGroupItemProps,
   type ToggleGroupProps,
 } from "./components/toggle-group";
+export {
+  Toolbar,
+  type ToolbarButtonProps,
+  type ToolbarGroupItemProps,
+  type ToolbarGroupProps,
+  type ToolbarItemProps,
+  type ToolbarLinkProps,
+  type ToolbarProps,
+  type ToolbarSeparatorProps,
+  type ToolbarToggleProps,
+} from "./components/toolbar";
 export { Tooltip, type TooltipProps } from "./components/tooltip";

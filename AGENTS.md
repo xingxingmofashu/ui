@@ -69,6 +69,7 @@ workspace.
 | Toast | `src/components/toast.tsx` | `src/theme/toast.ts` | `test/components/toast.test.tsx` |
 | Toggle | `src/components/toggle.tsx` | `src/theme/toggle.ts` | `test/components/toggle.test.tsx` |
 | Toggle Group | `src/components/toggle-group.tsx` | `src/theme/toggle-group.ts` | `test/components/toggle-group.test.tsx` |
+| Toolbar | `src/components/toolbar.tsx` | `src/theme/toolbar.ts` | `test/components/toolbar.test.tsx` |
 | Tooltip | `src/components/tooltip.tsx` | `src/theme/tooltip.ts` | `test/components/tooltip.test.tsx` |
 
 ## Glass

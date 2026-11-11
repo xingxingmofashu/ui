@@ -81,7 +81,8 @@ bundler.
 | --- | --- |
 | Anchored trigger | `Menu`, `Popover`, and `Tooltip` take `trigger={<Button ... />}`. The trigger must forward props and refs. |
 | Controlled overlay | `Dialog`, `AlertDialog`, and `Drawer` take `open` plus `onOpenChange`; render your own trigger button. |
-| Array-driven content | `Accordion`, `CheckboxGroup`, `Menu`, `RadioGroup`, `Select`, `Tabs`, and `ToggleGroup` take `items={[...]}`. |
+| Array-driven content | `Accordion`, `CheckboxGroup`, `Menu`, `RadioGroup`, `Select`, `Tabs`, `ToggleGroup`, and `Toolbar` take `items={[...]}`. |
+| Grouped actions | `Toolbar` groups action buttons, toggles, links, and separators with one keyboard stop. |
 | Toast | Wrap the app in `ToastProvider`, render `<Toast />`, and call `useToast()` inside. |
 | Form layout | `Form` owns submission and errors; `Field` labels one control; `Fieldset` groups fields under a legend. |
 | Actions and state | `Button` uses `children`; `Toggle` uses `pressed`; `Checkbox`/`Switch` use `checked`. |
@@ -91,7 +92,8 @@ bundler.
 | Intent | Components |
 | --- | --- |
 | Run an action | `Button` |
-| Keep an action pressed | `Toggle`, `ToggleGroup` |
+| Keep an action pressed | `Toggle`, `ToggleGroup`, `Toolbar` |
+| Group related actions | `Toolbar`, `ToggleGroup` |
 | Navigate between views | `Tabs`, `Menu`, `Drawer` |
 | Enter text | `Field` + `Input` |
 | Choose one or more options | `Select`, `RadioGroup` |
@@ -113,9 +115,11 @@ bundler.
 
 - [Button](references/components/button.md) — Action button with sizes, icons, and link rendering.
 - [Card](references/components/card.md) — Server-safe glass panel with header, body, and footer.
+- [Collapsible](references/components/collapsible.md) — One disclosure panel with an animated glass trigger.
 - [Progress](references/components/progress.md) — Determinate and indeterminate task progress.
 - [Toggle](references/components/toggle.md) — Persistent on/off action.
 - [Toggle Group](references/components/toggle-group.md) — Related toggle buttons with single or multiple selection.
+- [Toolbar](references/components/toolbar.md) — Action bar with buttons, toggles, links, groups, and separators.
 
 ### Form
 
@@ -133,7 +137,6 @@ bundler.
 ### Data
 
 - [Accordion](references/components/accordion.md) — Collapsible glass panels on one surface.
-- [Collapsible](references/components/collapsible.md) — One disclosure panel with an animated glass trigger.
 - [Scroll Area](references/components/scroll-area.md) — Native scrolling with custom glass scrollbars.
 
 ### Navigation

@@ -20,10 +20,10 @@ components with a Liquid Glass visual style, built with
 [Tailwind Variants](https://www.tailwind-variants.org). Glass surfaces, rim
 highlights, and inner shadows are drawn entirely with CSS.
 
-The package ships twenty-six components: Accordion, Alert Dialog, Button,
+The package ships twenty-seven components: Accordion, Alert Dialog, Button,
 Card, Checkbox, Checkbox Group, Collapsible, Dialog, Drawer, Field, Fieldset,
 Form, Input, Menu, Popover, Progress, Radio Group, Scroll Area, Select, Slider,
-Switch, Tabs, Toast, Toggle, Toggle Group, and Tooltip.
+Switch, Tabs, Toast, Toggle, Toggle Group, Toolbar, and Tooltip.
 
 > [!NOTE]
 > Requires React 19, React DOM 19, Tailwind CSS 4, Node.js 22+, and an

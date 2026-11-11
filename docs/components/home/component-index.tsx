@@ -18,6 +18,7 @@ const groups = [
       ["Tabs", "tabs"],
       ["Toggle", "toggle"],
       ["Toggle Group", "toggle-group"],
+      ["Toolbar", "toolbar"],
     ],
   },
   {
