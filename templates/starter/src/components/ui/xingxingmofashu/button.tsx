@@ -14,17 +14,17 @@ type FieldsetContext = {
  * of this module. A global key keeps the context shared between a Fieldset and
  * controls installed from separate items.
  */
-const FIELD_SET_CONTEXT_KEY = "__xingxingmofashuFieldsetContext__";
+const FIELDSET_CONTEXT_KEY = "__xingxingmofashuFieldsetContext__";
 
 type FieldsetGlobal = typeof globalThis & {
-  [FIELD_SET_CONTEXT_KEY]?: React.Context<FieldsetContext>;
+  [FIELDSET_CONTEXT_KEY]?: React.Context<FieldsetContext>;
 };
 
 const fieldsetGlobal = globalThis as FieldsetGlobal;
 
 const FieldsetContext =
-  fieldsetGlobal[FIELD_SET_CONTEXT_KEY] ??
-  (fieldsetGlobal[FIELD_SET_CONTEXT_KEY] = React.createContext<FieldsetContext>({
+  fieldsetGlobal[FIELDSET_CONTEXT_KEY] ??
+  (fieldsetGlobal[FIELDSET_CONTEXT_KEY] = React.createContext<FieldsetContext>({
     disabled: false,
   }));
 
