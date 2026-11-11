@@ -1,0 +1,120 @@
+---
+title: "Registry"
+description: "使用 shadcn CLI 安装 Liquid Glass 组件源码。"
+---
+
+Registry 分发与 `@xingxingmofashu/ui` 相同的组件，但生成为单个自包含源码文件，并通过 shadcn CLI 复制到你的项目中。适合希望完全掌控源码、在项目内调整主题配方的场景。它是 npm 包安装的替代方案；不要在同一个项目里同时保留同一组件的两份代码。
+
+## 环境要求
+
+- React 19 与 React DOM 19。
+- Tailwind CSS 4。
+- 较新的 [shadcn CLI](https://ui.shadcn.com/docs/cli)。
+- 项目中有 `components.json`。没有的话先运行 `npx shadcn@latest init`。
+
+## 添加 registry
+
+在 `components.json` 中配置一次命名空间：
+
+```json [components.json]
+{
+  "registries": {
+    "@xingxingmofashu": "https://xingxingmofashu.github.io/ui/r/{name}.json"
+  }
+}
+```
+
+也可以让 CLI 写入：
+
+```bash
+npx shadcn@latest registry add @xingxingmofashu=https://xingxingmofashu.github.io/ui/r/{name}.json
+```
+
+## 安装组件
+
+```bash
+npx shadcn@latest add @xingxingmofashu/button
+```
+
+也可以不配置命名空间，直接从 GitHub 安装：
+
+```bash
+npx shadcn@latest add xingxingmofashu/ui/button
+```
+
+为了可复现的安装，可以锁定 tag 或 commit SHA：
+
+```bash
+npx shadcn@latest add xingxingmofashu/ui/button#v1.0.0
+```
+
+或者通过 URL 安装单个 item：
+
+```bash
+npx shadcn@latest add https://xingxingmofashu.github.io/ui/r/button.json
+```
+
+## 安装了哪些文件
+
+每个 item 都是 `ui` 别名目录下的一个自包含文件。主题配方与共享工具已经内联，不再生成独立的 `theme/`、`internal/` 或 `composables/` 目录：
+
+```text
+components/ui/xingxingmofashu/
+  button.tsx
+```
+
+从复制后的路径导入：
+
+```tsx
+import { Button } from "@/components/ui/xingxingmofashu/button";
+```
+
+文件同时导出组件与 props 类型。需要调整材质或布局时，直接修改同一文件中的主题配方。可选的预设也只有一个文件：
+
+```text
+components/ui/xingxingmofashu/
+  glass-preset.tsx
+```
+
+CLI 会在缺少时添加 `@base-ui/react`、`cn` 与 `tailwind-variants`。分别安装的组件仍可协同工作，包括 `Fieldset` 对其内部控件的禁用状态。
+
+## 样式
+
+每个 item 都携带 Liquid Glass 运行时 token、Tailwind 别名、`.ui-glass*` 材质类与关键帧。CLI 会把它们合并到 `components.json` 中 `tailwind.css` 指向的 CSS 文件，无需额外导入。
+
+如果只想安装样式：
+
+```bash
+npx shadcn@latest add @xingxingmofashu/glass
+```
+
+可选的材质预设是独立 item：
+
+```bash
+npx shadcn@latest add @xingxingmofashu/glass-preset
+```
+
+## 定制与更新
+
+直接修改组件文件；主题配方与共享工具都在同一文件中。需要接受上游更新时，用
+`--overwrite` 重新执行 `add`：
+
+```bash
+npx shadcn@latest add @xingxingmofashu/button --overwrite
+```
+
+Registry 在发布时从包源码生成。源码副本不会随 npm 包自动更新。
+
+## Registry 还是 npm 包
+
+- 需要自动更新和稳定的包导入路径时，使用 npm 包。
+- 需要直接修改组件或主题源码时，使用 registry。
+- 不要在同一个项目中同时保留同一组件的两份代码。
+
+## 常见问题
+
+- **样式没有生效。** 检查 `components.json` 中的 `tailwind.css` 是否指向引入 Tailwind 的 CSS 入口。
+- **工具类缺失。** Tailwind 4 会自动扫描 `components/ui`。如果使用了显式 `@source`，请包含 `components/ui/xingxingmofashu`。
+- **导入失败。** 使用复制后的文件路径，例如
+  `@/components/ui/xingxingmofashu/button`；每个组件都是单个文件。
+- **CLI 拒绝安装。** 更新 shadcn CLI；`target` 占位符与 GitHub registry 需要较新的版本。

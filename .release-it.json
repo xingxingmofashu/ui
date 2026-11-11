@@ -74,6 +74,7 @@
     }
   },
   "hooks": {
-    "before:init": ["pnpm lint", "pnpm test", "pnpm typecheck"]
+    "before:init": ["pnpm lint", "pnpm test", "pnpm typecheck"],
+    "after:bump": ["pnpm registry:build"]
   }
 }

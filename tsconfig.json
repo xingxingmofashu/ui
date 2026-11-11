@@ -11,11 +11,13 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "allowJs": true
+    "allowJs": true,
+    "allowImportingTsExtensions": true
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "scripts/**/*.ts",
     "test/**/*.ts",
     "test/**/*.tsx",
     "playwright.config.ts",

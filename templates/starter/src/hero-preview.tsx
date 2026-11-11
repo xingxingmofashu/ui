@@ -1,14 +1,12 @@
 import { Rocket } from "lucide-react";
 import { useState } from "react";
 
-import {
-  Button,
-  Card,
-  Progress,
-  Switch,
-  Tabs,
-  useToast,
-} from "@xingxingmofashu/ui";
+import { Button } from "@/components/ui/xingxingmofashu/button";
+import { Card } from "@/components/ui/xingxingmofashu/card";
+import { Progress } from "@/components/ui/xingxingmofashu/progress";
+import { Switch } from "@/components/ui/xingxingmofashu/switch";
+import { Tabs } from "@/components/ui/xingxingmofashu/tabs";
+import { useToast } from "@/components/ui/xingxingmofashu/toast";
 
 const metrics = [
   { label: "Projects", value: "12" },

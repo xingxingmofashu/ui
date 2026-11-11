@@ -7,6 +7,8 @@ on:
       - "docs/**"
       - "playground/**"
       - "src/**"
+      - "registry.json"
+      - "scripts/registry/**"
       - "package.json"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"

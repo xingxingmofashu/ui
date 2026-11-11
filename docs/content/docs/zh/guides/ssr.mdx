@@ -146,7 +146,7 @@ export default nextConfig;
 
 ## Vite 与其他纯客户端应用
 
-Vite starter 在无服务端边界的情况下使用同一个组件包：
+Vite starter 在无服务端边界的情况下使用内置的 registry 源码：
 
 ```bash
 pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
@@ -155,8 +155,9 @@ pnpm install
 pnpm dev
 ```
 
-在 `src/index.css` 中导入一次组件样式，然后在 `src/App.tsx` 中渲染组件。完整步骤
-见[模板](/docs/zh/guides/templates)。
+Registry 样式已经合并到 `src/index.css`。从
+`@/components/ui/xingxingmofashu/*` 导入组件，并在 `src/App.tsx` 中渲染。完整步骤见
+[模板](/docs/zh/guides/templates)。
 
 ## 常见问题
 

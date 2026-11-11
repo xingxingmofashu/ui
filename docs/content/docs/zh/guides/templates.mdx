@@ -5,8 +5,9 @@ description: "从 Vite starter 开始，或复制 Next.js 设置面板与破坏�
 
 ## Vite starter
 
-仓库提供一个紧凑的 Vite + React 19 + TypeScript starter，已经导入组件样式，并渲染
-一个包含实时工作区预览、三张特性卡片、明暗主题切换与行动按钮的落地页。
+仓库提供一个紧凑的 Vite + React 19 + TypeScript starter，组件通过 registry 安装。
+CLI 已经把单文件组件源码复制进项目，并合并了 Liquid Glass 样式；页面包含实时工作区
+预览、三张特性卡片、明暗主题切换与行动按钮。
 
 ```bash
 pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
@@ -15,18 +16,25 @@ pnpm install
 pnpm dev
 ```
 
-Starter 固定了一个已发布的组件包版本。克隆后需要新版本时，更新 `package.json` 中
-的 `@xingxingmofashu/ui`。
+Starter 直接内置 registry 源码。可以直接编辑
+`src/components/ui/xingxingmofashu/`，也可以用 shadcn CLI 添加其他条目：
+
+```bash
+pnpm dlx shadcn@latest add @xingxingmofashu/dialog
+```
 
 关键文件：
 
-- `src/index.css` 导入 Tailwind CSS、组件样式与玻璃预设样式，并绘制页面背景。
+- `src/index.css` 包含 Tailwind CSS，以及 CLI 合并进来的 registry 令牌与材质类。
+- `src/components/ui/xingxingmofashu/` 包含单文件组件。每个文件自带主题配方与
+  共享工具。
+- `components.json` 配置 shadcn 与 registry 命名空间。
 - `src/App.tsx` 包含 Hero 文案、特性卡片、行动按钮与页脚。
-- `src/hero-preview.tsx` 包含可交互的预览卡片。它的材质切换使用
-  `GlassPresetScope`，因此只影响该卡片；如果需要全局且持久化的预设，请用
-  `GlassPresetProvider` 包裹应用。
+- `src/hero-preview.tsx` 包含可交互的预览卡片。页头的预设切换使用
+  `useGlassPreset`，因此选择会作用于整个页面，并通过 `GlassPresetProvider`
+  持久化。
 - `src/use-theme.ts` 负责持久化明暗主题。
-- `vite.config.ts` 包含 Tailwind 与 React 插件。
+- `vite.config.ts` 包含 Tailwind 与 React 插件，以及 `@` 别名。
 
 预览卡片使用了 `Tabs`、`Switch`、`Progress`、`ToggleGroup`、`Button` 与 `Toast`。
 可以按产品需要替换其中的内容。

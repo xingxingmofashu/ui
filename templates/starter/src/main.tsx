@@ -1,8 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { Toast, ToastProvider } from "@xingxingmofashu/ui";
-import { GlassPresetProvider } from "@xingxingmofashu/ui/plugins/glass-preset";
+import {
+  Toast,
+  ToastProvider,
+} from "@/components/ui/xingxingmofashu/toast";
+import { GlassPresetProvider } from "@/components/ui/xingxingmofashu/glass-preset";
 
 import App from "./App";
 import "./index.css";

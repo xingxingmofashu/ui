@@ -1,4 +1,4 @@
 {
   "title": "指南",
-  "pages": ["index", "theming", "forms", "accessibility", "ssr", "templates"]
+  "pages": ["index", "registry", "theming", "forms", "accessibility", "ssr", "templates"]
 }

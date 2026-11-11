@@ -4,7 +4,7 @@ import { Toast as UIToast } from "@base-ui/react/toast";
 import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
-import { useToast } from "../composables/use-toast";
+import { createToastManager, useToast } from "../composables/use-toast";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toast";
 
@@ -182,5 +182,5 @@ function Toast({
   );
 }
 
-export { Toast, ToastProvider };
+export { Toast, ToastProvider, createToastManager, useToast };
 export type { ToastPosition, ToastProps, ToastProviderProps };

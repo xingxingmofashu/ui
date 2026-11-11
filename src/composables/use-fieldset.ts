@@ -6,26 +6,27 @@ type FieldsetContext = {
   disabled: boolean;
 };
 
-const FieldsetContext = React.createContext<FieldsetContext>({
-  disabled: false,
-});
+/**
+ * Registry items install as single files, so each control carries its own copy
+ * of this module. A global key keeps the context shared between a Fieldset and
+ * controls installed from separate items.
+ */
+const FIELD_SET_CONTEXT_KEY = "__xingxingmofashuFieldsetContext__";
 
-type FieldsetProviderProps = {
-  disabled: boolean;
-  children: React.ReactNode;
+type FieldsetGlobal = typeof globalThis & {
+  [FIELD_SET_CONTEXT_KEY]?: React.Context<FieldsetContext>;
 };
 
-/** Shares a fieldset's state with every control inside it. */
-function FieldsetProvider({ disabled, children }: FieldsetProviderProps) {
-  const value = React.useMemo(() => ({ disabled }), [disabled]);
-
-  return React.createElement(FieldsetContext.Provider, { value }, children);
-}
+const fieldsetGlobal = globalThis as FieldsetGlobal;
+const FieldsetContext =
+  fieldsetGlobal[FIELD_SET_CONTEXT_KEY] ??
+  (fieldsetGlobal[FIELD_SET_CONTEXT_KEY] = React.createContext<FieldsetContext>({
+    disabled: false,
+  }));
 
 /** Returns the state of the nearest fieldset. */
 function useFieldset() {
   return React.useContext(FieldsetContext);
 }
 
-export { FieldsetProvider, useFieldset };
-export type { FieldsetContext, FieldsetProviderProps };
+export { FieldsetContext, useFieldset };

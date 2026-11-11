@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { GLASS_PRESETS, type GlassPreset } from "./presets";
 
 type GlassPresetScriptOptions = {

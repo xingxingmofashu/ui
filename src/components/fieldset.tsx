@@ -4,8 +4,9 @@ import { Fieldset as UIFieldset } from "@base-ui/react/fieldset";
 import { cn, type ClassValue } from "cn";
 import * as React from "react";
 
+import { FieldsetProvider } from "../composables/fieldset-provider";
 import { useAria } from "../composables/use-aria";
-import { FieldsetProvider, useFieldset } from "../composables/use-fieldset";
+import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/fieldset";
 

@@ -5,9 +5,11 @@ description: "Start from the Vite starter or copy a Next.js settings panel and d
 
 ## Vite starter
 
-The repository ships a compact Vite + React 19 + TypeScript starter that already
-imports the package stylesheet and renders a landing page with a live workspace
-preview, three feature cards, a light/dark toggle, and a call to action.
+The repository ships a compact Vite + React 19 + TypeScript starter whose
+components are installed from the registry. The CLI has already copied the
+single-file component source and merged the Liquid Glass styles into the
+project, and the page renders a live workspace preview, three feature cards, a
+light/dark toggle, and a call to action.
 
 ```bash
 pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
@@ -16,19 +18,27 @@ pnpm install
 pnpm dev
 ```
 
-The starter pins a released package version. After cloning, bump
-`@xingxingmofashu/ui` in `package.json` when you want a newer release.
+The starter vendors the registry source. Edit
+`src/components/ui/xingxingmofashu/` directly, or add another item with the
+shadcn CLI:
+
+```bash
+pnpm dlx shadcn@latest add @xingxingmofashu/dialog
+```
 
 Useful files:
 
-- `src/index.css` imports Tailwind CSS, the package stylesheet, and the glass
-  preset stylesheet, then draws the page canvas.
+- `src/index.css` contains Tailwind CSS plus the registry tokens and material
+  classes that the CLI merged into it.
+- `src/components/ui/xingxingmofashu/` contains the single-file components.
+  Each file carries its own theme recipe and shared helpers.
+- `components.json` configures shadcn and the registry namespace.
 - `src/App.tsx` contains the hero copy, feature cards, CTA, and footer.
-- `src/hero-preview.tsx` contains the interactive preview card. Its material
-  switch uses `GlassPresetScope`, so it only affects that card. Wrap the app in
-  `GlassPresetProvider` when you want a global, persisted preset.
+- `src/hero-preview.tsx` contains the interactive preview card. The header
+  preset switch uses `useGlassPreset`, so the choice applies to the whole page
+  and persists through `GlassPresetProvider`.
 - `src/use-theme.ts` persists the light/dark preference.
-- `vite.config.ts` contains the Tailwind and React plugins.
+- `vite.config.ts` contains the Tailwind and React plugins and the `@` alias.
 
 The preview uses `Tabs`, `Switch`, `Progress`, `ToggleGroup`, `Button`, and
 `Toast`. Replace its content with the components your product needs.

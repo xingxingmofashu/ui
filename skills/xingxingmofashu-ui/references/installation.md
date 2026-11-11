@@ -72,6 +72,33 @@ Toast hooks and the manager live under the `composables` export, for example
 server component must guarantee that only the server-safe `Card` module is
 loaded.
 
+## Registry installation
+
+The shadcn registry is an alternative to the npm package. Each item installs as
+a single self-contained file in `components/ui/xingxingmofashu/`; the theme
+recipe and shared helpers are inlined. Use it only when the user asks for
+editable source or a shadcn-style install; do not combine both copies in one
+project.
+
+```bash
+npx shadcn@latest add @xingxingmofashu/button
+```
+
+```bash
+npx shadcn@latest add xingxingmofashu/ui/button
+```
+
+The CLI merges the glass tokens and material classes into the CSS file configured
+by `tailwind.css` in `components.json`. Imports use the copied path:
+
+```tsx
+import { Button } from "@/components/ui/xingxingmofashu/button";
+```
+
+See the
+[Registry guide](https://xingxingmofashu.github.io/ui/docs/en/guides/registry)
+for namespace setup, version pinning, and updates.
+
 ## Theme selection
 
 Light is the default. Switch themes with either mechanism:
@@ -121,6 +148,7 @@ client.
 ## Canonical guides
 
 - [Installation](https://xingxingmofashu.github.io/ui/docs/en/get-started/installation)
+- [Registry](https://xingxingmofashu.github.io/ui/docs/en/guides/registry)
 - [Theming](https://xingxingmofashu.github.io/ui/docs/en/guides/theming)
 - [Server rendering](https://xingxingmofashu.github.io/ui/docs/en/guides/ssr)
 - [Full documentation](https://xingxingmofashu.github.io/ui/llms-full.txt)

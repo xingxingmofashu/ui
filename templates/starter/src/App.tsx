@@ -7,8 +7,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { Button, Card, Toggle, ToggleGroup } from "@xingxingmofashu/ui";
-import { useGlassPreset } from "@xingxingmofashu/ui/plugins/glass-preset";
+import { Button } from "@/components/ui/xingxingmofashu/button";
+import { Card } from "@/components/ui/xingxingmofashu/card";
+import { Toggle } from "@/components/ui/xingxingmofashu/toggle";
+import { ToggleGroup } from "@/components/ui/xingxingmofashu/toggle-group";
+import { useGlassPreset } from "@/components/ui/xingxingmofashu/glass-preset";
 
 import { HeroPreview } from "./hero-preview";
 import { useTheme } from "./use-theme";
@@ -23,8 +26,8 @@ const docsUrl = "https://xingxingmofashu.github.io/ui/docs/en";
 const installUrl = `${docsUrl}/get-started/installation`;
 const componentsUrl = `${docsUrl}/components`;
 const templatesUrl = `${docsUrl}/guides/templates`;
+const registryUrl = `${docsUrl}/guides/registry`;
 const githubUrl = "https://github.com/xingxingmofashu/ui";
-const packageUrl = "https://www.npmjs.com/package/@xingxingmofashu/ui";
 
 const features: Feature[] = [
   {
@@ -172,18 +175,17 @@ export default function App() {
             </h1>
 
             <p className="mt-5 max-w-xl text-sm leading-7 text-ui-ink/60 sm:text-base">
-              Lumen is a compact landing-page starter built with{" "}
+              Lumen is a compact landing-page starter built with the{" "}
               <a
                 className="text-ui-ink underline decoration-ui-glass-border underline-offset-4 transition-colors hover:decoration-ui-ink"
-                href={packageUrl}
+                href={registryUrl}
                 target="_blank"
                 rel="noreferrer"
               >
-                @xingxingmofashu/ui
+                Liquid Glass registry
               </a>
-              . It brings the Liquid Glass material, light and dark tokens, and
-              accessible React components into one small page you can make your
-              own.
+              . The shadcn CLI copies the component source, theme recipes, and
+              shared styles into the project, so you can edit every layer.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -287,14 +289,14 @@ export default function App() {
       <footer className="border-t border-ui-glass-border/60">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 text-[11px] text-ui-ink/50 sm:flex-row">
           <p>
-            Built with{" "}
+            Built with the{" "}
             <a
               className="underline-offset-4 hover:text-ui-ink hover:underline"
-              href={packageUrl}
+              href={registryUrl}
               target="_blank"
               rel="noreferrer"
             >
-              @xingxingmofashu/ui
+              Liquid Glass registry
             </a>{" "}
             · © 2026
           </p>

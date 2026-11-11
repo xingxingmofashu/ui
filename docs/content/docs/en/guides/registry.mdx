@@ -1,0 +1,126 @@
+---
+title: "Registry"
+description: "Install the Liquid Glass component source with the shadcn CLI."
+---
+
+The registry distributes the same components as `@xingxingmofashu/ui`, emitted as single self-contained source files and copied into your project through the shadcn CLI. Use it when you want to own the source and adjust theme recipes locally. It is an alternative to the npm package; do not keep both versions of the same component in one project.
+
+## Requirements
+
+- React 19 and React DOM 19.
+- Tailwind CSS 4.
+- A current [shadcn CLI](https://ui.shadcn.com/docs/cli).
+- A `components.json` file. Run `npx shadcn@latest init` if the project does not have one yet.
+
+## Add the registry
+
+Configure the namespace once in `components.json`:
+
+```json [components.json]
+{
+  "registries": {
+    "@xingxingmofashu": "https://xingxingmofashu.github.io/ui/r/{name}.json"
+  }
+}
+```
+
+Or let the CLI write it:
+
+```bash
+npx shadcn@latest registry add @xingxingmofashu=https://xingxingmofashu.github.io/ui/r/{name}.json
+```
+
+## Install a component
+
+```bash
+npx shadcn@latest add @xingxingmofashu/button
+```
+
+You can also install directly from GitHub without configuring the namespace:
+
+```bash
+npx shadcn@latest add xingxingmofashu/ui/button
+```
+
+Pin a release with a tag or commit SHA for a reproducible install:
+
+```bash
+npx shadcn@latest add xingxingmofashu/ui/button#v1.0.0
+```
+
+Or install one item by URL:
+
+```bash
+npx shadcn@latest add https://xingxingmofashu.github.io/ui/r/button.json
+```
+
+## What gets installed
+
+Each item is one self-contained file in the `ui` alias. The theme recipe and
+shared helpers are inlined, so there is no separate `theme/`, `internal/`, or
+`composables/` tree to keep in sync:
+
+```text
+components/ui/xingxingmofashu/
+  button.tsx
+```
+
+Import it from the copied path:
+
+```tsx
+import { Button } from "@/components/ui/xingxingmofashu/button";
+```
+
+The file exports the component and its props type. Edit the theme recipe in the
+same file when you want different material or layout. The optional presets are
+also one file:
+
+```text
+components/ui/xingxingmofashu/
+  glass-preset.tsx
+```
+
+The CLI adds `@base-ui/react`, `cn`, and `tailwind-variants` when they are
+missing. Separately installed components keep working together, including
+`Fieldset` disabled state across its controls.
+
+## Styles
+
+Every item carries the Liquid Glass runtime tokens, Tailwind aliases, `.ui-glass*` material classes, and keyframes. The CLI merges them into the CSS file configured by `tailwind.css` in `components.json`; no extra import is needed.
+
+If you only want the styles:
+
+```bash
+npx shadcn@latest add @xingxingmofashu/glass
+```
+
+The optional material presets are a separate item:
+
+```bash
+npx shadcn@latest add @xingxingmofashu/glass-preset
+```
+
+## Customize and update
+
+Edit the component file directly; its theme recipe and shared helpers are inline. Re-run `add` with `--overwrite` to accept upstream changes:
+
+```bash
+npx shadcn@latest add @xingxingmofashu/button --overwrite
+```
+
+The registry is generated from the package source at release time. A source copy does not receive npm updates automatically.
+
+## Registry or package
+
+- Use the npm package for automatic updates and stable package imports.
+- Use the registry when you want to edit the component or theme source.
+- Do not keep both copies of the same component in one project.
+
+## Troubleshooting
+
+- **Styles are missing.** Check that `tailwind.css` in `components.json` points to the CSS entry that imports Tailwind.
+- **Utilities are missing.** Tailwind 4 scans `components/ui` automatically. If you use explicit `@source` patterns, include `components/ui/xingxingmofashu`.
+- **Imports fail.** Use the copied file path, such as
+  `@/components/ui/xingxingmofashu/button`; each component is a single file.
+- **The CLI rejects the item.** Update the shadcn CLI; `target` placeholders and
+  GitHub registries require a current version.

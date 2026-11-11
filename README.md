@@ -127,6 +127,28 @@ The provider writes `data-glass` to `<html>` and exposes
 `useGlassPreset()`. Pass `preset` and `onPresetChange` for controlled state, or
 `defaultPreset` for an uncontrolled initial value.
 
+### Registry
+
+Prefer editable source? Install a component with the
+[shadcn CLI](https://ui.shadcn.com/docs/cli):
+
+```bash
+npx shadcn@latest add @xingxingmofashu/button
+```
+
+Or install directly from GitHub without configuring a namespace:
+
+```bash
+npx shadcn@latest add xingxingmofashu/ui/button
+```
+
+The registry installs a single self-contained component file. The theme recipe
+and shared helpers are inlined, so only one file lands in
+`components/ui/xingxingmofashu/`. The CLI also merges the Liquid Glass styles
+into your global CSS. See the
+[Registry guide](https://xingxingmofashu.github.io/ui/docs/en/guides/registry)
+for namespace setup, imports, version pinning, and updates.
+
 ## Usage
 
 ```tsx

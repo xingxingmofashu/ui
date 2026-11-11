@@ -156,7 +156,7 @@ already present in the exported HTML. If you host under a subpath, configure
 
 ## Vite and other client-only apps
 
-The Vite starter uses the same package without a server boundary:
+The Vite starter uses vendored registry source without a server boundary:
 
 ```bash
 pnpm dlx degit xingxingmofashu/ui/templates/starter my-app
@@ -165,9 +165,9 @@ pnpm install
 pnpm dev
 ```
 
-Import the package stylesheet once in `src/index.css`, then render components
-from `src/App.tsx`. See [Templates](/docs/en/guides/templates) for the full
-walkthrough.
+The registry styles are already merged into `src/index.css`. Import components
+from `@/components/ui/xingxingmofashu/*` and render them from `src/App.tsx`. See
+[Templates](/docs/en/guides/templates) for the full walkthrough.
 
 ## Common pitfalls
 

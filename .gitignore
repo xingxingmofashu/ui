@@ -21,6 +21,7 @@ blob-report/
 out/
 build/
 dist/
+docs/public/r/
 .turbo/
 .source/
 
