@@ -9,6 +9,7 @@ import { type VariantProps } from "tailwind-variants";
 import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toggle-group";
+import { mergeUI } from "../utils/ui";
 
 type ToggleGroup = ComponentConfig<typeof theme>;
 
@@ -84,12 +85,7 @@ function ToggleGroup<Value extends string>({
         <ToggleGroupItem
           key={item.value}
           {...item}
-          ui={{
-            item: cn(ui?.item, item.ui?.item),
-            content: cn(ui?.content, item.ui?.content),
-            icon: cn(ui?.icon, item.ui?.icon),
-            label: cn(ui?.label, item.ui?.label),
-          }}
+          ui={mergeUI(ui, item.ui)}
         />
       ))}
     </UIToggleGroup>

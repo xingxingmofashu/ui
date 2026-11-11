@@ -10,6 +10,7 @@ import { useAria } from "../composables/use-aria";
 import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/checkbox-group";
+import { mergeUI } from "../utils/ui";
 
 import { CheckIcon } from "./icons/check";
 import { DashIcon } from "./icons/dash";
@@ -170,28 +171,11 @@ function CheckboxGroup({
             name={item.name ?? name}
             form={item.form ?? form}
             readOnly={item.readOnly ?? readOnly}
-            ui={{
-              item: cn(ui?.item, item.ui?.item),
-              box: cn(ui?.box, item.ui?.box),
-              fill: cn(ui?.fill, item.ui?.fill),
-              glass: cn(ui?.glass, item.ui?.glass),
-              overlay: cn(ui?.overlay, item.ui?.overlay),
-              indicator: cn(ui?.indicator, item.ui?.indicator),
-              indicatorIcon: cn(
-                ui?.indicatorIcon,
-                item.ui?.indicatorIcon,
-              ),
-              wrapper: cn(
-                styles.wrapper(),
-                ui?.wrapper,
-                item.ui?.wrapper,
-              ),
-              itemLabel: cn(ui?.itemLabel, item.ui?.itemLabel),
-              itemDescription: cn(
-                ui?.itemDescription,
-                item.ui?.itemDescription,
-              ),
-            }}
+            ui={mergeUI<CheckboxGroup["slots"]>(
+              { wrapper: styles.wrapper() },
+              ui,
+              item.ui,
+            )}
           />
         ))}
       </div>

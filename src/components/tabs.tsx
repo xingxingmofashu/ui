@@ -7,6 +7,7 @@ import { type VariantProps } from "tailwind-variants";
 
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/tabs";
+import { mergeUI } from "../utils/ui";
 
 type Tabs = ComponentConfig<typeof theme>;
 
@@ -123,37 +124,33 @@ function Tabs({
               key={index}
               {...item}
               disabled={disabled || item.disabled}
-              ui={{
-                tab: cn(ui?.tab, itemUi?.tab),
-                icon: cn(ui?.icon, itemUi?.icon),
-                label: cn(ui?.label, itemUi?.label),
-              }}
+              ui={mergeUI(ui, itemUi)}
             />
           ),
         )}
       </UITabs.List>
 
       <div data-slot="panels" className={cn(styles.panels(), ui?.panels)}>
-        {items.map((item, index) => (
-          <UITabs.Panel
-            key={index}
-            value={item.value}
-            keepMounted={item.keepMounted}
-            data-slot="panel"
-            className={cn(styles.panel(), ui?.panel, item.ui?.panel)}
-          >
-            <div
-              data-slot="panel-content"
-              className={cn(
-                styles.panelContent(),
-                ui?.panelContent,
-                item.ui?.panelContent,
-              )}
+        {items.map((item, index) => {
+          const itemUi = mergeUI(ui, item.ui);
+
+          return (
+            <UITabs.Panel
+              key={index}
+              value={item.value}
+              keepMounted={item.keepMounted}
+              data-slot="panel"
+              className={cn(styles.panel(), itemUi.panel)}
             >
-              {item.content}
-            </div>
-          </UITabs.Panel>
-        ))}
+              <div
+                data-slot="panel-content"
+                className={cn(styles.panelContent(), itemUi.panelContent)}
+              >
+                {item.content}
+              </div>
+            </UITabs.Panel>
+          );
+        })}
       </div>
     </UITabs.Root>
   );

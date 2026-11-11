@@ -8,6 +8,7 @@ import { type VariantProps } from "tailwind-variants";
 
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/toolbar";
+import { mergeUI } from "../utils/ui";
 
 type Toolbar = ComponentConfig<typeof theme>;
 
@@ -176,7 +177,7 @@ function Toolbar({ items, size, className, style, ui, ...props }: ToolbarProps) 
               <ToolbarSeparator
                 key={`separator-${index}`}
                 {...entry}
-                ui={{ separator: cn(ui?.separator, entry.ui?.separator) }}
+                ui={mergeUI(ui, entry.ui)}
               />
             );
 
@@ -185,10 +186,7 @@ function Toolbar({ items, size, className, style, ui, ...props }: ToolbarProps) 
               <ToolbarGroup
                 key={`group-${index}`}
                 {...entry}
-                ui={{
-                  group: cn(ui?.group, entry.ui?.group),
-                  ...mergeItemUi(ui, entry.ui),
-                }}
+                ui={mergeUI(ui, entry.ui)}
               />
             );
 
@@ -197,7 +195,7 @@ function Toolbar({ items, size, className, style, ui, ...props }: ToolbarProps) 
               <ToolbarLink
                 key={`link-${index}`}
                 {...entry}
-                ui={mergeItemUi(ui, entry.ui)}
+                ui={mergeUI(ui, entry.ui)}
               />
             );
 
@@ -206,7 +204,7 @@ function Toolbar({ items, size, className, style, ui, ...props }: ToolbarProps) 
               <ToolbarToggle
                 key={`toggle-${index}`}
                 {...entry}
-                ui={mergeItemUi(ui, entry.ui)}
+                ui={mergeUI(ui, entry.ui)}
               />
             );
 
@@ -215,7 +213,7 @@ function Toolbar({ items, size, className, style, ui, ...props }: ToolbarProps) 
               <ToolbarButton
                 key={`button-${index}`}
                 {...entry}
-                ui={mergeItemUi(ui, entry.ui)}
+                ui={mergeUI(ui, entry.ui)}
               />
             );
         }
@@ -325,15 +323,13 @@ function ToolbarGroup({
       className={cn(styles.group(), ui?.group, className)}
     >
       {items.map((entry, index) => {
-        const itemUi = mergeItemUi(ui, entry.ui);
-
         switch (entry.kind) {
           case "link":
             return (
               <ToolbarLink
                 key={`link-${index}`}
                 {...entry}
-                ui={itemUi}
+                ui={mergeUI(ui, entry.ui)}
               />
             );
 
@@ -342,7 +338,7 @@ function ToolbarGroup({
               <ToolbarToggle
                 key={`toggle-${index}`}
                 {...entry}
-                ui={itemUi}
+                ui={mergeUI(ui, entry.ui)}
               />
             );
 
@@ -351,7 +347,7 @@ function ToolbarGroup({
               <ToolbarButton
                 key={`button-${index}`}
                 {...entry}
-                ui={itemUi}
+                ui={mergeUI(ui, entry.ui)}
               />
             );
         }
@@ -405,18 +401,6 @@ function ToolbarItemContent({ icon, label, ui }: ToolbarItemContentProps) {
       ) : null}
     </span>
   );
-}
-
-function mergeItemUi(
-  rootUi: Toolbar["slots"] | undefined,
-  itemUi: Partial<ToolbarItemSlots> | undefined,
-) {
-  return {
-    item: cn(rootUi?.item, itemUi?.item),
-    content: cn(rootUi?.content, itemUi?.content),
-    icon: cn(rootUi?.icon, itemUi?.icon),
-    label: cn(rootUi?.label, itemUi?.label),
-  };
 }
 
 export { Toolbar };

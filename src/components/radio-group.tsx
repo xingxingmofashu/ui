@@ -11,6 +11,7 @@ import { useAria } from "../composables/use-aria";
 import { useFieldset } from "../composables/use-fieldset";
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/radio-group";
+import { mergeUI } from "../utils/ui";
 
 type RadioGroup = ComponentConfig<typeof theme>;
 
@@ -131,24 +132,11 @@ function RadioGroup<Value>({
           <RadioGroupItem
             key={index}
             {...item}
-            ui={{
-              item: cn(ui?.item, item.ui?.item),
-              box: cn(ui?.box, item.ui?.box),
-              glass: cn(ui?.glass, item.ui?.glass),
-              overlay: cn(ui?.overlay, item.ui?.overlay),
-              indicator: cn(ui?.indicator, item.ui?.indicator),
-              dot: cn(ui?.dot, item.ui?.dot),
-              wrapper: cn(
-                styles.wrapper(),
-                ui?.wrapper,
-                item.ui?.wrapper,
-              ),
-              itemLabel: cn(ui?.itemLabel, item.ui?.itemLabel),
-              itemDescription: cn(
-                ui?.itemDescription,
-                item.ui?.itemDescription,
-              ),
-            }}
+            ui={mergeUI<RadioGroup["slots"]>(
+              { wrapper: styles.wrapper() },
+              ui,
+              item.ui,
+            )}
           />
         ))}
       </div>

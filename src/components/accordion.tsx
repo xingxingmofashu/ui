@@ -7,6 +7,7 @@ import { type VariantProps } from "tailwind-variants";
 
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/accordion";
+import { mergeUI } from "../utils/ui";
 
 import { PlusIcon } from "./icons/plus";
 
@@ -94,16 +95,7 @@ function Accordion<Value = any>({
           <AccordionItem
             key={index}
             {...item}
-            ui={{
-              item: cn(ui?.item, item.ui?.item),
-              header: cn(ui?.header, item.ui?.header),
-              trigger: cn(ui?.trigger, item.ui?.trigger),
-              title: cn(ui?.title, item.ui?.title),
-              indicator: cn(ui?.indicator, item.ui?.indicator),
-              indicatorIcon: cn(ui?.indicatorIcon, item.ui?.indicatorIcon),
-              panel: cn(ui?.panel, item.ui?.panel),
-              panelContent: cn(ui?.panelContent, item.ui?.panelContent),
-            }}
+            ui={mergeUI(ui, item.ui)}
           />
         ))}
       </div>

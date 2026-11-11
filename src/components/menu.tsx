@@ -6,6 +6,7 @@ import * as React from "react";
 
 import { type ComponentConfig } from "../internal/tv";
 import theme from "../theme/menu";
+import { mergeUI } from "../utils/ui";
 
 type Menu = ComponentConfig<typeof theme>;
 
@@ -153,9 +154,7 @@ function Menu({
                     <MenuSeparator
                       key={`separator-${index}`}
                       {...entry}
-                      ui={{
-                        separator: cn(ui?.separator, entry.ui?.separator),
-                      }}
+                      ui={mergeUI(ui, entry.ui)}
                     />
                   );
                 }
@@ -165,17 +164,7 @@ function Menu({
                     <MenuGroup
                       key={`group-${index}`}
                       {...entry}
-                      ui={{
-                        group: cn(ui?.group, entry.ui?.group),
-                        groupLabel: cn(
-                          ui?.groupLabel,
-                          entry.ui?.groupLabel,
-                        ),
-                        item: cn(ui?.item, entry.ui?.item),
-                        itemIcon: cn(ui?.itemIcon, entry.ui?.itemIcon),
-                        itemLabel: cn(ui?.itemLabel, entry.ui?.itemLabel),
-                        shortcut: cn(ui?.shortcut, entry.ui?.shortcut),
-                      }}
+                      ui={mergeUI(ui, entry.ui)}
                     />
                   );
                 }
@@ -184,12 +173,7 @@ function Menu({
                   <MenuActionItem
                     key={index}
                     {...entry}
-                    ui={{
-                      item: cn(ui?.item, entry.ui?.item),
-                      itemIcon: cn(ui?.itemIcon, entry.ui?.itemIcon),
-                      itemLabel: cn(ui?.itemLabel, entry.ui?.itemLabel),
-                      shortcut: cn(ui?.shortcut, entry.ui?.shortcut),
-                    }}
+                    ui={mergeUI(ui, entry.ui)}
                   />
                 );
               })}
@@ -279,12 +263,7 @@ function MenuGroup({
         <MenuActionItem
           key={index}
           {...item}
-          ui={{
-            item: cn(ui?.item, item.ui?.item),
-            itemIcon: cn(ui?.itemIcon, item.ui?.itemIcon),
-            itemLabel: cn(ui?.itemLabel, item.ui?.itemLabel),
-            shortcut: cn(ui?.shortcut, item.ui?.shortcut),
-          }}
+          ui={mergeUI(ui, item.ui)}
         />
       ))}
     </UIMenu.Group>
