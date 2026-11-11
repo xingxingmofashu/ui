@@ -136,18 +136,12 @@ Prefer editable source? Install a component with the
 npx shadcn@latest add @xingxingmofashu/button
 ```
 
-Or install directly from GitHub without configuring a namespace:
-
-```bash
-npx shadcn@latest add xingxingmofashu/ui/button
-```
-
 The registry installs a single self-contained component file. The theme recipe
 and shared helpers are inlined, so only one file lands in
 `components/ui/xingxingmofashu/`. The CLI also merges the Liquid Glass styles
 into your global CSS. See the
 [Registry guide](https://xingxingmofashu.github.io/ui/docs/en/guides/registry)
-for namespace setup, imports, version pinning, and updates.
+for namespace setup, imports, and updates.
 
 ## Usage
 

@@ -36,18 +36,6 @@ npx shadcn@latest registry add @xingxingmofashu=https://xingxingmofashu.github.i
 npx shadcn@latest add @xingxingmofashu/button
 ```
 
-You can also install directly from GitHub without configuring the namespace:
-
-```bash
-npx shadcn@latest add xingxingmofashu/ui/button
-```
-
-Pin a release with a tag or commit SHA for a reproducible install:
-
-```bash
-npx shadcn@latest add xingxingmofashu/ui/button#v1.0.0
-```
-
 Or install one item by URL:
 
 ```bash
@@ -56,9 +44,9 @@ npx shadcn@latest add https://xingxingmofashu.github.io/ui/r/button.json
 
 ## What gets installed
 
-Each item is one self-contained file in the `ui` alias. The theme recipe and
-shared helpers are inlined, so there is no separate `theme/`, `internal/`, or
-`composables/` tree to keep in sync:
+Each component item is one self-contained file in the `ui` alias. The theme
+recipe and shared helpers are inlined, so there is no separate `theme/`,
+`internal/`, or `composables/` tree to keep in sync:
 
 ```text
 components/ui/xingxingmofashu/
@@ -72,12 +60,16 @@ import { Button } from "@/components/ui/xingxingmofashu/button";
 ```
 
 The file exports the component and its props type. Edit the theme recipe in the
-same file when you want different material or layout. The optional presets are
-also one file:
+same file when you want different material or layout. The optional preset item
+is a library file in the `lib` alias, not a UI component:
 
 ```text
-components/ui/xingxingmofashu/
+lib/xingxingmofashu/
   glass-preset.tsx
+```
+
+```tsx
+import { GlassPresetProvider } from "@/lib/xingxingmofashu/glass-preset";
 ```
 
 The CLI adds `@base-ui/react`, `cn`, and `tailwind-variants` when they are
@@ -122,5 +114,5 @@ The registry is generated from the package source at release time. A source copy
 - **Utilities are missing.** Tailwind 4 scans `components/ui` automatically. If you use explicit `@source` patterns, include `components/ui/xingxingmofashu`.
 - **Imports fail.** Use the copied file path, such as
   `@/components/ui/xingxingmofashu/button`; each component is a single file.
-- **The CLI rejects the item.** Update the shadcn CLI; `target` placeholders and
-  GitHub registries require a current version.
+- **The CLI rejects the item.** Update the shadcn CLI; `target` placeholders
+  require a current version.

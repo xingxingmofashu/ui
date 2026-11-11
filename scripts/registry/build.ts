@@ -21,7 +21,10 @@ const REGISTRY_FILE = "registry.json";
 const OUTPUT_DIR = "docs/public/r";
 const ITEM_SCHEMA = "https://ui.shadcn.com/schema/registry-item.json";
 
-type RegistryItemType = "registry:ui" | "registry:style" | "registry:block";
+type RegistryItemType =
+  | "registry:ui"
+  | "registry:style"
+  | "registry:lib";
 
 interface RegistryFile {
   path: string;
@@ -52,8 +55,11 @@ export interface Registry {
 
 type SharedItemFields = Pick<RegistryItem, "cssVars" | "css" | "meta">;
 
-function getTargetPath(name: string): string {
-  return `@ui/${REGISTRY.installFolder}/${name}.tsx`;
+function getTargetPath(
+  name: string,
+  alias: "ui" | "lib" = "ui",
+): string {
+  return `@${alias}/${REGISTRY.installFolder}/${name}.tsx`;
 }
 
 function createComponentItem(
@@ -107,7 +113,7 @@ function createGlassPresetItem(
   return {
     ...sharedFields,
     name: "glass-preset",
-    type: "registry:block",
+    type: "registry:lib",
     title: "Glass Preset",
     description:
       "Optional Liquid Glass material presets with a React provider, scope, and pre-hydration script.",
@@ -116,8 +122,8 @@ function createGlassPresetItem(
     files: [
       {
         path: entryFile,
-        type: "registry:component",
-        target: getTargetPath("glass-preset"),
+        type: "registry:lib",
+        target: getTargetPath("glass-preset", "lib"),
         content: source.content,
       },
     ],

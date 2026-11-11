@@ -5,7 +5,7 @@ import {
   Toast,
   ToastProvider,
 } from "@/components/ui/xingxingmofashu/toast";
-import { GlassPresetProvider } from "@/components/ui/xingxingmofashu/glass-preset";
+import { GlassPresetProvider } from "@/lib/xingxingmofashu/glass-preset";
 
 import App from "./App";
 import "./index.css";

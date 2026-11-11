@@ -38,6 +38,7 @@ pnpm preview
 - `src/use-theme.ts` — persisted light/dark state.
 - `src/index.css` — Tailwind plus the Liquid Glass tokens and material classes.
 - `src/components/ui/xingxingmofashu/` — the single-file registry components.
+- `src/lib/xingxingmofashu/` — the glass preset library installed from the registry.
 - `components.json` — shadcn configuration and the registry namespace.
 - `index.html` — metadata and the no-flash theme script.
 
@@ -65,8 +66,7 @@ The CLI copies a single self-contained component file into
 - Override the shared `--ui-*` tokens in `src/index.css`.
 - The app is wrapped in `GlassPresetProvider`, so the header switch changes the
   whole page and persists in `localStorage`. Import `GlassPresetScope` from
-  `@/components/ui/xingxingmofashu/glass-preset` when a section needs its own
-  preset.
+  `@/lib/xingxingmofashu/glass-preset` when a section needs its own preset.
 
 ## Requirements
 

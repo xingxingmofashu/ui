@@ -36,18 +36,6 @@ npx shadcn@latest registry add @xingxingmofashu=https://xingxingmofashu.github.i
 npx shadcn@latest add @xingxingmofashu/button
 ```
 
-也可以不配置命名空间，直接从 GitHub 安装：
-
-```bash
-npx shadcn@latest add xingxingmofashu/ui/button
-```
-
-为了可复现的安装，可以锁定 tag 或 commit SHA：
-
-```bash
-npx shadcn@latest add xingxingmofashu/ui/button#v1.0.0
-```
-
 或者通过 URL 安装单个 item：
 
 ```bash
@@ -56,7 +44,7 @@ npx shadcn@latest add https://xingxingmofashu.github.io/ui/r/button.json
 
 ## 安装了哪些文件
 
-每个 item 都是 `ui` 别名目录下的一个自包含文件。主题配方与共享工具已经内联，不再生成独立的 `theme/`、`internal/` 或 `composables/` 目录：
+每个组件 item 都是 `ui` 别名目录下的一个自包含文件。主题配方与共享工具已经内联，不再生成独立的 `theme/`、`internal/` 或 `composables/` 目录：
 
 ```text
 components/ui/xingxingmofashu/
@@ -69,11 +57,15 @@ components/ui/xingxingmofashu/
 import { Button } from "@/components/ui/xingxingmofashu/button";
 ```
 
-文件同时导出组件与 props 类型。需要调整材质或布局时，直接修改同一文件中的主题配方。可选的预设也只有一个文件：
+文件同时导出组件与 props 类型。需要调整材质或布局时，直接修改同一文件中的主题配方。可选的预设是一个 `lib` 别名下的库文件，不是 UI 组件：
 
 ```text
-components/ui/xingxingmofashu/
+lib/xingxingmofashu/
   glass-preset.tsx
+```
+
+```tsx
+import { GlassPresetProvider } from "@/lib/xingxingmofashu/glass-preset";
 ```
 
 CLI 会在缺少时添加 `@base-ui/react`、`cn` 与 `tailwind-variants`。分别安装的组件仍可协同工作，包括 `Fieldset` 对其内部控件的禁用状态。
@@ -117,4 +109,4 @@ Registry 在发布时从包源码生成。源码副本不会随 npm 包自动更
 - **工具类缺失。** Tailwind 4 会自动扫描 `components/ui`。如果使用了显式 `@source`，请包含 `components/ui/xingxingmofashu`。
 - **导入失败。** 使用复制后的文件路径，例如
   `@/components/ui/xingxingmofashu/button`；每个组件都是单个文件。
-- **CLI 拒绝安装。** 更新 shadcn CLI；`target` 占位符与 GitHub registry 需要较新的版本。
+- **CLI 拒绝安装。** 更新 shadcn CLI；`target` 占位符需要较新的版本。

@@ -84,10 +84,6 @@ project.
 npx shadcn@latest add @xingxingmofashu/button
 ```
 
-```bash
-npx shadcn@latest add xingxingmofashu/ui/button
-```
-
 The CLI merges the glass tokens and material classes into the CSS file configured
 by `tailwind.css` in `components.json`. Imports use the copied path:
 
@@ -97,7 +93,7 @@ import { Button } from "@/components/ui/xingxingmofashu/button";
 
 See the
 [Registry guide](https://xingxingmofashu.github.io/ui/docs/en/guides/registry)
-for namespace setup, version pinning, and updates.
+for namespace setup, imports, and updates.
 
 ## Theme selection
 

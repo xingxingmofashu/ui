@@ -5192,7 +5192,7 @@
         "version": "1.0.0"
       },
       "name": "glass-preset",
-      "type": "registry:block",
+      "type": "registry:lib",
       "title": "Glass Preset",
       "description": "Optional Liquid Glass material presets with a React provider, scope, and pre-hydration script.",
       "categories": [
@@ -5202,8 +5202,8 @@
       "files": [
         {
           "path": "src/plugins/glass-preset/index.tsx",
-          "type": "registry:component",
-          "target": "@ui/xingxingmofashu/glass-preset.tsx"
+          "type": "registry:lib",
+          "target": "@lib/xingxingmofashu/glass-preset.tsx"
         }
       ]
     }

@@ -48,7 +48,7 @@ describe("registry items", () => {
     expect(committed).toEqual(serializeRegistry(registry));
   });
 
-  it("ships one self-contained file per component", () => {
+  it("ships one self-contained file per item", () => {
     for (const item of registry.items) {
       if (item.type === "registry:style") {
         expect(item.files).toEqual([]);
@@ -57,9 +57,10 @@ describe("registry items", () => {
 
       expect(item.files).toHaveLength(1);
       const [file] = item.files;
+      const alias = item.type === "registry:lib" ? "lib" : "ui";
 
       expect(file.target).toBe(
-        `@ui/xingxingmofashu/${item.name}.tsx`,
+        `@${alias}/xingxingmofashu/${item.name}.tsx`,
       );
 
       expect(file.content, `${item.name} has no content`).toBeDefined();
@@ -86,7 +87,7 @@ describe("registry items", () => {
   it("installs every file under the xingxingmofashu folder", () => {
     for (const item of registry.items) {
       for (const file of item.files) {
-        expect(file.target).toMatch(/^@ui\/xingxingmofashu\//);
+        expect(file.target).toMatch(/^@(ui|lib)\/xingxingmofashu\//);
       }
     }
   });
@@ -128,10 +129,12 @@ describe("glass-preset item", () => {
   const glass = itemsByName.get("glass")!;
   const preset = itemsByName.get("glass-preset")!;
 
-  it("ships a single bundled plugin file", () => {
+  it("ships a single bundled library file", () => {
+    expect(preset.type).toBe("registry:lib");
     expect(preset.files).toHaveLength(1);
+    expect(preset.files[0].type).toBe("registry:lib");
     expect(preset.files[0].target).toBe(
-      "@ui/xingxingmofashu/glass-preset.tsx",
+      "@lib/xingxingmofashu/glass-preset.tsx",
     );
 
     const contents = preset.files[0].content!;

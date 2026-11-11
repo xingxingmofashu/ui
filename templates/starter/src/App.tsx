@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/xingxingmofashu/button";
 import { Card } from "@/components/ui/xingxingmofashu/card";
 import { Toggle } from "@/components/ui/xingxingmofashu/toggle";
 import { ToggleGroup } from "@/components/ui/xingxingmofashu/toggle-group";
-import { useGlassPreset } from "@/components/ui/xingxingmofashu/glass-preset";
+import { useGlassPreset } from "@/lib/xingxingmofashu/glass-preset";
 
 import { HeroPreview } from "./hero-preview";
 import { useTheme } from "./use-theme";
