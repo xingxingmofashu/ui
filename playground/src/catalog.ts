@@ -15,7 +15,7 @@ const componentGroups: Partial<Record<string, ComponentGroup>> = {
   card: "Element",
   checkbox: "Form",
   "checkbox-group": "Form",
-  collapsible: "Data",
+  collapsible: "Element",
   dialog: "Overlay",
   drawer: "Overlay",
   field: "Form",
