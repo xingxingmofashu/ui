@@ -18,8 +18,8 @@ export default function ToolbarDisabledDemo() {
       />
 
       <p className="text-sm text-ui-ink/60">
-        Disabled items keep their place and stay in the toolbar's roving focus,
-        but they ignore activation.
+        Disabled buttons keep their place and stay in the toolbar's roving
+        focus, but they ignore activation.
       </p>
     </div>
   );

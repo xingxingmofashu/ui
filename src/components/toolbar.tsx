@@ -378,13 +378,13 @@ function ToolbarSeparator({
 function ToolbarItemContent({ icon, label, ui }: ToolbarItemContentProps) {
   const styles = theme();
 
-  if (icon === undefined && label === undefined) {
+  if (!icon && (label === undefined || label === null)) {
     return null;
   }
 
   return (
     <span data-slot="content" className={cn(styles.content(), ui?.content)}>
-      {icon !== undefined ? (
+      {icon ? (
         <span
           aria-hidden="true"
           data-slot="icon"

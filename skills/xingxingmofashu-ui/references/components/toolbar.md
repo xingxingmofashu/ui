@@ -83,7 +83,7 @@ export default function ToolbarBasicDemo() {
 | `items` | `readonly ToolbarItemProps[]` | — | Actions, toggles, links, groups, and separators rendered by the toolbar. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout and arrow-key axis. |
 | `loopFocus` | `boolean` | `true` | Wraps focus to the other end when an arrow key passes the last item. |
-| `disabled` | `boolean` | `false` | Disables every item while keeping focusable items in the roving focus order. |
+| `disabled` | `boolean` | `false` | Disables buttons, toggles, and groups while keeping focusable items in the roving focus order. Links are not affected. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Controls item height, padding, text, icons, and separator length. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the toolbar root element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the toolbar root. |
@@ -139,7 +139,7 @@ export default function ToolbarBasicDemo() {
 | --- | --- | --- | --- |
 | `kind` | `"group"` | — | Marks the entry as a group. Required. |
 | `items` | `readonly ToolbarGroupItemProps[]` | — | Action buttons, toggles, and links rendered inside the group. Required. |
-| `disabled` | `boolean` | `false` | Disables every item in the group. |
+| `disabled` | `boolean` | `false` | Disables the buttons and toggles in the group. Links are not affected. |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | Replaces the group element. |
 | `className` | `ClassValue` | — | Tailwind classes merged into the group. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
@@ -158,11 +158,11 @@ export default function ToolbarBasicDemo() {
 
 | Attribute | Description |
 | --- | --- |
-| `aria-disabled` | Reports a disabled focusable item. |
+| `aria-disabled` | Reports a disabled button or toggle item. |
 | `aria-orientation` | Reports the toolbar and separator orientation. |
 | `aria-pressed` | Reports the pressed state of a toggle item. |
-| `data-disabled` | Present on the toolbar, a group, or an item when disabled. |
-| `data-focusable` | Present on a disabled item that stays in the roving focus order. |
+| `data-disabled` | Present on the toolbar, a group, or a button or toggle item when disabled. |
+| `data-focusable` | Present on a focusable button or toggle item; disabled items keep it when `focusableWhenDisabled` is `true`. |
 | `data-orientation` | Indicates the orientation on the toolbar, groups, items, and separators. |
 | `data-pressed` | Present on a pressed toggle item. |
 | `data-slot` | Marks internal parts (`root`, `glass`, `overlay`, `group`, `item`, `content`, `icon`, `label`, `separator`). |
@@ -179,7 +179,7 @@ Component-specific values live in `src/theme/toolbar.ts`: `--ui-toolbar-item-hei
 
 `Toolbar` renders `role="toolbar"` with `aria-orientation`. Name it with `aria-label` or `aria-labelledby`. The bar takes one stop in the Tab order: arrow keys move focus along the toolbar orientation, and `loopFocus` defaults to `true`.
 
-Toggle items expose `aria-pressed`. Disabled items keep `aria-disabled` and, unless `focusableWhenDisabled` is `false`, remain focusable and skip activation. Groups render `role="group"` and need `aria-label` or `aria-labelledby`. Separators render `role="separator"` with the opposite orientation. Icon-only items need an accessible name, and icons are hidden from assistive technology. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for shared interaction patterns.
+Toggle items expose `aria-pressed`. Disabled buttons and toggles keep `aria-disabled` and, unless `focusableWhenDisabled` is `false`, remain focusable and skip activation. Groups render `role="group"` and need `aria-label` or `aria-labelledby`. Separators render `role="separator"` with the opposite orientation. Icon-only items need an accessible name, and icons are hidden from assistive technology. Links are not disabled by the toolbar; they stay in the roving focus order and keep standard link behavior. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for shared interaction patterns.
 
 ## Gotchas
 
@@ -188,7 +188,8 @@ Toggle items expose `aria-pressed`. Disabled items keep `aria-disabled` and, unl
 - Toggle items use `pressed` / `onPressedChange`; do not also control them through a group value.
 - Group entries accept buttons, toggles, and links, but not nested groups or separators.
 - Name icon-only items with `aria-label` or `aria-labelledby`.
-- `disabled` on the root disables every item; `focusableWhenDisabled` controls whether disabled items stay in the roving focus order.
+- `disabled` on the root disables buttons and toggles; links stay active. `focusableWhenDisabled` controls whether disabled items stay in the roving focus order.
+- Links have no disabled state. Remove or replace them when the toolbar or group is disabled.
 - For text entry, use a separate `Input` or `Field` next to the toolbar; the wrapper does not expose `Toolbar.Input`.
 
 ## Related components

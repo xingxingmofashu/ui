@@ -29,7 +29,7 @@ description: "一个 React 工具栏，在同一块 Liquid Glass 表面上组合
 
 ### Link
 
-使用 `{ kind: "link" }` 表示导航。链接条目必须提供 `href`，并渲染为原生锚点，因此保留标准的链接行为。链接条目没有禁用状态。
+使用 `{ kind: "link" }` 表示导航。链接条目必须提供 `href`，并渲染为原生锚点，因此保留标准的链接行为。链接条目没有禁用状态，在禁用的工具栏或分组中仍保持可用。
 
 <Example name="toolbar/link" />
 
@@ -47,7 +47,7 @@ description: "一个 React 工具栏，在同一块 Liquid Glass 表面上组合
 
 ### Disabled
 
-在工具栏上设置 `disabled` 会禁用全部条目；在按钮、切换按钮或分组上设置则只影响该部分。条目默认仍保留在 roving focus 顺序中，方便键盘用户发现它们；在条目上传入 `focusableWhenDisabled={false}` 可将其移出该导航。
+在工具栏上设置 `disabled` 会禁用其中的按钮与切换按钮；在按钮、切换按钮或分组上设置则只影响该部分。链接条目不受影响，仍保持可用。禁用的条目默认仍保留在 roving focus 顺序中，方便键盘用户发现它们；在按钮或切换按钮上传入 `focusableWhenDisabled={false}` 可将其移出该导航。
 
 <Example name="toolbar/disabled" />
 
@@ -55,7 +55,7 @@ description: "一个 React 工具栏，在同一块 Liquid Glass 表面上组合
 
 `Toolbar` 渲染带有 `aria-orientation` 的 `role="toolbar"`。请使用 `aria-label` 或 `aria-labelledby` 为它命名。整条工具栏在 Tab 顺序中只占一个停靠点：水平工具栏使用 `ArrowRight` 与 `ArrowLeft` 移动焦点，纵向工具栏使用 `ArrowDown` 与 `ArrowUp`。`loopFocus` 默认为 `true`，焦点会在两端循环。
 
-切换条目暴露 `aria-pressed`。禁用条目保留 `aria-disabled`，除非将 `focusableWhenDisabled` 设为 `false`，否则它们仍可聚焦，但会跳过激活。分组渲染 `role="group"`，使用自身的 `aria-label` 或 `aria-labelledby` 命名。分隔线渲染 `role="separator"`，方向与工具栏相反。只有图标的条目需要通过 `aria-label` 或 `aria-labelledby` 提供可访问名称，图标槽位对辅助技术隐藏。链接条目是原生锚点，保留浏览器的链接语义。
+切换条目暴露 `aria-pressed`。禁用的按钮与切换按钮保留 `aria-disabled`，除非将 `focusableWhenDisabled` 设为 `false`，否则它们仍可聚焦，但会跳过激活。分组渲染 `role="group"`，使用自身的 `aria-label` 或 `aria-labelledby` 命名。分隔线渲染 `role="separator"`，方向与工具栏相反。只有图标的条目需要通过 `aria-label` 或 `aria-labelledby` 提供可访问名称，图标槽位对辅助技术隐藏。链接条目是原生锚点，保留浏览器的链接语义；它们不受工具栏 `disabled` 影响，并保留在 roving focus 顺序中。
 
 共享的焦点与键盘模式见[无障碍指南](/docs/zh/guides/accessibility)。
 
@@ -68,7 +68,7 @@ description: "一个 React 工具栏，在同一块 Liquid Glass 表面上组合
 | `items` | `readonly ToolbarItemProps[]` | — | 工具栏渲染的操作、切换按钮、链接、分组与分隔线。 |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 布局与方向键所在的轴。 |
 | `loopFocus` | `boolean` | `true` | 方向键越过最后一个条目时，将焦点循环到另一端。 |
-| `disabled` | `boolean` | `false` | 禁用全部条目，同时让可聚焦条目保留在 roving focus 顺序中。 |
+| `disabled` | `boolean` | `false` | 禁用按钮、切换按钮与分组，同时让可聚焦条目保留在 roving focus 顺序中。链接不受影响。 |
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 控制条目高度、内边距、文字、图标与分隔线长度。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换工具栏根元素。 |
 | `className` | `ClassValue` | — | 合并到工具栏根元素的 Tailwind 类名。 |
@@ -132,7 +132,7 @@ description: "一个 React 工具栏，在同一块 Liquid Glass 表面上组合
 | --- | --- | --- | --- |
 | `kind` | `"group"` | — | 标记该条目为分组。必填。 |
 | `items` | `readonly ToolbarGroupItemProps[]` | — | 分组内渲染的操作按钮、切换按钮与链接。必填。 |
-| `disabled` | `boolean` | `false` | 禁用分组内的全部条目。 |
+| `disabled` | `boolean` | `false` | 禁用分组内的按钮与切换按钮。链接不受影响。 |
 | `render` | `ReactElement \| ((props, state) => ReactElement)` | — | 替换分组元素。 |
 | `className` | `ClassValue` | — | 合并到分组的 Tailwind 类名。 |
 | `style` | `CSSProperties` | — | 与 `className` 合并到同一元素的内联样式。 |
@@ -153,11 +153,11 @@ description: "一个 React 工具栏，在同一块 Liquid Glass 表面上组合
 
 | 属性 | 说明 |
 | --- | --- |
-| `aria-disabled` | 表示禁用的可聚焦条目。 |
+| `aria-disabled` | 表示禁用的按钮或切换按钮条目。 |
 | `aria-orientation` | 表示工具栏与分隔线的方向。 |
 | `aria-pressed` | 表示切换条目的按下状态。 |
-| `data-disabled` | 当工具栏、分组或条目禁用时存在。 |
-| `data-focusable` | 当禁用条目仍保留在 roving focus 顺序中时存在。 |
+| `data-disabled` | 当工具栏、分组或按钮/切换按钮条目禁用时存在。 |
+| `data-focusable` | 当按钮或切换按钮条目可聚焦时存在；禁用条目在 `focusableWhenDisabled` 为 `true` 时也会保留。 |
 | `data-orientation` | 在工具栏、分组、条目与分隔线上表示方向。 |
 | `data-pressed` | 在按下的切换条目上存在。 |
 | `data-slot` | 标记内部结构（`root`、`glass`、`overlay`、`group`、`item`、`content`、`icon`、`label`、`separator`）。 |

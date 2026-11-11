@@ -367,7 +367,7 @@ describe("Toolbar", () => {
       expect(italic).toHaveAttribute("aria-pressed", "false");
     });
 
-    it("disables every item from the root", async () => {
+    it("disables every button from the root", async () => {
       const user = userEvent.setup();
       const onClick = vi.fn();
 
@@ -409,7 +409,7 @@ describe("Toolbar", () => {
       expect(onClick).not.toHaveBeenCalled();
     });
 
-    it("disables every item in a group", async () => {
+    it("disables buttons in a group", async () => {
       const user = userEvent.setup();
       const onClick = vi.fn();
 
@@ -437,6 +437,25 @@ describe("Toolbar", () => {
       await user.click(undo);
 
       expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it("leaves link items active in a disabled toolbar", () => {
+      render(
+        <Toolbar
+          aria-label="Disabled links"
+          disabled
+          items={[
+            { label: "Publish" },
+            { kind: "link", href: "/releases", label: "Release notes" },
+          ]}
+        />,
+      );
+
+      const link = screen.getByRole("link", { name: "Release notes" });
+
+      expect(link).toHaveAttribute("href", "/releases");
+      expect(link).not.toHaveAttribute("aria-disabled");
+      expect(link).not.toHaveAttribute("data-disabled");
     });
 
     it("moves focus with arrow keys and loops at the ends", async () => {

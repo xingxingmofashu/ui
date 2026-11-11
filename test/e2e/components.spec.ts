@@ -64,6 +64,27 @@ test("menu renders a glass popup and closes on select", async ({ page }) => {
   await expect(page.getByRole("menu")).toBeHidden();
 });
 
+test("toolbar groups actions and moves focus with arrow keys", async ({
+  page,
+}) => {
+  await openExample(page, "toolbar/basic");
+
+  const toolbar = page.getByRole("toolbar", { name: "Document actions" });
+
+  await expect(toolbar).toBeVisible();
+  await expectGlass(toolbar);
+
+  const undo = toolbar.getByRole("button", { name: "Undo" });
+  const redo = toolbar.getByRole("button", { name: "Redo" });
+
+  await undo.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(redo).toBeFocused();
+
+  await toolbar.getByRole("button", { name: "Copy" }).click();
+  await expect(page.getByText("Last action: Copy")).toBeVisible();
+});
+
 test("toast renders a glass notification", async ({ page }) => {
   await openExample(page, "toast/basic");
 
