@@ -62,7 +62,7 @@ export default function SwitchBasicDemo() {
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; container?: ClassValue; base?: ClassValue; thumb?: ClassValue; wrapper?: ClassValue; label?: ClassValue; description?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
-`name`, `form`, `value`, `id`, `ref`, and other native attributes are forwarded to the rendered control and its hidden input.
+`name`, `form`, `value`, and `id` are forwarded to the hidden input; `disabled` applies to the root. `inputRef` targets the hidden input, while the wrapper's `ref` targets the root element.
 
 | Attribute | Description |
 | --- | --- |

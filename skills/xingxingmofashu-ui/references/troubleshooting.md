@@ -126,9 +126,10 @@ const [open, setOpen] = useState(false);
 <Dialog open={open} onOpenChange={setOpen} title="Title" />;
 ```
 
-Footer buttons do not close the dialog automatically. Call `setOpen(false)` in
-the action handler, or use the `actionsRef` API when the close must wait for an
-async operation.
+`Dialog` footer buttons do not close automatically; call `setOpen(false)` in the
+action handler. `AlertDialog` is different: both actions are `Close` and dismiss
+immediately. If the dialog must stay open for async work, keep `open` controlled
+and do not set it to `false` until the work finishes.
 
 ## Forms
 

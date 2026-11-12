@@ -96,7 +96,7 @@ export default function RadioGroupBasicDemo() {
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ item?: ClassValue; box?: ClassValue; glass?: ClassValue; overlay?: ClassValue; indicator?: ClassValue; dot?: ClassValue; wrapper?: ClassValue; itemLabel?: ClassValue; itemDescription?: ClassValue }` | — | Tailwind classes for this option's internal slots, keyed by `data-slot`. |
 
-`name`, `form`, `inputRef`, ARIA attributes, and `ref` are forwarded to the group or option and its hidden input.
+`name` and `form` apply to the group. `ref` targets the group or item root; use `inputRef` on the group or an item for the hidden radio input. ARIA attributes are forwarded to the group and each option.
 
 | Attribute | Description |
 | --- | --- |

@@ -122,7 +122,7 @@ export default function TabsBasicDemo() {
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ tab?: ClassValue; icon?: ClassValue; label?: ClassValue; panel?: ClassValue; panelContent?: ClassValue }` | — | Tailwind classes for this tab's internal slots, keyed by `data-slot`. |
 
-Root `ui` is merged into every tab and panel first, then the item's `ui`. The item's `className` applies only to the tab button; style the panel through `ui.panel`. ARIA attributes and `ref` are forwarded to the root, list, and tab elements.
+Root `ui` is merged into every tab and panel first, then the item's `ui`. The item's `className` applies only to the tab button; style the panel through `ui.panel`. Native attributes and `ref` are forwarded to the root and each tab; the list receives `aria-label`, `aria-labelledby`, and `aria-describedby`.
 
 | Attribute | Description |
 | --- | --- |

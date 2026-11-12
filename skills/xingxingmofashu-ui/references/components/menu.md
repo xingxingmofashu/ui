@@ -172,7 +172,7 @@ export default function MenuBasicDemo() {
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ separator?: ClassValue }` | — | Tailwind classes for the separator slot. |
 
-`ui` keys map to the `data-slot` values listed below. Native attributes and `ref` are forwarded to the root, each item, group, and separator.
+`ui` keys map to the `data-slot` values listed below. Native attributes and `ref` are forwarded to each item, group, and separator. The root renders no DOM element, so root-level native attributes and `ref` are not forwarded.
 
 | Attribute | Description |
 | --- | --- |

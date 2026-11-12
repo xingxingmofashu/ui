@@ -80,7 +80,7 @@ export default function TooltipBasicDemo() {
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ positioner?: ClassValue; popup?: ClassValue; glass?: ClassValue; overlay?: ClassValue; arrow?: ClassValue; content?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
-`ui` keys map to the `data-slot` values listed below. Additional native attributes are forwarded through the trigger element.
+`ui` keys map to the `data-slot` values listed below. Put additional native attributes on the `trigger` element; the wrapper does not forward arbitrary native attributes to it.
 
 | Attribute | Description |
 | --- | --- |

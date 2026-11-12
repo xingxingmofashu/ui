@@ -87,17 +87,32 @@ bundler.
 | Form layout | `Form` owns submission and errors; `Field` labels one control; `Fieldset` groups fields under a legend. |
 | Actions and state | `Button` uses `children`; `Toggle` uses `pressed`; `Checkbox`/`Switch` use `checked`. |
 
+## Load the right reference
+
+Files live under `references/`; component pages live under
+`references/components/`.
+
+| Task | Read |
+| --- | --- |
+| Install, configure the stylesheet, or fix missing styles | `installation`, `troubleshooting` |
+| Theme the glass, switch light/dark, or use glass presets | `theming` |
+| Build a form or settings page | `form`, `field`, `fieldset`, `input`, `select`, `checkbox-group`, `radio-group`, `slider`, `switch`, `patterns` |
+| Add an overlay | `dialog`, `alert-dialog`, `drawer`, `popover`, `menu`, `toast`, `tooltip`, `patterns` |
+| Choose between components | the decision table below |
+| Debug a runtime or styling issue | `troubleshooting` |
+
 ## Choose a component
 
 | Intent | Components |
 | --- | --- |
 | Run an action | `Button` |
 | Keep an action pressed | `Toggle`, `ToggleGroup`, `Toolbar` |
-| Group related actions | `Toolbar`, `ToggleGroup` |
+| Group related actions or toggles | `Toolbar`, `ToggleGroup` |
 | Navigate between views | `Tabs`, `Menu`, `Drawer` |
 | Enter text | `Field` + `Input` |
-| Choose one or more options | `Select`, `RadioGroup` |
-| Choose independent options | `Checkbox`, `CheckboxGroup` |
+| Choose one option | `Select`, `RadioGroup` |
+| Choose multiple options | `Select` (`multiple`), `CheckboxGroup` |
+| Toggle independent booleans | `Checkbox`, `CheckboxGroup` |
 | Toggle an immediate setting | `Switch` |
 | Pick a number or range | `Slider` |
 | Confirm something destructive | `AlertDialog` |

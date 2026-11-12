@@ -146,7 +146,7 @@ export default function CheckboxGroupParentDemo() {
 
 Parent items use `parent: true` and require the group's `allValues`; they do not submit a value. `uncheckedValue` is not supported on group items.
 
-`ui` keys map to the `data-slot` values listed below. `name`, `form`, `id`, `ref`, and other native attributes are forwarded to the group and each control.
+`ui` keys map to the `data-slot` values listed below. `name` and `form` are applied to every child control. `id`, `ref`, and other native attributes target the group root; use an item's `inputRef` for its hidden input.
 
 | Attribute | Description |
 | --- | --- |

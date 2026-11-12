@@ -118,7 +118,7 @@ Arrow keys move focus within the group, `Home` and `End` jump to the ends, and `
 ## Gotchas
 
 - Pass options through `items`; each item needs a unique `value`.
-- `multiple` switches the value between a single string and a string array.
+- `value` and `defaultValue` are always arrays; `multiple` only allows more than one entry in the array.
 - Name the group with `aria-label` or `aria-labelledby`; icon-only items need their own names.
 - `orientation` controls layout and arrow-key navigation.
 - `loopFocus` wraps focus at the ends.

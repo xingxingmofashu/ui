@@ -173,7 +173,7 @@ export default function ToolbarBasicDemo() {
 
 `style` merges into the same primary element as `className`. Use it for computed values or per-instance CSS variables.
 
-Component-specific values live in `src/theme/toolbar.ts`: `--ui-toolbar-item-height`, `--ui-toolbar-item-px`, `--ui-toolbar-font-size`, `--ui-toolbar-icon-size`, `--ui-toolbar-item-gap`, `--ui-toolbar-padding`, `--ui-toolbar-gap`, `--ui-toolbar-group-gap`, `--ui-toolbar-vertical-radius`, and `--ui-toolbar-separator-length`. The hover fill, pressed thumb, rim, shadow, and divider colors are mixed from `--ui-ink`.
+The component theme defines these values: `--ui-toolbar-item-height`, `--ui-toolbar-item-px`, `--ui-toolbar-font-size`, `--ui-toolbar-icon-size`, `--ui-toolbar-item-gap`, `--ui-toolbar-padding`, `--ui-toolbar-gap`, `--ui-toolbar-group-gap`, `--ui-toolbar-vertical-radius`, and `--ui-toolbar-separator-length`. They are internal; override them through `ui.item` / `ui.group` or `style` on the relevant element. The hover fill, pressed thumb, rim, shadow, and divider colors are mixed from `--ui-ink`.
 
 ## Accessibility
 

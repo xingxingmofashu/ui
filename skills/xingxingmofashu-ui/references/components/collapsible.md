@@ -80,7 +80,7 @@ Native `<div>` attributes and `ref` are forwarded to the root.
 
 `style` merges into the same primary element as `className`. Use it for computed values or per-instance CSS variables.
 
-Component-specific values live in `src/theme/collapsible.ts`: `--ui-collapsible-trigger-height`, `--ui-collapsible-trigger-px`, `--ui-collapsible-trigger-py`, `--ui-collapsible-font-size`, `--ui-collapsible-indicator-size`, `--ui-collapsible-icon-size`, `--ui-collapsible-panel-px`, `--ui-collapsible-panel-pb`, and `--ui-collapsible-panel-font-size`.
+The component theme defines these geometry values: `--ui-collapsible-trigger-height`, `--ui-collapsible-trigger-px`, `--ui-collapsible-trigger-py`, `--ui-collapsible-font-size`, `--ui-collapsible-indicator-size`, `--ui-collapsible-icon-size`, `--ui-collapsible-panel-px`, `--ui-collapsible-panel-pb`, and `--ui-collapsible-panel-font-size`. They are internal; adjust them through the `ui.trigger` / `ui.panel` classes (for example with arbitrary CSS variables) instead of editing package source.
 
 ## Accessibility
 

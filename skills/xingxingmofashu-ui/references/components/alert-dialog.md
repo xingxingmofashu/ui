@@ -65,8 +65,8 @@ export default function AlertDialogBasicDemo() {
 | `children` | `ReactNode` | — | Extra content between the description and the action buttons. |
 | `cancelLabel` | `ReactNode` | `"Cancel"` | Cancel button label. |
 | `confirmLabel` | `ReactNode` | `"Confirm"` | Confirm button label. |
-| `onCancel` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the cancel button is pressed. |
-| `onConfirm` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the confirm button is pressed. |
+| `onCancel` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the cancel button is pressed. The dialog closes immediately. |
+| `onConfirm` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the confirm button is pressed. The dialog closes immediately. |
 | `open` | `boolean` | — | Controlled open state. |
 | `defaultOpen` | `boolean` | `false` | Initial open state when uncontrolled. |
 | `onOpenChange` | `(open: boolean, details) => void` | — | Called when the dialog opens or closes. |
@@ -99,14 +99,15 @@ export default function AlertDialogBasicDemo() {
 
 `AlertDialog` renders a modal `alertdialog` named by `title` and described by `description`. Focus moves into the popup, stays trapped while it is open, and returns to the trigger when it closes.
 
-Escape closes the dialog without calling `onCancel` or `onConfirm`; guard the flow in `onOpenChange` when Escape must not dismiss it. The backdrop never closes an alert dialog, so keep the cancel action visible. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for overlay focus rules.
+`onCancel` and `onConfirm` both close the dialog immediately because the actions are rendered inside `AlertDialog.Close`. To keep the dialog open while async work runs, control `open` and delay setting it to `false` until the work finishes. Escape closes the dialog without calling `onCancel` or `onConfirm`; guard the flow in `onOpenChange` when Escape must not dismiss it. The backdrop never closes an alert dialog, so keep the cancel action visible. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for overlay focus rules.
 
 ## Gotchas
 
 - There is no `trigger` prop. Render your own Button and control `open`/`onOpenChange`.
 - Escape closes the dialog without calling `onCancel` or `onConfirm`; guard destructive flows in `onOpenChange`.
 - The backdrop never dismisses an alert dialog; keep the cancel action visible.
-- `onConfirm` does not close the dialog automatically; close it when the action succeeds.
+- `onCancel` and `onConfirm` close the dialog immediately; the buttons are rendered inside `AlertDialog.Close`.
+- To keep the dialog open during async work, control `open` and do not set it to `false` until the work finishes.
 
 ## Related components
 

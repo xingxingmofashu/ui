@@ -80,7 +80,7 @@ export default function ToastBasicDemo() {
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | Corner where the stack is anchored. |
-| `close` | `ReactNode` | Built-in close button | Custom content rendered in place of the default close button. |
+| `close` | `ReactNode` | Built-in close button | Custom content rendered in place of the default close button. The node must handle dismissal itself; the wrapper does not attach close behavior. |
 | `className` | `ClassValue` | — | Tailwind classes merged into each toast. |
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ viewport?: ClassValue; root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; content?: ClassValue; icon?: ClassValue; text?: ClassValue; title?: ClassValue; description?: ClassValue; actions?: ClassValue; action?: ClassValue; close?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
@@ -154,7 +154,7 @@ Native attributes and `ref` are forwarded to each toast root.
 
 The viewport is a live region. High-priority toasts use an `alertdialog` role and the rest use a `dialog` role; titles and descriptions are connected with `aria-labelledby` and `aria-describedby`.
 
-The stack supports F6 focus entry plus swipe dismissal, and timers pause while the viewport is hovered or focused. When you replace the default close button, give your `close` control an accessible name. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for announcement guidance.
+The stack supports F6 focus entry plus swipe dismissal, and timers pause while the viewport is hovered or focused. When you replace the default close button, give your custom control an accessible name and wire its close behavior yourself. See the [accessibility guide](https://xingxingmofashu.github.io/ui/docs/en/guides/accessibility) for announcement guidance.
 
 ## Gotchas
 
@@ -162,6 +162,7 @@ The stack supports F6 focus entry plus swipe dismissal, and timers pause while t
 - Call `useToast()` only inside the provider.
 - `add` returns an ID; use `update` and `close` for the same toast.
 - Actions do not close the toast automatically; call `close` in the action handler.
+- A custom `close` node replaces `Toast.Close`, so it does not dismiss the toast automatically.
 - `timeout={0}` keeps a toast open; `limit` controls the visible stack.
 - Use `createToastManager` for code outside React and pass it to `toastManager`.
 

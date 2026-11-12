@@ -140,8 +140,8 @@ export function DeleteProject() {
         description="This action cannot be undone."
         confirmLabel="Delete project"
         onConfirm={() => {
-          // Delete the project, then close when the work succeeds.
-          setOpen(false);
+          // Both actions close the dialog immediately. Run the delete here,
+          // or guard onOpenChange if the dialog must wait for async work.
         }}
       />
     </>

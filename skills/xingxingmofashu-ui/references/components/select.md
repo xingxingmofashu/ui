@@ -196,7 +196,7 @@ type ShippingMethod = {
 | `label` | `ReactNode` | — | Visible heading rendered above the group. Required. |
 | `items` | `readonly SelectItemProps[]` | — | Options in the group. Required. |
 
-`ui` keys map to the `data-slot` values listed below. `name`, `form`, `autoComplete`, `required`, `id`, ARIA attributes, and `ref` are forwarded to the trigger and hidden input.
+`ui` keys map to the `data-slot` values listed below. `name`, `form`, `autoComplete`, `required`, and `id` are forwarded to the Base UI select root. `aria-label`, `aria-labelledby`, and `aria-describedby` are applied to the trigger. Use `inputRef` to access the hidden input; the wrapper does not forward `ref` to the trigger.
 
 | Attribute | Description |
 | --- | --- |

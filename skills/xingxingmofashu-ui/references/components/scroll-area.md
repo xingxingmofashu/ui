@@ -105,7 +105,7 @@ export default function ScrollAreaBasicDemo() {
 | `style` | `CSSProperties` | — | Inline styles merged into the same element as `className`. |
 | `ui` | `{ root?: ClassValue; glass?: ClassValue; overlay?: ClassValue; viewport?: ClassValue; content?: ClassValue; scrollbar?: ClassValue; thumb?: ClassValue; corner?: ClassValue }` | — | Tailwind classes for internal slots, keyed by `data-slot`. |
 
-`aria-label`, `aria-labelledby`, `aria-describedby`, other native attributes, and `ref` are forwarded to the scrollable viewport.
+`aria-label`, `aria-labelledby`, and `aria-describedby` are forwarded to the scrollable viewport. Other native attributes and `ref` target the root element.
 
 | Attribute | Description |
 | --- | --- |
