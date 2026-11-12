@@ -16,7 +16,7 @@ type MenuItemProps = Omit<
   "children" | "className" | "label" | "onClick" | "onSelect" | "style"
 > & {
   type?: "item";
-  /** Value that identifies the item in the menu. */
+  /** Value that identifies the item in the menu and keys its React element. */
   value: string;
   /** Visible content inside the item. */
   label: React.ReactNode;
@@ -171,7 +171,7 @@ function Menu({
 
                 return (
                   <MenuActionItem
-                    key={index}
+                    key={entry.value}
                     {...entry}
                     ui={mergeUI(ui, entry.ui)}
                   />
@@ -259,9 +259,9 @@ function MenuGroup({
         {label}
       </UIMenu.GroupLabel>
 
-      {items.map((item, index) => (
+      {items.map((item) => (
         <MenuActionItem
-          key={index}
+          key={item.value}
           {...item}
           ui={mergeUI(ui, item.ui)}
         />
