@@ -10,6 +10,10 @@ export default defineBuildConfig({
       format: "esm",
       ext: "mjs",
       addRelativeDeclarationExtensions: false,
+      esbuild: {
+        jsx: "automatic",
+        jsxImportSource: "react",
+      },
     },
   ],
   clean: true,
