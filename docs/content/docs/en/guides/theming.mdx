@@ -44,6 +44,26 @@ during render causes a hydration mismatch; set the class in an inline script or
 use a theme library such as `next-themes` with `suppressHydrationWarning` on the
 `<html>` element.
 
+## Color scheme
+
+Set `color-scheme` together with the theme so the browser themes native UI such
+as scrollbars, form controls, and the initial canvas. The package sets
+`color-scheme: light` for the default light tokens and `color-scheme: dark` for
+`.dark` / `data-theme="dark"`, and the glass presets resolve their
+`light-dark()` values from that computed scheme.
+
+Declare both schemes in the document head and keep the meta in sync with the
+active theme. `"light dark"` follows the operating system, while `"light"` or
+`"dark"` pins the override:
+
+```html [index.html]
+<meta name="color-scheme" content="light dark" />
+```
+
+The package does not apply `prefers-color-scheme` by itself: light is the
+documented default, so an application that follows the operating system must
+switch `.dark` / `data-theme="dark"` itself.
+
 ## Glass presets
 
 Glass presets are an optional plugin, not part of the core stylesheet. The

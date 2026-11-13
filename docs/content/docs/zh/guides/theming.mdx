@@ -40,6 +40,23 @@ Token 通过 `.light` / `.dark` 类或 `data-theme="light"` /
 不匹配；应在内联脚本中设置类名，或使用 `next-themes` 之类的主题库，并在
 `<html>` 上添加 `suppressHydrationWarning`。
 
+## 配色方案
+
+切换主题时同时设置 `color-scheme`，浏览器才会为滚动条、表单控件和初始画布
+套用相应的原生配色。包内为默认浅色 token 设置了 `color-scheme: light`，为
+`.dark` / `data-theme="dark"` 设置了 `color-scheme: dark`；玻璃预设的
+`light-dark()` 数值也依据这个计算值解析。
+
+在文档 head 中声明同时支持两种方案，并让 meta 与当前主题保持同步。
+`"light dark"` 跟随操作系统，`"light"` 或 `"dark"` 表示固定覆盖：
+
+```html [index.html]
+<meta name="color-scheme" content="light dark" />
+```
+
+包本身不会主动应用 `prefers-color-scheme`：浅色是文档约定的默认值，因此需要
+跟随操作系统的应用要自行切换 `.dark` / `data-theme="dark"`。
+
 ## 玻璃预设
 
 玻璃预设是可选的插件，不属于核心样式表。插件的样式表提供 `thin`、`soft`、

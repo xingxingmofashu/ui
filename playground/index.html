@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta
       name="description"
@@ -37,10 +38,22 @@
           root.classList.toggle("dark", theme === "dark");
           root.classList.toggle("light", theme === "light");
           root.style.colorScheme = theme;
+
+          const scheme = document.querySelector('meta[name="color-scheme"]');
+
+          if (scheme) {
+            scheme.content = theme;
+          }
         } catch {
           document.documentElement.dataset.theme = "light";
           document.documentElement.dataset.glass = "thin";
           document.documentElement.style.colorScheme = "light";
+
+          const scheme = document.querySelector('meta[name="color-scheme"]');
+
+          if (scheme) {
+            scheme.content = "light";
+          }
         }
       })();
     </script>

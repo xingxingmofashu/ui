@@ -42,6 +42,21 @@ async function expectGlass(container: Locator) {
   }
 }
 
+test("playground keeps color-scheme in sync with the theme toggle", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const scheme = page.locator('meta[name="color-scheme"]');
+
+  await expect(scheme).toHaveAttribute("content", "light");
+
+  await page.getByRole("button", { name: "Dark" }).click();
+
+  await expect(scheme).toHaveAttribute("content", "dark");
+  await expect(page.locator("html")).toHaveClass(/dark/);
+});
+
 test("select opens a glass popup and chooses an option", async ({ page }) => {
   await openExample(page, "select/basic");
 

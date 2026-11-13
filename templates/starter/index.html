@@ -9,30 +9,37 @@
       name="description"
       content="A compact Vite + React 19 + Tailwind CSS 4 landing-page starter for @xingxingmofashu/ui."
     />
-    <meta
-      name="theme-color"
-      content="#eceef2"
-      media="(prefers-color-scheme: light)"
-    />
-    <meta
-      name="theme-color"
-      content="#07080b"
-      media="(prefers-color-scheme: dark)"
-    />
+    <meta name="theme-color" content="#eceef2" />
     <title>Lumen — Liquid Glass React starter</title>
     <script>
       (() => {
         try {
           const stored = localStorage.getItem("lumen-theme");
+          const preference =
+            stored === "light" || stored === "dark" ? stored : "system";
           const dark =
-            stored === "dark" ||
-            (!stored &&
+            preference === "dark" ||
+            (preference === "system" &&
               window.matchMedia("(prefers-color-scheme: dark)").matches);
+          const theme = dark ? "dark" : "light";
           const root = document.documentElement;
 
           root.classList.toggle("dark", dark);
           root.classList.toggle("light", !dark);
-          root.style.colorScheme = dark ? "dark" : "light";
+          root.style.colorScheme = theme;
+
+          const scheme = document.querySelector('meta[name="color-scheme"]');
+
+          if (scheme) {
+            scheme.content =
+              preference === "system" ? "light dark" : preference;
+          }
+
+          const color = document.querySelector('meta[name="theme-color"]');
+
+          if (color) {
+            color.content = dark ? "#07080b" : "#eceef2";
+          }
         } catch {
           document.documentElement.classList.add("light");
         }

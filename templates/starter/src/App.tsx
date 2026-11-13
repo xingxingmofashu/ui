@@ -7,7 +7,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { Button, Card, Toggle, ToggleGroup } from "@xingxingmofashu/ui";
+import { Button, Card, ToggleGroup } from "@xingxingmofashu/ui";
 import { useGlassPreset } from "@xingxingmofashu/ui/plugins/glass-preset";
 
 import { HeroPreview } from "./hero-preview";
@@ -68,7 +68,7 @@ function GitHubIcon() {
 }
 
 export default function App() {
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const { preset, setPreset } = useGlassPreset();
 
   return (
@@ -133,18 +133,15 @@ export default function App() {
           />
 
           <div className="flex items-center gap-2">
-            <Toggle
+            <Button
               aria-label={
                 theme === "dark"
                   ? "Switch to light theme"
                   : "Switch to dark theme"
               }
               size="sm"
-              pressed={theme === "dark"}
-              onPressedChange={(pressed) =>
-                setTheme(pressed ? "dark" : "light")
-              }
-              icon={theme === "dark" ? <Moon /> : <Sun />}
+              leadingIcon={theme === "dark" ? <Moon /> : <Sun />}
+              onClick={toggleTheme}
             />
             <Button
               size="sm"

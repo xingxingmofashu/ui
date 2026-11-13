@@ -1,5 +1,5 @@
 import { i18nProvider } from "fumadocs-ui/i18n";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -55,6 +55,10 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+};
+
+export const viewport: Viewport = {
+  colorScheme: "light dark",
 };
 
 export function generateStaticParams() {

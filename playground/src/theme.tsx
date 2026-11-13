@@ -23,6 +23,12 @@ function applyTheme(theme: Theme) {
   root.classList.toggle("light", theme === "light");
   root.style.colorScheme = theme;
 
+  const scheme = document.querySelector('meta[name="color-scheme"]');
+
+  if (scheme instanceof HTMLMetaElement) {
+    scheme.content = theme;
+  }
+
   try {
     localStorage.setItem(STORAGE_KEY, theme);
   } catch {
