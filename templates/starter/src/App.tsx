@@ -54,6 +54,12 @@ const presetItems = [
   { value: "thick", label: "Thick" },
 ] as const;
 
+function backgroundSrcSet(extension: "avif" | "webp") {
+  return [1280, 1920, 2560]
+    .map((width) => `/rqev27-${width}.${extension} ${width}w`)
+    .join(", ");
+}
+
 function GitHubIcon() {
   return (
     <svg
@@ -72,10 +78,31 @@ export default function App() {
   const { preset, setPreset } = useGlassPreset();
 
   return (
-    <div
-      id="top"
-      className="relative isolate min-h-svh overflow-x-clip bg-[url('/rqev27.jpg')] bg-cover bg-center bg-fixed"
-    >
+    <div id="top" className="relative isolate min-h-svh overflow-x-clip">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      >
+        <picture>
+          <source
+            type="image/avif"
+            srcSet={backgroundSrcSet("avif")}
+            sizes="100vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={backgroundSrcSet("webp")}
+            sizes="100vw"
+          />
+          <img
+            src="/rqev27.jpg"
+            alt=""
+            decoding="async"
+            fetchPriority="high"
+            className="size-full object-cover"
+          />
+        </picture>
+      </div>
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-6">
         <a
           href="#top"
